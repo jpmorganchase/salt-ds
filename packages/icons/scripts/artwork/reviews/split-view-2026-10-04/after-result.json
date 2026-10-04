@@ -1,0 +1,642 @@
+{
+  "results": [
+    {
+      "name": "split-view.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "opening": {
+        "left": 85,
+        "right": 490,
+        "top": 154,
+        "bottom": 869,
+        "area": 269403
+      },
+      "differences": 2,
+      "compared": 10404
+    },
+    {
+      "name": "split-view.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "opening": {
+        "left": 96,
+        "right": 479,
+        "top": 165,
+        "bottom": 858,
+        "area": 236440
+      },
+      "differences": 6,
+      "compared": 10404
+    },
+    {
+      "name": "split-view.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "opening": {
+        "left": 101,
+        "right": 474,
+        "top": 170,
+        "bottom": 853,
+        "area": 222387
+      },
+      "differences": 3,
+      "compared": 10404
+    },
+    {
+      "name": "split-view.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "opening": {
+        "left": 107,
+        "right": 468,
+        "top": 176,
+        "bottom": 847,
+        "area": 204753
+      },
+      "differences": 2,
+      "compared": 10404
+    },
+    {
+      "name": "split-view.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "opening": {
+        "left": 112,
+        "right": 463,
+        "top": 181,
+        "bottom": 842,
+        "area": 189467
+      },
+      "differences": 1,
+      "compared": 10404
+    },
+    {
+      "name": "schedule.svg",
+      "check": "calendar-shared-frame",
+      "weight": 0.67,
+      "differences": 0,
+      "comparedPaint": 194954
+    },
+    {
+      "name": "schedule.svg",
+      "check": "visible-concave-plus-junctions",
+      "weight": 0.67,
+      "cornerSamples": [
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        }
+      ]
+    },
+    {
+      "name": "schedule.svg",
+      "check": "interior-plus-vertical-clearance",
+      "weight": 0.67,
+      "gaps": [
+        1.125,
+        1.125
+      ],
+      "minimum": 0.7
+    },
+    {
+      "name": "schedule.svg",
+      "check": "calendar-shared-frame",
+      "weight": 1,
+      "differences": 0,
+      "comparedPaint": 276958
+    },
+    {
+      "name": "schedule.svg",
+      "check": "visible-concave-plus-junctions",
+      "weight": 1,
+      "cornerSamples": [
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        }
+      ]
+    },
+    {
+      "name": "schedule.svg",
+      "check": "interior-plus-vertical-clearance",
+      "weight": 1,
+      "gaps": [
+        0.96875,
+        0.96875
+      ],
+      "minimum": 0.7
+    },
+    {
+      "name": "schedule.svg",
+      "check": "calendar-shared-frame",
+      "weight": 1.333333,
+      "differences": 0,
+      "comparedPaint": 358480
+    },
+    {
+      "name": "schedule.svg",
+      "check": "visible-concave-plus-junctions",
+      "weight": 1.333333,
+      "cornerSamples": [
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        }
+      ]
+    },
+    {
+      "name": "schedule.svg",
+      "check": "interior-plus-vertical-clearance",
+      "weight": 1.333333,
+      "gaps": [
+        0.796875,
+        0.796875
+      ],
+      "minimum": 0.7
+    },
+    {
+      "name": "schedule.svg",
+      "check": "calendar-shared-frame",
+      "weight": 1.5,
+      "differences": 0,
+      "comparedPaint": 397415
+    },
+    {
+      "name": "schedule.svg",
+      "check": "visible-concave-plus-junctions",
+      "weight": 1.5,
+      "cornerSamples": [
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        }
+      ]
+    },
+    {
+      "name": "schedule.svg",
+      "check": "interior-plus-vertical-clearance",
+      "weight": 1.5,
+      "gaps": [
+        0.71875,
+        0.71875
+      ],
+      "minimum": 0.7
+    },
+    {
+      "name": "warning.svg",
+      "check": "punctuation-to-triangle-clearance",
+      "weight": 0.67,
+      "gap": 0.9433411780077238,
+      "minimum": 0.48
+    },
+    {
+      "name": "warning.svg",
+      "check": "punctuation-to-triangle-clearance",
+      "weight": 1,
+      "gap": 0.7757619742066506,
+      "minimum": 0.48
+    },
+    {
+      "name": "warning.svg",
+      "check": "punctuation-to-triangle-clearance",
+      "weight": 1.333333,
+      "gap": 0.6149583954423259,
+      "minimum": 0.48
+    },
+    {
+      "name": "warning.svg",
+      "check": "punctuation-to-triangle-clearance",
+      "weight": 1.5,
+      "gap": 0.53125,
+      "minimum": 0.48
+    },
+    {
+      "name": "volume-down.svg",
+      "check": "one-filled-speaker",
+      "count": 1
+    },
+    {
+      "name": "volume-down.svg",
+      "check": "speaker-final-frame",
+      "measured": [
+        0.25,
+        2.0999999046325684,
+        7.509089946746826,
+        11.799995422363281
+      ],
+      "target": [
+        0.25,
+        2.1,
+        7.509091,
+        11.8
+      ]
+    },
+    {
+      "name": "volume-down.svg",
+      "check": "speaker-preserved-contour",
+      "differences": 0,
+      "area": 8564
+    },
+    {
+      "name": "volume-up.svg",
+      "check": "one-filled-speaker",
+      "count": 1
+    },
+    {
+      "name": "volume-up.svg",
+      "check": "speaker-final-frame",
+      "measured": [
+        0.25,
+        2.0999999046325684,
+        7.509089946746826,
+        11.799995422363281
+      ],
+      "target": [
+        0.25,
+        2.1,
+        7.509091,
+        11.8
+      ]
+    },
+    {
+      "name": "volume-up.svg",
+      "check": "speaker-preserved-contour",
+      "differences": 0,
+      "area": 8564
+    },
+    {
+      "name": "volume-off.svg",
+      "check": "one-filled-speaker",
+      "count": 1
+    },
+    {
+      "name": "volume-off.svg",
+      "check": "speaker-final-frame",
+      "measured": [
+        0.25,
+        2.0973992347717285,
+        7.512399673461914,
+        11.805200576782227
+      ],
+      "target": [
+        0.25,
+        2.1,
+        7.509091,
+        11.8
+      ]
+    },
+    {
+      "name": "volume-off.svg",
+      "check": "speaker-preserved-contour",
+      "differences": 0,
+      "area": 8564
+    },
+    {
+      "name": "volume-up.svg",
+      "check": "speaker-shared-anchor-and-size",
+      "comparedWith": "volume-down.svg",
+      "drift": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "volume-off.svg",
+      "check": "speaker-shared-anchor-and-size",
+      "comparedWith": "volume-down.svg",
+      "drift": [
+        0,
+        0.0026006698608398438,
+        0.0033097267150878906,
+        0.0052051544189453125
+      ]
+    },
+    {
+      "name": "progress-cancelled.svg",
+      "check": "progress-optical-stem",
+      "weight": 0.67,
+      "measured": 1.7519914215686274,
+      "target": 1.75
+    },
+    {
+      "name": "progress-cancelled.svg",
+      "check": "progress-optical-stem",
+      "weight": 1,
+      "measured": 1.7519914215686274,
+      "target": 1.75
+    },
+    {
+      "name": "progress-cancelled.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1,
+      "changed": 0
+    },
+    {
+      "name": "progress-cancelled.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.333333,
+      "measured": 1.7519914215686274,
+      "target": 1.75
+    },
+    {
+      "name": "progress-cancelled.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.333333,
+      "changed": 0
+    },
+    {
+      "name": "progress-cancelled.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.5,
+      "measured": 1.7519914215686274,
+      "target": 1.75
+    },
+    {
+      "name": "progress-cancelled.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.5,
+      "changed": 0
+    },
+    {
+      "name": "progress-closed.svg",
+      "check": "progress-optical-stem",
+      "weight": 0.67,
+      "measured": 1.597610294117647,
+      "target": 1.6
+    },
+    {
+      "name": "progress-closed.svg",
+      "check": "progress-optical-stem",
+      "weight": 1,
+      "measured": 1.597610294117647,
+      "target": 1.6
+    },
+    {
+      "name": "progress-closed.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1,
+      "changed": 0
+    },
+    {
+      "name": "progress-closed.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.333333,
+      "measured": 1.597610294117647,
+      "target": 1.6
+    },
+    {
+      "name": "progress-closed.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.333333,
+      "changed": 0
+    },
+    {
+      "name": "progress-closed.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.5,
+      "measured": 1.597610294117647,
+      "target": 1.6
+    },
+    {
+      "name": "progress-closed.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.5,
+      "changed": 0
+    },
+    {
+      "name": "progress-complete.svg",
+      "check": "progress-optical-stem",
+      "weight": 0.67,
+      "measured": 1.997625612745098,
+      "target": 2
+    },
+    {
+      "name": "progress-complete.svg",
+      "check": "progress-optical-stem",
+      "weight": 1,
+      "measured": 1.997625612745098,
+      "target": 2
+    },
+    {
+      "name": "progress-complete.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1,
+      "changed": 0
+    },
+    {
+      "name": "progress-complete.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.333333,
+      "measured": 1.997625612745098,
+      "target": 2
+    },
+    {
+      "name": "progress-complete.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.333333,
+      "changed": 0
+    },
+    {
+      "name": "progress-complete.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.5,
+      "measured": 1.997625612745098,
+      "target": 2
+    },
+    {
+      "name": "progress-complete.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.5,
+      "changed": 0
+    },
+    {
+      "name": "progress-onhold.svg",
+      "check": "progress-optical-stem",
+      "weight": 0.67,
+      "measured": 1.7886642156862744,
+      "target": 1.788462
+    },
+    {
+      "name": "progress-onhold.svg",
+      "check": "progress-optical-stem",
+      "weight": 1,
+      "measured": 1.7886642156862744,
+      "target": 1.788462
+    },
+    {
+      "name": "progress-onhold.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1,
+      "changed": 0
+    },
+    {
+      "name": "progress-onhold.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.333333,
+      "measured": 1.7886642156862744,
+      "target": 1.788462
+    },
+    {
+      "name": "progress-onhold.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.333333,
+      "changed": 0
+    },
+    {
+      "name": "progress-onhold.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.5,
+      "measured": 1.7886642156862744,
+      "target": 1.788462
+    },
+    {
+      "name": "progress-onhold.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.5,
+      "changed": 0
+    },
+    {
+      "name": "progress-pending.svg",
+      "check": "progress-optical-stem",
+      "weight": 0.67,
+      "measured": 1.1922181372549017,
+      "target": 1.192308
+    },
+    {
+      "name": "progress-pending.svg",
+      "check": "progress-optical-stem",
+      "weight": 1,
+      "measured": 1.1922181372549017,
+      "target": 1.192308
+    },
+    {
+      "name": "progress-pending.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1,
+      "changed": 0
+    },
+    {
+      "name": "progress-pending.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.333333,
+      "measured": 1.1922181372549017,
+      "target": 1.192308
+    },
+    {
+      "name": "progress-pending.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.333333,
+      "changed": 0
+    },
+    {
+      "name": "progress-pending.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.5,
+      "measured": 1.1922181372549017,
+      "target": 1.192308
+    },
+    {
+      "name": "progress-pending.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.5,
+      "changed": 0
+    },
+    {
+      "name": "progress-rejected.svg",
+      "check": "progress-optical-stem",
+      "weight": 0.67,
+      "measured": 2,
+      "target": 2
+    },
+    {
+      "name": "progress-rejected.svg",
+      "check": "progress-optical-stem",
+      "weight": 1,
+      "measured": 2,
+      "target": 2
+    },
+    {
+      "name": "progress-rejected.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1,
+      "changed": 0
+    },
+    {
+      "name": "progress-rejected.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.333333,
+      "measured": 2,
+      "target": 2
+    },
+    {
+      "name": "progress-rejected.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.333333,
+      "changed": 0
+    },
+    {
+      "name": "progress-rejected.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.5,
+      "measured": 2,
+      "target": 2
+    },
+    {
+      "name": "progress-rejected.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.5,
+      "changed": 0
+    }
+  ],
+  "failures": []
+}

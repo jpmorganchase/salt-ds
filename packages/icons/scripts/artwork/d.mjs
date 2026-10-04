@@ -17,7 +17,7 @@ import { enclosedTick, enclosedWarning } from "./enclosed-marks.mjs";
 import { circularCrossJunction } from "./junctions.mjs";
 import { lockKeyhole } from "./lock-marks.mjs";
 import { withSharedMark } from "./mark-composition.mjs";
-import { box, C, circ, dot, group, italicLetter, L, slash, textLabel } from "./primitives.mjs";
+import { box, C, circ, dot, group, italicLetter, L, S as stroke, slash, textLabel } from "./primitives.mjs";
 
 const icons = {};
 const put = (n, o, s) => {
@@ -66,8 +66,11 @@ put(
 );
 put(
   "split-view",
-  R(2.25, 3.75, 19.5, 16.5) +
-    F(box(12, 3.75, 9.75, 16.5)) +
+  // One complete pane frame gives all four opening corners the same profile.
+  // Its stroked divider continues the fillets into the adjacent filled panel.
+  F(box(12, 3.75, 9.75, 16.5)) +
+    R(2.25, 3.75, 9.75, 16.5) +
+    stroke("M12 3.75H21.75V20.25H12") +
     S("M5.25 8.25h3.75M5.25 11.25h3.75M5.25 14.25h2.25"),
 );
 put("square-root", S("M2.25 12.75l4.5 6L14.25 3.75h7.5"));
@@ -862,8 +865,6 @@ const straightHeadJoins = {
   "tear-out": arrowRoot(21.75, 2.25, [-1, 1], 1.6),
   "upload": arrowRoot(12, 2.25, [0, 1], 1.6),
   "workflow": arrowRoot(21, 20, [-1, 0], 1.25),
-  "split-view": circularCrossJunction(12, 3.75, 1.8, undefined, [[-1, 1]]) +
-    circularCrossJunction(12, 20.25, 1.8, undefined, [[-1, -1]]),
 };
 for (const [name, joins] of Object.entries(straightHeadJoins))
   icons[name] = icons[name].map((drawing) => drawing ? drawing + joins : drawing);

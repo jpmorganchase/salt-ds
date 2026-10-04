@@ -17,22 +17,23 @@ export const SplitViewIcon = forwardRef<SVGSVGElement, SplitViewIconProps>(
         {...props}
       >
         <g strokeWidth="var(--icon-strokeWidth, 1)">
+          <path fillRule="evenodd" d="M8 2.077h7v11.846H8Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1 2.077h14v11.846H1Z"
+            d="M1 2.077h7v11.846H1Z"
           />
-          <path d="M13.923 2.077A1.077 1.077 0 0 1 15 3.154V2.077Z" />
+          <path d="M6.923 2.077A1.077 1.077 0 0 1 8 3.154V2.077Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M13.923 2.077A1.077 1.077 0 0 1 15 3.154"
+            d="M6.923 2.077A1.077 1.077 0 0 1 8 3.154"
           />
-          <path d="M15 12.846a1.077 1.077 0 0 1-1.077 1.077H15Z" />
+          <path d="M8 12.846a1.077 1.077 0 0 1-1.077 1.077H8Z" />
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M15 12.846a1.077 1.077 0 0 1-1.077 1.077"
+            d="M8 12.846a1.077 1.077 0 0 1-1.077 1.077"
           />
           <path d="M2.077 13.923A1.077 1.077 0 0 1 1 12.846v1.077Z" />
           <path
@@ -44,25 +45,7 @@ export const SplitViewIcon = forwardRef<SVGSVGElement, SplitViewIconProps>(
           <path
             fill="none"
             stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M1 3.154a1.077 1.077 0 0 1 1.077-1.077"
-          />
-          <path fillRule="evenodd" d="M8 2.077h7v11.846H8Z" />
-          <path
-            fill="none"
-            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M3.154 5.308h2.692M3.154 7.462h2.692M3.154 9.615h1.615"
-          />
-          <path d="M6.708 2.077A1.29 1.29 0 0 1 8 3.369V2.077Z" />
-          <path
-            fill="none"
-            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M6.708 2.077A1.29 1.29 0 0 1 8 3.369"
-          />
-          <path d="M6.708 13.923A1.29 1.29 0 0 0 8 12.631v1.292Z" />
-          <path
-            fill="none"
-            stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-            d="M6.708 13.923A1.29 1.29 0 0 0 8 12.631"
+            d="M1 3.154a1.077 1.077 0 0 1 1.077-1.077m5.923 0h7v11.846H8M3.154 5.308h2.692M3.154 7.462h2.692M3.154 9.615h1.615"
           />
         </g>
       </Icon>

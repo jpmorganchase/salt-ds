@@ -133,7 +133,7 @@ An outline square has sharp outward-facing corners and softened corners around i
 
 ### Welding and softened corners
 
-**Welding** is the curved inner transition where connected parts meet, such as a column attaching to a rail. Softening the corner of an isolated opening follows the same visual language but is not a connection between separate parts.
+**Welding** is the curved inner transition where connected parts meet, such as a column attaching to a rail. Opening corners follow the same geometry rule. Equivalent concave corners with comparable weight and space need comparable softening, whether they belong to a frame opening or a divider join. Calling a corner a weld or an opening does not justify a different radius.
 
 Review the whole boundary, including internal supports, holes, notches and curve-to-line transitions. In Add to grid, the outline tile openings need softened corners, while the plus has its own welded crossing. The empty gaps between the tiles are not joins. In Add document, preserve the outward page-fold point while inspecting the inside fold elbow.
 
@@ -141,11 +141,15 @@ The larger references vary in their corner treatment. They do not establish a re
 
 ### Calibrate the amount of welding
 
-There is **no universal corner radius**. Compare the visible transition with the local painted band, available straight length, neighboring clearance and the nearest related construction. A compact plus, a column attachment and a curved globe intersection have different space available.
+There is **no universal corner radius**. Start with the angle of each exposed inner corner, as in the brand's curve-connection guidance. Acute recesses generally need smaller radii to retain straight length; broader recesses can accommodate larger transitions. Assess each sector of a crossing separately, since one crossing can contain both acute and obtuse corners.
 
-Simple marks with short arms, such as a close cross or compact arrow, often need a quieter transition to preserve their direction and proportions. Reduce the amount of softening at equivalent joins together; do not leave arbitrary joins sharp. Choose the smallest transition that remains visible across the supported weights without making the center look swollen or interrupting the straight arms. Judge it first at 12px on a standard-density screen, then at 16px and higher densities. Complexity, icon role and outline or solid styling do not define separate radius rules.
+Then compare the visible transition with the local painted band, available straight length, neighboring clearance and the nearest related construction. A compact plus, a column attachment and a curved globe intersection have different space available. The larger linework reference establishes an angle-based relationship; its radius ratios are not pixel values for system icons.
+
+Simple marks with short arms, such as a close cross or compact arrow, often need a quieter transition to preserve their direction and proportions. Reduce the amount of softening at equivalent joins together; do not leave arbitrary joins sharp. Choose the smallest transition that remains visible across the supported weights without making the center look swollen or interrupting the straight arms. Judge it first at 12px on a standard-density screen, then at 14px, 16px and higher densities. Complexity, icon role and outline or solid styling do not define separate radius rules.
 
 A successful transition is visible at the supported weights, leaves useful straight lengths and keeps neighboring openings clear. A curve hidden beneath a wider stroke does not produce a visible weld. Excessive softening can close a counter, turn a plus into a sparkle or consume an arrow's arms.
+
+The transition must meet the actual visible edges smoothly. A stroked frame and a filled pane have different painted boundaries, so copying a stroke-based join onto a fill can leave a small step. Inspect the complete opening for flat shelves, seams or abrupt changes where curves meet straight edges. Split view's frame corners and divider corners should form one continuous opening with consistent softening.
 
 For compact arrows, check both arms and the point at 12px. Reduce the local radius or simplify surrounding detail before weakening the arrow. A secondary arrow can use a lighter family treatment when its role supports it; small size alone is not a reason to thin it.
 

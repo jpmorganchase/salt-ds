@@ -1,0 +1,2392 @@
+{
+  "results": [
+    {
+      "name": "split-view.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 85,
+            "right": 490,
+            "top": 154,
+            "bottom": 869,
+            "area": 269403
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "split-view.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 96,
+            "right": 479,
+            "top": 165,
+            "bottom": 858,
+            "area": 236440
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "split-view.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 101,
+            "right": 474,
+            "top": 170,
+            "bottom": 853,
+            "area": 222387
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "split-view.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 107,
+            "right": 468,
+            "top": 176,
+            "bottom": 847,
+            "area": 204753
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "split-view.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 112,
+            "right": 463,
+            "top": 181,
+            "bottom": 842,
+            "area": 189467
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "column-chooser.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 85,
+            "right": 490,
+            "top": 327,
+            "bottom": 903,
+            "area": 210081
+          },
+          "differences": 0,
+          "compared": 4096
+        },
+        {
+          "opening": {
+            "left": 533,
+            "right": 938,
+            "top": 327,
+            "bottom": 903,
+            "area": 210078
+          },
+          "differences": 0,
+          "compared": 4096
+        }
+      ]
+    },
+    {
+      "name": "column-chooser.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 96,
+            "right": 479,
+            "top": 337,
+            "bottom": 892,
+            "area": 179129
+          },
+          "differences": 0,
+          "compared": 4096
+        },
+        {
+          "opening": {
+            "left": 544,
+            "right": 927,
+            "top": 337,
+            "bottom": 892,
+            "area": 179128
+          },
+          "differences": 0,
+          "compared": 4096
+        }
+      ]
+    },
+    {
+      "name": "column-chooser.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 101,
+            "right": 474,
+            "top": 342,
+            "bottom": 888,
+            "area": 165898
+          },
+          "differences": 0,
+          "compared": 4096
+        },
+        {
+          "opening": {
+            "left": 549,
+            "right": 922,
+            "top": 342,
+            "bottom": 888,
+            "area": 165896
+          },
+          "differences": 0,
+          "compared": 4096
+        }
+      ]
+    },
+    {
+      "name": "column-chooser.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 107,
+            "right": 468,
+            "top": 348,
+            "bottom": 882,
+            "area": 149060
+          },
+          "differences": 0,
+          "compared": 4096
+        },
+        {
+          "opening": {
+            "left": 555,
+            "right": 916,
+            "top": 348,
+            "bottom": 882,
+            "area": 149060
+          },
+          "differences": 0,
+          "compared": 4096
+        }
+      ]
+    },
+    {
+      "name": "column-chooser.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 112,
+            "right": 463,
+            "top": 353,
+            "bottom": 876,
+            "area": 134362
+          },
+          "differences": 0,
+          "compared": 4096
+        },
+        {
+          "opening": {
+            "left": 560,
+            "right": 911,
+            "top": 353,
+            "bottom": 876,
+            "area": 134361
+          },
+          "differences": 0,
+          "compared": 4096
+        }
+      ]
+    },
+    {
+      "name": "column-chooser_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 85,
+            "right": 490,
+            "top": 327,
+            "bottom": 903,
+            "area": 210081
+          },
+          "differences": 0,
+          "compared": 4096
+        },
+        {
+          "opening": {
+            "left": 533,
+            "right": 938,
+            "top": 327,
+            "bottom": 903,
+            "area": 210078
+          },
+          "differences": 0,
+          "compared": 4096
+        }
+      ]
+    },
+    {
+      "name": "column-chooser_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 96,
+            "right": 479,
+            "top": 337,
+            "bottom": 892,
+            "area": 179129
+          },
+          "differences": 0,
+          "compared": 4096
+        },
+        {
+          "opening": {
+            "left": 544,
+            "right": 927,
+            "top": 337,
+            "bottom": 892,
+            "area": 179128
+          },
+          "differences": 0,
+          "compared": 4096
+        }
+      ]
+    },
+    {
+      "name": "column-chooser_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 101,
+            "right": 474,
+            "top": 342,
+            "bottom": 888,
+            "area": 165898
+          },
+          "differences": 0,
+          "compared": 4096
+        },
+        {
+          "opening": {
+            "left": 549,
+            "right": 922,
+            "top": 342,
+            "bottom": 888,
+            "area": 165896
+          },
+          "differences": 0,
+          "compared": 4096
+        }
+      ]
+    },
+    {
+      "name": "column-chooser_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 107,
+            "right": 468,
+            "top": 348,
+            "bottom": 882,
+            "area": 149060
+          },
+          "differences": 0,
+          "compared": 4096
+        },
+        {
+          "opening": {
+            "left": 555,
+            "right": 916,
+            "top": 348,
+            "bottom": 882,
+            "area": 149060
+          },
+          "differences": 0,
+          "compared": 4096
+        }
+      ]
+    },
+    {
+      "name": "column-chooser_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 112,
+            "right": 463,
+            "top": 353,
+            "bottom": 876,
+            "area": 134362
+          },
+          "differences": 0,
+          "compared": 4096
+        },
+        {
+          "opening": {
+            "left": 560,
+            "right": 911,
+            "top": 353,
+            "bottom": 876,
+            "area": 134361
+          },
+          "differences": 0,
+          "compared": 4096
+        }
+      ]
+    },
+    {
+      "name": "panel-open-left.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 322,
+            "right": 937,
+            "top": 86,
+            "bottom": 937,
+            "area": 485802
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-left.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 332,
+            "right": 926,
+            "top": 97,
+            "bottom": 926,
+            "area": 442378
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-left.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 337,
+            "right": 922,
+            "top": 101,
+            "bottom": 922,
+            "area": 424216
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-left.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 343,
+            "right": 916,
+            "top": 108,
+            "bottom": 915,
+            "area": 399531
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-left.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 348,
+            "right": 910,
+            "top": 113,
+            "bottom": 910,
+            "area": 378600
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 322,
+            "right": 937,
+            "top": 86,
+            "bottom": 937,
+            "area": 485802
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 332,
+            "right": 926,
+            "top": 97,
+            "bottom": 926,
+            "area": 442378
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 337,
+            "right": 922,
+            "top": 101,
+            "bottom": 922,
+            "area": 424216
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 343,
+            "right": 916,
+            "top": 108,
+            "bottom": 915,
+            "area": 399531
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-left_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 348,
+            "right": 910,
+            "top": 113,
+            "bottom": 910,
+            "area": 378600
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-right.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 86,
+            "right": 701,
+            "top": 86,
+            "bottom": 937,
+            "area": 485810
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-right.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 97,
+            "right": 691,
+            "top": 97,
+            "bottom": 926,
+            "area": 442377
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-right.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 101,
+            "right": 686,
+            "top": 101,
+            "bottom": 922,
+            "area": 424216
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-right.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 107,
+            "right": 680,
+            "top": 108,
+            "bottom": 915,
+            "area": 399540
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-right.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 113,
+            "right": 675,
+            "top": 113,
+            "bottom": 910,
+            "area": 378616
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 86,
+            "right": 701,
+            "top": 86,
+            "bottom": 937,
+            "area": 485810
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 97,
+            "right": 691,
+            "top": 97,
+            "bottom": 926,
+            "area": 442377
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 101,
+            "right": 686,
+            "top": 101,
+            "bottom": 922,
+            "area": 424216
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 107,
+            "right": 680,
+            "top": 108,
+            "bottom": 915,
+            "area": 399540
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-right_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 113,
+            "right": 675,
+            "top": 113,
+            "bottom": 910,
+            "area": 378616
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-top.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 86,
+            "right": 937,
+            "top": 322,
+            "bottom": 937,
+            "area": 486226
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-top.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 97,
+            "right": 926,
+            "top": 332,
+            "bottom": 926,
+            "area": 442368
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-top.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 101,
+            "right": 922,
+            "top": 337,
+            "bottom": 922,
+            "area": 424201
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-top.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 107,
+            "right": 916,
+            "top": 343,
+            "bottom": 915,
+            "area": 399806
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-top.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 113,
+            "right": 910,
+            "top": 348,
+            "bottom": 910,
+            "area": 378616
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 86,
+            "right": 937,
+            "top": 322,
+            "bottom": 937,
+            "area": 486226
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 97,
+            "right": 926,
+            "top": 332,
+            "bottom": 926,
+            "area": 442368
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 101,
+            "right": 922,
+            "top": 337,
+            "bottom": 922,
+            "area": 424201
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 107,
+            "right": 916,
+            "top": 343,
+            "bottom": 915,
+            "area": 399806
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-top_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 113,
+            "right": 910,
+            "top": 348,
+            "bottom": 910,
+            "area": 378616
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 86,
+            "right": 937,
+            "top": 86,
+            "bottom": 701,
+            "area": 486193
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 97,
+            "right": 926,
+            "top": 97,
+            "bottom": 691,
+            "area": 442367
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 101,
+            "right": 922,
+            "top": 101,
+            "bottom": 686,
+            "area": 424206
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 107,
+            "right": 916,
+            "top": 108,
+            "bottom": 680,
+            "area": 399804
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-bottom.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 113,
+            "right": 910,
+            "top": 113,
+            "bottom": 675,
+            "area": 378618
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 86,
+            "right": 937,
+            "top": 86,
+            "bottom": 701,
+            "area": 486193
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 97,
+            "right": 926,
+            "top": 97,
+            "bottom": 691,
+            "area": 442367
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 101,
+            "right": 922,
+            "top": 101,
+            "bottom": 686,
+            "area": 424206
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 107,
+            "right": 916,
+            "top": 108,
+            "bottom": 680,
+            "area": 399804
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-open-bottom_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 113,
+            "right": 910,
+            "top": 113,
+            "bottom": 675,
+            "area": 378618
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-left.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 322,
+            "right": 937,
+            "top": 86,
+            "bottom": 937,
+            "area": 486884
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-left.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 332,
+            "right": 926,
+            "top": 97,
+            "bottom": 926,
+            "area": 443917
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-left.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 337,
+            "right": 922,
+            "top": 101,
+            "bottom": 922,
+            "area": 425997
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-left.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 343,
+            "right": 916,
+            "top": 108,
+            "bottom": 915,
+            "area": 401639
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-left.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 348,
+            "right": 910,
+            "top": 113,
+            "bottom": 910,
+            "area": 380984
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 322,
+            "right": 937,
+            "top": 86,
+            "bottom": 937,
+            "area": 486884
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 332,
+            "right": 926,
+            "top": 97,
+            "bottom": 926,
+            "area": 443917
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 337,
+            "right": 922,
+            "top": 101,
+            "bottom": 922,
+            "area": 425997
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 343,
+            "right": 916,
+            "top": 108,
+            "bottom": 915,
+            "area": 401639
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-left_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 348,
+            "right": 910,
+            "top": 113,
+            "bottom": 910,
+            "area": 380984
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-right.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 86,
+            "right": 701,
+            "top": 86,
+            "bottom": 937,
+            "area": 486879
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-right.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 97,
+            "right": 691,
+            "top": 97,
+            "bottom": 926,
+            "area": 443915
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-right.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 101,
+            "right": 686,
+            "top": 101,
+            "bottom": 922,
+            "area": 425997
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-right.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 107,
+            "right": 680,
+            "top": 108,
+            "bottom": 915,
+            "area": 401631
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-right.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 113,
+            "right": 675,
+            "top": 113,
+            "bottom": 910,
+            "area": 380971
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 86,
+            "right": 701,
+            "top": 86,
+            "bottom": 937,
+            "area": 486879
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 97,
+            "right": 691,
+            "top": 97,
+            "bottom": 926,
+            "area": 443915
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 101,
+            "right": 686,
+            "top": 101,
+            "bottom": 922,
+            "area": 425997
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 107,
+            "right": 680,
+            "top": 108,
+            "bottom": 915,
+            "area": 401631
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-right_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 113,
+            "right": 675,
+            "top": 113,
+            "bottom": 910,
+            "area": 380971
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-top.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 86,
+            "right": 937,
+            "top": 322,
+            "bottom": 937,
+            "area": 487251
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-top.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 97,
+            "right": 926,
+            "top": 332,
+            "bottom": 926,
+            "area": 443991
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-top.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 101,
+            "right": 922,
+            "top": 337,
+            "bottom": 922,
+            "area": 426015
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-top.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 107,
+            "right": 916,
+            "top": 343,
+            "bottom": 915,
+            "area": 401875
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-top.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 113,
+            "right": 910,
+            "top": 348,
+            "bottom": 910,
+            "area": 380919
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 86,
+            "right": 937,
+            "top": 322,
+            "bottom": 937,
+            "area": 487251
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 97,
+            "right": 926,
+            "top": 332,
+            "bottom": 926,
+            "area": 443991
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 101,
+            "right": 922,
+            "top": 337,
+            "bottom": 922,
+            "area": 426015
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 107,
+            "right": 916,
+            "top": 343,
+            "bottom": 915,
+            "area": 401875
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-top_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 113,
+            "right": 910,
+            "top": 348,
+            "bottom": 910,
+            "area": 380919
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 86,
+            "right": 937,
+            "top": 86,
+            "bottom": 701,
+            "area": 487238
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 97,
+            "right": 926,
+            "top": 97,
+            "bottom": 691,
+            "area": 443999
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 101,
+            "right": 922,
+            "top": 101,
+            "bottom": 686,
+            "area": 426014
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 107,
+            "right": 916,
+            "top": 108,
+            "bottom": 680,
+            "area": 401852
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-bottom.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 113,
+            "right": 910,
+            "top": 113,
+            "bottom": 675,
+            "area": 380925
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 0.67,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 86,
+            "right": 937,
+            "top": 86,
+            "bottom": 701,
+            "area": 487238
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 97,
+            "right": 926,
+            "top": 97,
+            "bottom": 691,
+            "area": 443999
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.1428571428571428,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 101,
+            "right": 922,
+            "top": 101,
+            "bottom": 686,
+            "area": 426014
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.3333333333333333,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 107,
+            "right": 916,
+            "top": 108,
+            "bottom": 680,
+            "area": 401852
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "panel-close-bottom_solid.svg",
+      "check": "continuous-equivalent-opening-corners",
+      "weight": 1.5,
+      "cornerComparisons": [
+        {
+          "opening": {
+            "left": 113,
+            "right": 910,
+            "top": 113,
+            "bottom": 675,
+            "area": 380925
+          },
+          "differences": 0,
+          "compared": 10404
+        }
+      ]
+    },
+    {
+      "name": "schedule.svg",
+      "check": "calendar-shared-frame",
+      "weight": 0.67,
+      "differences": 0,
+      "comparedPaint": 194954
+    },
+    {
+      "name": "schedule.svg",
+      "check": "visible-concave-plus-junctions",
+      "weight": 0.67,
+      "cornerSamples": [
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        }
+      ]
+    },
+    {
+      "name": "schedule.svg",
+      "check": "interior-plus-vertical-clearance",
+      "weight": 0.67,
+      "gaps": [
+        1.125,
+        1.125
+      ],
+      "minimum": 0.7
+    },
+    {
+      "name": "schedule.svg",
+      "check": "calendar-shared-frame",
+      "weight": 1,
+      "differences": 0,
+      "comparedPaint": 276958
+    },
+    {
+      "name": "schedule.svg",
+      "check": "visible-concave-plus-junctions",
+      "weight": 1,
+      "cornerSamples": [
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        }
+      ]
+    },
+    {
+      "name": "schedule.svg",
+      "check": "interior-plus-vertical-clearance",
+      "weight": 1,
+      "gaps": [
+        0.96875,
+        0.96875
+      ],
+      "minimum": 0.7
+    },
+    {
+      "name": "schedule.svg",
+      "check": "calendar-shared-frame",
+      "weight": 1.333333,
+      "differences": 0,
+      "comparedPaint": 358480
+    },
+    {
+      "name": "schedule.svg",
+      "check": "visible-concave-plus-junctions",
+      "weight": 1.333333,
+      "cornerSamples": [
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        }
+      ]
+    },
+    {
+      "name": "schedule.svg",
+      "check": "interior-plus-vertical-clearance",
+      "weight": 1.333333,
+      "gaps": [
+        0.796875,
+        0.796875
+      ],
+      "minimum": 0.7
+    },
+    {
+      "name": "schedule.svg",
+      "check": "calendar-shared-frame",
+      "weight": 1.5,
+      "differences": 0,
+      "comparedPaint": 397415
+    },
+    {
+      "name": "schedule.svg",
+      "check": "visible-concave-plus-junctions",
+      "weight": 1.5,
+      "cornerSamples": [
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        },
+        {
+          "inside": 255,
+          "outside": 0
+        }
+      ]
+    },
+    {
+      "name": "schedule.svg",
+      "check": "interior-plus-vertical-clearance",
+      "weight": 1.5,
+      "gaps": [
+        0.71875,
+        0.71875
+      ],
+      "minimum": 0.7
+    },
+    {
+      "name": "warning.svg",
+      "check": "punctuation-to-triangle-clearance",
+      "weight": 0.67,
+      "gap": 0.9433411780077238,
+      "minimum": 0.48
+    },
+    {
+      "name": "warning.svg",
+      "check": "punctuation-to-triangle-clearance",
+      "weight": 1,
+      "gap": 0.7757619742066506,
+      "minimum": 0.48
+    },
+    {
+      "name": "warning.svg",
+      "check": "punctuation-to-triangle-clearance",
+      "weight": 1.333333,
+      "gap": 0.6149583954423259,
+      "minimum": 0.48
+    },
+    {
+      "name": "warning.svg",
+      "check": "punctuation-to-triangle-clearance",
+      "weight": 1.5,
+      "gap": 0.53125,
+      "minimum": 0.48
+    },
+    {
+      "name": "volume-down.svg",
+      "check": "one-filled-speaker",
+      "count": 1
+    },
+    {
+      "name": "volume-down.svg",
+      "check": "speaker-final-frame",
+      "measured": [
+        0.25,
+        2.0999999046325684,
+        7.509089946746826,
+        11.799995422363281
+      ],
+      "target": [
+        0.25,
+        2.1,
+        7.509091,
+        11.8
+      ]
+    },
+    {
+      "name": "volume-down.svg",
+      "check": "speaker-preserved-contour",
+      "differences": 0,
+      "area": 8564
+    },
+    {
+      "name": "volume-up.svg",
+      "check": "one-filled-speaker",
+      "count": 1
+    },
+    {
+      "name": "volume-up.svg",
+      "check": "speaker-final-frame",
+      "measured": [
+        0.25,
+        2.0999999046325684,
+        7.509089946746826,
+        11.799995422363281
+      ],
+      "target": [
+        0.25,
+        2.1,
+        7.509091,
+        11.8
+      ]
+    },
+    {
+      "name": "volume-up.svg",
+      "check": "speaker-preserved-contour",
+      "differences": 0,
+      "area": 8564
+    },
+    {
+      "name": "volume-off.svg",
+      "check": "one-filled-speaker",
+      "count": 1
+    },
+    {
+      "name": "volume-off.svg",
+      "check": "speaker-final-frame",
+      "measured": [
+        0.25,
+        2.0973992347717285,
+        7.512399673461914,
+        11.805200576782227
+      ],
+      "target": [
+        0.25,
+        2.1,
+        7.509091,
+        11.8
+      ]
+    },
+    {
+      "name": "volume-off.svg",
+      "check": "speaker-preserved-contour",
+      "differences": 0,
+      "area": 8564
+    },
+    {
+      "name": "volume-up.svg",
+      "check": "speaker-shared-anchor-and-size",
+      "comparedWith": "volume-down.svg",
+      "drift": [
+        0,
+        0,
+        0,
+        0
+      ]
+    },
+    {
+      "name": "volume-off.svg",
+      "check": "speaker-shared-anchor-and-size",
+      "comparedWith": "volume-down.svg",
+      "drift": [
+        0,
+        0.0026006698608398438,
+        0.0033097267150878906,
+        0.0052051544189453125
+      ]
+    },
+    {
+      "name": "progress-cancelled.svg",
+      "check": "progress-optical-stem",
+      "weight": 0.67,
+      "measured": 1.7519914215686274,
+      "target": 1.75
+    },
+    {
+      "name": "progress-cancelled.svg",
+      "check": "progress-optical-stem",
+      "weight": 1,
+      "measured": 1.7519914215686274,
+      "target": 1.75
+    },
+    {
+      "name": "progress-cancelled.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1,
+      "changed": 0
+    },
+    {
+      "name": "progress-cancelled.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.333333,
+      "measured": 1.7519914215686274,
+      "target": 1.75
+    },
+    {
+      "name": "progress-cancelled.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.333333,
+      "changed": 0
+    },
+    {
+      "name": "progress-cancelled.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.5,
+      "measured": 1.7519914215686274,
+      "target": 1.75
+    },
+    {
+      "name": "progress-cancelled.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.5,
+      "changed": 0
+    },
+    {
+      "name": "progress-closed.svg",
+      "check": "progress-optical-stem",
+      "weight": 0.67,
+      "measured": 1.597610294117647,
+      "target": 1.6
+    },
+    {
+      "name": "progress-closed.svg",
+      "check": "progress-optical-stem",
+      "weight": 1,
+      "measured": 1.597610294117647,
+      "target": 1.6
+    },
+    {
+      "name": "progress-closed.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1,
+      "changed": 0
+    },
+    {
+      "name": "progress-closed.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.333333,
+      "measured": 1.597610294117647,
+      "target": 1.6
+    },
+    {
+      "name": "progress-closed.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.333333,
+      "changed": 0
+    },
+    {
+      "name": "progress-closed.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.5,
+      "measured": 1.597610294117647,
+      "target": 1.6
+    },
+    {
+      "name": "progress-closed.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.5,
+      "changed": 0
+    },
+    {
+      "name": "progress-complete.svg",
+      "check": "progress-optical-stem",
+      "weight": 0.67,
+      "measured": 1.997625612745098,
+      "target": 2
+    },
+    {
+      "name": "progress-complete.svg",
+      "check": "progress-optical-stem",
+      "weight": 1,
+      "measured": 1.997625612745098,
+      "target": 2
+    },
+    {
+      "name": "progress-complete.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1,
+      "changed": 0
+    },
+    {
+      "name": "progress-complete.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.333333,
+      "measured": 1.997625612745098,
+      "target": 2
+    },
+    {
+      "name": "progress-complete.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.333333,
+      "changed": 0
+    },
+    {
+      "name": "progress-complete.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.5,
+      "measured": 1.997625612745098,
+      "target": 2
+    },
+    {
+      "name": "progress-complete.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.5,
+      "changed": 0
+    },
+    {
+      "name": "progress-onhold.svg",
+      "check": "progress-optical-stem",
+      "weight": 0.67,
+      "measured": 1.7886642156862744,
+      "target": 1.788462
+    },
+    {
+      "name": "progress-onhold.svg",
+      "check": "progress-optical-stem",
+      "weight": 1,
+      "measured": 1.7886642156862744,
+      "target": 1.788462
+    },
+    {
+      "name": "progress-onhold.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1,
+      "changed": 0
+    },
+    {
+      "name": "progress-onhold.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.333333,
+      "measured": 1.7886642156862744,
+      "target": 1.788462
+    },
+    {
+      "name": "progress-onhold.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.333333,
+      "changed": 0
+    },
+    {
+      "name": "progress-onhold.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.5,
+      "measured": 1.7886642156862744,
+      "target": 1.788462
+    },
+    {
+      "name": "progress-onhold.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.5,
+      "changed": 0
+    },
+    {
+      "name": "progress-pending.svg",
+      "check": "progress-optical-stem",
+      "weight": 0.67,
+      "measured": 1.1922181372549017,
+      "target": 1.192308
+    },
+    {
+      "name": "progress-pending.svg",
+      "check": "progress-optical-stem",
+      "weight": 1,
+      "measured": 1.1922181372549017,
+      "target": 1.192308
+    },
+    {
+      "name": "progress-pending.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1,
+      "changed": 0
+    },
+    {
+      "name": "progress-pending.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.333333,
+      "measured": 1.1922181372549017,
+      "target": 1.192308
+    },
+    {
+      "name": "progress-pending.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.333333,
+      "changed": 0
+    },
+    {
+      "name": "progress-pending.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.5,
+      "measured": 1.1922181372549017,
+      "target": 1.192308
+    },
+    {
+      "name": "progress-pending.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.5,
+      "changed": 0
+    },
+    {
+      "name": "progress-rejected.svg",
+      "check": "progress-optical-stem",
+      "weight": 0.67,
+      "measured": 2,
+      "target": 2
+    },
+    {
+      "name": "progress-rejected.svg",
+      "check": "progress-optical-stem",
+      "weight": 1,
+      "measured": 2,
+      "target": 2
+    },
+    {
+      "name": "progress-rejected.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1,
+      "changed": 0
+    },
+    {
+      "name": "progress-rejected.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.333333,
+      "measured": 2,
+      "target": 2
+    },
+    {
+      "name": "progress-rejected.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.333333,
+      "changed": 0
+    },
+    {
+      "name": "progress-rejected.svg",
+      "check": "progress-optical-stem",
+      "weight": 1.5,
+      "measured": 2,
+      "target": 2
+    },
+    {
+      "name": "progress-rejected.svg",
+      "check": "progress-filled-mark-stroke-invariance",
+      "weight": 1.5,
+      "changed": 0
+    }
+  ],
+  "failures": []
+}

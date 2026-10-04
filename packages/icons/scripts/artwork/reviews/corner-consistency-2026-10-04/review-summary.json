@@ -1,0 +1,30 @@
+{
+  "coverage": {
+    "exports": 18,
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "sizes": [
+      12,
+      14,
+      16
+    ],
+    "devicePixelRatio": 1,
+    "componentCapture": "actual generated React with Salt theme and Button",
+    "mask": "numeric SVG at baked0.67reference width"
+  },
+  "independentReview": {
+    "verdict": "retain",
+    "finding": "Equivalent corners are consistent without visible frame, arrow or text movement, crowding or recognition regression; native12px change is subtle."
+  },
+  "announcement": {
+    "decision": "retain existing",
+    "reason": "Smaller acute and broader obtuse trial did not clearly improve native12/14/16; broader throat consumed opening space",
+    "geometryUnchanged": true
+  },
+  "photo": {
+    "principle": "Calibrate visible concave corners by angle, painted weight and available straight length, with comparable geometry treated consistently",
+    "limitation": "X not established for system icons; ratios are not literal pixel values"
+  }
+}

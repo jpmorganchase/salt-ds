@@ -643,22 +643,24 @@ put(
 );
 const columnChooserRows =
   "M5.25 10.5H9M5.25 14.25H9M5.25 18H9M15 10.5H18.75M15 14.25H18.75M15 18H18.75";
+// Match the frame and divider fillets within each opening. Their painted
+// right-angle corners have the same weight and comparable clear space.
 const columnChooserOutline =
   R(2.25, 3, 19.5, 18) +
   S("M2.25 7.5H21.75M12 7.5V21" + columnChooserRows) +
-  circularCrossJunction(2.25, 7.5, 1.8, undefined, [
+  circularCrossJunction(2.25, 7.5, 1.5, undefined, [
     [1, -1],
     [1, 1],
   ]) +
-  circularCrossJunction(21.75, 7.5, 1.8, undefined, [
+  circularCrossJunction(21.75, 7.5, 1.5, undefined, [
     [-1, -1],
     [-1, 1],
   ]) +
-  circularCrossJunction(12, 7.5, 1.7, undefined, [
+  circularCrossJunction(12, 7.5, 1.5, undefined, [
     [-1, 1],
     [1, 1],
   ]) +
-  circularCrossJunction(12, 21, 1.7, undefined, [
+  circularCrossJunction(12, 21, 1.5, undefined, [
     [-1, -1],
     [1, -1],
   ]);

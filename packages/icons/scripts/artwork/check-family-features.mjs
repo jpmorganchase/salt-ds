@@ -5,6 +5,16 @@ export async function checkFamilyFeatures(page, records) {
     "warning.svg",
     "calendar.svg",
     "schedule.svg",
+    "split-view.svg",
+    "column-chooser.svg",
+    "column-chooser_solid.svg",
+    ...["open", "close"].flatMap((action) =>
+      ["left", "right", "top", "bottom"].flatMap((direction) =>
+        ["", "_solid"].map(
+          (variant) => `panel-${action}-${direction}${variant}.svg`,
+        ),
+      ),
+    ),
     "volume-down.svg",
     "volume-up.svg",
     "volume-off.svg",
@@ -66,6 +76,128 @@ export async function checkFamilyFeatures(page, records) {
     };
     const at = (alpha, x, y) =>
       alpha[Math.floor(y * scale) * size + Math.floor(x * scale)];
+    // Locate enclosed openings in the finished paint. Their four
+    // corners must agree independently of the recipe, canvas fit or stroke
+    // width. A fill joined to a partial stroked arc used to leave a shelf at
+    // the divider; comparing mirrored corner silhouettes catches that defect.
+    const enclosedOpenings = (alpha) => {
+      const visited = new Uint8Array(alpha.length);
+      const queue = new Int32Array(alpha.length);
+      const openings = [];
+      for (let start = 0; start < alpha.length; start++) {
+        if (visited[start] || alpha[start] >= 128) continue;
+        let head = 0;
+        let tail = 1;
+        let left = size;
+        let right = 0;
+        let top = size;
+        let bottom = 0;
+        queue[0] = start;
+        visited[start] = 1;
+        while (head < tail) {
+          const index = queue[head++];
+          const x = index % size;
+          const y = Math.floor(index / size);
+          left = Math.min(left, x);
+          right = Math.max(right, x);
+          top = Math.min(top, y);
+          bottom = Math.max(bottom, y);
+          for (const next of [
+            index - size,
+            index + size,
+            x > 0 ? index - 1 : -1,
+            x < size - 1 ? index + 1 : -1,
+          ]) {
+            if (
+              next < 0 ||
+              next >= alpha.length ||
+              visited[next] ||
+              alpha[next] >= 128
+            )
+              continue;
+            visited[next] = 1;
+            queue[tail++] = next;
+          }
+        }
+        if (left > 0 && top > 0 && right < size - 1 && bottom < size - 1)
+          openings.push({ left, right, top, bottom, area: tail });
+      }
+      return openings.sort((a, b) => b.area - a.area);
+    };
+    const framedSamples = samples.filter(
+      ({ name }) =>
+        name === "split-view.svg" ||
+        name.startsWith("column-chooser") ||
+        name.startsWith("panel-"),
+    );
+    for (const { name, svg } of framedSamples) {
+      const isColumnChooser = name.startsWith("column-chooser");
+      // Column chooser's two lower panes have the largest clear areas. Panels
+      // have one main opening; the outlined sidebar is smaller. This follows
+      // the painted components without hard-coding any fitted coordinates.
+      const expectedOpenings = isColumnChooser ? 2 : 1;
+      for (const weight of [0.67, 1, 8 / 7, 4 / 3, 1.5]) {
+        const alpha = await render(svg, weight);
+        const openings = enclosedOpenings(alpha).slice(0, expectedOpenings);
+        const cornerComparisons = openings.map((opening) => {
+          const { left, right, top, bottom } = opening;
+          // Smaller crops avoid Column chooser's short text bars. All other
+          // crops stay clear of the central text or arrow. Mirroring about
+          // detected straight edges avoids assuming an authored radius.
+          const depth = Math.min(
+            Math.round((isColumnChooser ? 1 : 1.6) * scale),
+            Math.floor(Math.min(right - left, bottom - top) / 3),
+          );
+          const corners = [
+            [left, top, 1, 1],
+            [right, top, -1, 1],
+            [left, bottom, 1, -1],
+            [right, bottom, -1, -1],
+          ];
+          const painted = ([cx, cy, dx, dy], x, y) =>
+            alpha[(cy + dy * y) * size + cx + dx * x] >= 128;
+          let differences = 0;
+          let compared = 0;
+          for (let y = 0; y < depth; y++)
+            for (let x = 0; x < depth; x++) {
+              const reference = painted(corners[0], x, y);
+              // Equivalent curves can land on different raster phases. Allow
+              // one capture pixel (1/64 SVG unit) at the boundary, while still
+              // rejecting a radius mismatch or an actual flat shelf.
+              differences += Number(
+                corners
+                  .slice(1)
+                  .some(
+                    (corner) =>
+                      painted(corner, x, y) !== reference &&
+                      ![-1, 0, 1].some((offsetY) =>
+                        [-1, 0, 1].some(
+                          (offsetX) =>
+                            painted(corner, x + offsetX, y + offsetY) ===
+                            reference,
+                        ),
+                      ),
+                  ),
+              );
+              compared++;
+            }
+          return { opening, differences, compared };
+        });
+        record(
+          {
+            name,
+            check: "continuous-equivalent-opening-corners",
+            weight,
+            cornerComparisons,
+          },
+          openings.length === expectedOpenings &&
+            cornerComparisons.every(
+              ({ compared, differences }) =>
+                compared > 0 && differences / compared < 0.01,
+            ),
+        );
+      }
+    }
     // Schedule adds a mark within Calendar's empty date field. Compare
     // final paint outside that field so an independent fit cannot move or
     // resize the retained shell, header or bindings unnoticed.

@@ -90,14 +90,14 @@ proposals["schedule-time"] = [
 // Every panel orientation uses a square exterior. Explicit curved
 // branches ease the concave rail junctions while exterior corners stay sharp.
 const panelFrame = squareStroke(box(2.5, 2.5, 19, 19));
-// Visible circular roots replace helpers buried beneath the frame stroke.
+// Match the frame's 1.5-unit inner profile at each orthogonal divider join.
 const panelRail =
   S("M7.5 2.5v19") +
-  circularCrossJunction(7.5, 2.5, 1.8, undefined, [
+  circularCrossJunction(7.5, 2.5, 1.5, undefined, [
     [-1, 1],
     [1, 1],
   ]) +
-  circularCrossJunction(7.5, 21.5, 1.8, undefined, [
+  circularCrossJunction(7.5, 21.5, 1.5, undefined, [
     [-1, -1],
     [1, -1],
   ]);

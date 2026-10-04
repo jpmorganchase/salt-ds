@@ -48,29 +48,29 @@ export const PanelCloseBottomIcon = forwardRef<
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
           d="M2.115 14.988a1.103 1.103 0 0 1-1.103-1.103m0-2.575h13.976"
         />
-        <path d="M1.012 12.634a1.324 1.324 0 0 1 1.324-1.324H1.012Z" />
+        <path d="M1.012 12.414a1.103 1.103 0 0 1 1.103-1.104H1.012Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1.012 12.634a1.324 1.324 0 0 1 1.324-1.324"
+          d="M1.012 12.414a1.103 1.103 0 0 1 1.103-1.104"
         />
-        <path d="M1.012 9.986a1.324 1.324 0 0 0 1.324 1.324H1.012Z" />
+        <path d="M1.012 10.207a1.103 1.103 0 0 0 1.103 1.103H1.012Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M1.012 9.986a1.324 1.324 0 0 0 1.324 1.324"
+          d="M1.012 10.207a1.103 1.103 0 0 0 1.103 1.103"
         />
-        <path d="M14.988 12.634a1.324 1.324 0 0 0-1.324-1.324h1.324Z" />
+        <path d="M14.988 12.414a1.103 1.103 0 0 0-1.103-1.104h1.103Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M14.988 12.634a1.324 1.324 0 0 0-1.324-1.324"
+          d="M14.988 12.414a1.103 1.103 0 0 0-1.103-1.104"
         />
-        <path d="M14.988 9.986a1.324 1.324 0 0 1-1.324 1.324h1.324Z" />
+        <path d="M14.988 10.207a1.103 1.103 0 0 1-1.103 1.103h1.103Z" />
         <path
           fill="none"
           stroke="var(--saltIcon-color, var(--icon-color, currentColor))"
-          d="M14.988 9.986a1.324 1.324 0 0 1-1.324 1.324M8 3.218v5.15M5.425 5.793 8 8.368l2.575-2.575"
+          d="M14.988 10.207a1.103 1.103 0 0 1-1.103 1.103M8 3.218v5.15M5.425 5.793 8 8.368l2.575-2.575"
         />
         <path d="M7.22 7.588a1.103 1.103 0 0 0 1.56 0l-.78.78Z" />
         <path

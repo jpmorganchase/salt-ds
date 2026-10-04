@@ -1,0 +1,21 @@
+{
+  "checked": 72,
+  "options": 18,
+  "widths": [
+    320,
+    390
+  ],
+  "themes": [
+    "light",
+    "dark"
+  ],
+  "nativeSizes": [
+    12,
+    14,
+    16
+  ],
+  "vectorSize": 96,
+  "nextPrevious": "passed",
+  "queryPersistence": "passed",
+  "errors": []
+}
