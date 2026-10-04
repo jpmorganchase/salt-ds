@@ -1,7 +1,11 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import postcss from "postcss";
+import { MAX_PAGE_BYTES } from "./config.mjs";
 import { listFiles } from "./files.mjs";
+import { relativeDocLink } from "./links.mjs";
+
+export const TOKEN_REFERENCE_PATH = "tokens.md";
 
 const TOKEN_TIERS = [
   {
@@ -98,34 +102,169 @@ function themeNote(themes) {
   return "";
 }
 
-export function renderTokenReference({ tokens, packageVersion, links }) {
-  const lines = [
+function tokenLine(token) {
+  const replacement = token.replacement
+    ? `: alias of \`${token.replacement}\``
+    : "";
+  return `- \`${token.name}\`${replacement}${themeNote(token.themes)}`;
+}
+
+function groupNames(tokens) {
+  return [...new Set(tokens.map((token) => token.group))].sort();
+}
+
+/** Token lines, under a heading per group unless `grouped` is false. */
+function tokenListLines(tokens, { grouped, headingLevel }) {
+  if (!grouped) return [...tokens.map(tokenLine), ""];
+  return groupNames(tokens).flatMap((group) => [
+    `${"#".repeat(headingLevel)} ${group}`,
+    "",
+    ...tokens.filter((token) => token.group === group).map(tokenLine),
+    "",
+  ]);
+}
+
+function introLines({ packageVersion, links, split }) {
+  return [
     "# Design tokens",
     "",
-    `Every design token (CSS custom property) declared by \`@salt-ds/theme@${packageVersion}\`, grouped by tier. Values depend on the theme, mode and density; read the CSS in \`@salt-ds/theme/css\` for values.`,
+    `Every design token (CSS custom property) declared by \`@salt-ds/theme@${packageVersion}\`, grouped by tier. Values depend on the theme, mode and density; read the CSS in \`@salt-ds/theme/css\` for values.${split ? " The lists are split into files that can each be read in one go." : ""}`,
     "",
     `Read [Design tokens](${links.designTokens}) and [How to read semantic tokens](${links.howToRead}) before choosing tokens.`,
     "",
   ];
-  for (const tier of TOKEN_TIERS) {
-    const tierTokens = tokens.filter((token) => token.tier === tier.key);
-    if (tierTokens.length === 0) continue;
-    lines.push(`## ${tier.title}`, "", tier.guidance, "");
-    const groups = [...new Set(tierTokens.map((token) => token.group))].sort();
-    for (const group of groups) {
-      if (tier.key !== "deprecated") lines.push(`### ${group}`, "");
-      for (const token of tierTokens.filter((item) => item.group === group)) {
-        const replacement = token.replacement
-          ? `: alias of \`${token.replacement}\``
-          : "";
-        lines.push(
-          `- \`${token.name}\`${replacement}${themeNote(token.themes)}`,
-        );
-      }
-      lines.push("");
-    }
-  }
+}
+
+function finish(lines) {
   return `${lines.join("\n").trimEnd()}\n`;
+}
+
+/** Splits tokens into runs whose lists stay under `limit` bytes. */
+function chunkTokens(tokens, limit) {
+  const chunks = [];
+  let current = [];
+  let bytes = 0;
+  for (const token of tokens) {
+    const lineBytes = Buffer.byteLength(tokenLine(token)) + 1;
+    if (current.length > 0 && bytes + lineBytes > limit) {
+      chunks.push(current);
+      current = [];
+      bytes = 0;
+    }
+    current.push(token);
+    bytes += lineBytes;
+  }
+  if (current.length > 0) chunks.push(current);
+  return chunks;
+}
+
+function tokenCount(tokens) {
+  return `${tokens.length} ${tokens.length === 1 ? "token" : "tokens"}`;
+}
+
+/**
+ * Renders the design token reference. It is one `tokens.md` when that fits in
+ * `budget`; otherwise `tokens.md` links to one file per tier, or per group and
+ * then per part of a group for tiers that are too long to read in one go.
+ */
+export function renderTokenReference({
+  tokens,
+  packageVersion,
+  links,
+  budget = MAX_PAGE_BYTES,
+}) {
+  const tiers = TOKEN_TIERS.map((tier) => ({
+    ...tier,
+    tokens: tokens.filter((token) => token.tier === tier.key),
+  })).filter((tier) => tier.tokens.length > 0);
+
+  const single = finish([
+    ...introLines({ packageVersion, links, split: false }),
+    ...tiers.flatMap((tier) => [
+      `## ${tier.title}`,
+      "",
+      tier.guidance,
+      "",
+      ...tokenListLines(tier.tokens, {
+        grouped: tier.key !== "deprecated",
+        headingLevel: 3,
+      }),
+    ]),
+  ]);
+  if (Buffer.byteLength(single) <= budget) {
+    return [{ docPath: TOKEN_REFERENCE_PATH, markdown: single }];
+  }
+
+  const files = [];
+  const overview = introLines({ packageVersion, links, split: true });
+  const fileFor = ({ docPath, title, guidance, list }) => {
+    const back = relativeDocLink(docPath, TOKEN_REFERENCE_PATH);
+    files.push({
+      docPath,
+      markdown: finish([
+        `# ${title}`,
+        "",
+        `${guidance} Part of the [design tokens reference](${back}) for \`@salt-ds/theme@${packageVersion}\`.`,
+        "",
+        ...list,
+      ]),
+    });
+  };
+  // Leaves room for a file's heading and guidance.
+  const listBudget = budget - 1024;
+
+  for (const tier of tiers) {
+    overview.push(`## ${tier.title}`, "", tier.guidance, "");
+    const grouped = tier.key !== "deprecated";
+    const tierList = tokenListLines(tier.tokens, { grouped, headingLevel: 2 });
+    if (Buffer.byteLength(tierList.join("\n")) <= listBudget) {
+      const docPath = `tokens/${tier.key}.md`;
+      fileFor({
+        docPath,
+        title: tier.title,
+        guidance: tier.guidance,
+        list: tierList,
+      });
+      const groups = grouped
+        ? ` in groups: ${groupNames(tier.tokens).join(", ")}`
+        : "";
+      overview.push(
+        `- [${tier.title}](${docPath}): ${tokenCount(tier.tokens)}${groups}.`,
+        "",
+      );
+      continue;
+    }
+    for (const group of groupNames(tier.tokens)) {
+      const chunks = chunkTokens(
+        tier.tokens.filter((token) => token.group === group),
+        listBudget,
+      );
+      chunks.forEach((chunk, index) => {
+        const part = chunks.length > 1 ? index + 1 : undefined;
+        const docPath = `tokens/${tier.key}/${group}${part ? `-${part}` : ""}.md`;
+        const label = part
+          ? `${group}, part ${part} of ${chunks.length}`
+          : group;
+        fileFor({
+          docPath,
+          title: `${tier.title}: ${label}`,
+          guidance: tier.guidance,
+          list: tokenListLines(chunk, { grouped: false }),
+        });
+        const range = part
+          ? `, \`${chunk[0].name}\` to \`${chunk.at(-1).name}\``
+          : "";
+        overview.push(
+          `- [${label}](${docPath}): ${tokenCount(chunk)}${range}.`,
+        );
+      });
+    }
+    overview.push("");
+  }
+  return [
+    { docPath: TOKEN_REFERENCE_PATH, markdown: finish(overview) },
+    ...files,
+  ];
 }
 
 /** Icon component names exported by @salt-ds/icons, with deprecations. */

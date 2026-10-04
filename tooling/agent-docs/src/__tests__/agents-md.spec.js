@@ -11,15 +11,40 @@ import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import {
   agentsBlock,
-  indexPathFor,
+  BEGIN_MARKER,
+  END_MARKER,
+  findDocs,
+  INSTRUCTIONS,
+  indexLines,
+  readManifests,
   run,
   upsertBlock,
   withClaudeImport,
 } from "../agents-md.mjs";
 import { REPOSITORY_ROOT } from "../generate.mjs";
 
-const block = agentsBlock("node_modules/@salt-ds/core/docs/index.md");
+const block = agentsBlock({
+  root: "node_modules/@salt-ds",
+  lines: ["|core/docs/components:{button.md[Action]}"],
+});
 const roots = [];
+
+function manifest(pages) {
+  return JSON.stringify({ name: "@salt-ds/core", version: "1.0.0", pages });
+}
+
+const coreManifest = manifest([
+  { path: "components/dialog.md", title: "Dialog", aliases: ["Modal"] },
+  { path: "components/button.md", title: "Button" },
+  { path: "patterns/forms.md", title: "Forms" },
+]);
+const labManifest = manifest([
+  {
+    path: "components/layouts/deck-layout.md",
+    title: "Deck layout",
+    aliases: ["Slide deck", "Step content"],
+  },
+]);
 
 async function createProject(files = {}) {
   const root = await mkdtemp(path.join(tmpdir(), "salt-agents-md-"));
@@ -42,7 +67,10 @@ describe("upsertBlock", () => {
   it("creates, appends and replaces the Salt block", () => {
     expect(upsertBlock("", block)).toBe(`${block}\n`);
     expect(upsertBlock("# Rules\n", block)).toBe(`# Rules\n\n${block}\n`);
-    const stale = upsertBlock("# Rules\n", agentsBlock("old/index.md"));
+    const stale = upsertBlock(
+      "# Rules\n",
+      agentsBlock({ root: "old", lines: [] }),
+    );
     expect(upsertBlock(`${stale}More rules.\n`, block)).toBe(
       `# Rules\n\n${block}\nMore rules.\n`,
     );
@@ -77,42 +105,88 @@ describe("withClaudeImport", () => {
   });
 });
 
-describe("indexPathFor", () => {
+describe("indexLines", () => {
+  it("lists each docs folder once, core first, with other names in brackets", () => {
+    expect(
+      indexLines([
+        { directory: "lab", pages: JSON.parse(labManifest).pages },
+        { directory: "core", pages: JSON.parse(coreManifest).pages },
+      ]),
+    ).toEqual([
+      "|core/docs/components:{button.md,dialog.md[Modal]}",
+      "|core/docs/patterns:{forms.md}",
+      "|lab/docs/components/layouts:{deck-layout.md[Slide deck;Step content]}",
+    ]);
+  });
+
+  it("keeps the index syntax intact when names contain its delimiters", () => {
+    expect(
+      indexLines([
+        {
+          directory: "core",
+          pages: [
+            { path: "tokens.md", aliases: ["a, b", "c|d", "[e]", 3] },
+            { title: "No path" },
+          ],
+        },
+      ]),
+    ).toEqual(["|core/docs:{tokens.md[a b;c d;e]}"]);
+  });
+});
+
+describe("findDocs", () => {
   it("finds docs installed above the project, as in a workspace", async () => {
     const root = await createProject({
       "node_modules/@salt-ds/core/docs/index.md": "",
       "apps/web/package.json": "{}",
     });
-    expect(indexPathFor(path.join(root, "apps/web"))).toBe(
-      "../../node_modules/@salt-ds/core/docs/index.md",
-    );
+    expect(findDocs(path.join(root, "apps/web"))).toEqual({
+      scopeDir: path.join(root, "node_modules/@salt-ds"),
+      root: "../../node_modules/@salt-ds",
+    });
   });
 
   it("prefers the docs next to the script that was run", async () => {
     const root = await createProject({
+      "node_modules/@salt-ds/core/docs/index.md": "",
       "apps/web/node_modules/@salt-ds/core/docs/index.md": "",
     });
     expect(
-      indexPathFor(
+      findDocs(
         root,
         path.join(
           root,
           "apps/web/node_modules/@salt-ds/core/docs/agents-md.mjs",
         ),
-      ),
-    ).toBe("apps/web/node_modules/@salt-ds/core/docs/index.md");
+      )?.root,
+    ).toBe("apps/web/node_modules/@salt-ds");
   });
 
-  it("falls back to the usual location", async () => {
+  it("finds nothing when Salt is not installed", async () => {
     const root = await createProject();
-    expect(indexPathFor(root)).toBe("node_modules/@salt-ds/core/docs/index.md");
+    expect(findDocs(root)).toBeUndefined();
+  });
+});
+
+describe("readManifests", () => {
+  it("reads the manifest of each installed package and skips the rest", async () => {
+    const root = await createProject({
+      "node_modules/@salt-ds/core/docs/manifest.json": coreManifest,
+      "node_modules/@salt-ds/lab/docs/manifest.json": "not json",
+      "node_modules/@salt-ds/icons/package.json": "{}",
+    });
+    expect(readManifests(path.join(root, "node_modules/@salt-ds"))).toEqual([
+      { directory: "core", pages: JSON.parse(coreManifest).pages },
+    ]);
   });
 });
 
 describe("run", () => {
-  it("writes AGENTS.md and CLAUDE.md, then reports them up to date", async () => {
+  it("writes the docs index to AGENTS.md and imports it in CLAUDE.md", async () => {
     const root = await createProject({
       "node_modules/@salt-ds/core/docs/index.md": "",
+      "node_modules/@salt-ds/core/docs/manifest.json": coreManifest,
+      "node_modules/@salt-ds/lab/docs/manifest.json": labManifest,
       "CLAUDE.md": "# Claude\n",
     });
     const log = [];
@@ -121,7 +195,14 @@ describe("run", () => {
     expect(run(["--check", "--dir", root], options)).toBe(1);
     expect(run(["--dir", root], options)).toBe(0);
     expect(await readFile(path.join(root, "AGENTS.md"), "utf8")).toBe(
-      `${block}\n`,
+      `${agentsBlock({
+        root: "node_modules/@salt-ds",
+        lines: [
+          "|core/docs/components:{button.md,dialog.md[Modal]}",
+          "|core/docs/patterns:{forms.md}",
+          "|lab/docs/components/layouts:{deck-layout.md[Slide deck;Step content]}",
+        ],
+      })}\n`,
     );
     expect(await readFile(path.join(root, "CLAUDE.md"), "utf8")).toBe(
       "# Claude\n\n@AGENTS.md\n",
@@ -132,14 +213,40 @@ describe("run", () => {
     expect(log.at(-1)).toBe("CLAUDE.md is up to date.");
   });
 
-  it("can leave CLAUDE.md alone", async () => {
+  it("reports the block as stale when the installed docs change", async () => {
+    const root = await createProject({
+      "node_modules/@salt-ds/core/docs/index.md": "",
+      "node_modules/@salt-ds/core/docs/manifest.json": coreManifest,
+    });
+    const options = { log: () => {} };
+    expect(run(["--dir", root, "--no-claude"], options)).toBe(0);
+    await writeFile(
+      path.join(root, "node_modules/@salt-ds/core/docs/manifest.json"),
+      manifest([{ path: "components/tabs.md", title: "Tabs" }]),
+    );
+    expect(run(["--check", "--dir", root, "--no-claude"], options)).toBe(1);
+  });
+
+  it("fails without installed Salt docs", async () => {
     const root = await createProject();
+    expect(() => run(["--dir", root], { log: () => {} })).toThrow(
+      "Cannot find the Salt docs",
+    );
+  });
+
+  it("can leave CLAUDE.md alone", async () => {
+    const root = await createProject({
+      "node_modules/@salt-ds/core/docs/index.md": "",
+    });
     run(["--dir", root, "--no-claude"], { log: () => {} });
     await expect(readFile(path.join(root, "CLAUDE.md"))).rejects.toThrow();
   });
 
   it("leaves a CLAUDE.md that links to AGENTS.md alone", async () => {
-    const root = await createProject({ "AGENTS.md": "# Rules\n" });
+    const root = await createProject({
+      "AGENTS.md": "# Rules\n",
+      "node_modules/@salt-ds/core/docs/index.md": "",
+    });
     await symlink("AGENTS.md", path.join(root, "CLAUDE.md"));
     const log = [];
     expect(run(["--dir", root], { log: (line) => log.push(line) })).toBe(0);
@@ -152,6 +259,7 @@ describe("run", () => {
   it("names the file when its block is incomplete", async () => {
     const root = await createProject({
       "AGENTS.md": "<!-- BEGIN:salt-ds-agent-docs -->\n",
+      "node_modules/@salt-ds/core/docs/index.md": "",
     });
     expect(() => run(["--dir", root], { log: () => {} })).toThrow(
       "AGENTS.md: Found an incomplete Salt block.",
@@ -169,11 +277,17 @@ describe("run", () => {
 });
 
 describe("core README", () => {
-  it("shows the same block that the script writes", async () => {
+  it("shows the block that the script writes", async () => {
     const readme = await readFile(
       path.join(REPOSITORY_ROOT, "packages/core/README.md"),
       "utf8",
     );
-    expect(readme).toContain(block);
+    const example = readme.slice(
+      readme.indexOf(BEGIN_MARKER),
+      readme.indexOf(END_MARKER) + END_MARKER.length,
+    );
+    expect(example).toContain(
+      `${BEGIN_MARKER}\n\n## Salt Design System\n\n${INSTRUCTIONS}\n\n[Salt docs index]|root: node_modules/@salt-ds\n|core/docs/`,
+    );
   });
 });
