@@ -87,7 +87,7 @@ export const AnnouncementDialog: StoryFn = () => {
           <FlexLayout direction={{ xs: "column", sm: "row" }}>
             <FlexItem grow={1} basis="50%" style={{ minWidth: 0 }}>
               <StackLayout gap={1}>
-                <H3 className={styles.announcementHeading}>Builder</H3>
+                <H3>Builder</H3>
                 <Text>
                   Create your own optimized corporate bond portfolios targeting
                   specific characteristics using a wide range of parameters and
@@ -179,11 +179,7 @@ export const MultiAnnouncementDialog: StoryFn = () => {
           <FlexLayout direction={{ xs: "column", sm: "row" }}>
             <FlexItem grow={1} basis="50%" style={{ minWidth: 0 }}>
               <StackLayout gap={1}>
-                {currentSlide.subheader && (
-                  <H3 className={styles.announcementHeading}>
-                    {currentSlide.subheader}
-                  </H3>
-                )}
+                {currentSlide.subheader && <H3>{currentSlide.subheader}</H3>}
                 <Text>{currentSlide.body}</Text>
               </StackLayout>
             </FlexItem>
@@ -245,28 +241,27 @@ export const MultiAnnouncementDialog: StoryFn = () => {
                 </Button>
               }
               endItem={
-                <StackLayout direction="row" gap={1} align="center">
-                  <Text
-                    color="secondary"
-                    style={{ marginRight: "var(--salt-spacing-200)" }}
-                  >
+                <StackLayout direction="row" gap={3} align="center">
+                  <Text color="secondary">
                     {`${activeIndex + 1} of ${multiSlideAnnouncementContent.length}`}
                   </Text>
-                  {!isFirst && (
+                  <StackLayout direction="row" gap={1} align="center">
+                    {!isFirst && (
+                      <Button
+                        sentiment="accented"
+                        appearance="bordered"
+                        onClick={handlePrevious}
+                      >
+                        Previous
+                      </Button>
+                    )}
                     <Button
                       sentiment="accented"
-                      appearance="bordered"
-                      onClick={handlePrevious}
+                      onClick={isLast ? () => setOpen(false) : handleNext}
                     >
-                      Previous
+                      {primaryLabel}
                     </Button>
-                  )}
-                  <Button
-                    sentiment="accented"
-                    onClick={isLast ? () => setOpen(false) : handleNext}
-                  >
-                    {primaryLabel}
-                  </Button>
+                  </StackLayout>
                 </StackLayout>
               }
             />
@@ -337,7 +332,7 @@ export const ContentScrolling: StoryFn = () => {
           <FlexLayout direction={{ xs: "column", sm: "row" }}>
             <FlexItem grow={1} basis="50%" style={{ minWidth: 0 }}>
               <StackLayout gap={1}>
-                <H3 className={styles.announcementHeading}>Analytics engine</H3>
+                <H3>Analytics engine</H3>
                 <Text>
                   The new analytics engine processes data up to 10x faster than
                   before, enabling real-time insights that help you make
@@ -345,9 +340,7 @@ export const ContentScrolling: StoryFn = () => {
                   tools, you can create stunning charts that communicate complex
                   information.
                 </Text>
-                <H3 className={styles.announcementHeading}>
-                  Collaboration features
-                </H3>
+                <H3>Collaboration features</H3>
                 <Text>
                   Share insights seamlessly across your organization with
                   enhanced collaboration tools. Team members can annotate data,
@@ -357,25 +350,19 @@ export const ContentScrolling: StoryFn = () => {
                   reports. Version control ensures everyone works with the most
                   up-to-date information.
                 </Text>
-                <H3 className={styles.announcementHeading}>
-                  Security & compliance
-                </H3>
+                <H3>Security &amp; compliance</H3>
                 <Text>
                   Enhanced security protocols and compliance certifications
                   ensure your data remains protected and meets industry
                   standards.
                 </Text>
-                <H3 className={styles.announcementHeading}>
-                  Performance & reliability
-                </H3>
+                <H3>Performance &amp; reliability</H3>
                 <Text>
                   Faster load times and fewer outages keep your team productive.
                   We maintain high availability and optimize resource use across
                   all environments.
                 </Text>
-                <H3 className={styles.announcementHeading}>
-                  Accessibility & theming
-                </H3>
+                <H3>Accessibility &amp; theming</H3>
                 <Text>
                   Built-in support for screen readers, keyboard navigation, and
                   high-contrast modes. Customize colors, density, and layout to
