@@ -46,6 +46,12 @@
   background: var(--salt-container-primary-background);
 }
 
+/* Patterns can be whole screens with fixed headers or side panels; layout
+   containment keeps those inside the preview instead of the docs page. */
+.patternExample {
+  contain: layout;
+}
+
 .toolbar {
   display: flex;
   justify-content: flex-end;

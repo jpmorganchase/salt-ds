@@ -49,6 +49,7 @@ const DesktopAppHeader: FC<{
           paddingRight: "var(--salt-spacing-300)",
           backgroundColor: "var(--salt-container-primary-background)",
           position: "fixed",
+          left: 0,
           width: "100%",
           boxShadow:
             offset > 0 ? "var(--salt-overlayable-shadow-scroll)" : "none",
@@ -88,7 +89,10 @@ const DesktopAppHeader: FC<{
                   <NavigationItem
                     active={active === item}
                     href="#"
-                    onClick={() => setActive(item)}
+                    onClick={(event) => {
+                      event.preventDefault();
+                      setActive(item);
+                    }}
                   >
                     {item}
                   </NavigationItem>
@@ -153,6 +157,7 @@ const MobileAppHeader: FC<{
           backgroundColor: "var(--salt-container-primary-background)",
           zIndex: "calc(var(--salt-zIndex-drawer) + 1)",
           position: "fixed",
+          left: 0,
           borderBottom:
             "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
           boxShadow: offset > 0 ? "var(--salt-shadow-1)" : "none",
@@ -223,7 +228,8 @@ const MobileAppHeader: FC<{
                   orientation="vertical"
                   active={active === item}
                   href="#"
-                  onClick={() => {
+                  onClick={(event) => {
+                    event.preventDefault();
                     handleClick(item);
                   }}
                 >
@@ -236,7 +242,8 @@ const MobileAppHeader: FC<{
                 <NavigationItem
                   orientation="vertical"
                   href="#"
-                  onClick={() => {
+                  onClick={(event) => {
+                    event.preventDefault();
                     setDrawerOpen(false);
                   }}
                 >
@@ -272,7 +279,7 @@ export const AppHeader = () => {
   ];
 
   return (
-    <BorderLayout>
+    <BorderLayout style={{ width: "100%" }}>
       <BorderItem position="north">
         {isMobile ? (
           <MobileAppHeader items={items} utilities={utilities} />
@@ -321,7 +328,7 @@ export const HeaderOnly = () => {
   ];
 
   return (
-    <BorderLayout>
+    <BorderLayout style={{ width: "100%" }}>
       <BorderItem position="north">
         <DesktopAppHeader items={items} utilities={utilities} />
       </BorderItem>
@@ -356,7 +363,7 @@ export const HeaderWithVerticalNavigation = () => {
   const [active, setActive] = useState(navItems[0]);
 
   return (
-    <BorderLayout>
+    <BorderLayout style={{ width: "100%" }}>
       <BorderItem position="north">
         <DesktopAppHeader
           items={items}

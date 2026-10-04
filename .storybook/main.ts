@@ -13,7 +13,10 @@ const config: StorybookConfig = {
     options: {},
   },
   stories: ["../packages/*/stories/**/*.@(mdx|stories.@(js|jsx|ts|tsx))"],
-  staticDirs: ["../docs/public", { from: "../site/public/img", to: "/img" }],
+  staticDirs: [
+    "../docs/public",
+    { from: "../site/public/img/examples", to: "/img/examples" },
+  ],
   typescript: {
     reactDocgen: "react-docgen-typescript",
   },

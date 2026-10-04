@@ -92,5 +92,7 @@ const InternationalPhoneNumberTemplate: StoryFn<{
   );
 };
 
-export const Column = InternationalPhoneNumberTemplate.bind({});
-export const Row = InternationalPhoneNumberTemplate.bind({});
+export const Column = () => (
+  <InternationalPhoneNumberTemplate direction="column" />
+);
+export const Row = () => <InternationalPhoneNumberTemplate direction="row" />;
