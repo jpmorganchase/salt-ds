@@ -12,6 +12,7 @@ import {
   collectIcons,
   renderCountrySymbolReference,
   renderIconReference,
+  renderTokenReference,
 } from "../references.mjs";
 import { summarize } from "../render.mjs";
 
@@ -109,5 +110,70 @@ describe("icon and country references", () => {
     });
     expect(markdown).toContain("`_Sharp` suffix");
     expect(markdown.trimEnd().endsWith("`GB`")).toBe(true);
+  });
+});
+
+describe("token reference", () => {
+  const token = (name, tier, group) => ({
+    name,
+    tier,
+    group,
+    themes: new Set(["shared"]),
+  });
+  const tokens = [
+    token("--salt-actionable-bold", "characteristics", "actionable"),
+    ...Array.from({ length: 60 }, (_, index) =>
+      token(
+        `--salt-color-blue-${String(index).padStart(3, "0")}`,
+        "foundations",
+        "color",
+      ),
+    ),
+    token("--salt-spacing-100", "foundations", "spacing"),
+  ];
+  const links = {
+    designTokens: "./themes/design-tokens.md",
+    howToRead: "./themes/design-tokens/how-to-read-tokens.md",
+  };
+
+  it("is one file when it fits", () => {
+    const files = renderTokenReference({
+      tokens,
+      packageVersion: "1.0.0",
+      links,
+    });
+    expect(files.map((file) => file.docPath)).toEqual(["tokens.md"]);
+    expect(files[0].markdown).toContain(
+      "### actionable\n\n- `--salt-actionable-bold`",
+    );
+  });
+
+  it("splits by tier, then group, then part to stay within the budget", () => {
+    const files = renderTokenReference({
+      tokens,
+      packageVersion: "1.0.0",
+      links,
+      budget: 2048,
+    });
+    const byPath = new Map(files.map((file) => [file.docPath, file.markdown]));
+    expect([...byPath.keys()]).toEqual([
+      "tokens.md",
+      "tokens/characteristics.md",
+      "tokens/foundations/color-1.md",
+      "tokens/foundations/color-2.md",
+      "tokens/foundations/spacing.md",
+    ]);
+    for (const markdown of byPath.values()) {
+      expect(Buffer.byteLength(markdown)).toBeLessThanOrEqual(2048);
+    }
+    expect(byPath.get("tokens.md")).toContain(
+      "- [color, part 1 of 2](tokens/foundations/color-1.md): ",
+    );
+    expect(byPath.get("tokens/foundations/spacing.md")).toContain(
+      "# Foundation tokens: spacing\n\nBase values.",
+    );
+    expect(byPath.get("tokens/foundations/spacing.md")).toContain(
+      "[design tokens reference](../../tokens.md)",
+    );
   });
 });

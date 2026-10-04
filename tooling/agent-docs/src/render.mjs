@@ -254,6 +254,24 @@ function sectionFor(entry) {
   return entry.docPath.split("/")[0].replace(/\.md$/, "");
 }
 
+/**
+ * Renders `docs/manifest.json`: every page an index lists, which
+ * agents-md.mjs compresses into the AGENTS.md block.
+ */
+export function renderManifest({ packageName, version, entries }) {
+  const pages = entries
+    .map((entry) => ({
+      path: entry.docPath,
+      title: entry.title,
+      section: sectionFor(entry),
+      ...(entry.aliases?.length > 0 ? { aliases: entry.aliases } : {}),
+    }))
+    .sort((left, right) =>
+      left.path < right.path ? -1 : left.path > right.path ? 1 : 0,
+    );
+  return `${JSON.stringify({ name: packageName, version, pages }, null, 2)}\n`;
+}
+
 /** Renders `docs/index.md` for one package. */
 export function renderIndex({ packageName, version, entries, otherPackages }) {
   const lines = [

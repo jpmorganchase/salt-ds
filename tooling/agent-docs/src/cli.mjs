@@ -28,6 +28,9 @@ try {
       `${check ? "Checked" : "Wrote"} ${packageName}/docs: ${files} files, ${Math.round(bytes / 1024)} KB`,
     );
   }
+  console.log(
+    `AGENTS.md block indexing every package: ${(result.agentsBlockBytes / 1024).toFixed(1)} KB`,
+  );
   if (result.warnings.length > 0) {
     console.log(
       `${result.warnings.length} warning(s)${verbose ? ":" : ". Run with --verbose to list them."}`,
