@@ -29,16 +29,12 @@ defaults.
 
 ```tsx
 import { SemanticIconProvider } from "@salt-ds/core";
-import {
-  ChevronDownIcon,
-  ErrorSolidIcon,
-  SuccessCircleSolidIcon,
-} from "@salt-ds/icons";
+import { CheckmarkIcon, TriangleDownIcon } from "@salt-ds/icons";
 
+// Only the overridden roles; every other role keeps its Salt default.
 const productIcons = {
-  ExpandIcon: ChevronDownIcon,
-  ErrorIcon: ErrorSolidIcon,
-  SuccessIcon: SuccessCircleSolidIcon,
+  ExpandIcon: TriangleDownIcon,
+  SuccessIcon: CheckmarkIcon,
 };
 
 export function ProductIconBoundary({ children }) {
@@ -70,14 +66,6 @@ export function ExpandIndicator() {
 Use the hook for semantic roles, not as a general icon lookup. Add an
 accessible name to the owning control or status text; a decorative icon should
 remain hidden from assistive technology.
-
-## Accessibility and testing
-
-Review custom icons at every supported density and theme. Verify that status
-icons remain distinguishable without color, directional icons still match the
-application's reading direction, and icon-only controls retain an accessible
-name. Test the components that consume each overridden role rather than only
-rendering the icon map in isolation.
 
 ## Deprecations and migrations
 

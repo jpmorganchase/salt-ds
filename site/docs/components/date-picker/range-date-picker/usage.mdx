@@ -176,7 +176,10 @@ If you are creating your own confirmation controls instead of using `DatePickerA
 
 ### useDatePickerContext
 
-Inside a `DatePicker`, the `useDatePickerContext` hook returns the picker's `state` and `helpers`. Pass `selectionVariant="range"` to match the `DatePicker`; the hook then returns a `RangeDatePickerState`.
+Inside a `DatePicker`, the `useDatePickerContext` hook returns the picker state
+and helpers as `DatePickerState`. Pass `selectionVariant="range"` to match the
+`DatePicker`, then narrow it when you need variant-specific helpers, for example
+`useDatePickerContext({ selectionVariant: "range" }) as RangeDatePickerState`.
 
 ### useDatePickerOverlay
 

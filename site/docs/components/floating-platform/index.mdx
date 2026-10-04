@@ -1,5 +1,6 @@
 ---
 title: Floating platform
+description: "`FloatingPlatformProvider` and `FloatingComponentProvider` let advanced applications customize how Salt positions and renders floating UI such as tooltips, menus and dropdowns."
 data:
   description: "`FloatingPlatformProvider` and `FloatingComponentProvider` let advanced applications customize how Salt positions and renders floating UI such as tooltips, menus and dropdowns."
   sourceCodeUrl: "https://github.com/jpmorganchase/salt-ds/tree/main/packages/core/src/utils/useFloatingUI"
@@ -69,7 +70,10 @@ export function DesktopTooltip() {
   return (
     <FloatingPlatformProvider
       platform={desktopPlatform}
-      middleware={(defaultMiddleware) => [...defaultMiddleware, offset(10)]}
+      middleware={(defaultMiddleware) => [
+        offset(10),
+        ...defaultMiddleware.filter(({ name }) => name !== "offset"),
+      ]}
     >
       <Tooltip content="Rendered with desktop-aware positioning">
         <button type="button">More information</button>
@@ -87,8 +91,12 @@ updates cost more than event-driven positioning.
 
 `FloatingComponentProvider` replaces the element used as the root of a floating
 surface. The component must forward its ref and all supplied positioning,
-accessibility and event props. It must also honor `open` and `disabled`. This is
-the integration point for rendering into a portal or activating another
+accessibility and event props, including `open`, `top`, `left`, `position`,
+`width`, `height`, `focusManagerProps` and `lockScroll`. When
+`focusManagerProps` are supplied and the surface is open, render a
+`FloatingFocusManager` with those props. Honor `lockScroll` while open. Otherwise,
+modal focus trapping, initial and return focus, and scroll locking are lost. This
+is the integration point for rendering into a portal or activating another
 window; it does not configure that window's styles or providers for you.
 
 When rendering into a separate document:
@@ -105,14 +113,14 @@ secondary document.
 
 ## Accessibility and keyboard behavior
 
-The providers don't change a component's keyboard contract. Tooltips, menus,
-dropdowns and dialogs must retain their documented roles, focus management,
-dismissal behavior and trigger relationships after customization. Test at
-least Tab and Shift+Tab navigation, Escape dismissal, trigger activation,
-focus restoration and screen-reader naming in the actual host environment.
+The providers are not intended to change a component's keyboard contract. A
+custom root keeps that contract only when it preserves the focus management and
+scroll locking described above. Tooltips, menus, dropdowns and dialogs must
+retain their documented roles, focus management, dismissal behavior and trigger
+relationships after customization. Test at least Tab and Shift+Tab navigation,
+Escape dismissal, trigger activation, focus restoration and screen-reader naming
+in the actual host environment.
 
 ## Deprecations and migrations
 
-There are no current deprecations for these providers. Earlier maintainer-only
-Storybook guidance has moved to this canonical page; application documentation
-should link here instead of depending on Storybook routes.
+There are no current deprecations for these providers.

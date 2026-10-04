@@ -13,12 +13,14 @@ values, validation rules, when errors appear, submission and reset. Follow the
 ## Validation and accessible feedback
 
 Set `FormField validationStatus="error"` when the application decides a field is
-invalid. Participating controls show the error state and associate the label and
-helper text, but most don't set `aria-invalid` from the status. Set it on the
-native control yourself; for example, use `inputProps` on Input or `textAreaProps`
-on MultilineInput. NumberInput is the exception: while it has a value, it sets
-`aria-invalid` for an error status or an out-of-range value. Warning and success
-states don't mark a field invalid. Supply specific feedback through
+invalid. Controls that participate in `FormField` vary in how much context they
+use: some show the error state and associate the label and helper text, while
+others only consume selected values such as the label or disabled state. Most
+don't set `aria-invalid` from the status. Set it on the native control yourself;
+for example, use `inputProps` on Input or `textAreaProps` on MultilineInput.
+NumberInput and DateInput inputs set `aria-invalid` for an error status;
+NumberInput also sets it for an out-of-range value while it has a value. Warning
+and success states don't mark a field invalid. Supply specific feedback through
 `FormFieldHelperText`.
 
 This communicates a validation result; it does not run validation or call
@@ -36,9 +38,10 @@ explicit labels, error associations and invalid semantics on their accessible
 control/group. Do not assume wrapping any widget in FormField connects it.
 
 Lab's legacy FormField and Input-based controls use the legacy context. Their
-native prop/ref paths differ from Core: InputLegacy, SearchInput and FormattedInput
-forward their ordinary ref to the input, while the current Lab ComboBox does not.
-Use the relevant component API when adapting an existing Lab form.
+native prop/ref paths differ from Core: Lab's exported `Input`, `SearchInput` and
+`FormattedInput` forward their ordinary ref to the input, while the current Lab
+`ComboBox` does not. Use the relevant component API when adapting an existing Lab
+form.
 
 ### Input, MultilineInput
 
@@ -63,21 +66,23 @@ submit their values; unchecked inputs are absent from `FormData`. Use each child
 ### Switch
 
 Bind `checked` and `onChange`. Its named native checkbox submits only when
-checked. Put native input handlers in `inputProps`; the ordinary ref targets the
-label, not the input.
+checked. `validationStatus` does not show an error state. Put native input
+handlers in `inputProps`; the ordinary ref targets the label, not the input.
 
 ### Slider, RangeSlider
 
 Bind `value` and `onChange`. Use `name`, or `startName` and
-`endName`, to submit numeric text from the native range inputs. The ordinary ref
+`endName`, to submit numeric text from the native range inputs. From `FormField`,
+Slider and RangeSlider use only `aria-labelledby` and `disabled`; helper text is
+not linked, and `validationStatus` does not show an error state. The ordinary ref
 targets the track. Focus the appropriate input inside it when adapting a library's
 error-focus behavior.
 
 ### Rating
 
-Bind `value` and `onChange`. A named selected radio submits its value. The
-ordinary ref targets the wrapper. Focus the selected or first enabled radio when
-needed.
+Bind `value` and `onChange`. A named selected radio submits its value.
+`validationStatus` does not show an error state. The ordinary ref targets the
+wrapper. Focus the selected or first enabled radio when needed.
 
 ### Dropdown, ListBox, ToggleButtonGroup
 
@@ -98,8 +103,10 @@ bindings separate.
 
 Bind dates using the date APIs. Native named fields submit formatted text; use an
 explicit date/time-zone serialization policy for application data. Range inputs use
-`startName` / `endName`. Use `inputRef`, or `startInputRef` / `endInputRef`. Range
-native props can identify an error on one endpoint.
+`startName` / `endName`. Use `inputRef`, or `startInputRef` / `endInputRef`.
+`validationStatus="error"` sets `aria-invalid` on the DateInput fields, including
+DatePicker inputs built on them. Range native props can identify an error on one
+endpoint.
 
 ### Calendar, selection lists/trees, ColorChooser
 
