@@ -17,18 +17,44 @@ type PropsTableType = {
   componentName: string;
 };
 
+type PropType = {
+  name: string;
+  raw?: string;
+  value?: unknown;
+};
+
 type JSONData = {
   props: Record<
     string,
     {
       name: string;
-      type: { name: string };
+      type: PropType;
       description: string;
       defaultValue?: { value: string };
     }
   >;
   displayName?: string;
 };
+
+const MAX_ENUM_VALUES = 12;
+
+/**
+ * propsGen.js extracts literal unions as enums, whose name is "enum", so show
+ * their values instead (matching the docs generated for coding agents).
+ */
+function formatType(type: PropType) {
+  if (type.name !== "enum") return type.name;
+  if (
+    Array.isArray(type.value) &&
+    type.value.length > 0 &&
+    type.value.length <= MAX_ENUM_VALUES
+  ) {
+    return type.value
+      .map((item: { value?: unknown }) => String(item?.value))
+      .join(" | ");
+  }
+  return type.raw ?? type.name;
+}
 
 export const PropsTable: FC<PropsTableType> = ({
   packageName = "core",
@@ -81,7 +107,7 @@ export const PropsTable: FC<PropsTableType> = ({
               <TR key={name}>
                 <TD className={styles.overflowWrap}>{name}</TD>
                 <TD>
-                  <Code>{type.name}</Code>
+                  <Code>{formatType(type)}</Code>
                 </TD>
                 <TD>
                   <Markdown>{description}</Markdown>

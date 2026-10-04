@@ -86,7 +86,7 @@ export const Navigation = () => {
   }, []);
 
   return (
-    <BorderLayout>
+    <BorderLayout style={{ width: "100%" }}>
       <BorderItem position="north">
         <header>
           <FlexLayout
@@ -94,6 +94,7 @@ export const Navigation = () => {
               paddingLeft: "var(--salt-spacing-300)",
               paddingRight: "var(--salt-spacing-300)",
               backgroundColor: "var(--salt-container-primary-background)",
+              left: 0,
               position: "fixed",
               width: "100%",
               boxShadow:

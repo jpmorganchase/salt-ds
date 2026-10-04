@@ -423,6 +423,6 @@ const ListBuilder: StoryFn<ListBuilderProps> = ({
   );
 };
 
-export const SingleSelect = ListBuilder.bind({});
-export const Multiselect = ListBuilder.bind({});
-export const Vertical = ListBuilder.bind({});
+export const SingleSelect = () => <ListBuilder />;
+export const Multiselect = () => <ListBuilder multiselect />;
+export const Vertical = () => <ListBuilder orientation="column" />;
