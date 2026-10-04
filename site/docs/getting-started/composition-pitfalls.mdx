@@ -29,9 +29,10 @@ owner for the action or navigation.
 
 ### Avoid pass-through wrappers over Salt primitives
 
-Treat wrappers that only forward props to a Salt primitive as suspicious. If a
-wrapper does not add behavior, semantics, or a stable domain API, prefer using
-the Salt primitive directly.
+Treat wrappers that only forward props to a Salt primitive as suspicious. Prefer
+using the Salt primitive directly unless the wrapper adds behavior, semantics or
+a stable domain API. See [Custom wrappers](./custom-wrappers) for wrapper examples
+and review criteria.
 
 ### Recreating standard Salt primitives
 
@@ -86,26 +87,10 @@ export function OpenHelp() {
 
 ### Pass-through wrappers
 
-```tsx
-// Avoid
-import { Button } from "@salt-ds/core";
-
-export function PrimaryButton(props) {
-  return <Button {...props} />;
-}
-```
-
-```tsx
-// Prefer
-import { Button } from "@salt-ds/core";
-
-export function SaveAction() {
-  return <Button appearance="solid">Save</Button>;
-}
-```
-
-If a wrapper remains, it should add more than prop forwarding. Give it a clear
-reason such as shared behavior, domain semantics, or a stable public API.
+Use the Salt primitive directly when a wrapper only renames a component and
+forwards props. Keep wrappers only when they add shared behavior, domain
+semantics or a stable public API. See [Custom wrappers](./custom-wrappers) for
+full examples of pass-through and justified wrappers.
 
 ### Recreating a Salt primitive
 
@@ -128,34 +113,6 @@ export function HelpAction() {
   return <Button onClick={openHelp}>Help</Button>;
 }
 ```
-
-## When wrappers are justified
-
-A wrapper can be the right choice when it:
-
-- establishes a stable domain-specific API
-- adds shared behavior such as analytics, permissions, or data wiring
-- adds semantics that the base primitive does not carry on its own
-- coordinates multiple Salt primitives into a reusable higher-level unit
-
-If the wrapper is justified, keep the responsibilities explicit and avoid hiding
-the underlying interaction model.
-
-```tsx
-// Reasonable wrapper
-import { Button } from "@salt-ds/core";
-
-export function BlockingAction({ canRun, onRun, children }) {
-  return (
-    <Button disabled={!canRun} onClick={onRun}>
-      {children}
-    </Button>
-  );
-}
-```
-
-This wrapper adds a domain-specific API and shared behavior rather than only
-renaming `Button`.
 
 ## Quick review checklist
 

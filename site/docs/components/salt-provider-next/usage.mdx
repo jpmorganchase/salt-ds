@@ -1,0 +1,46 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Import
+
+To import `SaltProviderNext` from the core Salt package, use:
+
+```js
+import { SaltProviderNext } from "@salt-ds/core";
+```
+
+## Usage
+
+Use `SaltProviderNext` when your application uses the J.P. Morgan theme. It adds
+the `salt-theme-next` class used by the J.P. Morgan theme CSS and accepts the
+brand-aware `accent`, `corner`, `actionFont` and `headingFont` props.
+
+`SaltProviderNext` otherwise follows the same provider model as `SaltProvider`,
+including `mode`, `density`, `breakpoints`, `applyClassesTo` and style injection
+props.
+
+```tsx
+import { SaltProviderNext } from "@salt-ds/core";
+import "@salt-ds/theme/css/global.css";
+import "@salt-ds/theme/css/theme-next.css";
+
+<SaltProviderNext
+  accent="teal"
+  corner="rounded"
+  headingFont="Amplitude"
+  actionFont="Amplitude"
+>
+  <App />
+</SaltProviderNext>;
+```
+
+## Props
+
+<PropsTable packageName="core" componentName="SaltProviderNext" />
