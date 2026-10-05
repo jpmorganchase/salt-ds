@@ -60,6 +60,12 @@ When adding `render` support to a component:
 
 Consumer-facing guidance should stay in the [render prop guide](./site/docs/getting-started/render-prop.mdx).
 
+### React Server Components
+
+Salt components can be imported from React Server Components. The build adds the `"use client"` directive to every module that uses React, so don't add it to source files. Modules that don't use React, like plain utilities, stay usable on the server. Everything a marked module exports is client-only, so put utilities and constants that should work on the server in their own modules, not alongside components or hooks.
+
+To check that the built packages work in React Server Components, run `yarn test:server-components` after `yarn build`. It builds a Next.js App Router app whose pages are Server Components.
+
 ### Theming
 
 Additions and updates to the theme come from our designers. Any changes to the theme should have solid reasoning, be well-documented and follow clear steps for any necessary deprecation. All Salt theme tokens are prefixed with `--salt-`, followed by `-<characteristic | foundation>-`, and then the intent of the token: for example `--salt-actionable-cta-background`. For more information on tokens, see our [Theme docs](https://storybook.saltdesignsystem.com/?path=/docs/theme-about-the-salt-theme--docs). Tokens should align 100% with Figma to ensure ease of communication between designers and developers.

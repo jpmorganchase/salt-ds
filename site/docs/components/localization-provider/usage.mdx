@@ -37,6 +37,28 @@ return (
 
 - Inside an application that has no date controls.
 
+## Use in React Server Components
+
+Server Components can’t pass classes, functions or objects that contain them to Client Components. This includes the `DateAdapter` and `instance` props, and date-fns locales. To use the date components in [React Server Components](/salt/getting-started/server-components), set up `LocalizationProvider` in your own Client Component, marked with `"use client"`:
+
+```tsx
+"use client";
+
+import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
+import { LocalizationProvider } from "@salt-ds/date-components";
+import type { ReactNode } from "react";
+
+export function DateProvider({ children }: { children: ReactNode }) {
+  return (
+    <LocalizationProvider DateAdapter={AdapterLuxon}>
+      {children}
+    </LocalizationProvider>
+  );
+}
+```
+
+Then render it from a Server Component, such as your root layout, around the components that need it.
+
 # Usage
 
 Salt's date adapters and the date framework you require should be defined as a dependency in your `package.json`:

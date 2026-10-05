@@ -1,0 +1,40 @@
+---
+title: React Server Components
+layout: DetailTechnical
+sidebar:
+  label: Server Components
+---
+
+Salt components can be imported directly from React Server Components, such as pages and layouts in the Next.js App Router.
+
+Salt marks its modules that use React with the `"use client"` directive, so its components render as Client Components. A Server Component can render them and pass them props that can be serialized, such as strings, numbers and JSX elements.
+
+```tsx
+import { Button, StackLayout, Text } from "@salt-ds/core";
+import { AddIcon } from "@salt-ds/icons";
+
+export default function Page() {
+  return (
+    <StackLayout>
+      <Text>Rendered from a Server Component</Text>
+      <Button>
+        <AddIcon aria-hidden /> Add
+      </Button>
+    </StackLayout>
+  );
+}
+```
+
+## Pass functions from a Client Component
+
+Server Components can’t pass functions or classes to Client Components. This includes event handlers, such as `onClick`, render prop callbacks and the `DateAdapter` prop of `LocalizationProvider`. Pass these from your own Client Component, marked with `"use client"`.
+
+For example, the date components need `LocalizationProvider` to be set up in a Client Component. See [Localization provider](../components/localization-provider/usage#use-in-react-server-components).
+
+## Use utilities and constants
+
+Utilities in modules that don’t use React, such as `makePrefixer`, can be called from Server Components.
+
+Utilities and constants that are defined alongside components or hooks can only be used in Client Components. These include `resolveResponsiveValue`, `getCurrentBreakpoint`, `DEFAULT_ICON_SIZE` and `countryToComponentMap`. To use them, move the code that uses them into a Client Component.
+
+To show a country symbol from a country code in a Server Component, see [Country symbol](../components/country-symbol/usage#use-in-react-server-components).
