@@ -477,4 +477,32 @@ describe("GIVEN a SidePanel component", () => {
     await page.getByRole("button", { name: "Close Custom Trigger" }).click();
     await expect.element(trigger).toHaveFocus();
   });
+
+  it("runs the cleanup returned by a callback ref passed to getTriggerProps", async () => {
+    const log: string[] = [];
+    const ref = (node: HTMLElement | null) => {
+      log.push(node ? "attach" : "null");
+      return () => {
+        log.push("cleanup");
+      };
+    };
+    function CustomTrigger() {
+      const { getTriggerProps } = useSidePanel();
+      return <Button {...getTriggerProps({ ref })}>Open</Button>;
+    }
+    const { unmount } = await renderWithSalt(
+      <SidePanelProvider>
+        <CustomTrigger />
+      </SidePanelProvider>,
+    );
+    expect(log.at(-1)).toBe("attach");
+
+    await unmount();
+
+    expect(log.at(-1)).toBe("cleanup");
+    expect(log).not.toContain("null");
+    expect(log.filter((entry) => entry === "cleanup")).toHaveLength(
+      log.filter((entry) => entry === "attach").length,
+    );
+  });
 });

@@ -51,7 +51,7 @@ Salt supports React 16.14 and later, so components can only use APIs that are av
 - Keep using `forwardRef` and `Context.Provider`, and don't use React 19 APIs such as `use`, `useActionState` or `ref` as a prop.
 - Use `ReactElement` instead of the global `JSX` namespace, which was removed from the React 19 types.
 - Type ref objects for DOM elements as `RefObject<HTMLElement | null>` when they are only read, as `Ref<HTMLElement>` when they are only passed to a `ref` prop, and as `MutableRefObject<HTMLElement | null>` when they are both, so they work with refs created with `useRef(null)` in every version of the React types.
-- Merge refs with `useForkRef`, which supports the cleanup functions that React 19 callback refs can return.
+- Merge refs with `useForkRef`, which supports the cleanup functions that React 19 callback refs can return. In props getters, which can't call hooks, use the internal `forkRef` instead.
 - Don't spread a props object that contains `key` into JSX, and don't use `defaultProps` on function components.
 
 To check types, run:
