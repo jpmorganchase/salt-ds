@@ -29,25 +29,7 @@ export default function Page() {
 
 Server Components can’t pass functions or classes to Client Components. This includes event handlers, such as `onClick`, render prop callbacks and the `DateAdapter` prop of `LocalizationProvider`. Pass these from your own Client Component, marked with `"use client"`.
 
-For example, to use the date components, set up `LocalizationProvider` in a Client Component:
-
-```tsx
-"use client";
-
-import { AdapterDateFns } from "@salt-ds/date-adapters/date-fns";
-import { LocalizationProvider } from "@salt-ds/date-components";
-import type { ReactNode } from "react";
-
-export function DateProvider({ children }: { children: ReactNode }) {
-  return (
-    <LocalizationProvider DateAdapter={AdapterDateFns}>
-      {children}
-    </LocalizationProvider>
-  );
-}
-```
-
-Then render it from a Server Component, such as your root layout, around the components that need it.
+For example, the date components need `LocalizationProvider` to be set up in a Client Component. See [Localization provider](../components/localization-provider/usage#use-in-react-server-components).
 
 ## Use utilities and constants
 
