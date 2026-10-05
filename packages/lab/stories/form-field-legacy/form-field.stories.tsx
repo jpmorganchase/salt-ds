@@ -11,11 +11,10 @@ export default {
 
 export const Primary: StoryFn<typeof FormField> = (props) => {
   return (
-    <>
+    <StackLayout gap={5} align="start">
       <FormField label="Default Form Field label" {...props}>
         <Input defaultValue="Value" />
       </FormField>
-      <div style={{ height: 40 }} />
       <FormField
         labelPlacement="left"
         label="Default Form Field label"
@@ -23,7 +22,7 @@ export const Primary: StoryFn<typeof FormField> = (props) => {
       >
         <Input defaultValue="Value" />
       </FormField>
-    </>
+    </StackLayout>
   );
 };
 
@@ -37,7 +36,7 @@ export const Secondary: StoryFn<typeof FormField> = () => (
       padding: "20px 20px",
     }}
   >
-    <div style={{ width: "200px" }}>
+    <StackLayout gap={1} style={{ width: "200px" }}>
       <H3>Secondary</H3>
       <FormField
         label="Secondary form field"
@@ -46,8 +45,8 @@ export const Secondary: StoryFn<typeof FormField> = () => (
       >
         <Input defaultValue="Value" />
       </FormField>
-    </div>
-    <div style={{ width: "200px" }}>
+    </StackLayout>
+    <StackLayout gap={1} style={{ width: "200px" }}>
       <H3>Secondary with disabled outer ring</H3>
       <FormField
         label="Secondary form field"
@@ -57,12 +56,12 @@ export const Secondary: StoryFn<typeof FormField> = () => (
       >
         <Input defaultValue="Value" />
       </FormField>
-    </div>
+    </StackLayout>
   </div>
 );
 
 export const Tertiary: StoryFn<typeof FormField> = () => (
-  <div style={{ width: "200px" }}>
+  <StackLayout gap={1} style={{ width: "200px" }}>
     <H3>Tertiary</H3>
     <FormField
       label="Tertiary form field"
@@ -71,7 +70,7 @@ export const Tertiary: StoryFn<typeof FormField> = () => (
     >
       <Input defaultValue="Value" />
     </FormField>
-  </div>
+  </StackLayout>
 );
 
 export const Disabled: StoryFn<typeof FormField> = () => (
