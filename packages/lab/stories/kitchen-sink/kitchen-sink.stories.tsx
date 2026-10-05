@@ -98,7 +98,7 @@ export default {
 };
 
 // A story function also takes the story context, so React 19's types don't
-// accept it as a JSX component. These stories are only rendered with props.
+// accept it as a JSX component. None of these stories use the context.
 function asComponent<TArgs>(
   story: (args: TArgs, context: never) => unknown,
 ): FunctionComponent<Partial<TArgs>> {
