@@ -11,11 +11,10 @@ export default {
 
 export const Primary: StoryFn<typeof FormField> = (props) => {
   return (
-    <>
+    <StackLayout gap={5} align="start">
       <FormField label="Default Form Field label" {...props}>
         <Input defaultValue="Value" />
       </FormField>
-      <div style={{ height: 40 }} />
       <FormField
         labelPlacement="left"
         label="Default Form Field label"
@@ -23,7 +22,7 @@ export const Primary: StoryFn<typeof FormField> = (props) => {
       >
         <Input defaultValue="Value" />
       </FormField>
-    </>
+    </StackLayout>
   );
 };
 
