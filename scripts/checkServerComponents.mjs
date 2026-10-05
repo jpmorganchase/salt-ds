@@ -44,7 +44,7 @@ const packages = [
 const expectedMarkup = {
   "index.html": ["saltButton", "saltIcon", "serverComponent-text"],
   "carousel.html": ["saltCarouselCard"],
-  "countries.html": ["saltCountrySymbol"],
+  "countries.html": ["saltCountrySymbol", 'data-testid="FR"'],
   "dates.html": ["saltCalendar"],
   "lab.html": ["saltContentStatus"],
 };
