@@ -4387,14 +4387,11 @@ __metadata:
     embla-carousel-fade: "npm:^8.6.0"
   peerDependencies:
     "@types/react": ">=16.14.0"
-    embla-carousel: ^8.6.0
     embla-carousel-react: ^8.6.0
     react: ">=16.14.0"
     react-dom: ">=16.14.0"
   peerDependenciesMeta:
     "@types/react":
-      optional: true
-    embla-carousel:
       optional: true
     embla-carousel-react:
       optional: true
