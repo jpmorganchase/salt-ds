@@ -22,6 +22,7 @@ Never break these. If a task seems to require it, stop and ask.
 ## Working on tasks
 
 - Follow the acceptance checklist in [docs/tasks.md](./docs/tasks.md).
+- Start from a decision point in [docs/decision-types.md](./docs/decision-types.md), and re-check its anchor against the pinned Salt version.
 - Write the "why it's hard" line first. If you can't, the task isn't ready.
 - Don't name Salt components in a request unless the task's specificity is API-level.
 

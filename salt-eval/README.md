@@ -5,14 +5,11 @@ A benchmark for AI coding agents that build React interfaces with the Salt Desig
 1. **Does Salt context help agents produce better UI?** We run the same tasks under arms that differ only in the Salt context the agent gets (none, docs, an MCP server, a skill or a combination) and compare pass rates task by task.
 2. **When it doesn't, what should we improve?** Every failed check is traced to a cause: a guidance gap, unclear guidance, a retrieval miss, tool misuse, misinterpretation, a prior override, an implementation error or an eval defect. Each cause points to a different fix.
 
-
-
 ## Status
 
 Design phase. Next steps are in [roadmap.md](./roadmap.md), starting with Phase 0.
 
 ## Scope
-
 
 | salt-eval is                                               | salt-eval isn't                                                                 |
 | ---------------------------------------------------------- | ------------------------------------------------------------------------------- |
@@ -20,9 +17,6 @@ Design phase. Next steps are in [roadmap.md](./roadmap.md), starting with Phase 
 | Product-agnostic: any context product can be an arm        | A model leaderboard                                                             |
 | Real coding agents working in real starting points         | A single "Salt compliance" score                                                |
 | Automated checks, validated judgment and transcript review | A merge gate for Salt pull requests, until its numbers earn that                |
-
-
-
 
 ## Principles
 
@@ -34,16 +28,15 @@ Design phase. Next steps are in [roadmap.md](./roadmap.md), starting with Phase 
 6. **Read transcripts before trusting numbers.** A score tells you which transcripts to read, not what happened.
 7. **Change one thing at a time,** and report every difference with its noise floor.
 
-
-
 ## Reading order
 
 1. [CONTEXT.md](./CONTEXT.md): the vocabulary. Use these terms in tasks, code and conversation.
 2. [docs/tasks.md](./docs/tasks.md): what a good Salt task is, with worked examples. The most important document here.
-3. [docs/grading.md](./docs/grading.md): checks, rubric items, judges and failure attribution.
-4. [docs/experiments.md](./docs/experiments.md): how to compare arms without fooling ourselves.
-5. [docs/architecture.md](./docs/architecture.md): the harness that runs and records a trial.
-6. [roadmap.md](./roadmap.md): what to build next and how we'll know it worked.
+3. [docs/decision-types.md](./docs/decision-types.md): the kinds of Salt decision tasks test, the tests that separate a good task from a plausible one and researched decision points to build tasks from.
+4. [docs/grading.md](./docs/grading.md): checks, rubric items, judges and failure attribution.
+5. [docs/experiments.md](./docs/experiments.md): how to compare arms without fooling ourselves.
+6. [docs/architecture.md](./docs/architecture.md): the harness that runs and records a trial.
+7. [roadmap.md](./roadmap.md): what to build next and how we'll know it worked.
 
 Background: [docs/prior-art.md](./docs/prior-art.md) covers what we took from Atlassian, Anthropic and our own earlier attempts. `docs/adr/` records decisions, starting with [why salt-eval lives here](./docs/adr/0001-salt-eval-lives-at-repo-root.md). Agents working in this folder follow [AGENTS.md](./AGENTS.md).
 

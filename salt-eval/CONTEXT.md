@@ -30,6 +30,10 @@ _Avoid_: quality level, mode
 How much of the Salt solution a request names: the outcome ("let users move between sections"), the pattern ("add vertical navigation") or the API ("use `VerticalNavigationItem`").
 _Avoid_: difficulty, detail level
 
+**Decision type**:
+The kind of Salt decision a task turns on: setup and integration, component choice, composition, pattern, foundation, accessibility, content or API currency. A task's primary decision type is the one its "why it's hard" line leads with.
+_Avoid_: category, layer, Salt layer
+
 **Variant**:
 A rewording of a task's request that keeps its checks. A task and its variants count as one unit in statistics and always share a split.
 _Avoid_: paraphrase, duplicate, cluster
