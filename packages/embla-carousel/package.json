@@ -21,6 +21,8 @@
   ],
   "dependencies": {
     "@salt-ds/core": "workspace:^",
+    "@salt-ds/styles": "workspace:*",
+    "@salt-ds/window": "workspace:*",
     "clsx": "^2.0.0"
   },
   "devDependencies": {
@@ -30,12 +32,16 @@
   },
   "peerDependencies": {
     "@types/react": ">=16.14.0",
+    "embla-carousel": "^8.6.0",
     "embla-carousel-react": "^8.6.0",
     "react": ">=16.14.0",
     "react-dom": ">=16.14.0"
   },
   "peerDependenciesMeta": {
     "@types/react": {
+      "optional": true
+    },
+    "embla-carousel": {
       "optional": true
     },
     "embla-carousel-react": {

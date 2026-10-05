@@ -207,7 +207,7 @@ export function useFloatingPlatform() {
   return useContext(FloatingPlatformContext);
 }
 
-export const DEFAULT_FLOATING_UI_MIDDLEWARE = [
+export const DEFAULT_FLOATING_UI_MIDDLEWARE: Middleware[] = [
   flip(),
   shift({ limiter: limitShift() }),
 ];
