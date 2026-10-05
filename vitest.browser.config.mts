@@ -121,7 +121,9 @@ const legacyReactAliases: Alias[] =
         {
           // vitest-browser-react uses react-dom/client, which only exists in
           // React 18+. Keep the same small render contract for Salt's 16/17 lane.
-          find: "vitest-browser-react",
+          // The setup file's `vitest-browser-react/pure` import still has to
+          // resolve, although it only runs with React 18+.
+          find: /^vitest-browser-react(\/pure)?$/,
           replacement: path.resolve(
             rootDir,
             "./test/browser/legacy-react-renderer.tsx",
