@@ -62,7 +62,7 @@ Consumer-facing guidance should stay in the [render prop guide](./site/docs/gett
 
 ### React Server Components
 
-Salt components can be imported from React Server Components. The build adds the `"use client"` directive to every module that uses React, so don't add it to source files. Modules that don't use React, like plain utilities, stay usable on the server.
+Salt components can be imported from React Server Components. The build adds the `"use client"` directive to every module that uses React, so don't add it to source files. Modules that don't use React, like plain utilities, stay usable on the server. Everything a marked module exports is client-only, so put utilities and constants that should work on the server in their own modules, not alongside components or hooks.
 
 To check that the built packages work in React Server Components, run `yarn test:server-components` after `yarn build`. It builds a Next.js App Router app whose pages are Server Components.
 
