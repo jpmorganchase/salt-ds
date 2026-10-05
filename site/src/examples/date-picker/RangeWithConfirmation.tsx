@@ -35,7 +35,7 @@ export const RangeWithConfirmation = (): ReactElement => {
   const [validationStatus, setValidationStatus] = useState<
     "error" | undefined
   >();
-  const savedValidationState = useRef<typeof validationStatus>();
+  const savedValidationState = useRef<typeof validationStatus>(undefined);
   const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
     null,
   );

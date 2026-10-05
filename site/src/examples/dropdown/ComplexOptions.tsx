@@ -9,7 +9,7 @@ import { EditIcon, GuideClosedIcon, UserAdminIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
 
 type Permission = {
-  icon: JSX.Element;
+  icon: ReactElement;
   name: string;
   description: string;
 };
