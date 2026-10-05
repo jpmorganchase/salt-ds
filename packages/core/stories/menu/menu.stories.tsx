@@ -241,7 +241,7 @@ export const Icons: StoryFn<typeof Menu> = (args) => {
       </MenuTrigger>
       <MenuPanel>
         <MenuItem>
-          {/* <CopyIcon aria-hidden /> */}
+          <CopyIcon aria-hidden />
           Copy
         </MenuItem>
         <MenuItem>
