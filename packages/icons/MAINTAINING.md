@@ -309,6 +309,8 @@ Generated artifacts include `src/SVG/*.svg`, `scripts/artwork/view-box-transform
 Use the generator for these artifacts; make durable artwork changes in the effective recipes.
 Use the full package `build:icons` command: passing one SVG to the lower-level generator would rebuild its aggregate lists and CSS from only that subset.
 
+The component optimizer preserves authored path coordinates for icons that explicitly use a miter limit above 4 to retain acute points. Even a tiny closing edge introduced by coordinate rounding can visibly flatten a stroked tip. Keep the curve endpoint coincident with its start, and compare the generated React paint with the numeric SVG at the supported widths. `optimizeIconSvg.test.mjs`, included in `test:artwork`, checks the Sparkle family’s curved closures and inherited miter limits; it does not certify every other contour in the catalogue.
+
 ### Website synonyms and categories
 
 Maintain [salt-icon-synonym.json](https://github.com/jpmorganchase/salt-ds/blob/main/site/src/components/icon-preview/salt-icon-synonym.json) alongside new names and semantic changes.

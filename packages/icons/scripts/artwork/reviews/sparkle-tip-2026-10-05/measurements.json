@@ -1,0 +1,172 @@
+{
+  "date": "2026-10-05",
+  "renderer": "Chrome; 1024px=64x16 for paint equivalence; native captures at DPR1",
+  "cases": [
+    {
+      "file": "sparkle.svg",
+      "weight": 0.67,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle.svg",
+      "weight": 1,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle.svg",
+      "weight": 1.1428571428571428,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle.svg",
+      "weight": 1.3333333333333333,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle.svg",
+      "weight": 1.5,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle_solid.svg",
+      "weight": 0.67,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle_solid.svg",
+      "weight": 1,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle_solid.svg",
+      "weight": 1.1428571428571428,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle_solid.svg",
+      "weight": 1.3333333333333333,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle_solid.svg",
+      "weight": 1.5,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle-refresh.svg",
+      "weight": 0.67,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle-refresh.svg",
+      "weight": 1,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle-refresh.svg",
+      "weight": 1.1428571428571428,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle-refresh.svg",
+      "weight": 1.3333333333333333,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle-refresh.svg",
+      "weight": 1.5,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle-refresh_solid.svg",
+      "weight": 0.67,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle-refresh_solid.svg",
+      "weight": 1,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle-refresh_solid.svg",
+      "weight": 1.1428571428571428,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle-refresh_solid.svg",
+      "weight": 1.3333333333333333,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    },
+    {
+      "file": "sparkle-refresh_solid.svg",
+      "weight": 1.5,
+      "differing": 0,
+      "maxDelta": 0,
+      "alphaDelta": 0
+    }
+  ],
+  "componentContext": [
+    {
+      "file": "sparkle.svg",
+      "width": 12,
+      "height": 12,
+      "stroke": "1.33333px"
+    },
+    {
+      "file": "sparkle_solid.svg",
+      "width": 12,
+      "height": 12,
+      "stroke": "1.33333px"
+    },
+    {
+      "file": "sparkle-refresh.svg",
+      "width": 12,
+      "height": 12,
+      "stroke": "1.33333px"
+    },
+    {
+      "file": "sparkle-refresh_solid.svg",
+      "width": 12,
+      "height": 12,
+      "stroke": "1.33333px"
+    }
+  ]
+}

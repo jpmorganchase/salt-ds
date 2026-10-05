@@ -6,6 +6,7 @@ import { glob } from "glob";
 import Mustache from "mustache";
 import { optimize } from "svgo";
 import { brandIconNames } from "./artwork/brands.mjs";
+import { optimizeIconSvg } from "./optimizeIconSvg.mjs";
 import { svgAttributeMap } from "./svgAttributeMap.mjs";
 
 const biome = new Biome();
@@ -256,31 +257,11 @@ const generateIconComponents = async ({
 
       console.log("processing", fileName, "to", newFilePath);
 
-      // SVGO is a separate step to enable multi-pass optimizations.
-      const optimizedSvg = optimize(svgString, {
-        multipass: true,
-        plugins: [
-          {
-            name: "preset-default",
-            params: {
-              overrides: {
-                // Keep the fixed secondary widths, such as 0.5025, intact.
-                cleanupNumericValues: { floatPrecision: 8 },
-                // Brand curves are already uniformly scaled from official art.
-                ...(preserveBrandContours && { convertPathData: false }),
-              },
-            },
-          },
-          {
-            name: "removeAttrs",
-            params: {
-              attrs: "(width|height)",
-            },
-          },
-        ],
+      const optimizedSvg = optimizeIconSvg(svgString, {
+        preserveBrandContours,
       });
 
-      const svgPaths = optimize(optimizedSvg.data, {
+      const svgPaths = optimize(optimizedSvg, {
         plugins: [
           {
             name: "mapHTMLAttributesToReactProps",
