@@ -130,7 +130,7 @@ function introLines({ packageVersion, links, split }) {
     "",
     `Every design token (CSS custom property) declared by \`@salt-ds/theme@${packageVersion}\`, grouped by tier. Values depend on the theme, mode and density; read the CSS in \`@salt-ds/theme/css\` for values.${split ? " The lists are split into files that can each be read in one go." : ""}`,
     "",
-    `Read [Design tokens](${links.designTokens}) and [How to read semantic tokens](${links.howToRead}) before choosing tokens.`,
+    `Read [Design tokens](${links.designTokens}) and [How to read semantic tokens](${links.howToRead}) before choosing tokens. Prefer a component prop where one does the job, and use tokens for custom styling.`,
     "",
   ];
 }

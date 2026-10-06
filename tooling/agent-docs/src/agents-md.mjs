@@ -24,7 +24,7 @@ export const END_MARKER = "<!-- END:salt-ds-agent-docs -->";
 /** Lists the pages in each package's docs folder; written by tooling/agent-docs. */
 export const MANIFEST_FILE = "manifest.json";
 export const INSTRUCTIONS =
-  "This project uses the Salt Design System (`@salt-ds/*` packages), whose APIs may differ from your training data. For any Salt task, prefer retrieval-led reasoning over pre-training-led reasoning: before writing or changing UI that uses Salt, read the relevant pages from the index below. They are generated for the installed package versions. Index paths are relative to `root`, which is relative to this file. Names in brackets are other names for the same component, and each package's `docs/index.md` summarizes its pages.";
+  "This project uses the Salt Design System (`@salt-ds/*` packages), whose APIs may differ from your training data. For any Salt task, prefer retrieval-led reasoning over pre-training-led reasoning: before writing or changing UI that uses Salt, read the relevant pages from the index below. They are generated for the installed package versions. Prefer component props, such as `Text`'s `color`, to custom CSS with `--salt-*` tokens. Before you finish, check that each Salt prop you used is in its component page's props table and not deprecated, and that each `--salt-*` token is listed under characteristic or foundation tokens in `theme/docs/tokens.md`. Index paths are relative to `root`, which is relative to this file. Names in brackets are other names for the same component, and each package's `docs/index.md` summarizes its pages.";
 const CLAUDE_IMPORT = "@AGENTS.md";
 const USAGE = `Usage: node node_modules/@salt-ds/core/docs/agents-md.mjs [options]
 
