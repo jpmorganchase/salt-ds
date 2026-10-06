@@ -18,6 +18,7 @@ import {
   forwardRef,
   type KeyboardEvent,
   type MouseEvent,
+  type ReactElement,
   type ReactNode,
   type Ref,
   type SyntheticEvent,
@@ -526,4 +527,4 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   );
 }) as <Item = string>(
   props: ComboBoxProps<Item> & { ref?: Ref<HTMLDivElement> },
-) => JSX.Element;
+) => ReactElement;

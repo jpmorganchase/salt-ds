@@ -5,6 +5,7 @@ import {
   OverlayHeader,
   OverlayPanel,
   OverlayPanelContent,
+  type OverlayProps,
   OverlayTrigger,
   StackLayout,
   Text,
@@ -156,7 +157,7 @@ WithSections.parameters = {
   },
 };
 
-const HideArrowTemplate: StoryFn<typeof Overlay> = (args) => (
+const HideArrowTemplate = (args: OverlayProps) => (
   <Overlay hideArrow open {...args}>
     <OverlayTrigger>
       <Button>Show Overlay</Button>

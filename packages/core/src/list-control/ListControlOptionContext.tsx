@@ -10,7 +10,7 @@ import { ListControlOptionStore } from "./ListControlOptionStore";
 
 export interface ListControlOptionContextValue<Item> {
   disabled?: boolean;
-  listRef?: RefObject<HTMLDivElement>;
+  listRef?: RefObject<HTMLDivElement | null>;
   multiselect: boolean;
   optionStateStore: ListControlOptionStore<Item>;
   register: (

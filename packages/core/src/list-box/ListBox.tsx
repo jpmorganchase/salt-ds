@@ -7,6 +7,7 @@ import {
   type ForwardedRef,
   forwardRef,
   type KeyboardEvent,
+  type ReactElement,
   type ReactNode,
   type Ref,
   useRef,
@@ -105,7 +106,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
   } = listControl;
 
   const typeaheadString = useRef("");
-  const typeaheadTimeout = useRef<number | undefined>();
+  const typeaheadTimeout = useRef<number | undefined>(undefined);
 
   const handleTypeahead = (event: KeyboardEvent<HTMLDivElement>) => {
     if (typeaheadTimeout.current) {
@@ -272,4 +273,4 @@ export const ListBox = forwardRef(function ListBox<Item>(
   );
 }) as <Item = string>(
   props: ListBoxProps<Item> & { ref?: Ref<HTMLDivElement> },
-) => JSX.Element;
+) => ReactElement;

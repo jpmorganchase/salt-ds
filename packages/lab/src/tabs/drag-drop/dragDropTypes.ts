@@ -1,4 +1,4 @@
-import type { MouseEventHandler, RefObject } from "react";
+import type { MouseEventHandler, ReactElement, RefObject } from "react";
 
 import type { orientationType } from "../../responsive";
 
@@ -16,8 +16,8 @@ export type Rect = {
 };
 
 export type DragHookResult = {
-  draggable: JSX.Element | null;
-  dropIndicator: JSX.Element | null;
+  draggable: ReactElement | null;
+  dropIndicator: ReactElement | null;
   draggedItemIndex?: number;
   isDragging: boolean;
   onMouseDown?: MouseEventHandler;
@@ -30,6 +30,6 @@ export type DragDropHook = (props: {
   extendedDropZone?: boolean;
   onDrop: (fromIndex: number, toIndex: number) => void;
   orientation: orientationType;
-  containerRef: RefObject<HTMLElement>;
+  containerRef: RefObject<HTMLElement | null>;
   itemQuery?: string;
 }) => DragHookResult;

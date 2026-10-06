@@ -5,6 +5,7 @@ import {
   type ChangeEvent,
   type FocusEvent,
   type KeyboardEvent,
+  type ReactElement,
   useEffect,
   useState,
 } from "react";
@@ -23,7 +24,7 @@ export const RGBInput = ({
   rgbaValue,
   value,
   onSubmit,
-}: RGBInputProps): JSX.Element => {
+}: RGBInputProps): ReactElement => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-rgba-input",

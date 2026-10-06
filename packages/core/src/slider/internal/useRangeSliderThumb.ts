@@ -18,7 +18,7 @@ type UseRangeSliderThumbProps = Pick<SliderProps, "min" | "max" | "step"> & {
     event: ChangeEvent<HTMLInputElement>,
     thumbIndex: number,
   ) => void;
-  inputRefs: RefObject<HTMLInputElement>[];
+  inputRefs: RefObject<HTMLInputElement | null>[];
   marks?: { label: string; value: number }[];
   onChange?: (event: Event, value: [number, number]) => void;
   onChangeEnd?: (event: Event, value: [number, number]) => void;

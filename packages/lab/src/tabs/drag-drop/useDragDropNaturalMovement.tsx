@@ -1,4 +1,10 @@
-import { type MouseEventHandler, useCallback, useRef, useState } from "react";
+import {
+  type MouseEventHandler,
+  type ReactElement,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
 import { Draggable } from "./Draggable";
 import {
   dimensions,
@@ -23,14 +29,14 @@ export const useDragDropNaturalMovement: DragDropHook = ({
   const [showOverflow, setShowOverflow] = useState(false);
   const overflowMenuShowingRef = useRef(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [dragPortal, setDragPortal] = useState<JSX.Element | null>(null);
+  const [dragPortal, setDragPortal] = useState<ReactElement | null>(null);
   const draggableRef = useRef<HTMLDivElement>(null);
   const startPos = useRef(0);
   const previousPos = useRef(0);
   const mouseOffset = useRef(0);
   const mouseDownTimer = useRef<number | null>(null);
   const dragLimits = useRef({ start: 0, end: 0 });
-  const dragDirection = useRef<Direction | undefined>();
+  const dragDirection = useRef<Direction | undefined>(undefined);
   const dropTarget = useRef<MeasuredDropTarget | null>(null);
   const measuredDropTargets = useRef<MeasuredDropTarget[]>([]);
   const { clearSpacers, displaceItem, displaceLastItem } = useDragSpacers();

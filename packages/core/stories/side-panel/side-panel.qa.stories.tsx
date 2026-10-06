@@ -39,10 +39,10 @@ function FakeSidePanel({
 const loremText =
   "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.";
 
-const SidePanelTemplate: StoryFn<SidePanelProps> = ({
+const SidePanelTemplate = ({
   variant = "primary",
   position = "right",
-}) => {
+}: SidePanelProps) => {
   return (
     <div style={{ width: 350, display: "flex" }}>
       <FakeSidePanel variant={variant} position={position}>

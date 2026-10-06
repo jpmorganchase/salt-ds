@@ -44,6 +44,21 @@ To deprecate a prop, you should:
 2. Update the component's documentation to reflect the deprecation, including the reason for deprecation and the recommended alternative.
 3. Add a changeset with the deprecation information, including the prop name, the reason for deprecation, and the recommended alternative. The changeset should show contain a diff code block.
 
+### Supporting React 16 to 19
+
+Salt supports React 16.14 and later, so components can only use APIs that are available in React 16, or feature-detect newer ones, as `useId` does. In particular:
+
+- Keep using `forwardRef` and `Context.Provider`, and don't use React 19 APIs such as `use`, `useActionState` or `ref` as a prop.
+- Use `ReactElement` instead of the global `JSX` namespace, which was removed from the React 19 types.
+- Type ref objects for DOM elements as `RefObject<HTMLElement | null>` when they are only read, as `Ref<HTMLElement>` when they are only passed to a `ref` prop, and as `MutableRefObject<HTMLElement | null>` when they are both, so they work with refs created with `useRef(null)` in every version of the React types.
+- Merge refs with `useForkRef`, which supports the cleanup functions that React 19 callback refs can return. In props getters, which can't call hooks, use the internal `forkRef` instead.
+- Don't spread a props object that contains `key` into JSX, and don't use `defaultProps` on function components.
+
+To check types, run:
+
+- `yarn typecheck` and `yarn typecheck:react19` to type check the source with the React 18 and 19 types.
+- `yarn typecheck:consumer` after `yarn build` to type check an application that uses the built packages with the React 16 to 19 types.
+
 ### Render prop support
 
 Expose `render` when consumers need to compose a Salt component with another component, such as a routing link, or when changing the rendered element is a valid case-by-case escape hatch. Keep the default element semantically correct so most consumers do not need `render`.

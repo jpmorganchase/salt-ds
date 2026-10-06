@@ -43,8 +43,10 @@ export const useAriaAnnounce = (
 ): ElementProps => {
   const { open, dataRef, refs } = context;
 
-  const pointerTypeRef = useRef<PointerEvent["pointerType"]>();
-  const timeoutRef = useRef<number>();
+  const pointerTypeRef = useRef<PointerEvent["pointerType"] | undefined>(
+    undefined,
+  );
+  const timeoutRef = useRef<number | undefined>(undefined);
   const blockMouseMoveRef = useRef(true);
   const { announce } = useAriaAnnouncer();
 
