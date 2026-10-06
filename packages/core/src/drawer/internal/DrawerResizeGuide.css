@@ -1,0 +1,47 @@
+/* Styles applied to root element */
+.saltDrawerResizeGuide {
+  --drawerResizeGuide-borderColor: var(--salt-content-secondary-foreground);
+  --drawerResizeGuide-borderWidth: var(--salt-size-fixed-200);
+
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--salt-zIndex-drawer) + 1);
+  touch-action: none;
+  user-select: none;
+}
+
+/* Styles applied to the guide line */
+.saltDrawerResizeGuide::before {
+  content: "";
+  position: absolute;
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+/* Styles applied for left and right drawers */
+.saltDrawerResizeGuide-vertical {
+  cursor: ew-resize;
+}
+
+.saltDrawerResizeGuide-vertical::before {
+  top: 0;
+  bottom: 0;
+  left: var(--drawerResizeGuide-offset, 0px);
+  width: 0;
+  border-left: var(--drawerResizeGuide-borderWidth) var(--salt-borderStyle-dashed) var(--drawerResizeGuide-borderColor);
+  transform: translateX(-50%);
+}
+
+/* Styles applied for top and bottom drawers */
+.saltDrawerResizeGuide-horizontal {
+  cursor: ns-resize;
+}
+
+.saltDrawerResizeGuide-horizontal::before {
+  left: 0;
+  right: 0;
+  top: var(--drawerResizeGuide-offset, 0px);
+  height: 0;
+  border-top: var(--drawerResizeGuide-borderWidth) var(--salt-borderStyle-dashed) var(--drawerResizeGuide-borderColor);
+  transform: translateY(-50%);
+}

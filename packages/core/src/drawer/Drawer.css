@@ -28,16 +28,6 @@
   user-select: none;
 }
 
-/* While resizing, the content ignores the pointer. The handle keeps its active state, and the content keeps scrolling with the wheel. */
-.saltDrawer-resizing * {
-  pointer-events: none;
-}
-
-.saltDrawer-resizing > .saltDrawerResizeHandle,
-.saltDrawer-resizing .saltDrawerContent-inner {
-  pointer-events: auto;
-}
-
 @supports selector(:has(*)) {
   .saltDrawer:has(> .saltDrawerHeader, > .saltDrawerContent, > .saltDrawerFooter) {
     --drawer-padding: 0px;

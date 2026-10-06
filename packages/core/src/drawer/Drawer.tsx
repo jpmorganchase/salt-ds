@@ -26,7 +26,11 @@ import {
 import drawerCss from "./Drawer.css";
 import { DrawerContext } from "./DrawerContext";
 import { hasDrawerSection } from "./hasDrawerSection";
-import { DrawerResizeHandle, useDrawerResize } from "./internal";
+import {
+  DrawerResizeGuide,
+  DrawerResizeHandle,
+  useDrawerResize,
+} from "./internal";
 
 interface ConditionalScrimWrapperProps extends PropsWithChildren {
   condition: boolean;
@@ -147,9 +151,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       sizeStyle,
       isResizing,
       isHovered,
-      guideOffset,
+      isPlacing,
       isInHitArea,
       separatorProps,
+      guideProps,
     } = useDrawerResize({
       enabled: resizable,
       position,
@@ -162,7 +167,9 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const { getFloatingProps } = useInteractions([
       useClick(context),
       useDismiss(context, {
-        outsidePress: disableDismiss ? false : (event) => !isInHitArea(event),
+        outsidePress: disableDismiss
+          ? false
+          : (event) => !isPlacing && !isInHitArea(event),
       }),
     ]);
 
@@ -236,11 +243,13 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 position={position}
                 resizing={isResizing}
                 hovered={isHovered}
-                guideOffset={guideOffset}
                 aria-label="Resize drawer"
                 aria-controls={drawerId}
                 {...separatorProps}
               />
+            )}
+            {isPlacing && (
+              <DrawerResizeGuide position={position} {...guideProps} />
             )}
           </FloatingComponent>
         </ConditionalScrimWrapper>

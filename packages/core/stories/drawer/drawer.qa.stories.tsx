@@ -345,15 +345,17 @@ const playPlacing =
   (position: "left" | "top", guideSize: number) =>
   async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const ownerDocument = canvasElement.ownerDocument;
-    const guideOffset = () => {
+    const getGuide = () => {
       const guide = ownerDocument.querySelector<HTMLElement>(
-        ".saltDrawerResizeHandle-guide",
+        ".saltDrawerResizeGuide",
       );
       if (!guide) throw new Error("The guide line isn't showing");
-      return Number.parseFloat(
-        position === "left" ? guide.style.left : guide.style.top,
-      );
+      return guide;
     };
+    const guideOffset = () =>
+      Number.parseFloat(
+        getGuide().style.getPropertyValue("--drawerResizeGuide-offset"),
+      );
 
     const drawer = await waitFor(() => {
       const element =
@@ -378,7 +380,7 @@ const playPlacing =
       position === "left"
         ? { x: drawerRect.left + guideSize, y }
         : { x, y: drawerRect.top + guideSize };
-    dispatchPointer(ownerDocument, "pointermove", target.x, target.y);
+    dispatchPointer(getGuide(), "pointermove", target.x, target.y);
     await waitFor(() => {
       const expected = position === "left" ? target.x : target.y;
       if (Math.abs(guideOffset() - expected) > 1) {
