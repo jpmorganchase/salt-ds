@@ -8,6 +8,12 @@ data:
   $ref: ./#/data
 ---
 
+## Interactions
+
+- Users can resize a resizable drawer by dragging its inner edge.
+- Users can also resize it without dragging: they click the edge, then click the new position for it. A guide line shows the new position until the second click.
+- When the resize handle has focus, users can resize the drawer with the keyboard.
+
 ## Keyboard interactions
 
 <KeyboardControls>
@@ -31,6 +37,44 @@ data:
 <KeyboardControl keyOrCombos="Escape">
 
 - Escape closes the drawer and returns focus to the trigger element.
+- If the user is placing the edge of a resizable drawer by click, Escape cancels the resize instead and keeps the drawer open.
+
+</KeyboardControl>
+</KeyboardControls>
+
+### Resizable drawer
+
+When the resize handle of a resizable drawer has focus:
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Left arrow / Right arrow">
+
+- For left and right drawers, moves the edge by a small step.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Up arrow / Down arrow">
+
+- For top and bottom drawers, moves the edge by a small step.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Shift + Arrow">
+
+- Moves the edge by a larger step.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Home">
+
+- Shrinks the drawer to its minimum size.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="End">
+
+- Grows the drawer to its maximum size.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Enter">
+
+- Shrinks the drawer to its minimum size, or restores its previous size.
 
 </KeyboardControl>
 </KeyboardControls>

@@ -19,6 +19,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { waitFor } from "storybook/test";
 
 export default {
   title: "Core/Drawer/Drawer QA",
@@ -317,3 +318,87 @@ export const ResizableAtMinimumSize: StoryFn = () => (
 ResizableAtMinimumSize.parameters = {
   chromatic: { disableSnapshot: false },
 };
+
+const dispatchPointer = (
+  target: EventTarget,
+  type: "pointerdown" | "pointermove" | "pointerup",
+  clientX: number,
+  clientY: number,
+) =>
+  target.dispatchEvent(
+    new PointerEvent(type, {
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+      button: 0,
+      buttons: type === "pointerdown" ? 1 : 0,
+      clientX,
+      clientY,
+      isPrimary: true,
+      pointerId: 1,
+      pointerType: "mouse",
+    }),
+  );
+
+/** Clicks the resize handle, then hovers so the guide line previews the edge at the given size. */
+const playPlacing =
+  (position: "left" | "top", guideSize: number) =>
+  async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const ownerDocument = canvasElement.ownerDocument;
+    const guideOffset = () => {
+      const guide = ownerDocument.querySelector<HTMLElement>(
+        ".saltDrawerResizeHandle-guide",
+      );
+      if (!guide) throw new Error("The guide line isn't showing");
+      return Number.parseFloat(
+        position === "left" ? guide.style.left : guide.style.top,
+      );
+    };
+
+    const drawer = await waitFor(() => {
+      const element =
+        ownerDocument.querySelector<HTMLElement>('[role="dialog"]');
+      if (!element || element.getAnimations().length > 0) {
+        throw new Error("The drawer is still opening");
+      }
+      return element;
+    });
+    const handle = drawer.querySelector<HTMLElement>('[role="separator"]');
+    if (!handle) throw new Error("The drawer has no resize handle");
+
+    const handleRect = handle.getBoundingClientRect();
+    const x = handleRect.left + handleRect.width / 2;
+    const y = handleRect.top + handleRect.height / 2;
+    dispatchPointer(handle, "pointerdown", x, y);
+    dispatchPointer(handle, "pointerup", x, y);
+    await waitFor(guideOffset);
+
+    const drawerRect = drawer.getBoundingClientRect();
+    const target =
+      position === "left"
+        ? { x: drawerRect.left + guideSize, y }
+        : { x, y: drawerRect.top + guideSize };
+    dispatchPointer(ownerDocument, "pointermove", target.x, target.y);
+    await waitFor(() => {
+      const expected = position === "left" ? target.x : target.y;
+      if (Math.abs(guideOffset() - expected) > 1) {
+        throw new Error("The guide line hasn't moved");
+      }
+    });
+  };
+
+export const ResizablePlacingLeft: StoryFn = () => (
+  <ResizableDrawerTemplate position="left" />
+);
+ResizablePlacingLeft.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+ResizablePlacingLeft.play = playPlacing("left", 500);
+
+export const ResizablePlacingTop: StoryFn = () => (
+  <ResizableDrawerTemplate position="top" />
+);
+ResizablePlacingTop.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+ResizablePlacingTop.play = playPlacing("top", 420);

@@ -177,6 +177,20 @@ describe("GIVEN a resizable Drawer", () => {
       await expect.poll(valueNow).toBeCloseTo(350, 0);
     });
 
+    it("updates its value after the edge is placed by a click", async () => {
+      await renderWithSalt(<ResizableFixture />);
+      await waitForOpen();
+
+      const { x, y } = handleCenter();
+      await dispatchPointer(separator().element(), "pointerdown", x, y);
+      await dispatchPointer(separator().element(), "pointerup", x, y);
+      const target = document.elementFromPoint(450, y) ?? document.body;
+      await dispatchPointer(target, "pointerdown", 450, y);
+      await dispatchPointer(target, "pointerup", 450, y);
+
+      await expect.poll(valueNow).toBeCloseTo(450, 0);
+    });
+
     it("updates its maximum when the viewport resizes", async () => {
       await renderWithSalt(
         <Drawer open resizable style={{ width: 300 }}>
@@ -240,6 +254,21 @@ describe("GIVEN a resizable Drawer", () => {
       expect(hasOutline).toBe(true);
     });
 
+    it("keeps focus on the handle after the edge is placed by a click", async () => {
+      await renderWithSalt(<ResizableFixture />);
+      await waitForOpen();
+
+      await separator().click();
+      await page
+        .getByTestId("scrim")
+        .click({ force: true, position: { x: 450, y: 300 } });
+      await expect.poll(valueNow).toBeCloseTo(450, 0);
+
+      await expect.element(separator()).toHaveFocus();
+      await userEvent.keyboard("{ArrowRight}");
+      await expect.poll(valueNow).toBeCloseTo(458, 0);
+    });
+
     it("returns focus to the trigger after a resized drawer closes", async () => {
       await renderWithSalt(<TriggeredDrawer />);
 
@@ -289,6 +318,25 @@ describe("GIVEN a resizable Drawer", () => {
         await runAxeScan(container);
 
         await dispatchPointer(separator().element(), "pointerup", x + 30, y);
+      },
+      AXE_TIMEOUT,
+    );
+
+    it(
+      "has no violations while placing the edge by click",
+      async () => {
+        const { container } = await renderWithSalt(<ResizableFixture />);
+        await waitForOpen();
+
+        const { x, y } = handleCenter();
+        await dispatchPointer(separator().element(), "pointerdown", x, y);
+        await dispatchPointer(separator().element(), "pointerup", x, y);
+        await dispatchPointer(document, "pointermove", 450, y);
+        await expect
+          .poll(() => getComputedStyle(document.body).cursor)
+          .toBe("ew-resize");
+
+        await runAxeScan(container);
       },
       AXE_TIMEOUT,
     );

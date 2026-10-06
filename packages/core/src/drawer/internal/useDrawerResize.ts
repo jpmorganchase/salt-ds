@@ -29,9 +29,7 @@ interface DragState extends Bounds {
 }
 
 /** Click-to-place resizing */
-interface PlacingState extends Bounds {
-  rect: DOMRect;
-}
+type PlacingState = Bounds;
 
 type Interaction = "inactive" | "hover" | "active" | "placing";
 
@@ -330,9 +328,10 @@ export function useDrawerResize({
 
   const startPlacing = useEventCallback((drag: DragState) => {
     if (!element) return;
-    const rect = element.getBoundingClientRect();
-    placingRef.current = { rect, min: drag.min, max: drag.max };
-    setGuideOffset(edgeFromSize(rect, position, drag.originSize));
+    placingRef.current = { min: drag.min, max: drag.max };
+    setGuideOffset(
+      edgeFromSize(element.getBoundingClientRect(), position, drag.originSize),
+    );
     setInteraction("placing");
   });
 
@@ -368,10 +367,13 @@ export function useDrawerResize({
     const placing = placingRef.current;
     if (!placing || !element) return;
     stopPlacing();
-    const next = clamp(sizeFromPoint(placing.rect, position, event), placing);
+    // Read the position now, as the drawer may have moved since placing started, e.g. while it slides in.
+    const rect = element.getBoundingClientRect();
+    const next = clamp(sizeFromPoint(rect, position, event), placing);
     const current = clamp(measure(element, horizontal), placing);
     if (next !== current) {
-      onResizeEnd?.(event, applySize(event, next, placing));
+      const applied = applySize(event, next, placing);
+      onResizeEnd?.(event, applied);
     }
   });
 
@@ -452,11 +454,12 @@ export function useDrawerResize({
       if (placing) {
         // Touch has no hover, so the guide stays at the edge until the placing tap.
         if (event.pointerType !== "touch") {
+          const rect = element.getBoundingClientRect();
           setGuideOffset(
             edgeFromSize(
-              placing.rect,
+              rect,
               position,
-              clamp(sizeFromPoint(placing.rect, position, event), placing),
+              clamp(sizeFromPoint(rect, position, event), placing),
             ),
           );
         }
@@ -672,7 +675,7 @@ export function useDrawerResize({
   useEffect(() => {
     if (!enabled || !element || !targetWindow) return;
     const onResize = () => {
-      // The drawer position stored for placing is stale after the window resizes.
+      // The size limits stored for placing are stale after the window resizes.
       stopPlacing();
       readMetrics();
     };
