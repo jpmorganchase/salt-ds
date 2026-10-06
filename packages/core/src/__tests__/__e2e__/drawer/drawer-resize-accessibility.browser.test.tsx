@@ -29,12 +29,7 @@ const valueNow = () =>
 
 async function waitForOpen() {
   await expect.element(page.getByRole("dialog")).toBeVisible();
-  await expect
-    .poll(() => {
-      const { top, left } = drawer().getBoundingClientRect();
-      return Math.min(top, left);
-    })
-    .toBeGreaterThanOrEqual(0);
+  await expect.poll(() => drawer().getAnimations().length).toBe(0);
 }
 
 async function dispatchPointer(
@@ -187,6 +182,11 @@ describe("GIVEN a resizable Drawer", () => {
       const target = document.elementFromPoint(450, y) ?? document.body;
       await dispatchPointer(target, "pointerdown", 450, y);
       await dispatchPointer(target, "pointerup", 450, y);
+      await act(async () => {
+        target.dispatchEvent(
+          new MouseEvent("click", { bubbles: true, clientX: 450, clientY: y }),
+        );
+      });
 
       await expect.poll(valueNow).toBeCloseTo(450, 0);
     });
