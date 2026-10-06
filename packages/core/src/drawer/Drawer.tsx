@@ -82,8 +82,7 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    * */
   onResize?: (event: Event, size: number) => void;
   /**
-   * Callback called when the handle stops being dragged, the edge is placed by a click, or the handle is moved
-   * from the keyboard.
+   * Callback called when the user finishes resizing the drawer.
    * It provides a generic event and the new size in px.
    * */
   onResizeEnd?: (event: Event, size: number) => void;

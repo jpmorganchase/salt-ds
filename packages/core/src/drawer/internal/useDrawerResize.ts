@@ -75,8 +75,8 @@ const PROBE_SIZE = 1e6;
 const MIN_TARGET_SIZE = 24;
 // A press that moves less than this is a click on the handle, not a drag.
 const CLICK_THRESHOLD = 4;
-// Stop swallowing the placing press's events if its click never arrives.
-const SWALLOW_TIMEOUT = 1000;
+// Stop blocking the rest of the placing press if its click never arrives.
+const PLACING_PRESS_TIMEOUT = 1000;
 
 const isElement = (target: EventTarget | null): target is Element =>
   target !== null && (target as Node).nodeType === 1;
@@ -378,17 +378,17 @@ export function useDrawerResize({
   useEffect(() => {
     if (!enabled || !element || !targetWindow) return;
     const ownerDocument = targetWindow.document;
-    let swallowing = false;
-    let swallowTimer: number | undefined;
+    let blockingPress = false;
+    let blockingPressTimer: number | undefined;
 
-    const swallow = (event: Event) => {
+    const stopEvent = (event: Event) => {
       event.preventDefault();
       event.stopImmediatePropagation();
     };
 
-    const stopSwallowing = () => {
-      swallowing = false;
-      targetWindow.clearTimeout(swallowTimer);
+    const stopBlockingPress = () => {
+      blockingPress = false;
+      targetWindow.clearTimeout(blockingPressTimer);
     };
 
     const focusHandle = () =>
@@ -405,24 +405,27 @@ export function useDrawerResize({
         stopPlacing();
         return;
       }
-      swallow(event);
+      stopEvent(event);
       place(event);
-      swallowing = true;
-      targetWindow.clearTimeout(swallowTimer);
-      swallowTimer = targetWindow.setTimeout(stopSwallowing, SWALLOW_TIMEOUT);
+      blockingPress = true;
+      targetWindow.clearTimeout(blockingPressTimer);
+      blockingPressTimer = targetWindow.setTimeout(
+        stopBlockingPress,
+        PLACING_PRESS_TIMEOUT,
+      );
     };
 
     const onPlacingPointerUp = (event: PointerEvent) => {
-      if (!swallowing) return;
-      swallow(event);
+      if (!blockingPress) return;
+      stopEvent(event);
       focusHandle();
     };
 
     const onPlacingMouseEvent = (event: MouseEvent) => {
-      if (!swallowing) return;
-      swallow(event);
+      if (!blockingPress) return;
+      stopEvent(event);
       if (event.type === "click") {
-        stopSwallowing();
+        stopBlockingPress();
         focusHandle();
       }
     };
@@ -430,7 +433,7 @@ export function useDrawerResize({
     const onPlacingKeyDown = (event: KeyboardEvent) => {
       if (!placingRef.current) return;
       if (event.key === "Escape") {
-        swallow(event);
+        stopEvent(event);
       }
       // Other keys leave the mode and keep working, e.g. the arrow keys still resize.
       stopPlacing();
@@ -548,7 +551,7 @@ export function useDrawerResize({
       ownerDocument.removeEventListener("contextmenu", onContextMenu, true);
       ownerDocument.removeEventListener("pointerout", onPointerOut);
       targetWindow.removeEventListener("blur", onBlur);
-      targetWindow.clearTimeout(swallowTimer);
+      targetWindow.clearTimeout(blockingPressTimer);
       dragRef.current = null;
       placingRef.current = null;
       setGuideOffset(null);
