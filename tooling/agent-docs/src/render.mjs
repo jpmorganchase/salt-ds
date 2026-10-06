@@ -282,7 +282,7 @@ export function renderIndex({ packageName, version, entries, otherPackages }) {
     `Generated from the Salt documentation site for \`${packageName}@${version}\`, the version installed with this file. Prefer these pages to prior knowledge of Salt: APIs and guidance change between versions.`,
     "",
     "- Read a component's page before using it. It covers usage guidance, props, examples and accessibility.",
-    "- Use Salt components and patterns before writing custom markup or CSS, and style with Salt design tokens.",
+    "- Use Salt components, their props and patterns before writing custom markup or CSS, and use Salt design tokens in any custom CSS.",
     "- Links such as `@salt-ds/theme/docs/index.md` point to another Salt package's docs, found where packages are installed (usually `node_modules`). Only use Salt packages the project has installed.",
     "",
   ];

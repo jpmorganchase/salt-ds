@@ -56,8 +56,16 @@ controlling spacing, flow, split regions, or parent-child arrangement.
 ### Styling that fights Salt
 
 Avoid raw spacing, sizing, and color values that override Salt foundations and
-token usage without a strong reason. Prefer Salt layouts, foundations, and
-tokens before introducing custom styling.
+token usage without a strong reason. Before you add custom styling, check these
+options in order:
+
+1. A prop of the component, such as `Text`'s `color` for status text,
+   `Button`'s `sentiment` or a layout's `gap`. Check the component's props
+   table.
+2. A Salt layout or pattern that already provides the structure.
+3. Salt design tokens in your own CSS: characteristic tokens, or foundation
+   tokens where no characteristic fits. Don't use palette tokens or deprecated
+   tokens. See [How tokens are structured](/salt/themes/design-tokens/index#how-tokens-are-structured).
 
 ## Before and after
 
@@ -114,6 +122,30 @@ export function HelpAction() {
 }
 ```
 
+### Styling instead of a prop
+
+```tsx
+// Avoid
+import { Text } from "@salt-ds/core";
+
+export function OverdueStatus() {
+  return (
+    <Text style={{ color: "var(--salt-status-error-foreground-informative)" }}>
+      Overdue
+    </Text>
+  );
+}
+```
+
+```tsx
+// Prefer
+import { Text } from "@salt-ds/core";
+
+export function OverdueStatus() {
+  return <Text color="error">Overdue</Text>;
+}
+```
+
 ## Quick review checklist
 
 Before shipping or reviewing composed UI, check:
@@ -122,7 +154,8 @@ Before shipping or reviewing composed UI, check:
 2. Are there nested interactive Salt primitives that should be flattened?
 3. Is there a pass-through wrapper over a Salt primitive that should be removed?
 4. Could a Salt layout or pattern replace some of the custom structure?
-5. Does the styling still follow Salt foundations and token guidance?
+5. Could a component prop replace some of the custom styling?
+6. Does the styling still follow Salt foundations and token guidance?
 
 ## Next reads
 

@@ -12,6 +12,22 @@ data:
 
 For further details on how to use the component to provide navigation, see the [navigation pattern](/salt/patterns/navigation/)
 
+### Structure
+
+```tsx
+<VerticalNavigation aria-label="Main">
+  <VerticalNavigationItem active={pathname === "/payments"}>
+    <VerticalNavigationItemContent>
+      <VerticalNavigationItemTrigger href="/payments">
+        <VerticalNavigationItemLabel>Payments</VerticalNavigationItemLabel>
+      </VerticalNavigationItemTrigger>
+    </VerticalNavigationItemContent>
+  </VerticalNavigationItem>
+</VerticalNavigation>
+```
+
+For a nested group, add a `VerticalNavigationSubMenu` of items inside the parent `VerticalNavigationItem`, after its `VerticalNavigationItemContent`. The [examples](./examples) show nested and collapsible groups.
+
 ### Routing libraries
 
 If your app uses a routing library such as [React Router](https://reactrouter.com/en/main) or [Next.js](https://nextjs.org/docs/app/building-your-application/routing), use the `render` prop on navigation item triggers to render the routing library’s link component. See the [render prop guide](/salt/getting-started/render-prop) for the supported render forms.

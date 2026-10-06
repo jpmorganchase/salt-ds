@@ -7,6 +7,8 @@ sidebar:
 
 Statuses provide visual cues that communicate the current state of a system or process. Each status—error, info, caution, and success—helps users quickly understand what’s happening, identify issues, and determine if action is needed. Consistent use of status tokens ensures users can respond confidently and efficiently to changes or events within your application.
 
+Components such as [`Text`](/salt/components/text/examples#color), with its `color` prop, [`StatusIndicator`](/salt/components/status-indicator) and [`Banner`](/salt/components/banner) apply these tokens for you. Use the tokens directly only for custom styling. See [Styling that fights Salt](/salt/getting-started/composition-pitfalls#styling-that-fights-salt).
+
 ## Error status
 
 Error tokens are used to indicate a problem or failure that requires user attention or intervention. They represent situations where an action cannot be completed, data is invalid, or a critical issue must be resolved before the user can proceed.
@@ -45,6 +47,7 @@ Info tokens are used to communicate helpful or contextual information to users. 
     "--salt-status-info-background",
     "--salt-status-info-borderColor",
     "--salt-status-info-foreground-decorative",
+    "--salt-status-info-foreground-informative",
   ]}
 />
 

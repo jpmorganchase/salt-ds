@@ -137,7 +137,7 @@ You can display a form as a dedicated page, within a dialog, nested into drawers
 2. **Label**: Helps users understand what information to provide.
 3. **Form controls**: Enable users to provide input on forms.
 4. **Helper text**: Assists users in providing the right information.
-5. **Button bar**: Provides next steps when a user reaches the end of the form, such as navigating to the previous or next steps, submitting the form, or cancelling changes. For more details, visit the [button bar pattern](/salt/patterns/button-bar).
+5. **Button bar**: Provides next steps when a user reaches the end of the form, such as navigating to the previous or next steps, submitting the form, or cancelling changes. See [Actions](#actions).
 
 Keep the heading, fields, helper text, and button bar in a consistent vertical reading order so the form stays easy to scan.
 
@@ -146,6 +146,31 @@ Keep the heading, fields, helper text, and button bar in a consistent vertical r
   alt="Form anatomy."
   border
 />
+
+### Actions
+
+End the form with a [button bar](/salt/patterns/button-bar). Use one solid button for the action that completes the task, a bordered button for the alternative, such as **Cancel**, and transparent buttons for lower-priority actions. Use the accented sentiment unless an action calls for another sentiment.
+
+Where the actions go depends on the form:
+
+- **A single-step form**, the default: group the core actions on the left, with the solid action first. For example, a solid **Save** followed by a bordered **Cancel** to its right.
+- **A multi-step form**: group the core actions on the right, with **Next** to the right of **Previous** and **Cancel**.
+- **A form in a dialog**: keep the core actions on the right, in [`DialogActions`](/salt/components/dialog/usage#action-composition).
+
+Place tertiary actions that aren't core to the task at the opposite end of the button bar.
+
+Stack the buttons on narrow screens, as the [stacked button bar](/salt/patterns/button-bar#stacked-button-bar) recommends. For a single-step form:
+
+```tsx
+<StackLayout direction={{ xs: "column", sm: "row" }} gap={1}>
+  <Button type="submit" appearance="solid" sentiment="accented">
+    Save
+  </Button>
+  <Button type="button" appearance="bordered" sentiment="accented">
+    Cancel
+  </Button>
+</StackLayout>
+```
 
 ### Standard layout
 
@@ -298,7 +323,7 @@ An overlay typically displays smaller forms that:
 - Display on application boot (i.e., as the app loads).
 - Enable access/feedback (i.e., credentials input, reviews).
 
-For a dialog form, also apply the [Dialog use and interruption guidance](/salt/components/dialog/usage#using-the-component) when choosing between an overlay and a full page.
+For a dialog form, also apply the [Dialog use and interruption guidance](/salt/components/dialog/usage#using-the-component) when choosing between an overlay and a full page. A dialog keeps its core actions on the right, unlike a single-step form on a page; see [Actions](#actions).
 
 <Diagram
   src="/img/patterns/forms/form-overlay.png"
