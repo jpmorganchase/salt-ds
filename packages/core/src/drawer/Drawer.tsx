@@ -82,7 +82,8 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    * */
   onResize?: (event: Event, size: number) => void;
   /**
-   * Callback called when the handle stops being dragged or is moved from the keyboard.
+   * Callback called when the handle stops being dragged, the edge is placed by a click, or the handle is moved
+   * from the keyboard.
    * It provides a generic event and the new size in px.
    * */
   onResizeEnd?: (event: Event, size: number) => void;
@@ -143,15 +144,21 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       onOpenChange,
     });
 
-    const { sizeStyle, isResizing, isHovered, isInHitArea, separatorProps } =
-      useDrawerResize({
-        enabled: resizable,
-        position,
-        element: elements.floating,
-        size,
-        onResize,
-        onResizeEnd,
-      });
+    const {
+      sizeStyle,
+      isResizing,
+      isHovered,
+      guideOffset,
+      isInHitArea,
+      separatorProps,
+    } = useDrawerResize({
+      enabled: resizable,
+      position,
+      element: elements.floating,
+      size,
+      onResize,
+      onResizeEnd,
+    });
 
     const { getFloatingProps } = useInteractions([
       useClick(context),
@@ -230,6 +237,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 position={position}
                 resizing={isResizing}
                 hovered={isHovered}
+                guideOffset={guideOffset}
                 aria-label="Resize drawer"
                 aria-controls={drawerId}
                 {...separatorProps}

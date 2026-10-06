@@ -602,7 +602,18 @@ export const Resizable: StoryFn<DrawerProps> = ({
               {isHorizontal
                 ? "minimum width 200px, maximum width 640px."
                 : "minimum height 160px, maximum height 520px."}{" "}
-              The drawer never exceeds the viewport.
+              The drawer never exceeds the viewport. See the{" "}
+              <Link
+                href="#resizable-drawer-mock-link"
+                onClick={() => {
+                  if (process.env.NODE_ENV !== "production") {
+                    console.log("Resizable drawer mock link clicked");
+                  }
+                }}
+              >
+                mock link
+              </Link>{" "}
+              for more details.
             </Text>
             <Text>{loremText.repeat(4)}</Text>
           </StackLayout>

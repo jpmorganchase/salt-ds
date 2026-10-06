@@ -21,12 +21,19 @@ interface Bounds {
 
 interface DragState extends Bounds {
   pointerId: number;
+  startX: number;
+  startY: number;
   origin: number;
   originSize: number;
-  captured: boolean;
+  moved: boolean;
 }
 
-type Interaction = "inactive" | "hover" | "active";
+/** Click-to-place resizing */
+interface PlacingState extends Bounds {
+  rect: DOMRect;
+}
+
+type Interaction = "inactive" | "hover" | "active" | "placing";
 
 type HitEvent = Pick<MouseEvent, "clientX" | "clientY" | "target">;
 
@@ -55,6 +62,8 @@ export interface UseDrawerResizeResult {
   sizeStyle: CSSProperties | undefined;
   isResizing: boolean;
   isHovered: boolean;
+  /** Viewport coordinate of the guide line shown while placing the edge by click. */
+  guideOffset: number | null;
   isInHitArea: (event: HitEvent) => boolean;
   separatorProps: SeparatorProps;
 }
@@ -64,6 +73,10 @@ const KEYBOARD_STEP_MULTIPLIER = 5;
 const PROBE_SIZE = 1e6;
 // WCAG 2.5.8 (AA) minimum target size.
 const MIN_TARGET_SIZE = 24;
+// A press that moves less than this is a click on the handle, not a drag.
+const CLICK_THRESHOLD = 4;
+// Stop swallowing the placing press's events if its click never arrives.
+const SWALLOW_TIMEOUT = 1000;
 
 const isElement = (target: EventTarget | null): target is Element =>
   target !== null && (target as Node).nodeType === 1;
@@ -119,6 +132,42 @@ const probeBounds = (element: HTMLElement, horizontal: boolean): Bounds => {
 const clamp = (value: number, { min, max }: Bounds) =>
   Math.min(Math.max(value, min), max);
 
+/** Size the drawer needs for its moving edge to sit at the given point. */
+const sizeFromPoint = (
+  rect: DOMRect,
+  position: DrawerPosition,
+  { clientX: x, clientY: y }: Pick<MouseEvent, "clientX" | "clientY">,
+) => {
+  switch (position) {
+    case "left":
+      return x - rect.left;
+    case "right":
+      return rect.right - x;
+    case "top":
+      return y - rect.top;
+    default:
+      return rect.bottom - y;
+  }
+};
+
+/** Viewport coordinate of the moving edge for a given size. */
+const edgeFromSize = (
+  rect: DOMRect,
+  position: DrawerPosition,
+  size: number,
+) => {
+  switch (position) {
+    case "left":
+      return rect.left + size;
+    case "right":
+      return rect.right - size;
+    case "top":
+      return rect.top + size;
+    default:
+      return rect.bottom - size;
+  }
+};
+
 export function useDrawerResize({
   enabled,
   position,
@@ -145,10 +194,12 @@ export function useDrawerResize({
     isControlled || sizeAxisHorizontal === horizontal ? sizeState : undefined;
 
   const [interaction, setInteraction] = useState<Interaction>("inactive");
+  const [guideOffset, setGuideOffset] = useState<number | null>(null);
   const [metrics, setMetrics] = useState<(Bounds & { current: number }) | null>(
     null,
   );
   const dragRef = useRef<DragState | null>(null);
+  const placingRef = useRef<PlacingState | null>(null);
   const handleRef = useRef<HTMLElement | null>(null);
   const restoreSizeRef = useRef<number | null>(null);
   const initialSizeRef = useRef<number | null>(null);
@@ -233,11 +284,13 @@ export function useDrawerResize({
     event.preventDefault();
     dragRef.current = {
       pointerId: event.pointerId,
+      startX: event.clientX,
+      startY: event.clientY,
       origin: horizontal ? event.clientX : event.clientY,
       originSize: current.current,
       min: current.min,
       max: current.max,
-      captured: false,
+      moved: false,
     };
     sizeRef.current = current.current;
     handleRef.current?.focus({
@@ -248,9 +301,15 @@ export function useDrawerResize({
   });
 
   const moveDrag = useEventCallback((event: PointerEvent, drag: DragState) => {
-    // Captured on the first move rather than on press, so a press without a drag still clicks.
-    if (!drag.captured) {
-      drag.captured = true;
+    // Small movement keeps the press a click, so it can start placing the edge by click.
+    if (!drag.moved) {
+      if (
+        Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY) <
+        CLICK_THRESHOLD
+      ) {
+        return;
+      }
+      drag.moved = true;
       try {
         handleRef.current?.setPointerCapture(event.pointerId);
       } catch {
@@ -269,10 +328,30 @@ export function useDrawerResize({
     }
   });
 
+  const startPlacing = useEventCallback((drag: DragState) => {
+    if (!element) return;
+    const rect = element.getBoundingClientRect();
+    placingRef.current = { rect, min: drag.min, max: drag.max };
+    setGuideOffset(edgeFromSize(rect, position, drag.originSize));
+    setInteraction("placing");
+  });
+
+  const stopPlacing = useEventCallback(() => {
+    if (!placingRef.current) return;
+    placingRef.current = null;
+    setGuideOffset(null);
+    setInteraction("inactive");
+  });
+
   const endDrag = useEventCallback((event: Event) => {
     const drag = dragRef.current;
     if (!drag) return;
     dragRef.current = null;
+    // A click on the handle, rather than a drag, waits for a second click to place the edge.
+    if (!drag.moved && event.type === "pointerup") {
+      startPlacing(drag);
+      return;
+    }
     const stillHovered =
       "pointerType" in event &&
       (event as PointerEvent).pointerType !== "touch" &&
@@ -284,9 +363,78 @@ export function useDrawerResize({
     }
   });
 
+  /** Places the edge where the press after a click on the handle lands. */
+  const place = useEventCallback((event: PointerEvent) => {
+    const placing = placingRef.current;
+    if (!placing || !element) return;
+    stopPlacing();
+    const next = clamp(sizeFromPoint(placing.rect, position, event), placing);
+    const current = clamp(measure(element, horizontal), placing);
+    if (next !== current) {
+      onResizeEnd?.(event, applySize(event, next, placing));
+    }
+  });
+
   useEffect(() => {
     if (!enabled || !element || !targetWindow) return;
     const ownerDocument = targetWindow.document;
+    let swallowing = false;
+    let swallowTimer: number | undefined;
+
+    const swallow = (event: Event) => {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    };
+
+    const stopSwallowing = () => {
+      swallowing = false;
+      targetWindow.clearTimeout(swallowTimer);
+    };
+
+    const focusHandle = () =>
+      handleRef.current?.focus({
+        preventScroll: true,
+        focusVisible: false,
+      } as FocusOptions);
+
+    // Placing listeners run on the window's capture phase, ahead of the drawer's content and the dismiss handling,
+    // so the placing press doesn't activate content or close the drawer, and Escape doesn't close it.
+    const onPlacingPointerDown = (event: PointerEvent) => {
+      if (!placingRef.current || !event.isPrimary) return;
+      if (event.pointerType === "mouse" && event.button > 0) {
+        stopPlacing();
+        return;
+      }
+      swallow(event);
+      place(event);
+      swallowing = true;
+      targetWindow.clearTimeout(swallowTimer);
+      swallowTimer = targetWindow.setTimeout(stopSwallowing, SWALLOW_TIMEOUT);
+    };
+
+    const onPlacingPointerUp = (event: PointerEvent) => {
+      if (!swallowing) return;
+      swallow(event);
+      focusHandle();
+    };
+
+    const onPlacingMouseEvent = (event: MouseEvent) => {
+      if (!swallowing) return;
+      swallow(event);
+      if (event.type === "click") {
+        stopSwallowing();
+        focusHandle();
+      }
+    };
+
+    const onPlacingKeyDown = (event: KeyboardEvent) => {
+      if (!placingRef.current) return;
+      if (event.key === "Escape") {
+        swallow(event);
+      }
+      // Other keys leave the mode and keep working, e.g. the arrow keys still resize.
+      stopPlacing();
+    };
 
     const onPointerDown = (event: PointerEvent) => {
       if (event.defaultPrevented || !event.isPrimary) return;
@@ -297,6 +445,20 @@ export function useDrawerResize({
 
     const onPointerMove = (event: PointerEvent) => {
       if (event.defaultPrevented) return;
+      const placing = placingRef.current;
+      if (placing) {
+        // Touch has no hover, so the guide stays at the edge until the placing tap.
+        if (event.pointerType !== "touch") {
+          setGuideOffset(
+            edgeFromSize(
+              placing.rect,
+              position,
+              clamp(sizeFromPoint(placing.rect, position, event), placing),
+            ),
+          );
+        }
+        return;
+      }
       const drag = dragRef.current;
       if (!drag) {
         // Touch has no hover, so it would leave the hover state behind.
@@ -330,6 +492,11 @@ export function useDrawerResize({
       if (!event.defaultPrevented) endDrag(event);
     };
 
+    const onBlur = (event: FocusEvent) => {
+      endDrag(event);
+      stopPlacing();
+    };
+
     // "pointerout" doesn't fire when the pointer moves into an iframe, so hover would stick.
     const onPointerOut = (event: PointerEvent) => {
       if (
@@ -341,32 +508,63 @@ export function useDrawerResize({
       }
     };
 
+    const capture = { capture: true };
+    targetWindow.addEventListener("pointerdown", onPlacingPointerDown, capture);
+    targetWindow.addEventListener("pointerup", onPlacingPointerUp, capture);
+    targetWindow.addEventListener("mousedown", onPlacingMouseEvent, capture);
+    targetWindow.addEventListener("mouseup", onPlacingMouseEvent, capture);
+    targetWindow.addEventListener("click", onPlacingMouseEvent, capture);
+    targetWindow.addEventListener("keydown", onPlacingKeyDown, capture);
     ownerDocument.addEventListener("pointerdown", onPointerDown, true);
     ownerDocument.addEventListener("pointermove", onPointerMove);
     ownerDocument.addEventListener("pointerup", onPointerUp, true);
     ownerDocument.addEventListener("pointercancel", onPointerCancel);
     ownerDocument.addEventListener("contextmenu", onContextMenu, true);
     ownerDocument.addEventListener("pointerout", onPointerOut);
-    targetWindow.addEventListener("blur", endDrag);
+    targetWindow.addEventListener("blur", onBlur);
     return () => {
+      targetWindow.removeEventListener(
+        "pointerdown",
+        onPlacingPointerDown,
+        capture,
+      );
+      targetWindow.removeEventListener(
+        "pointerup",
+        onPlacingPointerUp,
+        capture,
+      );
+      targetWindow.removeEventListener(
+        "mousedown",
+        onPlacingMouseEvent,
+        capture,
+      );
+      targetWindow.removeEventListener("mouseup", onPlacingMouseEvent, capture);
+      targetWindow.removeEventListener("click", onPlacingMouseEvent, capture);
+      targetWindow.removeEventListener("keydown", onPlacingKeyDown, capture);
       ownerDocument.removeEventListener("pointerdown", onPointerDown, true);
       ownerDocument.removeEventListener("pointermove", onPointerMove);
       ownerDocument.removeEventListener("pointerup", onPointerUp, true);
       ownerDocument.removeEventListener("pointercancel", onPointerCancel);
       ownerDocument.removeEventListener("contextmenu", onContextMenu, true);
       ownerDocument.removeEventListener("pointerout", onPointerOut);
-      targetWindow.removeEventListener("blur", endDrag);
+      targetWindow.removeEventListener("blur", onBlur);
+      targetWindow.clearTimeout(swallowTimer);
       dragRef.current = null;
+      placingRef.current = null;
+      setGuideOffset(null);
       setInteraction("inactive");
     };
   }, [
     enabled,
     element,
     targetWindow,
+    position,
     isInHitArea,
     startDrag,
     moveDrag,
     endDrag,
+    stopPlacing,
+    place,
   ]);
 
   const showResizeCursor = interaction !== "inactive";
@@ -470,10 +668,14 @@ export function useDrawerResize({
 
   useEffect(() => {
     if (!enabled || !element || !targetWindow) return;
-    const onResize = () => readMetrics();
+    const onResize = () => {
+      // The drawer position stored for placing is stale after the window resizes.
+      stopPlacing();
+      readMetrics();
+    };
     targetWindow.addEventListener("resize", onResize);
     return () => targetWindow.removeEventListener("resize", onResize);
-  }, [enabled, element, targetWindow, readMetrics]);
+  }, [enabled, element, targetWindow, readMetrics, stopPlacing]);
 
   // Unsectioned drawers scroll themselves, so offset the handle to keep it on the edge.
   useEffect(() => {
@@ -500,8 +702,9 @@ export function useDrawerResize({
       size !== undefined
         ? { [horizontal ? "width" : "height"]: size }
         : undefined,
-    isResizing: interaction === "active",
+    isResizing: interaction === "active" || interaction === "placing",
     isHovered: interaction === "hover",
+    guideOffset,
     isInHitArea,
     separatorProps: {
       role: "separator",

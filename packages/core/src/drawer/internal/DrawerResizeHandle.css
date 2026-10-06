@@ -135,3 +135,26 @@
   outline-color: var(--salt-focused-outlineColor);
   outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
 }
+
+.saltDrawerResizeHandle-guide {
+  position: fixed;
+  z-index: calc(var(--salt-zIndex-drawer) + 1);
+  box-sizing: border-box;
+  pointer-events: none;
+}
+
+.saltDrawerResizeHandle-guideVertical {
+  top: 0;
+  bottom: 0;
+  width: 0;
+  border-left: var(--salt-size-fixed-200) var(--salt-borderStyle-dashed) var(--salt-focused-outlineColor);
+  transform: translateX(-50%);
+}
+
+.saltDrawerResizeHandle-guideHorizontal {
+  left: 0;
+  right: 0;
+  height: 0;
+  border-top: var(--salt-size-fixed-200) var(--salt-borderStyle-dashed) var(--salt-focused-outlineColor);
+  transform: translateY(-50%);
+}
