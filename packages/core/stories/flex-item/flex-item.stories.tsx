@@ -1,4 +1,4 @@
-import { FlexItem, FlexLayout } from "@salt-ds/core";
+import { FlexItem, FlexLayout, StackLayout, Text } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import "../layout/layout.stories.css";
 
@@ -20,15 +20,19 @@ const FlexItemStory: StoryFn<typeof FlexItem> = (args) => {
   return (
     <FlexLayout className="layout-container">
       <FlexItem className="layout-active-content" {...args}>
-        <p>Item</p>
+        <Text as="p">Item</Text>
       </FlexItem>
       <FlexItem>
-        <p>Larger Item</p>
-        <p>Containing 2 paragraphs</p>
+        <StackLayout gap={1}>
+          <Text as="p">Larger Item</Text>
+          <Text as="p">Containing 2 paragraphs</Text>
+        </StackLayout>
       </FlexItem>
       <FlexItem>
-        <p>Larger Item</p>
-        <p>Containing 2 paragraphs</p>
+        <StackLayout gap={1}>
+          <Text as="p">Larger Item</Text>
+          <Text as="p">Containing 2 paragraphs</Text>
+        </StackLayout>
       </FlexItem>
     </FlexLayout>
   );

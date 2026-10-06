@@ -20,6 +20,7 @@ import {
   type ForwardedRef,
   forwardRef,
   type KeyboardEvent,
+  type ReactElement,
   type ReactNode,
   type Ref,
   useEffect,
@@ -270,7 +271,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   const handleButtonRef = useForkRef(handleTriggerRef, ref);
 
   const typeaheadString = useRef("");
-  const typeaheadTimeout = useRef<number | undefined>();
+  const typeaheadTimeout = useRef<number | undefined>(undefined);
 
   const handleTypeahead = (event: KeyboardEvent<HTMLButtonElement>) => {
     if (typeaheadTimeout.current) {
@@ -534,4 +535,4 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   );
 }) as <Item = string>(
   props: DropdownProps<Item> & { ref?: Ref<HTMLButtonElement> },
-) => JSX.Element;
+) => ReactElement;

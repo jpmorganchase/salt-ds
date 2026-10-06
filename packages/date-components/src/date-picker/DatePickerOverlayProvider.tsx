@@ -162,7 +162,9 @@ export const DatePickerOverlayProvider: React.FC<
   const triggeringElementRef = useRef<HTMLElement | null>(null);
   const initialFocusRef = useRef<HTMLElement | null>(null);
   const [focused, setFocused] = useState(false);
-  const onDismissCallback = useRef<(event?: Event) => void>();
+  const onDismissCallback = useRef<((event?: Event) => void) | undefined>(
+    undefined,
+  );
   const handleOpenChange = useCallback(
     (newOpen: boolean, _event?: Event, reason?: DatePickerOpenChangeReason) => {
       if (newOpen) {

@@ -34,9 +34,7 @@ export const CardActions = (): ReactElement => {
         }),
       ]}
     >
-      <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
-        Card actions example
-      </H2>
+      <H2 id={`${carouselId}-title`}>Card actions example</H2>
       <StackLayout gap={1} direction="column-reverse">
         <FlexLayout gap={1} wrap={true}>
           <CarouselPreviousButton tabIndex={-1} />

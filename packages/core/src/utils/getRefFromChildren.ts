@@ -1,7 +1,7 @@
-import { isValidElement, type ReactNode } from "react";
+import { isValidElement, type ReactNode, type Ref } from "react";
 
 export function getRefFromChildren(child: ReactNode) {
-  if (!child || !isValidElement(child)) {
+  if (!child || !isValidElement<{ ref?: Ref<unknown> }>(child)) {
     return null;
   }
 

@@ -1,4 +1,4 @@
-import { FlexLayout, StackLayout } from "@salt-ds/core";
+import { FlexLayout, StackLayout, Text } from "@salt-ds/core";
 import {
   AddDocumentIcon,
   AddDocumentSolidIcon,
@@ -134,7 +134,7 @@ export const AllIconsWithSearch: StoryFn<typeof Icon> = () => {
                   key: i,
                   size: 2,
                 })}
-                <p style={{ margin: 0 }}>{name}</p>
+                <Text as="p">{name}</Text>
               </StackLayout>
             );
           })}

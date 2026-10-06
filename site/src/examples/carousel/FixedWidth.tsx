@@ -19,9 +19,7 @@ export const FixedWidth = (): ReactElement => {
       className={styles.fixedWidth}
       emblaOptions={{ align: "start", slidesToScroll: 1, containScroll: false }}
     >
-      <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
-        Fixed width slide example
-      </H2>
+      <H2 id={`${carouselId}-title`}>Fixed width slide example</H2>
       <StackLayout gap={1} direction="column-reverse">
         <FlexLayout gap={1} wrap={true} align={"center"}>
           <CarouselPreviousButton tabIndex={-1} />
@@ -42,7 +40,6 @@ export const FixedWidth = (): ReactElement => {
                 <div className={styles.carouselNumber}>
                   <Display1
                     id={`${slideId}-title`}
-                    className={styles.carouselHeading}
                     aria-label={`Slide ${index + 1}`}
                   >
                     {index + 1}

@@ -154,13 +154,11 @@ export const WithMultipleValidations = FileDropzoneTemplate.bind({});
 WithMultipleValidations.args = {
   accept: "image/*",
   children: (
-    <Text>
-      Images only.
-      <br />
-      500KB total file size limit.
-      <br />
-      36 chars File name limit.
-    </Text>
+    <StackLayout gap={0.5}>
+      <Text>Images only.</Text>
+      <Text>500KB total file size limit.</Text>
+      <Text>36 chars File name limit.</Text>
+    </StackLayout>
   ),
   validate: [validateFileType, validateTotalSize, validateFileName],
 };

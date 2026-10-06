@@ -6,6 +6,7 @@ import {
   type ChangeEvent,
   type FocusEvent,
   type KeyboardEvent,
+  type ReactElement,
   useEffect,
   useState,
 } from "react";
@@ -25,7 +26,7 @@ export const AlphaInput = ({
   alphaValue,
   onSubmit,
   showAsOpacity = false,
-}: AlphaInputProps): JSX.Element => {
+}: AlphaInputProps): ReactElement => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-rgba-input",

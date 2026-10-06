@@ -17,6 +17,7 @@ import "@salt-ds/countries/saltCountries.css";
 import {
   type ChangeEvent,
   type CSSProperties,
+  type FC,
   type SyntheticEvent,
   useEffect,
   useState,
@@ -49,7 +50,9 @@ function getTemplateDefaultValue({
   return defaultSelected?.[0] ?? "";
 }
 
-const Template: StoryFn<ComboBoxProps> = (args) => {
+const Template: StoryFn<ComboBoxProps> & FC<ComboBoxProps> = (
+  args: ComboBoxProps,
+) => {
   const [value, setValue] = useState(getTemplateDefaultValue(args));
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {

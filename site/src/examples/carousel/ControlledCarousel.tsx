@@ -56,9 +56,7 @@ export const ControlledCarousel = (): ReactElement => {
         className={styles.carousel}
         getEmblaApi={setEmblaApi}
       >
-        <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
-          Controlled carousel example
-        </H2>
+        <H2 id={`${carouselId}-title`}>Controlled carousel example</H2>
         <StackLayout gap={1} direction="column-reverse">
           <FlexLayout gap={1} wrap={true}>
             <CarouselPreviousButton tabIndex={-1} />

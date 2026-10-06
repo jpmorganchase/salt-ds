@@ -58,6 +58,8 @@ jobs:
         run: yarn build
       - name: Check packages
         run: node ./scripts/checkPackages.mjs
+      - name: Check consumer types (React 16-19)
+        run: yarn run typecheck:consumer
   type-checks:
     name: Type Checks
     runs-on: ubuntu-latest
@@ -75,6 +77,8 @@ jobs:
         run: yarn
       - name: Run typecheck
         run: yarn run typecheck
+      - name: Run typecheck (React 19 types)
+        run: yarn run typecheck:react19
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest

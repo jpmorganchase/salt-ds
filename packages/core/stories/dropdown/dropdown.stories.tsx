@@ -17,7 +17,12 @@ import {
   UserAdminIcon,
 } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { type SyntheticEvent, useState } from "react";
+import {
+  type FC,
+  type ReactElement,
+  type SyntheticEvent,
+  useState,
+} from "react";
 
 export default {
   title: "Core/Dropdown",
@@ -89,7 +94,9 @@ const longUsStates = [
   "Wyoming",
 ];
 
-const Template: StoryFn<DropdownProps> = (args) => {
+const Template: StoryFn<DropdownProps> & FC<DropdownProps> = (
+  args: DropdownProps,
+) => {
   return (
     <Dropdown {...args}>
       {usStates.map((state) => (
@@ -193,7 +200,7 @@ export const Grouped: StoryFn<typeof Dropdown> = (args) => {
 
 const permissions: Record<
   string,
-  { icon: JSX.Element; name: string; description: string }
+  { icon: ReactElement; name: string; description: string }
 > = {
   read: {
     icon: <GuideClosedIcon aria-hidden />,

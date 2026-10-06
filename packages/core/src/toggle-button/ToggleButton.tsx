@@ -22,7 +22,8 @@ import {
 
 import toggleButtonCss from "./ToggleButton.css";
 
-export interface ToggleButtonProps extends ComponentPropsWithoutRef<"button"> {
+export interface ToggleButtonProps
+  extends Omit<ComponentPropsWithoutRef<"button">, "onChange"> {
   /**
    * The appearance of the toggle button when `selected` is true.
    * @default solid
@@ -134,7 +135,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       onFocus?.(event);
     };
 
-    const toggleButtonProps: ToggleButtonProps = {
+    const toggleButtonProps: ComponentPropsWithoutRef<"button"> = {
       "aria-readonly": readOnlyProp,
       "aria-pressed": !toggleButtonGroup ? selected : undefined,
       "aria-checked": toggleButtonGroup ? selected : undefined,
