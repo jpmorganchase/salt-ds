@@ -22,12 +22,13 @@ node node_modules/@salt-ds/core/docs/agents-md.mjs
 ```
 
 The script adds a Salt section to `AGENTS.md` that tells agents to read the
-installed documentation before they write Salt UI, with a compressed index of
-every documentation page in the Salt packages you have installed. GitHub
-Copilot, Codex, Cursor and most other coding agents read `AGENTS.md` with every
-request, so they know which pages exist without having to decide to look them
-up. The script makes `CLAUDE.md` import `AGENTS.md` for Claude Code, and keeps
-your other instructions.
+installed documentation before they write Salt UI, to prefer component props to
+custom CSS, and to check the props and design tokens they used against it
+before they finish, with a compressed index of every documentation page in the
+Salt packages you have installed. GitHub Copilot, Codex, Cursor and most other
+coding agents read `AGENTS.md` with every request, so they know which pages
+exist without having to decide to look them up. The script makes `CLAUDE.md`
+import `AGENTS.md` for Claude Code, and keeps your other instructions.
 
 Run the script again after you add or upgrade Salt packages, because the index
 lists the pages of the installed versions.
@@ -40,9 +41,8 @@ lists the pages of the installed versions.
   script by that path, such as
   `node apps/web/node_modules/@salt-ds/core/docs/agents-md.mjs`.
 
-The [`@salt-ds/core` README](https://www.npmjs.com/package/@salt-ds/core) shows
-what the section looks like. Generate it with the script rather than by hand, so
-the index matches your installed versions.
+Generate the section with the script rather than by hand, so the index matches
+your installed versions.
 
 ## What agents can read
 

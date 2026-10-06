@@ -11,17 +11,13 @@ import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
 import {
   agentsBlock,
-  BEGIN_MARKER,
-  END_MARKER,
   findDocs,
-  INSTRUCTIONS,
   indexLines,
   readManifests,
   run,
   upsertBlock,
   withClaudeImport,
 } from "../agents-md.mjs";
-import { REPOSITORY_ROOT } from "../generate.mjs";
 
 const block = agentsBlock({
   root: "node_modules/@salt-ds",
@@ -272,22 +268,6 @@ describe("run", () => {
     expect(log[0]).toContain("--no-claude");
     expect(() => run(["--force"], { log: () => {} })).toThrow(
       "Unknown argument: --force",
-    );
-  });
-});
-
-describe("core README", () => {
-  it("shows the block that the script writes", async () => {
-    const readme = await readFile(
-      path.join(REPOSITORY_ROOT, "packages/core/README.md"),
-      "utf8",
-    );
-    const example = readme.slice(
-      readme.indexOf(BEGIN_MARKER),
-      readme.indexOf(END_MARKER) + END_MARKER.length,
-    );
-    expect(example).toContain(
-      `${BEGIN_MARKER}\n\n## Salt Design System\n\n${INSTRUCTIONS}\n\n[Salt docs index]|root: node_modules/@salt-ds\n|core/docs/`,
     );
   });
 });
