@@ -41,7 +41,8 @@ export const CollapsiblePanel = forwardRef<
   const renderId = isValidElement<{ id?: string }>(render)
     ? render.props.id
     : undefined;
-  // The render element's id wins when props are merged, so prefer it here to keep aria-controls in sync.
+  // The render element's id wins when props are merged, so prefer it here
+  // to keep aria-controls in sync.
   const id = useId(renderId ?? idProp);
   const { open, setPanelId } = useCollapsibleContext();
 
