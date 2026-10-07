@@ -282,19 +282,24 @@ export function useDrawerResize({
     );
   };
 
-  const isInHitArea = useEventCallback((event: HitEvent) => {
-    if (!enabled) return false;
+  const isOverHandle = ({
+    clientX: x,
+    clientY: y,
+  }: Pick<MouseEvent, "clientX" | "clientY">) => {
     const rect = getHitRect();
-    if (!rect) return false;
-    const { clientX: x, clientY: y } = event;
     return (
+      rect !== null &&
       x >= rect.left &&
       x <= rect.right &&
       y >= rect.top &&
-      y <= rect.bottom &&
-      isViableTarget(event.target)
+      y <= rect.bottom
     );
-  });
+  };
+
+  const isInHitArea = useEventCallback(
+    (event: HitEvent) =>
+      enabled && isOverHandle(event) && isViableTarget(event.target),
+  );
 
   const startDrag = useEventCallback((event: PointerEvent) => {
     const current = readMetrics();
@@ -317,6 +322,7 @@ export function useDrawerResize({
 
   const moveDrag = useEventCallback((event: PointerEvent, drag: DragState) => {
     // Small movement keeps the press a click, so it can start placing the edge by click.
+    // Past the threshold the edge catches up with the pointer, so it stays under it.
     if (!drag.moved) {
       if (
         Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY) <
@@ -402,6 +408,19 @@ export function useDrawerResize({
     }
   });
 
+  const sizeToPlace = (
+    target: HTMLElement,
+    rect: DOMRect,
+    point: Pick<MouseEvent, "clientX" | "clientY">,
+    bounds: Bounds,
+  ) =>
+    clamp(
+      isOverHandle(point)
+        ? measure(target, horizontal)
+        : sizeFromPoint(rect, position, point),
+      bounds,
+    );
+
   const moveGuideToPointer = (
     event: Pick<MouseEvent, "clientX" | "clientY">,
   ) => {
@@ -409,11 +428,7 @@ export function useDrawerResize({
     if (!placing || !element) return;
     const rect = element.getBoundingClientRect();
     moveGuide(
-      edgeFromSize(
-        rect,
-        position,
-        clamp(sizeFromPoint(rect, position, event), placing),
-      ),
+      edgeFromSize(rect, position, sizeToPlace(element, rect, event, placing)),
     );
   };
 
@@ -449,7 +464,7 @@ export function useDrawerResize({
       stopPlacing();
       // The drawer may have moved since placing started, e.g. while sliding in.
       const rect = element.getBoundingClientRect();
-      const next = clamp(sizeFromPoint(rect, position, event), placing);
+      const next = sizeToPlace(element, rect, event, placing);
       const current = clamp(measure(element, horizontal), placing);
       if (next !== current) {
         const applied = applySize(event.nativeEvent, next, placing);
