@@ -26,13 +26,16 @@ function example(name, { code = `export const ${name} = 1;\n`, support } = {}) {
   };
 }
 
-function moduleExample(name) {
+function moduleExample(
+  name,
+  code = "export const Standard = 1;\nexport const Compact = 2;\n",
+) {
   return {
     type: EXAMPLE_NODE,
     name,
     entry: {
       language: "tsx",
-      code: "export const Standard = 1;\nexport const Compact = 2;\n",
+      code,
       absolutePath: "/examples/patterns/forms/index.tsx",
       displayPath: "patterns/forms/index.tsx",
       isModule: true,
@@ -41,11 +44,19 @@ function moduleExample(name) {
   };
 }
 
-function place(children, budget) {
+function linesOfCode(count) {
+  return Array.from(
+    { length: count },
+    (_, index) => `export const line${index} = ${index};`,
+  ).join("\n");
+}
+
+function place(children, budget, lineBudget) {
   const result = placeExamples(children, {
     title: "Button",
     docPath: "components/button.md",
     budget,
+    lineBudget,
   });
   return {
     markdown: stringifyMarkdown({ type: "root", children: result.children }),
@@ -191,5 +202,75 @@ describe("placeExamples with large files and repeated examples", () => {
     expect(files.get("components/button/examples/forms.md")).toContain(
       "Source of the `Standard` and `Compact` examples on the [Button](../../button.md) page.",
     );
+  });
+});
+
+describe("placeExamples with too many lines", () => {
+  const noSupport = { support: [] };
+
+  it("links supporting files before moving examples", () => {
+    const styles = { ...sharedCss, code: ".root {}\n".repeat(30) };
+    const { markdown, files } = place(
+      [example("Basic", { support: [styles] })],
+      Number.POSITIVE_INFINITY,
+      20,
+    );
+    expect(markdown).toContain("_Example:_ `Basic`\n\n```tsx");
+    expect(markdown).toContain(
+      "Supporting file `./styles.css` is in [button/styles.css](./button/examples/files/button-styles-css.md).",
+    );
+    expect([...files.keys()]).toEqual([
+      "components/button/examples/files/button-styles-css.md",
+    ]);
+  });
+
+  it("moves the longest examples, keeping a short first example", () => {
+    const { markdown, files } = place(
+      [
+        example("Basic", noSupport),
+        example("Long", { ...noSupport, code: linesOfCode(40) }),
+        example("Small", noSupport),
+      ],
+      Number.POSITIVE_INFINITY,
+      20,
+    );
+    expect(markdown).toContain("_Example:_ `Basic`\n\n```tsx");
+    expect(markdown).toContain(
+      "_Example:_ `Long` ([source](./button/examples/long.md)).",
+    );
+    expect(markdown).toContain("_Example:_ `Small`\n\n```tsx");
+    expect([...files.keys()]).toEqual(["components/button/examples/long.md"]);
+  });
+
+  it("keeps a short first example when the page is still too long", () => {
+    const { markdown } = place(
+      [
+        example("Basic", noSupport),
+        ...Array.from({ length: 30 }, () => u.paragraph([u.text("Guidance.")])),
+        example("Other", noSupport),
+      ],
+      Number.POSITIVE_INFINITY,
+      20,
+    );
+    expect(markdown).toContain("_Example:_ `Basic`\n\n```tsx");
+    expect(markdown).toContain(
+      "_Example:_ `Other` ([source](./button/examples/other.md)).",
+    );
+  });
+
+  it("moves a long first example, such as a pattern module", () => {
+    const { markdown, files } = place(
+      [
+        moduleExample("Standard", linesOfCode(40)),
+        moduleExample("Compact", linesOfCode(40)),
+      ],
+      Number.POSITIVE_INFINITY,
+      20,
+    );
+    expect(markdown).toContain(
+      "_Example:_ `Standard`, exported by `patterns/forms/index.tsx` ([source](./button/examples/forms.md)).",
+    );
+    expect(markdown).not.toContain("```tsx");
+    expect([...files.keys()]).toEqual(["components/button/examples/forms.md"]);
   });
 });

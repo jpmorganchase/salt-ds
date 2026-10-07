@@ -239,6 +239,13 @@ describe("generateAgentDocs", () => {
     expect(button).toContain("Supporting file `./styles.css`:");
     expect(button).toContain("## Accessibility");
     expect(button).toContain("- **Enter**");
+    // Accessibility comes before the examples, which are the longest part.
+    expect(button.indexOf("## Usage")).toBeLessThan(
+      button.indexOf("## Accessibility"),
+    );
+    expect(button.indexOf("## Accessibility")).toBeLessThan(
+      button.indexOf("## Examples"),
+    );
 
     const alertDialog = result.outputs
       .get("@salt-ds/core")
@@ -388,7 +395,7 @@ title: Forms
 layout: DetailPattern
 ---
 
-${"Stack fields vertically. ".repeat(1000)}
+${"Stack fields vertically.\n\n".repeat(1000)}
 `,
     });
     const result = await generateAgentDocs({
@@ -399,6 +406,32 @@ ${"Stack fields vertically. ".repeat(1000)}
     expect(result.warnings).toContainEqual(
       expect.stringMatching(
         /^@salt-ds\/core\/docs\/patterns\/forms\.md is \d+ KB .*site\/docs\/patterns\/forms\.mdx\.$/,
+      ),
+    );
+    expect(result.notes).not.toContainEqual(
+      expect.stringContaining("patterns/forms.md is"),
+    );
+  });
+
+  it("suggests shortening a page longer than agents usually read", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/patterns/forms.mdx": `---
+title: Forms
+layout: DetailPattern
+---
+
+${"Stack fields vertically.\n\n".repeat(150)}
+`,
+    });
+    const result = await generateAgentDocs({
+      repoRoot,
+      propsProvider,
+      write: false,
+    });
+    expect(result.warnings).toEqual([]);
+    expect(result.notes).toContainEqual(
+      expect.stringMatching(
+        /^@salt-ds\/core\/docs\/patterns\/forms\.md is \d+ lines, .*site\/docs\/patterns\/forms\.mdx\.$/,
       ),
     );
   });

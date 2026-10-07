@@ -5,11 +5,15 @@ export const GENERATED_MARKER =
 
 export const DOCS_DIRECTORY = "docs";
 
-/** Component pages are split into these tabs on the site and merged into one file. */
+/**
+ * Component pages are split into these tabs on the site and merged into one
+ * file in this order. Accessibility comes before the examples, which are the
+ * longest part, so that it is within the lines agents read first.
+ */
 export const COMPONENT_TABS = [
   { file: "usage.mdx", heading: "Usage" },
-  { file: "examples.mdx", heading: "Examples" },
   { file: "accessibility.mdx", heading: "Accessibility" },
+  { file: "examples.mdx", heading: "Examples" },
 ];
 
 export const TAB_ROUTE_SEGMENTS = new Set(
@@ -60,6 +64,14 @@ export const MAX_INLINE_SUPPORT_FILE_BYTES = 8 * 1024;
  * files. Many coding agents read a file in one call of limited size.
  */
 export const MAX_PAGE_BYTES = 20 * 1024;
+
+/**
+ * Pages longer than this also move example source into separate files, apart
+ * from a short first example. Coding agents read a file from the top a couple
+ * of hundred lines at a time and often stop after the first read, so guidance
+ * further down a page is easily missed.
+ */
+export const MAX_PAGE_LINES = 200;
 
 /**
  * The Salt block that agents-md.mjs writes to AGENTS.md is sent with every
