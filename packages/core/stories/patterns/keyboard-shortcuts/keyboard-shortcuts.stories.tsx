@@ -91,7 +91,9 @@ function highlightTextMatch(text: string, query: string): React.ReactNode {
   return text.split(regex).map((part, i) =>
     part.toLowerCase() === query.toLowerCase() ? (
       // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
-      <strong key={i}>{part}</strong>
+      <mark key={i} className="keyboardShortcuts-match">
+        {part}
+      </mark>
     ) : (
       part
     ),

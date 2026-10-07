@@ -29,6 +29,12 @@ table.saltTable td.keyboardShortcuts-td {
   position: "relative";
 }
 
+.keyboardShortcuts-match {
+  background: transparent;
+  color: inherit;
+  font-weight: var(--salt-text-fontWeight-strong);
+}
+
 .keyboardShortcuts-connector {
   display: inline-block;
   vertical-align: middle;
