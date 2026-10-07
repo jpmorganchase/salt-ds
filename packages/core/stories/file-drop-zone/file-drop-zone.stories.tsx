@@ -107,9 +107,9 @@ const FileDropzoneTemplate: StoryFn<
         onDrop={handleDrop}
       >
         <FileDropZoneIcon status={status} />
-        <strong>
+        <Text styleAs="inherit" fontWeight="bolder">
           {status !== undefined ? statusTitles[status] : "Drop files here or"}
-        </strong>
+        </Text>
         <FileDropZoneTrigger
           accept={accept}
           disabled={disabled}
@@ -182,7 +182,7 @@ const Results = ({ result }: ResultCardProps) => {
   const renderFiles = useCallback(
     (files: readonly ResultCardFile[]) =>
       files.length === 0 ? (
-        <strong>No files selected.</strong>
+        <Text fontWeight="bolder">No files selected.</Text>
       ) : (
         files.map(({ name, size }) => {
           const label = `${name} - ${size} bytes`;
@@ -223,7 +223,7 @@ const Results = ({ result }: ResultCardProps) => {
       {!result?.files && (
         <Banner>
           <BannerContent>
-            <strong>No files have been added.</strong>
+            <Text fontWeight="bolder">No files have been added.</Text>
           </BannerContent>
         </Banner>
       )}

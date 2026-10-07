@@ -70,10 +70,18 @@
   opacity: 0.4;
 }
 
-.saltOnSolidButton strong {
+/* Lets a nested Text with styleAs="inherit" use the action weights */
+.saltOnSolidButton {
+  --text-fontWeight-strong: var(--salt-text-action-fontWeight-strong);
+  --text-fontWeight-small: var(--salt-text-action-fontWeight-small);
+}
+
+.saltOnSolidButton strong,
+.saltOnSolidButton b {
   font-weight: var(--salt-text-action-fontWeight-strong);
 }
 
+/* Deprecated, use a nested Text with styleAs="inherit" and fontWeight="lighter" instead */
 .saltOnSolidButton small {
   font-size: inherit;
   font-weight: var(--salt-text-action-fontWeight-small);

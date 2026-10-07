@@ -598,9 +598,7 @@ export const WithItemRenderer: StoryFn<ListProps<State>> = (props) => {
 const ListPlaceholder = () => (
   <StackLayout gap={1} align="center">
     <StatusIndicator status="info" size={2} />
-    <Text>
-      <strong>No source found</strong>
-    </Text>
+    <Text fontWeight="bolder">No source found</Text>
     <Text>Did you hide it somewhere?</Text>
   </StackLayout>
 );
