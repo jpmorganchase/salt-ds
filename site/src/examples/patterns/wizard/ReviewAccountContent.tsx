@@ -14,7 +14,7 @@ import {
   Text,
 } from "@salt-ds/core";
 import { accountTypeOptions } from "./AccountTypeContent";
-import type { AccountFormData } from "./index";
+import type { AccountFormData } from "./types";
 
 export const ReviewAccountContent = ({
   formData,

@@ -67,9 +67,9 @@ export const MAX_PAGE_BYTES = 20 * 1024;
 
 /**
  * Pages longer than this also move example source into separate files, apart
- * from a short first example. Coding agents read a file from the top a couple
- * of hundred lines at a time and often stop after the first read, so guidance
- * further down a page is easily missed.
+ * from a short first example on component pages. Coding agents read a file
+ * from the top a couple of hundred lines at a time and often stop after the
+ * first read, so guidance further down a page is easily missed.
  */
 export const MAX_PAGE_LINES = 200;
 

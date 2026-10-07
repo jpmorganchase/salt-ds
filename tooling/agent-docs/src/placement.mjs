@@ -1,4 +1,3 @@
-import path from "node:path";
 import { MAX_PAGE_BYTES, MAX_PAGE_LINES } from "./config.mjs";
 import { relativeDocLink } from "./links.mjs";
 import { EXAMPLE_NODE, stringifyMarkdown, u } from "./mdx.mjs";
@@ -13,18 +12,11 @@ function slugify(value) {
 }
 
 function exampleLabel(example) {
-  const label = [
+  return [
     u.emphasis([u.text("Example:")]),
     u.text(" "),
     u.inlineCode(example.name),
   ];
-  if (example.entry.isModule) {
-    label.push(
-      u.text(", exported by "),
-      u.inlineCode(example.entry.displayPath),
-    );
-  }
-  return label;
 }
 
 /**
@@ -73,13 +65,7 @@ function exampleNodes(example, shown, linkShared, { label = true } = {}) {
   }
   shown.add(entry.absolutePath);
   return [
-    ...(label
-      ? [
-          u.paragraph(
-            entry.isModule ? [...exampleText, u.text(":")] : exampleText,
-          ),
-        ]
-      : []),
+    ...(label ? [u.paragraph(exampleText)] : []),
     u.code(entry.language, entry.code.trimEnd()),
     ...support.flatMap((file) => supportNodes(file, shown, linkShared)),
   ];
@@ -110,25 +96,18 @@ function uniquePath(paths, candidate) {
   return docPath;
 }
 
-/**
- * Groups examples that move together: the examples a page shows from one
- * file, which is each repeat of one example or every example exported by the
- * same module, since they share its source.
- */
+/** Groups the repeats of one example on a page, which move together. */
 function groupExamples(examples, base) {
   const groups = new Map();
   const paths = new Set();
   for (const example of examples) {
     const key = example.entry.absolutePath;
     if (!groups.has(key)) {
-      const name = example.entry.isModule
-        ? path.posix.basename(path.posix.dirname(example.entry.displayPath))
-        : example.name;
       groups.set(key, {
         examples: [],
         docPath: uniquePath(
           paths,
-          `${base}/examples/${slugify(name) || "example"}.md`,
+          `${base}/examples/${slugify(example.name) || "example"}.md`,
         ),
       });
     }
@@ -143,15 +122,21 @@ function groupExamples(examples, base) {
  * Renders the LivePreview examples on a page. When the page would exceed
  * `budget` bytes or `lineBudget` lines, it links its examples' supporting
  * files instead of showing them, then moves the largest examples to files
- * under `<page>/examples/`, linked from the page, until it fits. A first
- * example of up to half of `lineBudget` stays unless the page is still over
- * `budget` without the others. Large supporting files, and those that more
- * than one moved example uses, are always written once under
- * `<page>/examples/files/` and linked.
+ * under `<page>/examples/`, linked from the page, until it fits. With
+ * `keepShortFirst`, a first example of up to half of `lineBudget` stays unless
+ * the page is still over `budget` without the others. Large supporting files,
+ * and those that more than one moved example uses, are always written once
+ * under `<page>/examples/files/` and linked.
  */
 export function placeExamples(
   children,
-  { title, docPath, budget = MAX_PAGE_BYTES, lineBudget = MAX_PAGE_LINES },
+  {
+    title,
+    docPath,
+    budget = MAX_PAGE_BYTES,
+    lineBudget = MAX_PAGE_LINES,
+    keepShortFirst = true,
+  },
 ) {
   const examples = collectExamples(children);
   const base = docPath.replace(/\.md$/, "");
@@ -225,12 +210,12 @@ export function placeExamples(
   if (groups.length > 0 && !fits(placed)) {
     const sizeOf = (group) =>
       measure(exampleNodes(group.examples[0], new Set(), () => "#"));
-    // The first example usually shows the basic composition, so a short one
-    // stays on the page unless the page is too large to read in one call.
-    // A long one, such as a pattern module holding every example, moves like
-    // the others.
+    // A short first example, usually the basic composition, can stay on the
+    // page unless the page is too large to read in one call. A long one
+    // moves like the others.
     const [firstGroup, ...otherGroups] = groups;
-    const keepFirst = sizeOf(firstGroup).lines <= lineBudget / 2;
+    const keepFirst =
+      keepShortFirst && sizeOf(firstGroup).lines <= lineBudget / 2;
     // Largest first, measured against whichever budget it uses more of.
     const candidates = (keepFirst ? otherGroups : groups)
       .map((group) => {
@@ -266,20 +251,10 @@ export function placeExamples(
   }
   const backLink = (fromDocPath) =>
     u.link(relativeDocLink(fromDocPath, docPath), [u.text(title)]);
-  const nameList = (names) =>
-    names.flatMap((name, index) => [
-      ...(index > 0
-        ? [u.text(index === names.length - 1 ? " and " : ", ")]
-        : []),
-      u.inlineCode(name),
-    ]);
 
   const files = movedGroups.map((group) => {
     const [first] = group.examples;
-    const heading = first.entry.isModule
-      ? `${title} examples: ${first.entry.displayPath}`
-      : `${title} example: ${first.name}`;
-    const names = [...new Set(group.examples.map((example) => example.name))];
+    const heading = `${title} example: ${first.name}`;
     // Large files, files shared with other examples and then the largest
     // files if the example is still too long are linked rather than shown.
     const linked = new Set(
@@ -296,8 +271,8 @@ export function placeExamples(
           u.heading(1, [u.text(heading)]),
           u.paragraph([
             u.text("Source of the "),
-            ...nameList(names),
-            u.text(names.length > 1 ? " examples on the " : " example on the "),
+            u.inlineCode(first.name),
+            u.text(" example on the "),
             backLink(group.docPath),
             u.text(" page."),
           ]),

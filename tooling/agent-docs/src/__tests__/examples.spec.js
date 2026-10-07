@@ -2,7 +2,7 @@ import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
-import { createExampleResolver, exportsName } from "../examples.mjs";
+import { createExampleResolver } from "../examples.mjs";
 
 const roots = [];
 
@@ -33,7 +33,6 @@ describe("createExampleResolver", () => {
     const example = await examples.resolve("button", "Primary");
     expect(example.entry).toMatchObject({
       displayPath: "button/Primary.tsx",
-      isModule: false,
     });
     expect(example.support).toEqual([
       expect.objectContaining({
@@ -44,22 +43,23 @@ describe("createExampleResolver", () => {
     ]);
   });
 
-  it("resolves a named export of a module's index.tsx", async () => {
+  it("resolves pattern examples the same way, one file per example", async () => {
     const examples = await createExamples({
-      "patterns/forms/index.tsx":
+      "patterns/forms/index.ts": 'export * from "./Standard";\n',
+      "patterns/forms/Standard.tsx":
         'import { fields } from "./fields";\nexport const Standard = () => fields;\n',
       "patterns/forms/fields.ts": "export const fields = [];\n",
     });
     const example = await examples.resolve("patterns/forms", "Standard");
     expect(example.entry).toMatchObject({
-      displayPath: "patterns/forms/index.tsx",
-      isModule: true,
+      displayPath: "patterns/forms/Standard.tsx",
     });
     expect(example.support.map((file) => file.displayPath)).toEqual([
       "./fields.ts",
     ]);
     expect(await examples.resolve("patterns/forms", "Missing")).toEqual({
-      error: "Example patterns/forms/index.tsx has no Missing export.",
+      error:
+        "Example patterns/forms/Missing.tsx does not exist in site/src/examples.",
     });
   });
 
@@ -80,18 +80,5 @@ describe("createExampleResolver", () => {
     expect(await examples.resolve("button", "Primary")).toEqual({
       error: "Example button/Primary.tsx does not exist in site/src/examples.",
     });
-  });
-});
-
-describe("exportsName", () => {
-  it("finds declared and listed exports", () => {
-    expect(exportsName("export const Standard = 1;", "Standard")).toBe(true);
-    expect(exportsName("export function Compact() {}", "Compact")).toBe(true);
-    expect(
-      exportsName("const A = 1;\nexport { A as Renamed };", "Renamed"),
-    ).toBe(true);
-    expect(exportsName("export const StandardLayout = 1;", "Standard")).toBe(
-      false,
-    );
   });
 });

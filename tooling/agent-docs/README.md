@@ -13,7 +13,7 @@ The generated folders are ignored by Git. Generation replaces a `docs` folder on
 ## What it generates
 
 - One page per component: the overview frontmatter and the usage, accessibility and examples tabs merged into one file, in that order so that accessibility guidance comes before the long examples. `PropsTable` becomes a props table (from `react-docgen-typescript`, as on the site), and each `LivePreview` becomes the example's source plus the local files it imports.
-- One page per pattern, getting-started, foundations, themes and about page. A pattern's `LivePreview` names an export of `site/src/examples/patterns/<pattern>/index.tsx`; the page shows that module's source once for all of its examples.
+- One page per pattern, getting-started, foundations, themes and about page. Pattern examples are one file per example, `site/src/examples/patterns/<pattern>/<Example>.tsx`, as component examples are.
 - Reference lists: every design token (`@salt-ds/theme/docs/tokens.md`), icon (`@salt-ds/icons/docs/icons.md`) and country symbol (`@salt-ds/countries/docs/country-symbols.md`). The token list is too long to read in one go, so `tokens.md` links to a file per tier, or per group for long tiers, split into parts where a group is still too long.
 - An `index.md` per package listing every page with its summary and `alsoKnownAs` names, which agents use to find the right page. Summaries are shortened so the index fits in one read, and generation warns when an index grows past 20 KB.
 - A `manifest.json` per package listing the same pages with their `alsoKnownAs` names, for `agents-md.mjs`.
@@ -26,9 +26,9 @@ Links between pages in one package are relative. Links to another package use `@
 Coding agents read a file from the top a couple of hundred lines at a time and often stop after the first read, and some read a file in one call of limited size. So a page over 200 lines (`MAX_PAGE_LINES` in [`src/config.mjs`](./src/config.mjs)) or 20 KB (`MAX_PAGE_BYTES`) keeps its guidance and moves example source out until it fits:
 
 1. The supporting files of its examples, such as styles and data, are written to `<page>/examples/files/` and linked.
-2. Its largest examples move to `<page>/examples/<example>.md`. The first example usually shows the basic composition, so it stays on the page if it is at most 100 lines (half of `MAX_PAGE_LINES`), unless the page is still over 20 KB. A longer first example, such as a pattern module holding every example, moves like the others.
+2. Its largest examples move to `<page>/examples/<example>.md`. A component page's examples come after its usage and accessibility guidance, and the first usually shows the basic composition, so it stays on the page if it is at most 100 lines (half of `MAX_PAGE_LINES`), unless the page is still over 20 KB. Other pages, such as patterns, can show an example before their guidance, so all of their examples move.
 
-The page links to each moved example, and each moved example links back. Examples from one file move together, so a pattern module or an example shown twice is written once. Supporting files over 8 KB, usually example data, are always written once to `<page>/examples/files/` and linked, as are files that more than one moved example uses and the largest files of an example that is still too long.
+The page links to each moved example, and each moved example links back. An example shown twice on a page is written once. Supporting files over 8 KB, usually example data, are always written once to `<page>/examples/files/` and linked, as are files that more than one moved example uses and the largest files of an example that is still too long.
 
 Generation warns about a page that is still over 20 KB with its examples moved out, and lists a page still over 200 lines as an authoring suggestion, because only shortening its site pages can fix them.
 

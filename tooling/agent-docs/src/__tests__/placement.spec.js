@@ -20,27 +20,8 @@ function example(name, { code = `export const ${name} = 1;\n`, support } = {}) {
       code,
       absolutePath: `/examples/button/${name}.tsx`,
       displayPath: `button/${name}.tsx`,
-      isModule: false,
     },
     support: support ?? [sharedCss],
-  };
-}
-
-function moduleExample(
-  name,
-  code = "export const Standard = 1;\nexport const Compact = 2;\n",
-) {
-  return {
-    type: EXAMPLE_NODE,
-    name,
-    entry: {
-      language: "tsx",
-      code,
-      absolutePath: "/examples/patterns/forms/index.tsx",
-      displayPath: "patterns/forms/index.tsx",
-      isModule: true,
-    },
-    support: [],
   };
 }
 
@@ -51,12 +32,13 @@ function linesOfCode(count) {
   ).join("\n");
 }
 
-function place(children, budget, lineBudget) {
+function place(children, budget, lineBudget, keepShortFirst) {
   const result = placeExamples(children, {
     title: "Button",
     docPath: "components/button.md",
     budget,
     lineBudget,
+    keepShortFirst,
   });
   return {
     markdown: stringifyMarkdown({ type: "root", children: result.children }),
@@ -84,20 +66,6 @@ describe("placeExamples", () => {
       "> Supporting file `./styles.css` is shown above.",
     );
     expect(files.size).toBe(0);
-  });
-
-  it("shows a module's source once for all of its examples", () => {
-    const { markdown } = place(
-      [moduleExample("Standard"), moduleExample("Compact")],
-      Number.POSITIVE_INFINITY,
-    );
-    expect(markdown).toContain(
-      "_Example:_ `Standard`, exported by `patterns/forms/index.tsx`:\n\n```tsx",
-    );
-    expect(markdown).toContain(
-      "_Example:_ `Compact`, exported by `patterns/forms/index.tsx` (shown above).",
-    );
-    expect(markdown.match(/```tsx/g)).toHaveLength(1);
   });
 
   it("moves the largest examples off a long page, keeping the first", () => {
@@ -190,17 +158,10 @@ describe("placeExamples with large files and repeated examples", () => {
     ).toHaveLength(2);
   });
 
-  it("names each example once in a moved module's file", () => {
-    const { files } = place(
-      [
-        moduleExample("Standard"),
-        moduleExample("Compact"),
-        moduleExample("Standard"),
-      ],
-      10,
-    );
-    expect(files.get("components/button/examples/forms.md")).toContain(
-      "Source of the `Standard` and `Compact` examples on the [Button](../../button.md) page.",
+  it("names the example in a moved example's file", () => {
+    const { files } = place([example("Accented"), example("Accented")], 10);
+    expect(files.get("components/button/examples/accented.md")).toContain(
+      "# Button example: Accented\n\nSource of the `Accented` example on the [Button](../../button.md) page.",
     );
   });
 });
@@ -258,19 +219,35 @@ describe("placeExamples with too many lines", () => {
     );
   });
 
-  it("moves a long first example, such as a pattern module", () => {
+  it("moves a long first example like the others", () => {
     const { markdown, files } = place(
       [
-        moduleExample("Standard", linesOfCode(40)),
-        moduleExample("Compact", linesOfCode(40)),
+        example("Long", { ...noSupport, code: linesOfCode(40) }),
+        example("Small", noSupport),
       ],
       Number.POSITIVE_INFINITY,
       20,
     );
     expect(markdown).toContain(
-      "_Example:_ `Standard`, exported by `patterns/forms/index.tsx` ([source](./button/examples/forms.md)).",
+      "_Example:_ `Long` ([source](./button/examples/long.md)).",
+    );
+    expect(markdown).toContain("_Example:_ `Small`\n\n```tsx");
+    expect([...files.keys()]).toEqual(["components/button/examples/long.md"]);
+  });
+
+  it("moves a short first example too when the page doesn't keep it", () => {
+    const { markdown } = place(
+      [
+        example("Basic", noSupport),
+        ...Array.from({ length: 30 }, () => u.paragraph([u.text("Guidance.")])),
+      ],
+      Number.POSITIVE_INFINITY,
+      20,
+      false,
+    );
+    expect(markdown).toContain(
+      "_Example:_ `Basic` ([source](./button/examples/basic.md)).",
     );
     expect(markdown).not.toContain("```tsx");
-    expect([...files.keys()]).toEqual(["components/button/examples/forms.md"]);
   });
 });

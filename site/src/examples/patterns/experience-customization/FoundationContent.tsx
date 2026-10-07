@@ -19,7 +19,7 @@ import {
   useTheme,
 } from "@salt-ds/core";
 import { type Ref, type SyntheticEvent, useEffect, useRef } from "react";
-import type { FormContentProps } from "./index";
+import type { FormContentProps } from "./types";
 
 const HighDensityTable =
   "/img/examples/experience-customization/table-high.png";

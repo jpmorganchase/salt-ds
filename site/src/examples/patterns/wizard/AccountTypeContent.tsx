@@ -7,7 +7,7 @@ import {
   StackLayout,
   Text,
 } from "@salt-ds/core";
-import type { FormContentProps } from "./index";
+import type { FormContentProps } from "./types";
 
 export const accountTypeOptions = [
   {

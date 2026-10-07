@@ -9,12 +9,12 @@ import {
   StackLayout,
   Switch,
 } from "@salt-ds/core";
-import type { FormContentProps } from "./index";
 import {
   StockCard,
   type StockCardData,
   type StockCardProps,
 } from "./StockCard";
+import type { FormContentProps } from "./types";
 
 const NegativeTrend =
   "/img/examples/experience-customization/negative-trend.png";
