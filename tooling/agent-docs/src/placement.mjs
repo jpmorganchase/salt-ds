@@ -1,5 +1,5 @@
 import path from "node:path";
-import { MAX_PAGE_BYTES } from "./config.mjs";
+import { MAX_PAGE_BYTES, MAX_PAGE_LINES } from "./config.mjs";
 import { relativeDocLink } from "./links.mjs";
 import { EXAMPLE_NODE, stringifyMarkdown, u } from "./mdx.mjs";
 
@@ -93,10 +93,12 @@ function collectExamples(nodes, examples = []) {
   return examples;
 }
 
-function byteLength(nodes) {
-  return Buffer.byteLength(
-    stringifyMarkdown({ type: "root", children: nodes }),
-  );
+function measure(nodes) {
+  const markdown = stringifyMarkdown({ type: "root", children: nodes });
+  return {
+    bytes: Buffer.byteLength(markdown),
+    lines: markdown.trimEnd().split("\n").length,
+  };
 }
 
 function uniquePath(paths, candidate) {
@@ -139,14 +141,17 @@ function groupExamples(examples, base) {
 
 /**
  * Renders the LivePreview examples on a page. When the page would exceed
- * `budget`, the largest examples move to files under `<page>/examples/`,
- * linked from the page, until it fits. Large supporting files, and those that
- * more than one moved example uses, are written once under
+ * `budget` bytes or `lineBudget` lines, it links its examples' supporting
+ * files instead of showing them, then moves the largest examples to files
+ * under `<page>/examples/`, linked from the page, until it fits. A first
+ * example of up to half of `lineBudget` stays unless the page is still over
+ * `budget` without the others. Large supporting files, and those that more
+ * than one moved example uses, are always written once under
  * `<page>/examples/files/` and linked.
  */
 export function placeExamples(
   children,
-  { title, docPath, budget = MAX_PAGE_BYTES },
+  { title, docPath, budget = MAX_PAGE_BYTES, lineBudget = MAX_PAGE_LINES },
 ) {
   const examples = collectExamples(children);
   const base = docPath.replace(/\.md$/, "");
@@ -156,6 +161,8 @@ export function placeExamples(
   // Supporting files written once under `<page>/examples/files/` and linked.
   const sharedFiles = new Map();
   const sharedPaths = new Set();
+  // Whether the page links its examples' supporting files instead of showing them.
+  let linkSupport = false;
   const fileLink = (fromDocPath, file) => {
     if (!sharedFiles.has(file.absolutePath)) {
       sharedFiles.set(file.absolutePath, {
@@ -173,14 +180,17 @@ export function placeExamples(
   };
 
   const render = () => {
+    // Only the supporting files this rendering links are written.
+    sharedFiles.clear();
+    sharedPaths.clear();
     const shown = new Set();
-    const linkLarge = (file) =>
-      file.large ? fileLink(docPath, file) : undefined;
+    const linkFile = (file) =>
+      file.large || linkSupport ? fileLink(docPath, file) : undefined;
     const replace = (nodes) =>
       nodes.flatMap((node) => {
         if (node.type === EXAMPLE_NODE) {
           if (!moved.has(node.group)) {
-            return exampleNodes(node, shown, linkLarge);
+            return exampleNodes(node, shown, linkFile);
           }
           return [
             u.paragraph([
@@ -200,28 +210,46 @@ export function placeExamples(
     return replace(children);
   };
 
+  const withinBytes = (nodes) => measure(nodes).bytes <= budget;
+  const fits = (nodes) => {
+    const size = measure(nodes);
+    return size.bytes <= budget && size.lines <= lineBudget;
+  };
+
   let placed = render();
-  if (groups.length > 0 && byteLength(placed) > budget) {
-    // The first example usually shows the basic composition, so it moves last.
+  if (groups.length > 0 && !fits(placed)) {
+    // Supporting files, such as styles and data, are linked rather than shown.
+    linkSupport = true;
+    placed = render();
+  }
+  if (groups.length > 0 && !fits(placed)) {
+    const sizeOf = (group) =>
+      measure(exampleNodes(group.examples[0], new Set(), () => "#"));
+    // The first example usually shows the basic composition, so a short one
+    // stays on the page unless the page is too large to read in one call.
+    // A long one, such as a pattern module holding every example, moves like
+    // the others.
     const [firstGroup, ...otherGroups] = groups;
-    const candidates = [
-      ...otherGroups
-        .map((group) => ({
+    const keepFirst = sizeOf(firstGroup).lines <= lineBudget / 2;
+    // Largest first, measured against whichever budget it uses more of.
+    const candidates = (keepFirst ? otherGroups : groups)
+      .map((group) => {
+        const size = sizeOf(group);
+        return {
           group,
-          bytes: byteLength(
-            exampleNodes(group.examples[0], new Set(), (file) =>
-              file.large ? "#" : undefined,
-            ),
-          ),
-        }))
-        .sort((left, right) => right.bytes - left.bytes)
-        .map(({ group }) => group),
-      firstGroup,
-    ];
+          share: Math.max(size.bytes / budget, size.lines / lineBudget),
+        };
+      })
+      .sort((left, right) => right.share - left.share)
+      .map(({ group }) => group);
     for (const group of candidates) {
       moved.add(group);
       placed = render();
-      if (byteLength(placed) <= budget) break;
+      if (fits(placed)) break;
+    }
+    if (keepFirst && !withinBytes(placed)) {
+      moved.add(firstGroup);
+      placed = render();
     }
   }
 

@@ -7,6 +7,7 @@ import {
   GENERATED_MARKER,
   MAX_AGENTS_BLOCK_BYTES,
   MAX_PAGE_BYTES,
+  MAX_PAGE_LINES,
   SITE_ORIGIN,
 } from "./config.mjs";
 import { createExampleResolver } from "./examples.mjs";
@@ -364,14 +365,19 @@ export async function generateAgentDocs({
       target.files.set(file.docPath, file.markdown);
     }
     const pageBytes = Buffer.byteLength(rendered.markdown);
+    const pageLines = rendered.markdown.trimEnd().split("\n").length;
+    // A component page merges its tab pages, so name the folder holding them.
+    const source =
+      doc.kind === "component"
+        ? `${path.posix.dirname(doc.index.relativePath)}/`
+        : doc.page.relativePath;
     if (pageBytes > MAX_PAGE_BYTES) {
-      // A component page merges its tab pages, so name the folder holding them.
-      const source =
-        doc.kind === "component"
-          ? `${path.posix.dirname(doc.index.relativePath)}/`
-          : doc.page.relativePath;
       warnings.push(
         `${doc.packageName}/docs/${doc.docPath} is ${Math.round(pageBytes / 1024)} KB with its examples moved out, so agents may not read it in one go. Consider shortening site/docs/${source}.`,
+      );
+    } else if (pageLines > MAX_PAGE_LINES) {
+      notes.push(
+        `${doc.packageName}/docs/${doc.docPath} is ${pageLines} lines, and agents often stop reading after about ${MAX_PAGE_LINES}, so its later sections may go unread. Consider shortening site/docs/${source}.`,
       );
     }
     target.entries.push({
