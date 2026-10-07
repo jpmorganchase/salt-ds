@@ -144,7 +144,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     const { context, floating, elements } = useFloatingUI({
       open: showComponent,
-      onOpenChange,
+      onOpenChange: (newOpen, event) => {
+        if (!newOpen && isCancelPlacingEvent(event)) return;
+        onOpenChange?.(newOpen);
+      },
     });
 
     const {
@@ -153,6 +156,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       isHovered,
       isPlacing,
       isInHitArea,
+      isCancelPlacingEvent,
       separatorProps,
       guideProps,
     } = useDrawerResize({

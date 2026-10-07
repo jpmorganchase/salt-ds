@@ -76,6 +76,8 @@ export interface UseDrawerResizeResult {
   isHovered: boolean;
   isPlacing: boolean;
   isInHitArea: (event: HitEvent) => boolean;
+  /** Whether the event is the Escape that cancelled placing, so it shouldn't close the drawer. */
+  isCancelPlacingEvent: (event?: Event) => boolean;
   separatorProps: SeparatorProps;
   guideProps: GuideProps;
 }
@@ -217,6 +219,7 @@ export function useDrawerResize({
   const placingRef = useRef<PlacingState | null>(null);
   const handleRef = useRef<HTMLElement | null>(null);
   const guideRef = useRef<HTMLElement | null>(null);
+  const cancelPlacingEventRef = useRef<Event | null>(null);
   const restoreSizeRef = useRef<number | null>(null);
   const initialSizeRef = useRef<number | null>(null);
   const axisRef = useRef(horizontal);
@@ -572,8 +575,7 @@ export function useDrawerResize({
         stopPlacing();
         if (key === "Escape") {
           event.preventDefault();
-          // Keeps the drawer open.
-          event.stopPropagation();
+          cancelPlacingEventRef.current = event.nativeEvent;
           return;
         }
       }
@@ -626,6 +628,12 @@ export function useDrawerResize({
       const applied = applySize(event.nativeEvent, next, current);
       onResizeEnd?.(event.nativeEvent, applied);
     },
+  );
+
+  const isCancelPlacingEvent = useCallback(
+    (event?: Event) =>
+      event !== undefined && event === cancelPlacingEventRef.current,
+    [],
   );
 
   const onFocus = useCallback(() => {
@@ -704,6 +712,7 @@ export function useDrawerResize({
     isHovered: interaction === "hover",
     isPlacing: interaction === "placing",
     isInHitArea,
+    isCancelPlacingEvent,
     separatorProps: {
       role: "separator",
       tabIndex: 0,
