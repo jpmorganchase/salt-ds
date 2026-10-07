@@ -35,12 +35,9 @@ export const Highlighter = (
     <span>
       {text.split(matchRegex).map((part, index) =>
         part.match(matchRegex) ? (
-          <strong
-            className={withBaseName("highlight")}
-            key={`${index}-${part}`}
-          >
+          <mark className={withBaseName("highlight")} key={`${index}-${part}`}>
             {part}
-          </strong>
+          </mark>
         ) : (
           part
         ),

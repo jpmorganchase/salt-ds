@@ -31,9 +31,11 @@ describe("A highlighter", () => {
         <Highlighter matchPattern="OR" text={text} />
       </span>,
     );
-    expect(
-      document.querySelectorAll(".saltHighlighter-highlight"),
-    ).toHaveLength(2);
+    const highlights = document.querySelectorAll(".saltHighlighter-highlight");
+    expect(highlights).toHaveLength(2);
+    for (const highlight of highlights) {
+      expect(highlight.tagName).toBe("MARK");
+    }
     await expect
       .element(page.getByTestId("test-string"))
       .toHaveTextContent(text);

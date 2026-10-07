@@ -28,9 +28,9 @@ export const calculateBestIndex = (
 };
 
 /**
- * Highlight a section of text with a <strong> tag
+ * Highlight a section of text with a <mark> tag
  *
- * This is required in addition to the Salt `<Hightlight>` component because
+ * This is required in addition to the Salt `<Highlighter>` component because
  * the Fuse.js "matches" may include text that differs slightly from the original
  * search term. For example, if the search term is "foo", the match may be "fool".
  *
@@ -44,7 +44,7 @@ export const highlightMatch = (text: string, index: Fuse.RangeTuple) => {
     text.substring(index[1] + 1),
   ];
   if (parts[1].length === 0) return text;
-  return `${parts[0]}<strong>${parts[1]}</strong>${parts[2]}`;
+  return `${parts[0]}<mark>${parts[1]}</mark>${parts[2]}`;
 };
 
 export const getBestMatch = (

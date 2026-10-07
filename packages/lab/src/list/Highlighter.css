@@ -1,3 +1,5 @@
 .saltHighlighter-highlight {
+  background: transparent;
+  color: inherit;
   font-weight: var(--salt-text-fontWeight-strong); /* TODO: Check with design */
 }

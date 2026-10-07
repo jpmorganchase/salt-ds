@@ -11,6 +11,12 @@
   max-width: 50vw;
 }
 
+.resultDescription mark {
+  background: transparent;
+  color: inherit;
+  font-weight: var(--salt-text-label-fontWeight-strong);
+}
+
 .statusOption {
   display: flex;
   align-items: center;
