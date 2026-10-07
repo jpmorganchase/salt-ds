@@ -283,9 +283,7 @@ const LayerLayoutCenterExample: StoryFn<typeof LayerLayout> = (args) => {
           <StackLayout gap={2} align="center">
             <StackLayout gap={1} align="center">
               <StatusIndicator status="error" size={2} />
-              <Text>
-                <strong>There's been a system error</strong>
-              </Text>
+              <Text fontWeight="bolder">There's been a system error</Text>
               <Text>It should be temporary, so please try again.</Text>
             </StackLayout>
             <Button onClick={hide}>Close Layer</Button>

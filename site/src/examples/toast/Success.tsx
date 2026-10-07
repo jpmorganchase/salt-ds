@@ -5,9 +5,7 @@ import type { ReactElement } from "react";
 export const Success = (): ReactElement => (
   <Toast status="success" style={{ width: 260 }}>
     <ToastContent>
-      <Text>
-        <strong>File uploaded</strong>
-      </Text>
+      <Text fontWeight="bolder">File uploaded</Text>
       <div>
         The project file has been successfully uploaded to the shared drive.
       </div>

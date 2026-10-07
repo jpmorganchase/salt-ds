@@ -17,7 +17,9 @@ export const Disabled = (): ReactElement => (
     disabled
   >
     <FileDropZoneIcon />
-    <strong>Drop files here or</strong>
+    <Text styleAs="inherit" fontWeight="bolder">
+      Drop files here or
+    </Text>
     <FileDropZoneTrigger accept=".png" disabled onChange={validate} />
     <Text disabled>Only .png files</Text>
   </FileDropZone>

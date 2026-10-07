@@ -94,7 +94,7 @@ export const PhoneNumber: StoryFn = () => {
       </FormField>
       {inputValue.length > 0 && (
         <Text color="secondary" styleAs="label">
-          Value for submission: <strong>{inputValue}</strong>
+          Value for submission: <b>{inputValue}</b>
         </Text>
       )}
     </StackLayout>
@@ -197,7 +197,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
         </FormField>
         {inputValue.length > 0 && (
           <Text color="secondary" styleAs="label">
-            Value for submission: <strong>{inputValue}</strong>
+            Value for submission: <b>{inputValue}</b>
           </Text>
         )}
       </StackLayout>
@@ -247,7 +247,7 @@ export const PhoneNumberWithPreview: StoryFn = () => {
         </FormField>
         {inputValue2.length > 0 && (
           <Text color="secondary" styleAs="label">
-            Value for submission: <strong>{inputValue2}</strong>
+            Value for submission: <b>{inputValue2}</b>
           </Text>
         )}
       </StackLayout>
@@ -301,7 +301,7 @@ export const CreditCard: StoryFn = () => {
       </FormField>
       {inputValue.length > 0 && (
         <Text color="secondary" styleAs="label">
-          Value for submission: <strong>{inputValue}</strong>
+          Value for submission: <b>{inputValue}</b>
         </Text>
       )}
     </StackLayout>
@@ -364,7 +364,7 @@ export const Currency: StoryFn = () => {
       </FormField>
       {inputValue.length > 0 && (
         <Text color="secondary" styleAs="label">
-          Value for submission: <strong>{inputValue}</strong>
+          Value for submission: <b>{inputValue}</b>
         </Text>
       )}
     </StackLayout>
@@ -448,7 +448,7 @@ export const PostalCode: StoryFn = () => {
       </FormField>
       {inputValue.length > 0 && (
         <Text color="secondary" styleAs="label">
-          Value for submission: <strong>{inputValue}</strong>
+          Value for submission: <b>{inputValue}</b>
         </Text>
       )}
     </StackLayout>

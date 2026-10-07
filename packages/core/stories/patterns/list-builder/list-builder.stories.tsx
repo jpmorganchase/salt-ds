@@ -79,8 +79,8 @@ function EmptyMessage({ emptyMessage }: { emptyMessage?: string }) {
     <StackLayout gap={3} align="center">
       <StatusIndicator status="info" size={2} />
       <StackLayout gap={1} align="center">
-        <Text styleAs="h4">
-          <strong>No data available</strong>
+        <Text styleAs="h4" fontWeight="bolder">
+          No data available
         </Text>
         <Text style={{ textAlign: "center" }}>
           {emptyMessage ??
@@ -188,10 +188,8 @@ function List({
         <SplitLayout
           align="center"
           startItem={
-            <Text color="secondary" styleAs="label">
-              <strong>
-                {title} ({total})
-              </strong>
+            <Text color="secondary" styleAs="label" fontWeight="bolder">
+              {title} ({total})
             </Text>
           }
           endItem={

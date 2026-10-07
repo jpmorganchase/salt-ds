@@ -14,9 +14,7 @@ export const FillViewport = (): ReactElement => {
   return (
     <>
       <Scrim fixed open={open} onClick={handleClose}>
-        <Text>
-          <strong>Click scrim to close</strong>
-        </Text>
+        <Text fontWeight="bolder">Click scrim to close</Text>
       </Scrim>
       <Button onClick={handleOpen} sentiment="accented">
         Show scrim

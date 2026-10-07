@@ -1,4 +1,4 @@
-import { Button } from "@salt-ds/core";
+import { Button, Text } from "@salt-ds/core";
 import { SearchIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
@@ -595,6 +595,16 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
       appearance="transparent"
     >
       <SearchIcon /> Button
+    </Button>
+    <Button>
+      Save{" "}
+      <Text as="span" styleAs="inherit" fontWeight="lighter">
+        draft
+      </Text>{" "}
+      <b>now</b>
+    </Button>
+    <Button>
+      Deprecated <small>small</small>
     </Button>
   </QAContainer>
 );
