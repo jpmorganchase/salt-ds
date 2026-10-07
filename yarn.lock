@@ -4274,10 +4274,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@salt-ds/core@workspace:packages/core"
   dependencies:
-    "@floating-ui/core": "npm:^1.7.5"
     "@floating-ui/react": "npm:^0.27.19"
-    "@floating-ui/react-dom": "npm:^2.1.8"
-    "@floating-ui/utils": "npm:^0.2.11"
     "@salt-ds/icons": "workspace:^"
     "@salt-ds/styles": "workspace:*"
     "@salt-ds/window": "workspace:*"
