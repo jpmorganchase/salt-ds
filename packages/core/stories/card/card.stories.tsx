@@ -16,10 +16,11 @@ import {
   RadioButtonGroup,
   StackLayout,
   Text,
+  useId,
 } from "@salt-ds/core";
 import { ChevronDownIcon, ChevronUpIcon, CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { useId, useState } from "react";
+import { useState } from "react";
 import exampleImage from "./../assets/exampleImage1x.png";
 
 export default {
@@ -336,16 +337,28 @@ export const CollapsibleCard: StoryFn<typeof Card> = (args) => {
           <StackLayout gap={1}>
             <StackLayout as="dl" gap={1} style={{ margin: 0 }}>
               <FlexLayout justify="space-between">
-                <Text as="dt" color="secondary">Portfolio return</Text>
-                <Text as="dd" style={{ margin: 0 }}>+4.8%</Text>
+                <Text as="dt" color="secondary">
+                  Portfolio return
+                </Text>
+                <Text as="dd" style={{ margin: 0 }}>
+                  +4.8%
+                </Text>
               </FlexLayout>
               <FlexLayout justify="space-between">
-                <Text as="dt" color="secondary">Benchmark return</Text>
-                <Text as="dd" style={{ margin: 0 }}>+3.9%</Text>
+                <Text as="dt" color="secondary">
+                  Benchmark return
+                </Text>
+                <Text as="dd" style={{ margin: 0 }}>
+                  +3.9%
+                </Text>
               </FlexLayout>
               <FlexLayout justify="space-between">
-                <Text as="dt" color="secondary">Income generated</Text>
-                <Text as="dd" style={{ margin: 0 }}>$12,450</Text>
+                <Text as="dt" color="secondary">
+                  Income generated
+                </Text>
+                <Text as="dd" style={{ margin: 0 }}>
+                  $12,450
+                </Text>
               </FlexLayout>
             </StackLayout>
             <Text color="secondary">

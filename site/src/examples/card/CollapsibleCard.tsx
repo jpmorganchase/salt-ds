@@ -11,9 +11,10 @@ import {
   H3,
   StackLayout,
   Text,
+  useId,
 } from "@salt-ds/core";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
-import { type ReactElement, useId, useState } from "react";
+import { type ReactElement, useState } from "react";
 
 export const CollapsibleCard = (): ReactElement => {
   const [expanded, setExpanded] = useState(false);
@@ -55,16 +56,28 @@ export const CollapsibleCard = (): ReactElement => {
           <StackLayout gap={1}>
             <StackLayout as="dl" gap={1} style={{ margin: 0 }}>
               <FlexLayout justify="space-between">
-                <Text as="dt" color="secondary">Portfolio return</Text>
-                <Text as="dd" style={{ margin: 0 }}>+4.8%</Text>
+                <Text as="dt" color="secondary">
+                  Portfolio return
+                </Text>
+                <Text as="dd" style={{ margin: 0 }}>
+                  +4.8%
+                </Text>
               </FlexLayout>
               <FlexLayout justify="space-between">
-                <Text as="dt" color="secondary">Benchmark return</Text>
-                <Text as="dd" style={{ margin: 0 }}>+3.9%</Text>
+                <Text as="dt" color="secondary">
+                  Benchmark return
+                </Text>
+                <Text as="dd" style={{ margin: 0 }}>
+                  +3.9%
+                </Text>
               </FlexLayout>
               <FlexLayout justify="space-between">
-                <Text as="dt" color="secondary">Income generated</Text>
-                <Text as="dd" style={{ margin: 0 }}>$12,450</Text>
+                <Text as="dt" color="secondary">
+                  Income generated
+                </Text>
+                <Text as="dd" style={{ margin: 0 }}>
+                  $12,450
+                </Text>
               </FlexLayout>
             </StackLayout>
             <Text color="secondary">
