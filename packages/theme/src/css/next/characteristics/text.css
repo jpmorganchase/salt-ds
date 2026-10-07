@@ -122,15 +122,15 @@
   --salt-text-label-fontSize: 14px;
   --salt-text-label-lineHeight: 18px;
 
-  --salt-text-label-fontSize-large: 14px;
-  --salt-text-label-lineHeight-large: 18px;
+  --salt-text-label-large-fontSize: 14px;
+  --salt-text-label-large-lineHeight: 18px;
 
   --salt-text-fontSize: 16px;
   --salt-text-lineHeight: 20px;
   --salt-text-minHeight: 20px;
 
-  --salt-text-fontSize-large: 16px;
-  --salt-text-lineHeight-large: 26px;
+  --salt-text-large-fontSize: 16px;
+  --salt-text-large-lineHeight: 26px;
 
   --salt-text-display1-fontSize: 102px;
   --salt-text-display1-lineHeight: 133px;
@@ -179,15 +179,15 @@
   --salt-text-label-fontSize: 12px;
   --salt-text-label-lineHeight: 16px;
 
-  --salt-text-label-fontSize-large: 14px;
-  --salt-text-label-lineHeight-large: 18px;
+  --salt-text-label-large-fontSize: 14px;
+  --salt-text-label-large-lineHeight: 18px;
 
   --salt-text-fontSize: 14px;
   --salt-text-lineHeight: 18px;
   --salt-text-minHeight: 18px;
 
-  --salt-text-fontSize-large: 16px;
-  --salt-text-lineHeight-large: 26px;
+  --salt-text-large-fontSize: 16px;
+  --salt-text-large-lineHeight: 26px;
 
   --salt-text-display1-fontSize: 84px;
   --salt-text-display1-lineHeight: 109px;
@@ -236,15 +236,15 @@
   --salt-text-label-fontSize: 11px;
   --salt-text-label-lineHeight: 14px;
 
-  --salt-text-label-fontSize-large: 12px;
-  --salt-text-label-lineHeight-large: 16px;
+  --salt-text-label-large-fontSize: 12px;
+  --salt-text-label-large-lineHeight: 16px;
 
   --salt-text-fontSize: 12px;
   --salt-text-lineHeight: 16px;
   --salt-text-minHeight: 16px;
 
-  --salt-text-fontSize-large: 14px;
-  --salt-text-lineHeight-large: 22px;
+  --salt-text-large-fontSize: 14px;
+  --salt-text-large-lineHeight: 22px;
 
   --salt-text-display1-fontSize: 68px;
   --salt-text-display1-lineHeight: 88px;
@@ -293,15 +293,15 @@
   --salt-text-label-fontSize: 10px;
   --salt-text-label-lineHeight: 13px;
 
-  --salt-text-label-fontSize-large: 11px;
-  --salt-text-label-lineHeight-large: 14px;
+  --salt-text-label-large-fontSize: 11px;
+  --salt-text-label-large-lineHeight: 14px;
 
   --salt-text-fontSize: 11px;
   --salt-text-lineHeight: 14px;
   --salt-text-minHeight: 14px;
 
-  --salt-text-fontSize-large: 12px;
-  --salt-text-lineHeight-large: 19px;
+  --salt-text-large-fontSize: 12px;
+  --salt-text-large-lineHeight: 19px;
 
   --salt-text-display1-fontSize: 54px;
   --salt-text-display1-lineHeight: 70px;
@@ -350,15 +350,15 @@
   --salt-text-label-fontSize: 14px;
   --salt-text-label-lineHeight: 18px;
 
-  --salt-text-label-fontSize-large: 14px;
-  --salt-text-label-lineHeight-large: 18px;
+  --salt-text-label-large-fontSize: 16px;
+  --salt-text-label-large-lineHeight: 21px;
 
   --salt-text-fontSize: 16px;
   --salt-text-lineHeight: 21px;
   --salt-text-minHeight: 21px;
 
-  --salt-text-fontSize-large: 16px;
-  --salt-text-lineHeight-large: 26px;
+  --salt-text-large-fontSize: 18px;
+  --salt-text-large-lineHeight: 29px;
 
   --salt-text-display1-fontSize: 40px;
   --salt-text-display1-lineHeight: 52px;

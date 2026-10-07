@@ -8,8 +8,8 @@ Added editorial, eyebrow, body large and label large typography tokens to all th
 - Editorial font: `--salt-text-editorial-fontFamily`, `--salt-text-editorial-fontWeight`, `--salt-text-editorial-fontWeight-small`, `--salt-text-editorial-fontWeight-strong`, `--salt-text-editorial-fontStyle` and `--salt-text-editorial-textTransform`. These match the display values in each theme.
 - Eyebrow: `--salt-text-eyebrow-fontSize`, `--salt-text-eyebrow-lineHeight` and `--salt-text-eyebrow-letterSpacing`.
 - Eyebrow font: `--salt-text-eyebrow-fontFamily`, `--salt-text-eyebrow-fontWeight`, `--salt-text-eyebrow-fontWeight-small`, `--salt-text-eyebrow-fontWeight-strong`, `--salt-text-eyebrow-fontStyle` and `--salt-text-eyebrow-textTransform`. These match the body text values in each theme.
-- Body large: `--salt-text-fontSize-large` and `--salt-text-lineHeight-large`.
-- Label large: `--salt-text-label-fontSize-large` and `--salt-text-label-lineHeight-large`.
+- Body large: `--salt-text-large-fontSize` and `--salt-text-large-lineHeight`.
+- Label large: `--salt-text-label-large-fontSize` and `--salt-text-label-large-lineHeight`.
 
 | Token                    | High  | Medium | Low   | Mobile | Touch |
 | ------------------------ | ----- | ------ | ----- | ------ | ----- |

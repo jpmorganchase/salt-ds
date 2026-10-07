@@ -410,8 +410,8 @@ label.saltText small,
 /* Label large */
 .saltText-labelLarge.saltText {
   font-family: var(--salt-text-fontFamily);
-  font-size: var(--salt-text-label-fontSize-large);
-  line-height: var(--salt-text-label-lineHeight-large);
+  font-size: var(--salt-text-label-large-fontSize);
+  line-height: var(--salt-text-label-large-lineHeight);
   font-weight: var(--salt-text-label-fontWeight);
 }
 
@@ -429,8 +429,8 @@ label.saltText small,
 /* Body large */
 .saltText-bodyLarge.saltText {
   font-family: var(--salt-text-fontFamily);
-  font-size: var(--salt-text-fontSize-large);
-  line-height: var(--salt-text-lineHeight-large);
+  font-size: var(--salt-text-large-fontSize);
+  line-height: var(--salt-text-large-lineHeight);
   font-weight: var(--salt-text-fontWeight);
 }
 
