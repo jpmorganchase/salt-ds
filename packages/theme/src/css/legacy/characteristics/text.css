@@ -58,12 +58,12 @@
 
   /* Eyebrow */
   --salt-text-eyebrow-fontFamily: var(--salt-typography-fontFamily-openSans);
-  --salt-text-eyebrow-letterSpacing: 0.08em;
+  --salt-text-eyebrow-letterSpacing: 0.06em;
   --salt-text-eyebrow-textTransform: uppercase;
   --salt-text-eyebrow-fontStyle: var(--salt-typography-fontStyle-normal);
-  --salt-text-eyebrow-fontWeight: var(--salt-typography-fontWeight-semiBold);
+  --salt-text-eyebrow-fontWeight: var(--salt-typography-fontWeight-bold);
   --salt-text-eyebrow-fontWeight-small: var(--salt-typography-fontWeight-semiBold);
-  --salt-text-eyebrow-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
+  --salt-text-eyebrow-fontWeight-strong: var(--salt-typography-fontWeight-bold);
 }
 
 /* Sizes by density */
@@ -117,8 +117,8 @@
   --salt-text-editorial4-fontSize: 122px;
   --salt-text-editorial4-lineHeight: 122px;
 
-  --salt-text-eyebrow-fontSize: 16px;
-  --salt-text-eyebrow-lineHeight: 21px;
+  --salt-text-eyebrow-fontSize: 18px;
+  --salt-text-eyebrow-lineHeight: 23px;
 
   --salt-text-notation-fontSize: 14px;
   --salt-text-notation-lineHeight: 18px;
@@ -345,8 +345,8 @@
   --salt-text-editorial4-fontSize: 44px;
   --salt-text-editorial4-lineHeight: 44px;
 
-  --salt-text-eyebrow-fontSize: 16px;
-  --salt-text-eyebrow-lineHeight: 21px;
+  --salt-text-eyebrow-fontSize: 18px;
+  --salt-text-eyebrow-lineHeight: 23px;
 
   --salt-text-notation-fontSize: 12px;
   --salt-text-notation-lineHeight: 16px;
