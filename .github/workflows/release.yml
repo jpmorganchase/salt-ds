@@ -192,7 +192,7 @@ jobs:
     permissions: {}
     steps:
       - name: Download Storybook build
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: storybook-build
           path: ./storybook-static
@@ -325,7 +325,7 @@ jobs:
       - name: Install npm with trusted publishing support
         run: npm install --global npm@11.11.0 --ignore-scripts
       - name: Download version
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: version-publish-${{ github.run_id }}
           path: publish-artifact
