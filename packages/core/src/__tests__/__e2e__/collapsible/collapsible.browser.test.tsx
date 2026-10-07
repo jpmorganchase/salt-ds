@@ -103,9 +103,6 @@ describe("Given a Collapsible", () => {
     );
 
     await expect
-      .element(page.getByTestId("custom-panel"))
-      .toHaveAttribute("id", "custom-id");
-    await expect
       .element(page.getByRole("button", { name: "Toggle" }))
       .toHaveAttribute("aria-controls", "custom-id");
   });

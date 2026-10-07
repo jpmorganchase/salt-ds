@@ -13,10 +13,11 @@ import {
   Text,
 } from "@salt-ds/core";
 import { ChevronDownIcon, ChevronUpIcon } from "@salt-ds/icons";
-import { type ReactElement, useState } from "react";
+import { type ReactElement, useId, useState } from "react";
 
 export const CollapsibleCard = (): ReactElement => {
   const [expanded, setExpanded] = useState(false);
+  const triggerId = useId();
 
   return (
     <Collapsible
@@ -34,6 +35,7 @@ export const CollapsibleCard = (): ReactElement => {
               <Button
                 appearance="transparent"
                 aria-label="Q2 2026 report highlights"
+                id={triggerId}
                 sentiment="neutral"
               >
                 {expanded ? (
@@ -45,20 +47,26 @@ export const CollapsibleCard = (): ReactElement => {
             </CollapsibleTrigger>
           </FlexLayout>
         </CardHeader>
-        <CollapsiblePanel render={<CardContent />}>
+        <CollapsiblePanel
+          aria-labelledby={triggerId}
+          render={<CardContent />}
+          role="group"
+        >
           <StackLayout gap={1}>
-            <FlexLayout justify="space-between">
-              <Text color="secondary">Portfolio return</Text>
-              <Text>+4.8%</Text>
-            </FlexLayout>
-            <FlexLayout justify="space-between">
-              <Text color="secondary">Benchmark return</Text>
-              <Text>+3.9%</Text>
-            </FlexLayout>
-            <FlexLayout justify="space-between">
-              <Text color="secondary">Income generated</Text>
-              <Text>$12,450</Text>
-            </FlexLayout>
+            <StackLayout as="dl" gap={1} style={{ margin: 0 }}>
+              <FlexLayout justify="space-between">
+                <Text as="dt" color="secondary">Portfolio return</Text>
+                <Text as="dd" style={{ margin: 0 }}>+4.8%</Text>
+              </FlexLayout>
+              <FlexLayout justify="space-between">
+                <Text as="dt" color="secondary">Benchmark return</Text>
+                <Text as="dd" style={{ margin: 0 }}>+3.9%</Text>
+              </FlexLayout>
+              <FlexLayout justify="space-between">
+                <Text as="dt" color="secondary">Income generated</Text>
+                <Text as="dd" style={{ margin: 0 }}>$12,450</Text>
+              </FlexLayout>
+            </StackLayout>
             <Text color="secondary">
               Performance is shown after fees for the period ending 30 June
               2026.
