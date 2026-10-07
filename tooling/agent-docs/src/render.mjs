@@ -170,11 +170,17 @@ function firstParagraphText(nodes) {
   return paragraph ? nodeText(paragraph) : "";
 }
 
-/** Renders a page's Markdown and any example files moved off it. */
+/**
+ * Renders a page's Markdown and any example files moved off it. A component
+ * page's examples come after its usage and accessibility guidance, so a short
+ * first example can stay; on other pages examples can come first, so they
+ * all move when the page is too long.
+ */
 function finishDocument(doc, children, summary) {
   const placed = placeExamples(children, {
     title: doc.title,
     docPath: doc.docPath,
+    keepShortFirst: doc.kind === "component",
   });
   return {
     markdown: stringifyMarkdown({ type: "root", children: placed.children }),

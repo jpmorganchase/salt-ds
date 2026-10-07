@@ -15,7 +15,6 @@
     "start": "yarn storybook",
     "build": "yarn workspaces foreach --exclude @salt-ds/site -Apt run build && yarn bundle:css && yarn build:agent-docs",
     "build:agent-docs": "node ./tooling/agent-docs/src/cli.mjs",
-    "gen:pattern-examples": "node ./scripts/generatePatternExamples.mjs",
     "release": "yarn build && node scripts/publishWithRetry.mjs",
     "build:ag-grid-theme": "yarn workspace @salt-ds/ag-grid-theme build",
     "build:highcharts-theme": "yarn workspaces foreach -Rpt --from @salt-ds/highcharts-theme run build",

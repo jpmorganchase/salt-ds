@@ -29,8 +29,12 @@ const fixtureFiles = {
     ".salt-theme { --salt-actionable-bold-background: var(--salt-palette-accent); }",
   "packages/theme/src/css/deprecated/characteristics.css":
     ".salt-theme { --salt-old-background: var(--salt-actionable-bold-background); --salt-old-accent: var(--salt-palette-accent); }",
-  "site/src/examples/patterns/forms/index.tsx":
-    "export const Standard = () => null;\nexport const Compact = () => null;\n",
+  "site/src/examples/patterns/forms/index.ts":
+    'export * from "./Compact";\nexport * from "./Standard";\n',
+  "site/src/examples/patterns/forms/Standard.tsx":
+    "export const Standard = () => null;\n",
+  "site/src/examples/patterns/forms/Compact.tsx":
+    "export const Compact = () => null;\n",
   "site/src/examples/button/Primary.tsx":
     'import "./styles.css";\n\nexport const Primary = () => null;\n',
   "site/src/examples/button/styles.css": ".primary {}\n",
@@ -256,10 +260,10 @@ describe("generateAgentDocs", () => {
       .get("@salt-ds/core")
       .files.get("patterns/forms.md");
     expect(forms).toContain(
-      "_Example:_ `Standard`, exported by `patterns/forms/index.tsx`:",
+      "_Example:_ `Standard`\n\n```tsx\nexport const Standard = () => null;\n```",
     );
     expect(forms).toContain(
-      "_Example:_ `Compact`, exported by `patterns/forms/index.tsx` (shown above).",
+      "_Example:_ `Compact`\n\n```tsx\nexport const Compact = () => null;\n```",
     );
 
     const index = await readFile(
