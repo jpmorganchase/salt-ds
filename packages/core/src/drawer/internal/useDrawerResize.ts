@@ -322,7 +322,6 @@ export function useDrawerResize({
 
   const moveDrag = useEventCallback((event: PointerEvent, drag: DragState) => {
     // Small movement keeps the press a click, so it can start placing the edge by click.
-    // Past the threshold the edge catches up with the pointer, so it stays under it.
     if (!drag.moved) {
       if (
         Math.hypot(event.clientX - drag.startX, event.clientY - drag.startY) <
