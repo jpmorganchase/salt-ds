@@ -26,7 +26,11 @@ import {
 import drawerCss from "./Drawer.css";
 import { DrawerContext } from "./DrawerContext";
 import { hasDrawerSection } from "./hasDrawerSection";
-import { DrawerResizeHandle, useDrawerResize } from "./internal";
+import {
+  DrawerResizeGuide,
+  DrawerResizeHandle,
+  useDrawerResize,
+} from "./internal";
 
 interface ConditionalScrimWrapperProps extends PropsWithChildren {
   condition: boolean;
@@ -82,7 +86,7 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    * */
   onResize?: (event: Event, size: number) => void;
   /**
-   * Callback called when the handle stops being dragged or is moved from the keyboard.
+   * Callback called when the user finishes resizing the drawer.
    * It provides a generic event and the new size in px.
    * */
   onResizeEnd?: (event: Event, size: number) => void;
@@ -140,23 +144,36 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     const { context, floating, elements } = useFloatingUI({
       open: showComponent,
-      onOpenChange,
+      onOpenChange: (newOpen, event) => {
+        if (!newOpen && isCancelPlacingEvent(event)) return;
+        onOpenChange?.(newOpen);
+      },
     });
 
-    const { sizeStyle, isResizing, isHovered, isInHitArea, separatorProps } =
-      useDrawerResize({
-        enabled: resizable,
-        position,
-        element: elements.floating,
-        size,
-        onResize,
-        onResizeEnd,
-      });
+    const {
+      sizeStyle,
+      isResizing,
+      isHovered,
+      isPlacing,
+      isInHitArea,
+      isCancelPlacingEvent,
+      separatorProps,
+      guideProps,
+    } = useDrawerResize({
+      enabled: resizable,
+      position,
+      element: elements.floating,
+      size,
+      onResize,
+      onResizeEnd,
+    });
 
     const { getFloatingProps } = useInteractions([
       useClick(context),
       useDismiss(context, {
-        outsidePress: disableDismiss ? false : (event) => !isInHitArea(event),
+        outsidePress: disableDismiss
+          ? false
+          : (event) => !isPlacing && !isInHitArea(event),
       }),
     ]);
 
@@ -234,6 +251,9 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 aria-controls={drawerId}
                 {...separatorProps}
               />
+            )}
+            {isPlacing && (
+              <DrawerResizeGuide position={position} {...guideProps} />
             )}
           </FloatingComponent>
         </ConditionalScrimWrapper>

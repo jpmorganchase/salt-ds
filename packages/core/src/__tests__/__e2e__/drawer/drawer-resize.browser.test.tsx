@@ -1,5 +1,11 @@
 import type { DrawerProps } from "@salt-ds/core";
-import { Button, Drawer, DrawerContent, DrawerHeader } from "@salt-ds/core";
+import {
+  Button,
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  Link,
+} from "@salt-ds/core";
 import { type CSSProperties, useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
@@ -48,12 +54,7 @@ const sizeBase = () =>
 
 async function waitForOpen() {
   await expect.element(page.getByRole("dialog")).toBeVisible();
-  await expect
-    .poll(() => {
-      const { top, left } = drawer().getBoundingClientRect();
-      return Math.min(top, left);
-    })
-    .toBeGreaterThanOrEqual(0);
+  await expect.poll(() => drawer().getAnimations().length).toBe(0);
 }
 
 async function dispatchPointer(
@@ -108,6 +109,72 @@ async function pressOnHandle(key: string) {
   await userEvent.keyboard(key);
 }
 
+/** Point, level with the handle, where the moving edge sits when the drawer has the given size. */
+function pointForSize(position: Position, size: number) {
+  const rect = drawer().getBoundingClientRect();
+  const { x, y } = handleCenter();
+  switch (position) {
+    case "left":
+      return { x: rect.left + size, y };
+    case "right":
+      return { x: rect.right - size, y };
+    case "top":
+      return { x, y: rect.top + size };
+    default:
+      return { x, y: rect.bottom - size };
+  }
+}
+
+async function clickHandle(init?: PointerEventInit) {
+  const { x, y } = handleCenter();
+  await dispatchPointer(handle(), "pointerdown", x, y, init);
+  await dispatchPointer(handle(), "pointerup", x, y, init);
+}
+
+const targetAt = (x: number, y: number) =>
+  document.elementFromPoint(x, y) ?? document.body;
+
+async function dispatchClick(
+  target: EventTarget,
+  clientX: number,
+  clientY: number,
+) {
+  await act(async () => {
+    target.dispatchEvent(
+      new MouseEvent("click", {
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+        button: 0,
+        clientX,
+        clientY,
+      }),
+    );
+  });
+}
+
+async function clickAt(
+  { x, y }: { x: number; y: number },
+  init?: PointerEventInit,
+) {
+  const target = targetAt(x, y);
+  await dispatchPointer(target, "pointerdown", x, y, init);
+  await dispatchPointer(target, "pointerup", x, y, init);
+  await dispatchClick(target, x, y);
+}
+
+async function hoverAt({ x, y }: { x: number; y: number }) {
+  await dispatchPointer(targetAt(x, y), "pointermove", x, y, { buttons: 0 });
+}
+
+const guide = () =>
+  document.querySelector<HTMLElement>(".saltDrawerResizeGuide");
+
+const guideOffset = () =>
+  Number.parseFloat(
+    guide()?.style.getPropertyValue("--drawerResizeGuide-offset") ?? "",
+  );
+
 const limitsStyle = (position: Position) =>
   isHorizontal(position)
     ? { width: 300, minWidth: 100, maxWidth: 600 }
@@ -131,17 +198,42 @@ function ResizableFixture({
   );
 }
 
-function DismissibleFixture() {
+function DismissibleFixture({
+  onResize,
+  onResizeEnd,
+}: Pick<DrawerProps, "onResize" | "onResizeEnd">) {
   const [open, setOpen] = useState(true);
   return (
     <Drawer
       open={open}
       onOpenChange={setOpen}
       resizable
+      onResize={onResize}
+      onResizeEnd={onResizeEnd}
       style={limitsStyle("left")}
     >
       <DrawerHeader header="Resizable drawer" />
       <DrawerContent>Content</DrawerContent>
+    </Drawer>
+  );
+}
+
+function ContentFixture({
+  onAction,
+  onLinkClick,
+}: {
+  onAction: () => void;
+  onLinkClick: () => void;
+}) {
+  return (
+    <Drawer open resizable style={limitsStyle("left")}>
+      <DrawerHeader header="Resizable drawer" />
+      <DrawerContent>
+        <Button onClick={onAction}>Action</Button>
+        <Link href="#placing-link" onClick={onLinkClick}>
+          Details
+        </Link>
+      </DrawerContent>
     </Drawer>
   );
 }
@@ -480,6 +572,387 @@ describe("GIVEN a resizable Drawer", () => {
       await expect
         .poll(() => drawerSize("top"))
         .toBeCloseTo(window.innerHeight * 0.5, 0);
+    });
+  });
+
+  describe("click to place", () => {
+    for (const position of POSITIONS) {
+      it(`places the edge where the next click lands, position=${position}`, async () => {
+        await renderWithSalt(<ResizableFixture position={position} />);
+        await waitForOpen();
+
+        await clickHandle();
+        await clickAt(pointForSize(position, 450));
+
+        await expect.poll(() => drawerSize(position)).toBeCloseTo(450, 0);
+      });
+    }
+
+    it("doesn't resize until the next click", async () => {
+      await renderWithSalt(<ResizableFixture />);
+      await waitForOpen();
+
+      await clickHandle();
+      await hoverAt(pointForSize("left", 420));
+      await hoverAt(pointForSize("left", 900));
+      expect(drawerSize("left")).toBeCloseTo(300, 0);
+
+      await clickAt(pointForSize("left", 450));
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(450, 0);
+    });
+
+    it("places the edge on release, not on press", async () => {
+      await renderWithSalt(<ResizableFixture />);
+      await waitForOpen();
+
+      await clickHandle();
+      const { x, y } = pointForSize("left", 450);
+      const target = targetAt(x, y);
+      await dispatchPointer(target, "pointerdown", x, y);
+      expect(drawerSize("left")).toBeCloseTo(300, 0);
+
+      await dispatchPointer(target, "pointerup", x, y);
+      await dispatchClick(target, x, y);
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(450, 0);
+    });
+
+    it("keeps the placed size within the limits", async () => {
+      await renderWithSalt(<ResizableFixture />);
+      await waitForOpen();
+
+      await clickHandle();
+      await clickAt(pointForSize("left", 900));
+
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(600, 0);
+    });
+
+    it("treats a slightly shaky click as a click", async () => {
+      await renderWithSalt(<ResizableFixture />);
+      await waitForOpen();
+
+      const start = handleCenter();
+      await dispatchPointer(handle(), "pointerdown", start.x, start.y);
+      await dispatchPointer(handle(), "pointermove", start.x + 2, start.y);
+      await dispatchPointer(handle(), "pointerup", start.x + 2, start.y);
+      expect(drawerSize("left")).toBeCloseTo(300, 0);
+
+      await clickAt(pointForSize("left", 450));
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(450, 0);
+    });
+
+    it("drags instead of placing when the press moves further", async () => {
+      await renderWithSalt(<ResizableFixture />);
+      await waitForOpen();
+
+      await dragHandleBy("left", 20);
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(320, 0);
+
+      await clickAt(pointForSize("left", 450));
+      expect(drawerSize("left")).toBeCloseTo(320, 0);
+    });
+
+    it("places the edge with a second tap on touch", async () => {
+      await renderWithSalt(<ResizableFixture />);
+      await waitForOpen();
+
+      const touch = { pointerType: "touch" };
+      await clickHandle(touch);
+      await clickAt(pointForSize("left", 450), touch);
+
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(450, 0);
+    });
+
+    it("cancels with Escape without closing the drawer", async () => {
+      await renderWithSalt(<DismissibleFixture />);
+      await waitForOpen();
+
+      await clickHandle();
+      await hoverAt(pointForSize("left", 450));
+      await userEvent.keyboard("{Escape}");
+
+      await expect
+        .poll(() => getComputedStyle(document.body).cursor)
+        .toBe("auto");
+      await expect.element(page.getByRole("dialog")).toBeInTheDocument();
+      expect(drawerSize("left")).toBeCloseTo(300, 0);
+    });
+
+    it("stops placing on another key, which still works", async () => {
+      await renderWithSalt(<ResizableFixture />);
+      await waitForOpen();
+
+      await clickHandle();
+      await pressOnHandle("{ArrowRight}");
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(308, 0);
+
+      await clickAt(pointForSize("left", 450));
+      expect(drawerSize("left")).toBeCloseTo(308, 0);
+    });
+
+    it("cancels on a secondary button press", async () => {
+      await renderWithSalt(<ResizableFixture />);
+      await waitForOpen();
+
+      await clickHandle();
+      const { x, y } = pointForSize("left", 450);
+      await dispatchPointer(targetAt(x, y), "pointerdown", x, y, {
+        button: 2,
+        buttons: 2,
+      });
+
+      await clickAt(pointForSize("left", 450));
+      expect(drawerSize("left")).toBeCloseTo(300, 0);
+    });
+
+    it("cancels when the window loses focus", async () => {
+      await renderWithSalt(<ResizableFixture />);
+      await waitForOpen();
+
+      await clickHandle();
+      await act(async () => {
+        window.dispatchEvent(new FocusEvent("blur"));
+      });
+
+      await clickAt(pointForSize("left", 450));
+      expect(drawerSize("left")).toBeCloseTo(300, 0);
+    });
+
+    it("shows the resize cursor while placing", async () => {
+      await renderWithSalt(<ResizableFixture />);
+      await waitForOpen();
+
+      await clickHandle();
+      await hoverAt(pointForSize("left", 450));
+      await expect
+        .poll(() => getComputedStyle(document.body).cursor)
+        .toBe("ew-resize");
+
+      await userEvent.keyboard("{Escape}");
+      await expect
+        .poll(() => getComputedStyle(document.body).cursor)
+        .toBe("auto");
+    });
+
+    it("doesn't close the drawer when the edge is placed on the scrim", async () => {
+      await renderWithSalt(<DismissibleFixture />);
+      await waitForOpen();
+
+      await page.getByRole("separator", { name: "Resize drawer" }).click();
+      await page
+        .getByTestId("scrim")
+        .click({ force: true, position: { x: 450, y: 300 } });
+
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(450, 0);
+      await expect.element(page.getByRole("dialog")).toBeInTheDocument();
+    });
+
+    it("doesn't activate content where the edge is placed", async () => {
+      const onAction = vi.fn();
+      const onLinkClick = vi.fn();
+      const { hash } = window.location;
+      await renderWithSalt(
+        <ContentFixture onAction={onAction} onLinkClick={onLinkClick} />,
+      );
+      await waitForOpen();
+      const separator = page.getByRole("separator", { name: "Resize drawer" });
+      const action = page.getByRole("button", { name: "Action" });
+      const link = page.getByRole("link", { name: "Details" });
+
+      const placingEnded = () =>
+        expect.poll(() => getComputedStyle(document.body).cursor).toBe("auto");
+
+      await separator.click();
+      await action.click({ force: true });
+      await placingEnded();
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(100, 0);
+
+      await separator.click();
+      await link.click({ force: true });
+      await placingEnded();
+
+      expect(onAction).not.toHaveBeenCalled();
+      expect(onLinkClick).not.toHaveBeenCalled();
+      expect(window.location.hash).toBe(hash);
+      await expect.element(separator).toHaveFocus();
+
+      await action.click();
+      expect(onAction).toHaveBeenCalledTimes(1);
+    });
+
+    it("reports the placed size once", async () => {
+      const onResize = vi.fn();
+      const onResizeEnd = vi.fn();
+      await renderWithSalt(
+        <DismissibleFixture onResize={onResize} onResizeEnd={onResizeEnd} />,
+      );
+      await waitForOpen();
+
+      await clickHandle();
+      await hoverAt(pointForSize("left", 420));
+      await clickAt(pointForSize("left", 450));
+
+      expect(onResize).toHaveBeenCalledTimes(1);
+      expect(onResize.mock.calls[0][1]).toBeCloseTo(450, 0);
+      expect(onResizeEnd).toHaveBeenCalledTimes(1);
+      expect(onResizeEnd.mock.calls[0][1]).toBeCloseTo(450, 0);
+    });
+
+    it("doesn't report a size when cancelled or placed at the current edge", async () => {
+      const onResize = vi.fn();
+      const onResizeEnd = vi.fn();
+      await renderWithSalt(
+        <DismissibleFixture onResize={onResize} onResizeEnd={onResizeEnd} />,
+      );
+      await waitForOpen();
+
+      await clickHandle();
+      await userEvent.keyboard("{Escape}");
+      await clickHandle();
+      await clickAt(pointForSize("left", 300));
+
+      expect(onResize).not.toHaveBeenCalled();
+      expect(onResizeEnd).not.toHaveBeenCalled();
+      await expect.element(page.getByRole("dialog")).toBeInTheDocument();
+    });
+
+    it("places the edge of a controlled drawer", async () => {
+      function ControlledFixture() {
+        const [size, setSize] = useState(300);
+        return (
+          <Drawer
+            open
+            resizable
+            size={size}
+            onResize={(_event, next) => setSize(next)}
+            style={{ minWidth: 100, maxWidth: 600 }}
+          >
+            <DrawerHeader header="Resizable drawer" />
+          </Drawer>
+        );
+      }
+      await renderWithSalt(<ControlledFixture />);
+      await waitForOpen();
+
+      await clickHandle();
+      await clickAt(pointForSize("left", 450));
+
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(450, 0);
+      await expect
+        .poll(() => handle().getAttribute("aria-valuenow"))
+        .toBe("450");
+    });
+
+    it("keeps the size when the handle is clicked again, as in a double-click", async () => {
+      const onResize = vi.fn();
+      await renderWithSalt(<ResizableFixture onResize={onResize} />);
+      await waitForOpen();
+
+      await clickHandle();
+      await clickAt(handleCenter());
+
+      await expect.poll(guide).toBeNull();
+      expect(drawerSize("left")).toBeCloseTo(300, 0);
+      expect(onResize).not.toHaveBeenCalled();
+    });
+
+    it("keeps the size when clicked just outside the edge, within the handle's target", async () => {
+      await renderWithSalt(<ResizableFixture />);
+      await waitForOpen();
+
+      await clickHandle();
+      const { y } = handleCenter();
+      await clickAt({ x: drawer().getBoundingClientRect().right + 4, y });
+
+      await expect.poll(guide).toBeNull();
+      expect(drawerSize("left")).toBeCloseTo(300, 0);
+    });
+
+    it("snaps the guide line to the edge while over the handle", async () => {
+      await renderWithSalt(<ResizableFixture />);
+      await waitForOpen();
+
+      await clickHandle();
+      await hoverAt(pointForSize("left", 450));
+      await expect
+        .poll(guideOffset)
+        .toBeCloseTo(drawer().getBoundingClientRect().left + 450, 0);
+
+      await hoverAt(handleCenter());
+      await expect
+        .poll(guideOffset)
+        .toBeCloseTo(drawer().getBoundingClientRect().right, 0);
+    });
+
+    it("places the edge when dismissing is disabled", async () => {
+      await renderWithSalt(<ResizableFixture disableDismiss />);
+      await waitForOpen();
+
+      await clickHandle();
+      await clickAt(pointForSize("left", 450));
+
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(450, 0);
+      await expect.element(page.getByRole("dialog")).toBeInTheDocument();
+    });
+
+    it("cancels when the window is resized", async () => {
+      await renderWithSalt(<ResizableFixture />);
+      await waitForOpen();
+
+      try {
+        await clickHandle();
+        await expect.poll(guide).not.toBeNull();
+        await page.viewport(1000, 800);
+        await expect.poll(guide).toBeNull();
+
+        await clickAt(pointForSize("left", 450));
+        expect(drawerSize("left")).toBeCloseTo(300, 0);
+      } finally {
+        await page.viewport(1280, 1024);
+      }
+    });
+
+    it("stops placing when the drawer closes", async () => {
+      let setOpen: (open: boolean) => void = () => {};
+      function ClosableFixture() {
+        const [open, setOpenState] = useState(true);
+        setOpen = setOpenState;
+        return <ResizableFixture open={open} />;
+      }
+      await renderWithSalt(<ClosableFixture />);
+      await waitForOpen();
+
+      await clickHandle();
+      await expect.poll(guide).not.toBeNull();
+      await act(async () => setOpen(false));
+
+      await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+      await expect.poll(guide).toBeNull();
+      await expect
+        .poll(() => getComputedStyle(document.body).cursor)
+        .toBe("auto");
+    });
+
+    it("stops placing when resizing is turned off", async () => {
+      let setResizable: (resizable: boolean) => void = () => {};
+      function ToggleFixture() {
+        const [resizable, setResizableState] = useState(true);
+        setResizable = setResizableState;
+        return <ResizableFixture resizable={resizable} />;
+      }
+      await renderWithSalt(<ToggleFixture />);
+      await waitForOpen();
+
+      await clickHandle();
+      await expect.poll(guide).not.toBeNull();
+      await act(async () => setResizable(false));
+
+      await expect.poll(guide).toBeNull();
+      await expect
+        .poll(() => getComputedStyle(document.body).cursor)
+        .toBe("auto");
+      await expect
+        .element(page.getByRole("separator", { name: "Resize drawer" }))
+        .not.toBeInTheDocument();
     });
   });
 

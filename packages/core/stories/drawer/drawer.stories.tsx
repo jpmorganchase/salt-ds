@@ -592,7 +592,7 @@ export const Resizable: StoryFn<DrawerProps> = ({
       >
         <DrawerHeader
           header={`Resizable ${position} drawer`}
-          description="Drag the handle on the edge, or focus it and use the arrow keys."
+          description="Drag the edge, click the edge and then click its new position, or focus the edge and use the arrow keys."
           actions={<CloseButton onClick={() => setOpen(false)} />}
         />
         <DrawerContent>
@@ -603,6 +603,11 @@ export const Resizable: StoryFn<DrawerProps> = ({
                 ? "minimum width 200px, maximum width 640px."
                 : "minimum height 160px, maximum height 520px."}{" "}
               The drawer never exceeds the viewport.
+            </Text>
+            <Text>
+              While you place the edge by click, clicking content such as this{" "}
+              <Link href="#resizable-drawer-example">example link</Link> only
+              moves the edge.
             </Text>
             <Text>{loremText.repeat(4)}</Text>
           </StackLayout>
