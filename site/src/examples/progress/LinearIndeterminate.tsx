@@ -13,9 +13,7 @@ export const LinearIndeterminate = (): ReactElement => {
     <Toast status="info">
       <ToastContent>
         <div>
-          <Text>
-            <strong>File uploading</strong>
-          </Text>
+          <Text fontWeight="bolder">File uploading</Text>
           <Text>File upload to shared drive in progress.</Text>
           <LinearProgress aria-label="Download" />
         </div>

@@ -301,7 +301,7 @@ export const WithCustomizedDelimiter: StoryFn<
         >
           {isLocked ? (
             <div>
-              Using delimiter &quot;<strong>{delimiter}</strong>&quot;
+              Using delimiter &quot;<b>{delimiter}</b>&quot;
             </div>
           ) : (
             <FormField style={{ height: `calc(100% - ${offsetHeight}px)` }}>

@@ -51,6 +51,8 @@ Although we don't encourage it, you may find it necessary to change an elementâ€
 
 Using the `styleAs` prop, you can maintain the correct HTML hierarchy and the appropriate visual priority. You can style headings to visually appear as different heading levels, irrespective of the underlying DOM element of a heading on the page.
 
+Set `styleAs` to `inherit` to match the font and color of the parent element. This is useful when you nest `Text` to change the weight of part of the content. The `fontWeight` prop then uses the weights of the closest parent `Text`, or the body text weights if there isn't one.
+
 <LivePreview componentName="text" exampleName="Styling" />
 
 ## Color
@@ -63,7 +65,22 @@ Read our [guidance on how to use text color](/salt/foundations/typography#color)
 
 ## Font weight
 
-Nest `<strong>` or `<small>` elements inside `Text` to adjust font weight.
+Use the `fontWeight` prop to make text `lighter` or `bolder` than its default weight. Omit the prop to use the default weight. The weights come from the theme and depend on the text style, so `bolder` on a heading is heavier than `bolder` on body text.
+
+To change the weight of part of the text, nest `<Text as="span" styleAs="inherit">` with the `fontWeight` prop. It keeps the parent's text style and color, and uses that style's weights. You can also nest a `<b>` element, which uses the same weight as `bolder`.
+
+```tsx
+<H2>
+  Quarterly results{" "}
+  <Text as="span" styleAs="inherit" fontWeight="lighter">
+    (unaudited)
+  </Text>
+</H2>
+```
+
+`fontWeight` and `<b>` change appearance only. Use `<strong>` when the text is important, such as a warning or a key term in a legal disclosure, and `<em>` for stressed emphasis, because these elements convey meaning to assistive technologies. Don't use `<strong>` or `<small>` just to change the weight, and don't wrap the entire content of a heading in `<strong>`.
+
+**Note:** Styling nested `<small>` elements with a lighter weight is deprecated and will be removed in a future major version. Use `fontWeight="lighter"` instead, or nest `<Text as="span" styleAs="inherit" fontWeight="lighter">` for part of the text.
 
 Read our [guidance on how to use font weight](/salt/foundations/typography#font-weight).
 

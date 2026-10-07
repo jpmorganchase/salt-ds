@@ -12,9 +12,7 @@ export const TagInCard = (): ReactElement => (
   >
     <StackLayout>
       <StackLayout gap={1}>
-        <H3>
-          <strong>Bond Performance</strong>
-        </H3>
+        <H3 fontWeight="bolder">Bond Performance</H3>
         <Text>
           A snapshot of your bond investments: market value, yield, maturity
           dates, real-time interest rate changes, and credit ratings.

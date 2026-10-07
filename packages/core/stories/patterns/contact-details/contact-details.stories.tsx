@@ -403,9 +403,7 @@ export const List = () => {
               size={1}
             />
             <StackLayout direction={"column"} gap={0.5}>
-              <Text>
-                <strong> {contact.primary} </strong>
-              </Text>
+              <Text fontWeight="bolder">{contact.primary}</Text>
               <FlowLayout gap={3}>
                 <FlexLayout gap={1} align="center">
                   <CallIcon />

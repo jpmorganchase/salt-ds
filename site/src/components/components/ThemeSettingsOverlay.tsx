@@ -123,8 +123,13 @@ export function ThemeSettingsOverlay<T extends string>({
           <StackLayout className={styles.fields} gap={1}>
             {onDensityChange ? (
               <StackLayout gap={0.75} align="baseline" padding={0}>
-                <Text id={densityLabelId} styleAs="label" color="secondary">
-                  <strong>Density</strong>
+                <Text
+                  id={densityLabelId}
+                  styleAs="label"
+                  color="secondary"
+                  fontWeight="bolder"
+                >
+                  Density
                 </Text>
                 <Dropdown<Density>
                   bordered
@@ -144,8 +149,13 @@ export function ThemeSettingsOverlay<T extends string>({
               </StackLayout>
             ) : null}
             <StackLayout gap={0.75} align="baseline" padding={0}>
-              <Text id={modeLabelId} styleAs="label" color="secondary">
-                <strong>Mode</strong>
+              <Text
+                id={modeLabelId}
+                styleAs="label"
+                color="secondary"
+                fontWeight="bolder"
+              >
+                Mode
               </Text>
               <ToggleButtonGroup
                 className={styles.toggleGroup}
@@ -161,8 +171,13 @@ export function ThemeSettingsOverlay<T extends string>({
               </ToggleButtonGroup>
             </StackLayout>
             <StackLayout gap={0.75} align="baseline" padding={0}>
-              <Text id={themeLabelId} styleAs="label" color="secondary">
-                <strong>Themes</strong>
+              <Text
+                id={themeLabelId}
+                styleAs="label"
+                color="secondary"
+                fontWeight="bolder"
+              >
+                Themes
               </Text>
               <Dropdown<T>
                 bordered

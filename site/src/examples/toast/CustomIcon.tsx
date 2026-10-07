@@ -16,9 +16,7 @@ export const CustomIcon = (): ReactElement => (
       status={"info"}
     >
       <ToastContent>
-        <Text>
-          <strong>Info with Custom Icon</strong>
-        </Text>
+        <Text fontWeight="bolder">Info with Custom Icon</Text>
         <div>Filters have been cleared</div>
       </ToastContent>
       <Button aria-label="Dismiss" appearance="transparent">
@@ -31,9 +29,7 @@ export const CustomIcon = (): ReactElement => (
       status={"success"}
     >
       <ToastContent>
-        <Text>
-          <strong>Success with Custom Icon</strong>
-        </Text>
+        <Text fontWeight="bolder">Success with Custom Icon</Text>
         <div>The world is connected</div>
       </ToastContent>
       <Button aria-label="Dismiss" appearance="transparent">
@@ -46,9 +42,7 @@ export const CustomIcon = (): ReactElement => (
       status={"warning"}
     >
       <ToastContent>
-        <Text>
-          <strong>Warning with Custom Icon</strong>
-        </Text>
+        <Text fontWeight="bolder">Warning with Custom Icon</Text>
         <div>There is not enough seasoning</div>
       </ToastContent>
       <Button aria-label="Dismiss" appearance="transparent">
@@ -61,9 +55,7 @@ export const CustomIcon = (): ReactElement => (
       status={"error"}
     >
       <ToastContent>
-        <Text>
-          <strong>Error with Custom Icon</strong>
-        </Text>
+        <Text fontWeight="bolder">Error with Custom Icon</Text>
         <div>There is a wild animal here</div>
       </ToastContent>
       <Button aria-label="Dismiss" appearance="transparent">

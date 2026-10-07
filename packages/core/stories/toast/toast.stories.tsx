@@ -47,9 +47,7 @@ Info.args = {
   status: "info",
   children: (
     <StackLayout gap={0}>
-      <Text>
-        <strong>File update</strong>
-      </Text>
+      <Text fontWeight="bolder">File update</Text>
       <Text>A new version of this file is available with 37 updates. </Text>
     </StackLayout>
   ),
@@ -60,9 +58,7 @@ export const Error: StoryFn<typeof Toast> = () => (
     <Toast status="error">
       <ToastContent>
         <StackLayout gap={0}>
-          <Text>
-            <strong>System error</strong>
-          </Text>
+          <Text fontWeight="bolder">System error</Text>
           <Text>Connection timed out. Failed to retrieve data. </Text>
         </StackLayout>
       </ToastContent>
@@ -74,9 +70,7 @@ export const Error: StoryFn<typeof Toast> = () => (
       <ToastContent>
         <StackLayout gap={1}>
           <StackLayout gap={0}>
-            <Text>
-              <strong>System error</strong>
-            </Text>
+            <Text fontWeight="bolder">System error</Text>
             <Text>Connection timed out. Failed to retrieve data. </Text>
           </StackLayout>
           <FlowLayout gap={1} justify="end">
@@ -94,9 +88,7 @@ export const Warning: StoryFn<typeof Toast> = () => (
     <Toast status="warning">
       <ToastContent>
         <StackLayout gap={0}>
-          <Text>
-            <strong>File access</strong>
-          </Text>
+          <Text fontWeight="bolder">File access</Text>
           <Text>Viewers of this file can see comments and suggestions. </Text>
         </StackLayout>
       </ToastContent>
@@ -108,9 +100,7 @@ export const Warning: StoryFn<typeof Toast> = () => (
       <ToastContent>
         <StackLayout gap={1}>
           <StackLayout gap={0}>
-            <Text>
-              <strong>File access</strong>
-            </Text>
+            <Text fontWeight="bolder">File access</Text>
             <Text>Viewers of this file can see comments and suggestions. </Text>
           </StackLayout>
           <FlowLayout gap={1}>
@@ -130,9 +120,7 @@ Success.args = {
   status: "success",
   children: (
     <StackLayout gap={0}>
-      <Text>
-        <strong>Project file upload</strong>
-      </Text>
+      <Text fontWeight="bolder">Project file upload</Text>
       <Text>Project file has successfully uploaded to the shared drive. </Text>
     </StackLayout>
   ),
@@ -162,9 +150,7 @@ CustomIcon.args = {
   icon: <GlobeIcon aria-label="success" />,
   children: (
     <StackLayout gap={0}>
-      <Text>
-        <strong>Connection established</strong>
-      </Text>
+      <Text fontWeight="bolder">Connection established</Text>
       <Text>A connection has successfully been established.</Text>
     </StackLayout>
   ),

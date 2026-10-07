@@ -332,10 +332,18 @@
   cursor: var(--salt-cursor-pending);
 }
 
-.saltButton strong {
+/* Lets a nested Text with styleAs="inherit" use the action weights */
+.saltButton {
+  --text-fontWeight-strong: var(--salt-text-action-fontWeight-strong);
+  --text-fontWeight-small: var(--salt-text-action-fontWeight-small);
+}
+
+.saltButton strong,
+.saltButton b {
   font-weight: var(--salt-text-action-fontWeight-strong);
 }
 
+/* Deprecated, use a nested Text with styleAs="inherit" and fontWeight="lighter" instead */
 .saltButton small {
   font-size: inherit;
   font-weight: var(--salt-text-action-fontWeight-small);
