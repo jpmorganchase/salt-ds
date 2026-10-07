@@ -15,7 +15,10 @@ import collapsiblePanelCss from "./CollapsiblePanel.css";
 
 export interface CollapsiblePanelProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Element used to customize the panel's root.
+   * Element used to customize the panel's root, e.g. `<CardContent />`.
+   * Props are merged onto this element, and its own props take precedence.
+   * Don't set `children`, `hidden` or `aria-hidden` on it, as they replace the
+   * panel's content and open state.
    */
   render?: ReactElement;
 }
@@ -38,7 +41,8 @@ export const CollapsiblePanel = forwardRef<
   const renderId = isValidElement<{ id?: string }>(render)
     ? render.props.id
     : undefined;
-  const id = useId(idProp ?? renderId);
+  // The render element's id wins when props are merged, so prefer it here to keep aria-controls in sync.
+  const id = useId(renderId ?? idProp);
   const { open, setPanelId } = useCollapsibleContext();
 
   useEffect(() => {

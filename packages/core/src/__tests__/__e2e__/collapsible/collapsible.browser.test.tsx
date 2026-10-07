@@ -106,4 +106,28 @@ describe("Given a Collapsible", () => {
       .element(page.getByRole("button", { name: "Toggle" }))
       .toHaveAttribute("aria-controls", "custom-id");
   });
+
+  it("prefers the render element id over the id prop for aria-controls", async () => {
+    await renderWithSalt(
+      <Collapsible>
+        <CollapsibleTrigger>
+          <Button>Toggle</Button>
+        </CollapsibleTrigger>
+        <CollapsiblePanel
+          data-testid="custom-panel"
+          id="prop-id"
+          render={<section id="render-id" />}
+        >
+          Content
+        </CollapsiblePanel>
+      </Collapsible>,
+    );
+
+    await expect
+      .element(page.getByTestId("custom-panel"))
+      .toHaveAttribute("id", "render-id");
+    await expect
+      .element(page.getByRole("button", { name: "Toggle" }))
+      .toHaveAttribute("aria-controls", "render-id");
+  });
 });

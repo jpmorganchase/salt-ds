@@ -3,7 +3,9 @@
   transition:
     grid-template-rows var(--salt-duration-perceptible) ease-in-out,
     opacity var(--salt-duration-perceptible) ease-in-out,
-    visibility var(--salt-duration-perceptible) ease-in-out;
+    visibility var(--salt-duration-perceptible) ease-in-out,
+    padding-top var(--salt-duration-perceptible) ease-in-out,
+    padding-bottom var(--salt-duration-perceptible) ease-in-out;
 }
 
 .saltCollapsiblePanel[aria-hidden="true"] {
