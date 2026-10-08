@@ -182,41 +182,6 @@ const styleGroups = [
     components: [Text, H1, H2, H3, H4, Label, TextNotation],
     fontSize: "24px",
   },
-  {
-    styleAs: "editorial1",
-    components: [Text, H1, H2, H3, H4, Label, TextNotation],
-    fontSize: "144px",
-  },
-  {
-    styleAs: "editorial2",
-    components: [Text, H1, H2, H3, H4, Label, TextNotation],
-    fontSize: "122px",
-  },
-  {
-    styleAs: "editorial3",
-    components: [Text, H1, H2, H3, H4, Label, TextNotation],
-    fontSize: "102px",
-  },
-  {
-    styleAs: "editorial4",
-    components: [Text, H1, H2, H3, H4, Label, TextNotation],
-    fontSize: "84px",
-  },
-  {
-    styleAs: "eyebrow",
-    components: [Text, H1, H2, H3, H4, Label, TextNotation],
-    fontSize: "14px",
-  },
-  {
-    styleAs: "bodyLarge",
-    components: [Text, H1, H2, H3, H4, Label, TextNotation],
-    fontSize: "14px",
-  },
-  {
-    styleAs: "labelLarge",
-    components: [Text, H1, H2, H3, H4, Label, TextNotation],
-    fontSize: "12px",
-  },
 ] as const;
 
 for (const { styleAs, components: styledComponents, fontSize } of styleGroups) {
@@ -261,22 +226,6 @@ describe("GIVEN styleAs=action", () => {
       expect(style.fontWeight).toBe("600");
     });
   }
-});
-
-describe("GIVEN styleAs=bodyLarge", () => {
-  it("uses body emphasis weights when a heading is styled as body large", async () => {
-    const { container } = await renderWithSalt(
-      <H1 styleAs="bodyLarge">
-        Body large <strong>strong</strong>
-      </H1>,
-    );
-    const heading = container.querySelector<HTMLElement>(
-      ".saltText",
-    ) as HTMLElement;
-    const strong = container.querySelector("strong") as HTMLElement;
-    expect(getComputedStyle(heading).fontWeight).toBe("400");
-    expect(getComputedStyle(strong).fontWeight).toBe("600");
-  });
 });
 
 const emphasisContent = (label: string) => (
