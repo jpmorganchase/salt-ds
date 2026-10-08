@@ -199,18 +199,13 @@ function ResizableFixture({
   );
 }
 
-function DismissibleFixture({
-  onResize,
-  onResizeEnd,
-}: Pick<DrawerProps, "onResize" | "onResizeEnd">) {
+function DismissibleFixture() {
   const [open, setOpen] = useState(true);
   return (
     <Drawer
       open={open}
       onOpenChange={setOpen}
       resizable
-      onResize={onResize}
-      onResizeEnd={onResizeEnd}
       style={limitsStyle("left")}
     >
       <DrawerHeader header="Resizable drawer" />
@@ -780,30 +775,8 @@ describe("GIVEN a resizable Drawer", () => {
       expect(onAction).toHaveBeenCalledTimes(1);
     });
 
-    it("reports the placed size once", async () => {
-      const onResize = vi.fn();
-      const onResizeEnd = vi.fn();
-      await renderWithSalt(
-        <DismissibleFixture onResize={onResize} onResizeEnd={onResizeEnd} />,
-      );
-      await waitForOpen();
-
-      await clickHandle();
-      await hoverAt(pointForSize("left", 420));
-      await clickAt(pointForSize("left", 450));
-
-      expect(onResize).toHaveBeenCalledTimes(1);
-      expect(onResize.mock.calls[0][1]).toBeCloseTo(450, 0);
-      expect(onResizeEnd).toHaveBeenCalledTimes(1);
-      expect(onResizeEnd.mock.calls[0][1]).toBeCloseTo(450, 0);
-    });
-
-    it("doesn't report a size when cancelled or placed at the current edge", async () => {
-      const onResize = vi.fn();
-      const onResizeEnd = vi.fn();
-      await renderWithSalt(
-        <DismissibleFixture onResize={onResize} onResizeEnd={onResizeEnd} />,
-      );
+    it("keeps the size when cancelled or placed at the current edge", async () => {
+      await renderWithSalt(<DismissibleFixture />);
       await waitForOpen();
 
       await clickHandle();
@@ -811,41 +784,12 @@ describe("GIVEN a resizable Drawer", () => {
       await clickHandle();
       await clickAt(pointForSize("left", 300));
 
-      expect(onResize).not.toHaveBeenCalled();
-      expect(onResizeEnd).not.toHaveBeenCalled();
+      expect(drawerSize("left")).toBeCloseTo(300, 0);
       await expect.element(page.getByRole("dialog")).toBeInTheDocument();
     });
 
-    it("places the edge of a controlled drawer", async () => {
-      function ControlledFixture() {
-        const [size, setSize] = useState(300);
-        return (
-          <Drawer
-            open
-            resizable
-            size={size}
-            onResize={(_event, next) => setSize(next)}
-            style={{ minWidth: 100, maxWidth: 600 }}
-          >
-            <DrawerHeader header="Resizable drawer" />
-          </Drawer>
-        );
-      }
-      await renderWithSalt(<ControlledFixture />);
-      await waitForOpen();
-
-      await clickHandle();
-      await clickAt(pointForSize("left", 450));
-
-      await expect.poll(() => drawerSize("left")).toBeCloseTo(450, 0);
-      await expect
-        .poll(() => handle().getAttribute("aria-valuenow"))
-        .toBe("450");
-    });
-
     it("keeps the size when the handle is clicked again, as in a double-click", async () => {
-      const onResize = vi.fn();
-      await renderWithSalt(<ResizableFixture onResize={onResize} />);
+      await renderWithSalt(<ResizableFixture />);
       await waitForOpen();
 
       await clickHandle();
@@ -853,7 +797,6 @@ describe("GIVEN a resizable Drawer", () => {
 
       await expect.poll(guide).toBeNull();
       expect(drawerSize("left")).toBeCloseTo(300, 0);
-      expect(onResize).not.toHaveBeenCalled();
     });
 
     it("keeps the size when clicked just outside the edge, within the handle's target", async () => {
@@ -957,130 +900,96 @@ describe("GIVEN a resizable Drawer", () => {
     });
   });
 
-  describe("onResizeEnd", () => {
-    it("reports the new size once when a drag ends", async () => {
-      const onResizeEnd = vi.fn();
-      await renderWithSalt(<ResizableFixture onResizeEnd={onResizeEnd} />);
+  describe("user size", () => {
+    it("keeps the user's size when closed and reopened", async () => {
+      function ReopenFixture() {
+        const [open, setOpen] = useState(true);
+        return (
+          <>
+            <Button onClick={() => setOpen(true)}>Open</Button>
+            <Drawer
+              open={open}
+              resizable
+              style={limitsStyle("left")}
+              disableScrim
+            >
+              <DrawerHeader header="Resizable drawer" />
+              <DrawerContent>
+                <Button onClick={() => setOpen(false)}>Close</Button>
+              </DrawerContent>
+            </Drawer>
+          </>
+        );
+      }
+      await renderWithSalt(<ReopenFixture />);
       await waitForOpen();
 
-      await dragHandleBy("left", 50);
+      await dragHandleBy("left", 100);
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(400, 0);
 
-      expect(onResizeEnd).toHaveBeenCalledTimes(1);
-      expect(onResizeEnd.mock.calls[0][1]).toBeCloseTo(350, 0);
-    });
-
-    it("reports the new size after a keyboard resize", async () => {
-      const onResizeEnd = vi.fn();
-      await renderWithSalt(<ResizableFixture onResizeEnd={onResizeEnd} />);
+      await page.getByRole("button", { name: "Close" }).click();
+      await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+      await page.getByRole("button", { name: "Open" }).click();
       await waitForOpen();
 
-      await pressOnHandle("{ArrowRight}");
-      await expect.poll(() => drawerSize("left")).toBeGreaterThan(300);
-
-      expect(onResizeEnd).toHaveBeenCalledTimes(1);
-      expect(onResizeEnd.mock.calls[0][1]).toBeCloseTo(drawerSize("left"), 0);
+      expect(drawerSize("left")).toBeCloseTo(400, 0);
+      expect(handle().getAttribute("aria-valuenow")).toBe("400");
     });
 
-    it("is not called when the size does not change", async () => {
-      const onResizeEnd = vi.fn();
-      await renderWithSalt(<ResizableFixture onResizeEnd={onResizeEnd} />);
+    it("keeps the user's size when the style size changes", async () => {
+      function StyleFixture() {
+        const [width, setWidth] = useState(300);
+        return (
+          <Drawer
+            open
+            resizable
+            style={{ width, minWidth: 100, maxWidth: 600 }}
+          >
+            <DrawerHeader header="Resizable drawer" />
+            <DrawerContent>
+              <Button onClick={() => setWidth(200)}>Change width</Button>
+            </DrawerContent>
+          </Drawer>
+        );
+      }
+      await renderWithSalt(<StyleFixture />);
       await waitForOpen();
 
-      await pressOnHandle("{End}");
-      onResizeEnd.mockClear();
-      await pressOnHandle("{End}");
-      await dragHandleBy("left", 0);
+      await dragHandleBy("left", 100);
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(400, 0);
 
-      expect(onResizeEnd).not.toHaveBeenCalled();
-    });
-  });
+      await page.getByRole("button", { name: "Change width" }).click();
 
-  describe("controlled size", () => {
-    function ControlledFixture({ onResize }: Pick<DrawerProps, "onResize">) {
-      const [size, setSize] = useState(300);
-      return (
-        <Drawer
-          open
-          resizable
-          size={size}
-          onResize={(event, next) => {
-            setSize(next);
-            onResize?.(event, next);
-          }}
-          style={{ minWidth: 100, maxWidth: 600 }}
-        >
-          <DrawerHeader header="Resizable drawer" />
-          <DrawerContent>
-            <Button onClick={() => setSize(300)}>Reset</Button>
-          </DrawerContent>
-        </Drawer>
-      );
-    }
-
-    it("takes precedence over the style width", async () => {
-      await renderWithSalt(
-        <Drawer open resizable size={250} style={{ width: 400 }}>
-          <DrawerHeader header="Resizable drawer" />
-        </Drawer>,
-      );
-      await waitForOpen();
-
-      await expect.poll(() => drawerSize("left")).toBeCloseTo(250, 0);
+      expect(drawerSize("left")).toBeCloseTo(400, 0);
     });
 
-    it("reports each size change while dragging", async () => {
-      const onResize = vi.fn();
-      await renderWithSalt(<ControlledFixture onResize={onResize} />);
-      await waitForOpen();
-
-      const start = handleCenter();
-      await dispatchPointer(handle(), "pointerdown", start.x, start.y);
-      await dispatchPointer(handle(), "pointermove", start.x + 20, start.y);
-      await dispatchPointer(handle(), "pointermove", start.x + 50, start.y);
-      await dispatchPointer(handle(), "pointerup", start.x + 50, start.y);
-
-      expect(onResize).toHaveBeenCalledTimes(2);
-      expect(onResize.mock.calls[0][1]).toBeCloseTo(320, 0);
-      expect(onResize.mock.calls[1][1]).toBeCloseTo(350, 0);
-      await expect.poll(() => drawerSize("left")).toBeCloseTo(350, 0);
-    });
-
-    it("applies a new size after the user has resized", async () => {
-      await renderWithSalt(<ControlledFixture />);
+    it("starts again from the style size when remounted with a new key", async () => {
+      function KeyFixture() {
+        const [key, setKey] = useState(0);
+        return (
+          <Drawer key={key} open resizable style={limitsStyle("left")}>
+            <DrawerHeader header="Resizable drawer" />
+            <DrawerContent>
+              <Button onClick={() => setKey((current) => current + 1)}>
+                Reset
+              </Button>
+            </DrawerContent>
+          </Drawer>
+        );
+      }
+      await renderWithSalt(<KeyFixture />);
       await waitForOpen();
 
       await dragHandleBy("left", 100);
       await expect.poll(() => drawerSize("left")).toBeCloseTo(400, 0);
 
       await page.getByRole("button", { name: "Reset" }).click();
+      await waitForOpen();
 
       await expect.poll(() => drawerSize("left")).toBeCloseTo(300, 0);
       await expect
         .poll(() => handle().getAttribute("aria-valuenow"))
         .toBe("300");
-    });
-
-    it("does not resize when the size is not updated", async () => {
-      const onResize = vi.fn();
-      await renderWithSalt(
-        <Drawer
-          open
-          resizable
-          size={300}
-          onResize={onResize}
-          style={{ minWidth: 100, maxWidth: 600 }}
-        >
-          <DrawerHeader header="Resizable drawer" />
-        </Drawer>,
-      );
-      await waitForOpen();
-
-      await dragHandleBy("left", 100);
-      await pressOnHandle("{ArrowRight}");
-
-      expect(onResize).toHaveBeenCalledTimes(2);
-      await expect.poll(() => drawerSize("left")).toBeCloseTo(300, 0);
-      expect(handle().getAttribute("aria-valuenow")).toBe("300");
     });
   });
 

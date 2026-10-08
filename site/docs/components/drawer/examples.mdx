@@ -54,9 +54,7 @@ Use the `resizable` prop to allow the user to resize the drawer. Users can drag 
 
 Use the `--saltDrawer-minWidth` and `--saltDrawer-maxWidth` CSS variables to set size limits for left and right drawers, and `--saltDrawer-minHeight` and `--saltDrawer-maxHeight` for top and bottom drawers.
 
-By default, the size of a resizable drawer is uncontrolled. The drawer starts at the width or height set in its styles and keeps track of the size as the user resizes it. Use the `onResizeEnd` callback to save the user's preferred size once they finish resizing.
-
-To control the size of the drawer instead, pass the `size` prop and update it in the `onResize` callback.
+The drawer starts at the width or height set in its styles and keeps the size the user sets, including when it closes and opens again.
 
 <LivePreview componentName="drawer" exampleName="Resizable" />
 

@@ -75,22 +75,6 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    * */
   resizable?: boolean;
   /**
-   * Size of the drawer in px, to be used when in a controlled state.
-   * Width for `left` and `right` drawers, height for `top` and `bottom` drawers.
-   * When not set, the drawer starts at its CSS size.
-   * */
-  size?: number;
-  /**
-   * Callback called when the drawer is resized.
-   * It provides a generic event and the new size in px.
-   * */
-  onResize?: (event: Event, size: number) => void;
-  /**
-   * Callback called when the user finishes resizing the drawer.
-   * It provides a generic event and the new size in px.
-   * */
-  onResizeEnd?: (event: Event, size: number) => void;
-  /**
    * Which element to initially focus. Can be either a number (tabbable index as specified by the order) or a ref.
    * Default value is 0 (first tabbable element).
    * */
@@ -113,9 +97,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       disableDismiss,
       disableScrim,
       resizable = false,
-      size,
-      onResize,
-      onResizeEnd,
       initialFocus,
       id,
       style,
@@ -163,9 +144,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       enabled: resizable,
       position,
       element: elements.floating,
-      size,
-      onResize,
-      onResizeEnd,
     });
 
     const { getFloatingProps } = useInteractions([

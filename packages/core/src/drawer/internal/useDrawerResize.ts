@@ -7,11 +7,7 @@ import type {
   PointerEvent as ReactPointerEvent,
 } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
-import {
-  useControlled,
-  useEventCallback,
-  useIsomorphicLayoutEffect,
-} from "../../utils";
+import { useEventCallback, useIsomorphicLayoutEffect } from "../../utils";
 import type { DrawerProps } from "../Drawer";
 
 type DrawerPosition = NonNullable<DrawerProps["position"]>;
@@ -26,6 +22,7 @@ interface DragState extends Bounds {
   startX: number;
   startY: number;
   originSize: number;
+  previousSize: number;
   moved: boolean;
 }
 
@@ -65,9 +62,6 @@ export interface UseDrawerResizeProps {
   enabled: boolean;
   position: DrawerPosition;
   element: HTMLElement | null | undefined;
-  size?: number;
-  onResize?: (event: Event, size: number) => void;
-  onResizeEnd?: (event: Event, size: number) => void;
 }
 
 export interface UseDrawerResizeResult {
@@ -190,26 +184,15 @@ export function useDrawerResize({
   enabled,
   position,
   element,
-  size: sizeProp,
-  onResize,
-  onResizeEnd,
 }: UseDrawerResizeProps): UseDrawerResizeResult {
   const horizontal = isHorizontal(position);
   const targetWindow = useWindow();
 
-  // Uncontrolled, the size stays unset until the user resizes, so the drawer keeps its CSS size.
-  const [sizeState, setSizeState, isControlled] = useControlled<
-    number | undefined
-  >({
-    controlled: sizeProp,
-    default: undefined,
-    name: "Drawer",
-    state: "size",
-  });
-  // Drop the uncontrolled size when `position` switches axis.
+  // The size stays unset until the user resizes, so the drawer keeps its CSS size.
+  const [sizeState, setSizeState] = useState<number | undefined>(undefined);
+  // Drop the size when `position` switches axis.
   const [sizeAxisHorizontal, setSizeAxisHorizontal] = useState(horizontal);
-  const size =
-    isControlled || sizeAxisHorizontal === horizontal ? sizeState : undefined;
+  const size = sizeAxisHorizontal === horizontal ? sizeState : undefined;
 
   const [interaction, setInteraction] = useState<Interaction>("inactive");
   const [metrics, setMetrics] = useState<(Bounds & { current: number }) | null>(
@@ -240,18 +223,10 @@ export function useDrawerResize({
     return next;
   });
 
-  const sizeRef = useRef<number | null>(null);
-
-  const applySize = useEventCallback(
-    (event: Event, next: number, bounds: Bounds) => {
-      const clamped = clamp(next, bounds);
-      sizeRef.current = clamped;
-      setSizeState(clamped);
-      setSizeAxisHorizontal(horizontal);
-      onResize?.(event, clamped);
-      return clamped;
-    },
-  );
+  const applySize = (nextSize: number) => {
+    setSizeState(nextSize);
+    setSizeAxisHorizontal(horizontal);
+  };
 
   // The handle's box extended outward, away from the content, to the minimum target size.
   const getHitRect = () => {
@@ -311,11 +286,11 @@ export function useDrawerResize({
       startX: event.clientX,
       startY: event.clientY,
       originSize: current.current,
+      previousSize: current.current,
       min: current.min,
       max: current.max,
       moved: false,
     };
-    sizeRef.current = current.current;
     focusWithoutRing(handleRef.current);
     setInteraction("active");
   });
@@ -340,12 +315,13 @@ export function useDrawerResize({
     const coordinate = horizontal ? event.clientX : event.clientY;
     const origin = horizontal ? drag.startX : drag.startY;
     const direction = growsWithCoordinate(position) ? 1 : -1;
-    const next = clamp(
+    const nextSize = clamp(
       drag.originSize + (coordinate - origin) * direction,
       drag,
     );
-    if (next !== sizeRef.current) {
-      applySize(event, next, drag);
+    if (nextSize !== drag.previousSize) {
+      drag.previousSize = nextSize;
+      applySize(nextSize);
     }
   });
 
@@ -401,10 +377,6 @@ export function useDrawerResize({
       (event as PointerEvent).pointerType !== "touch" &&
       isInHitArea(event as PointerEvent);
     setInteraction(stillHovered ? "hover" : "inactive");
-    const finalSize = sizeRef.current;
-    if (finalSize !== null && finalSize !== drag.originSize) {
-      onResizeEnd?.(event, finalSize);
-    }
   });
 
   const sizeToPlace = (
@@ -463,11 +435,10 @@ export function useDrawerResize({
       stopPlacing();
       // The drawer may have moved since placing started, e.g. while sliding in.
       const rect = element.getBoundingClientRect();
-      const next = sizeToPlace(element, rect, event, placing);
+      const nextSize = sizeToPlace(element, rect, event, placing);
       const current = clamp(measure(element, horizontal), placing);
-      if (next !== current) {
-        const applied = applySize(event.nativeEvent, next, placing);
-        onResizeEnd?.(event.nativeEvent, applied);
+      if (nextSize !== current) {
+        applySize(nextSize);
       }
       focusWithoutRing(handleRef.current);
     },
@@ -611,21 +582,21 @@ export function useDrawerResize({
       event.preventDefault();
 
       const collapsed = current.current <= current.min + 1;
-      let next: number;
+      let nextSize: number;
       if (key === "Home") {
         if (!collapsed) {
           restoreSizeRef.current = current.current;
         }
-        next = current.min;
+        nextSize = current.min;
       } else if (key === "End") {
-        next = current.max;
+        nextSize = current.max;
       } else if (key === "Enter") {
         if (collapsed) {
-          next =
+          nextSize =
             restoreSizeRef.current ?? initialSizeRef.current ?? current.max;
         } else {
           restoreSizeRef.current = current.current;
-          next = current.min;
+          nextSize = current.min;
         }
       } else {
         const towardsHigherCoordinate =
@@ -635,12 +606,12 @@ export function useDrawerResize({
         const step = shiftKey
           ? KEYBOARD_STEP * KEYBOARD_STEP_MULTIPLIER
           : KEYBOARD_STEP;
-        next = current.current + step * direction;
+        nextSize = current.current + step * direction;
       }
 
-      if (clamp(next, current) === current.current) return;
-      const applied = applySize(event.nativeEvent, next, current);
-      onResizeEnd?.(event.nativeEvent, applied);
+      nextSize = clamp(nextSize, current);
+      if (nextSize === current.current) return;
+      applySize(nextSize);
     },
   );
 
