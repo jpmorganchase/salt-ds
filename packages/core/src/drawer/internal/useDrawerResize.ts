@@ -697,26 +697,6 @@ export function useDrawerResize({
     return () => targetWindow.removeEventListener("resize", onResize);
   }, [enabled, element, targetWindow, readMetrics, stopPlacing]);
 
-  // Unsectioned drawers scroll themselves, so offset the handle to keep it on the edge.
-  useEffect(() => {
-    if (!enabled || !element) return;
-    const onScroll = () => {
-      const handle = handleRef.current;
-      if (!handle) return;
-      handle.style.setProperty(
-        "--drawerResizeHandle-scrollLeft",
-        `${element.scrollLeft}px`,
-      );
-      handle.style.setProperty(
-        "--drawerResizeHandle-scrollTop",
-        `${element.scrollTop}px`,
-      );
-    };
-    onScroll();
-    element.addEventListener("scroll", onScroll, { passive: true });
-    return () => element.removeEventListener("scroll", onScroll);
-  }, [enabled, element]);
-
   return {
     sizeStyle:
       size !== undefined

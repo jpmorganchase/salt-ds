@@ -29,29 +29,46 @@
 }
 
 @supports selector(:has(*)) {
-  .saltDrawer:has(> .saltDrawerHeader, > .saltDrawerContent, > .saltDrawerFooter) {
+  .saltDrawer:has(> .saltDrawerHeader, > .saltDrawerContent, > .saltDrawerFooter),
+  .saltDrawer-inner:has(> .saltDrawerHeader, > .saltDrawerContent, > .saltDrawerFooter) {
     --drawer-padding: 0px;
   }
 }
 
 .saltDrawer-resizable {
   --drawer-resizeHandleSize: var(--salt-size-fixed-600);
+  --drawer-resizeHandleHitSize: calc(var(--drawer-resizeHandleSize) + var(--salt-spacing-100));
+
+  overflow: hidden;
+  padding: 0;
+}
+
+/* Styles applied to the inner element of a resizable drawer, which scrolls so the handle stays clear of its scrollbar */
+.saltDrawer-inner {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  overflow: auto;
+  padding: var(--drawer-padding);
+  box-sizing: border-box;
 }
 
 .saltDrawer-resizable.saltDrawer-left {
-  padding-right: calc(var(--drawer-padding) + var(--drawer-resizeHandleSize));
+  padding-right: var(--drawer-resizeHandleHitSize);
 }
 
 .saltDrawer-resizable.saltDrawer-right {
-  padding-left: calc(var(--drawer-padding) + var(--drawer-resizeHandleSize));
+  padding-left: var(--drawer-resizeHandleHitSize);
 }
 
 .saltDrawer-resizable.saltDrawer-top {
-  padding-bottom: calc(var(--drawer-padding) + var(--drawer-resizeHandleSize));
+  padding-bottom: var(--drawer-resizeHandleHitSize);
 }
 
 .saltDrawer-resizable.saltDrawer-bottom {
-  padding-top: calc(var(--drawer-padding) + var(--drawer-resizeHandleSize));
+  padding-top: var(--drawer-resizeHandleHitSize);
 }
 
 .saltDrawer-resizable.saltDrawer-left,

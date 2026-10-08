@@ -274,9 +274,10 @@ export const ResizableScrolledUnsectioned: StoryFn = () => {
   const [drawer, setDrawer] = useState<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    if (!drawer) return;
+    const scroller = drawer?.querySelector<HTMLElement>(".saltDrawer-inner");
+    if (!scroller) return;
     const frame = requestAnimationFrame(() => {
-      drawer.scrollTop = 400;
+      scroller.scrollTop = 400;
     });
     return () => cancelAnimationFrame(frame);
   }, [drawer]);
@@ -294,6 +295,33 @@ export const ResizableScrolledUnsectioned: StoryFn = () => {
   );
 };
 ResizableScrolledUnsectioned.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const ResizableOverflowingSections: StoryFn = () => (
+  <Drawer
+    open
+    resizable
+    initialFocus={-1}
+    style={{ width: 350, "--saltDrawer-maxHeight": "200px" } as CSSProperties}
+  >
+    <DrawerHeader
+      header="Resizable drawer"
+      description="Pending transaction review"
+      actions={<CloseButton />}
+    />
+    <DrawerContent>
+      <Text>{loremText}</Text>
+    </DrawerContent>
+    <DrawerFooter>
+      <Button sentiment="accented" appearance="bordered">
+        Cancel
+      </Button>
+      <Button sentiment="accented">Save</Button>
+    </DrawerFooter>
+  </Drawer>
+);
+ResizableOverflowingSections.parameters = {
   chromatic: { disableSnapshot: false },
 };
 

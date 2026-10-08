@@ -241,7 +241,12 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
               ...sizeStyle,
             }}
           >
-            {children}
+            {resizable ? (
+              // Scrolls the content so its scrollbar stays clear of the resize handle.
+              <div className={withBaseName("inner")}>{children}</div>
+            ) : (
+              children
+            )}
             {resizable && (
               <DrawerResizeHandle
                 position={position}

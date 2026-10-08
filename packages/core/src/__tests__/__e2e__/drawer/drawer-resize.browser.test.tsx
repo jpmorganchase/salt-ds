@@ -3,6 +3,7 @@ import {
   Button,
   Drawer,
   DrawerContent,
+  DrawerFooter,
   DrawerHeader,
   Link,
 } from "@salt-ds/core";
@@ -1110,6 +1111,103 @@ describe("GIVEN a resizable Drawer", () => {
       await page.getByRole("button", { name: "Move to top" }).click();
 
       await expect.poll(() => drawerSize("top")).toBeCloseTo(200, 0);
+    });
+  });
+
+  describe("overflowing content", () => {
+    const inner = () =>
+      drawer().querySelector<HTMLElement>(".saltDrawer-inner") as HTMLElement;
+
+    const overlaps = (a: DOMRect, b: DOMRect) =>
+      a.left < b.right - 0.5 &&
+      b.left < a.right - 0.5 &&
+      a.top < b.bottom - 0.5 &&
+      b.top < a.bottom - 0.5;
+
+    const edgeOffset = (position: Position) => {
+      const drawerRect = drawer().getBoundingClientRect();
+      const handleRect = handle().getBoundingClientRect();
+      switch (position) {
+        case "left":
+          return drawerRect.right - handleRect.right;
+        case "right":
+          return handleRect.left - drawerRect.left;
+        case "top":
+          return drawerRect.bottom - handleRect.bottom;
+        default:
+          return handleRect.top - drawerRect.top;
+      }
+    };
+
+    for (const position of POSITIONS) {
+      it(`scrolls inside, clear of the handle, position=${position}`, async () => {
+        await renderWithSalt(
+          <Drawer
+            open
+            resizable
+            position={position}
+            style={limitsStyle(position)}
+          >
+            <div style={{ width: 2000, height: 2000, flexShrink: 0 }}>
+              Content
+            </div>
+          </Drawer>,
+        );
+        await waitForOpen();
+
+        const scroller = inner();
+        expect(scroller.scrollHeight).toBeGreaterThan(scroller.clientHeight);
+        expect(scroller.scrollWidth).toBeGreaterThan(scroller.clientWidth);
+        expect(drawer().scrollHeight).toBe(drawer().clientHeight);
+        expect(drawer().scrollWidth).toBe(drawer().clientWidth);
+        expect(
+          overlaps(
+            handle().getBoundingClientRect(),
+            scroller.getBoundingClientRect(),
+          ),
+        ).toBe(false);
+
+        const { scrollWidth, scrollHeight } = scroller;
+        const { left, top } = handle().getBoundingClientRect();
+        scroller.scrollLeft = scrollWidth;
+        scroller.scrollTop = scrollHeight;
+        await expect.poll(() => scroller.scrollTop).toBeGreaterThan(0);
+
+        expect(scroller.scrollWidth).toBe(scrollWidth);
+        expect(scroller.scrollHeight).toBe(scrollHeight);
+        expect(handle().getBoundingClientRect().left).toBe(left);
+        expect(handle().getBoundingClientRect().top).toBe(top);
+        expect(edgeOffset(position)).toBeCloseTo(0, 0);
+      });
+    }
+
+    it("scrolls the sections together when they don't fit", async () => {
+      await renderWithSalt(
+        <Drawer
+          open
+          resizable
+          style={
+            { width: 300, "--saltDrawer-maxHeight": "120px" } as CSSProperties
+          }
+        >
+          <DrawerHeader header="Resizable drawer" description="Description" />
+          <DrawerContent>Content</DrawerContent>
+          <DrawerFooter>
+            <Button>Save</Button>
+          </DrawerFooter>
+        </Drawer>,
+      );
+      await waitForOpen();
+
+      const scroller = inner();
+      expect(scroller.scrollHeight).toBeGreaterThan(scroller.clientHeight);
+      expect(drawer().scrollHeight).toBe(drawer().clientHeight);
+      expect(
+        overlaps(
+          handle().getBoundingClientRect(),
+          scroller.getBoundingClientRect(),
+        ),
+      ).toBe(false);
     });
   });
 });
