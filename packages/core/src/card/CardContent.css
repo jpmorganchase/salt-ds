@@ -3,6 +3,12 @@
   box-sizing: border-box;
 }
 
+/* Collapse vertical padding when rendered as a closed CollapsiblePanel */
+.saltCardContent.saltCollapsiblePanel[aria-hidden="true"] {
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
 .saltCard-sectioned > .saltCardHeader + .saltCardContent,
 .saltCard-sectioned > .saltCardContent + .saltCardContent,
 .saltLinkCard-sectioned > .saltCardHeader + .saltCardContent,
