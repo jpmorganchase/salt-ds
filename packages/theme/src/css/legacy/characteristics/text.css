@@ -49,7 +49,7 @@
 
   /* Editorial */
   --salt-text-editorial-fontFamily: var(--salt-typography-fontFamily-openSans);
-  --salt-text-editorial-letterSpacing: -0.02em;
+  --salt-text-editorial-letterSpacing: 0;
   --salt-text-editorial-textTransform: none;
   --salt-text-editorial-fontStyle: var(--salt-typography-fontStyle-normal);
   --salt-text-editorial-fontWeight: var(--salt-typography-fontWeight-semiBold);

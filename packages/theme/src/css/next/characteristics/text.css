@@ -24,7 +24,7 @@
   --salt-text-code-fontFamily: var(--salt-typography-fontFamily-ptMono);
 
   /* Editorial */
-  --salt-text-editorial-letterSpacing: -0.02em;
+  --salt-text-editorial-letterSpacing: 0;
 
   /* Eyebrow */
   --salt-text-eyebrow-fontFamily: var(--salt-typography-fontFamily-openSans);
