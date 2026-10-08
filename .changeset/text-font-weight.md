@@ -31,13 +31,3 @@ Deprecated the lighter weight styling of `<small>` elements nested in `Text`. `<
 
 For part of the text, nest `<Text as="span" styleAs="inherit" fontWeight="lighter">`.
 
-`Button` and `OnSolidButton` now style nested `<b>` elements with the action strong weight, and a nested `<Text as="span" styleAs="inherit" fontWeight="lighter">` or `fontWeight="bolder"` uses the action weights. The lighter weight styling of `<small>` in `Button` and `OnSolidButton` is deprecated in the same way.
-
-```tsx
-<Button>
-  Save{" "}
-  <Text as="span" styleAs="inherit" fontWeight="lighter">
-    draft
-  </Text>
-</Button>
-```
