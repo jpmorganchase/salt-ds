@@ -430,20 +430,6 @@ describe("GIVEN a resizable Drawer", () => {
       });
     }
 
-    it("moves further with Shift and an arrow key", async () => {
-      await renderWithSalt(<ResizableFixture />);
-      await waitForOpen();
-
-      await pressOnHandle("{ArrowRight}");
-      await expect.poll(() => drawerSize("left")).toBeGreaterThan(300);
-      const step = drawerSize("left") - 300;
-
-      await pressOnHandle("{Shift>}{ArrowRight}{/Shift}");
-      await expect
-        .poll(() => drawerSize("left"))
-        .toBeGreaterThan(300 + step * 2);
-    });
-
     it("ignores the arrow keys of the other axis", async () => {
       await renderWithSalt(<ResizableFixture />);
       await waitForOpen();

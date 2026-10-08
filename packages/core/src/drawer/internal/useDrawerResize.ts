@@ -77,7 +77,6 @@ export interface UseDrawerResizeResult {
 }
 
 const KEYBOARD_STEP = 8;
-const KEYBOARD_STEP_MULTIPLIER = 5;
 const PROBE_SIZE = 1e6;
 // WCAG 2.5.8 (AA) minimum target size.
 const MIN_TARGET_SIZE = 24;
@@ -555,7 +554,7 @@ export function useDrawerResize({
 
   const onKeyDown = useEventCallback(
     (event: ReactKeyboardEvent<HTMLElement>) => {
-      const { key, shiftKey } = event;
+      const { key } = event;
       if (placingRef.current) {
         stopPlacing();
         if (key === "Escape") {
@@ -603,10 +602,7 @@ export function useDrawerResize({
           key === "ArrowRight" || key === "ArrowDown";
         const direction =
           towardsHigherCoordinate === growsWithCoordinate(position) ? 1 : -1;
-        const step = shiftKey
-          ? KEYBOARD_STEP * KEYBOARD_STEP_MULTIPLIER
-          : KEYBOARD_STEP;
-        nextSize = current.current + step * direction;
+        nextSize = current.current + KEYBOARD_STEP * direction;
       }
 
       nextSize = clamp(nextSize, current);
