@@ -21,4 +21,4 @@ Added editorial, eyebrow, body large and label large typography tokens to all th
 | Body `fontSize-large`    | 12px  | 14px   | 16px  | 16px   | 16px  |
 | `label` `fontSize-large` | 11px  | 12px   | 14px  | 14px   | 14px  |
 
-Editorial line heights match their font size, with -2% (`-0.02em`) letter spacing. Eyebrow line heights are 1.3× their font size, with 8% (`0.08em`) letter spacing. Body large line heights are 1.6× and label large line heights are 1.3× their font size. All line heights are rounded to the nearest pixel.
+Editorial line heights match their font size. Editorial letter spacing is -2% (`-0.02em`) in the J.P. Morgan (Interim) theme and 0 in the J.P. Morgan and Legacy (UITK) themes. Eyebrow line heights are 1.3× their font size, with letter spacing of 10% (`0.1em`) in J.P. Morgan, 8% (`0.08em`) in J.P. Morgan (Interim) and 6% (`0.06em`) in Legacy (UITK). Body large line heights are 1.6× and label large line heights are 1.3× their font size. All line heights are rounded to the nearest pixel.
