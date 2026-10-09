@@ -66,7 +66,7 @@ function SubmenuWithDisabledLastItem() {
   return (
     <Menu>
       <MenuTrigger>
-        <Button aria-label="Open Menu">Open Menu</Button>
+        <Button>Open Menu</Button>
       </MenuTrigger>
       <MenuPanel>
         <MenuItem>Copy</MenuItem>
@@ -127,6 +127,8 @@ describe("Given a Menu", () => {
     await userEvent.keyboard("{Enter}");
     const copy = page.getByRole("menuitem", { name: "Copy" });
     await expect.element(copy).toHaveFocus();
+    // userEvent can't hold a key across calls, so a repeat keydown can't be
+    // sent after focus moves into the menu.
     copy.element().dispatchEvent(
       new KeyboardEvent("keydown", {
         key: "Enter",
@@ -413,7 +415,7 @@ function SelectableMenu({
   return (
     <Menu>
       <MenuTrigger>
-        <Button aria-label="Open Menu">Open Menu</Button>
+        <Button>Open Menu</Button>
       </MenuTrigger>
       <MenuPanel>
         <MenuGroup
@@ -610,16 +612,7 @@ describe("Given a Menu with selectable groups", () => {
     await userEvent.keyboard("{Enter}");
     const one = page.getByRole("menuitemcheckbox", { name: "One" });
     await expect.element(one).toHaveFocus();
-    for (const repeat of [false, true, true]) {
-      one.element().dispatchEvent(
-        new KeyboardEvent("keydown", {
-          key: " ",
-          bubbles: true,
-          cancelable: true,
-          repeat,
-        }),
-      );
-    }
+    await userEvent.keyboard("[Space>3/]");
     await expect.element(one).toHaveAttribute("aria-checked", "true");
     expect(onSelectionChange).toHaveBeenCalledTimes(1);
   });
