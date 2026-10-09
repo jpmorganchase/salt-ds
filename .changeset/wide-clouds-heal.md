@@ -22,6 +22,5 @@ const [sortBy, setSortBy] = useState(["name"]);
 
 Disabled `MenuItem` components can now be focused with the arrow keys so they can be discovered, but they still can't be activated.
 
-- Fixed disabled submenu triggers opening their submenu from the keyboard.
 - Fixed a submenu staying open when hovering another item in the parent menu if the submenu's last item was disabled.
 - Fixed holding Enter on a menu trigger activating the first item once the menu opened.
