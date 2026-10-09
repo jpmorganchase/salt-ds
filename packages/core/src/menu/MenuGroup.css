@@ -2,7 +2,7 @@
   background: var(--salt-container-primary-background);
   color: var(--salt-content-secondary-foreground);
   font-size: var(--salt-text-label-fontSize);
-  font-weight: var(--salt-text-label-fontWeight-strong);
+  font-weight: var(--salt-text-label-fontWeight-bolder);
   font-family: var(--salt-text-fontFamily);
   line-height: var(--salt-text-label-lineHeight);
   letter-spacing: var(--salt-text-letterSpacing);

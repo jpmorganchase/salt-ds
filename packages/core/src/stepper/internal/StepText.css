@@ -18,14 +18,14 @@
 }
 
 .saltStep-depth-0 > .saltText.saltStepText-label {
-  font-weight: var(--salt-text-fontWeight-strong);
+  font-weight: var(--salt-text-fontWeight-bolder);
 }
 
 .saltStepText-description {
   grid-area: description;
   color: var(--salt-content-secondary-foreground);
   font-size: var(--salt-text-label-fontSize);
-  font-weight: var(--salt-text-label-fontWeight-strong);
+  font-weight: var(--salt-text-label-fontWeight-bolder);
   font-family: var(--salt-text-fontFamily);
   line-height: var(--salt-text-label-lineHeight);
   letter-spacing: var(--salt-text-letterSpacing);

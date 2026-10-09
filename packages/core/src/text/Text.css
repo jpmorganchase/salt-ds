@@ -10,8 +10,8 @@
   line-height: var(--saltText-lineHeight, var(--salt-text-lineHeight));
   font-weight: var(--saltText-fontWeight, var(--salt-text-fontWeight));
   letter-spacing: var(--salt-text-letterSpacing);
-  --text-fontWeight-strong: var(--salt-text-fontWeight-strong);
-  --text-fontWeight-small: var(--salt-text-fontWeight-small);
+  --text-fontWeight-bolder: var(--salt-text-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-fontWeight-lighter);
 }
 
 /* Allows truncation */
@@ -69,8 +69,8 @@
   font-size: var(--salt-text-notation-fontSize);
   line-height: var(--salt-text-notation-lineHeight);
   font-weight: var(--salt-text-fontWeight);
-  --text-fontWeight-strong: var(--salt-text-notation-fontWeight-strong);
-  --text-fontWeight-small: var(--salt-text-notation-fontWeight-small);
+  --text-fontWeight-bolder: var(--salt-text-notation-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-notation-fontWeight-lighter);
 }
 
 /* Action */
@@ -80,8 +80,8 @@
   text-transform: var(--salt-text-action-textTransform);
   text-align: var(--salt-text-action-textAlign);
   font-weight: var(--salt-text-action-fontWeight);
-  --text-fontWeight-strong: var(--salt-text-action-fontWeight-strong);
-  --text-fontWeight-small: var(--salt-text-action-fontWeight-small);
+  --text-fontWeight-bolder: var(--salt-text-action-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-action-fontWeight-lighter);
 }
 
 /* Code */
@@ -99,8 +99,8 @@ code.saltText,
   letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
   line-height: var(--salt-text-display1-lineHeight);
   text-transform: var(--salt-text-display-textTransform, none);
-  --text-fontWeight-strong: var(--salt-text-display-fontWeight-strong);
-  --text-fontWeight-small: var(--salt-text-display-fontWeight-small);
+  --text-fontWeight-bolder: var(--salt-text-display-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-display-fontWeight-lighter);
 }
 
 /* Display 2 */
@@ -112,8 +112,8 @@ code.saltText,
   letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
   line-height: var(--salt-text-display2-lineHeight);
   text-transform: var(--salt-text-display-textTransform, none);
-  --text-fontWeight-strong: var(--salt-text-display-fontWeight-strong);
-  --text-fontWeight-small: var(--salt-text-display-fontWeight-small);
+  --text-fontWeight-bolder: var(--salt-text-display-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-display-fontWeight-lighter);
 }
 
 /* Display 3 */
@@ -125,8 +125,8 @@ code.saltText,
   letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
   line-height: var(--salt-text-display3-lineHeight);
   text-transform: var(--salt-text-display-textTransform, none);
-  --text-fontWeight-strong: var(--salt-text-display-fontWeight-strong);
-  --text-fontWeight-small: var(--salt-text-display-fontWeight-small);
+  --text-fontWeight-bolder: var(--salt-text-display-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-display-fontWeight-lighter);
 }
 
 /* Display 4 */
@@ -138,8 +138,8 @@ code.saltText,
   letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
   line-height: var(--salt-text-display4-lineHeight);
   text-transform: var(--salt-text-display-textTransform, none);
-  --text-fontWeight-strong: var(--salt-text-display-fontWeight-strong);
-  --text-fontWeight-small: var(--salt-text-display-fontWeight-small);
+  --text-fontWeight-bolder: var(--salt-text-display-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-display-fontWeight-lighter);
 }
 
 /* Heading 1 */
@@ -149,8 +149,8 @@ h1.saltText,
   font-size: var(--salt-text-h1-fontSize);
   font-weight: var(--salt-text-heading-fontWeight);
   line-height: var(--salt-text-h1-lineHeight);
-  --text-fontWeight-strong: var(--salt-text-heading-fontWeight-strong);
-  --text-fontWeight-small: var(--salt-text-heading-fontWeight-small);
+  --text-fontWeight-bolder: var(--salt-text-heading-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-heading-fontWeight-lighter);
 }
 
 /* Heading 2 */
@@ -160,8 +160,8 @@ h2.saltText,
   font-size: var(--salt-text-h2-fontSize);
   font-weight: var(--salt-text-heading-fontWeight);
   line-height: var(--salt-text-h2-lineHeight);
-  --text-fontWeight-strong: var(--salt-text-heading-fontWeight-strong);
-  --text-fontWeight-small: var(--salt-text-heading-fontWeight-small);
+  --text-fontWeight-bolder: var(--salt-text-heading-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-heading-fontWeight-lighter);
 }
 
 /* Heading 3 */
@@ -171,8 +171,8 @@ h3.saltText,
   font-size: var(--salt-text-h3-fontSize);
   font-weight: var(--salt-text-heading-fontWeight);
   line-height: var(--salt-text-h3-lineHeight);
-  --text-fontWeight-strong: var(--salt-text-heading-fontWeight-strong);
-  --text-fontWeight-small: var(--salt-text-heading-fontWeight-small);
+  --text-fontWeight-bolder: var(--salt-text-heading-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-heading-fontWeight-lighter);
 }
 
 /* Heading 4 */
@@ -182,8 +182,8 @@ h4.saltText,
   font-size: var(--salt-text-h4-fontSize);
   font-weight: var(--salt-text-heading-fontWeight);
   line-height: var(--salt-text-h4-lineHeight);
-  --text-fontWeight-strong: var(--salt-text-heading-fontWeight-strong);
-  --text-fontWeight-small: var(--salt-text-heading-fontWeight-small);
+  --text-fontWeight-bolder: var(--salt-text-heading-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-heading-fontWeight-lighter);
 }
 
 /* Label */
@@ -193,38 +193,38 @@ label.saltText,
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
   font-weight: var(--salt-text-label-fontWeight);
-  --text-fontWeight-strong: var(--salt-text-label-fontWeight-strong);
-  --text-fontWeight-small: var(--salt-text-label-fontWeight-small);
+  --text-fontWeight-bolder: var(--salt-text-label-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-label-fontWeight-lighter);
 }
 
-/* Inherit the parent's text style, including its strong and small weights */
+/* Inherit the parent's text style, including its bolder and lighter weights */
 .saltText-inheritStyle.saltText {
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
   letter-spacing: inherit;
   line-height: inherit;
-  --text-fontWeight-strong: inherit;
-  --text-fontWeight-small: inherit;
+  --text-fontWeight-bolder: inherit;
+  --text-fontWeight-lighter: inherit;
 }
 
 /* Emphasis strong */
 .saltText strong,
 .saltText b {
-  font-weight: var(--text-fontWeight-strong, var(--salt-text-fontWeight-strong));
+  font-weight: var(--text-fontWeight-bolder, var(--salt-text-fontWeight-bolder));
 }
 
 /* Emphasis small. Deprecated, use the fontWeight prop instead */
 .saltText small {
   font-size: inherit;
-  font-weight: var(--text-fontWeight-small, var(--salt-text-fontWeight-small));
+  font-weight: var(--text-fontWeight-lighter, var(--salt-text-fontWeight-lighter));
 }
 
 /* Font weight prop. Must follow the text styles so it overrides their weights */
 .saltText.saltText-bolder {
-  font-weight: var(--text-fontWeight-strong, var(--salt-text-fontWeight-strong));
+  font-weight: var(--text-fontWeight-bolder, var(--salt-text-fontWeight-bolder));
 }
 
 .saltText.saltText-lighter {
-  font-weight: var(--text-fontWeight-small, var(--salt-text-fontWeight-small));
+  font-weight: var(--text-fontWeight-lighter, var(--salt-text-fontWeight-lighter));
 }

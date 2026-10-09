@@ -144,7 +144,7 @@
 .ag-theme-salt-dark .ag-status-name-value-value,
 .ag-theme-salt-compact-light .ag-status-name-value-value,
 .ag-theme-salt-compact-dark .ag-status-name-value-value {
-  font-weight: var(--salt-text-fontWeight-strong);
+  font-weight: var(--salt-text-fontWeight-bolder);
   color: var(--salt-content-primary-foreground);
 }
 

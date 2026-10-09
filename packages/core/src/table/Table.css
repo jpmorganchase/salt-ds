@@ -84,7 +84,7 @@ table.saltTable thead {
   height: var(--table-header-height);
   min-height: var(--table-header-height);
   font-size: var(--salt-text-label-fontSize);
-  font-weight: var(--salt-text-label-fontWeight-strong);
+  font-weight: var(--salt-text-label-fontWeight-bolder);
   line-height: var(--salt-text-label-lineHeight);
 }
 
@@ -134,7 +134,7 @@ table.saltTable tfoot {
   min-height: var(--table-footer-height);
   font-size: var(--salt-text-fontSize);
   line-height: var(--salt-text-lineHeight);
-  font-weight: var(--salt-text-fontWeight-strong);
+  font-weight: var(--salt-text-fontWeight-bolder);
 }
 
 table.saltTable tfoot.saltTable-tfoot-sticky {
@@ -193,7 +193,7 @@ table.saltTable th.saltTable-th-align-right {
 }
 
 table.saltTable tbody th[scope="row"] {
-  font-weight: var(--salt-text-fontWeight-strong);
+  font-weight: var(--salt-text-fontWeight-bolder);
   line-height: var(--salt-text-lineHeight);
 }
 
