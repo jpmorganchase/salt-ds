@@ -69,6 +69,7 @@ export const validationCellExampleColumns: ColDef[] = [
     headerName: "Color",
     field: "color",
     editable: false,
+    cellClassRules: validationCellClassRules,
   },
   {
     headerName: "Currency",
