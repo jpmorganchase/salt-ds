@@ -2,7 +2,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: var(--salt-text-fontWeight-small);
+  font-weight: var(--salt-text-fontWeight-lighter);
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
   color: var(--salt-content-primary-foreground);
   background-color: var(--salt-container-secondary-background);

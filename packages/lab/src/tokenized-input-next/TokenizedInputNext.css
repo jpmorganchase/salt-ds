@@ -119,7 +119,7 @@
 
 /* Style applied to placeholder */
 .saltTokenizedInputNext-textarea::placeholder {
-  font-weight: var(--salt-text-fontWeight-small);
+  font-weight: var(--salt-text-fontWeight-lighter);
 }
 
 /* Reset in the  class */

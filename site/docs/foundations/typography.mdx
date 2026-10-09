@@ -65,9 +65,9 @@ The typographic hierarchy has seven levels, with variants within some levels:
 
 ## Font weight
 
-Font weight refers to the relative thickness of a font's stroke. Each text style in Salt offers three different weights, allowing you to establish a visual hierarchy even when using the same text style. The specific font weight is dependent on the text style and theme being used. Each text style has a default weight which can be made ‘small’ to de-emphasize the text or ‘strong’ to emphasize it.
+Font weight refers to the relative thickness of a font's stroke. Each text style in Salt offers three different weights, allowing you to establish a visual hierarchy even when using the same text style. The specific font weight is dependent on the text style and theme being used. Each text style has a default weight which can be made ‘lighter’ to de-emphasize the text or ‘bolder’ to emphasize it.
 
-In code, use the `fontWeight` prop on [`Text`](/salt/components/text/examples#font-weight): `lighter` applies the small weight and `bolder` applies the strong weight.
+In code, use the `fontWeight` prop on [`Text`](/salt/components/text/examples#font-weight): `lighter` applies the lighter weight and `bolder` applies the bolder weight. In CSS, use the `-fontWeight-lighter` and `-fontWeight-bolder` tokens of the text style, for example `--salt-text-fontWeight-lighter` and `--salt-text-heading-fontWeight-bolder`.
 
 <Image
   src="/img/foundations/typography-fontweight.png"
