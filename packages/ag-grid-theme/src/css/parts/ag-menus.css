@@ -36,6 +36,12 @@
 .ag-theme-salt-compact-dark .ag-menu-separator {
   height: var(--salt-size-fixed-100);
 }
+.ag-theme-salt-light .ag-menu-separator-part::after,
+.ag-theme-salt-dark .ag-menu-separator-part::after,
+.ag-theme-salt-compact-light .ag-menu-separator-part::after,
+.ag-theme-salt-compact-dark .ag-menu-separator-part::after {
+  border-top-color: var(--salt-separable-tertiary-borderColor);
+}
 .ag-theme-salt-light .ag-menu-list,
 .ag-theme-salt-dark .ag-menu-list,
 .ag-theme-salt-compact-light .ag-menu-list,
