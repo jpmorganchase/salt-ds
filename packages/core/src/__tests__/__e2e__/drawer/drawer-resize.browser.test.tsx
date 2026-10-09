@@ -10,6 +10,7 @@ import {
 import { type CSSProperties, useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
+import { mouse, touch } from "~browser-test-utils/pointer";
 import { act, renderWithSalt } from "~browser-test-utils/render";
 
 type Position = NonNullable<DrawerProps["position"]>;
@@ -58,32 +59,6 @@ async function waitForOpen() {
   await expect.poll(() => drawer().getAnimations().length).toBe(0);
 }
 
-async function dispatchPointer(
-  target: EventTarget,
-  type: "pointerdown" | "pointermove" | "pointerup" | "pointercancel",
-  clientX: number,
-  clientY: number,
-  init: PointerEventInit = {},
-) {
-  await act(async () => {
-    target.dispatchEvent(
-      new PointerEvent(type, {
-        bubbles: true,
-        cancelable: true,
-        composed: true,
-        button: 0,
-        buttons: type === "pointerup" ? 0 : 1,
-        clientX,
-        clientY,
-        isPrimary: true,
-        pointerId: 1,
-        pointerType: "mouse",
-        ...init,
-      }),
-    );
-  });
-}
-
 function handleCenter() {
   const rect = handle().getBoundingClientRect();
   return { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
@@ -97,11 +72,7 @@ const moveAlong = (
 
 async function dragHandleBy(position: Position, delta: number) {
   const start = handleCenter();
-  const end = moveAlong(position, start, delta);
-
-  await dispatchPointer(handle(), "pointerdown", start.x, start.y);
-  await dispatchPointer(handle(), "pointermove", end.x, end.y);
-  await dispatchPointer(handle(), "pointerup", end.x, end.y);
+  await mouse.drag(start, moveAlong(position, start, delta));
 }
 
 async function pressOnHandle(key: string) {
@@ -126,46 +97,8 @@ function pointForSize(position: Position, size: number) {
   }
 }
 
-async function clickHandle(init?: PointerEventInit) {
-  const { x, y } = handleCenter();
-  await dispatchPointer(handle(), "pointerdown", x, y, init);
-  await dispatchPointer(handle(), "pointerup", x, y, init);
-}
-
-const targetAt = (x: number, y: number) =>
-  document.elementFromPoint(x, y) ?? document.body;
-
-async function dispatchClick(
-  target: EventTarget,
-  clientX: number,
-  clientY: number,
-) {
-  await act(async () => {
-    target.dispatchEvent(
-      new MouseEvent("click", {
-        bubbles: true,
-        cancelable: true,
-        composed: true,
-        button: 0,
-        clientX,
-        clientY,
-      }),
-    );
-  });
-}
-
-async function clickAt(
-  { x, y }: { x: number; y: number },
-  init?: PointerEventInit,
-) {
-  const target = targetAt(x, y);
-  await dispatchPointer(target, "pointerdown", x, y, init);
-  await dispatchPointer(target, "pointerup", x, y, init);
-  await dispatchClick(target, x, y);
-}
-
-async function hoverAt({ x, y }: { x: number; y: number }) {
-  await dispatchPointer(targetAt(x, y), "pointermove", x, y, { buttons: 0 });
+async function clickHandle() {
+  await mouse.click(handleCenter());
 }
 
 const guide = () =>
@@ -318,12 +251,16 @@ describe("GIVEN a resizable Drawer", () => {
       await waitForOpen();
 
       const start = handleCenter();
-      await dispatchPointer(handle(), "pointerdown", start.x, start.y);
-      await dispatchPointer(handle(), "pointermove", start.x + 50, start.y);
-      await dispatchPointer(handle(), "pointercancel", start.x + 50, start.y);
-      await dispatchPointer(document, "pointermove", start.x + 150, start.y);
+      await touch.start(start);
+      await touch.move({ x: start.x + 50, y: start.y });
+      expect(getComputedStyle(document.body).cursor).toBe("ew-resize");
 
-      await expect.poll(() => drawerSize("left")).toBeCloseTo(350, 0);
+      await touch.cancel();
+
+      await expect
+        .poll(() => getComputedStyle(document.body).cursor)
+        .toBe("auto");
+      expect(drawerSize("left")).toBeCloseTo(350, 0);
     });
 
     it("ignores a non-primary pointer", async () => {
@@ -331,32 +268,10 @@ describe("GIVEN a resizable Drawer", () => {
       await waitForOpen();
 
       const start = handleCenter();
-      const secondTouch = {
-        isPrimary: false,
-        pointerId: 2,
-        pointerType: "touch",
-      };
-      await dispatchPointer(
-        handle(),
-        "pointerdown",
-        start.x,
-        start.y,
-        secondTouch,
-      );
-      await dispatchPointer(
-        handle(),
-        "pointermove",
-        start.x + 80,
-        start.y,
-        secondTouch,
-      );
-      await dispatchPointer(
-        handle(),
-        "pointerup",
-        start.x + 80,
-        start.y,
-        secondTouch,
-      );
+      const firstTouch = { x: start.x - 200, y: start.y };
+      await touch.start(firstTouch, start);
+      await touch.move(firstTouch, { x: start.x + 80, y: start.y });
+      await touch.end();
 
       expect(drawerSize("left")).toBeCloseTo(300, 0);
     });
@@ -368,14 +283,7 @@ describe("GIVEN a resizable Drawer", () => {
       const rect = drawer().getBoundingClientRect();
       const x = rect.right + 5;
       const y = rect.top + 120;
-      await dispatchPointer(
-        document.elementFromPoint(x, y) as Element,
-        "pointerdown",
-        x,
-        y,
-      );
-      await dispatchPointer(document, "pointermove", x + 50, y);
-      await dispatchPointer(document, "pointerup", x + 50, y);
+      await mouse.drag({ x, y }, { x: x + 50, y });
 
       await expect.element(page.getByRole("dialog")).toBeInTheDocument();
       await expect.poll(() => drawerSize("left")).toBeCloseTo(350, 0);
@@ -386,14 +294,7 @@ describe("GIVEN a resizable Drawer", () => {
       await waitForOpen();
 
       const rect = drawer().getBoundingClientRect();
-      const x = rect.right + 40;
-      const y = rect.top + 120;
-      await dispatchPointer(
-        document.elementFromPoint(x, y) as Element,
-        "pointerdown",
-        x,
-        y,
-      );
+      await mouse.click({ x: rect.right + 40, y: rect.top + 120 });
 
       await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
     });
@@ -403,8 +304,8 @@ describe("GIVEN a resizable Drawer", () => {
       await waitForOpen();
 
       const start = handleCenter();
-      await dispatchPointer(handle(), "pointerdown", start.x, start.y);
-      await dispatchPointer(handle(), "pointermove", start.x + 40, start.y);
+      await mouse.down(start);
+      await mouse.move({ x: start.x + 40, y: start.y });
       expect(getComputedStyle(document.body).cursor).toBe("ew-resize");
 
       await userEvent.keyboard("{Escape}");
@@ -564,7 +465,7 @@ describe("GIVEN a resizable Drawer", () => {
         await waitForOpen();
 
         await clickHandle();
-        await clickAt(pointForSize(position, 450));
+        await mouse.click(pointForSize(position, 450));
 
         await expect.poll(() => drawerSize(position)).toBeCloseTo(450, 0);
       });
@@ -575,11 +476,11 @@ describe("GIVEN a resizable Drawer", () => {
       await waitForOpen();
 
       await clickHandle();
-      await hoverAt(pointForSize("left", 420));
-      await hoverAt(pointForSize("left", 900));
+      await mouse.move(pointForSize("left", 420));
+      await mouse.move(pointForSize("left", 900));
       expect(drawerSize("left")).toBeCloseTo(300, 0);
 
-      await clickAt(pointForSize("left", 450));
+      await mouse.click(pointForSize("left", 450));
       await expect.poll(() => drawerSize("left")).toBeCloseTo(450, 0);
     });
 
@@ -588,13 +489,11 @@ describe("GIVEN a resizable Drawer", () => {
       await waitForOpen();
 
       await clickHandle();
-      const { x, y } = pointForSize("left", 450);
-      const target = targetAt(x, y);
-      await dispatchPointer(target, "pointerdown", x, y);
+      const point = pointForSize("left", 450);
+      await mouse.down(point);
       expect(drawerSize("left")).toBeCloseTo(300, 0);
 
-      await dispatchPointer(target, "pointerup", x, y);
-      await dispatchClick(target, x, y);
+      await mouse.up(point);
       await expect.poll(() => drawerSize("left")).toBeCloseTo(450, 0);
     });
 
@@ -603,7 +502,7 @@ describe("GIVEN a resizable Drawer", () => {
       await waitForOpen();
 
       await clickHandle();
-      await clickAt(pointForSize("left", 900));
+      await mouse.click(pointForSize("left", 900));
 
       await expect.poll(() => drawerSize("left")).toBeCloseTo(600, 0);
     });
@@ -613,12 +512,12 @@ describe("GIVEN a resizable Drawer", () => {
       await waitForOpen();
 
       const start = handleCenter();
-      await dispatchPointer(handle(), "pointerdown", start.x, start.y);
-      await dispatchPointer(handle(), "pointermove", start.x + 2, start.y);
-      await dispatchPointer(handle(), "pointerup", start.x + 2, start.y);
+      await mouse.down(start);
+      await mouse.move({ x: start.x + 2, y: start.y });
+      await mouse.up();
       expect(drawerSize("left")).toBeCloseTo(300, 0);
 
-      await clickAt(pointForSize("left", 450));
+      await mouse.click(pointForSize("left", 450));
       await expect.poll(() => drawerSize("left")).toBeCloseTo(450, 0);
     });
 
@@ -629,7 +528,7 @@ describe("GIVEN a resizable Drawer", () => {
       await dragHandleBy("left", 20);
       await expect.poll(() => drawerSize("left")).toBeCloseTo(320, 0);
 
-      await clickAt(pointForSize("left", 450));
+      await mouse.click(pointForSize("left", 450));
       expect(drawerSize("left")).toBeCloseTo(320, 0);
     });
 
@@ -637,9 +536,8 @@ describe("GIVEN a resizable Drawer", () => {
       await renderWithSalt(<ResizableFixture />);
       await waitForOpen();
 
-      const touch = { pointerType: "touch" };
-      await clickHandle(touch);
-      await clickAt(pointForSize("left", 450), touch);
+      await touch.tap(handleCenter());
+      await touch.tap(pointForSize("left", 450));
 
       await expect.poll(() => drawerSize("left")).toBeCloseTo(450, 0);
     });
@@ -649,7 +547,7 @@ describe("GIVEN a resizable Drawer", () => {
       await waitForOpen();
 
       await clickHandle();
-      await hoverAt(pointForSize("left", 450));
+      await mouse.move(pointForSize("left", 450));
       await userEvent.keyboard("{Escape}");
 
       await expect
@@ -667,7 +565,7 @@ describe("GIVEN a resizable Drawer", () => {
       await pressOnHandle("{ArrowRight}");
       await expect.poll(() => drawerSize("left")).toBeCloseTo(308, 0);
 
-      await clickAt(pointForSize("left", 450));
+      await mouse.click(pointForSize("left", 450));
       expect(drawerSize("left")).toBeCloseTo(308, 0);
     });
 
@@ -676,13 +574,11 @@ describe("GIVEN a resizable Drawer", () => {
       await waitForOpen();
 
       await clickHandle();
-      const { x, y } = pointForSize("left", 450);
-      await dispatchPointer(targetAt(x, y), "pointerdown", x, y, {
-        button: 2,
-        buttons: 2,
-      });
+      const point = pointForSize("left", 450);
+      await mouse.down(point, "right");
+      await mouse.up(point);
 
-      await clickAt(pointForSize("left", 450));
+      await mouse.click(pointForSize("left", 450));
       expect(drawerSize("left")).toBeCloseTo(300, 0);
     });
 
@@ -695,7 +591,7 @@ describe("GIVEN a resizable Drawer", () => {
         window.dispatchEvent(new FocusEvent("blur"));
       });
 
-      await clickAt(pointForSize("left", 450));
+      await mouse.click(pointForSize("left", 450));
       expect(drawerSize("left")).toBeCloseTo(300, 0);
     });
 
@@ -704,7 +600,7 @@ describe("GIVEN a resizable Drawer", () => {
       await waitForOpen();
 
       await clickHandle();
-      await hoverAt(pointForSize("left", 450));
+      await mouse.move(pointForSize("left", 450));
       await expect
         .poll(() => getComputedStyle(document.body).cursor)
         .toBe("ew-resize");
@@ -768,7 +664,7 @@ describe("GIVEN a resizable Drawer", () => {
       await clickHandle();
       await userEvent.keyboard("{Escape}");
       await clickHandle();
-      await clickAt(pointForSize("left", 300));
+      await mouse.click(pointForSize("left", 300));
 
       expect(drawerSize("left")).toBeCloseTo(300, 0);
       await expect.element(page.getByRole("dialog")).toBeInTheDocument();
@@ -779,7 +675,7 @@ describe("GIVEN a resizable Drawer", () => {
       await waitForOpen();
 
       await clickHandle();
-      await clickAt(handleCenter());
+      await mouse.click(handleCenter());
 
       await expect.poll(guide).toBeNull();
       expect(drawerSize("left")).toBeCloseTo(300, 0);
@@ -791,7 +687,7 @@ describe("GIVEN a resizable Drawer", () => {
 
       await clickHandle();
       const { y } = handleCenter();
-      await clickAt({ x: drawer().getBoundingClientRect().right + 4, y });
+      await mouse.click({ x: drawer().getBoundingClientRect().right + 4, y });
 
       await expect.poll(guide).toBeNull();
       expect(drawerSize("left")).toBeCloseTo(300, 0);
@@ -802,12 +698,12 @@ describe("GIVEN a resizable Drawer", () => {
       await waitForOpen();
 
       await clickHandle();
-      await hoverAt(pointForSize("left", 450));
+      await mouse.move(pointForSize("left", 450));
       await expect
         .poll(guideOffset)
         .toBeCloseTo(drawer().getBoundingClientRect().left + 450, 0);
 
-      await hoverAt(handleCenter());
+      await mouse.move(handleCenter());
       await expect
         .poll(guideOffset)
         .toBeCloseTo(drawer().getBoundingClientRect().right, 0);
@@ -818,7 +714,7 @@ describe("GIVEN a resizable Drawer", () => {
       await waitForOpen();
 
       await clickHandle();
-      await clickAt(pointForSize("left", 450));
+      await mouse.click(pointForSize("left", 450));
 
       await expect.poll(() => drawerSize("left")).toBeCloseTo(450, 0);
       await expect.element(page.getByRole("dialog")).toBeInTheDocument();
@@ -834,7 +730,7 @@ describe("GIVEN a resizable Drawer", () => {
         await page.viewport(1000, 800);
         await expect.poll(guide).toBeNull();
 
-        await clickAt(pointForSize("left", 450));
+        await mouse.click(pointForSize("left", 450));
         expect(drawerSize("left")).toBeCloseTo(300, 0);
       } finally {
         await page.viewport(1280, 1024);

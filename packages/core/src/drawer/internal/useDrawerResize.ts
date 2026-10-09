@@ -187,7 +187,7 @@ export function useDrawerResize({
   const horizontal = isHorizontal(position);
   const targetWindow = useWindow();
 
-  // The size stays unset until the user resizes, so the drawer keeps its CSS size.
+  // Unset until the user resizes, so the drawer keeps its CSS size.
   const [sizeState, setSizeState] = useState<number | undefined>(undefined);
   // Drop the size when `position` switches axis.
   const [sizeAxisHorizontal, setSizeAxisHorizontal] = useState(horizontal);

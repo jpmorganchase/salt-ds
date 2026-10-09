@@ -43,7 +43,7 @@
   padding: 0;
 }
 
-/* Styles applied to the inner element of a resizable drawer, which scrolls so the handle stays clear of its scrollbar */
+/* Styles applied to the scrolling inner element of a resizable drawer */
 .saltDrawer-inner {
   display: flex;
   flex: 1 1 auto;

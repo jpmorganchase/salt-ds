@@ -220,7 +220,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             }}
           >
             {resizable ? (
-              // Scrolls the content so its scrollbar stays clear of the resize handle.
+              // Keeps the content's scrollbar clear of the resize handle.
               <div className={withBaseName("inner")}>{children}</div>
             ) : (
               children

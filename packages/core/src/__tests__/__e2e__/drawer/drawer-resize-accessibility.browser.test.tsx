@@ -4,7 +4,8 @@ import { useState } from "react";
 import { describe, expect, it } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { runAxeScan } from "~browser-test-utils/accessibility";
-import { act, renderWithSalt } from "~browser-test-utils/render";
+import { mouse } from "~browser-test-utils/pointer";
+import { renderWithSalt } from "~browser-test-utils/render";
 
 type Position = NonNullable<DrawerProps["position"]>;
 
@@ -30,30 +31,6 @@ const valueNow = () =>
 async function waitForOpen() {
   await expect.element(page.getByRole("dialog")).toBeVisible();
   await expect.poll(() => drawer().getAnimations().length).toBe(0);
-}
-
-async function dispatchPointer(
-  target: EventTarget,
-  type: "pointerdown" | "pointermove" | "pointerup",
-  clientX: number,
-  clientY: number,
-) {
-  await act(async () => {
-    target.dispatchEvent(
-      new PointerEvent(type, {
-        bubbles: true,
-        cancelable: true,
-        composed: true,
-        button: 0,
-        buttons: type === "pointerup" ? 0 : 1,
-        clientX,
-        clientY,
-        isPrimary: true,
-        pointerId: 1,
-        pointerType: "mouse",
-      }),
-    );
-  });
 }
 
 function handleCenter() {
@@ -165,9 +142,7 @@ describe("GIVEN a resizable Drawer", () => {
       await waitForOpen();
 
       const { x, y } = handleCenter();
-      await dispatchPointer(separator().element(), "pointerdown", x, y);
-      await dispatchPointer(separator().element(), "pointermove", x + 50, y);
-      await dispatchPointer(separator().element(), "pointerup", x + 50, y);
+      await mouse.drag({ x, y }, { x: x + 50, y });
 
       await expect.poll(valueNow).toBeCloseTo(350, 0);
     });
@@ -177,16 +152,8 @@ describe("GIVEN a resizable Drawer", () => {
       await waitForOpen();
 
       const { x, y } = handleCenter();
-      await dispatchPointer(separator().element(), "pointerdown", x, y);
-      await dispatchPointer(separator().element(), "pointerup", x, y);
-      const target = document.elementFromPoint(450, y) ?? document.body;
-      await dispatchPointer(target, "pointerdown", 450, y);
-      await dispatchPointer(target, "pointerup", 450, y);
-      await act(async () => {
-        target.dispatchEvent(
-          new MouseEvent("click", { bubbles: true, clientX: 450, clientY: y }),
-        );
-      });
+      await mouse.click({ x, y });
+      await mouse.click({ x: 450, y });
 
       await expect.poll(valueNow).toBeCloseTo(450, 0);
     });
@@ -311,13 +278,13 @@ describe("GIVEN a resizable Drawer", () => {
         await waitForOpen();
 
         const { x, y } = handleCenter();
-        await dispatchPointer(separator().element(), "pointerdown", x, y);
-        await dispatchPointer(separator().element(), "pointermove", x + 30, y);
+        await mouse.down({ x, y });
+        await mouse.move({ x: x + 30, y });
         await expect.poll(valueNow).toBeCloseTo(330, 0);
 
         await runAxeScan(container);
 
-        await dispatchPointer(separator().element(), "pointerup", x + 30, y);
+        await mouse.up();
       },
       AXE_TIMEOUT,
     );
@@ -329,9 +296,8 @@ describe("GIVEN a resizable Drawer", () => {
         await waitForOpen();
 
         const { x, y } = handleCenter();
-        await dispatchPointer(separator().element(), "pointerdown", x, y);
-        await dispatchPointer(separator().element(), "pointerup", x, y);
-        await dispatchPointer(document, "pointermove", 450, y);
+        await mouse.click({ x, y });
+        await mouse.move({ x: 450, y });
         await expect
           .poll(() => getComputedStyle(document.body).cursor)
           .toBe("ew-resize");
