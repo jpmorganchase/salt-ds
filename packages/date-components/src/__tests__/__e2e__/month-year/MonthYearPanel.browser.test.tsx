@@ -1,3 +1,4 @@
+import { FormField, FormFieldLabel } from "@salt-ds/core";
 import type {
   DateFrameworkType,
   SaltDateAdapter,
@@ -442,6 +443,53 @@ function registerAdapterTests(
             }),
           )
           .toHaveAttribute("aria-pressed", "true");
+      });
+
+      it("SHOULD have accessible name via aria-labelledby in a FormField (single)", async () => {
+        await render(
+          <FormField>
+            <FormFieldLabel>Select a month</FormFieldLabel>
+            <DatePicker selectionVariant="single">
+              <DatePickerSingleInput
+                format={MONTH_YEAR_FORMAT}
+                parse={(inputDate, format) =>
+                  parseMonthYear(adapter, inputDate, format)
+                }
+              />
+              <DatePickerOverlay>
+                <MonthYearSinglePanel />
+              </DatePickerOverlay>
+            </DatePicker>
+          </FormField>,
+        );
+        const input = textInput().element();
+        expect(input.getAttribute("aria-labelledby")).toMatch(/\S/);
+      });
+
+      it("SHOULD have accessible names via aria-labelledby in a FormField (range)", async () => {
+        await render(
+          <FormField>
+            <FormFieldLabel>Select a month range</FormFieldLabel>
+            <DatePicker selectionVariant="range">
+              <DatePickerRangeInput
+                format={MONTH_YEAR_FORMAT}
+                parse={(inputDate, field, format) =>
+                  parseMonthYearRange(adapter, inputDate, field, format)
+                }
+              />
+              <DatePickerOverlay>
+                <MonthYearRangePanel />
+              </DatePickerOverlay>
+            </DatePicker>
+          </FormField>,
+        );
+        const [startInput, endInput] = rangeInputs();
+        expect(startInput.element().getAttribute("aria-labelledby")).toMatch(
+          /\S/,
+        );
+        expect(endInput.element().getAttribute("aria-labelledby")).toMatch(
+          /\S/,
+        );
       });
     });
   });
