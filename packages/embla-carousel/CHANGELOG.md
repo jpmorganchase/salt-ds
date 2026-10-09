@@ -1,5 +1,32 @@
 # @salt-ds/embla-carousel
 
+## 1.1.7
+
+### Patch Changes
+
+- 4f1b504: Fixed references to undeclared dependencies, which could fail to resolve under strict package managers such as Yarn PnP, or pnpm with hoisting disabled.
+
+  - `@salt-ds/styles` now depends on `clsx`.
+  - `@salt-ds/embla-carousel` now depends on `@salt-ds/styles` and `@salt-ds/window`, and takes Embla's types from `embla-carousel-react` instead of importing the undeclared `embla-carousel`, so `embla-carousel` no longer needs to be installed for its types.
+  - `@salt-ds/core` types now only reference `@floating-ui/react`, instead of its transitive dependencies `@floating-ui/core`, `@floating-ui/dom`, `@floating-ui/react-dom` and `@floating-ui/utils`. `margin` takes its `Middleware` type from `@floating-ui/react`, `useTooltip` has an explicit return type, and `DEFAULT_FLOATING_UI_MIDDLEWARE` is typed as `Middleware[]`.
+
+- 55f27de: `CarouselAutoplayIndicator` and the carousel's tabs now show their names in React DevTools instead of being anonymous.
+- Updated dependencies [fd5ae98]
+- Updated dependencies [4f1b504]
+- Updated dependencies [75f2d7d]
+- Updated dependencies [61228a7]
+- Updated dependencies [f8925a2]
+- Updated dependencies [4aa4585]
+- Updated dependencies [55f27de]
+- Updated dependencies [602ddb5]
+- Updated dependencies [fd1bf44]
+- Updated dependencies [75f2d7d]
+- Updated dependencies [7182ee8]
+- Updated dependencies [7182ee8]
+- Updated dependencies [cb2e335]
+  - @salt-ds/core@1.73.0
+  - @salt-ds/styles@0.4.2
+
 ## 1.1.6
 
 ### Patch Changes

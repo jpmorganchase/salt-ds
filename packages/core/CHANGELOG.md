@@ -1,5 +1,47 @@
 # @salt-ds/core
 
+## 1.73.0
+
+### Minor Changes
+
+- fd5ae98: Added a `render` element prop to `CollapsiblePanel` for customizing its root element.
+
+  `CollapsiblePanel` animations now respect reduced motion preferences, and changes to the panel's top and bottom padding now animate.
+
+- 75f2d7d: Deprecated `setRef`. Use `useForkRef` to merge refs instead, which also runs the cleanup functions that callback refs can return from React 19.
+- 602ddb5: Added `OnSolidButton`, a button for low-emphasis actions on solid backgrounds.
+
+  ```tsx
+  import { OnSolidButton } from "@salt-ds/core";
+
+  <OnSolidButton>Dismiss</OnSolidButton>;
+  ```
+
+### Patch Changes
+
+- 4f1b504: Fixed references to undeclared dependencies, which could fail to resolve under strict package managers such as Yarn PnP, or pnpm with hoisting disabled.
+
+  - `@salt-ds/styles` now depends on `clsx`.
+  - `@salt-ds/embla-carousel` now depends on `@salt-ds/styles` and `@salt-ds/window`, and takes Embla's types from `embla-carousel-react` instead of importing the undeclared `embla-carousel`, so `embla-carousel` no longer needs to be installed for its types.
+  - `@salt-ds/core` types now only reference `@floating-ui/react`, instead of its transitive dependencies `@floating-ui/core`, `@floating-ui/dom`, `@floating-ui/react-dom` and `@floating-ui/utils`. `margin` takes its `Middleware` type from `@floating-ui/react`, `useTooltip` has an explicit return type, and `DEFAULT_FLOATING_UI_MIDDLEWARE` is typed as `Middleware[]`.
+
+- 61228a7: `SaltProvider` warnings about multiple root providers and `applyClassesToChild` are now only logged in development.
+- f8925a2: Fixed `Stepper`'s injected style id to use lowercase `salt-stepper`, matching the other components.
+- 4aa4585: Fixed `MegaMenuListItem` showing the hover background while pressed. A pressed item now shows the active styling.
+- 55f27de: `Code` and `OverlayPanelCloseButton` now show their own names in React DevTools instead of `TextAction` and `OverlayPanelButton`, and `CollapsiblePanel` and `FormField` are no longer anonymous.
+- fd1bf44: Fixed the checkbox in multiselect `Option` being misaligned with the option's text, impacting `ComboBox`, `Dropdown` and `ListBox`.
+- 75f2d7d: Fixed cleanup functions returned from callback refs, which are supported from React 19, not being called when the ref is passed to a Salt component. The cleanup function now runs when the element is removed, instead of the ref being called with `null`. `useForkRef` supports these cleanup functions in the same way.
+- 7182ee8: Fixed types when using Salt with version 19 of `@types/react`:
+
+  - APIs that take a ref object, such as `useResizeObserver`, accept refs created with `useRef(null)`. Version 19 types these as `RefObject<T | null>`, which caused a type error.
+  - Types no longer use the global `JSX` namespace, which version 19 removed. Types that used it, such as the return types of `ComboBox`, `Dropdown` and `ListBox`, resolved to `any`, or caused errors in Salt's declaration files when `skipLibCheck` is disabled. `ToggleButtonProps` also caused an error when `skipLibCheck` is disabled.
+
+- 7182ee8: Fixed cleanup functions returned from callback refs, which are supported from React 19, not being called when the ref is passed to `getTriggerProps` from `useSidePanel`. The cleanup function now runs when the element is removed, instead of the ref being called with `null`.
+- cb2e335: Fixed `Toolbar` moving items that fit into its overflow menu, and not restoring focus to the previously focused control, when rendered in React Strict Mode.
+- Updated dependencies [4f1b504]
+  - @salt-ds/styles@0.4.2
+  - @salt-ds/icons@1.18.4
+
 ## 1.72.0
 
 ### Minor Changes
