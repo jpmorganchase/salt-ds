@@ -136,7 +136,6 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       isResizing,
       isHovered,
       isPlacing,
-      isInHitArea,
       isCancelPlacingEvent,
       separatorProps,
       guideProps,
@@ -149,9 +148,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const { getFloatingProps } = useInteractions([
       useClick(context),
       useDismiss(context, {
-        outsidePress: disableDismiss
-          ? false
-          : (event) => !isPlacing && !isInHitArea(event),
+        outsidePress: disableDismiss ? false : () => !isPlacing,
       }),
     ]);
 

@@ -36,8 +36,6 @@ interface PlacingState extends Bounds {
 
 type Interaction = "inactive" | "hover" | "active" | "placing";
 
-type HitEvent = Pick<MouseEvent, "clientX" | "clientY" | "target">;
-
 export interface SeparatorProps
   extends Pick<
     AriaAttributes,
@@ -69,7 +67,6 @@ export interface UseDrawerResizeResult {
   isResizing: boolean;
   isHovered: boolean;
   isPlacing: boolean;
-  isInHitArea: (event: HitEvent) => boolean;
   /** Whether the event is the Escape that cancelled placing, so it shouldn't close the drawer. */
   isCancelPlacingEvent: (event?: Event) => boolean;
   separatorProps: SeparatorProps;
@@ -78,8 +75,6 @@ export interface UseDrawerResizeResult {
 
 const KEYBOARD_STEP = 8;
 const PROBE_SIZE = 1e6;
-// WCAG 2.5.8 (AA) minimum target size.
-const MIN_TARGET_SIZE = 24;
 // A press that moves less than this is a click on the handle, not a drag.
 const CLICK_THRESHOLD = 4;
 
@@ -227,42 +222,13 @@ export function useDrawerResize({
     setSizeAxisHorizontal(horizontal);
   };
 
-  // The handle's box extended outward, away from the content, to the minimum target size.
-  const getHitRect = () => {
-    const handle = handleRef.current;
-    if (!handle) return null;
-    const { left, top, right, bottom, width, height } =
-      handle.getBoundingClientRect();
-    const outside = Math.max(
-      0,
-      MIN_TARGET_SIZE - (horizontal ? width : height),
-    );
-    return {
-      left: position === "right" ? left - outside : left,
-      right: position === "left" ? right + outside : right,
-      top: position === "bottom" ? top - outside : top,
-      bottom: position === "top" ? bottom + outside : bottom,
-    };
-  };
-
-  // Everything outside the modal drawer is inert, so any other element under the pointer is a layer above it.
-  const isViableTarget = (target: EventTarget | null) => {
-    if (!element) return false;
-    if (!isElement(target)) return true;
-    return (
-      element.contains(target) ||
-      target.contains(element) ||
-      target.closest("[inert]") !== null
-    );
-  };
-
   const isOverHandle = ({
     clientX: x,
     clientY: y,
   }: Pick<MouseEvent, "clientX" | "clientY">) => {
-    const rect = getHitRect();
+    const rect = handleRef.current?.getBoundingClientRect();
     return (
-      rect !== null &&
+      rect !== undefined &&
       x >= rect.left &&
       x <= rect.right &&
       y >= rect.top &&
@@ -270,9 +236,11 @@ export function useDrawerResize({
     );
   };
 
-  const isInHitArea = useEventCallback(
-    (event: HitEvent) =>
-      enabled && isOverHandle(event) && isViableTarget(event.target),
+  const isHandle = useEventCallback(
+    (target: EventTarget | null) =>
+      enabled &&
+      isElement(target) &&
+      handleRef.current?.contains(target) === true,
   );
 
   const startDrag = useEventCallback((event: PointerEvent) => {
@@ -371,10 +339,17 @@ export function useDrawerResize({
     const drag = dragRef.current;
     if (!drag) return;
     dragRef.current = null;
+    // Pointer capture retargets the release to the handle.
+    const pointer = event as PointerEvent;
     const stillHovered =
       "pointerType" in event &&
-      (event as PointerEvent).pointerType !== "touch" &&
-      isInHitArea(event as PointerEvent);
+      pointer.pointerType !== "touch" &&
+      isHandle(
+        handleRef.current?.ownerDocument.elementFromPoint(
+          pointer.clientX,
+          pointer.clientY,
+        ) ?? null,
+      );
     setInteraction(stillHovered ? "hover" : "inactive");
   });
 
@@ -450,7 +425,9 @@ export function useDrawerResize({
     const onPointerDown = (event: PointerEvent) => {
       if (event.defaultPrevented || !event.isPrimary) return;
       if (event.pointerType === "mouse" && event.button > 0) return;
-      if (placingRef.current || dragRef.current || !isInHitArea(event)) return;
+      if (placingRef.current || dragRef.current || !isHandle(event.target)) {
+        return;
+      }
       startDrag(event);
     };
 
@@ -461,7 +438,7 @@ export function useDrawerResize({
       if (!drag) {
         // Touch has no hover, so it would leave the hover state behind.
         if (event.pointerType !== "touch") {
-          setInteraction(isInHitArea(event) ? "hover" : "inactive");
+          setInteraction(isHandle(event.target) ? "hover" : "inactive");
         }
         return;
       }
@@ -535,7 +512,7 @@ export function useDrawerResize({
     enabled,
     element,
     targetWindow,
-    isInHitArea,
+    isHandle,
     startDrag,
     moveDrag,
     endDrag,
@@ -672,7 +649,6 @@ export function useDrawerResize({
     isResizing: interaction === "active" || interaction === "placing",
     isHovered: interaction === "hover",
     isPlacing: interaction === "placing",
-    isInHitArea,
     isCancelPlacingEvent,
     separatorProps: {
       role: "separator",

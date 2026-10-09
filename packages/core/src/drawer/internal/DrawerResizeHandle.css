@@ -10,6 +10,9 @@
   --drawerResizeHandle-dot-background: var(--salt-separable-foreground);
   --drawerResizeHandle-dot-background-hover: var(--salt-separable-foreground-hover);
   --drawerResizeHandle-dot-background-active: var(--salt-separable-foreground-active);
+  /* Extends the target outside the drawer to 24px (WCAG 2.5.8) */
+  --drawerResizeHandle-outset: max(0px, 24px - var(--drawerResizeHandle-hitSize));
+  --drawerResizeHandle-targetSize: calc(var(--drawerResizeHandle-hitSize) + var(--drawerResizeHandle-outset));
 
   position: absolute;
   z-index: 1;
@@ -45,15 +48,15 @@
 .saltDrawerResizeHandle-left {
   top: 0;
   bottom: 0;
-  right: 0;
-  width: var(--drawerResizeHandle-hitSize);
+  right: calc(-1 * var(--drawerResizeHandle-outset));
+  width: var(--drawerResizeHandle-targetSize);
 }
 
 .saltDrawerResizeHandle-left::before,
 .saltDrawerResizeHandle-left::after {
   top: 0;
   bottom: 0;
-  right: 0;
+  right: var(--drawerResizeHandle-outset);
   width: var(--drawerResizeHandle-size);
 }
 
@@ -61,15 +64,15 @@
 .saltDrawerResizeHandle-right {
   top: 0;
   bottom: 0;
-  left: 0;
-  width: var(--drawerResizeHandle-hitSize);
+  left: calc(-1 * var(--drawerResizeHandle-outset));
+  width: var(--drawerResizeHandle-targetSize);
 }
 
 .saltDrawerResizeHandle-right::before,
 .saltDrawerResizeHandle-right::after {
   top: 0;
   bottom: 0;
-  left: 0;
+  left: var(--drawerResizeHandle-outset);
   width: var(--drawerResizeHandle-size);
 }
 
@@ -83,15 +86,15 @@
 .saltDrawerResizeHandle-top {
   left: 0;
   right: 0;
-  bottom: 0;
-  height: var(--drawerResizeHandle-hitSize);
+  bottom: calc(-1 * var(--drawerResizeHandle-outset));
+  height: var(--drawerResizeHandle-targetSize);
 }
 
 .saltDrawerResizeHandle-top::before,
 .saltDrawerResizeHandle-top::after {
   left: 0;
   right: 0;
-  bottom: 0;
+  bottom: var(--drawerResizeHandle-outset);
   height: var(--drawerResizeHandle-size);
 }
 
@@ -99,15 +102,15 @@
 .saltDrawerResizeHandle-bottom {
   left: 0;
   right: 0;
-  top: 0;
-  height: var(--drawerResizeHandle-hitSize);
+  top: calc(-1 * var(--drawerResizeHandle-outset));
+  height: var(--drawerResizeHandle-targetSize);
 }
 
 .saltDrawerResizeHandle-bottom::before,
 .saltDrawerResizeHandle-bottom::after {
   left: 0;
   right: 0;
-  top: 0;
+  top: var(--drawerResizeHandle-outset);
   height: var(--drawerResizeHandle-size);
 }
 

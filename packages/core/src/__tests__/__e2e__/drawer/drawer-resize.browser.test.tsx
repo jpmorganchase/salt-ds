@@ -289,6 +289,50 @@ describe("GIVEN a resizable Drawer", () => {
       await expect.poll(() => drawerSize("left")).toBeCloseTo(350, 0);
     });
 
+    it("resizes from just outside its edge when the page fills the viewport", async () => {
+      await renderWithSalt(
+        <div style={{ width: "100vw", minHeight: "100vh" }}>
+          <DismissibleFixture />
+        </div>,
+      );
+      await waitForOpen();
+
+      const rect = drawer().getBoundingClientRect();
+      const x = rect.right + 5;
+      const y = rect.top + 120;
+      await mouse.drag({ x, y }, { x: x + 50, y });
+
+      await expect.element(page.getByRole("dialog")).toBeInTheDocument();
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(350, 0);
+    });
+
+    it("doesn't resize through a layer above the drawer", async () => {
+      await renderWithSalt(
+        <>
+          <ResizableFixture />
+          <div
+            role="status"
+            style={{
+              position: "fixed",
+              left: 300,
+              top: 0,
+              width: 50,
+              height: "100vh",
+              zIndex: "calc(var(--salt-zIndex-drawer) + 1)",
+            }}
+          />
+        </>,
+      );
+      await waitForOpen();
+
+      const rect = drawer().getBoundingClientRect();
+      const x = rect.right + 5;
+      const y = rect.top + 120;
+      await mouse.drag({ x, y }, { x: x + 50, y });
+
+      expect(drawerSize("left")).toBeCloseTo(300, 0);
+    });
+
     it("dismisses rather than resizes on a press further outside the drawer", async () => {
       await renderWithSalt(<DismissibleFixture />);
       await waitForOpen();
@@ -915,19 +959,38 @@ describe("GIVEN a resizable Drawer", () => {
       a.top < b.bottom - 0.5 &&
       b.top < a.bottom - 0.5;
 
-    const edgeOffset = (position: Position) => {
+    const straddlesEdge = (position: Position) => {
       const drawerRect = drawer().getBoundingClientRect();
       const handleRect = handle().getBoundingClientRect();
       switch (position) {
         case "left":
-          return drawerRect.right - handleRect.right;
+          return (
+            handleRect.left < drawerRect.right &&
+            handleRect.right > drawerRect.right
+          );
         case "right":
-          return handleRect.left - drawerRect.left;
+          return (
+            handleRect.left < drawerRect.left &&
+            handleRect.right > drawerRect.left
+          );
         case "top":
-          return drawerRect.bottom - handleRect.bottom;
+          return (
+            handleRect.top < drawerRect.bottom &&
+            handleRect.bottom > drawerRect.bottom
+          );
         default:
-          return handleRect.top - drawerRect.top;
+          return (
+            handleRect.top < drawerRect.top &&
+            handleRect.bottom > drawerRect.top
+          );
       }
+    };
+
+    const expectDrawerNotToScroll = () => {
+      drawer().scrollTop = 100;
+      drawer().scrollLeft = 100;
+      expect(drawer().scrollTop).toBe(0);
+      expect(drawer().scrollLeft).toBe(0);
     };
 
     for (const position of POSITIONS) {
@@ -949,8 +1012,7 @@ describe("GIVEN a resizable Drawer", () => {
         const scroller = inner();
         expect(scroller.scrollHeight).toBeGreaterThan(scroller.clientHeight);
         expect(scroller.scrollWidth).toBeGreaterThan(scroller.clientWidth);
-        expect(drawer().scrollHeight).toBe(drawer().clientHeight);
-        expect(drawer().scrollWidth).toBe(drawer().clientWidth);
+        expectDrawerNotToScroll();
         expect(
           overlaps(
             handle().getBoundingClientRect(),
@@ -968,7 +1030,7 @@ describe("GIVEN a resizable Drawer", () => {
         expect(scroller.scrollHeight).toBe(scrollHeight);
         expect(handle().getBoundingClientRect().left).toBe(left);
         expect(handle().getBoundingClientRect().top).toBe(top);
-        expect(edgeOffset(position)).toBeCloseTo(0, 0);
+        expect(straddlesEdge(position)).toBe(true);
       });
     }
 
@@ -992,7 +1054,7 @@ describe("GIVEN a resizable Drawer", () => {
 
       const scroller = inner();
       expect(scroller.scrollHeight).toBeGreaterThan(scroller.clientHeight);
-      expect(drawer().scrollHeight).toBe(drawer().clientHeight);
+      expectDrawerNotToScroll();
       expect(
         overlaps(
           handle().getBoundingClientRect(),

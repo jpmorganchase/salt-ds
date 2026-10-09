@@ -38,8 +38,7 @@
 .saltDrawer-resizable {
   --drawer-resizeHandleSize: var(--salt-size-fixed-600);
   --drawer-resizeHandleHitSize: calc(var(--drawer-resizeHandleSize) + var(--salt-spacing-100));
-
-  overflow: hidden;
+  overflow: visible;
   padding: 0;
 }
 
