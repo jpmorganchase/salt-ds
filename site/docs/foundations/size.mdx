@@ -11,15 +11,52 @@ Size defines the height and width of components within the design system, ensuri
 
 Consistent use of size tokens ensures uniformity in component dimensions, enhancing the visual harmony and functionality of your application's design. Each size token responds to density, ensuring components remain aligned as the density is changed.
 
-| Token                    | Dimension        | High Density (px) | Medium Density (px) | Low Density (px) | Touch Density (px) | Mobile Density (px) |
-| ------------------------ | ---------------- | ----------------- | ------------------- | ---------------- | ------------------ | ------------------- |
-| `--salt-size-base`       | Height only      | 20                | 28                  | 36               | 44                 | 44                  |
-| `--salt-size-selectable` | Height and width | 12                | 14                  | 16               | 18                 | 18                  |
-| `--salt-size-icon`       | Height and width | 12                | 12                  | 14               | 16                 | 16                  |
-| `--salt-size-adornment`  | Height and width | 6                 | 8                   | 10               | 12                 | 12                  |
-| `--salt-size-bar`        | Height or width  | 2                 | 4                   | 6                | 8                  | 8                   |
-| `--salt-size-bar-strong` | Height or width  | 4                 | 8                   | 12               | 16                 | 16                  |
-| `--salt-size-indicator`  | Height or width  | 1                 | 2                   | 3                | 4                  | 4                   |
+| Token                    | High Density (px) | Medium Density (px) | Low Density (px) | Mobile Density (px) |
+| ------------------------ | ----------------- | ------------------- | ---------------- | ------------------- |
+| `--salt-size-base`       | 20                | 28                  | 36               | 44                  |
+| `--salt-size-selectable` | 12                | 14                  | 16               | 18                  |
+| `--salt-size-icon`       | 12                | 12                  | 14               | 16                  |
+| `--salt-size-adornment`  | 6                 | 8                   | 10               | 12                  |
+| `--salt-size-bar`        | 2                 | 4                   | 6                | 8                   |
+| `--salt-size-bar-strong` | 4                 | 8                   | 12               | 16                  |
+| `--salt-size-indicator`  | 1                 | 2                   | 3                | 4                   |
+
+<Disclosure
+  id="mobile-density-interim-size-values"
+  summary={<>View Mobile Density (Interim) values</>}
+>
+
+Mobile Density (Interim) is currently available as a pre-release.
+
+| Token                    | Mobile Density (Interim) (px) |
+| ------------------------ | ----------------------------- |
+| `--salt-size-base`       | 40                            |
+| `--salt-size-selectable` | 18                            |
+| `--salt-size-icon`       | 16                            |
+| `--salt-size-adornment`  | 12                            |
+| `--salt-size-bar`        | 4                             |
+| `--salt-size-bar-strong` | 8                             |
+| `--salt-size-indicator`  | 4                             |
+
+</Disclosure>
+<Disclosure
+  id="touch-density-size-values"
+  summary={<>View Touch Density values</>}
+>
+
+Touch Density is deprecated and retained to support existing implementations.
+
+| Token                    | Touch Density (px) |
+| ------------------------ | ------------------ |
+| `--salt-size-base`       | 44                 |
+| `--salt-size-selectable` | 18                 |
+| `--salt-size-icon`       | 16                 |
+| `--salt-size-adornment`  | 12                 |
+| `--salt-size-bar`        | 8                  |
+| `--salt-size-bar-strong` | 16                 |
+| `--salt-size-indicator`  | 4                  |
+
+</Disclosure>
 
 ## Base
 
