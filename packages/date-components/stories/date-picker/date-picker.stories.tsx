@@ -2657,7 +2657,7 @@ export const SingleWithLocaleZhCN: StoryFn<DatePickerSingleProps> = ({
     <FormField validationStatus={validationStatus}>
       <FormLabel id={labelId}>Select a date</FormLabel>
       <DatePicker
-        selectionVariant={"single"}
+        selectionVariant="single"
         {...args}
         onSelectionChange={handleSelectionChange}
       >
@@ -2990,26 +2990,16 @@ export const RangeWithTimezone: StoryFn<DatePickerRangeProps> = ({
 
       setCurrentTimezone(startDate ? dateAdapter.getTimezone(startDate) : "");
 
-      if (startDate && !startDateErrors?.length) {
-        const start = formatDate(startDate);
-        setStartIso8601String(start.iso);
-        setStartLocaleDateString(start.locale);
-        setStartDateString(start.formatted);
-      } else {
-        setStartIso8601String("");
-        setStartLocaleDateString("");
-        setStartDateString("");
-      }
-      if (endDate && !endDateErrors?.length) {
-        const end = formatDate(endDate);
-        setEndIso8601String(end.iso);
-        setEndLocaleDateString(end.locale);
-        setEndDateString(end.formatted);
-      } else {
-        setEndIso8601String("");
-        setEndLocaleDateString("");
-        setEndDateString("");
-      }
+      const formattedStartDate = startDate ? formatDate(startDate) : null;
+      setStartIso8601String(formattedStartDate?.iso ?? "");
+      setStartLocaleDateString(formattedStartDate?.locale ?? "");
+      setStartDateString(formattedStartDate?.formatted ?? "");
+
+      const formattedEndDate = endDate ? formatDate(endDate) : null;
+      setEndIso8601String(formattedEndDate?.iso ?? "");
+      setEndLocaleDateString(formattedEndDate?.locale ?? "");
+      setEndDateString(formattedEndDate?.formatted ?? "");
+
       args?.onSelectionChange?.(event, selection, details);
     },
     [args?.onSelectionChange, dateAdapter, selectedTimezone],
