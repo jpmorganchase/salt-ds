@@ -2,6 +2,8 @@ import {
   type ButtonProps,
   type DropdownProps,
   makePrefixer,
+  Tooltip,
+  type TooltipProps,
   useForkRef,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
@@ -147,6 +149,11 @@ export interface MonthGridProps
     direction: "forward" | "backward",
     targetIndex: number,
   ) => boolean;
+  /**
+   * Additional Tooltip props for unselectable month tooltips.
+   * Matches CalendarDay's tooltip pattern for consistency.
+   */
+  TooltipProps?: Partial<TooltipProps>;
 }
 
 export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
@@ -174,6 +181,7 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
       yearDropdownRange = 100,
       apiRef,
       onNavigateOutOfRange,
+      TooltipProps,
       className,
       ...rest
     } = props;
@@ -437,6 +445,94 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
                   const isFocusable = focusedIndex === index;
                   const isInteractive =
                     !disabled && !readOnly && !isUnselectable;
+
+                  const buttonElement = (
+                    <button
+                      type="button"
+                      ref={(node) => {
+                        buttonRefs.current[index] = node;
+                        if (isFocusable) {
+                          assignFocusedButtonRef(node);
+                        }
+                      }}
+                      // Unselectable months use aria-disabled instead of
+                      // the native `disabled` attribute so they remain
+                      // reachable via roving-tabindex/arrow-key navigation
+                      // and can display a focus ring, matching the
+                      // Calendar day pattern. The onClick handler is
+                      // already gated by `isInteractive`.
+                      disabled={disabled}
+                      aria-disabled={isUnselectable || undefined}
+                      aria-pressed={selected}
+                      aria-label={
+                        unselectableReason
+                          ? monthYearPanelMessages.monthUnselectableAriaLabel(
+                              fullLabel,
+                              unselectableReason,
+                            )
+                          : fullLabel
+                      }
+                      tabIndex={isFocusable ? 0 : -1}
+                      onClick={(event) => {
+                        if (!isInteractive) return;
+                        onFocusedIndexChange(index);
+                        onMonthSelect(event, month);
+                      }}
+                      onKeyDown={(event) => handleKeyDown(event, index)}
+                      onFocus={() => {
+                        onFocusedIndexChange(index);
+                        // Keyboard-driven roving focus doubles as a range
+                        // preview trigger, mirroring mouse hover.
+                        onMonthHoverChange?.(month);
+                      }}
+                      onMouseEnter={
+                        onMonthHoverChange
+                          ? () => onMonthHoverChange(month)
+                          : undefined
+                      }
+                      className={clsx(withDayBaseName(), {
+                        [withDayBaseName("selected")]:
+                          selected && !getMonthRangeStatus,
+                        [withDayBaseName("selectedStart")]: selectedStart,
+                        [withDayBaseName("selectedEnd")]: selectedEnd,
+                        [withDayBaseName("selectedSpan")]: selectedSpan,
+                        [withDayBaseName("selectedSameDay")]: selectedSameDay,
+                        [withDayBaseName("hoveredStart")]: hoveredStart,
+                        [withDayBaseName("hoveredEnd")]: hoveredEnd,
+                        [withDayBaseName("hoveredSpan")]: hoveredSpan,
+                        [withDayBaseName("unselectable")]: isUnselectable,
+                        [withDayBaseName("focused")]: isFocusable,
+                      })}
+                    >
+                      <span
+                        aria-hidden="true"
+                        className={withDayBaseName("content")}
+                      >
+                        {shortLabel}
+                      </span>
+                    </button>
+                  );
+
+                  // Wrap unselectable months in a tooltip, matching CalendarDay pattern
+                  const tooltipContent: string | false | undefined =
+                    unselectableReason;
+                  const monthButtonElement =
+                    tooltipContent && tooltipContent.length > 0 ? (
+                      <Tooltip
+                        hideIcon
+                        status="info"
+                        content={tooltipContent}
+                        placement="top"
+                        enterDelay={0}
+                        leaveDelay={0}
+                        {...TooltipProps}
+                      >
+                        {buttonElement}
+                      </Tooltip>
+                    ) : (
+                      buttonElement
+                    );
+
                   return (
                     <div
                       role="gridcell"
@@ -446,70 +542,7 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
                       key={shortLabel}
                       className={withBaseName("cell")}
                     >
-                      <button
-                        type="button"
-                        ref={(node) => {
-                          buttonRefs.current[index] = node;
-                          if (isFocusable) {
-                            assignFocusedButtonRef(node);
-                          }
-                        }}
-                        // Unselectable months use aria-disabled instead of
-                        // the native `disabled` attribute so they remain
-                        // reachable via roving-tabindex/arrow-key navigation
-                        // and can display a focus ring, matching the
-                        // Calendar day pattern. The onClick handler is
-                        // already gated by `isInteractive`.
-                        disabled={disabled}
-                        aria-disabled={isUnselectable || undefined}
-                        aria-pressed={selected}
-                        aria-label={
-                          unselectableReason
-                            ? monthYearPanelMessages.monthUnselectableAriaLabel(
-                                fullLabel,
-                                unselectableReason,
-                              )
-                            : fullLabel
-                        }
-                        tabIndex={isFocusable ? 0 : -1}
-                        onClick={(event) => {
-                          if (!isInteractive) return;
-                          onFocusedIndexChange(index);
-                          onMonthSelect(event, month);
-                        }}
-                        onKeyDown={(event) => handleKeyDown(event, index)}
-                        onFocus={() => {
-                          onFocusedIndexChange(index);
-                          // Keyboard-driven roving focus doubles as a range
-                          // preview trigger, mirroring mouse hover.
-                          onMonthHoverChange?.(month);
-                        }}
-                        onMouseEnter={
-                          onMonthHoverChange
-                            ? () => onMonthHoverChange(month)
-                            : undefined
-                        }
-                        className={clsx(withDayBaseName(), {
-                          [withDayBaseName("selected")]:
-                            selected && !getMonthRangeStatus,
-                          [withDayBaseName("selectedStart")]: selectedStart,
-                          [withDayBaseName("selectedEnd")]: selectedEnd,
-                          [withDayBaseName("selectedSpan")]: selectedSpan,
-                          [withDayBaseName("selectedSameDay")]: selectedSameDay,
-                          [withDayBaseName("hoveredStart")]: hoveredStart,
-                          [withDayBaseName("hoveredEnd")]: hoveredEnd,
-                          [withDayBaseName("hoveredSpan")]: hoveredSpan,
-                          [withDayBaseName("unselectable")]: isUnselectable,
-                          [withDayBaseName("focused")]: isFocusable,
-                        })}
-                      >
-                        <span
-                          aria-hidden="true"
-                          className={withDayBaseName("content")}
-                        >
-                          {shortLabel}
-                        </span>
-                      </button>
+                      {monthButtonElement}
                     </div>
                   );
                 })}
