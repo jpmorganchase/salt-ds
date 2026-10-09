@@ -301,6 +301,30 @@
           }
         }
       }
+    },
+    {
+      // Published code must declare everything it imports in its own package.json.
+      // Hoisting hides missing entries here, but strict installs (Yarn PnP, or
+      // pnpm with hoisting disabled) fail.
+      "includes": [
+        "**/packages/*/src/**",
+        "!**/packages/*/src/__tests__/**",
+        "!**/packages/*/src/examples/**",
+        // CSS-only package; its TypeScript only backs Storybook examples.
+        "!**/packages/ag-grid-theme/**"
+      ],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUndeclaredDependencies": {
+              "level": "error",
+              "options": {
+                "devDependencies": false
+              }
+            }
+          }
+        }
+      }
     }
   ]
 }

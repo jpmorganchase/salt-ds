@@ -4376,6 +4376,8 @@ __metadata:
   resolution: "@salt-ds/embla-carousel@workspace:packages/embla-carousel"
   dependencies:
     "@salt-ds/core": "workspace:^"
+    "@salt-ds/styles": "workspace:*"
+    "@salt-ds/window": "workspace:*"
     clsx: "npm:^2.0.0"
     embla-carousel-autoplay: "npm:^8.6.0"
     embla-carousel-class-names: "npm:^8.6.0"
@@ -4587,6 +4589,8 @@ __metadata:
 "@salt-ds/styles@workspace:*, @salt-ds/styles@workspace:packages/styles":
   version: 0.0.0-use.local
   resolution: "@salt-ds/styles@workspace:packages/styles"
+  dependencies:
+    clsx: "npm:^2.0.0"
   peerDependencies:
     "@types/react": ">=16.14.0"
     react: ">=16.14.0"
