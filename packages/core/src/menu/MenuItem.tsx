@@ -104,7 +104,7 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
     const [hasIcon, setHasIcon] = useState(false);
 
     const insideSelectableGroup =
-      selectionVariant !== "none" && !triggersSubmenu;
+      selectionVariant !== undefined && !triggersSubmenu;
     const selectable = insideSelectableGroup && value !== undefined;
     const selected = selectable && isSelected(value);
 
