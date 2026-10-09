@@ -2,7 +2,7 @@
 "@salt-ds/core": minor
 ---
 
-Added a `fontWeight` prop to `Text` and the components built on it (`H1`–`H4`, `Display1`–`Display4`, `Label`, `TextNotation` and `TextAction`). Set it to `lighter` or `bolder` to apply the text style's small or strong weight without using `<small>` or `<strong>`, which carry meaning for assistive technologies. Omit it to keep the default weight.
+Added a `fontWeight` prop to `Text` and the components built on it (`H1`–`H4`, `Display1`–`Display4`, `Label`, `TextNotation` and `TextAction`). Set it to `lighter` or `bolder` to apply the text style's lighter or bolder weight without using `<small>` or `<strong>`, which carry meaning for assistive technologies. Omit it to keep the default weight.
 
 ```tsx
 <Text fontWeight="bolder">Bolder text</Text>
@@ -30,4 +30,3 @@ Deprecated the lighter weight styling of `<small>` elements nested in `Text`. `<
 ```
 
 For part of the text, nest `<Text as="span" styleAs="inherit" fontWeight="lighter">`.
-

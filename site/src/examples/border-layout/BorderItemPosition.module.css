@@ -4,7 +4,7 @@
 }
 
 .container .active {
-  font-weight: var(--salt-text-fontWeight-strong);
+  font-weight: var(--salt-text-fontWeight-bolder);
   background: var(--salt-container-secondary-background);
 }
 
