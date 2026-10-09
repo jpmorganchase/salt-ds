@@ -2,6 +2,7 @@ import {
   Button,
   Drawer,
   DrawerContent,
+  DrawerFooter,
   DrawerHeader,
   StackLayout,
   Text,
@@ -29,6 +30,7 @@ export const Header = (): ReactElement => {
         style={{ width: 400 }}
       >
         <DrawerHeader
+          preheader="Payments"
           header="Check deposit #1278"
           description="Pending transaction review"
           actions={
@@ -47,6 +49,18 @@ export const Header = (): ReactElement => {
             <Text>{placeholderText.repeat(4)}</Text>
           </StackLayout>
         </DrawerContent>
+        <DrawerFooter>
+          <Button
+            sentiment="accented"
+            appearance="bordered"
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+          <Button sentiment="accented" onClick={handleClose}>
+            Save
+          </Button>
+        </DrawerFooter>
       </Drawer>
     </>
   );

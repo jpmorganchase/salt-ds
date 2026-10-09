@@ -11,7 +11,15 @@ import {
 import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
-import { type ReactNode, useLayoutEffect, useRef } from "react";
+import {
+  type CSSProperties,
+  type ReactNode,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from "react";
+import { waitFor } from "storybook/test";
 
 export default {
   title: "Core/Drawer/Drawer QA",
@@ -109,6 +117,12 @@ const DrawerTemplate = () => {
             <Button sentiment="accented">Save and continue</Button>
           </DrawerFooter>
         </FakeDrawer>
+        <FakeDrawer>
+          <DrawerHeader header="Title without actions" />
+          <DrawerContent>
+            <Text>{loremText}</Text>
+          </DrawerContent>
+        </FakeDrawer>
       </StackLayout>
       <StackLayout direction="row" gap={3}>
         <FakeDrawer>
@@ -189,3 +203,232 @@ export const DrawerOverflow: StoryFn<QAContainerProps> = (props) => {
 DrawerOverflow.parameters = {
   chromatic: { disableSnapshot: false },
 };
+
+const ResizableDrawerTemplate = ({
+  position,
+  resizable = true,
+}: Pick<DrawerProps, "position" | "resizable">) => {
+  const horizontal = position === "left" || position === "right";
+  return (
+    <Drawer
+      open
+      resizable={resizable}
+      position={position}
+      style={horizontal ? { width: 350 } : { height: 280 }}
+    >
+      <DrawerHeader
+        header="Resizable drawer"
+        description="Pending transaction review"
+        actions={<CloseButton />}
+      />
+      <DrawerContent>
+        <Text>{loremText}</Text>
+        <Text>{loremText}</Text>
+      </DrawerContent>
+      <DrawerFooter>
+        <Button sentiment="accented" appearance="bordered">
+          Cancel
+        </Button>
+        <Button sentiment="accented">Save</Button>
+      </DrawerFooter>
+    </Drawer>
+  );
+};
+
+export const NotResizable: StoryFn = () => (
+  <ResizableDrawerTemplate position="left" resizable={false} />
+);
+NotResizable.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const ResizableLeft: StoryFn = () => (
+  <ResizableDrawerTemplate position="left" />
+);
+ResizableLeft.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const ResizableRight: StoryFn = () => (
+  <ResizableDrawerTemplate position="right" />
+);
+ResizableRight.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const ResizableTop: StoryFn = () => (
+  <ResizableDrawerTemplate position="top" />
+);
+ResizableTop.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const ResizableBottom: StoryFn = () => (
+  <ResizableDrawerTemplate position="bottom" />
+);
+ResizableBottom.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const ResizableScrolledUnsectioned: StoryFn = () => {
+  const [drawer, setDrawer] = useState<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const scroller = drawer?.querySelector<HTMLElement>(".saltDrawer-inner");
+    if (!scroller) return;
+    const frame = requestAnimationFrame(() => {
+      scroller.scrollTop = 400;
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [drawer]);
+
+  return (
+    <Drawer
+      open
+      resizable
+      initialFocus={-1}
+      style={{ width: 350 }}
+      ref={setDrawer}
+    >
+      <Text>{loremText.repeat(20)}</Text>
+    </Drawer>
+  );
+};
+ResizableScrolledUnsectioned.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const ResizableOverflowingSections: StoryFn = () => (
+  <Drawer
+    open
+    resizable
+    initialFocus={-1}
+    style={{ width: 350, "--saltDrawer-maxHeight": "200px" } as CSSProperties}
+  >
+    <DrawerHeader
+      header="Resizable drawer"
+      description="Pending transaction review"
+      actions={<CloseButton />}
+    />
+    <DrawerContent>
+      <Text>{loremText}</Text>
+    </DrawerContent>
+    <DrawerFooter>
+      <Button sentiment="accented" appearance="bordered">
+        Cancel
+      </Button>
+      <Button sentiment="accented">Save</Button>
+    </DrawerFooter>
+  </Drawer>
+);
+ResizableOverflowingSections.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const ResizableAtMinimumSize: StoryFn = () => (
+  <Drawer
+    open
+    resizable
+    style={
+      {
+        width: 0,
+        padding: 0,
+        "--saltDrawer-minWidth": "0px",
+      } as CSSProperties
+    }
+  >
+    <DrawerHeader header="Resizable drawer" />
+    <DrawerContent>
+      <Text>{loremText}</Text>
+    </DrawerContent>
+  </Drawer>
+);
+ResizableAtMinimumSize.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+const dispatchPointer = (
+  target: EventTarget,
+  type: "pointerdown" | "pointermove" | "pointerup",
+  clientX: number,
+  clientY: number,
+) =>
+  target.dispatchEvent(
+    new PointerEvent(type, {
+      bubbles: true,
+      cancelable: true,
+      composed: true,
+      button: 0,
+      buttons: type === "pointerdown" ? 1 : 0,
+      clientX,
+      clientY,
+      isPrimary: true,
+      pointerId: 1,
+      pointerType: "mouse",
+    }),
+  );
+
+/** Clicks the resize handle, then hovers so the guide line previews the edge at the given size. */
+const playPlacing =
+  (position: "left" | "top", guideSize: number) =>
+  async ({ canvasElement }: { canvasElement: HTMLElement }) => {
+    const ownerDocument = canvasElement.ownerDocument;
+    const getGuide = () => {
+      const guide = ownerDocument.querySelector<HTMLElement>(
+        ".saltDrawerResizeGuide",
+      );
+      if (!guide) throw new Error("The guide line isn't showing");
+      return guide;
+    };
+    const guideOffset = () =>
+      Number.parseFloat(
+        getGuide().style.getPropertyValue("--drawerResizeGuide-offset"),
+      );
+
+    const drawer = await waitFor(() => {
+      const element =
+        ownerDocument.querySelector<HTMLElement>('[role="dialog"]');
+      if (!element || element.getAnimations().length > 0) {
+        throw new Error("The drawer is still opening");
+      }
+      return element;
+    });
+    const handle = drawer.querySelector<HTMLElement>('[role="separator"]');
+    if (!handle) throw new Error("The drawer has no resize handle");
+
+    const handleRect = handle.getBoundingClientRect();
+    const x = handleRect.left + handleRect.width / 2;
+    const y = handleRect.top + handleRect.height / 2;
+    dispatchPointer(handle, "pointerdown", x, y);
+    dispatchPointer(handle, "pointerup", x, y);
+    await waitFor(guideOffset);
+
+    const drawerRect = drawer.getBoundingClientRect();
+    const target =
+      position === "left"
+        ? { x: drawerRect.left + guideSize, y }
+        : { x, y: drawerRect.top + guideSize };
+    dispatchPointer(getGuide(), "pointermove", target.x, target.y);
+    await waitFor(() => {
+      const expected = position === "left" ? target.x : target.y;
+      if (Math.abs(guideOffset() - expected) > 1) {
+        throw new Error("The guide line hasn't moved");
+      }
+    });
+  };
+
+export const ResizablePlacingLeft: StoryFn = () => (
+  <ResizableDrawerTemplate position="left" />
+);
+ResizablePlacingLeft.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+ResizablePlacingLeft.play = playPlacing("left", 500);
+
+export const ResizablePlacingTop: StoryFn = () => (
+  <ResizableDrawerTemplate position="top" />
+);
+ResizablePlacingTop.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+ResizablePlacingTop.play = playPlacing("top", 420);

@@ -26,6 +26,11 @@ import {
 import drawerCss from "./Drawer.css";
 import { DrawerContext } from "./DrawerContext";
 import { hasDrawerSection } from "./hasDrawerSection";
+import {
+  DrawerResizeGuide,
+  DrawerResizeHandle,
+  useDrawerResize,
+} from "./internal";
 
 interface ConditionalScrimWrapperProps extends PropsWithChildren {
   condition: boolean;
@@ -64,6 +69,12 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    * */
   disableScrim?: boolean;
   /**
+   * Allow the user to resize the drawer. Set size limits with the `--saltDrawer-minWidth`/`--saltDrawer-maxWidth`
+   * variables (`--saltDrawer-minHeight`/`--saltDrawer-maxHeight` for `top` and `bottom`). The drawer never shrinks
+   * below `--salt-size-base`, unless `min-width`/`min-height` is set directly.
+   * */
+  resizable?: boolean;
+  /**
    * Which element to initially focus. Can be either a number (tabbable index as specified by the order) or a ref.
    * Default value is 0 (first tabbable element).
    * */
@@ -85,8 +96,10 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       variant = "primary",
       disableDismiss,
       disableScrim,
+      resizable = false,
       initialFocus,
       id,
+      style,
       "aria-labelledby": ariaLabelledBy,
       "aria-describedby": ariaDescribedBy,
       ...rest
@@ -112,12 +125,31 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
 
     const { context, floating, elements } = useFloatingUI({
       open: showComponent,
-      onOpenChange,
+      onOpenChange: (newOpen, event) => {
+        if (!newOpen && isCancelPlacingEvent(event)) return;
+        onOpenChange?.(newOpen);
+      },
+    });
+
+    const {
+      sizeStyle,
+      isResizing,
+      isHovered,
+      isPlacing,
+      isCancelPlacingEvent,
+      separatorProps,
+      guideProps,
+    } = useDrawerResize({
+      enabled: resizable,
+      position,
+      element: elements.floating,
     });
 
     const { getFloatingProps } = useInteractions([
       useClick(context),
-      useDismiss(context, { outsidePress: !disableDismiss }),
+      useDismiss(context, {
+        outsidePress: disableDismiss ? false : () => !isPlacing,
+      }),
     ]);
 
     const handleRef = useForkRef<HTMLDivElement>(floating, ref);
@@ -172,13 +204,37 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
                 [withBaseName("exitAnimation")]: !open,
                 [withBaseName(variant)]: variant,
                 [withBaseName("sectioned")]: sectioned,
+                [withBaseName("resizable")]: resizable,
+                [withBaseName("resizing")]: isResizing,
               },
               className,
             )}
             {...getFloatingProps()}
             {...rest}
+            style={{
+              ...style,
+              ...sizeStyle,
+            }}
           >
-            {children}
+            {resizable ? (
+              // Keeps the content's scrollbar clear of the resize handle.
+              <div className={withBaseName("inner")}>{children}</div>
+            ) : (
+              children
+            )}
+            {resizable && (
+              <DrawerResizeHandle
+                position={position}
+                resizing={isResizing}
+                hovered={isHovered}
+                aria-label="Resize drawer"
+                aria-controls={drawerId}
+                {...separatorProps}
+              />
+            )}
+            {isPlacing && (
+              <DrawerResizeGuide position={position} {...guideProps} />
+            )}
           </FloatingComponent>
         </ConditionalScrimWrapper>
       </DrawerContext.Provider>

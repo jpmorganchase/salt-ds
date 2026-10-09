@@ -60,6 +60,7 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(
     const descriptionId = useId();
     const hasHeading = Boolean(header || preheader);
     const hasDescription = Boolean(description);
+    const centeredTitle = Boolean(actions) && !preheader;
 
     useIsomorphicLayoutEffect(() => {
       setHeaderId?.(hasHeading ? headingId : undefined);
@@ -83,6 +84,7 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(
           withBaseName(),
           {
             [withBaseName("withAccent")]: !disableAccent,
+            [withBaseName("withCenteredTitle")]: centeredTitle,
           },
           className,
         )}

@@ -12,13 +12,31 @@ data:
 
 Drawer displays with a header, content area, and footer. The component is modal, meaning it prevents interaction with the rest of the UI while open and must be addressed by clicking one of the action buttons or dismissing with the close button in `DrawerHeader`. If the content of the drawer extends beyond the end of the screen, the `DrawerContent` area will become scrollable.
 
-By default, a drawer anchors to the `left` edge of the screen and has `variant="primary"`. You can place drawer on the `left`, `right`, `top` and `bottom` edges using the `position` prop. Set `variant="secondary"` for a secondary drawer and `variant="tertiary"` for a tertiary drawer.
-
 <LivePreview componentName="drawer" exampleName="Default" />
+
+## Variants
+
+`Drawer` comes in three variants: primary, secondary and tertiary. The primary variant is the default. Set `variant="secondary"` for a secondary drawer and `variant="tertiary"` for a tertiary drawer.
+
+<LivePreview componentName="drawer" exampleName="Variants" />
+
+## Placement
+
+Use the `position` prop to anchor the drawer to the `left`, `right`, `top` or `bottom` edge of the screen. The default position is `left`.
+
+### Best practices
+
+- Consider using a right-anchored drawer to show supporting information related to the current context, such as recent events, notifications or quick settings.
+- Anchor your drawer to the top edge if it will display supporting information that's related to the current context and is best presented in a horizontal format, e.g., complex filters or a summary panel.
+- Anchor a drawer to the bottom edge of the screen when using a master-detail layout with content, such as graphs, images or comparisons, that requires a wider horizontal format.
+
+<LivePreview componentName="drawer" exampleName="Placement" />
 
 ## Header
 
-`DrawerHeader` follows our standardized header for container components and app regions, and it can be added to provide a structured header for drawer. The header includes a title and actions that follows our [Header Block pattern](/salt/patterns/header-block).
+`DrawerHeader` follows our standardized header for container components and app regions, and it can be added to provide a structured header for drawer. The header includes a title and actions that follow our [Header Block pattern](/salt/patterns/header-block).
+
+Use the `header` prop to set the title of your drawer. You can use the optional `preheader` prop to render a preheader above the main header, and the optional `description` prop to render a description below it.
 
 <LivePreview componentName="drawer" exampleName="Header" />
 
@@ -28,29 +46,15 @@ By default, a drawer anchors to the `left` edge of the screen and has `variant="
 
 <LivePreview componentName="drawer" exampleName="Footer" />
 
-## Preheader
+## Resizable
 
-You can use the optional `preheader` prop to render a preheader above the main header of your drawer.
+Use the `resizable` prop to allow the user to resize the drawer. Users can drag its inner edge, click the edge and then click the new position for it, or focus the edge and use the arrow keys.
 
-<LivePreview componentName="drawer" exampleName="Preheader" />
+Use the `--saltDrawer-minWidth` and `--saltDrawer-maxWidth` CSS variables to set size limits for left and right drawers, and `--saltDrawer-minHeight` and `--saltDrawer-maxHeight` for top and bottom drawers.
 
-## Right drawer usage example
+The drawer starts at the width or height set in its styles and keeps the size the user sets, including when it closes and opens again.
 
-Consider using a right-anchored drawer to show supporting information related to the current context, such as recent events, notifications or quick settings. Always set your drawer's width suitable for the content inside it.
-
-<LivePreview componentName="drawer" exampleName="RightDrawer" />
-
-## Top drawer usage example
-
-Anchor your drawer to the top edge if it will display supporting information that’s related to the current context and is best presented in a horizontal format, e.g., complex filters or a summary panel.
-
-<LivePreview componentName="drawer" exampleName="TopDrawer" />
-
-## Bottom drawer usage example
-
-Anchor a drawer to the bottom edge of the screen when using a master-detail layout with content, such as graphs, images or comparisons that requires a wider horizontal format.
-
-<LivePreview componentName="drawer" exampleName="BottomDrawer" />
+<LivePreview componentName="drawer" exampleName="Resizable" />
 
 ## Mandatory actions
 

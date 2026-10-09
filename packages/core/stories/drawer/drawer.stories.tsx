@@ -24,6 +24,7 @@ import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import {
   type ChangeEvent,
+  type CSSProperties,
   type MouseEventHandler,
   type SyntheticEvent,
   useEffect,
@@ -550,6 +551,76 @@ export const HeaderAndFooter: StoryFn<DrawerProps> = (args) => {
             Cancel
           </Button>
           <Button sentiment="accented" onClick={handleClose}>
+            Save
+          </Button>
+        </DrawerFooter>
+      </Drawer>
+    </>
+  );
+};
+
+export const Resizable: StoryFn<DrawerProps> = ({
+  position = "left",
+  ...args
+}) => {
+  const [open, setOpen] = useState(false);
+
+  const isHorizontal = position === "left" || position === "right";
+
+  return (
+    <>
+      <Button onClick={() => setOpen(true)}>Open Drawer</Button>
+      <Drawer
+        {...args}
+        resizable
+        position={position}
+        open={open}
+        onOpenChange={setOpen}
+        style={
+          isHorizontal
+            ? ({
+                width: 320,
+                "--saltDrawer-minWidth": "200px",
+                "--saltDrawer-maxWidth": "640px",
+              } as CSSProperties)
+            : ({
+                height: 280,
+                "--saltDrawer-minHeight": "160px",
+                "--saltDrawer-maxHeight": "520px",
+              } as CSSProperties)
+        }
+      >
+        <DrawerHeader
+          header={`Resizable ${position} drawer`}
+          description="Drag the edge, click the edge and then click its new position, or focus the edge and use the arrow keys."
+          actions={<CloseButton onClick={() => setOpen(false)} />}
+        />
+        <DrawerContent>
+          <StackLayout>
+            <Text>
+              Limits come from the drawer's CSS variables:{" "}
+              {isHorizontal
+                ? "minimum width 200px, maximum width 640px."
+                : "minimum height 160px, maximum height 520px."}{" "}
+              The drawer never exceeds the viewport.
+            </Text>
+            <Text>
+              While you place the edge by click, clicking content such as this{" "}
+              <Link href="#resizable-drawer-example">example link</Link> only
+              moves the edge.
+            </Text>
+            <Text>{loremText.repeat(4)}</Text>
+          </StackLayout>
+        </DrawerContent>
+        <DrawerFooter>
+          <Button
+            sentiment="accented"
+            appearance="bordered"
+            onClick={() => setOpen(false)}
+          >
+            Cancel
+          </Button>
+          <Button sentiment="accented" onClick={() => setOpen(false)}>
             Save
           </Button>
         </DrawerFooter>

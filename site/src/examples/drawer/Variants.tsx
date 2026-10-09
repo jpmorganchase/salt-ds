@@ -1,16 +1,20 @@
 import {
   Button,
+  capitalize,
   Drawer,
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
+  type DrawerProps,
   StackLayout,
   Text,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
 
-export const DisableAccent = (): ReactElement => {
+const DrawerTemplate = ({
+  variant = "primary",
+}: Pick<DrawerProps, "variant">): ReactElement => {
   const [open, setOpen] = useState(false);
 
   const handleClose = () => {
@@ -18,17 +22,16 @@ export const DisableAccent = (): ReactElement => {
   };
 
   return (
-    <StackLayout>
-      <Button onClick={() => setOpen(true)}>Open Drawer without accent</Button>
+    <>
+      <Button onClick={() => setOpen(true)}>{variant}</Button>
       <Drawer
         open={open}
         onOpenChange={setOpen}
-        position="right"
-        style={{ width: 400 }}
+        variant={variant}
+        style={{ width: 300 }}
       >
         <DrawerHeader
-          disableAccent
-          header="Drawer without accent"
+          header={`${capitalize(variant)} drawer`}
           actions={
             <Button
               aria-label="Close drawer"
@@ -40,7 +43,10 @@ export const DisableAccent = (): ReactElement => {
           }
         />
         <DrawerContent>
-          <Text>Use disableAccent to hide the accent bar.</Text>
+          <Text>
+            {capitalize(variant)} drawers sit on the container {variant}{" "}
+            background.
+          </Text>
         </DrawerContent>
         <DrawerFooter>
           <Button
@@ -55,6 +61,14 @@ export const DisableAccent = (): ReactElement => {
           </Button>
         </DrawerFooter>
       </Drawer>
-    </StackLayout>
+    </>
   );
 };
+
+export const Variants = (): ReactElement => (
+  <StackLayout gap={1}>
+    <DrawerTemplate variant="primary" />
+    <DrawerTemplate variant="secondary" />
+    <DrawerTemplate variant="tertiary" />
+  </StackLayout>
+);

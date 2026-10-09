@@ -1,13 +1,18 @@
 /* Styles applied to Drawer component */
 .saltDrawer {
+  --drawer-padding: var(--salt-spacing-300);
+
   background: var(--drawer-background);
   display: flex;
   flex-direction: column;
-  max-height: 100%;
-  max-width: 100%;
+  /* Size limits never exceed the viewport. */
+  min-height: min(max(var(--saltDrawer-minHeight, 0px), var(--drawer-minHeight, 0px)), 100%);
+  max-height: min(var(--saltDrawer-maxHeight, 100%), 100%);
+  min-width: min(max(var(--saltDrawer-minWidth, 0px), var(--drawer-minWidth, 0px)), 100%);
+  max-width: min(var(--saltDrawer-maxWidth, 100%), 100%);
   overflow: auto;
   /* Legacy padding for unsectioned drawers only. */
-  padding: var(--salt-spacing-300);
+  padding: var(--drawer-padding);
   box-shadow: var(--salt-overlayable-shadow-modal);
   z-index: var(--salt-zIndex-drawer);
   position: fixed;
@@ -16,13 +21,63 @@
 }
 
 .saltDrawer.saltDrawer-sectioned {
-  padding: 0;
+  --drawer-padding: 0px;
+}
+
+.saltDrawer-resizing {
+  user-select: none;
 }
 
 @supports selector(:has(*)) {
-  .saltDrawer:has(> .saltDrawerHeader, > .saltDrawerContent, > .saltDrawerFooter) {
-    padding: 0;
+  .saltDrawer:has(> .saltDrawerHeader, > .saltDrawerContent, > .saltDrawerFooter),
+  .saltDrawer-inner:has(> .saltDrawerHeader, > .saltDrawerContent, > .saltDrawerFooter) {
+    --drawer-padding: 0px;
   }
+}
+
+.saltDrawer-resizable {
+  --drawer-resizeHandleSize: var(--salt-size-fixed-600);
+  --drawer-resizeHandleHitSize: calc(var(--drawer-resizeHandleSize) + var(--salt-spacing-100));
+  overflow: visible;
+  padding: 0;
+}
+
+/* Styles applied to the scrolling inner element of a resizable drawer */
+.saltDrawer-inner {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  overflow: auto;
+  padding: var(--drawer-padding);
+  box-sizing: border-box;
+}
+
+.saltDrawer-resizable.saltDrawer-left {
+  padding-right: var(--drawer-resizeHandleHitSize);
+}
+
+.saltDrawer-resizable.saltDrawer-right {
+  padding-left: var(--drawer-resizeHandleHitSize);
+}
+
+.saltDrawer-resizable.saltDrawer-top {
+  padding-bottom: var(--drawer-resizeHandleHitSize);
+}
+
+.saltDrawer-resizable.saltDrawer-bottom {
+  padding-top: var(--drawer-resizeHandleHitSize);
+}
+
+.saltDrawer-resizable.saltDrawer-left,
+.saltDrawer-resizable.saltDrawer-right {
+  --drawer-minWidth: var(--salt-size-base);
+}
+
+.saltDrawer-resizable.saltDrawer-top,
+.saltDrawer-resizable.saltDrawer-bottom {
+  --drawer-minHeight: var(--salt-size-base);
 }
 
 /* Styles applied when variant = "primary" */
