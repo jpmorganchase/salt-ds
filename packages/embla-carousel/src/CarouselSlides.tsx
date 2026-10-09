@@ -2,7 +2,6 @@ import { makePrefixer, useAriaAnnouncer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import type { EmblaCarouselType } from "embla-carousel";
 import {
   Children,
   type ComponentPropsWithoutRef,
@@ -23,6 +22,7 @@ import {
 } from "./CarouselContext";
 import carouselSlidesCss from "./CarouselSlides.css";
 import { createCustomSettle } from "./createCustomSettle";
+import type { EmblaCarouselType } from "./emblaTypes";
 import { getVisibleSlideDescription } from "./getVisibleSlideDescription";
 import { getVisibleSlideIndexes } from "./getVisibleSlideIndexes";
 
