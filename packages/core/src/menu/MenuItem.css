@@ -59,6 +59,20 @@
   min-height: var(--salt-text-lineHeight);
 }
 
+.saltMenuItem .saltMenuItem-selectionIcon {
+  margin: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2) 0;
+}
+
+.saltMenuItem-selectionIconPlaceholder {
+  flex-shrink: 0;
+  width: var(--salt-size-selectable);
+}
+
+.saltMenuItem-iconPlaceholder {
+  flex-shrink: 0;
+  width: max(var(--salt-size-icon), 12px);
+}
+
 .saltMenuItem-expandIcon.saltIcon {
   margin-left: auto;
 }
