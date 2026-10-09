@@ -21,6 +21,11 @@
   word-break: break-word;
 }
 
+/* Centres the title's first line on the actions */
+.saltDrawerHeader-withCenteredTitle .saltDrawerHeader-container {
+  padding-top: calc((var(--salt-size-base) - var(--salt-text-h2-lineHeight)) / 2);
+}
+
 .saltDrawerHeader-header > .saltText {
   display: block;
   margin: 0;
