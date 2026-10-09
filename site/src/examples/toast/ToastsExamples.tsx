@@ -10,9 +10,7 @@ export const InfoToast = () => {
   return open ? (
     <Toast status="info">
       <ToastContent>
-        <Text>
-          <strong>File update</strong>
-        </Text>
+        <Text fontWeight="bolder">File update</Text>
         <div>A new version of this file is available with 37 updates.</div>
       </ToastContent>
       <Button
@@ -35,9 +33,7 @@ export const ErrorToast = () => {
     <Toast status="error">
       <ToastContent>
         <div>
-          <Text>
-            <strong>A system error occurred</strong>
-          </Text>
+          <Text fontWeight="bolder">A system error occurred</Text>
           <div>The connection timed out and failed to retrieve data.</div>
         </div>
         <FlowLayout
@@ -62,9 +58,7 @@ export const WarningToast = () => {
     <Toast status="warning">
       <ToastContent>
         <div>
-          <Text>
-            <strong>File access</strong>
-          </Text>
+          <Text fontWeight="bolder">File access</Text>
           <div>Viewers of this file can see comments and suggestions.</div>
         </div>
         <FlowLayout gap={1} style={{ marginTop: "var(--salt-spacing-100)" }}>
@@ -88,9 +82,7 @@ export const SuccessToast = () => {
   return open ? (
     <Toast status="success">
       <ToastContent>
-        <Text>
-          <strong>File uploaded</strong>
-        </Text>
+        <Text fontWeight="bolder">File uploaded</Text>
         <div>
           The project file has been successfully uploaded to the shared drive.
         </div>

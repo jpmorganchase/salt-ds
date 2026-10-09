@@ -17,7 +17,9 @@ export const Error = (): ReactElement => (
     status="error"
   >
     <FileDropZoneIcon status="error" />
-    <strong>File format is not allowed</strong>
+    <Text styleAs="inherit" fontWeight="bolder">
+      File format is not allowed
+    </Text>
     <FileDropZoneTrigger accept=".png" onChange={validate} />
     <Text>Only .png files</Text>
   </FileDropZone>

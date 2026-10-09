@@ -285,15 +285,15 @@ DynamicElements.globals = {
 export const SubpixelWidthRounding: StoryFn<typeof Toolbar> = () => (
   <StackLayout gap={1.5} style={subpixelRoundingShellStyle}>
     <Text>
-      <strong>Expected:</strong> all {subpixelItemLabels.length} labelled items
-      fit when the integer Storybook width slider is set to{" "}
-      {subpixelSliderFitWidth}px. Each item is {subpixelItemWidth}px wide, so
-      the rendered total is fractional.
+      <b>Expected:</b> all {subpixelItemLabels.length} labelled items fit when
+      the integer Storybook width slider is set to {subpixelSliderFitWidth}px.
+      Each item is {subpixelItemWidth}px wide, so the rendered total is
+      fractional.
     </Text>
     <Text>
-      <strong>Bug indicator:</strong> if {subpixelSliderFitWidth}px shows only
-      the overflow trigger, fractional widths are still being rounded into a
-      false overflow. At {subpixelSliderOverflowWidth}px, items should overflow.
+      <b>Bug indicator:</b> if {subpixelSliderFitWidth}px shows only the
+      overflow trigger, fractional widths are still being rounded into a false
+      overflow. At {subpixelSliderOverflowWidth}px, items should overflow.
     </Text>
     <div style={subpixelRoundingFrameStyle}>
       <Toolbar
@@ -331,14 +331,14 @@ export const SubpixelWidthRoundingWithGapsAndDividers: StoryFn<
 > = () => (
   <StackLayout gap={1.5} style={subpixelRoundingShellStyle}>
     <Text>
-      <strong>Expected:</strong> this version keeps the default toolbar spacing
-      and includes vertical dividers. The debug log should show a non-zero
-      content gap and item widths that include adjacent divider decorations.
+      <b>Expected:</b> this version keeps the default toolbar spacing and
+      includes vertical dividers. The debug log should show a non-zero content
+      gap and item widths that include adjacent divider decorations.
     </Text>
     <Text>
-      <strong>Bug indicator:</strong> if the slider width is at or above the
-      logged initial width but items still overflow, the measurement is not
-      accounting for gaps or divider decorations correctly.
+      <b>Bug indicator:</b> if the slider width is at or above the logged
+      initial width but items still overflow, the measurement is not accounting
+      for gaps or divider decorations correctly.
     </Text>
     <div style={subpixelRoundingFrameStyle}>
       <Toolbar
@@ -459,9 +459,7 @@ export const OverflowMenuInClippingContainer: StoryFn<typeof Toolbar> = () => (
   <StackLayout gap={2} style={clippingValidationShellStyle}>
     <div style={clippingValidationCardStyle}>
       <StackLayout gap={0.5} style={clippingValidationHeaderStyle}>
-        <Text>
-          <strong>Trade exception review</strong>
-        </Text>
+        <Text fontWeight="bolder">Trade exception review</Text>
         <Text>Resolve exceptions before the desk closes the batch.</Text>
       </StackLayout>
       <div style={clippingValidationBodyStyle}>

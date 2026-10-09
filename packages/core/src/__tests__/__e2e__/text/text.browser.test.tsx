@@ -116,6 +116,36 @@ describe("GIVEN a Text component", () => {
     );
   }
 
+  for (const fontWeight of ["lighter", "bolder"] as const) {
+    it.each(components)(
+      `$name supports the ${fontWeight} font weight`,
+      async ({ component: Component }) => {
+        const { container } = await renderWithSalt(
+          <Component fontWeight={fontWeight}>{textExample}</Component>,
+        );
+        expect(container.querySelector(".saltText")).toHaveClass(
+          `saltText-${fontWeight}`,
+        );
+      },
+    );
+  }
+
+  it("does not add a font weight class when fontWeight is omitted", async () => {
+    const { container } = await renderWithSalt(<Text>{textExample}</Text>);
+    const text = container.querySelector(".saltText");
+    expect(text).not.toHaveClass("saltText-lighter");
+    expect(text).not.toHaveClass("saltText-bolder");
+  });
+
+  it("adds an inherit style class and inherits color with styleAs=inherit", async () => {
+    const { container } = await renderWithSalt(
+      <Text styleAs="inherit">{textExample}</Text>,
+    );
+    const text = container.querySelector(".saltText");
+    expect(text).toHaveClass("saltText-inheritStyle");
+    expect(text).not.toHaveClass("saltText-primary");
+  });
+
   it("does not add an inherit color class", async () => {
     const { container } = await renderWithSalt(
       <Text color="inherit">{textExample}</Text>,

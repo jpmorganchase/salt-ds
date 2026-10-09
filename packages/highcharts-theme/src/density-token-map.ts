@@ -71,7 +71,7 @@ export type SaltChartTokenMap = {
   "--salt-text-heading-fontFamily": string;
   "--salt-text-label-fontSize": string;
   "--salt-text-label-fontWeight": string;
-  "--salt-text-label-fontWeight-strong": string;
+  "--salt-text-label-fontWeight-bolder": string;
   "--salt-text-label-lineHeight": string;
   "--salt-content-primary-foreground": string;
   "--salt-content-secondary-foreground": string;
@@ -145,7 +145,7 @@ const TYPOGRAPHY_TOKENS = {
   titleFontFamily: "--salt-text-heading-fontFamily",
   labelFontSize: "--salt-text-label-fontSize",
   labelFontWeight: "--salt-text-label-fontWeight",
-  labelStrongFontWeight: "--salt-text-label-fontWeight-strong",
+  labelBolderFontWeight: "--salt-text-label-fontWeight-bolder",
   labelLineHeight: "--salt-text-label-lineHeight",
   primaryForeground: "--salt-content-primary-foreground",
   secondaryForeground: "--salt-content-secondary-foreground",
@@ -206,8 +206,8 @@ export const getDensityTokenMap = (
   let titleFontFamily = getTokenFallback(TYPOGRAPHY_TOKENS.titleFontFamily);
   let labelFontSize = getTokenFallback(TYPOGRAPHY_TOKENS.labelFontSize);
   let labelFontWeight = getTokenFallback(TYPOGRAPHY_TOKENS.labelFontWeight);
-  let labelStrongFontWeight = getTokenFallback(
-    TYPOGRAPHY_TOKENS.labelStrongFontWeight,
+  let labelBolderFontWeight = getTokenFallback(
+    TYPOGRAPHY_TOKENS.labelBolderFontWeight,
   );
   let labelLineHeight = getTokenFallback(TYPOGRAPHY_TOKENS.labelLineHeight);
   let primaryForeground = getTokenFallback(TYPOGRAPHY_TOKENS.primaryForeground);
@@ -339,9 +339,9 @@ export const getDensityTokenMap = (
       tokenValues,
       TYPOGRAPHY_TOKENS.labelFontWeight,
     );
-    labelStrongFontWeight = getResolvedStringToken(
+    labelBolderFontWeight = getResolvedStringToken(
       tokenValues,
-      TYPOGRAPHY_TOKENS.labelStrongFontWeight,
+      TYPOGRAPHY_TOKENS.labelBolderFontWeight,
     );
     labelLineHeight = getResolvedStringToken(
       tokenValues,
@@ -426,7 +426,7 @@ export const getDensityTokenMap = (
     "--salt-text-heading-fontFamily": titleFontFamily,
     "--salt-text-label-fontSize": labelFontSize,
     "--salt-text-label-fontWeight": labelFontWeight,
-    "--salt-text-label-fontWeight-strong": labelStrongFontWeight,
+    "--salt-text-label-fontWeight-bolder": labelBolderFontWeight,
     "--salt-text-label-lineHeight": labelLineHeight,
     "--salt-content-primary-foreground": primaryForeground,
     "--salt-content-secondary-foreground": secondaryForeground,

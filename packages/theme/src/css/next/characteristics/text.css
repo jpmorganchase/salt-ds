@@ -7,18 +7,18 @@
   /* Body text (should be used as default) */
   --salt-text-fontFamily: var(--salt-typography-fontFamily-openSans);
   --salt-text-fontWeight: var(--salt-typography-fontWeight-regular);
-  --salt-text-fontWeight-small: var(--salt-typography-fontWeight-light);
-  --salt-text-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
+  --salt-text-fontWeight-lighter: var(--salt-typography-fontWeight-light);
+  --salt-text-fontWeight-bolder: var(--salt-typography-fontWeight-semiBold);
 
   /* Notation */
   --salt-text-notation-fontWeight: var(--salt-typography-fontWeight-semiBold);
-  --salt-text-notation-fontWeight-small: var(--salt-typography-fontWeight-regular);
-  --salt-text-notation-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+  --salt-text-notation-fontWeight-lighter: var(--salt-typography-fontWeight-regular);
+  --salt-text-notation-fontWeight-bolder: var(--salt-typography-fontWeight-bold);
 
   /* Label */
   --salt-text-label-fontWeight: var(--salt-typography-fontWeight-regular);
-  --salt-text-label-fontWeight-small: var(--salt-typography-fontWeight-light);
-  --salt-text-label-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
+  --salt-text-label-fontWeight-lighter: var(--salt-typography-fontWeight-light);
+  --salt-text-label-fontWeight-bolder: var(--salt-typography-fontWeight-semiBold);
 
   /* Code */
   --salt-text-code-fontFamily: var(--salt-typography-fontFamily-ptMono);
@@ -30,8 +30,8 @@
   --salt-text-action-textAlign: center;
   --salt-text-action-fontFamily: var(--salt-typography-fontFamily-openSans);
   --salt-text-action-fontWeight: var(--salt-typography-fontWeight-semiBold);
-  --salt-text-action-fontWeight-small: var(--salt-typography-fontWeight-regular);
-  --salt-text-action-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+  --salt-text-action-fontWeight-lighter: var(--salt-typography-fontWeight-regular);
+  --salt-text-action-fontWeight-bolder: var(--salt-typography-fontWeight-bold);
 }
 .salt-theme-next.salt-theme[data-action-font="Amplitude"] {
   --salt-text-action-letterSpacing: 0.6px;
@@ -39,16 +39,16 @@
   --salt-text-action-textAlign: center;
   --salt-text-action-fontFamily: var(--salt-typography-fontFamily-amplitude);
   --salt-text-action-fontWeight: var(--salt-typography-fontWeight-medium);
-  --salt-text-action-fontWeight-small: var(--salt-typography-fontWeight-regular);
-  --salt-text-action-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+  --salt-text-action-fontWeight-lighter: var(--salt-typography-fontWeight-regular);
+  --salt-text-action-fontWeight-bolder: var(--salt-typography-fontWeight-bold);
 }
 
 .salt-theme-next.salt-theme[data-heading-font="Open Sans"] {
   /* Heading */
   --salt-text-heading-fontFamily: var(--salt-typography-fontFamily-openSans);
   --salt-text-heading-fontWeight: var(--salt-typography-fontWeight-semiBold);
-  --salt-text-heading-fontWeight-small: var(--salt-typography-fontWeight-regular);
-  --salt-text-heading-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+  --salt-text-heading-fontWeight-lighter: var(--salt-typography-fontWeight-regular);
+  --salt-text-heading-fontWeight-bolder: var(--salt-typography-fontWeight-bold);
 
   /* Display */
   --salt-text-display-fontFamily: var(--salt-typography-fontFamily-openSans);
@@ -56,16 +56,16 @@
   --salt-text-display-textTransform: none;
   --salt-text-display-fontStyle: var(--salt-typography-fontStyle-normal);
   --salt-text-display-fontWeight: var(--salt-typography-fontWeight-semiBold);
-  --salt-text-display-fontWeight-small: var(--salt-typography-fontWeight-regular);
-  --salt-text-display-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+  --salt-text-display-fontWeight-lighter: var(--salt-typography-fontWeight-regular);
+  --salt-text-display-fontWeight-bolder: var(--salt-typography-fontWeight-bold);
 }
 
 .salt-theme-next.salt-theme[data-heading-font="Amplitude"] {
   /* Heading */
   --salt-text-heading-fontFamily: var(--salt-typography-fontFamily-amplitude);
   --salt-text-heading-fontWeight: var(--salt-typography-fontWeight-medium);
-  --salt-text-heading-fontWeight-small: var(--salt-typography-fontWeight-regular);
-  --salt-text-heading-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+  --salt-text-heading-fontWeight-lighter: var(--salt-typography-fontWeight-regular);
+  --salt-text-heading-fontWeight-bolder: var(--salt-typography-fontWeight-bold);
 
   /* Display */
   --salt-text-display-fontFamily: var(--salt-typography-fontFamily-amplitude);
@@ -73,8 +73,8 @@
   --salt-text-display-textTransform: none;
   --salt-text-display-fontStyle: var(--salt-typography-fontStyle-normal);
   --salt-text-display-fontWeight: var(--salt-typography-fontWeight-medium);
-  --salt-text-display-fontWeight-small: var(--salt-typography-fontWeight-regular);
-  --salt-text-display-fontWeight-strong: var(--salt-typography-fontWeight-bold);
+  --salt-text-display-fontWeight-lighter: var(--salt-typography-fontWeight-regular);
+  --salt-text-display-fontWeight-bolder: var(--salt-typography-fontWeight-bold);
 }
 
 /* Sizes by density */

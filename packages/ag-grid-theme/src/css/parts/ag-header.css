@@ -25,7 +25,7 @@
 .ag-theme-salt-compact-light .ag-header-row,
 .ag-theme-salt-compact-dark .ag-header-row {
   font-size: var(--salt-text-label-fontSize);
-  font-weight: var(--salt-text-label-fontWeight-strong);
+  font-weight: var(--salt-text-label-fontWeight-bolder);
 }
 
 .ag-theme-salt-light .ag-header-cell:focus-visible::after,

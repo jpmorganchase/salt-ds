@@ -63,8 +63,8 @@ export const WithTitle: StoryFn<typeof SystemStatus> = (props) => (
     <SystemStatus status="error" {...props}>
       <SystemStatusContent>
         <StackLayout gap={0.5}>
-          <Text color="inherit">
-            <strong>Connection interrupted</strong>
+          <Text color="inherit" fontWeight="bolder">
+            Connection interrupted
           </Text>
           <Text color="inherit">Please refresh the page.</Text>
         </StackLayout>

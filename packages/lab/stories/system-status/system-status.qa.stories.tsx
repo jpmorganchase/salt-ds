@@ -19,8 +19,8 @@ const BasicSystemStatusExample: FC<SystemStatusProps> = ({ status }) => {
     <SystemStatus status={status}>
       <SystemStatusContent>
         <StackLayout gap={0.5}>
-          <Text color="inherit">
-            <strong>Title</strong>
+          <Text color="inherit" fontWeight="bolder">
+            Title
           </Text>
           <Text color="inherit">Example custom renderer</Text>
         </StackLayout>
@@ -44,8 +44,8 @@ const WithButtonSystemStatusExample: FC<SystemStatusProps> = ({ status }) => {
         <StackLayout gap={0.5}>
           <SplitLayout
             startItem={
-              <Text color="inherit">
-                <strong>Title</strong>
+              <Text color="inherit" fontWeight="bolder">
+                Title
               </Text>
             }
             endItem={

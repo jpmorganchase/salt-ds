@@ -17,7 +17,9 @@ export const Success = (): ReactElement => (
     status="success"
   >
     <FileDropZoneIcon status="success" />
-    <strong>Upload completed</strong>
+    <Text styleAs="inherit" fontWeight="bolder">
+      Upload completed
+    </Text>
     <FileDropZoneTrigger accept=".png" onChange={validate} />
     <Text>Only .png files</Text>
   </FileDropZone>

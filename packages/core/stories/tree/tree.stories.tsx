@@ -230,10 +230,10 @@ export const ControlledSingleSelect: StoryFn<typeof Tree> = (args) => {
     <StackLayout gap={2}>
       <StackLayout gap={0.5}>
         <Text>
-          <strong>Expanded:</strong> {expanded.join(", ") || "none"}
+          <b>Expanded:</b> {expanded.join(", ") || "none"}
         </Text>
         <Text>
-          <strong>Selected:</strong> {selected.join(", ") || "none"}
+          <b>Selected:</b> {selected.join(", ") || "none"}
         </Text>
       </StackLayout>
       <Tree
@@ -274,10 +274,10 @@ export const ControlledMultiselect: StoryFn<typeof Tree> = (args) => {
     <StackLayout gap={2}>
       <StackLayout gap={0.5}>
         <Text>
-          <strong>Expanded:</strong> {expanded.join(", ") || "none"}
+          <b>Expanded:</b> {expanded.join(", ") || "none"}
         </Text>
         <Text>
-          <strong>Selected:</strong> {selected.join(", ") || "none"}
+          <b>Selected:</b> {selected.join(", ") || "none"}
         </Text>
       </StackLayout>
       <Tree

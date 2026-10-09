@@ -8,5 +8,5 @@
 }
 
 .saltVerticalNavigationSubMenu .saltVerticalNavigationItemContent {
-  font-weight: var(--salt-text-heading-fontWeight-small);
+  font-weight: var(--salt-text-heading-fontWeight-lighter);
 }

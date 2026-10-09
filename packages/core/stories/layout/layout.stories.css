@@ -2,7 +2,7 @@
 .layout-content {
   padding: var(--salt-spacing-200);
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
-  font-weight: var(--salt-text-fontWeight-small);
+  font-weight: var(--salt-text-fontWeight-lighter);
 }
 .layout-active-content,
 .layout-container > .layout-active-content {
