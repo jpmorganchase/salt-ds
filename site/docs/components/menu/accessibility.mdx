@@ -12,6 +12,10 @@ data:
 
 - When a selectable `MenuGroup` has no `label`, pass an `aria-label` that describes the set of options, so screen reader users know what they're choosing between.
 
+### Disabled menu items
+
+- Disabled menu items remain focusable, so keyboard and screen reader users can still discover them. For further information, see the W3C guidance on [focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols).
+
 ## Keyboard interactions
 
 <KeyboardControls>
@@ -25,15 +29,20 @@ If focus is on a menu item, Tab closes the menu and moves focus to the next focu
 If focus is on a menu item, this action closes the menu and moves focus to the previous focusable element in the tab order.
 
 </KeyboardControl>
-<KeyboardControl keyOrCombos="Space / Enter">
+<KeyboardControl keyOrCombos="Enter">
 
 - If focus is on the menu trigger, this action opens the menu and places focus on the first menu item.
 - When focus is on a menu item that has a submenu, this action opens the submenu and places focus on its first item.
-- When focus is on a menu item in a selectable `MenuGroup`, this action selects the item, or toggles it when the group allows multiple selection.
+- When focus is on a menu item in a selectable `MenuGroup`, this action selects the item, or toggles it when the group allows multiple selection, and closes the menu.
 - Otherwise, this action activates the item, and closes the menu.
-- When focus is on a selectable menu item, activation commits selection.
-- Space key commits the selection, and the menu remains open after the selection is made.
-- Pressing Enter commits the selection and closes the menu.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Space">
+
+- If focus is on the menu trigger, this action opens the menu and places focus on the first menu item.
+- When focus is on a menu item that has a submenu, this action opens the submenu and places focus on its first item.
+- When focus is on a menu item in a selectable `MenuGroup`, this action selects the item, or toggles it when the group allows multiple selection. The menu remains open, so users can review or change their selection.
+- Otherwise, this action activates the item, and closes the menu.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Up arrow">
