@@ -23,9 +23,9 @@ interface BaseMenuGroupProps extends ComponentPropsWithoutRef<"div"> {
    */
   label?: string;
   /**
-   * Selection variant of the menu group. If "single", the menu items inside behave like radio buttons. If "multiple", they behave like checkboxes. Each selectable menu item needs a `value`. Defaults to "none".
+   * Selection variant of the menu group. If "single", the menu items inside behave like radio buttons. If "multiple", they behave like checkboxes. Each selectable menu item needs a `value`. When omitted, the menu items are not selectable.
    */
-  selectionVariant?: "none" | "single" | "multiple";
+  selectionVariant?: "single" | "multiple";
 }
 
 interface SelectableMenuGroupProps extends BaseMenuGroupProps {
@@ -43,7 +43,7 @@ interface SelectableMenuGroupProps extends BaseMenuGroupProps {
 }
 
 interface NonSelectableMenuGroupProps extends BaseMenuGroupProps {
-  selectionVariant?: "none";
+  selectionVariant?: undefined;
 }
 
 export type MenuGroupProps =
@@ -62,7 +62,7 @@ export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
       label,
       onSelectionChange,
       selected: selectedProp = noSelection,
-      selectionVariant = "none",
+      selectionVariant,
       ...rest
     } = props as BaseMenuGroupProps &
       Partial<Pick<SelectableMenuGroupProps, "onSelectionChange" | "selected">>;
