@@ -28,7 +28,11 @@ import { useState } from "react";
 import styles from "./ThemeSettingsOverlay.module.css";
 
 export type PreviewMode = Mode | "system";
-export type ThemeSettingsScope = "component" | "pattern" | "tokens";
+export type ThemeSettingsScope =
+  | "component"
+  | "pattern"
+  | "tokens"
+  | "textStyles";
 export type ThemeOption<T extends string> = { value: T; label: string };
 
 const title = "Preview settings";
@@ -38,6 +42,7 @@ const descriptions: Record<ThemeSettingsScope, string> = {
     "Adjust the theme settings for the component examples on this page",
   pattern: "Adjust the theme settings for the pattern examples on this page",
   tokens: "Adjust the theme settings for the token previews in this table",
+  textStyles: "Adjust the theme settings for the text styles in this preview",
 };
 
 const densityOptions: Density[] = ["high", "medium", "low", "touch", "mobile"];
