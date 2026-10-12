@@ -325,6 +325,57 @@ ResizableOverflowingSections.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
+const ScrolledUnderHandleTemplate = ({
+  position,
+}: Pick<DrawerProps, "position">) => {
+  const [drawer, setDrawer] = useState<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const scroller = drawer?.querySelector<HTMLElement>(".saltDrawer-inner");
+    if (!scroller) return;
+    const frame = requestAnimationFrame(() => {
+      scroller.scrollTop = 60;
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [drawer]);
+
+  return (
+    <Drawer
+      open
+      resizable
+      position={position}
+      initialFocus={-1}
+      style={{ height: 200 }}
+      ref={setDrawer}
+    >
+      <DrawerHeader header="Resizable drawer" actions={<CloseButton />} />
+      <DrawerContent>
+        <Text>{loremText}</Text>
+      </DrawerContent>
+      <DrawerFooter>
+        <Button sentiment="accented" appearance="bordered">
+          Cancel
+        </Button>
+        <Button sentiment="accented">Save</Button>
+      </DrawerFooter>
+    </Drawer>
+  );
+};
+
+export const ResizableTopScrolledUnderHandle: StoryFn = () => (
+  <ScrolledUnderHandleTemplate position="top" />
+);
+ResizableTopScrolledUnderHandle.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const ResizableBottomScrolledUnderHandle: StoryFn = () => (
+  <ScrolledUnderHandleTemplate position="bottom" />
+);
+ResizableBottomScrolledUnderHandle.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
 export const ResizableAtMinimumSize: StoryFn = () => (
   <Drawer
     open

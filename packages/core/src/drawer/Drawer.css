@@ -61,16 +61,14 @@
   padding-right: var(--drawer-resizeHandleHitSize);
 }
 
-.saltDrawer-resizable.saltDrawer-right {
-  padding-left: var(--drawer-resizeHandleHitSize);
+.saltDrawer-resizable.saltDrawer-top > .saltDrawer-inner {
+  clip-path: inset(0 0 var(--drawer-resizeHandleHitSize) 0);
+  scroll-padding-bottom: var(--drawer-resizeHandleHitSize);
 }
 
-.saltDrawer-resizable.saltDrawer-top {
-  padding-bottom: var(--drawer-resizeHandleHitSize);
-}
-
-.saltDrawer-resizable.saltDrawer-bottom {
-  padding-top: var(--drawer-resizeHandleHitSize);
+.saltDrawer-resizable.saltDrawer-bottom > .saltDrawer-inner {
+  clip-path: inset(var(--drawer-resizeHandleHitSize) 0 0 0);
+  scroll-padding-top: var(--drawer-resizeHandleHitSize);
 }
 
 .saltDrawer-resizable.saltDrawer-left,
