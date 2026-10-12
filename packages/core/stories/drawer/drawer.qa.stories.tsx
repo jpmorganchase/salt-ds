@@ -206,15 +206,32 @@ DrawerOverflow.parameters = {
 
 const ResizableDrawerTemplate = ({
   position,
-  resizable = true,
-}: Pick<DrawerProps, "position" | "resizable">) => {
+  style,
+  scrollTo,
+}: Pick<DrawerProps, "position" | "style"> & {
+  scrollTo?: "middle" | "bottom";
+}) => {
+  const [drawer, setDrawer] = useState<HTMLDivElement | null>(null);
   const horizontal = position === "left" || position === "right";
+
+  useEffect(() => {
+    const scroller = drawer?.querySelector<HTMLElement>(".saltDrawer-inner");
+    if (!scroller || !scrollTo) return;
+    const frame = requestAnimationFrame(() => {
+      const max = scroller.scrollHeight - scroller.clientHeight;
+      scroller.scrollTop = scrollTo === "bottom" ? max : Math.round(max / 2);
+    });
+    return () => cancelAnimationFrame(frame);
+  }, [drawer, scrollTo]);
+
   return (
     <Drawer
       open
-      resizable={resizable}
+      resizable
       position={position}
-      style={horizontal ? { width: 350 } : { height: 280 }}
+      initialFocus={-1}
+      ref={setDrawer}
+      style={{ ...(horizontal ? { width: 350 } : { height: 280 }), ...style }}
     >
       <DrawerHeader
         header="Resizable drawer"
@@ -235,15 +252,16 @@ const ResizableDrawerTemplate = ({
   );
 };
 
-export const NotResizable: StoryFn = () => (
-  <ResizableDrawerTemplate position="left" resizable={false} />
-);
-NotResizable.parameters = {
+export const ResizableDefault: StoryFn = () => <ResizableDrawerTemplate />;
+ResizableDefault.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
 export const ResizableLeft: StoryFn = () => (
-  <ResizableDrawerTemplate position="left" />
+  <ResizableDrawerTemplate
+    position="left"
+    style={{ "--saltDrawer-maxHeight": "160px" } as CSSProperties}
+  />
 );
 ResizableLeft.parameters = {
   chromatic: { disableSnapshot: false },
@@ -257,144 +275,20 @@ ResizableRight.parameters = {
 };
 
 export const ResizableTop: StoryFn = () => (
-  <ResizableDrawerTemplate position="top" />
+  <ResizableDrawerTemplate position="top" style={{ height: 160 }} />
 );
 ResizableTop.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
 export const ResizableBottom: StoryFn = () => (
-  <ResizableDrawerTemplate position="bottom" />
+  <ResizableDrawerTemplate
+    position="bottom"
+    style={{ height: 160 }}
+    scrollTo="bottom"
+  />
 );
 ResizableBottom.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const ResizableScrolledUnsectioned: StoryFn = () => {
-  const [drawer, setDrawer] = useState<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const scroller = drawer?.querySelector<HTMLElement>(".saltDrawer-inner");
-    if (!scroller) return;
-    const frame = requestAnimationFrame(() => {
-      scroller.scrollTop = 400;
-    });
-    return () => cancelAnimationFrame(frame);
-  }, [drawer]);
-
-  return (
-    <Drawer
-      open
-      resizable
-      initialFocus={-1}
-      style={{ width: 350 }}
-      ref={setDrawer}
-    >
-      <Text>{loremText.repeat(20)}</Text>
-    </Drawer>
-  );
-};
-ResizableScrolledUnsectioned.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const ResizableOverflowingSections: StoryFn = () => (
-  <Drawer
-    open
-    resizable
-    initialFocus={-1}
-    style={{ width: 350, "--saltDrawer-maxHeight": "200px" } as CSSProperties}
-  >
-    <DrawerHeader
-      header="Resizable drawer"
-      description="Pending transaction review"
-      actions={<CloseButton />}
-    />
-    <DrawerContent>
-      <Text>{loremText}</Text>
-    </DrawerContent>
-    <DrawerFooter>
-      <Button sentiment="accented" appearance="bordered">
-        Cancel
-      </Button>
-      <Button sentiment="accented">Save</Button>
-    </DrawerFooter>
-  </Drawer>
-);
-ResizableOverflowingSections.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-const ScrolledUnderHandleTemplate = ({
-  position,
-}: Pick<DrawerProps, "position">) => {
-  const [drawer, setDrawer] = useState<HTMLDivElement | null>(null);
-
-  useEffect(() => {
-    const scroller = drawer?.querySelector<HTMLElement>(".saltDrawer-inner");
-    if (!scroller) return;
-    const frame = requestAnimationFrame(() => {
-      scroller.scrollTop = 60;
-    });
-    return () => cancelAnimationFrame(frame);
-  }, [drawer]);
-
-  return (
-    <Drawer
-      open
-      resizable
-      position={position}
-      initialFocus={-1}
-      style={{ height: 200 }}
-      ref={setDrawer}
-    >
-      <DrawerHeader header="Resizable drawer" actions={<CloseButton />} />
-      <DrawerContent>
-        <Text>{loremText}</Text>
-      </DrawerContent>
-      <DrawerFooter>
-        <Button sentiment="accented" appearance="bordered">
-          Cancel
-        </Button>
-        <Button sentiment="accented">Save</Button>
-      </DrawerFooter>
-    </Drawer>
-  );
-};
-
-export const ResizableTopScrolledUnderHandle: StoryFn = () => (
-  <ScrolledUnderHandleTemplate position="top" />
-);
-ResizableTopScrolledUnderHandle.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const ResizableBottomScrolledUnderHandle: StoryFn = () => (
-  <ScrolledUnderHandleTemplate position="bottom" />
-);
-ResizableBottomScrolledUnderHandle.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const ResizableAtMinimumSize: StoryFn = () => (
-  <Drawer
-    open
-    resizable
-    style={
-      {
-        width: 0,
-        padding: 0,
-        "--saltDrawer-minWidth": "0px",
-      } as CSSProperties
-    }
-  >
-    <DrawerHeader header="Resizable drawer" />
-    <DrawerContent>
-      <Text>{loremText}</Text>
-    </DrawerContent>
-  </Drawer>
-);
-ResizableAtMinimumSize.parameters = {
   chromatic: { disableSnapshot: false },
 };
 

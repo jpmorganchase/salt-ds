@@ -1,11 +1,14 @@
 import type { DrawerProps } from "@salt-ds/core";
-import { Button, Drawer, DrawerContent, DrawerHeader } from "@salt-ds/core";
-import { useState } from "react";
+import { Drawer, DrawerContent, DrawerHeader } from "@salt-ds/core";
+import { composeStories } from "@storybook/react-vite";
 import { describe, expect, it } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { runAxeScan } from "~browser-test-utils/accessibility";
 import { mouse } from "~browser-test-utils/pointer";
 import { renderWithSalt } from "~browser-test-utils/render";
+import * as drawerStories from "~stories/drawer/drawer.stories";
+
+const { Resizable } = composeStories(drawerStories);
 
 type Position = NonNullable<DrawerProps["position"]>;
 
@@ -42,7 +45,7 @@ async function tabToSeparator() {
   await expect
     .element(page.getByRole("button", { name: "Close drawer" }))
     .toHaveFocus();
-  await userEvent.tab();
+  await userEvent.tab({ shift: true });
   await expect.element(separator()).toHaveFocus();
 }
 
@@ -51,59 +54,27 @@ const limitsStyle = (position: Position) =>
     ? { width: 300, minWidth: 100, maxWidth: 600 }
     : { height: 300, minHeight: 100, maxHeight: 600 };
 
-// The close button takes initial focus, so the separator isn't focused on open.
-function ResizableFixture({
-  position = "left",
-  ...rest
-}: Partial<DrawerProps>) {
-  return (
-    <Drawer
-      open
-      resizable
-      position={position}
-      style={limitsStyle(position)}
-      {...rest}
-    >
-      <DrawerHeader
-        header="Resizable drawer"
-        actions={<Button aria-label="Close drawer">Close</Button>}
-      />
-      <DrawerContent>Content</DrawerContent>
-    </Drawer>
-  );
+async function openDrawer() {
+  await page.getByRole("button", { name: "Open Drawer" }).click();
+  await waitForOpen();
 }
 
-function TriggeredDrawer() {
-  const [open, setOpen] = useState(false);
-  return (
-    <>
-      <Button onClick={() => setOpen(true)}>Open Drawer</Button>
-      <Drawer
-        open={open}
-        onOpenChange={setOpen}
-        resizable
-        style={limitsStyle("left")}
-      >
-        <DrawerHeader
-          header="Resizable drawer"
-          actions={
-            <Button aria-label="Close drawer" onClick={() => setOpen(false)}>
-              Close
-            </Button>
-          }
-        />
-        <DrawerContent>Content</DrawerContent>
-      </Drawer>
-    </>
+async function renderResizable({
+  position = "left",
+  ...props
+}: Partial<DrawerProps> = {}) {
+  const result = await renderWithSalt(
+    <Resizable position={position} style={limitsStyle(position)} {...props} />,
   );
+  await openDrawer();
+  return result;
 }
 
 describe("GIVEN a resizable Drawer", () => {
   describe("separator semantics", () => {
     for (const position of POSITIONS) {
       it(`exposes a ${ORIENTATION[position]} separator when position=${position}`, async () => {
-        await renderWithSalt(<ResizableFixture position={position} />);
-        await waitForOpen();
+        await renderResizable({ position });
 
         await expect
           .element(separator())
@@ -111,8 +82,7 @@ describe("GIVEN a resizable Drawer", () => {
       });
 
       it(`reports its size and limits before any interaction, position=${position}`, async () => {
-        await renderWithSalt(<ResizableFixture position={position} />);
-        await waitForOpen();
+        await renderResizable({ position });
 
         await expect
           .element(separator())
@@ -127,8 +97,7 @@ describe("GIVEN a resizable Drawer", () => {
     }
 
     it("updates its value after a keyboard resize", async () => {
-      await renderWithSalt(<ResizableFixture />);
-      await waitForOpen();
+      await renderResizable();
 
       await tabToSeparator();
       await userEvent.keyboard("{ArrowRight}");
@@ -138,8 +107,7 @@ describe("GIVEN a resizable Drawer", () => {
     });
 
     it("updates its value after a pointer resize", async () => {
-      await renderWithSalt(<ResizableFixture />);
-      await waitForOpen();
+      await renderResizable();
 
       const { x, y } = handleCenter();
       await mouse.drag({ x, y }, { x: x + 50, y });
@@ -148,8 +116,7 @@ describe("GIVEN a resizable Drawer", () => {
     });
 
     it("updates its value after the edge is placed by a click", async () => {
-      await renderWithSalt(<ResizableFixture />);
-      await waitForOpen();
+      await renderResizable();
 
       const { x, y } = handleCenter();
       await mouse.click({ x, y });
@@ -185,8 +152,7 @@ describe("GIVEN a resizable Drawer", () => {
     });
 
     it("points at the drawer it controls", async () => {
-      await renderWithSalt(<ResizableFixture />);
-      await waitForOpen();
+      await renderResizable();
 
       await expect
         .element(separator())
@@ -196,8 +162,7 @@ describe("GIVEN a resizable Drawer", () => {
 
   describe("focus management", () => {
     it("is reachable by keyboard within the drawer's focus trap", async () => {
-      await renderWithSalt(<ResizableFixture />);
-      await waitForOpen();
+      await renderResizable();
 
       await tabToSeparator();
 
@@ -208,8 +173,7 @@ describe("GIVEN a resizable Drawer", () => {
     });
 
     it("shows a focus indicator when focused with the keyboard", async () => {
-      await renderWithSalt(<ResizableFixture />);
-      await waitForOpen();
+      await renderResizable();
 
       await tabToSeparator();
 
@@ -226,8 +190,7 @@ describe("GIVEN a resizable Drawer", () => {
     });
 
     it("keeps focus on the handle after the edge is placed by a click", async () => {
-      await renderWithSalt(<ResizableFixture />);
-      await waitForOpen();
+      await renderResizable();
 
       await separator().click();
       await page
@@ -241,11 +204,7 @@ describe("GIVEN a resizable Drawer", () => {
     });
 
     it("returns focus to the trigger after a resized drawer closes", async () => {
-      await renderWithSalt(<TriggeredDrawer />);
-
-      const trigger = page.getByRole("button", { name: "Open Drawer" });
-      await trigger.click();
-      await waitForOpen();
+      await renderResizable();
 
       await tabToSeparator();
       await userEvent.keyboard("{ArrowRight}");
@@ -253,7 +212,9 @@ describe("GIVEN a resizable Drawer", () => {
 
       await userEvent.keyboard("{Escape}");
       await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
-      await expect.element(trigger).toHaveFocus();
+      await expect
+        .element(page.getByRole("button", { name: "Open Drawer" }))
+        .toHaveFocus();
     });
   });
 
@@ -264,10 +225,7 @@ describe("GIVEN a resizable Drawer", () => {
       it(
         `has no violations when position=${position}`,
         async () => {
-          const { container } = await renderWithSalt(
-            <ResizableFixture position={position} />,
-          );
-          await waitForOpen();
+          const { container } = await renderResizable({ position });
 
           await runAxeScan(container);
         },
@@ -278,8 +236,7 @@ describe("GIVEN a resizable Drawer", () => {
     it(
       "has no violations while resizing",
       async () => {
-        const { container } = await renderWithSalt(<ResizableFixture />);
-        await waitForOpen();
+        const { container } = await renderResizable();
 
         const { x, y } = handleCenter();
         await mouse.down({ x, y });
@@ -296,8 +253,7 @@ describe("GIVEN a resizable Drawer", () => {
     it(
       "has no violations while placing the edge by click",
       async () => {
-        const { container } = await renderWithSalt(<ResizableFixture />);
-        await waitForOpen();
+        const { container } = await renderResizable();
 
         const { x, y } = handleCenter();
         await mouse.click({ x, y });

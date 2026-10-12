@@ -561,6 +561,7 @@ export const HeaderAndFooter: StoryFn<DrawerProps> = (args) => {
 
 export const Resizable: StoryFn<DrawerProps> = ({
   position = "left",
+  style,
   ...args
 }) => {
   const [open, setOpen] = useState(false);
@@ -576,8 +577,8 @@ export const Resizable: StoryFn<DrawerProps> = ({
         position={position}
         open={open}
         onOpenChange={setOpen}
-        style={
-          isHorizontal
+        style={{
+          ...(isHorizontal
             ? ({
                 width: 320,
                 "--saltDrawer-minWidth": "200px",
@@ -587,8 +588,9 @@ export const Resizable: StoryFn<DrawerProps> = ({
                 height: 280,
                 "--saltDrawer-minHeight": "160px",
                 "--saltDrawer-maxHeight": "520px",
-              } as CSSProperties)
-        }
+              } as CSSProperties)),
+          ...style,
+        }}
       >
         <DrawerHeader
           header={`Resizable ${position} drawer`}
