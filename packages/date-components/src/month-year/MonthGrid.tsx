@@ -4,6 +4,7 @@ import {
   makePrefixer,
   Tooltip,
   type TooltipProps,
+  useAriaAnnouncer,
   useForkRef,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
@@ -52,6 +53,8 @@ export interface MonthRangeStatus {
   hoveredEnd?: boolean;
   /** Month falls inside the hover-preview range. */
   hoveredSpan?: boolean;
+  /** Month is before the start while the end is still to be picked. */
+  changeStart?: boolean;
 }
 
 /**
@@ -108,7 +111,11 @@ export interface MonthGridProps
   minYear?: number;
   /** Inclusive upper year bound. */
   maxYear?: number;
-  /** Localised label for the overall grid (e.g. "Start month"). */
+  /** Minimum selectable date, used to label the boundary month. */
+  minDate?: DateFrameworkType;
+  /** Maximum selectable date, used to label the boundary month. */
+  maxDate?: DateFrameworkType;
+  /** Localised label for the overall grid (e.g. "2026 months group"). */
   ariaLabel?: string;
   /** Timezone forwarded from the DatePicker context. */
   timezone?: Timezone;
@@ -171,6 +178,8 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
       focusedButtonRef,
       minYear,
       maxYear,
+      minDate,
+      maxDate,
       ariaLabel,
       timezone,
       disabled,
@@ -187,6 +196,7 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
     } = props;
 
     const { dateAdapter } = useLocalization();
+    const { announce } = useAriaAnnouncer();
     const targetWindow = useWindow();
     // Month buttons intentionally reuse the CalendarDay class contract so
     // they inherit the same visual treatment (background, hover, focus ring,
@@ -215,7 +225,7 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
           // The destination button's own `onFocus` handler will update
           // `focusedIndex` and the hover-preview state, so we don't need
           // to duplicate that bookkeeping here.
-          buttonRefs.current[index]?.focus();
+          buttonRefs.current[index]?.focus({ preventScroll: true });
         },
       }),
       [],
@@ -235,7 +245,7 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
       if (pendingFocusIndex.current === null) return;
       const nextIndex = pendingFocusIndex.current;
       pendingFocusIndex.current = null;
-      buttonRefs.current[nextIndex]?.focus();
+      buttonRefs.current[nextIndex]?.focus({ preventScroll: true });
     }, [focusedIndex, year]);
 
     const requestFocus = useCallback(
@@ -255,6 +265,26 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
       [onFocusedIndexChange, onYearChange],
     );
 
+    /**
+     * Arrow keys cannot leave the years allowed by the min/max dates, and the
+     * attempt is announced. Unselectable months in the visible year stay
+     * reachable.
+     */
+    const canFocusYear = useCallback(
+      (targetYear: number) => {
+        if (minYear !== undefined && targetYear < minYear) {
+          announce(monthYearPanelMessages.previousYearOutOfRange);
+          return false;
+        }
+        if (maxYear !== undefined && targetYear > maxYear) {
+          announce(monthYearPanelMessages.nextYearOutOfRange);
+          return false;
+        }
+        return true;
+      },
+      [announce, maxYear, minYear],
+    );
+
     const handleKeyDown = useCallback(
       (event: KeyboardEvent<HTMLButtonElement>, index: number) => {
         if (disabled) return;
@@ -262,6 +292,7 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
         switch (event.key) {
           case "ArrowRight": {
             if (index === MONTHS_PER_YEAR - 1) {
+              if (!canFocusYear(year + 1)) break;
               if (onNavigateOutOfRange?.("forward", 0)) break;
               if (canGoNext) rolloverToYear(event, year + 1, 0);
             } else {
@@ -271,6 +302,7 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
           }
           case "ArrowLeft": {
             if (index === 0) {
+              if (!canFocusYear(year - 1)) break;
               if (onNavigateOutOfRange?.("backward", MONTHS_PER_YEAR - 1))
                 break;
               if (canGoPrev)
@@ -286,6 +318,7 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
               requestFocus(next);
             } else {
               const targetIndex = next - MONTHS_PER_YEAR;
+              if (!canFocusYear(year + 1)) break;
               if (onNavigateOutOfRange?.("forward", targetIndex)) break;
               if (canGoNext) rolloverToYear(event, year + 1, targetIndex);
             }
@@ -297,41 +330,36 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
               requestFocus(next);
             } else {
               const targetIndex = next + MONTHS_PER_YEAR;
+              if (!canFocusYear(year - 1)) break;
               if (onNavigateOutOfRange?.("backward", targetIndex)) break;
               if (canGoPrev) rolloverToYear(event, year - 1, targetIndex);
             }
             break;
           }
           case "Home":
-            requestFocus(0);
+            requestFocus(index - (index % COLUMNS));
             break;
           case "End":
-            requestFocus(MONTHS_PER_YEAR - 1);
+            requestFocus(index - (index % COLUMNS) + COLUMNS - 1);
             break;
           case "PageUp": {
-            if (!canGoPrev) break;
             const delta = event.shiftKey ? 10 : 1;
-            const nextYear = Math.max(
-              minYear ?? Number.NEGATIVE_INFINITY,
-              year - delta,
-            );
-            if (nextYear !== year) {
-              pendingFocusIndex.current = index;
-              onYearChange(event, nextYear);
-            }
+            const nextYear = canGoPrev
+              ? Math.max(minYear ?? Number.NEGATIVE_INFINITY, year - delta)
+              : year - 1;
+            if (!canFocusYear(nextYear)) break;
+            pendingFocusIndex.current = index;
+            onYearChange(event, nextYear);
             break;
           }
           case "PageDown": {
-            if (!canGoNext) break;
             const delta = event.shiftKey ? 10 : 1;
-            const nextYear = Math.min(
-              maxYear ?? Number.POSITIVE_INFINITY,
-              year + delta,
-            );
-            if (nextYear !== year) {
-              pendingFocusIndex.current = index;
-              onYearChange(event, nextYear);
-            }
+            const nextYear = canGoNext
+              ? Math.min(maxYear ?? Number.POSITIVE_INFINITY, year + delta)
+              : year + 1;
+            if (!canFocusYear(nextYear)) break;
+            pendingFocusIndex.current = index;
+            onYearChange(event, nextYear);
             break;
           }
           default:
@@ -340,6 +368,7 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
         if (handled) event.preventDefault();
       },
       [
+        canFocusYear,
         canGoNext,
         canGoPrev,
         disabled,
@@ -368,6 +397,8 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
 
     return (
       <div
+        role="application"
+        aria-label={ariaLabel ?? monthYearPanelMessages.gridLabel(year)}
         {...rest}
         ref={setContainerRef}
         className={clsx(withBaseName(), className)}
@@ -385,12 +416,6 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
           YearDropdownProps={YearDropdownProps}
         />
         <div
-          role="grid"
-          aria-label={ariaLabel ?? monthYearPanelMessages.singleGridLabel(year)}
-          aria-rowcount={ROWS}
-          aria-colcount={COLUMNS}
-          aria-readonly={readOnly || undefined}
-          aria-disabled={disabled || undefined}
           onMouseLeave={
             onMonthHoverChange ? () => onMonthHoverChange(null) : undefined
           }
@@ -417,12 +442,7 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
           )}
         >
           {Array.from({ length: ROWS }, (_, rowIndex) => (
-            <div
-              role="row"
-              aria-rowindex={rowIndex + 1}
-              key={`row-${rowIndex}`}
-              className={withBaseName("row")}
-            >
+            <div key={`row-${rowIndex}`} className={withBaseName("row")}>
               {months
                 .slice(rowIndex * COLUMNS, rowIndex * COLUMNS + COLUMNS)
                 .map((month, colIndex) => {
@@ -439,9 +459,48 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
                     hoveredStart = false,
                     hoveredEnd = false,
                     hoveredSpan = false,
+                    changeStart = false,
                   } = rangeStatus ?? {};
                   const unselectableReason = isMonthUnselectable?.(month);
                   const isUnselectable = Boolean(unselectableReason);
+                  let monthLabel = fullLabel;
+                  if (selectedStart) {
+                    monthLabel =
+                      monthYearPanelMessages.monthRangeStartAriaLabel(
+                        fullLabel,
+                      );
+                  } else if (selectedEnd) {
+                    monthLabel =
+                      monthYearPanelMessages.monthRangeEndAriaLabel(fullLabel);
+                  } else if (selectedSpan) {
+                    monthLabel =
+                      monthYearPanelMessages.monthRangeSpanAriaLabel(fullLabel);
+                  } else if (hoveredEnd && !isUnselectable) {
+                    monthLabel =
+                      monthYearPanelMessages.monthSelectAsEndAriaLabel(
+                        fullLabel,
+                      );
+                  } else if (changeStart && !isUnselectable) {
+                    monthLabel =
+                      monthYearPanelMessages.monthChangeStartAriaLabel(
+                        fullLabel,
+                      );
+                  } else if (selected) {
+                    monthLabel =
+                      monthYearPanelMessages.monthSelectedAriaLabel(fullLabel);
+                  } else if (
+                    minDate &&
+                    dateAdapter.isSame(month, minDate, "month")
+                  ) {
+                    monthLabel =
+                      monthYearPanelMessages.monthMinimumAriaLabel(fullLabel);
+                  } else if (
+                    maxDate &&
+                    dateAdapter.isSame(month, maxDate, "month")
+                  ) {
+                    monthLabel =
+                      monthYearPanelMessages.monthMaximumAriaLabel(fullLabel);
+                  }
                   const isFocusable = focusedIndex === index;
                   const isInteractive =
                     !disabled && !readOnly && !isUnselectable;
@@ -461,17 +520,8 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
                       // and can display a focus ring, matching the
                       // Calendar day pattern. The onClick handler is
                       // already gated by `isInteractive`.
-                      disabled={disabled}
-                      aria-disabled={isUnselectable || undefined}
-                      aria-pressed={selected}
-                      aria-label={
-                        unselectableReason
-                          ? monthYearPanelMessages.monthUnselectableAriaLabel(
-                              fullLabel,
-                              unselectableReason,
-                            )
-                          : fullLabel
-                      }
+                      aria-disabled={disabled || isUnselectable || undefined}
+                      aria-label={monthLabel}
                       tabIndex={isFocusable ? 0 : -1}
                       onClick={(event) => {
                         if (!isInteractive) return;
@@ -534,14 +584,7 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
                     );
 
                   return (
-                    <div
-                      role="gridcell"
-                      aria-colindex={colIndex + 1}
-                      aria-selected={selected || undefined}
-                      aria-disabled={isUnselectable || undefined}
-                      key={shortLabel}
-                      className={withBaseName("cell")}
-                    >
+                    <div key={shortLabel} className={withBaseName("cell")}>
                       {monthButtonElement}
                     </div>
                   );

@@ -1,6 +1,7 @@
-import { FormField, FormFieldLabel as FormLabel, useId } from "@salt-ds/core";
+import { FormField, FormFieldLabel as FormLabel } from "@salt-ds/core";
 import type { DateFrameworkType, ParserResult } from "@salt-ds/date-adapters";
 import {
+  createMonthYearSingleSelectionAnnouncement,
   type DateInputSingleDetails,
   DatePicker,
   DatePickerHelperText,
@@ -88,24 +89,25 @@ export const SingleWithMonthYearPanelUnselectableMonths = (): ReactElement => {
     [dateAdapter],
   );
 
-  const labelId = useId();
-
   return (
     <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
-      <FormLabel id={labelId}>Select a month</FormLabel>
+      <FormLabel>Select a month</FormLabel>
       <DatePicker
         selectionVariant="single"
+        createAnnouncement={createMonthYearSingleSelectionAnnouncement}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput
-            aria-labelledby={labelId}
             format={format}
             parse={parseMonthYear}
             placeholder="Month Year"
           />
         </DatePickerTrigger>
-        <DatePickerOverlay>
+        <DatePickerOverlay
+          aria-label="Month picker"
+          aria-describedby={undefined}
+        >
           <MonthYearSinglePanel isMonthUnselectable={isMonthUnselectable} />
         </DatePickerOverlay>
         <DatePickerHelperText>{helperText}</DatePickerHelperText>

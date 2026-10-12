@@ -1,6 +1,7 @@
-import { FormField, FormFieldLabel as FormLabel, useId } from "@salt-ds/core";
+import { FormField, FormFieldLabel as FormLabel } from "@salt-ds/core";
 import type { DateFrameworkType, ParserResult } from "@salt-ds/date-adapters";
 import {
+  createMonthYearRangeSelectionAnnouncement,
   type DateInputRangeDetails,
   DateParserField,
   DatePicker,
@@ -108,25 +109,26 @@ export const RangeWithMonthYearPanelUnselectableMonths = (): ReactElement => {
     [dateAdapter],
   );
 
-  const labelId = useId();
-
   return (
     <FormField style={{ width: "256px" }} validationStatus={validationStatus}>
-      <FormLabel id={labelId}>Select a month range</FormLabel>
+      <FormLabel>Select a month range</FormLabel>
       <DatePicker
         selectionVariant="range"
+        createAnnouncement={createMonthYearRangeSelectionAnnouncement}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput
-            aria-labelledby={labelId}
             format={format}
             parse={parseMonthYearRange}
-            startInputProps={{ placeholder: "Month Year" }}
-            endInputProps={{ placeholder: "Month Year" }}
+            startInputProps={{ placeholder: "Start date" }}
+            endInputProps={{ placeholder: "End date" }}
           />
         </DatePickerTrigger>
-        <DatePickerOverlay>
+        <DatePickerOverlay
+          aria-label="Month picker"
+          aria-describedby={undefined}
+        >
           <MonthYearRangePanel isMonthUnselectable={isMonthUnselectable} />
         </DatePickerOverlay>
         <DatePickerHelperText>{helperText}</DatePickerHelperText>

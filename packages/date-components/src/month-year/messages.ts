@@ -10,18 +10,30 @@
  * label) without repeating template literals throughout the component tree.
  */
 export const monthYearPanelMessages = {
-  previousYearLabel: (year: number) => `Previous year, ${year}`,
-  nextYearLabel: (year: number) => `Next year, ${year}`,
+  previousYearLabel: "Previous year",
+  previousYearOutOfRange: "Past dates are out of range",
+  nextYearLabel: "Next year",
+  nextYearOutOfRange: "Future dates are out of range",
   yearDropdownLabel: "Year Dropdown",
-  singleGridLabel: (year: number) => `Select a month in ${year}`,
-  startGridLabel: (year: number) => `Start month, ${year}`,
-  endGridLabel: (year: number) => `End month, ${year}`,
+  yearChangedAnnouncement: (year: number) => `${year}.`,
+  gridLabel: (year: number) => `${year} months group`,
+  monthSelectedAriaLabel: (fullLabel: string) => `${fullLabel}, selected`,
+  monthRangeStartAriaLabel: (fullLabel: string) =>
+    `Start date: ${fullLabel}, selected`,
+  monthRangeEndAriaLabel: (fullLabel: string) =>
+    `End date: ${fullLabel}, selected`,
+  monthRangeSpanAriaLabel: (fullLabel: string) =>
+    `In range: ${fullLabel}, selected`,
+  monthSelectAsEndAriaLabel: (fullLabel: string) =>
+    `${fullLabel}, select as end date`,
+  monthChangeStartAriaLabel: (fullLabel: string) =>
+    `Change start date to ${fullLabel}`,
+  monthMinimumAriaLabel: (fullLabel: string) => `${fullLabel}, minimum date`,
+  monthMaximumAriaLabel: (fullLabel: string) => `${fullLabel}, maximum date`,
   monthOutOfRange: "out of range",
-  monthUnselectableAriaLabel: (fullLabel: string, reason: string) =>
-    `${fullLabel}, ${reason}`,
-  selectedAnnouncement: (fullLabel: string) => `Selected ${fullLabel}`,
+  selectedAnnouncement: (fullLabel: string) => `${fullLabel}, selected`,
+  selectStartDate: "Select start date.",
+  selectEndDate: "Select end date.",
   selectedRangeAnnouncement: (start: string, end: string) =>
-    `Selected range: start ${start}, end ${end}`,
-  noStartMonth: "no start month",
-  noEndMonth: "no end month",
+    `Date range ${start} to ${end}, selected`,
 } as const;

@@ -1,6 +1,8 @@
-import { FormField, FormFieldLabel as FormLabel, useId } from "@salt-ds/core";
+import { FormField, FormFieldLabel as FormLabel } from "@salt-ds/core";
 import type { DateFrameworkType, ParserResult } from "@salt-ds/date-adapters";
 import {
+  createMonthYearRangeSelectionAnnouncement,
+  createMonthYearSingleSelectionAnnouncement,
   type DateInputRangeDetails,
   type DateInputSingleDetails,
   DateParserField,
@@ -124,25 +126,26 @@ export const MonthYearPanel: StoryFn<DatePickerSingleProps> = ({
     [dateAdapter],
   );
 
-  const labelId = useId();
-
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel id={labelId}>Select a month</FormLabel>
+      <FormLabel>Select a month</FormLabel>
       <DatePicker
         selectionVariant="single"
+        createAnnouncement={createMonthYearSingleSelectionAnnouncement}
         {...args}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput
-            aria-labelledby={labelId}
             format={format}
             parse={parseMonthYear}
             placeholder="Month Year"
           />
         </DatePickerTrigger>
-        <DatePickerOverlay>
+        <DatePickerOverlay
+          aria-label="Month picker"
+          aria-describedby={undefined}
+        >
           <MonthYearSinglePanel />
         </DatePickerOverlay>
         <DatePickerHelperText>{helperText}</DatePickerHelperText>
@@ -251,26 +254,27 @@ export const RangeMonthYearPanel: StoryFn<DatePickerRangeProps> = ({
     [dateAdapter],
   );
 
-  const labelId = useId();
-
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel id={labelId}>Select a month range</FormLabel>
+      <FormLabel>Select a month range</FormLabel>
       <DatePicker
         selectionVariant="range"
+        createAnnouncement={createMonthYearRangeSelectionAnnouncement}
         {...args}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput
-            aria-labelledby={labelId}
             format={format}
             parse={parseMonthYearRange}
-            startInputProps={{ placeholder: "Month Year" }}
-            endInputProps={{ placeholder: "Month Year" }}
+            startInputProps={{ placeholder: "Start date" }}
+            endInputProps={{ placeholder: "End date" }}
           />
         </DatePickerTrigger>
-        <DatePickerOverlay>
+        <DatePickerOverlay
+          aria-label="Month picker"
+          aria-describedby={undefined}
+        >
           <MonthYearRangePanel />
         </DatePickerOverlay>
         <DatePickerHelperText>{helperText}</DatePickerHelperText>
@@ -353,13 +357,12 @@ export const MonthYearPanelMinMaxDate: StoryFn<DatePickerSingleProps> = ({
   const maxDate =
     dateAdapter.parse("31/10/2028", "DD/MM/YYYY").date ?? undefined;
 
-  const labelId = useId();
-
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel id={labelId}>Select a month</FormLabel>
+      <FormLabel>Select a month</FormLabel>
       <DatePicker
         selectionVariant="single"
+        createAnnouncement={createMonthYearSingleSelectionAnnouncement}
         minDate={minDate}
         maxDate={maxDate}
         {...args}
@@ -367,13 +370,15 @@ export const MonthYearPanelMinMaxDate: StoryFn<DatePickerSingleProps> = ({
       >
         <DatePickerTrigger>
           <DatePickerSingleInput
-            aria-labelledby={labelId}
             format={format}
             parse={parseMonthYear}
             placeholder="Month Year"
           />
         </DatePickerTrigger>
-        <DatePickerOverlay>
+        <DatePickerOverlay
+          aria-label="Month picker"
+          aria-describedby={undefined}
+        >
           <MonthYearSinglePanel defaultVisibleYear={2026} />
         </DatePickerOverlay>
         <DatePickerHelperText>{helperText}</DatePickerHelperText>
@@ -474,13 +479,12 @@ export const RangeMonthYearPanelMinMaxDate: StoryFn<DatePickerRangeProps> = ({
   const maxDate =
     dateAdapter.parse("31/10/2028", "DD/MM/YYYY").date ?? undefined;
 
-  const labelId = useId();
-
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel id={labelId}>Select a month range</FormLabel>
+      <FormLabel>Select a month range</FormLabel>
       <DatePicker
         selectionVariant="range"
+        createAnnouncement={createMonthYearRangeSelectionAnnouncement}
         minDate={minDate}
         maxDate={maxDate}
         {...args}
@@ -488,14 +492,16 @@ export const RangeMonthYearPanelMinMaxDate: StoryFn<DatePickerRangeProps> = ({
       >
         <DatePickerTrigger>
           <DatePickerRangeInput
-            aria-labelledby={labelId}
             format={format}
             parse={parseMonthYearRange}
-            startInputProps={{ placeholder: "Month Year" }}
-            endInputProps={{ placeholder: "Month Year" }}
+            startInputProps={{ placeholder: "Start date" }}
+            endInputProps={{ placeholder: "End date" }}
           />
         </DatePickerTrigger>
-        <DatePickerOverlay>
+        <DatePickerOverlay
+          aria-label="Month picker"
+          aria-describedby={undefined}
+        >
           <MonthYearRangePanel
             defaultStartVisibleYear={2026}
             defaultEndVisibleYear={2028}
@@ -583,25 +589,26 @@ export const MonthYearPanelUnselectableMonths: StoryFn<
     [dateAdapter],
   );
 
-  const labelId = useId();
-
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel id={labelId}>Select a month</FormLabel>
+      <FormLabel>Select a month</FormLabel>
       <DatePicker
         selectionVariant="single"
+        createAnnouncement={createMonthYearSingleSelectionAnnouncement}
         {...args}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
           <DatePickerSingleInput
-            aria-labelledby={labelId}
             format={format}
             parse={parseMonthYear}
             placeholder="Month Year"
           />
         </DatePickerTrigger>
-        <DatePickerOverlay>
+        <DatePickerOverlay
+          aria-label="Month picker"
+          aria-describedby={undefined}
+        >
           <MonthYearSinglePanel isMonthUnselectable={isMonthUnselectable} />
         </DatePickerOverlay>
         <DatePickerHelperText>{helperText}</DatePickerHelperText>
@@ -705,26 +712,27 @@ export const RangeMonthYearPanelUnselectableMonths: StoryFn<
     [dateAdapter],
   );
 
-  const labelId = useId();
-
   return (
     <FormField validationStatus={validationStatus}>
-      <FormLabel id={labelId}>Select a month range</FormLabel>
+      <FormLabel>Select a month range</FormLabel>
       <DatePicker
         selectionVariant="range"
+        createAnnouncement={createMonthYearRangeSelectionAnnouncement}
         {...args}
         onSelectionChange={handleSelectionChange}
       >
         <DatePickerTrigger>
           <DatePickerRangeInput
-            aria-labelledby={labelId}
             format={format}
             parse={parseMonthYearRange}
-            startInputProps={{ placeholder: "Month Year" }}
-            endInputProps={{ placeholder: "Month Year" }}
+            startInputProps={{ placeholder: "Start date" }}
+            endInputProps={{ placeholder: "End date" }}
           />
         </DatePickerTrigger>
-        <DatePickerOverlay>
+        <DatePickerOverlay
+          aria-label="Month picker"
+          aria-describedby={undefined}
+        >
           <MonthYearRangePanel isMonthUnselectable={isMonthUnselectable} />
         </DatePickerOverlay>
         <DatePickerHelperText>{helperText}</DatePickerHelperText>

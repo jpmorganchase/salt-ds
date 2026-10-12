@@ -1,4 +1,6 @@
 import {
+  createMonthYearRangeSelectionAnnouncement,
+  createMonthYearSingleSelectionAnnouncement,
   DatePicker,
   DatePickerOverlay,
   DatePickerRangeInput,
@@ -28,13 +30,17 @@ export const MonthYearPanel: StoryFn = () => {
     <QAContainer itemPadding={10} width={1200} height={2000}>
       <DatePicker
         selectionVariant="single"
+        createAnnouncement={createMonthYearSingleSelectionAnnouncement}
         defaultSelectedDate={dateAdapter.today()}
         open
       >
         <DatePickerTrigger>
           <DatePickerSingleInput format="MMMM YYYY" />
         </DatePickerTrigger>
-        <DatePickerOverlay>
+        <DatePickerOverlay
+          aria-label="Month picker"
+          aria-describedby={undefined}
+        >
           <MonthYearSinglePanel />
         </DatePickerOverlay>
       </DatePicker>
@@ -49,6 +55,7 @@ export const RangeMonthYearPanel: StoryFn = () => {
     <QAContainer itemPadding={10} width={1500} height={2000}>
       <DatePicker
         selectionVariant="range"
+        createAnnouncement={createMonthYearRangeSelectionAnnouncement}
         defaultSelectedDate={{
           startDate: dateAdapter.today(),
           endDate: dateAdapter.add(dateAdapter.today(), { months: 4 }),
@@ -58,7 +65,10 @@ export const RangeMonthYearPanel: StoryFn = () => {
         <DatePickerTrigger>
           <DatePickerRangeInput format="MMMM YYYY" />
         </DatePickerTrigger>
-        <DatePickerOverlay>
+        <DatePickerOverlay
+          aria-label="Month picker"
+          aria-describedby={undefined}
+        >
           <MonthYearRangePanel />
         </DatePickerOverlay>
       </DatePicker>

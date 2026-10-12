@@ -5,6 +5,8 @@ import {
   type DropdownProps,
   makePrefixer,
   Option,
+  Tooltip,
+  useAriaAnnouncer,
 } from "@salt-ds/core";
 import { ChevronLeftIcon, ChevronRightIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
@@ -80,6 +82,8 @@ export const MonthGridHeaderPanel = forwardRef<
     ...rest
   } = props;
 
+  const { announce } = useAriaAnnouncer();
+
   const canGoPrev = minYear === undefined || year - 1 >= minYear;
   const canGoNext = maxYear === undefined || year + 1 <= maxYear;
 
@@ -121,18 +125,35 @@ export const MonthGridHeaderPanel = forwardRef<
       ref={ref}
       className={clsx(withBaseName("header"), className)}
     >
-      <Button
-        appearance="transparent"
-        aria-label={monthYearPanelMessages.previousYearLabel(year - 1)}
-        disabled={disabled || !canGoPrev}
-        {...PreviousYearButtonProps}
-        onClick={(event) => {
-          PreviousYearButtonProps?.onClick?.(event);
-          onYearChange(event, year - 1);
-        }}
+      <Tooltip
+        placement="top"
+        disabled={canGoPrev}
+        content={monthYearPanelMessages.previousYearOutOfRange}
+        enterDelay={0} // --salt-duration-instant
+        leaveDelay={0} // --salt-duration-instant
       >
-        <ChevronLeftIcon aria-hidden />
-      </Button>
+        <Button
+          appearance="transparent"
+          aria-label={
+            canGoPrev
+              ? monthYearPanelMessages.previousYearLabel
+              : monthYearPanelMessages.previousYearOutOfRange
+          }
+          focusableWhenDisabled={true}
+          // The label already says why, so keep the tooltip text out of the
+          // accessible description.
+          aria-describedby={canGoPrev ? undefined : ""}
+          disabled={disabled || !canGoPrev}
+          {...PreviousYearButtonProps}
+          onClick={(event) => {
+            PreviousYearButtonProps?.onClick?.(event);
+            onYearChange(event, year - 1);
+            announce(monthYearPanelMessages.yearChangedAnnouncement(year - 1));
+          }}
+        >
+          <ChevronLeftIcon aria-hidden />
+        </Button>
+      </Tooltip>
       <Dropdown<number>
         aria-label={monthYearPanelMessages.yearDropdownLabel}
         selected={[year]}
@@ -152,18 +173,33 @@ export const MonthGridHeaderPanel = forwardRef<
           </Option>
         ))}
       </Dropdown>
-      <Button
-        appearance="transparent"
-        aria-label={monthYearPanelMessages.nextYearLabel(year + 1)}
-        disabled={disabled || !canGoNext}
-        {...NextYearButtonProps}
-        onClick={(event) => {
-          NextYearButtonProps?.onClick?.(event);
-          onYearChange(event, year + 1);
-        }}
+      <Tooltip
+        placement="top"
+        disabled={canGoNext}
+        content={monthYearPanelMessages.nextYearOutOfRange}
+        enterDelay={0} // --salt-duration-instant
+        leaveDelay={0} // --salt-duration-instant
       >
-        <ChevronRightIcon aria-hidden />
-      </Button>
+        <Button
+          appearance="transparent"
+          aria-label={
+            canGoNext
+              ? monthYearPanelMessages.nextYearLabel
+              : monthYearPanelMessages.nextYearOutOfRange
+          }
+          focusableWhenDisabled={true}
+          aria-describedby={canGoNext ? undefined : ""}
+          disabled={disabled || !canGoNext}
+          {...NextYearButtonProps}
+          onClick={(event) => {
+            NextYearButtonProps?.onClick?.(event);
+            onYearChange(event, year + 1);
+            announce(monthYearPanelMessages.yearChangedAnnouncement(year + 1));
+          }}
+        >
+          <ChevronRightIcon aria-hidden />
+        </Button>
+      </Tooltip>
     </div>
   );
 });

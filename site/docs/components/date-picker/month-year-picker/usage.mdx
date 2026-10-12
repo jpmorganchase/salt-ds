@@ -30,6 +30,7 @@ The panel renders the twelve months of the visible year in a 3 × 4 grid. The he
 
 ```js
 import {
+  createMonthYearSingleSelectionAnnouncement,
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
@@ -45,6 +46,7 @@ Date controls require your application to contain a [LocalizationProvider](../..
 ```tsx
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import {
+  createMonthYearSingleSelectionAnnouncement,
   DatePicker,
   DatePickerOverlay,
   DatePickerSingleInput,
@@ -54,11 +56,14 @@ import {
 } from "@salt-ds/date-components";
 
 <LocalizationProvider DateAdapter={AdapterLuxon}>
-  <DatePicker selectionVariant="single">
+  <DatePicker
+    selectionVariant="single"
+    createAnnouncement={createMonthYearSingleSelectionAnnouncement}
+  >
     <DatePickerTrigger>
       <DatePickerSingleInput format="MMMM YYYY" />
     </DatePickerTrigger>
-    <DatePickerOverlay>
+    <DatePickerOverlay aria-label="Month picker" aria-describedby={undefined}>
       <MonthYearSinglePanel />
     </DatePickerOverlay>
   </DatePicker>

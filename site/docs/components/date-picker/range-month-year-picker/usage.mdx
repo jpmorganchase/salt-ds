@@ -62,6 +62,7 @@ Each grid header renders a `Dropdown` of selectable years alongside the previous
 
 ```js
 import {
+  createMonthYearRangeSelectionAnnouncement,
   DatePicker,
   DatePickerOverlay,
   DatePickerRangeInput,
@@ -77,6 +78,7 @@ Date controls require your application to contain a [LocalizationProvider](../..
 ```tsx
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import {
+  createMonthYearRangeSelectionAnnouncement,
   DatePicker,
   DatePickerOverlay,
   DatePickerRangeInput,
@@ -86,11 +88,14 @@ import {
 } from "@salt-ds/date-components";
 
 <LocalizationProvider DateAdapter={AdapterLuxon}>
-  <DatePicker selectionVariant="range">
+  <DatePicker
+    selectionVariant="range"
+    createAnnouncement={createMonthYearRangeSelectionAnnouncement}
+  >
     <DatePickerTrigger>
       <DatePickerRangeInput format="MMMM YYYY" />
     </DatePickerTrigger>
-    <DatePickerOverlay>
+    <DatePickerOverlay aria-label="Month picker" aria-describedby={undefined}>
       <MonthYearRangePanel />
     </DatePickerOverlay>
   </DatePicker>

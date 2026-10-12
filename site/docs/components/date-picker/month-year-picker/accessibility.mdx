@@ -14,10 +14,12 @@ data:
 - Clearly indicate months that cannot be selected — via `minDate` / `maxDate` on the parent `DatePicker`, or via `isMonthUnselectable` on the panel. The rejection message you return from `isMonthUnselectable` is surfaced to assistive technology.
 - Match the input `format` (typically `MMMM YYYY`) with the panel's rendered value so screen reader users hear consistent phrasing between the typed and picked value.
 - Consider a `Dropdown` of pre-formatted month options instead of a picker when the set of months is small and fixed.
+- Pass `createMonthYearSingleSelectionAnnouncement` to the `DatePicker` `createAnnouncement` prop so a month entered in the input is announced in month wording, for example "January 2026, selected".
+- Give the overlay an accessible name, for example `<DatePickerOverlay aria-label="Month picker">`.
 
 ### Focus
 
-- When the overlay opens, focus lands on the currently-selected month button, or January when there is no selection. This is wired via `useDatePickerOverlay().state.initialFocusRef`.
+- When the overlay opens, focus lands on the selected month. If no month is selected, focus lands on the current month, or on the first selectable month if the current month cannot be selected. This is wired via `useDatePickerOverlay().state.initialFocusRef`.
 - Closing the overlay (Escape, apply, outside-press) returns focus to the triggering input, handled by `DatePickerOverlayProvider`.
 - Within the grid, roving `tabindex` means only the focused month is in the tab order; arrow keys move focus between months.
 
@@ -28,8 +30,10 @@ data:
 
 ### Announce changes dynamically
 
-- Selection changes are announced through Salt's shared `aria-live` announcer as "Selected: January 2026".
-- The grid uses ARIA `role="grid"` with `aria-rowcount` / `aria-colcount`, and each month button has an `aria-label` of the form "January 2026" so it is understandable in isolation.
+The following announcements are handled at the component level:
+
+- The new year, for example "2027.", when the previous or next year button is activated.
+- "Past dates are out of range" or "Future dates are out of range" when an arrow key would move to a year outside `minDate` / `maxDate`.
 
 ## Keyboard interactions
 

@@ -13,10 +13,12 @@ data:
 - Wrap the `DatePicker` in [`FormField`](/salt/components/form-field) so both inputs receive a visible label, help text and a status message. Screen reader users rely on the label to understand which range they are entering.
 - Clearly indicate months that cannot be selected — via `minDate` / `maxDate` on the parent `DatePicker`, or via `isMonthUnselectable` on the panel. The rejection message you return from `isMonthUnselectable` is surfaced to assistive technology on both grids.
 - Match the input `format` (typically `MMMM YYYY`) with the panel's rendered value so screen reader users hear consistent phrasing between the typed and picked value.
+- Pass `createMonthYearRangeSelectionAnnouncement` to the `DatePicker` `createAnnouncement` prop so a range entered in the inputs is announced in month wording, for example "Date range January 2026 to March 2026, selected".
+- Give the overlay an accessible name, for example `<DatePickerOverlay aria-label="Month picker">`.
 
 ### Focus
 
-- When the overlay opens, focus lands on the start grid's currently-focused month button (the selected start month, or January when there is no selection). This is wired via `useDatePickerOverlay().state.initialFocusRef`.
+- When the overlay opens, focus lands on the start grid's currently-focused month button (the selected start month; if there is none, the current month, or the first selectable month if the current month cannot be selected). This is wired via `useDatePickerOverlay().state.initialFocusRef`.
 - Closing the overlay (Escape, apply, outside-press) returns focus to the triggering input, handled by `DatePickerOverlayProvider`.
 - Within each grid, roving `tabindex` means only the focused month is in the tab order; arrow keys move focus between months in that grid.
 - Tab / Shift + Tab move focus between the start grid, the end grid, and the previous/next year buttons of each grid.
@@ -28,8 +30,12 @@ data:
 
 ### Announce changes dynamically
 
-- Selection changes are announced through Salt's shared `aria-live` announcer as "Selected range: start January 2026, end March 2026".
-- Each grid uses ARIA `role="grid"` with `aria-rowcount` / `aria-colcount` and an `aria-label` such as "Start month, 2026" or "End month, 2026". Each month button has an `aria-label` of the form "January 2026" so it is understandable in isolation.
+The following announcements are handled at the component level:
+
+- "Select start date." when the overlay opens and no start month is selected.
+- "Select end date." after a start month is selected.
+- The new year, for example "2027.", when a previous or next year button is activated.
+- "Past dates are out of range" or "Future dates are out of range" when an arrow key would move to a year outside `minDate` / `maxDate`.
 
 ## Keyboard interactions
 

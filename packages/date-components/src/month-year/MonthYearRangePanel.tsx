@@ -19,6 +19,7 @@ import {
   type ReactNode,
   type SyntheticEvent,
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
@@ -33,9 +34,21 @@ import { useLocalization } from "../localization-provider";
 import { MonthGrid, type MonthGridApi, type MonthGridProps } from "./MonthGrid";
 import monthYearPanelCss from "./MonthYearPanel.css";
 import { monthYearPanelMessages } from "./messages";
-import { isMonthOutOfRange, monthIndexOf, yearOf } from "./utils";
+import {
+  buildMonthsForYear,
+  isMonthOutOfRange,
+  monthIndexOf,
+  yearOf,
+} from "./utils";
 
 const withBaseName = makePrefixer("saltMonthYearPanel");
+
+// The overlay's live region has only just been created when the panel
+// mounts, so wait before writing the opening prompt to it.
+const OPEN_PROMPT_DELAY = 500;
+
+// Lets the picked month's updated label be read before the prompt.
+const END_MONTH_PROMPT_DELAY = 100;
 
 export interface MonthYearRangePanelProps
   extends ComponentPropsWithoutRef<"div"> {
@@ -76,6 +89,8 @@ export interface MonthYearRangePanelProps
       | "focusedButtonRef"
       | "minYear"
       | "maxYear"
+      | "minDate"
+      | "maxDate"
       | "timezone"
       | "readOnly"
       | "disabled"
@@ -95,6 +110,8 @@ export interface MonthYearRangePanelProps
       | "focusedButtonRef"
       | "minYear"
       | "maxYear"
+      | "minDate"
+      | "maxDate"
       | "timezone"
       | "readOnly"
       | "disabled"
@@ -151,6 +168,26 @@ export const MonthYearRangePanel = forwardRef<
   const initialFocusRef = overlayContext?.state?.initialFocusRef;
   const { announce } = useAriaAnnouncer();
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: only prompt when the panel opens
+  useEffect(() => {
+    if (
+      !selectedDate?.startDate ||
+      !dateAdapter.isValid(selectedDate.startDate)
+    ) {
+      const timeout = targetWindow?.setTimeout(
+        () => announce(monthYearPanelMessages.selectStartDate),
+        OPEN_PROMPT_DELAY,
+      );
+      return () => targetWindow?.clearTimeout(timeout);
+    }
+  }, []);
+
+  const endMonthPromptTimeout = useRef<number | undefined>(undefined);
+  useEffect(
+    () => () => targetWindow?.clearTimeout(endMonthPromptTimeout.current),
+    [targetWindow],
+  );
+
   const minDate = minDateProp ?? contextMinDate;
   const maxDate = maxDateProp ?? contextMaxDate;
   const minYear = minDate ? dateAdapter.getYear(minDate) : undefined;
@@ -184,11 +221,49 @@ export const MonthYearRangePanel = forwardRef<
     state: "endVisibleYear",
   });
 
+  const isMonthUnselectable = useCallback(
+    (date: DateFrameworkType) => {
+      if (isMonthOutOfRange(dateAdapter, date, minDate, maxDate)) {
+        return monthYearPanelMessages.monthOutOfRange;
+      }
+      return isMonthUnselectableProp?.(date) ?? false;
+    },
+    [dateAdapter, isMonthUnselectableProp, maxDate, minDate],
+  );
+
+  const getNextFocusedIndex = (
+    year: number,
+    date: DateFrameworkType | null | undefined,
+  ) => {
+    const months = buildMonthsForYear(dateAdapter, year, timezone);
+    const isMonthFocusable = (month: DateFrameworkType | null | undefined) =>
+      month &&
+      dateAdapter.isValid(month) &&
+      dateAdapter.getYear(month) === year &&
+      !isMonthUnselectable(months[monthIndexOf(dateAdapter, month, 0)]);
+
+    if (isMonthFocusable(date)) {
+      return monthIndexOf(dateAdapter, date, 0);
+    }
+
+    // Today
+    const today = dateAdapter.today(timezone);
+    if (isMonthFocusable(today)) {
+      return monthIndexOf(dateAdapter, today, 0);
+    }
+
+    // First selectable month in the visible year
+    const firstSelectableIndex = months.findIndex(
+      (month) => !isMonthUnselectable(month),
+    );
+    return firstSelectableIndex === -1 ? 0 : firstSelectableIndex;
+  };
+
   const [startFocusedIndex, setStartFocusedIndex] = useState<number>(() =>
-    monthIndexOf(dateAdapter, selectedDate?.startDate, 0),
+    getNextFocusedIndex(visibleStartYear, selectedDate?.startDate),
   );
   const [endFocusedIndex, setEndFocusedIndex] = useState<number>(() =>
-    monthIndexOf(dateAdapter, selectedDate?.endDate, 0),
+    getNextFocusedIndex(visibleEndYear, selectedDate?.endDate),
   );
 
   /**
@@ -391,15 +466,15 @@ export const MonthYearRangePanel = forwardRef<
     if (startDate && dateAdapter.isValid(startDate)) {
       setStartFocusedIndex(monthIndexOf(dateAdapter, startDate, 0));
     } else {
-      // Selection was cleared — reset the roving tabindex to January so a
-      // fresh open lands on a sensible default rather than the previous
-      // selection's month.
-      setStartFocusedIndex(0);
+      // Selection was cleared — reset the roving tabindex to the current or
+      // first selectable month so a fresh open lands on a sensible default
+      // rather than the previous selection's month.
+      setStartFocusedIndex(getNextFocusedIndex(visibleStartYear, null));
     }
     if (endDate && dateAdapter.isValid(endDate)) {
       setEndFocusedIndex(monthIndexOf(dateAdapter, endDate, 0));
     } else {
-      setEndFocusedIndex(0);
+      setEndFocusedIndex(getNextFocusedIndex(visibleEndYear, null));
     }
 
     // Always reconcile — even if `nextStart`/`nextEnd` match the current
@@ -423,19 +498,9 @@ export const MonthYearRangePanel = forwardRef<
     }
   }, [selectedDate?.startDate, selectedDate?.endDate]);
 
-  const isMonthUnselectable = useCallback(
-    (date: DateFrameworkType) => {
-      if (isMonthOutOfRange(dateAdapter, date, minDate, maxDate)) {
-        return monthYearPanelMessages.monthOutOfRange;
-      }
-      return isMonthUnselectableProp?.(date) ?? false;
-    },
-    [dateAdapter, isMonthUnselectableProp, maxDate, minDate],
-  );
-
   /**
-   * `aria-selected` (on the gridcell) and `aria-pressed` (on the button)
-   * should fire for BOTH range endpoints regardless of which grid renders
+   * The ", selected" suffix on the button's `aria-label` should apply to
+   * BOTH range endpoints regardless of which grid renders
    * them. Otherwise a cross-year range's start-month cell in the end grid
    * (and vice-versa) reads as unselected to assistive tech, even though it
    * is visually highlighted via the `saltCalendarDay-selectedStart` /
@@ -547,26 +612,15 @@ export const MonthYearRangePanel = forwardRef<
         hoveredStart,
         hoveredEnd,
         hoveredSpan,
+        // Picking a month before the start replaces the start.
+        changeStart:
+          hasStart &&
+          !hasEnd &&
+          rangeStart !== undefined &&
+          dateAdapter.compare(monthStart, rangeStart) < 0,
       };
     },
     [dateAdapter, hoveredMonth, selectedDate?.endDate, selectedDate?.startDate],
-  );
-
-  const announceRange = useCallback(
-    (next: DateRangeSelection) => {
-      const startText =
-        next.startDate && dateAdapter.isValid(next.startDate)
-          ? dateAdapter.format(next.startDate, "MMMM YYYY")
-          : monthYearPanelMessages.noStartMonth;
-      const endText =
-        next.endDate && dateAdapter.isValid(next.endDate)
-          ? dateAdapter.format(next.endDate, "MMMM YYYY")
-          : monthYearPanelMessages.noEndMonth;
-      announce(
-        monthYearPanelMessages.selectedRangeAnnouncement(startText, endText),
-      );
-    },
-    [announce, dateAdapter],
   );
 
   const handleSelect = useCallback(
@@ -612,15 +666,21 @@ export const MonthYearRangePanel = forwardRef<
       // `onSelectionChange` callback sees the freshly-committed value.
       select(event, next);
       onSelectionChange?.(event, next);
-      announceRange(next);
+      if (!next.endDate) {
+        endMonthPromptTimeout.current = targetWindow?.setTimeout(
+          () => announce(monthYearPanelMessages.selectEndDate),
+          END_MONTH_PROMPT_DELAY,
+        );
+      }
     },
     [
-      announceRange,
+      announce,
       dateAdapter,
       onSelectionChange,
       select,
       selectedDate?.endDate,
       selectedDate?.startDate,
+      targetWindow,
     ],
   );
 
@@ -649,11 +709,11 @@ export const MonthYearRangePanel = forwardRef<
   );
 
   const startAriaLabel = useMemo(
-    () => monthYearPanelMessages.startGridLabel(visibleStartYear),
+    () => monthYearPanelMessages.gridLabel(visibleStartYear),
     [visibleStartYear],
   );
   const endAriaLabel = useMemo(
-    () => monthYearPanelMessages.endGridLabel(visibleEndYear),
+    () => monthYearPanelMessages.gridLabel(visibleEndYear),
     [visibleEndYear],
   );
 
@@ -673,47 +733,54 @@ export const MonthYearRangePanel = forwardRef<
         </div>
       )}
       <div className={withBaseName("rangeContainer")}>
-        <MonthGrid
-          ariaLabel={startAriaLabel}
-          year={visibleStartYear}
-          onYearChange={handleStartVisibleYearChange}
-          focusedIndex={startFocusedIndex}
-          onFocusedIndexChange={setStartFocusedIndex}
-          isMonthSelected={isMonthSelected}
-          getMonthRangeStatus={getMonthRangeStatus}
-          isMonthUnselectable={isMonthUnselectable}
-          onMonthSelect={handleSelect}
-          onMonthHoverChange={setHoveredMonth}
-          focusedButtonRef={startFocusedButtonRef}
-          apiRef={startGridApiRef}
-          onNavigateOutOfRange={handleStartOutOfRange}
-          minYear={minYear}
-          maxYear={maxYear}
-          timezone={timezone}
-          disabled={disabled}
-          readOnly={readOnly}
-          {...StartMonthGridProps}
-        />
-        <MonthGrid
-          ariaLabel={endAriaLabel}
-          year={visibleEndYear}
-          onYearChange={handleEndVisibleYearChange}
-          focusedIndex={endFocusedIndex}
-          onFocusedIndexChange={setEndFocusedIndex}
-          isMonthSelected={isMonthSelected}
-          getMonthRangeStatus={getMonthRangeStatus}
-          isMonthUnselectable={isMonthUnselectable}
-          onMonthSelect={handleSelect}
-          onMonthHoverChange={setHoveredMonth}
-          apiRef={endGridApiRef}
-          onNavigateOutOfRange={handleEndOutOfRange}
-          minYear={minYear}
-          maxYear={maxYear}
-          timezone={timezone}
-          disabled={disabled}
-          readOnly={readOnly}
-          {...EndMonthGridProps}
-        />
+        {/* Avoid Dropdowns in MonthGrid inheriting the FormField's state */}
+        <FormFieldContext.Provider value={{} as FormFieldContextValue}>
+          <MonthGrid
+            ariaLabel={startAriaLabel}
+            year={visibleStartYear}
+            onYearChange={handleStartVisibleYearChange}
+            focusedIndex={startFocusedIndex}
+            onFocusedIndexChange={setStartFocusedIndex}
+            isMonthSelected={isMonthSelected}
+            getMonthRangeStatus={getMonthRangeStatus}
+            isMonthUnselectable={isMonthUnselectable}
+            onMonthSelect={handleSelect}
+            onMonthHoverChange={setHoveredMonth}
+            focusedButtonRef={startFocusedButtonRef}
+            apiRef={startGridApiRef}
+            onNavigateOutOfRange={handleStartOutOfRange}
+            minYear={minYear}
+            maxYear={maxYear}
+            minDate={minDate}
+            maxDate={maxDate}
+            timezone={timezone}
+            disabled={disabled}
+            readOnly={readOnly}
+            {...StartMonthGridProps}
+          />
+          <MonthGrid
+            ariaLabel={endAriaLabel}
+            year={visibleEndYear}
+            onYearChange={handleEndVisibleYearChange}
+            focusedIndex={endFocusedIndex}
+            onFocusedIndexChange={setEndFocusedIndex}
+            isMonthSelected={isMonthSelected}
+            getMonthRangeStatus={getMonthRangeStatus}
+            isMonthUnselectable={isMonthUnselectable}
+            onMonthSelect={handleSelect}
+            onMonthHoverChange={setHoveredMonth}
+            apiRef={endGridApiRef}
+            onNavigateOutOfRange={handleEndOutOfRange}
+            minYear={minYear}
+            maxYear={maxYear}
+            minDate={minDate}
+            maxDate={maxDate}
+            timezone={timezone}
+            disabled={disabled}
+            readOnly={readOnly}
+            {...EndMonthGridProps}
+          />
+        </FormFieldContext.Provider>
       </div>
     </StackLayout>
   );

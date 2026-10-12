@@ -4,7 +4,6 @@ import {
   FormFieldHelperText,
   makePrefixer,
   StackLayout,
-  useAriaAnnouncer,
   useControlled,
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
@@ -30,7 +29,12 @@ import { useLocalization } from "../localization-provider";
 import { MonthGrid, type MonthGridProps } from "./MonthGrid";
 import monthYearPanelCss from "./MonthYearPanel.css";
 import { monthYearPanelMessages } from "./messages";
-import { isMonthOutOfRange, monthIndexOf, yearOf } from "./utils";
+import {
+  buildMonthsForYear,
+  isMonthOutOfRange,
+  monthIndexOf,
+  yearOf,
+} from "./utils";
 
 const withBaseName = makePrefixer("saltMonthYearPanel");
 
@@ -81,6 +85,8 @@ export interface MonthYearSinglePanelProps
       | "focusedButtonRef"
       | "minYear"
       | "maxYear"
+      | "minDate"
+      | "maxDate"
       | "timezone"
       | "readOnly"
       | "disabled"
@@ -131,8 +137,6 @@ export const MonthYearSinglePanel = forwardRef<
 
   const overlayContext = useDatePickerOverlay();
   const initialFocusRef = overlayContext?.state?.initialFocusRef;
-  const { announce } = useAriaAnnouncer();
-
   const minDate = minDateProp ?? contextMinDate;
   const maxDate = maxDateProp ?? contextMaxDate;
   const minYear = minDate ? dateAdapter.getYear(minDate) : undefined;
@@ -149,8 +153,46 @@ export const MonthYearSinglePanel = forwardRef<
     state: "visibleYear",
   });
 
+  const isMonthUnselectable = useCallback(
+    (date: DateFrameworkType) => {
+      if (isMonthOutOfRange(dateAdapter, date, minDate, maxDate)) {
+        return monthYearPanelMessages.monthOutOfRange;
+      }
+      return isMonthUnselectableProp?.(date) ?? false;
+    },
+    [dateAdapter, isMonthUnselectableProp, maxDate, minDate],
+  );
+
+  const getNextFocusedIndex = (
+    year: number,
+    date: DateFrameworkType | null | undefined,
+  ) => {
+    const months = buildMonthsForYear(dateAdapter, year, timezone);
+    const isMonthFocusable = (month: DateFrameworkType | null | undefined) =>
+      month &&
+      dateAdapter.isValid(month) &&
+      dateAdapter.getYear(month) === year &&
+      !isMonthUnselectable(months[monthIndexOf(dateAdapter, month, 0)]);
+
+    if (isMonthFocusable(date)) {
+      return monthIndexOf(dateAdapter, date, 0);
+    }
+
+    // Today
+    const today = dateAdapter.today(timezone);
+    if (isMonthFocusable(today)) {
+      return monthIndexOf(dateAdapter, today, 0);
+    }
+
+    // First selectable month in the visible year
+    const firstSelectableIndex = months.findIndex(
+      (month) => !isMonthUnselectable(month),
+    );
+    return firstSelectableIndex === -1 ? 0 : firstSelectableIndex;
+  };
+
   const [focusedIndex, setFocusedIndex] = useState<number>(() =>
-    monthIndexOf(dateAdapter, selectedDate, 0),
+    getNextFocusedIndex(visibleYear, selectedDate),
   );
 
   const handleVisibleYearChange = useCallback(
@@ -168,11 +210,11 @@ export const MonthYearSinglePanel = forwardRef<
   // Sync the visible year with an externally-changing selection (e.g. the user
   // types a new value into the DatePicker input, or the parent updates the
   // controlled `selectedDate`). When the selection is cleared, reset the
-  // roving-tabindex owner to January so a fresh open lands sensibly.
+  // roving-tabindex owner to the current or first selectable month.
   // biome-ignore lint/correctness/useExhaustiveDependencies: only respond to selectedDate changes
   useIsomorphicLayoutEffect(() => {
     if (!selectedDate || !dateAdapter.isValid(selectedDate)) {
-      setFocusedIndex(0);
+      setFocusedIndex(getNextFocusedIndex(visibleYear, null));
       return;
     }
     const nextYear = dateAdapter.getYear(selectedDate);
@@ -190,16 +232,6 @@ export const MonthYearSinglePanel = forwardRef<
     [dateAdapter, selectedDate],
   );
 
-  const isMonthUnselectable = useCallback(
-    (date: DateFrameworkType) => {
-      if (isMonthOutOfRange(dateAdapter, date, minDate, maxDate)) {
-        return monthYearPanelMessages.monthOutOfRange;
-      }
-      return isMonthUnselectableProp?.(date) ?? false;
-    },
-    [dateAdapter, isMonthUnselectableProp, maxDate, minDate],
-  );
-
   const handleMonthSelect = useCallback(
     (event: SyntheticEvent, date: DateFrameworkType) => {
       const normalised = dateAdapter.startOf(date, "month");
@@ -208,17 +240,12 @@ export const MonthYearSinglePanel = forwardRef<
       // freshly-committed selection. Matches DatePickerSingleGridPanel.
       select(event, normalised);
       onSelectionChange?.(event, normalised);
-      announce(
-        monthYearPanelMessages.selectedAnnouncement(
-          dateAdapter.format(normalised, "MMMM YYYY"),
-        ),
-      );
     },
-    [announce, dateAdapter, onSelectionChange, select],
+    [dateAdapter, onSelectionChange, select],
   );
 
   const ariaLabel = useMemo(
-    () => monthYearPanelMessages.singleGridLabel(visibleYear),
+    () => monthYearPanelMessages.gridLabel(visibleYear),
     [visibleYear],
   );
 
@@ -237,23 +264,28 @@ export const MonthYearSinglePanel = forwardRef<
           </FormFieldContext.Provider>
         </div>
       )}
-      <MonthGrid
-        ariaLabel={ariaLabel}
-        year={visibleYear}
-        onYearChange={handleVisibleYearChange}
-        focusedIndex={focusedIndex}
-        onFocusedIndexChange={setFocusedIndex}
-        isMonthSelected={isMonthSelected}
-        isMonthUnselectable={isMonthUnselectable}
-        onMonthSelect={handleMonthSelect}
-        focusedButtonRef={initialFocusRef}
-        minYear={minYear}
-        maxYear={maxYear}
-        timezone={timezone}
-        disabled={disabled}
-        readOnly={readOnly}
-        {...MonthGridProps}
-      />
+      {/* Avoid Dropdowns in MonthGrid inheriting the FormField's state */}
+      <FormFieldContext.Provider value={{} as FormFieldContextValue}>
+        <MonthGrid
+          ariaLabel={ariaLabel}
+          year={visibleYear}
+          onYearChange={handleVisibleYearChange}
+          focusedIndex={focusedIndex}
+          onFocusedIndexChange={setFocusedIndex}
+          isMonthSelected={isMonthSelected}
+          isMonthUnselectable={isMonthUnselectable}
+          onMonthSelect={handleMonthSelect}
+          focusedButtonRef={initialFocusRef}
+          minYear={minYear}
+          maxYear={maxYear}
+          minDate={minDate}
+          maxDate={maxDate}
+          timezone={timezone}
+          disabled={disabled}
+          readOnly={readOnly}
+          {...MonthGridProps}
+        />
+      </FormFieldContext.Provider>
     </StackLayout>
   );
 });
