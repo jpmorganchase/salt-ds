@@ -7,14 +7,23 @@ import {
   DrawerHeader,
 } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
-import { type CSSProperties, useState } from "react";
-import { describe, expect, it, vi } from "vitest";
+import type { CSSProperties } from "react";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { mouse, touch } from "~browser-test-utils/pointer";
 import { act, renderWithSalt } from "~browser-test-utils/render";
 import * as drawerStories from "~stories/drawer/drawer.stories";
 
 const { Resizable } = composeStories(drawerStories);
+
+const ResizableDrawer = (props: DrawerProps) => (
+  <Drawer open resizable {...props}>
+    <DrawerHeader header="Resizable drawer" />
+    <DrawerContent>Content</DrawerContent>
+  </Drawer>
+);
+
+afterEach(() => page.viewport(1280, 1024));
 
 type Position = NonNullable<DrawerProps["position"]>;
 
@@ -42,10 +51,9 @@ const growDelta = (position: Position, distance: number) =>
 
 const drawer = () => page.getByRole("dialog").element() as HTMLElement;
 
-const handle = () =>
-  page
-    .getByRole("separator", { name: "Resize drawer" })
-    .element() as HTMLElement;
+const separator = () => page.getByRole("separator", { name: "Resize drawer" });
+
+const handle = () => separator().element() as HTMLElement;
 
 const drawerSize = (position: Position) => {
   const rect = drawer().getBoundingClientRect();
@@ -80,7 +88,7 @@ async function dragHandleBy(position: Position, delta: number) {
 
 async function pressOnHandle(key: string) {
   handle().focus();
-  await expect.poll(() => document.activeElement).toBe(handle());
+  await expect.element(separator()).toHaveFocus();
   await userEvent.keyboard(key);
 }
 
@@ -135,31 +143,20 @@ async function renderResizable({
 describe("GIVEN a resizable Drawer", () => {
   describe("size", () => {
     it("returns to its declared size when resizing is turned off", async () => {
-      function ToggleFixture() {
-        const [resizable, setResizable] = useState(true);
-        return (
-          <Drawer open resizable={resizable} style={limitsStyle("left")}>
-            <DrawerHeader header="Resizable drawer" />
-            <DrawerContent>
-              <Button onClick={() => setResizable(false)}>
-                Turn off resizing
-              </Button>
-            </DrawerContent>
-          </Drawer>
-        );
-      }
-      await renderWithSalt(<ToggleFixture />);
+      const { rerender } = await renderWithSalt(
+        <ResizableDrawer style={limitsStyle("left")} />,
+      );
       await waitForOpen();
 
       await dragHandleBy("left", 100);
       await expect.poll(() => drawerSize("left")).toBeCloseTo(400, 0);
 
-      await page.getByRole("button", { name: "Turn off resizing" }).click();
+      await rerender(
+        <ResizableDrawer resizable={false} style={limitsStyle("left")} />,
+      );
 
       await expect.poll(() => drawerSize("left")).toBeCloseTo(300, 0);
-      await expect
-        .element(page.getByRole("separator", { name: "Resize drawer" }))
-        .not.toBeInTheDocument();
+      await expect.element(separator()).not.toBeInTheDocument();
     });
 
     it("leaves content controls clickable", async () => {
@@ -268,7 +265,7 @@ describe("GIVEN a resizable Drawer", () => {
     it("doesn't resize through a layer above the drawer", async () => {
       await renderWithSalt(
         <>
-          <Resizable style={limitsStyle("left")} />
+          <Resizable style={limitsStyle("left")} disableDismiss />
           <div
             role="status"
             style={{
@@ -376,15 +373,10 @@ describe("GIVEN a resizable Drawer", () => {
     for (const position of POSITIONS) {
       it(`never shrinks below --salt-size-base without limits, position=${position}`, async () => {
         await renderWithSalt(
-          <Drawer
-            open
-            resizable
+          <ResizableDrawer
             position={position}
             style={isHorizontal(position) ? { width: 320 } : { height: 280 }}
-          >
-            <DrawerHeader header="Resizable drawer" />
-            <DrawerContent>Content</DrawerContent>
-          </Drawer>,
+          />,
         );
         await waitForOpen();
 
@@ -398,9 +390,7 @@ describe("GIVEN a resizable Drawer", () => {
 
     it("accepts width limits as CSS variables", async () => {
       await renderWithSalt(
-        <Drawer
-          open
-          resizable
+        <ResizableDrawer
           style={
             {
               width: 300,
@@ -408,10 +398,7 @@ describe("GIVEN a resizable Drawer", () => {
               "--saltDrawer-maxWidth": "400px",
             } as CSSProperties
           }
-        >
-          <DrawerHeader header="Resizable drawer" />
-          <DrawerContent>Content</DrawerContent>
-        </Drawer>,
+        />,
       );
       await waitForOpen();
 
@@ -424,9 +411,7 @@ describe("GIVEN a resizable Drawer", () => {
 
     it("accepts height limits as CSS variables", async () => {
       await renderWithSalt(
-        <Drawer
-          open
-          resizable
+        <ResizableDrawer
           position="top"
           style={
             {
@@ -435,10 +420,7 @@ describe("GIVEN a resizable Drawer", () => {
               "--saltDrawer-maxHeight": "50vh",
             } as CSSProperties
           }
-        >
-          <DrawerHeader header="Resizable drawer" />
-          <DrawerContent>Content</DrawerContent>
-        </Drawer>,
+        />,
       );
       await waitForOpen();
 
@@ -470,15 +452,10 @@ describe("GIVEN a resizable Drawer", () => {
     for (const position of POSITIONS) {
       it(`keeps the handle's whole target on screen at its maximum size, position=${position}`, async () => {
         await renderWithSalt(
-          <Drawer
-            open
-            resizable
+          <ResizableDrawer
             position={position}
             style={isHorizontal(position) ? { width: 300 } : { height: 300 }}
-          >
-            <DrawerHeader header="Resizable drawer" />
-            <DrawerContent>Content</DrawerContent>
-          </Drawer>,
+          />,
         );
         await waitForOpen();
 
@@ -489,12 +466,7 @@ describe("GIVEN a resizable Drawer", () => {
     }
 
     it("keeps the handle's whole target on screen when its style fills the viewport", async () => {
-      await renderWithSalt(
-        <Drawer open resizable style={{ width: "100vw" }}>
-          <DrawerHeader header="Resizable drawer" />
-          <DrawerContent>Content</DrawerContent>
-        </Drawer>,
-      );
+      await renderWithSalt(<ResizableDrawer style={{ width: "100vw" }} />);
       await waitForOpen();
 
       expect(handleOuterEdge("left")).toBeCloseTo(0, 0);
@@ -645,7 +617,7 @@ describe("GIVEN a resizable Drawer", () => {
     it("doesn't close the drawer when the edge is placed on the scrim", async () => {
       await renderResizable();
 
-      await page.getByRole("separator", { name: "Resize drawer" }).click();
+      await separator().click();
       await page
         .getByTestId("scrim")
         .click({ force: true, position: { x: 450, y: 300 } });
@@ -657,30 +629,34 @@ describe("GIVEN a resizable Drawer", () => {
     it("doesn't activate content where the edge is placed", async () => {
       const { hash } = window.location;
       await renderResizable();
-      const separator = page.getByRole("separator", { name: "Resize drawer" });
       const save = page.getByRole("button", { name: "Save" });
       const link = page.getByRole("link", { name: "example link" });
 
       const placingEnded = () =>
         expect.poll(() => getComputedStyle(document.body).cursor).toBe("auto");
-      const centerFromDrawerLeft = (element: Element) => {
-        const { left, width } = element.getBoundingClientRect();
-        return left + width / 2 - drawer().getBoundingClientRect().left;
+      const pointOver = (element: Element) => {
+        const { left, top, width, height } = element.getBoundingClientRect();
+        return {
+          x: Math.round(left + width / 2),
+          y: Math.round(top + height / 2),
+        };
       };
 
-      await separator.click();
-      const saveCenter = centerFromDrawerLeft(save.element());
-      await save.click({ force: true });
+      await separator().click();
+      const savePoint = pointOver(save.element());
+      await mouse.click(savePoint);
       await placingEnded();
-      await expect.poll(() => drawerSize("left")).toBeCloseTo(saveCenter, 0);
+      await expect
+        .poll(() => drawerSize("left"))
+        .toBeCloseTo(savePoint.x - drawer().getBoundingClientRect().left, 0);
 
-      await separator.click();
-      await link.click({ force: true });
+      await separator().click();
+      await mouse.click(pointOver(link.element()));
       await placingEnded();
 
       await expect.element(page.getByRole("dialog")).toBeInTheDocument();
       expect(window.location.hash).toBe(hash);
-      await expect.element(separator).toHaveFocus();
+      await expect.element(separator()).toHaveFocus();
 
       await save.click();
       await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
@@ -747,36 +723,26 @@ describe("GIVEN a resizable Drawer", () => {
     it("cancels when the window is resized", async () => {
       await renderResizable();
 
-      try {
-        await clickHandle();
-        await expect.poll(guide).not.toBeNull();
-        await page.viewport(1000, 800);
-        await expect.poll(guide).toBeNull();
+      await clickHandle();
+      await expect.poll(guide).not.toBeNull();
+      await page.viewport(1000, 800);
+      await expect.poll(guide).toBeNull();
 
-        await mouse.click(pointForSize("left", 450));
-        expect(drawerSize("left")).toBeCloseTo(300, 0);
-      } finally {
-        await page.viewport(1280, 1024);
-      }
+      await mouse.click(pointForSize("left", 450));
+      expect(drawerSize("left")).toBeCloseTo(300, 0);
     });
 
     it("stops placing when the drawer closes", async () => {
-      let setOpen: (open: boolean) => void = () => {};
-      function ClosableFixture() {
-        const [open, setOpenState] = useState(true);
-        setOpen = setOpenState;
-        return (
-          <Drawer open={open} resizable style={limitsStyle("left")}>
-            <DrawerHeader header="Resizable drawer" />
-          </Drawer>
-        );
-      }
-      await renderWithSalt(<ClosableFixture />);
+      const { rerender } = await renderWithSalt(
+        <ResizableDrawer style={limitsStyle("left")} />,
+      );
       await waitForOpen();
 
       await clickHandle();
       await expect.poll(guide).not.toBeNull();
-      await act(async () => setOpen(false));
+      await rerender(
+        <ResizableDrawer open={false} style={limitsStyle("left")} />,
+      );
 
       await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
       await expect.poll(guide).toBeNull();
@@ -786,30 +752,22 @@ describe("GIVEN a resizable Drawer", () => {
     });
 
     it("stops placing when resizing is turned off", async () => {
-      let setResizable: (resizable: boolean) => void = () => {};
-      function ToggleFixture() {
-        const [resizable, setResizableState] = useState(true);
-        setResizable = setResizableState;
-        return (
-          <Drawer open resizable={resizable} style={limitsStyle("left")}>
-            <DrawerHeader header="Resizable drawer" />
-          </Drawer>
-        );
-      }
-      await renderWithSalt(<ToggleFixture />);
+      const { rerender } = await renderWithSalt(
+        <ResizableDrawer style={limitsStyle("left")} />,
+      );
       await waitForOpen();
 
       await clickHandle();
       await expect.poll(guide).not.toBeNull();
-      await act(async () => setResizable(false));
+      await rerender(
+        <ResizableDrawer resizable={false} style={limitsStyle("left")} />,
+      );
 
       await expect.poll(guide).toBeNull();
       await expect
         .poll(() => getComputedStyle(document.body).cursor)
         .toBe("auto");
-      await expect
-        .element(page.getByRole("separator", { name: "Resize drawer" }))
-        .not.toBeInTheDocument();
+      await expect.element(separator()).not.toBeInTheDocument();
     });
   });
 
@@ -825,91 +783,55 @@ describe("GIVEN a resizable Drawer", () => {
       await openDrawer();
 
       expect(drawerSize("left")).toBeCloseTo(400, 0);
-      expect(handle().getAttribute("aria-valuenow")).toBe("400");
+      await expect.element(separator()).toHaveAttribute("aria-valuenow", "400");
     });
 
     it("keeps the user's size when the style size changes", async () => {
-      function StyleFixture() {
-        const [width, setWidth] = useState(300);
-        return (
-          <Drawer
-            open
-            resizable
-            style={{ width, minWidth: 100, maxWidth: 600 }}
-          >
-            <DrawerHeader header="Resizable drawer" />
-            <DrawerContent>
-              <Button onClick={() => setWidth(200)}>Change width</Button>
-            </DrawerContent>
-          </Drawer>
-        );
-      }
-      await renderWithSalt(<StyleFixture />);
+      const limits = { minWidth: 100, maxWidth: 600 };
+      const { rerender } = await renderWithSalt(
+        <ResizableDrawer style={{ width: 300, ...limits }} />,
+      );
       await waitForOpen();
 
       await dragHandleBy("left", 100);
       await expect.poll(() => drawerSize("left")).toBeCloseTo(400, 0);
 
-      await page.getByRole("button", { name: "Change width" }).click();
+      await rerender(<ResizableDrawer style={{ width: 200, ...limits }} />);
 
       expect(drawerSize("left")).toBeCloseTo(400, 0);
     });
 
     it("starts again from the style size when remounted with a new key", async () => {
-      function KeyFixture() {
-        const [key, setKey] = useState(0);
-        return (
-          <Drawer key={key} open resizable style={limitsStyle("left")}>
-            <DrawerHeader header="Resizable drawer" />
-            <DrawerContent>
-              <Button onClick={() => setKey((current) => current + 1)}>
-                Reset
-              </Button>
-            </DrawerContent>
-          </Drawer>
-        );
-      }
-      await renderWithSalt(<KeyFixture />);
+      const { rerender } = await renderWithSalt(
+        <ResizableDrawer key="first" style={limitsStyle("left")} />,
+      );
       await waitForOpen();
 
       await dragHandleBy("left", 100);
       await expect.poll(() => drawerSize("left")).toBeCloseTo(400, 0);
 
-      await page.getByRole("button", { name: "Reset" }).click();
+      await rerender(
+        <ResizableDrawer key="second" style={limitsStyle("left")} />,
+      );
       await waitForOpen();
 
       await expect.poll(() => drawerSize("left")).toBeCloseTo(300, 0);
-      await expect
-        .poll(() => handle().getAttribute("aria-valuenow"))
-        .toBe("300");
+      await expect.element(separator()).toHaveAttribute("aria-valuenow", "300");
     });
   });
 
   describe("layout changes", () => {
     it("does not carry a width over as a height when the position changes", async () => {
-      function PositionFixture() {
-        const [position, setPosition] = useState<Position>("left");
-        return (
-          <Drawer
-            open
-            resizable
-            position={position}
-            style={{ width: 300, height: 200 }}
-          >
-            <DrawerHeader header="Resizable drawer" />
-            <DrawerContent>
-              <Button onClick={() => setPosition("top")}>Move to top</Button>
-            </DrawerContent>
-          </Drawer>
-        );
-      }
-      await renderWithSalt(<PositionFixture />);
+      const style = { width: 300, height: 200 };
+      const { rerender } = await renderWithSalt(
+        <ResizableDrawer style={style} />,
+      );
       await waitForOpen();
 
       await dragHandleBy("left", 100);
       await expect.poll(() => drawerSize("left")).toBeCloseTo(400, 0);
 
-      await page.getByRole("button", { name: "Move to top" }).click();
+      await rerender(<ResizableDrawer position="top" style={style} />);
 
       await expect.poll(() => drawerSize("top")).toBeCloseTo(200, 0);
     });

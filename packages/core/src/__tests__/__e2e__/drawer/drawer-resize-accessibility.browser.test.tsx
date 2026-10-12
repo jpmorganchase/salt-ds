@@ -1,7 +1,7 @@
 import type { DrawerProps } from "@salt-ds/core";
 import { Drawer, DrawerContent, DrawerHeader } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { runAxeScan } from "~browser-test-utils/accessibility";
 import { mouse } from "~browser-test-utils/pointer";
@@ -9,6 +9,8 @@ import { renderWithSalt } from "~browser-test-utils/render";
 import * as drawerStories from "~stories/drawer/drawer.stories";
 
 const { Resizable } = composeStories(drawerStories);
+
+afterEach(() => page.viewport(1280, 1024));
 
 type Position = NonNullable<DrawerProps["position"]>;
 
@@ -112,7 +114,7 @@ describe("GIVEN a resizable Drawer", () => {
       const { x, y } = handleCenter();
       await mouse.drag({ x, y }, { x: x + 50, y });
 
-      await expect.poll(valueNow).toBeCloseTo(350, 0);
+      await expect.element(separator()).toHaveAttribute("aria-valuenow", "350");
     });
 
     it("updates its value after the edge is placed by a click", async () => {
@@ -122,7 +124,7 @@ describe("GIVEN a resizable Drawer", () => {
       await mouse.click({ x, y });
       await mouse.click({ x: 450, y });
 
-      await expect.poll(valueNow).toBeCloseTo(450, 0);
+      await expect.element(separator()).toHaveAttribute("aria-valuenow", "450");
     });
 
     it("updates its maximum when the viewport resizes", async () => {
@@ -141,14 +143,10 @@ describe("GIVEN a resizable Drawer", () => {
         .element(separator())
         .toHaveAttribute("aria-valuemax", String(window.innerWidth - outside));
 
-      try {
-        await page.viewport(900, 700);
-        await expect
-          .element(separator())
-          .toHaveAttribute("aria-valuemax", String(900 - outside));
-      } finally {
-        await page.viewport(1280, 1024);
-      }
+      await page.viewport(900, 700);
+      await expect
+        .element(separator())
+        .toHaveAttribute("aria-valuemax", String(900 - outside));
     });
 
     it("points at the drawer it controls", async () => {
@@ -196,11 +194,11 @@ describe("GIVEN a resizable Drawer", () => {
       await page
         .getByTestId("scrim")
         .click({ force: true, position: { x: 450, y: 300 } });
-      await expect.poll(valueNow).toBeCloseTo(450, 0);
+      await expect.element(separator()).toHaveAttribute("aria-valuenow", "450");
 
       await expect.element(separator()).toHaveFocus();
       await userEvent.keyboard("{ArrowRight}");
-      await expect.poll(valueNow).toBeCloseTo(458, 0);
+      await expect.element(separator()).toHaveAttribute("aria-valuenow", "458");
     });
 
     it("returns focus to the trigger after a resized drawer closes", async () => {
@@ -241,7 +239,9 @@ describe("GIVEN a resizable Drawer", () => {
         const { x, y } = handleCenter();
         await mouse.down({ x, y });
         await mouse.move({ x: x + 30, y });
-        await expect.poll(valueNow).toBeCloseTo(330, 0);
+        await expect
+          .element(separator())
+          .toHaveAttribute("aria-valuenow", "330");
 
         await runAxeScan(container);
 
