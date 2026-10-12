@@ -20,7 +20,7 @@
 
 /* Styles applied for left and right drawers */
 .saltDrawerResizeGuide-vertical {
-  cursor: ew-resize;
+  cursor: var(--salt-cursor-drag-ew);
 }
 
 .saltDrawerResizeGuide-vertical::before {
@@ -34,7 +34,7 @@
 
 /* Styles applied for top and bottom drawers */
 .saltDrawerResizeGuide-horizontal {
-  cursor: ns-resize;
+  cursor: var(--salt-cursor-drag-ns);
 }
 
 .saltDrawerResizeGuide-horizontal::before {
