@@ -27,7 +27,7 @@
   --salt-text-editorial-letterSpacing: 0;
 
   /* Eyebrow */
-  --salt-text-eyebrow-fontFamily: var(--salt-typography-fontFamily-openSans);
+  --salt-text-eyebrow-fontFamily: var(--salt-typography-fontFamily-amplitude);
   --salt-text-eyebrow-letterSpacing: 0.1em;
   --salt-text-eyebrow-textTransform: uppercase;
   --salt-text-eyebrow-fontStyle: var(--salt-typography-fontStyle-normal);
