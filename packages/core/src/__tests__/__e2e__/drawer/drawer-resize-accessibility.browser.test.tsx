@@ -166,15 +166,19 @@ describe("GIVEN a resizable Drawer", () => {
         </Drawer>,
       );
       await waitForOpen();
+      const outside =
+        separator().element().getBoundingClientRect().right -
+        drawer().getBoundingClientRect().right;
+      expect(outside).toBeGreaterThan(0);
       await expect
         .element(separator())
-        .toHaveAttribute("aria-valuemax", String(window.innerWidth));
+        .toHaveAttribute("aria-valuemax", String(window.innerWidth - outside));
 
       try {
         await page.viewport(900, 700);
         await expect
           .element(separator())
-          .toHaveAttribute("aria-valuemax", "900");
+          .toHaveAttribute("aria-valuemax", String(900 - outside));
       } finally {
         await page.viewport(1280, 1024);
       }

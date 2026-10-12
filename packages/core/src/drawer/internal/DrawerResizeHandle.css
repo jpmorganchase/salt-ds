@@ -1,7 +1,5 @@
 /* Styles applied to root element */
 .saltDrawerResizeHandle {
-  --drawerResizeHandle-size: var(--drawer-resizeHandleSize);
-  --drawerResizeHandle-hitSize: var(--drawer-resizeHandleHitSize);
   --drawerResizeHandle-thumbSize: max(var(--salt-size-icon, 12px), 12px);
   --drawerResizeHandle-thumbImage: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%3E%3Cpath%20d%3D%22M5%2011V9H7V11H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%207L5%205H7L7%207H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%201V3H7V1L5%201Z%22%20%2F%3E%3C%2Fsvg%3E");
   --drawerResizeHandle-background: transparent;
@@ -10,9 +8,7 @@
   --drawerResizeHandle-dot-background: var(--salt-separable-foreground);
   --drawerResizeHandle-dot-background-hover: var(--salt-separable-foreground-hover);
   --drawerResizeHandle-dot-background-active: var(--salt-separable-foreground-active);
-  /* Extends the target outside the drawer to 24px (WCAG 2.5.8) */
-  --drawerResizeHandle-outset: max(0px, 24px - var(--drawerResizeHandle-hitSize));
-  --drawerResizeHandle-targetSize: calc(var(--drawerResizeHandle-hitSize) + var(--drawerResizeHandle-outset));
+  --drawerResizeHandle-targetSize: calc(var(--drawer-resizeHandleHitSize) + var(--drawer-resizeHandleOutset));
 
   position: absolute;
   z-index: 1;
@@ -48,7 +44,7 @@
 .saltDrawerResizeHandle-left {
   top: 0;
   bottom: 0;
-  right: calc(-1 * var(--drawerResizeHandle-outset));
+  right: calc(-1 * var(--drawer-resizeHandleOutset));
   width: var(--drawerResizeHandle-targetSize);
 }
 
@@ -56,15 +52,15 @@
 .saltDrawerResizeHandle-left::after {
   top: 0;
   bottom: 0;
-  right: var(--drawerResizeHandle-outset);
-  width: var(--drawerResizeHandle-size);
+  right: var(--drawer-resizeHandleOutset);
+  width: var(--drawer-resizeHandleSize);
 }
 
 /* Styles applied when the Drawer's position = "right" */
 .saltDrawerResizeHandle-right {
   top: 0;
   bottom: 0;
-  left: calc(-1 * var(--drawerResizeHandle-outset));
+  left: calc(-1 * var(--drawer-resizeHandleOutset));
   width: var(--drawerResizeHandle-targetSize);
 }
 
@@ -72,8 +68,8 @@
 .saltDrawerResizeHandle-right::after {
   top: 0;
   bottom: 0;
-  left: var(--drawerResizeHandle-outset);
-  width: var(--drawerResizeHandle-size);
+  left: var(--drawer-resizeHandleOutset);
+  width: var(--drawer-resizeHandleSize);
 }
 
 /* Styles applied when the Drawer's position = "top" or "bottom" */
@@ -86,7 +82,7 @@
 .saltDrawerResizeHandle-top {
   left: 0;
   right: 0;
-  bottom: calc(-1 * var(--drawerResizeHandle-outset));
+  bottom: calc(-1 * var(--drawer-resizeHandleOutset));
   height: var(--drawerResizeHandle-targetSize);
 }
 
@@ -94,15 +90,15 @@
 .saltDrawerResizeHandle-top::after {
   left: 0;
   right: 0;
-  bottom: var(--drawerResizeHandle-outset);
-  height: var(--drawerResizeHandle-size);
+  bottom: var(--drawer-resizeHandleOutset);
+  height: var(--drawer-resizeHandleSize);
 }
 
 /* Styles applied when the Drawer's position = "bottom" */
 .saltDrawerResizeHandle-bottom {
   left: 0;
   right: 0;
-  top: calc(-1 * var(--drawerResizeHandle-outset));
+  top: calc(-1 * var(--drawer-resizeHandleOutset));
   height: var(--drawerResizeHandle-targetSize);
 }
 
@@ -110,8 +106,8 @@
 .saltDrawerResizeHandle-bottom::after {
   left: 0;
   right: 0;
-  top: var(--drawerResizeHandle-outset);
-  height: var(--drawerResizeHandle-size);
+  top: var(--drawer-resizeHandleOutset);
+  height: var(--drawer-resizeHandleSize);
 }
 
 /* Styles applied on hover */

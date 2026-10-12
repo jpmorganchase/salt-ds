@@ -500,6 +500,53 @@ describe("GIVEN a resizable Drawer", () => {
         .poll(() => drawerSize("top"))
         .toBeCloseTo(window.innerHeight * 0.5, 0);
     });
+
+    const handleOuterEdge = (position: Position) => {
+      const rect = handle().getBoundingClientRect();
+      switch (position) {
+        case "left":
+          return window.innerWidth - rect.right;
+        case "right":
+          return rect.left;
+        case "top":
+          return window.innerHeight - rect.bottom;
+        default:
+          return rect.top;
+      }
+    };
+
+    for (const position of POSITIONS) {
+      it(`keeps the handle's whole target on screen at its maximum size, position=${position}`, async () => {
+        await renderWithSalt(
+          <Drawer
+            open
+            resizable
+            position={position}
+            style={isHorizontal(position) ? { width: 300 } : { height: 300 }}
+          >
+            <DrawerHeader header="Resizable drawer" />
+            <DrawerContent>Content</DrawerContent>
+          </Drawer>,
+        );
+        await waitForOpen();
+
+        await pressOnHandle("{End}");
+
+        await expect.poll(() => handleOuterEdge(position)).toBeCloseTo(0, 0);
+      });
+    }
+
+    it("keeps the handle's whole target on screen when its style fills the viewport", async () => {
+      await renderWithSalt(
+        <Drawer open resizable style={{ width: "100vw" }}>
+          <DrawerHeader header="Resizable drawer" />
+          <DrawerContent>Content</DrawerContent>
+        </Drawer>,
+      );
+      await waitForOpen();
+
+      expect(handleOuterEdge("left")).toBeCloseTo(0, 0);
+    });
   });
 
   describe("click to place", () => {
