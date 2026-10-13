@@ -9,6 +9,7 @@ import {
   StatusIndicator,
   Text,
   Tooltip,
+  useId,
 } from "@salt-ds/core";
 import {
   ChevronDownIcon,
@@ -165,6 +166,7 @@ function List({
 }: ListProps) {
   const [sort, setSort] = useState<SortType>(null);
   const sortedOptions = sortData(options, sort);
+  const titleId = useId();
 
   const handleMoveUp = () => {
     onReorder?.("up");
@@ -185,7 +187,7 @@ function List({
         <SplitLayout
           align="center"
           startItem={
-            <Text color="secondary" styleAs="label">
+            <Text id={titleId} color="secondary" styleAs="label">
               <strong>
                 {title} ({total})
               </strong>
@@ -249,9 +251,11 @@ function List({
                 ? "hidden"
                 : undefined,
           }}
-          aria-label="Filter"
+          inputProps={{
+            "aria-label": title ? `Filter ${title.toLowerCase()}` : "Filter",
+          }}
           value={filter}
-          startAdornment={<FilterIcon />}
+          startAdornment={<FilterIcon aria-hidden />}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
             onFilter?.(event.target.value)
           }
@@ -270,6 +274,7 @@ function List({
       </StackLayout>
       {sortedOptions.length > 0 ? (
         <ListBox
+          aria-labelledby={titleId}
           multiselect={multiselect}
           onSelectionChange={(_, newSelected) => {
             onSelection?.(newSelected);

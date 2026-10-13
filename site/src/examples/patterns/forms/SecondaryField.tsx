@@ -51,7 +51,7 @@ export const SecondaryField = () => {
             variant="secondary"
             bordered
             endAdornment={
-              <Label variant={!isError ? "secondary" : "primary"}>
+              <Label color={!isError ? "secondary" : "primary"}>
                 {!isError && `${value.length}/${MAX_CHARS}`}
                 {isError && <strong>{`${value.length}/${MAX_CHARS}`}</strong>}
               </Label>
