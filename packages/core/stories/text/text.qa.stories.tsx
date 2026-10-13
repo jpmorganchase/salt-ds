@@ -104,17 +104,20 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
       <LighterText>lighter</LighterText> text
     </H4>
     <Eyebrow>
-      Eyebrow <strong>strong</strong> and <small>small</small> text
+      Eyebrow <strong>strong</strong>, <b>b</b> and{" "}
+      <LighterText>lighter</LighterText> text
     </Eyebrow>
     <Text styleAs="bodyLarge">
-      Body large <strong>strong</strong> and <small>small</small> text
+      Body large <strong>strong</strong>, <b>b</b> and{" "}
+      <LighterText>lighter</LighterText> text
     </Text>
     <Label>
       Label <strong>strong</strong>, <b>b</b> and{" "}
       <LighterText>lighter</LighterText> text
     </Label>
     <Label styleAs="labelLarge">
-      Label large <strong>strong</strong> and <small>small</small> text
+      Label large <strong>strong</strong>, <b>b</b> and{" "}
+      <LighterText>lighter</LighterText> text
     </Label>
     <TextNotation>
       Notation <strong>strong</strong>, <b>b</b> and{" "}
@@ -138,7 +141,7 @@ AllVariantsGrid.parameters = {
 };
 
 export const FontWeightGrid: StoryFn<QAContainerProps> = (props) => (
-  <QAContainer height={1500} width={1000} cols={1} {...props}>
+  <QAContainer height={1700} width={1000} cols={1} {...props}>
     <Text fontWeight="lighter">Body lighter text</Text>
     <Text fontWeight="bolder">
       Body bolder text with <b>b</b>
@@ -179,6 +182,22 @@ export const FontWeightGrid: StoryFn<QAContainerProps> = (props) => (
     <Label fontWeight="bolder">
       Label bolder text with <b>b</b>
     </Label>
+    <Label styleAs="labelLarge" fontWeight="lighter">
+      Label large lighter text
+    </Label>
+    <Label styleAs="labelLarge" fontWeight="bolder">
+      Label large bolder text with <b>b</b>
+    </Label>
+    <Text styleAs="bodyLarge" fontWeight="lighter">
+      Body large lighter text
+    </Text>
+    <Text styleAs="bodyLarge" fontWeight="bolder">
+      Body large bolder text with <b>b</b>
+    </Text>
+    <Eyebrow fontWeight="lighter">Eyebrow lighter text</Eyebrow>
+    <Eyebrow fontWeight="bolder">
+      Eyebrow bolder text with <b>b</b>
+    </Eyebrow>
     <TextNotation fontWeight="lighter">Notation lighter text</TextNotation>
     <TextNotation fontWeight="bolder">
       Notation bolder text with <b>b</b>
@@ -262,16 +281,20 @@ FontWeightGrid.parameters = {
 export const EditorialVariantsGrid: StoryFn<QAContainerProps> = (props) => (
   <QAContainer height={3200} width={2000} cols={1} vertical {...props}>
     <Editorial1>
-      Editorial 1 <strong>strong</strong> <small>small</small>
+      Editorial 1 <strong>strong</strong> <b>b</b>{" "}
+      <LighterText>lighter</LighterText>
     </Editorial1>
     <Editorial2>
-      Editorial 2 <strong>strong</strong> <small>small</small>
+      Editorial 2 <strong>strong</strong> <b>b</b>{" "}
+      <LighterText>lighter</LighterText>
     </Editorial2>
     <Editorial3>
-      Editorial 3 <strong>strong</strong> <small>small</small>
+      Editorial 3 <strong>strong</strong> <b>b</b>{" "}
+      <LighterText>lighter</LighterText>
     </Editorial3>
     <Editorial4>
-      Editorial 4 <strong>strong</strong> <small>small</small>
+      Editorial 4 <strong>strong</strong> <b>b</b>{" "}
+      <LighterText>lighter</LighterText>
     </Editorial4>
   </QAContainer>
 );

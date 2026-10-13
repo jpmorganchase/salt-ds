@@ -151,18 +151,8 @@ code.saltText,
   letter-spacing: var(--salt-text-editorial-letterSpacing);
   line-height: var(--salt-text-editorial1-lineHeight);
   text-transform: var(--salt-text-editorial-textTransform, none);
-}
-
-/* Editorial 1 emphasis strong */
-.saltText-editorial1.saltText strong {
-  font-size: inherit;
-  font-weight: var(--salt-text-editorial-fontWeight-strong);
-}
-
-/* Editorial 1 emphasis small */
-.saltText-editorial1.saltText small {
-  font-size: inherit;
-  font-weight: var(--salt-text-editorial-fontWeight-small);
+  --text-fontWeight-bolder: var(--salt-text-editorial-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-editorial-fontWeight-lighter);
 }
 
 /* Editorial 2 */
@@ -174,18 +164,8 @@ code.saltText,
   letter-spacing: var(--salt-text-editorial-letterSpacing);
   line-height: var(--salt-text-editorial2-lineHeight);
   text-transform: var(--salt-text-editorial-textTransform, none);
-}
-
-/* Editorial 2 emphasis strong */
-.saltText-editorial2.saltText strong {
-  font-size: inherit;
-  font-weight: var(--salt-text-editorial-fontWeight-strong);
-}
-
-/* Editorial 2 emphasis small */
-.saltText-editorial2.saltText small {
-  font-size: inherit;
-  font-weight: var(--salt-text-editorial-fontWeight-small);
+  --text-fontWeight-bolder: var(--salt-text-editorial-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-editorial-fontWeight-lighter);
 }
 
 /* Editorial 3 */
@@ -197,18 +177,8 @@ code.saltText,
   letter-spacing: var(--salt-text-editorial-letterSpacing);
   line-height: var(--salt-text-editorial3-lineHeight);
   text-transform: var(--salt-text-editorial-textTransform, none);
-}
-
-/* Editorial 3 emphasis strong */
-.saltText-editorial3.saltText strong {
-  font-size: inherit;
-  font-weight: var(--salt-text-editorial-fontWeight-strong);
-}
-
-/* Editorial 3 emphasis small */
-.saltText-editorial3.saltText small {
-  font-size: inherit;
-  font-weight: var(--salt-text-editorial-fontWeight-small);
+  --text-fontWeight-bolder: var(--salt-text-editorial-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-editorial-fontWeight-lighter);
 }
 
 /* Editorial 4 */
@@ -220,18 +190,8 @@ code.saltText,
   letter-spacing: var(--salt-text-editorial-letterSpacing);
   line-height: var(--salt-text-editorial4-lineHeight);
   text-transform: var(--salt-text-editorial-textTransform, none);
-}
-
-/* Editorial 4 emphasis strong */
-.saltText-editorial4.saltText strong {
-  font-size: inherit;
-  font-weight: var(--salt-text-editorial-fontWeight-strong);
-}
-
-/* Editorial 4 emphasis small */
-.saltText-editorial4.saltText small {
-  font-size: inherit;
-  font-weight: var(--salt-text-editorial-fontWeight-small);
+  --text-fontWeight-bolder: var(--salt-text-editorial-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-editorial-fontWeight-lighter);
 }
 
 /* Heading 1 */
@@ -289,6 +249,39 @@ label.saltText,
   --text-fontWeight-lighter: var(--salt-text-label-fontWeight-lighter);
 }
 
+/* Label large */
+.saltText-labelLarge.saltText {
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-label-large-fontSize);
+  line-height: var(--salt-text-label-large-lineHeight);
+  font-weight: var(--salt-text-label-fontWeight);
+  --text-fontWeight-bolder: var(--salt-text-label-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-label-fontWeight-lighter);
+}
+
+/* Body large */
+.saltText-bodyLarge.saltText {
+  font-family: var(--salt-text-fontFamily);
+  font-size: var(--salt-text-large-fontSize);
+  line-height: var(--salt-text-large-lineHeight);
+  font-weight: var(--salt-text-fontWeight);
+  --text-fontWeight-bolder: var(--salt-text-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-fontWeight-lighter);
+}
+
+/* Eyebrow */
+.saltText-eyebrow.saltText {
+  font-family: var(--salt-text-eyebrow-fontFamily);
+  font-size: var(--salt-text-eyebrow-fontSize);
+  font-style: var(--salt-text-eyebrow-fontStyle, normal);
+  font-weight: var(--salt-text-eyebrow-fontWeight);
+  letter-spacing: var(--salt-text-eyebrow-letterSpacing);
+  line-height: var(--salt-text-eyebrow-lineHeight);
+  text-transform: var(--salt-text-eyebrow-textTransform, none);
+  --text-fontWeight-bolder: var(--salt-text-eyebrow-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-eyebrow-fontWeight-lighter);
+}
+
 /* Inherit the parent's text style, including its bolder and lighter weights */
 .saltText-inheritStyle.saltText {
   font-family: inherit;
@@ -319,64 +312,4 @@ label.saltText,
 
 .saltText.saltText-lighter {
   font-weight: var(--text-fontWeight-lighter, var(--salt-text-fontWeight-lighter));
-}
-
-/* Label large */
-.saltText-labelLarge.saltText {
-  font-family: var(--salt-text-fontFamily);
-  font-size: var(--salt-text-label-large-fontSize);
-  line-height: var(--salt-text-label-large-lineHeight);
-  font-weight: var(--salt-text-label-fontWeight);
-}
-
-/* Label large emphasis strong */
-.saltText-labelLarge.saltText strong {
-  font-weight: var(--salt-text-label-fontWeight-strong);
-}
-
-/* Label large emphasis small */
-.saltText-labelLarge.saltText small {
-  font-size: inherit;
-  font-weight: var(--salt-text-label-fontWeight-small);
-}
-
-/* Body large */
-.saltText-bodyLarge.saltText {
-  font-family: var(--salt-text-fontFamily);
-  font-size: var(--salt-text-large-fontSize);
-  line-height: var(--salt-text-large-lineHeight);
-  font-weight: var(--salt-text-fontWeight);
-}
-
-/* Body large emphasis strong */
-.saltText-bodyLarge.saltText strong {
-  font-weight: var(--salt-text-fontWeight-strong);
-}
-
-/* Body large emphasis small */
-.saltText-bodyLarge.saltText small {
-  font-size: inherit;
-  font-weight: var(--salt-text-fontWeight-small);
-}
-
-/* Eyebrow */
-.saltText-eyebrow.saltText {
-  font-family: var(--salt-text-eyebrow-fontFamily);
-  font-size: var(--salt-text-eyebrow-fontSize);
-  font-style: var(--salt-text-eyebrow-fontStyle, normal);
-  font-weight: var(--salt-text-eyebrow-fontWeight);
-  letter-spacing: var(--salt-text-eyebrow-letterSpacing);
-  line-height: var(--salt-text-eyebrow-lineHeight);
-  text-transform: var(--salt-text-eyebrow-textTransform, none);
-}
-
-/* Eyebrow emphasis strong */
-.saltText-eyebrow.saltText strong {
-  font-weight: var(--salt-text-eyebrow-fontWeight-strong);
-}
-
-/* Eyebrow emphasis small */
-.saltText-eyebrow.saltText small {
-  font-size: inherit;
-  font-weight: var(--salt-text-eyebrow-fontWeight-small);
 }

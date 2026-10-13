@@ -46,8 +46,6 @@
   --salt-text-display-fontWeight: var(--salt-typography-fontWeight-light);
   --salt-text-display-fontWeight-lighter: var(--salt-typography-fontWeight-light);
   --salt-text-display-fontWeight-bolder: var(--salt-typography-fontWeight-light);
-  --salt-text-display-fontWeight-small: var(--salt-typography-fontWeight-light);
-  --salt-text-display-fontWeight-strong: var(--salt-typography-fontWeight-light);
 
   /* Editorial */
   --salt-text-editorial-fontFamily: var(--salt-typography-fontFamily-roboto);
@@ -55,8 +53,8 @@
   --salt-text-editorial-textTransform: uppercase;
   --salt-text-editorial-fontStyle: var(--salt-typography-fontStyle-italic);
   --salt-text-editorial-fontWeight: var(--salt-typography-fontWeight-light);
-  --salt-text-editorial-fontWeight-small: var(--salt-typography-fontWeight-light);
-  --salt-text-editorial-fontWeight-strong: var(--salt-typography-fontWeight-light);
+  --salt-text-editorial-fontWeight-lighter: var(--salt-typography-fontWeight-light);
+  --salt-text-editorial-fontWeight-bolder: var(--salt-typography-fontWeight-light);
 
   /* Eyebrow */
   --salt-text-eyebrow-fontFamily: var(--salt-typography-fontFamily-roboto);
@@ -64,8 +62,8 @@
   --salt-text-eyebrow-textTransform: uppercase;
   --salt-text-eyebrow-fontStyle: var(--salt-typography-fontStyle-normal);
   --salt-text-eyebrow-fontWeight: var(--salt-typography-fontWeight-semiBold);
-  --salt-text-eyebrow-fontWeight-small: var(--salt-typography-fontWeight-regular);
-  --salt-text-eyebrow-fontWeight-strong: var(--salt-typography-fontWeight-semiBold);
+  --salt-text-eyebrow-fontWeight-lighter: var(--salt-typography-fontWeight-semiBold);
+  --salt-text-eyebrow-fontWeight-bolder: var(--salt-typography-fontWeight-semiBold);
 }
 
 /* Sizes by density */

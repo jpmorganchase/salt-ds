@@ -7,6 +7,7 @@ Added editorial, eyebrow, body large and label large typography styles to `Text`
 - Added `Editorial1`, `Editorial2`, `Editorial3` and `Editorial4` components, and the matching `editorial1` to `editorial4` `styleAs` values.
 - Added the `Eyebrow` component and the `eyebrow` `styleAs` value.
 - Added the `bodyLarge` and `labelLarge` `styleAs` values.
+- The new styles support the `fontWeight` prop and nested `<strong>` and `<b>` elements, using their own lighter and bolder weights. Eyebrow text keeps its default weight.
 
 ```tsx
 <Eyebrow>Market insights</Eyebrow>

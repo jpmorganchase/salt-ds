@@ -260,7 +260,7 @@ describe("GIVEN styleAs=action", () => {
 
 const emphasisContent = (label: string) => (
   <>
-    {label} <strong>strong</strong> <small>small</small>
+    {label} <strong>strong</strong> <b>b</b>
   </>
 );
 
@@ -276,7 +276,7 @@ const fontTokenCases = [
     baselineTokens: {
       "--salt-text-display-fontFamily": "Courier",
       "--salt-text-display-fontWeight": "100",
-      "--salt-text-display-fontWeight-strong": "100",
+      "--salt-text-display-fontWeight-bolder": "100",
       "--salt-text-display-fontStyle": "normal",
       "--salt-text-display-textTransform": "lowercase",
     },
@@ -290,7 +290,7 @@ const fontTokenCases = [
     baselineTokens: {
       "--salt-text-fontFamily": "Courier",
       "--salt-text-fontWeight": "100",
-      "--salt-text-fontWeight-strong": "100",
+      "--salt-text-fontWeight-bolder": "100",
     },
   },
 ] as const;
@@ -305,7 +305,7 @@ it.each(fontTokenCases)(
             ...baselineTokens,
             [`--salt-text-${name}-fontFamily`]: "Lato",
             [`--salt-text-${name}-fontWeight`]: "900",
-            [`--salt-text-${name}-fontWeight-strong`]: "800",
+            [`--salt-text-${name}-fontWeight-bolder`]: "800",
             [`--salt-text-${name}-fontStyle`]: "italic",
             [`--salt-text-${name}-textTransform`]: "uppercase",
           } as CSSProperties
@@ -322,10 +322,12 @@ it.each(fontTokenCases)(
     expect(style.fontWeight).toBe("900");
     expect(style.fontStyle).toBe("italic");
     expect(style.textTransform).toBe("uppercase");
-    expect(
-      getComputedStyle(subjectElement.querySelector("strong") as HTMLElement)
-        .fontWeight,
-    ).toBe("800");
+    for (const tag of ["strong", "b"]) {
+      expect(
+        getComputedStyle(subjectElement.querySelector(tag) as HTMLElement)
+          .fontWeight,
+      ).toBe("800");
+    }
   },
 );
 

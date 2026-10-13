@@ -5,9 +5,9 @@
 Added editorial, eyebrow, body large and label large typography tokens to all themes.
 
 - Editorial 1–4: `--salt-text-editorial1-fontSize` to `--salt-text-editorial4-fontSize`, `--salt-text-editorial1-lineHeight` to `--salt-text-editorial4-lineHeight` and `--salt-text-editorial-letterSpacing`.
-- Editorial font: `--salt-text-editorial-fontFamily`, `--salt-text-editorial-fontWeight`, `--salt-text-editorial-fontWeight-small`, `--salt-text-editorial-fontWeight-strong`, `--salt-text-editorial-fontStyle` and `--salt-text-editorial-textTransform`. These match the display values in each theme.
+- Editorial font: `--salt-text-editorial-fontFamily`, `--salt-text-editorial-fontWeight`, `--salt-text-editorial-fontWeight-lighter`, `--salt-text-editorial-fontWeight-bolder`, `--salt-text-editorial-fontStyle` and `--salt-text-editorial-textTransform`. These match the display values in each theme.
 - Eyebrow: `--salt-text-eyebrow-fontSize`, `--salt-text-eyebrow-lineHeight` and `--salt-text-eyebrow-letterSpacing`.
-- Eyebrow font: `--salt-text-eyebrow-fontFamily`, `--salt-text-eyebrow-fontWeight`, `--salt-text-eyebrow-fontWeight-small`, `--salt-text-eyebrow-fontWeight-strong`, `--salt-text-eyebrow-fontStyle` and `--salt-text-eyebrow-textTransform`. These match the body text values in each theme.
+- Eyebrow font: `--salt-text-eyebrow-fontFamily`, `--salt-text-eyebrow-fontWeight`, `--salt-text-eyebrow-fontWeight-lighter`, `--salt-text-eyebrow-fontWeight-bolder`, `--salt-text-eyebrow-fontStyle` and `--salt-text-eyebrow-textTransform`. The eyebrow lighter and bolder weights match its default weight, so eyebrow text doesn't change weight.
 - Body large: `--salt-text-large-fontSize` and `--salt-text-large-lineHeight`.
 - Label large: `--salt-text-label-large-fontSize` and `--salt-text-label-large-lineHeight`.
 

@@ -253,12 +253,13 @@ export const LabelLarge: StoryFn<typeof Text> = () => {
         seed so.
       </LabelText>
       <LabelText styleAs="labelLarge">
-        Label large text
-        <strong> emphasis high</strong>
+        Label large text <b>emphasis high</b>
       </LabelText>
       <LabelText styleAs="labelLarge">
-        Label large text
-        <small> emphasis low</small>
+        Label large text{" "}
+        <Text as="span" styleAs="inherit" fontWeight="lighter">
+          emphasis low
+        </Text>
       </LabelText>
     </StackLayout>
   );
@@ -274,12 +275,13 @@ export const BodyLarge: StoryFn<typeof Text> = () => {
         so.
       </Text>
       <Text styleAs="bodyLarge">
-        Body large text
-        <strong> emphasis high</strong>
+        Body large text <b>emphasis high</b>
       </Text>
       <Text styleAs="bodyLarge">
-        Body large text
-        <small> emphasis low</small>
+        Body large text{" "}
+        <Text as="span" styleAs="inherit" fontWeight="lighter">
+          emphasis low
+        </Text>
       </Text>
     </StackLayout>
   );
