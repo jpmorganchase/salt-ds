@@ -5,21 +5,25 @@ import {
   DrawerFooter,
   DrawerHeader,
   type DrawerProps,
+  type FloatingComponentProps,
+  FloatingComponentProvider,
   StackLayout,
   Text,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
+import "./drawer.qa.stories.css";
 import {
-  type CSSProperties,
+  forwardRef,
   type ReactNode,
+  type Ref,
   useEffect,
   useLayoutEffect,
   useRef,
   useState,
 } from "react";
-import { waitFor } from "storybook/test";
+import { userEvent, waitFor, within } from "storybook/test";
 
 export default {
   title: "Core/Drawer/Drawer QA",
@@ -204,176 +208,200 @@ DrawerOverflow.parameters = {
   chromatic: { disableSnapshot: false },
 };
 
-const ResizableDrawerTemplate = ({
+// Renders the drawer in place instead of portalling it to the body.
+const InlineFloatingComponent = forwardRef<
+  HTMLDivElement,
+  FloatingComponentProps
+>(function InlineFloatingComponent(props, ref) {
+  const { open, focusManagerProps, width, height, ...rest } = props;
+  return open ? <div ref={ref} {...rest} /> : null;
+});
+
+const resizableDrawerStyle = (position: DrawerProps["position"]) =>
+  position === "left" || position === "right"
+    ? { width: 300 }
+    : { height: 220 };
+
+const ResizableDrawerFrame = ({
   position,
-  style,
-  scrollTo,
-}: Pick<DrawerProps, "position" | "style"> & {
-  scrollTo?: "middle" | "bottom";
-}) => {
-  const [drawer, setDrawer] = useState<HTMLDivElement | null>(null);
-  const horizontal = position === "left" || position === "right";
-
-  useEffect(() => {
-    const scroller = drawer?.querySelector<HTMLElement>(".saltDrawer-inner");
-    if (!scroller || !scrollTo) return;
-    const frame = requestAnimationFrame(() => {
-      const max = scroller.scrollHeight - scroller.clientHeight;
-      scroller.scrollTop = scrollTo === "bottom" ? max : Math.round(max / 2);
-    });
-    return () => cancelAnimationFrame(frame);
-  }, [drawer, scrollTo]);
-
-  return (
+  drawerRef,
+  className,
+  children,
+}: Pick<DrawerProps, "position" | "children" | "className"> & {
+  drawerRef?: Ref<HTMLDivElement>;
+}) => (
+  // `contain: layout` positions the fixed drawer within this frame instead of the viewport.
+  <div
+    className={className}
+    style={{ width: 440, height: 340, contain: "layout" }}
+  >
     <Drawer
+      className="noAnimation"
       open
       resizable
+      disableScrim
       position={position}
-      initialFocus={-1}
-      ref={setDrawer}
-      style={{ ...(horizontal ? { width: 350 } : { height: 280 }), ...style }}
+      ref={drawerRef}
+      style={resizableDrawerStyle(position)}
     >
-      <DrawerHeader
-        header="Resizable drawer"
-        description="Pending transaction review"
-        actions={<CloseButton />}
-      />
-      <DrawerContent>
-        <Text>{loremText}</Text>
-        <Text>{loremText}</Text>
-      </DrawerContent>
-      <DrawerFooter>
-        <Button sentiment="accented" appearance="bordered">
-          Cancel
-        </Button>
-        <Button sentiment="accented">Save</Button>
-      </DrawerFooter>
+      {children}
     </Drawer>
+  </div>
+);
+
+const ResizableDrawerSections = () => (
+  <>
+    <DrawerHeader header="Title" actions={<CloseButton />} />
+    <DrawerContent>
+      <Text>{loremText}</Text>
+      <Text>{loremText}</Text>
+      <Text>{loremText}</Text>
+    </DrawerContent>
+    <DrawerFooter>
+      <Button sentiment="accented">Save</Button>
+    </DrawerFooter>
+  </>
+);
+
+const ResizableDrawerTemplate = ({
+  position,
+}: Pick<DrawerProps, "position">) => (
+  <ResizableDrawerFrame position={position}>
+    <ResizableDrawerSections />
+  </ResizableDrawerFrame>
+);
+
+export const DrawerResizable: StoryFn<QAContainerProps> = (props) => {
+  const { ...rest } = props;
+
+  return (
+    <FloatingComponentProvider Component={InlineFloatingComponent}>
+      <QAContainer
+        cols={2}
+        height="auto"
+        itemPadding={20}
+        itemWidthAuto
+        width={2000}
+        {...rest}
+      >
+        <ResizableDrawerTemplate position="left" />
+        <ResizableDrawerTemplate position="right" />
+        <ResizableDrawerTemplate position="top" />
+        <ResizableDrawerTemplate position="bottom" />
+      </QAContainer>
+    </FloatingComponentProvider>
+  );
+};
+DrawerResizable.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+const ScrolledResizableDrawerTemplate = ({
+  position,
+}: Pick<DrawerProps, "position">) => {
+  const [drawer, setDrawer] = useState<HTMLDivElement | null>(null);
+
+  // Scrolls the block under the handle. Must run after the drawer measures its size limits, which resets the scroll.
+  useEffect(() => {
+    const scroller = drawer?.querySelector<HTMLElement>(".saltDrawer-inner");
+    if (!scroller) return;
+    const max = scroller.scrollHeight - scroller.clientHeight;
+    scroller.scrollTop = Math.round(max / 2);
+  }, [drawer]);
+
+  return (
+    <ResizableDrawerFrame
+      position={position}
+      drawerRef={setDrawer}
+      className="hitArea"
+    >
+      <div
+        style={{
+          height: 600,
+          flexShrink: 0,
+          background: "var(--salt-sentiment-accent-background)",
+        }}
+      />
+    </ResizableDrawerFrame>
   );
 };
 
-export const ResizableDefault: StoryFn = () => <ResizableDrawerTemplate />;
-ResizableDefault.parameters = {
-  chromatic: { disableSnapshot: false },
-};
+export const DrawerResizableHitArea: StoryFn<QAContainerProps> = (props) => {
+  const { ...rest } = props;
 
-export const ResizableLeft: StoryFn = () => (
-  <ResizableDrawerTemplate
-    position="left"
-    style={{ "--saltDrawer-maxHeight": "160px" } as CSSProperties}
-  />
-);
-ResizableLeft.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const ResizableRight: StoryFn = () => (
-  <ResizableDrawerTemplate position="right" />
-);
-ResizableRight.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const ResizableTop: StoryFn = () => (
-  <ResizableDrawerTemplate position="top" style={{ height: 160 }} />
-);
-ResizableTop.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-export const ResizableBottom: StoryFn = () => (
-  <ResizableDrawerTemplate
-    position="bottom"
-    style={{ height: 160 }}
-    scrollTo="bottom"
-  />
-);
-ResizableBottom.parameters = {
-  chromatic: { disableSnapshot: false },
-};
-
-const dispatchPointer = (
-  target: EventTarget,
-  type: "pointerdown" | "pointermove" | "pointerup",
-  clientX: number,
-  clientY: number,
-) =>
-  target.dispatchEvent(
-    new PointerEvent(type, {
-      bubbles: true,
-      cancelable: true,
-      composed: true,
-      button: 0,
-      buttons: type === "pointerdown" ? 1 : 0,
-      clientX,
-      clientY,
-      isPrimary: true,
-      pointerId: 1,
-      pointerType: "mouse",
-    }),
+  return (
+    <FloatingComponentProvider Component={InlineFloatingComponent}>
+      <QAContainer
+        cols={2}
+        height="auto"
+        itemPadding={20}
+        itemWidthAuto
+        width={2000}
+        {...rest}
+      >
+        <ScrolledResizableDrawerTemplate position="left" />
+        <ScrolledResizableDrawerTemplate position="top" />
+        <ScrolledResizableDrawerTemplate position="bottom" />
+      </QAContainer>
+    </FloatingComponentProvider>
   );
+};
+DrawerResizableHitArea.parameters = {
+  chromatic: { disableSnapshot: false },
+};
 
-/** Clicks the resize handle, then hovers so the guide line previews the edge at the given size. */
-const playPlacing =
-  (position: "left" | "top", guideSize: number) =>
+const ResizableDrawerGuideTemplate = ({
+  position,
+}: Pick<DrawerProps, "position">) => (
+  <Drawer
+    className="noAnimation"
+    open
+    resizable
+    position={position}
+    style={resizableDrawerStyle(position)}
+  >
+    <ResizableDrawerSections />
+  </Drawer>
+);
+
+// The drawer covers the viewport, so dark mode needs its own Chromatic modes.
+const guideChromaticParameters = {
+  disableSnapshot: false,
+  modes: {
+    "legacy dark": { theme: "legacy", mode: "dark" },
+    "brand dark": { theme: "brand", mode: "dark" },
+  },
+};
+
+// Clicks the handle to start placing the edge, then moves the guide line to the given point.
+const playGuide =
+  (coords: { clientX: number; clientY: number }) =>
   async ({ canvasElement }: { canvasElement: HTMLElement }) => {
     const ownerDocument = canvasElement.ownerDocument;
-    const getGuide = () => {
-      const guide = ownerDocument.querySelector<HTMLElement>(
-        ".saltDrawerResizeGuide",
-      );
-      if (!guide) throw new Error("The guide line isn't showing");
-      return guide;
-    };
-    const guideOffset = () =>
-      Number.parseFloat(
-        getGuide().style.getPropertyValue("--drawerResizeGuide-offset"),
-      );
-
-    const drawer = await waitFor(() => {
-      const element =
-        ownerDocument.querySelector<HTMLElement>('[role="dialog"]');
-      if (!element || element.getAnimations().length > 0) {
-        throw new Error("The drawer is still opening");
-      }
+    const handle = await within(ownerDocument.body).findByRole("separator", {
+      name: "Resize drawer",
+    });
+    await userEvent.click(handle);
+    const guide = await waitFor(() => {
+      const element = ownerDocument.querySelector(".saltDrawerResizeGuide");
+      if (!element) throw new Error("The guide line isn't showing");
       return element;
     });
-    const handle = drawer.querySelector<HTMLElement>('[role="separator"]');
-    if (!handle) throw new Error("The drawer has no resize handle");
-
-    const handleRect = handle.getBoundingClientRect();
-    const x = handleRect.left + handleRect.width / 2;
-    const y = handleRect.top + handleRect.height / 2;
-    dispatchPointer(handle, "pointerdown", x, y);
-    dispatchPointer(handle, "pointerup", x, y);
-    await waitFor(guideOffset);
-
-    const drawerRect = drawer.getBoundingClientRect();
-    const target =
-      position === "left"
-        ? { x: drawerRect.left + guideSize, y }
-        : { x, y: drawerRect.top + guideSize };
-    dispatchPointer(getGuide(), "pointermove", target.x, target.y);
-    await waitFor(() => {
-      const expected = position === "left" ? target.x : target.y;
-      if (Math.abs(guideOffset() - expected) > 1) {
-        throw new Error("The guide line hasn't moved");
-      }
-    });
+    await userEvent.pointer({ target: guide, coords });
   };
 
-export const ResizablePlacingLeft: StoryFn = () => (
-  <ResizableDrawerTemplate position="left" />
+export const DrawerResizableGuideLeft: StoryFn = () => (
+  <ResizableDrawerGuideTemplate position="left" />
 );
-ResizablePlacingLeft.parameters = {
-  chromatic: { disableSnapshot: false },
+DrawerResizableGuideLeft.parameters = {
+  chromatic: guideChromaticParameters,
 };
-ResizablePlacingLeft.play = playPlacing("left", 500);
+DrawerResizableGuideLeft.play = playGuide({ clientX: 500, clientY: 300 });
 
-export const ResizablePlacingTop: StoryFn = () => (
-  <ResizableDrawerTemplate position="top" />
+export const DrawerResizableGuideTop: StoryFn = () => (
+  <ResizableDrawerGuideTemplate position="top" />
 );
-ResizablePlacingTop.parameters = {
-  chromatic: { disableSnapshot: false },
+DrawerResizableGuideTop.parameters = {
+  chromatic: guideChromaticParameters,
 };
-ResizablePlacingTop.play = playPlacing("top", 420);
+DrawerResizableGuideTop.play = playGuide({ clientX: 500, clientY: 400 });
