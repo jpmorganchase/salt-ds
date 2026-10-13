@@ -182,7 +182,7 @@ export function ThemeSettingsOverlay<T extends string>({
                 color="secondary"
                 fontWeight="bolder"
               >
-                Themes
+                Theme
               </Text>
               <Dropdown<T>
                 bordered
