@@ -36,10 +36,10 @@ export const Styles = (): ReactElement => (
     <H3>H3</H3>
     <H4>H4</H4>
     <Eyebrow>Eyebrow</Eyebrow>
-    <Text styleAs="bodyLarge">Body large</Text>
-    <Text>Text</Text>
-    <Label styleAs="labelLarge">Label large</Label>
-    <Label>Label</Label>
+    <Text styleAs="body2">Body 2</Text>
+    <Text>Body 1</Text>
+    <Label styleAs="label2">Label 2</Label>
+    <Label>Label 1</Label>
     <Code>Code</Code>
     <TextNotation>Notation</TextNotation>
     <TextAction>Action</TextAction>

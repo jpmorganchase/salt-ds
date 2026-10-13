@@ -107,16 +107,16 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
       Eyebrow <strong>strong</strong>, <b>b</b> and{" "}
       <LighterText>lighter</LighterText> text
     </Eyebrow>
-    <Text styleAs="bodyLarge">
-      Body large <strong>strong</strong>, <b>b</b> and{" "}
+    <Text styleAs="body2">
+      Body 2 <strong>strong</strong>, <b>b</b> and{" "}
       <LighterText>lighter</LighterText> text
     </Text>
     <Label>
       Label <strong>strong</strong>, <b>b</b> and{" "}
       <LighterText>lighter</LighterText> text
     </Label>
-    <Label styleAs="labelLarge">
-      Label large <strong>strong</strong>, <b>b</b> and{" "}
+    <Label styleAs="label2">
+      Label 2 <strong>strong</strong>, <b>b</b> and{" "}
       <LighterText>lighter</LighterText> text
     </Label>
     <TextNotation>
@@ -182,17 +182,17 @@ export const FontWeightGrid: StoryFn<QAContainerProps> = (props) => (
     <Label fontWeight="bolder">
       Label bolder text with <b>b</b>
     </Label>
-    <Label styleAs="labelLarge" fontWeight="lighter">
-      Label large lighter text
+    <Label styleAs="label2" fontWeight="lighter">
+      Label 2 lighter text
     </Label>
-    <Label styleAs="labelLarge" fontWeight="bolder">
-      Label large bolder text with <b>b</b>
+    <Label styleAs="label2" fontWeight="bolder">
+      Label 2 bolder text with <b>b</b>
     </Label>
-    <Text styleAs="bodyLarge" fontWeight="lighter">
-      Body large lighter text
+    <Text styleAs="body2" fontWeight="lighter">
+      Body 2 lighter text
     </Text>
-    <Text styleAs="bodyLarge" fontWeight="bolder">
-      Body large bolder text with <b>b</b>
+    <Text styleAs="body2" fontWeight="bolder">
+      Body 2 bolder text with <b>b</b>
     </Text>
     <Eyebrow fontWeight="lighter">Eyebrow lighter text</Eyebrow>
     <Eyebrow fontWeight="bolder">

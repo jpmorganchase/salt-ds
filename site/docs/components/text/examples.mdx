@@ -16,8 +16,8 @@ data:
 - Display
 - Headings
 - Eyebrow
-- Body, including body large
-- Label, including label large
+- Body 1 and Body 2
+- Label 1 and Label 2
 - Code
 
 These alternative components display text in commonly used styles. Where relevant, use them instead of `Text` to simplify syntax:
@@ -40,13 +40,13 @@ These alternative components display text in commonly used styles. Where relevan
 - `TextNotation`
 - `TextAction`
 
-To use the body large and label large styles, set `styleAs="bodyLarge"` on `Text` or `styleAs="labelLarge"` on `Label`.
+`Text` and `Label` use the Body 1 and Label 1 styles by default. To use Body 2 or Label 2, set `styleAs="body2"` on `Text` or `styleAs="label2"` on `Label`.
 
 <LivePreview componentName="text" exampleName="Styles" />
 
 ## Editorial content
 
-Use the editorial styles for large, expressive headlines, such as in a masthead or hero banner. Pair them with `Eyebrow` to introduce a topic above the heading, and the body large style for introductory paragraphs.
+Use the editorial styles for large, expressive headlines, such as in a masthead or hero banner. Pair them with `Eyebrow` to introduce a topic above the heading, and the Body 2 style for introductory paragraphs.
 
 Editorial components render a `<span>`. To keep the correct HTML hierarchy, use the `styleAs` prop to apply an editorial style to a heading element.
 
@@ -82,7 +82,7 @@ Read our [guidance on how to use text color](/salt/foundations/typography#color)
 
 ## Font weight
 
-Use the `fontWeight` prop to make text `lighter` or `bolder` than its default weight. Omit the prop to use the default weight. The weights come from the theme and depend on the text style, so `bolder` on a heading is heavier than `bolder` on body text. Themes can set a lighter or bolder weight to the same value as the default when the brand guidelines don't allow that variation. For example, the current themes keep `Eyebrow` at its default weight when using `fontWeight="bolder"` or a nested `<b>` element.
+Use the `fontWeight` prop to make text `lighter` or `bolder` than its default weight. Omit the prop to use the default weight. The weights come from the theme and depend on the text style, so `bolder` on a heading is heavier than `bolder` on body text. Themes can set a lighter or bolder weight to the same value as the default when the brand guidelines don't allow that variation. For example, `fontWeight="bolder"` and nested `<b>` elements don't change the weight of `Eyebrow`, and editorial text always uses a light weight in the J.P. Morgan theme.
 
 To change the weight of part of the text, nest `<Text as="span" styleAs="inherit">` with the `fontWeight` prop. It keeps the parent's text style and color, and uses that style's weights. You can also nest a `<b>` element, which uses the same weight as `bolder`.
 

@@ -243,20 +243,19 @@ const LabelCaptionTextComponent: StoryFn<typeof Text> = () => {
 
 export const Label = LabelCaptionTextComponent.bind({});
 
-//********** Label large ***********/
+//********** Label 2 ***********/
 
-export const LabelLarge: StoryFn<typeof Text> = () => {
+export const Label2: StoryFn<typeof Text> = () => {
   return (
     <StackLayout>
-      <LabelText styleAs="labelLarge">
-        Label large text - labelLarge - His seasons Shall without form fourth
-        seed so.
+      <LabelText styleAs="label2">
+        Label 2 text - label2 - His seasons Shall without form fourth seed so.
       </LabelText>
-      <LabelText styleAs="labelLarge">
-        Label large text <b>emphasis high</b>
+      <LabelText styleAs="label2">
+        Label 2 text <b>emphasis high</b>
       </LabelText>
-      <LabelText styleAs="labelLarge">
-        Label large text{" "}
+      <LabelText styleAs="label2">
+        Label 2 text{" "}
         <Text as="span" styleAs="inherit" fontWeight="lighter">
           emphasis low
         </Text>
@@ -265,20 +264,19 @@ export const LabelLarge: StoryFn<typeof Text> = () => {
   );
 };
 
-//********** Body large ***********/
+//********** Body 2 ***********/
 
-export const BodyLarge: StoryFn<typeof Text> = () => {
+export const Body2: StoryFn<typeof Text> = () => {
   return (
     <StackLayout>
-      <Text styleAs="bodyLarge">
-        Body large text - bodyLarge - His seasons Shall without form fourth seed
-        so.
+      <Text styleAs="body2">
+        Body 2 text - body2 - His seasons Shall without form fourth seed so.
       </Text>
-      <Text styleAs="bodyLarge">
-        Body large text <b>emphasis high</b>
+      <Text styleAs="body2">
+        Body 2 text <b>emphasis high</b>
       </Text>
-      <Text styleAs="bodyLarge">
-        Body large text{" "}
+      <Text styleAs="body2">
+        Body 2 text{" "}
         <Text as="span" styleAs="inherit" fontWeight="lighter">
           emphasis low
         </Text>

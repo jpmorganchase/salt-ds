@@ -249,21 +249,21 @@ label.saltText,
   --text-fontWeight-lighter: var(--salt-text-label-fontWeight-lighter);
 }
 
-/* Label large */
-.saltText-labelLarge.saltText {
+/* Label 2 */
+.saltText-label2.saltText {
   font-family: var(--salt-text-fontFamily);
-  font-size: var(--salt-text-label-large-fontSize);
-  line-height: var(--salt-text-label-large-lineHeight);
+  font-size: var(--salt-text-label2-fontSize);
+  line-height: var(--salt-text-label2-lineHeight);
   font-weight: var(--salt-text-label-fontWeight);
   --text-fontWeight-bolder: var(--salt-text-label-fontWeight-bolder);
   --text-fontWeight-lighter: var(--salt-text-label-fontWeight-lighter);
 }
 
-/* Body large */
-.saltText-bodyLarge.saltText {
+/* Body 2 */
+.saltText-body2.saltText {
   font-family: var(--salt-text-fontFamily);
-  font-size: var(--salt-text-large-fontSize);
-  line-height: var(--salt-text-large-lineHeight);
+  font-size: var(--salt-text-body2-fontSize);
+  line-height: var(--salt-text-body2-lineHeight);
   font-weight: var(--salt-text-fontWeight);
   --text-fontWeight-bolder: var(--salt-text-fontWeight-bolder);
   --text-fontWeight-lighter: var(--salt-text-fontWeight-lighter);
