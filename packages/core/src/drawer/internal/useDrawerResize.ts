@@ -23,6 +23,7 @@ interface DragState extends Bounds {
   startY: number;
   originSize: number;
   previousSize: number;
+  cancelSize: number | undefined;
   moved: boolean;
 }
 
@@ -67,8 +68,8 @@ export interface UseDrawerResizeResult {
   isResizing: boolean;
   isHovered: boolean;
   isPlacing: boolean;
-  /** Whether the event is the Escape that cancelled placing, so it shouldn't close the drawer. */
-  isCancelPlacingEvent: (event?: Event) => boolean;
+  /** Whether the event is the Escape that cancelled a resize, so it shouldn't close the drawer. */
+  isCancelResizeEvent: (event?: Event) => boolean;
   separatorProps: SeparatorProps;
   guideProps: GuideProps;
 }
@@ -196,7 +197,7 @@ export function useDrawerResize({
   const placingRef = useRef<PlacingState | null>(null);
   const handleRef = useRef<HTMLElement | null>(null);
   const guideRef = useRef<HTMLElement | null>(null);
-  const cancelPlacingEventRef = useRef<Event | null>(null);
+  const cancelResizeEventRef = useRef<Event | null>(null);
   const restoreSizeRef = useRef<number | null>(null);
   const initialSizeRef = useRef<number | null>(null);
   const axisRef = useRef(horizontal);
@@ -254,6 +255,7 @@ export function useDrawerResize({
       startY: event.clientY,
       originSize: current.current,
       previousSize: current.current,
+      cancelSize: size,
       min: current.min,
       max: current.max,
       moved: false,
@@ -351,6 +353,17 @@ export function useDrawerResize({
         ) ?? null,
       );
     setInteraction(stillHovered ? "hover" : "inactive");
+  });
+
+  const cancelDrag = useEventCallback((event: KeyboardEvent) => {
+    const drag = dragRef.current;
+    if (!drag) return;
+    const handle = handleRef.current;
+    if (handle?.hasPointerCapture(drag.pointerId)) {
+      handle.releasePointerCapture(drag.pointerId);
+    }
+    setSizeState(drag.cancelSize);
+    endDrag(event);
   });
 
   const sizeToPlace = (
@@ -473,6 +486,13 @@ export function useDrawerResize({
       if (!event.defaultPrevented) endDrag(event);
     };
 
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key !== "Escape" || !dragRef.current) return;
+      event.preventDefault();
+      cancelResizeEventRef.current = event;
+      cancelDrag(event);
+    };
+
     const onBlur = (event: FocusEvent) => {
       endDrag(event);
       stopPlacing();
@@ -494,6 +514,8 @@ export function useDrawerResize({
     ownerDocument.addEventListener("pointerup", onPointerUp, true);
     ownerDocument.addEventListener("pointercancel", onPointerCancel);
     ownerDocument.addEventListener("contextmenu", onContextMenu, true);
+    // Capture, to run before the drawer closes on Escape.
+    ownerDocument.addEventListener("keydown", onKeyDown, true);
     ownerDocument.addEventListener("pointerout", onPointerOut);
     targetWindow.addEventListener("blur", onBlur);
     return () => {
@@ -502,6 +524,7 @@ export function useDrawerResize({
       ownerDocument.removeEventListener("pointerup", onPointerUp, true);
       ownerDocument.removeEventListener("pointercancel", onPointerCancel);
       ownerDocument.removeEventListener("contextmenu", onContextMenu, true);
+      ownerDocument.removeEventListener("keydown", onKeyDown, true);
       ownerDocument.removeEventListener("pointerout", onPointerOut);
       targetWindow.removeEventListener("blur", onBlur);
       dragRef.current = null;
@@ -516,6 +539,7 @@ export function useDrawerResize({
     startDrag,
     moveDrag,
     endDrag,
+    cancelDrag,
     startPlacing,
     stopPlacing,
   ]);
@@ -536,7 +560,7 @@ export function useDrawerResize({
         stopPlacing();
         if (key === "Escape") {
           event.preventDefault();
-          cancelPlacingEventRef.current = event.nativeEvent;
+          cancelResizeEventRef.current = event.nativeEvent;
           return;
         }
       }
@@ -588,9 +612,9 @@ export function useDrawerResize({
     },
   );
 
-  const isCancelPlacingEvent = useCallback(
+  const isCancelResizeEvent = useCallback(
     (event?: Event) =>
-      event !== undefined && event === cancelPlacingEventRef.current,
+      event !== undefined && event === cancelResizeEventRef.current,
     [],
   );
 
@@ -624,9 +648,9 @@ export function useDrawerResize({
     }
   }, [enabled, element, horizontal, readMetrics]);
 
-  // Sync the separator's aria values with the rendered size.
+  // biome-ignore lint/correctness/useExhaustiveDependencies: re-syncs the separator's aria values whenever the size changes.
   useIsomorphicLayoutEffect(() => {
-    if (!enabled || !element || size === undefined) return;
+    if (!enabled || !element) return;
     readMetrics(true);
   }, [enabled, element, size, readMetrics]);
 
@@ -649,7 +673,7 @@ export function useDrawerResize({
     isResizing: interaction === "active" || interaction === "placing",
     isHovered: interaction === "hover",
     isPlacing: interaction === "placing",
-    isCancelPlacingEvent,
+    isCancelResizeEvent,
     separatorProps: {
       role: "separator",
       tabIndex: 0,

@@ -298,15 +298,43 @@ describe("GIVEN a resizable Drawer", () => {
       await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
     });
 
-    it("restores the cursor when the drawer closes mid-drag", async () => {
+    it("cancels with Escape without closing the drawer", async () => {
       await renderResizable();
+
+      const start = handleCenter();
+      await mouse.down(start);
+      await mouse.move({ x: start.x + 50, y: start.y });
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(350, 0);
+
+      await userEvent.keyboard("{Escape}");
+
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(300, 0);
+      await expect.element(separator()).toHaveAttribute("aria-valuenow", "300");
+      await expect.element(page.getByRole("dialog")).toBeInTheDocument();
+      await expect
+        .poll(() => getComputedStyle(document.body).cursor)
+        .toBe("auto");
+
+      await mouse.move({ x: start.x + 80, y: start.y });
+      await mouse.up();
+      expect(drawerSize("left")).toBeCloseTo(300, 0);
+      await expect.element(page.getByRole("dialog")).toBeInTheDocument();
+    });
+
+    it("restores the cursor when the drawer closes mid-drag", async () => {
+      const { rerender } = await renderWithSalt(
+        <ResizableDrawer style={limitsStyle("left")} />,
+      );
+      await waitForOpen();
 
       const start = handleCenter();
       await mouse.down(start);
       await mouse.move({ x: start.x + 40, y: start.y });
       expect(getComputedStyle(document.body).cursor).toBe("ew-resize");
 
-      await userEvent.keyboard("{Escape}");
+      await rerender(
+        <ResizableDrawer open={false} style={limitsStyle("left")} />,
+      );
       await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
 
       await expect
