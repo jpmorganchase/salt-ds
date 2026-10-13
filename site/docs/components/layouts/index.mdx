@@ -27,12 +27,6 @@ Salt layout components are each tailored to specific structural needs:
 - Prefer a Salt layout before adding a generic wrapper with custom CSS.
 - Each extra container should have a clear structural job such as flow, split,
   stack, grid, or parent-child arrangement.
-- Use [`DeckLayout`](./deck-layout) when one region displays one page at a time.
-- Use [`LayerLayout`](./layer-layout) only for a bespoke overlay shell; prefer
-  Salt's established dialog, drawer, tooltip or menu components when their
-  behavior matches the task.
-- `DeckLayout` and `LayerLayout` come from `@salt-ds/lab` and are experimental.
-  Review their release notes before upgrading.
 
 </Callout>
 
@@ -40,6 +34,4 @@ Salt layout components are each tailored to specific structural needs:
 
 A layout does not define the reading order or keyboard contract of the content
 inside it. Keep DOM order meaningful, preserve visible focus, and test zoom,
-reflow and keyboard navigation at every supported breakpoint. Overlay and deck
-layouts have additional focus and naming responsibilities described on their
-component pages.
+reflow and keyboard navigation at every supported breakpoint.
