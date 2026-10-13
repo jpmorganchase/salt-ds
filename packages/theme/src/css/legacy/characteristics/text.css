@@ -58,7 +58,7 @@
 
   /* Eyebrow */
   --salt-text-eyebrow-fontFamily: var(--salt-typography-fontFamily-openSans);
-  --salt-text-eyebrow-letterSpacing: 0.06em;
+  --salt-text-eyebrow-letterSpacing: 0.6px;
   --salt-text-eyebrow-textTransform: uppercase;
   --salt-text-eyebrow-fontStyle: var(--salt-typography-fontStyle-normal);
   --salt-text-eyebrow-fontWeight: var(--salt-typography-fontWeight-bold);
