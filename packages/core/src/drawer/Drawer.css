@@ -61,6 +61,10 @@
   padding-right: var(--drawer-resizeHandleHitSize);
 }
 
+.saltDrawer-resizable.saltDrawer-right {
+  padding-left: var(--drawer-resizeHandleSize);
+}
+
 .saltDrawer-resizable.saltDrawer-top > .saltDrawer-inner {
   clip-path: inset(0 0 var(--drawer-resizeHandleHitSize) 0);
   scroll-padding-bottom: var(--drawer-resizeHandleHitSize);
