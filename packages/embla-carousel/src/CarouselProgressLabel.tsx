@@ -1,8 +1,8 @@
 import { makePrefixer, Text, type TextProps } from "@salt-ds/core";
 import { clsx } from "clsx";
-import type { EmblaCarouselType } from "embla-carousel";
 import { useEffect, useState } from "react";
 import { useCarouselContext } from "./CarouselContext";
+import type { EmblaCarouselType } from "./emblaTypes";
 import { getVisibleSlideIndexes } from "./getVisibleSlideIndexes";
 
 /**

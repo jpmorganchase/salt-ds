@@ -2,6 +2,7 @@ export * from "./Accents";
 export * from "./Actions";
 export * from "./BackgroundImage";
 export * from "./BorderColor";
+export * from "./CollapsibleCard";
 export * from "./CustomAccent";
 export * from "./CustomPadding";
 export * from "./Default";

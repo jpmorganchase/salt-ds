@@ -21,6 +21,8 @@
   ],
   "dependencies": {
     "@salt-ds/core": "workspace:^",
+    "@salt-ds/styles": "workspace:*",
+    "@salt-ds/window": "workspace:*",
     "clsx": "^2.0.0"
   },
   "devDependencies": {

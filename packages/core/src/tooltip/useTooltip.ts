@@ -1,8 +1,10 @@
 import {
   arrow,
+  type FloatingContext,
   flip,
   limitShift,
   offset,
+  type Strategy,
   safePolygon,
   shift,
   useDismiss,
@@ -11,9 +13,10 @@ import {
   useInteractions,
   useRole,
 } from "@floating-ui/react";
-import { type HTMLProps, useRef } from "react";
+import { type HTMLProps, type MutableRefObject, useRef } from "react";
 import {
   type UseFloatingUIProps,
+  type UseFloatingUIReturn,
   useControlled,
   useFloatingUI,
 } from "../utils";
@@ -47,7 +50,26 @@ export interface UseTooltipProps
   leaveDelay?: number;
 }
 
-export function useTooltip(props?: UseTooltipProps) {
+interface UseTooltipReturn {
+  arrowProps: {
+    ref: MutableRefObject<SVGSVGElement | null>;
+    context: FloatingContext;
+  };
+  open: boolean;
+  floating: UseFloatingUIReturn["floating"];
+  reference: UseFloatingUIReturn["reference"];
+  getTooltipProps: () => HTMLProps<HTMLDivElement>;
+  getTriggerProps: () => Record<string, unknown>;
+  getTooltipPosition: () => {
+    top: number;
+    left: number;
+    position: Strategy;
+    width: number | undefined;
+    height: number | undefined;
+  };
+}
+
+export function useTooltip(props?: UseTooltipProps): UseTooltipReturn {
   const {
     enterDelay,
     disabled,
