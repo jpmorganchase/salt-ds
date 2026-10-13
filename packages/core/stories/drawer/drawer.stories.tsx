@@ -560,11 +560,17 @@ export const HeaderAndFooter: StoryFn<DrawerProps> = (args) => {
 };
 
 export const Resizable: StoryFn<DrawerProps> = ({
+  open: openProp = false,
   position = "left",
+  resizable = true,
   style,
   ...args
 }) => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(openProp);
+
+  useEffect(() => {
+    setOpen(openProp);
+  }, [openProp]);
 
   const isHorizontal = position === "left" || position === "right";
 
@@ -573,7 +579,7 @@ export const Resizable: StoryFn<DrawerProps> = ({
       <Button onClick={() => setOpen(true)}>Open Drawer</Button>
       <Drawer
         {...args}
-        resizable
+        resizable={resizable}
         position={position}
         open={open}
         onOpenChange={setOpen}

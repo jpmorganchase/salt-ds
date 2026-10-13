@@ -1,33 +1,59 @@
 import type { DrawerProps } from "@salt-ds/core";
-import {
-  Button,
-  Drawer,
-  DrawerContent,
-  DrawerFooter,
-  DrawerHeader,
-} from "@salt-ds/core";
+import { Drawer } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
 import type { CSSProperties } from "react";
-import { afterEach, describe, expect, it, vi } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
 import { page, userEvent } from "vitest/browser";
+import { runAxeScan } from "~browser-test-utils/accessibility";
 import { mouse, touch } from "~browser-test-utils/pointer";
 import { act, renderWithSalt } from "~browser-test-utils/render";
 import * as drawerStories from "~stories/drawer/drawer.stories";
 
 const { Resizable } = composeStories(drawerStories);
 
+type Position = NonNullable<DrawerProps["position"]>;
+
+const POSITIONS: Position[] = ["left", "right", "top", "bottom"];
+
+const isHorizontal = (position: Position) =>
+  position === "left" || position === "right";
+
+const limitsStyle = (position: Position) =>
+  isHorizontal(position)
+    ? { width: 300, minWidth: 100, maxWidth: 600 }
+    : { height: 300, minHeight: 100, maxHeight: 600 };
+
+// Clears the story's own CSS-variable limits so each test sets the limits it needs.
 const ResizableDrawer = (props: DrawerProps) => (
-  <Drawer open resizable {...props}>
-    <DrawerHeader header="Resizable drawer" />
-    <DrawerContent>Content</DrawerContent>
+  <Resizable
+    open
+    {...props}
+    style={
+      {
+        "--saltDrawer-minWidth": undefined,
+        "--saltDrawer-maxWidth": undefined,
+        "--saltDrawer-minHeight": undefined,
+        "--saltDrawer-maxHeight": undefined,
+        animation: "none",
+        ...props.style,
+      } as CSSProperties
+    }
+  />
+);
+
+// Unsectioned content, so the resizable inner wrapper scrolls instead of DrawerContent.
+const OverflowingDrawer = ({ position }: { position: Position }) => (
+  <Drawer
+    open
+    resizable
+    position={position}
+    style={{ ...limitsStyle(position), animation: "none" }}
+  >
+    <div style={{ width: 2000, height: 2000, flexShrink: 0 }}>Content</div>
   </Drawer>
 );
 
 afterEach(() => page.viewport(1280, 1024));
-
-type Position = NonNullable<DrawerProps["position"]>;
-
-const POSITIONS: Position[] = ["left", "right", "top", "bottom"];
 
 const GROW_KEY = {
   left: "ArrowRight",
@@ -43,8 +69,12 @@ const SHRINK_KEY = {
   bottom: "ArrowDown",
 } as const;
 
-const isHorizontal = (position: Position) =>
-  position === "left" || position === "right";
+const ORIENTATION = {
+  left: "vertical",
+  right: "vertical",
+  top: "horizontal",
+  bottom: "horizontal",
+} as const;
 
 const growDelta = (position: Position, distance: number) =>
   position === "left" || position === "top" ? distance : -distance;
@@ -65,9 +95,11 @@ const sizeBase = () =>
     getComputedStyle(drawer()).getPropertyValue("--salt-size-base"),
   );
 
+const valueNow = () =>
+  Number(separator().element().getAttribute("aria-valuenow"));
+
 async function waitForOpen() {
   await expect.element(page.getByRole("dialog")).toBeVisible();
-  await expect.poll(() => drawer().getAnimations().length).toBe(0);
 }
 
 function handleCenter() {
@@ -90,6 +122,14 @@ async function pressOnHandle(key: string) {
   handle().focus();
   await expect.element(separator()).toHaveFocus();
   await userEvent.keyboard(key);
+}
+
+async function tabToSeparator() {
+  await expect
+    .element(page.getByRole("button", { name: "Close drawer" }))
+    .toHaveFocus();
+  await userEvent.tab({ shift: true });
+  await expect.element(separator()).toHaveFocus();
 }
 
 /** Point, level with the handle, where the moving edge sits when the drawer has the given size. */
@@ -120,24 +160,38 @@ const guideOffset = () =>
     guide()?.style.getPropertyValue("--drawerResizeGuide-offset") ?? "",
   );
 
-const limitsStyle = (position: Position) =>
-  isHorizontal(position)
-    ? { width: 300, minWidth: 100, maxWidth: 600 }
-    : { height: 300, minHeight: 100, maxHeight: 600 };
+async function renderResizable({
+  position = "left",
+  ...props
+}: Partial<DrawerProps> = {}) {
+  await renderWithSalt(
+    <ResizableDrawer
+      position={position}
+      style={limitsStyle(position)}
+      {...props}
+    />,
+  );
+  await waitForOpen();
+}
 
 async function openDrawer() {
   await page.getByRole("button", { name: "Open Drawer" }).click();
   await waitForOpen();
 }
 
-async function renderResizable({
+async function renderResizableStory({
   position = "left",
   ...props
 }: Partial<DrawerProps> = {}) {
-  await renderWithSalt(
-    <Resizable position={position} style={limitsStyle(position)} {...props} />,
+  const result = await renderWithSalt(
+    <Resizable
+      position={position}
+      style={{ ...limitsStyle(position), animation: "none" }}
+      {...props}
+    />,
   );
   await openDrawer();
+  return result;
 }
 
 describe("GIVEN a resizable Drawer", () => {
@@ -160,19 +214,11 @@ describe("GIVEN a resizable Drawer", () => {
     });
 
     it("leaves content controls clickable", async () => {
-      const onClick = vi.fn();
-      await renderWithSalt(
-        <Drawer open resizable style={{ width: 300 }}>
-          <DrawerHeader header="Resizable drawer" />
-          <DrawerContent>
-            <Button onClick={onClick}>Action</Button>
-          </DrawerContent>
-        </Drawer>,
-      );
+      await renderWithSalt(<ResizableDrawer style={{ width: 300 }} />);
       await waitForOpen();
 
-      await page.getByRole("button", { name: "Action" }).click();
-      expect(onClick).toHaveBeenCalledTimes(1);
+      await page.getByRole("button", { name: "Save" }).click();
+      await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
     });
   });
 
@@ -248,10 +294,10 @@ describe("GIVEN a resizable Drawer", () => {
     it("resizes from just outside its edge when the page fills the viewport", async () => {
       await renderWithSalt(
         <div style={{ width: "100vw", minHeight: "100vh" }}>
-          <Resizable style={limitsStyle("left")} />
+          <ResizableDrawer style={limitsStyle("left")} />
         </div>,
       );
-      await openDrawer();
+      await waitForOpen();
 
       const rect = drawer().getBoundingClientRect();
       const x = rect.right + 5;
@@ -265,7 +311,7 @@ describe("GIVEN a resizable Drawer", () => {
     it("doesn't resize through a layer above the drawer", async () => {
       await renderWithSalt(
         <>
-          <Resizable style={limitsStyle("left")} disableDismiss />
+          <ResizableDrawer style={limitsStyle("left")} disableDismiss />
           <div
             role="status"
             style={{
@@ -279,7 +325,7 @@ describe("GIVEN a resizable Drawer", () => {
           />
         </>,
       );
-      await openDrawer();
+      await waitForOpen();
 
       const rect = drawer().getBoundingClientRect();
       const x = rect.right + 5;
@@ -656,7 +702,7 @@ describe("GIVEN a resizable Drawer", () => {
 
     it("doesn't activate content where the edge is placed", async () => {
       const { hash } = window.location;
-      await renderResizable();
+      await renderResizableStory();
       const save = page.getByRole("button", { name: "Save" });
       const link = page.getByRole("link", { name: "example link" });
 
@@ -801,7 +847,7 @@ describe("GIVEN a resizable Drawer", () => {
 
   describe("user size", () => {
     it("keeps the user's size when closed and reopened", async () => {
-      await renderResizable();
+      await renderResizableStory();
 
       await dragHandleBy("left", 100);
       await expect.poll(() => drawerSize("left")).toBeCloseTo(400, 0);
@@ -911,18 +957,7 @@ describe("GIVEN a resizable Drawer", () => {
 
     for (const position of POSITIONS) {
       it(`scrolls inside, keeping the handle on its edge, position=${position}`, async () => {
-        await renderWithSalt(
-          <Drawer
-            open
-            resizable
-            position={position}
-            style={limitsStyle(position)}
-          >
-            <div style={{ width: 2000, height: 2000, flexShrink: 0 }}>
-              Content
-            </div>
-          </Drawer>,
-        );
+        await renderWithSalt(<OverflowingDrawer position={position} />);
         await waitForOpen();
 
         const scroller = inner();
@@ -946,19 +981,11 @@ describe("GIVEN a resizable Drawer", () => {
 
     it("scrolls the sections together when they don't fit", async () => {
       await renderWithSalt(
-        <Drawer
-          open
-          resizable
+        <ResizableDrawer
           style={
             { width: 300, "--saltDrawer-maxHeight": "120px" } as CSSProperties
           }
-        >
-          <DrawerHeader header="Resizable drawer" description="Description" />
-          <DrawerContent>Content</DrawerContent>
-          <DrawerFooter>
-            <Button>Save</Button>
-          </DrawerFooter>
-        </Drawer>,
+        />,
       );
       await waitForOpen();
 
@@ -972,5 +999,195 @@ describe("GIVEN a resizable Drawer", () => {
         ),
       ).toBe(false);
     });
+  });
+
+  describe("separator semantics", () => {
+    for (const position of POSITIONS) {
+      it(`exposes a ${ORIENTATION[position]} separator when position=${position}`, async () => {
+        await renderResizable({ position });
+
+        await expect
+          .element(separator())
+          .toHaveAttribute("aria-orientation", ORIENTATION[position]);
+      });
+
+      it(`reports its size and limits before any interaction, position=${position}`, async () => {
+        await renderResizable({ position });
+
+        await expect
+          .element(separator())
+          .toHaveAttribute("aria-valuenow", "300");
+        await expect
+          .element(separator())
+          .toHaveAttribute("aria-valuemin", "100");
+        await expect
+          .element(separator())
+          .toHaveAttribute("aria-valuemax", "600");
+      });
+    }
+
+    it("updates its value after a keyboard resize", async () => {
+      await renderResizableStory();
+
+      await tabToSeparator();
+      await userEvent.keyboard("{ArrowRight}");
+
+      await expect.poll(valueNow).toBeGreaterThan(300);
+      expect(valueNow()).toBeCloseTo(drawer().getBoundingClientRect().width, 0);
+    });
+
+    it("updates its value after a pointer resize", async () => {
+      await renderResizable();
+
+      const { x, y } = handleCenter();
+      await mouse.drag({ x, y }, { x: x + 50, y });
+
+      await expect.element(separator()).toHaveAttribute("aria-valuenow", "350");
+    });
+
+    it("updates its value after the edge is placed by a click", async () => {
+      await renderResizable();
+
+      const { x, y } = handleCenter();
+      await mouse.click({ x, y });
+      await mouse.click({ x: 450, y });
+
+      await expect.element(separator()).toHaveAttribute("aria-valuenow", "450");
+    });
+
+    it("updates its maximum when the viewport resizes", async () => {
+      await renderWithSalt(<ResizableDrawer style={{ width: 300 }} />);
+      await waitForOpen();
+      const outside =
+        separator().element().getBoundingClientRect().right -
+        drawer().getBoundingClientRect().right;
+      expect(outside).toBeGreaterThan(0);
+      await expect
+        .element(separator())
+        .toHaveAttribute("aria-valuemax", String(window.innerWidth - outside));
+
+      await page.viewport(900, 700);
+      await expect
+        .element(separator())
+        .toHaveAttribute("aria-valuemax", String(900 - outside));
+    });
+
+    it("points at the drawer it controls", async () => {
+      await renderResizable();
+
+      await expect
+        .element(separator())
+        .toHaveAttribute("aria-controls", drawer().id);
+    });
+  });
+
+  describe("focus management", () => {
+    it("is reachable by keyboard within the drawer's focus trap", async () => {
+      await renderResizableStory();
+
+      await tabToSeparator();
+
+      await userEvent.tab();
+      await expect
+        .element(page.getByRole("button", { name: "Close drawer" }))
+        .toHaveFocus();
+    });
+
+    it("shows a focus indicator when focused with the keyboard", async () => {
+      await renderResizableStory();
+
+      await tabToSeparator();
+
+      const element = separator().element();
+      const hasOutline = [
+        getComputedStyle(element),
+        getComputedStyle(element, "::before"),
+      ].some(
+        (style) =>
+          style.outlineStyle !== "none" &&
+          Number.parseFloat(style.outlineWidth) > 0,
+      );
+      expect(hasOutline).toBe(true);
+    });
+
+    it("keeps focus on the handle after the edge is placed by a click", async () => {
+      await renderResizable();
+
+      await separator().click();
+      await page
+        .getByTestId("scrim")
+        .click({ force: true, position: { x: 450, y: 300 } });
+      await expect.element(separator()).toHaveAttribute("aria-valuenow", "450");
+
+      await expect.element(separator()).toHaveFocus();
+      await userEvent.keyboard("{ArrowRight}");
+      await expect.element(separator()).toHaveAttribute("aria-valuenow", "458");
+    });
+
+    it("returns focus to the trigger after a resized drawer closes", async () => {
+      await renderResizableStory();
+
+      await tabToSeparator();
+      await userEvent.keyboard("{ArrowRight}");
+      await expect.poll(valueNow).toBeGreaterThan(300);
+
+      await userEvent.keyboard("{Escape}");
+      await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+      await expect
+        .element(page.getByRole("button", { name: "Open Drawer" }))
+        .toHaveFocus();
+    });
+  });
+
+  describe("axe", () => {
+    const AXE_TIMEOUT = 30_000;
+
+    for (const position of POSITIONS) {
+      it(
+        `has no violations when position=${position}`,
+        async () => {
+          const { container } = await renderResizableStory({ position });
+
+          await runAxeScan(container);
+        },
+        AXE_TIMEOUT,
+      );
+    }
+
+    it(
+      "has no violations while resizing",
+      async () => {
+        const { container } = await renderResizableStory();
+
+        const { x, y } = handleCenter();
+        await mouse.down({ x, y });
+        await mouse.move({ x: x + 30, y });
+        await expect
+          .element(separator())
+          .toHaveAttribute("aria-valuenow", "330");
+
+        await runAxeScan(container);
+
+        await mouse.up();
+      },
+      AXE_TIMEOUT,
+    );
+
+    it(
+      "has no violations while placing the edge by click",
+      async () => {
+        const { container } = await renderResizableStory();
+
+        const { x, y } = handleCenter();
+        await mouse.click({ x, y });
+        await mouse.move({ x: 450, y });
+        await expect
+          .poll(() => getComputedStyle(document.body).cursor)
+          .toBe("ew-resize");
+
+        await runAxeScan(container);
+      },
+      AXE_TIMEOUT,
+    );
   });
 });
