@@ -25,10 +25,18 @@
   --salt-text-lineHeight: 20px;
   --salt-text-minHeight: 20px;
 
+  --salt-text-body2-fontSize: 16px;
+  --salt-text-body2-lineHeight: 26px;
+
   --salt-text-h4-fontSize: 14px;
   --salt-text-h4-lineHeight: 20px;
   --salt-text-label-fontSize: 12px;
   --salt-text-label-lineHeight: 16px;
+  --salt-text-label2-fontSize: 14px;
+  --salt-text-label2-lineHeight: 18px;
+
+  --salt-text-eyebrow-fontSize: 16px;
+  --salt-text-eyebrow-lineHeight: 21px;
 
   --salt-size-bar: 4px;
   --salt-size-bar-strong: 8px;
