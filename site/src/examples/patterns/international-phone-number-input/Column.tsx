@@ -7,6 +7,7 @@ import {
   StackLayout,
   Text,
 } from "@salt-ds/core";
+import "@salt-ds/countries/saltCountries.css";
 import { useState } from "react";
 
 type Country = { name: string; code: string; countryCode: string };

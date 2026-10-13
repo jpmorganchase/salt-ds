@@ -21,13 +21,13 @@ export const WithSecondary = () => {
     <StackLayout direction={{ xs: "column", sm: "row" }} gap={1}>
       <FlexItem>
         <Button appearance="transparent" style={{ width: "100%" }}>
-          <ExportIcon />
+          <ExportIcon aria-hidden />
           Export
         </Button>
       </FlexItem>
       <FlexItem>
         <Button appearance="transparent" style={{ width: "100%" }}>
-          <ImportIcon />
+          <ImportIcon aria-hidden />
           Import
         </Button>
       </FlexItem>

@@ -39,24 +39,23 @@ const config: StorybookConfig = {
   ],
   async viteFinal(config, { configType }) {
     const { mergeConfig, transformWithOxc } = await import("vite");
-    const patternExamplesRoot = join(
+    const siteExamplesRoot = join(
       config.root ?? process.cwd(),
       "site",
       "src",
       "examples",
-      "patterns",
     );
 
     const customConfig: UserConfig = {
       plugins: [
         {
-          // Pattern stories render the site's examples, whose tsconfig preserves
-          // JSX for Next.js, so compile their TSX here.
-          name: "salt:site-pattern-examples-tsx",
+          // Stories render site examples, such as pattern examples, whose
+          // tsconfig preserves JSX for Next.js, so compile their TSX here.
+          name: "salt:site-examples-tsx",
           enforce: "pre",
           async transform(source, id) {
             const sourcePath = id.split("?", 1)[0];
-            const relativePath = relative(patternExamplesRoot, sourcePath);
+            const relativePath = relative(siteExamplesRoot, sourcePath);
             if (
               !sourcePath.endsWith(".tsx") ||
               relativePath.startsWith("..") ||

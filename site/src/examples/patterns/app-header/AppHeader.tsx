@@ -62,7 +62,7 @@ export const DesktopAppHeader: FC<{
         <FlexItem align="center">
           <StackLayout direction="row" gap={2} align="center">
             <img
-              alt="logo"
+              alt=""
               src={logo}
               style={{
                 display: "block",
@@ -195,7 +195,7 @@ const MobileAppHeader: FC<{
         <FlexItem align="center">
           <StackLayout direction="row" gap={2} align="center">
             <img
-              alt="logo"
+              alt=""
               src={logo}
               style={{
                 display: "block",

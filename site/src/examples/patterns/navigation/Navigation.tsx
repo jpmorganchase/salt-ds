@@ -55,15 +55,15 @@ export const Navigation = () => {
 
   const headerUtilities = [
     {
-      icon: <SymphonyIcon />,
+      icon: <SymphonyIcon aria-hidden />,
       key: "Symphony",
     },
     {
-      icon: <StackoverflowIcon />,
+      icon: <StackoverflowIcon aria-hidden />,
       key: "Stack Overflow",
     },
     {
-      icon: <GithubIcon />,
+      icon: <GithubIcon aria-hidden />,
       key: "GitHub",
     },
   ];
@@ -106,7 +106,7 @@ export const Navigation = () => {
           >
             <FlexItem align="center">
               <img
-                alt="logo"
+                alt="Atlas"
                 src={logo}
                 style={{
                   display: "block",
@@ -115,7 +115,7 @@ export const Navigation = () => {
                 }}
               />
             </FlexItem>
-            <nav>
+            <nav aria-label="Primary">
               <ul
                 style={{
                   display: "flex",
@@ -144,7 +144,11 @@ export const Navigation = () => {
             <FlexItem align="center">
               <StackLayout direction="row" gap={1}>
                 {headerUtilities?.map((utility) => (
-                  <Button key={utility.key} appearance="transparent">
+                  <Button
+                    key={utility.key}
+                    appearance="transparent"
+                    aria-label={utility.key}
+                  >
                     {utility.icon}
                   </Button>
                 ))}
@@ -166,7 +170,7 @@ export const Navigation = () => {
             width: "250px",
           }}
         >
-          <nav>
+          <nav aria-label="Secondary">
             <StackLayout
               gap="var(--salt-spacing-fixed-100)"
               as="ul"

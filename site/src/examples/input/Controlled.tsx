@@ -1,4 +1,4 @@
-import { Input } from "@salt-ds/core";
+import { FormField, FormFieldLabel, Input } from "@salt-ds/core";
 import { type ChangeEvent, type ReactElement, useState } from "react";
 
 export const Controlled = (): ReactElement => {
@@ -9,6 +9,9 @@ export const Controlled = (): ReactElement => {
   };
 
   return (
-    <Input value={value} onChange={handleChange} style={{ width: "256px" }} />
+    <FormField style={{ width: "256px" }}>
+      <FormFieldLabel>Name</FormFieldLabel>
+      <Input value={value} onChange={handleChange} />
+    </FormField>
   );
 };

@@ -33,7 +33,7 @@ export const DialogForm = () => {
   const save = (
     <FlexItem>
       <Button
-        variant="secondary"
+        appearance="transparent"
         onClick={handleClose}
         style={{ width: "100%" }}
       >
