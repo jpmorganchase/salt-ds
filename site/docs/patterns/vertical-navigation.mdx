@@ -48,7 +48,7 @@ Use it when:
 
 A vertical navigation uses the `VerticalNavigation` component family in a navigation pane:
 
-1. [`VerticalNavigation`](/salt/components/vertical-navigation): Labels the navigation region and owns the item list.
+1. [`VerticalNavigation`](/salt/components/vertical-navigation): Renders the navigation region and owns the item list. Give it an accessible name with `aria-label` or `aria-labelledby`.
 2. [`VerticalNavigationItem`](/salt/components/vertical-navigation/examples): Represents a destination or expandable group. Only one destination should be active at a time.
 3. [`VerticalNavigationSubMenu`](/salt/components/vertical-navigation/examples#submenus-collapsible): Contains nested items revealed by an expandable parent trigger. The expansion trigger opens the group rather than navigating.
 
@@ -107,6 +107,8 @@ Top-level hierarchy items labels use a strong font weight, and nested items use 
 
 </GuidanceCallout>
 
+<LivePreview componentName="patterns/vertical-navigation" exampleName="NestedGroup" />
+
 ### Blur active state
 
 When a parent item is collapsed but contains the currently active page, the parent is shown with the active indicator.
@@ -141,6 +143,8 @@ We recommend using a density that is one size smaller than the main navigation. 
   border
   caption="Vertical navigation placed on the right of an application for secondary navigation."
 />
+
+<LivePreview componentName="patterns/vertical-navigation" exampleName="SecondaryNavigation" />
 
 ## Within modals
 

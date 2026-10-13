@@ -49,6 +49,8 @@ A menu button contains:
   a menu item’s purpose.
 </GuidanceCallout>
 
+<LivePreview componentName="patterns/menu-button" exampleName="WithIcons" />
+
 ### Layout
 
 - Use a [Button](/salt/components/button) inside `MenuTrigger` to open the menu.
@@ -73,6 +75,8 @@ By default, the menu aligns below the trigger at its starting edge. Depending on
   ]}
   label="Change screen space"
 />
+
+<LivePreview componentName="patterns/menu-button" exampleName="Placement" />
 
 ## Menu button
 
@@ -116,6 +120,8 @@ Overflow menus contain actions that affect a smaller type of content within an i
   label="Open overflow menu"
 />
 
+<LivePreview componentName="patterns/menu-button" exampleName="OverflowMenu" />
+
 ## Icon-only
 
 Icon-only menu buttons can be configured to contextually align to the product requirements, instead of being displayed as a chevron. See guidance for [button options](/salt/components/button) to select the most suitable button affordance for your application.
@@ -134,10 +140,14 @@ Icon-only menu buttons can be configured to contextually align to the product re
   label="Open overflow menu"
 />
 
+<LivePreview componentName="patterns/menu-button" exampleName="IconOnly" />
+
 ## Heading as menu
 
 A menu button beside a heading can expose commands for that section. If the control instead chooses a destination or changes the displayed content, follow [Navigation](/salt/patterns/navigation) or [view switching](/salt/components/toggle-button/usage#view-switching). Vertically align the trigger with its heading and use `--salt-spacing-100` between the button and text.
 
 <Diagram src="/img/patterns/menu-button/heading.png" alt="layout" border />
+
+<LivePreview componentName="patterns/menu-button" exampleName="Heading" />
 
 :fragment{src="./fragments/feedback.mdx"}

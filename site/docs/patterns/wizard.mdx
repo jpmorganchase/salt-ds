@@ -90,6 +90,8 @@ The wizard pattern can be used in different containers depending on your use cas
   The wizard should maintain a consistent size as users navigate between steps, ensuring a stable and predictable layout throughout the workflow.
 </GuidanceCallout>
 
+<LivePreview componentName="patterns/wizard" exampleName="VerticalWithCancelConfirmation" />
+
 ## Horizontal stepper vs. vertical stepper
 
 We recommend using a horizontal stepper for shorter and simpler tasks. For more lengthy and complex task flows, use a vertical stepper to break down the process into steps and substeps.
@@ -155,6 +157,8 @@ For shorter tasks that temporarily become the user’s main focus, a modal exper
 <GuidanceCallout type="positive" customPillText="Best practices">
   Don't include a close button, as it can be ambiguous whether the progress or the entered information will be saved or lost. Use a cancel button instead to clearly indicate the user’s intent to exit the flow, ensuring a conscious, deliberate action to stop the process.
 </GuidanceCallout>
+
+<LivePreview componentName="patterns/wizard" exampleName="Modal" />
 
 ## Optional step
 
@@ -247,6 +251,8 @@ When the user clicks the cancel button, display a warning message if there’s a
   caption="The warning dialog with message shows up to confirm if cancelling."
 />
 
+<LivePreview componentName="patterns/wizard" exampleName="HorizontalWithCancelConfirmation" />
+
 #### Modal wizard with the warning message
 
 <Diagram
@@ -257,6 +263,8 @@ When the user clicks the cancel button, display a warning message if there’s a
   background="secondary"
   caption="The warning message shows up to confirm if cancelling."
 />
+
+<LivePreview componentName="patterns/wizard" exampleName="ModalWithConfirmations" />
 
 ## Completion message
 

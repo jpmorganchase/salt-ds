@@ -129,6 +129,8 @@ In this layout, the app header is globally persistent. You can use it as standal
     border
   />
 
+<LivePreview componentName="patterns/app-header" exampleName="HeaderOnly" />
+
 ## Header with vertical navigation
 
 The app header with vertical navigation offers an additional layer of hierarchy. This layout allows users to navigate complex structures and perform system and product tasks in the UI. Under this configuration, submenus can remain on display without interfering with the content. For more details about navigation hierarchy, visit the [navigation pattern](./navigation).
@@ -141,9 +143,11 @@ The app header with vertical navigation offers an additional layer of hierarchy.
     border
   />
 
+<LivePreview componentName="patterns/app-header" exampleName="HeaderWithVerticalNavigation" />
+
 ## Responsive behavior
 
-The app header is responsive to the width of the application viewport and responds dynamically to the [Salt breakpoints](/salt/foundations/responsiveness#breakpoints). As the app header scales down to fit smaller viewports, its elements adjust dynamically to provide the best possible user experience.
+The app header is responsive to the width of the application viewport and responds dynamically to the [Salt breakpoints](/salt/foundations/responsiveness/breakpoints). As the app header scales down to fit smaller viewports, its elements adjust dynamically to provide the best possible user experience.
 
 For small viewport experiences, the app logo remains visible, while navigation and utility actions collapse into a hamburger menu positioned to the left of the brand logo. The navigation items sit above the utility actions in the hierarchy of the vertical navigation.
 
@@ -170,8 +174,8 @@ For small viewport experiences, the app logo remains visible, while navigation a
 <Callout status="success" title="Best practices">
  - Navigation items sit on top of the utility actions in the hierarchy of the hamburger menu.
  - If a search utility action is part of the app header, keep search functionality persistently available for small viewports. 
- - Consider medium, large and extra large [Salt breakpoints](/salt/foundations/responsiveness#breakpoints) for desktop experiences. 
- - Consider extra small and small [Salt breakpoints](/salt/foundations/responsiveness#breakpoints) for mobile experiences.
+ - Consider medium, large and extra large [Salt breakpoints](/salt/foundations/responsiveness/breakpoints) for desktop experiences. 
+ - Consider extra small and small [Salt breakpoints](/salt/foundations/responsiveness/breakpoints) for mobile experiences.
 </Callout>
 
 

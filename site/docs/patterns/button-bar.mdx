@@ -71,6 +71,8 @@ A button bar typically contains:
     border
   />
 
+<LivePreview componentName="patterns/button-bar" exampleName="DestructiveActions" />
+
 ## Button options
 
 There are three button appearances to choose from. Choosing the correct button depends on the context and is ultimately the choice of the application team. For guidance on button choices, please see the Button docs. We recommend using the accented button set for a majority of use cases, alongside the following guidelines for consistent design:
@@ -121,6 +123,8 @@ Remember to use a hierarchy when making your button choices, much like following
   to complete the task.
 </GuidanceCallout>
 
+<LivePreview componentName="patterns/button-bar" exampleName="WithSecondary" />
+
 ## Combining button sentiments
 
 Optionally, use colored [sentiment buttons](/salt/components/button/examples#other-sentiments) within a button bar depending on the sentiment of the action - i.e. positive, caution and negative. We recommend combining a sentiment with the button appearance (solid, bordered or transparent) that best represents the importance of the action.
@@ -148,6 +152,8 @@ The container and the type of scenario determine the position of actions (solid,
   border
 />
 
+<LivePreview componentName="patterns/button-bar" exampleName="SingleStepForm" />
+
 ### Multi-step form
 
 - Groups core actions on the right.
@@ -158,6 +164,8 @@ The container and the type of scenario determine the position of actions (solid,
   alt="Example showing form with button bar underneath and core actions on the right."
   border
 />
+
+<LivePreview componentName="patterns/button-bar" exampleName="MultiStepForm" />
 
 ### Dialog
 
@@ -178,6 +186,8 @@ Actions in [`DialogActions`](/salt/components/dialog/usage#action-composition) a
 - You should display tertiary actions that aren’t core to the workflow at the opposite end of the button bar.
 
 </GuidanceCallout>
+
+<LivePreview componentName="patterns/button-bar" exampleName="DialogForm" />
 
 ## Button bar position
 
@@ -263,6 +273,8 @@ Order of stacked buttons: In a stacked button layout, we recommend buttons stack
 
 </GuidanceCallout>
 
+<LivePreview componentName="patterns/button-bar" exampleName="Responsive" />
+
 ### Building a stacked button bar
 
 1. Build a button bar following the foundational guidelines provided earlier in the documentation.
@@ -283,5 +295,7 @@ Order of stacked buttons: In a stacked button layout, we recommend buttons stack
   contentPosition="top"
   border
 />
+
+<LivePreview componentName="patterns/button-bar" exampleName="ResponsiveReverse" />
 
 :fragment{src="./fragments/feedback.mdx"}
