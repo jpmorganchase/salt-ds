@@ -27,7 +27,6 @@
   --salt-text-editorial-letterSpacing: 0;
 
   /* Eyebrow */
-  --salt-text-eyebrow-fontFamily: var(--salt-typography-fontFamily-amplitude);
   --salt-text-eyebrow-letterSpacing: 0.1em;
   --salt-text-eyebrow-textTransform: uppercase;
   --salt-text-eyebrow-fontStyle: var(--salt-typography-fontStyle-normal);
@@ -78,6 +77,9 @@
   --salt-text-editorial-fontWeight: var(--salt-typography-fontWeight-semiBold);
   --salt-text-editorial-fontWeight-lighter: var(--salt-typography-fontWeight-regular);
   --salt-text-editorial-fontWeight-bolder: var(--salt-typography-fontWeight-bold);
+
+  /* Eyebrow */
+  --salt-text-eyebrow-fontFamily: var(--salt-typography-fontFamily-openSans);
 }
 
 .salt-theme-next.salt-theme[data-heading-font="Amplitude"] {
@@ -103,6 +105,9 @@
   --salt-text-editorial-fontWeight: var(--salt-typography-fontWeight-medium);
   --salt-text-editorial-fontWeight-lighter: var(--salt-typography-fontWeight-regular);
   --salt-text-editorial-fontWeight-bolder: var(--salt-typography-fontWeight-bold);
+
+  /* Eyebrow */
+  --salt-text-eyebrow-fontFamily: var(--salt-typography-fontFamily-amplitude);
 }
 
 /* Sizes by density */
