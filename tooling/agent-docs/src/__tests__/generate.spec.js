@@ -10,6 +10,11 @@ import {
   generateAgentDocs,
 } from "../generate.mjs";
 
+const FORMS_PREVIEWS = `<LivePreview componentName="patterns/forms" exampleName="Standard" />
+
+<LivePreview componentName="patterns/forms" exampleName="Compact" />
+`;
+
 const fixtureFiles = {
   "packages/core/package.json": {
     name: "@salt-ds/core",
@@ -185,7 +190,7 @@ describe("findBrokenLinks", () => {
           files: new Map([
             [
               "components/button.md",
-              "[ok](./dialog.md#focus) [theme](@salt-ds/theme/docs/tokens.md) [web](https://example.com) [missing](../patterns/nope.md) [site](/salt/x)\n\n```md\n[ignored](./nope.md)\n```\n",
+              "# Button\n\n[ok](./dialog.md#focus) [theme](@salt-ds/theme/docs/tokens.md) [web](https://example.com) [missing](../patterns/nope.md) [site](/salt/x)\n\n```md\n[ignored](./nope.md)\n```\n\n> ```ts\n> handlers[key](event);\n> ```\n",
             ],
             ["components/dialog.md", ""],
           ]),
@@ -194,8 +199,32 @@ describe("findBrokenLinks", () => {
       ["@salt-ds/theme", { files: new Map([["tokens.md", ""]]) }],
     ]);
     expect(findBrokenLinks(outputs)).toEqual([
+      "@salt-ds/core/docs/components/button.md: link ./dialog.md#focus points to a heading that doesn't exist.",
       "@salt-ds/core/docs/components/button.md: broken link ../patterns/nope.md.",
       "@salt-ds/core/docs/components/button.md: broken link /salt/x.",
+    ]);
+  });
+
+  it("checks that anchors match a heading or HTML id in the target", () => {
+    const outputs = new Map([
+      [
+        "@salt-ds/core",
+        {
+          files: new Map([
+            [
+              "components/button.md",
+              "# Button\n\n## Focus\n\n## Focus\n\n[a](#focus) [b](#focus-1) [c](./dialog.md#keep-it) [d](./dialog.md#closing-a-dialog) [e](#nope)\n",
+            ],
+            [
+              "components/dialog.md",
+              '## Closing a dialog\n\n<a id="keep-it"></a>\n',
+            ],
+          ]),
+        },
+      ],
+    ]);
+    expect(findBrokenLinks(outputs)).toEqual([
+      "@salt-ds/core/docs/components/button.md: link #nope points to a heading that doesn't exist.",
     ]);
   });
 });
@@ -400,7 +429,7 @@ layout: DetailPattern
 ---
 
 ${"Stack fields vertically.\n\n".repeat(1000)}
-`,
+${FORMS_PREVIEWS}`,
     });
     const result = await generateAgentDocs({
       repoRoot,
@@ -425,7 +454,7 @@ layout: DetailPattern
 ---
 
 ${"Stack fields vertically.\n\n".repeat(150)}
-`,
+${FORMS_PREVIEWS}`,
     });
     const result = await generateAgentDocs({
       repoRoot,
@@ -454,6 +483,98 @@ ${"Stack fields vertically.\n\n".repeat(150)}
     expect(error).toBeInstanceOf(AgentDocsError);
     expect(error.errors).toEqual([
       '@salt-ds/theme: add "docs" to "files" in packages/theme/package.json so its generated docs are published.',
+    ]);
+    expect(await pathExists(path.join(repoRoot, "packages/core/docs"))).toBe(
+      false,
+    );
+  });
+
+  it("leaves out aliases that are another page's title, or repeat a name", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/components/button/index.mdx": fixtureFiles[
+        "site/docs/components/button/index.mdx"
+      ].replace(
+        'alsoKnownAs: ["Action"]',
+        'alsoKnownAs: ["Action", "Forms", "action"]',
+      ),
+    });
+    const result = await generateAgentDocs({
+      repoRoot,
+      propsProvider,
+      write: false,
+    });
+    const core = result.outputs.get("@salt-ds/core").files;
+    const button = JSON.parse(core.get("manifest.json")).pages.find(
+      (page) => page.path === "components/button.md",
+    );
+    expect(button.aliases).toEqual(["Action"]);
+    expect(core.get("components/button.md")).toContain(
+      "- Also known as: Action\n",
+    );
+    expect(result.notes).toContain(
+      'site/docs/components/button/index.mdx: alsoKnownAs "Forms" is the title of @salt-ds/core/docs/patterns/forms.md, so the docs for agents leave it out.',
+    );
+  });
+
+  it("titles a section overview by its group and lists the pages below it", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/components/layouts/index.mdx": `---
+title: Overview
+layout: DetailTechnical
+sidebar:
+  groupLabel: Layouts
+data:
+  items:
+    $ref: ./*/index
+---
+
+Layouts arrange content:
+
+{meta.data.items?.map(({ title }) => title)}
+`,
+      "site/docs/components/layouts/stack-layout/index.mdx": `---
+title: Stack layout
+data:
+  description: "\`StackLayout\` stacks items. It can also wrap."
+  package:
+    name: "@salt-ds/core"
+layout: DetailComponent
+---
+`,
+    });
+    const result = await generateAgentDocs({
+      repoRoot,
+      propsProvider,
+      write: false,
+    });
+    const core = result.outputs.get("@salt-ds/core").files;
+    const overview = core.get("components/layouts.md");
+    expect(overview).toContain("# Layouts overview\n");
+    expect(overview).toContain(
+      "- [Stack layout](./layouts/stack-layout.md): StackLayout stacks items.\n",
+    );
+    expect(core.get("index.md")).toContain(
+      "- [Layouts overview](components/layouts.md)",
+    );
+    expect(result.warnings).toEqual([]);
+  });
+
+  it("fails when no page shows a pattern example", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/patterns/forms.mdx": `---
+title: Forms
+layout: DetailPattern
+---
+
+<LivePreview componentName="patterns/forms" exampleName="Standard" />
+`,
+    });
+    const error = await generateAgentDocs({ repoRoot, propsProvider }).catch(
+      (caught) => caught,
+    );
+    expect(error).toBeInstanceOf(AgentDocsError);
+    expect(error.errors).toEqual([
+      "site/src/examples/patterns/forms/Compact.tsx: no pattern page shows this example. Add a LivePreview for it to the section of the page that discusses it.",
     ]);
     expect(await pathExists(path.join(repoRoot, "packages/core/docs"))).toBe(
       false,

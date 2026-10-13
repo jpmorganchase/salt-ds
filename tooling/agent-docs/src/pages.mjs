@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import matter from "gray-matter";
 import { COMPONENT_TABS, SECTION_RULES } from "./config.mjs";
-import { listFiles } from "./files.mjs";
+import { compareText, listFiles } from "./files.mjs";
 
 /** `components/button/usage.mdx` -> `/salt/components/button/usage`. */
 export function routeForRelativePath(relativePath) {
@@ -60,6 +60,18 @@ function asList(value) {
 }
 
 /**
+ * A section's overview page is titled "Overview" under its sidebar group on
+ * the site, which says nothing on its own in the docs index.
+ */
+function pageTitle(page) {
+  const { title, sidebar } = page.frontmatter;
+  if (title === "Overview" && typeof sidebar?.groupLabel === "string") {
+    return `${sidebar.groupLabel} overview`;
+  }
+  return title ?? path.posix.basename(page.route);
+}
+
+/**
  * Reads every site page and groups them into documents: one per component
  * (its overview and tabs merged) and one per other shipped page.
  */
@@ -79,7 +91,7 @@ export async function discoverDocuments({ siteDocsDir }) {
 
   // Component pages are a component's index page, which normally uses the
   // DetailComponent layout. Pages with another layout that declare a package,
-  // such as technical pages for lab layouts, belong to that package too.
+  // such as technical pages, belong to that package too.
   const componentIndexes = [...pages.values()].filter(
     (page) =>
       page.relativePath.startsWith("components/") &&
@@ -92,7 +104,7 @@ export async function discoverDocuments({ siteDocsDir }) {
     (left, right) =>
       left.relativePath.split("/").length -
         right.relativePath.split("/").length ||
-      left.relativePath.localeCompare(right.relativePath),
+      compareText(left.relativePath, right.relativePath),
   );
 
   for (const index of componentIndexes) {
@@ -145,7 +157,7 @@ export async function discoverDocuments({ siteDocsDir }) {
       packageName: rule.package,
       route: page.route,
       docPath: docPathForRoute(page.route),
-      title: page.frontmatter.title ?? path.posix.basename(page.route),
+      title: pageTitle(page),
       summary:
         page.frontmatter.description ?? page.frontmatter.data?.description,
       aliases: [],
@@ -153,6 +165,6 @@ export async function discoverDocuments({ siteDocsDir }) {
     });
   }
 
-  documents.sort((left, right) => left.route.localeCompare(right.route));
+  documents.sort((left, right) => compareText(left.route, right.route));
   return { documents, errors };
 }

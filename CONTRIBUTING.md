@@ -27,7 +27,7 @@ The repo contains below packages under `/packages`
 
 `yarn build` also generates Markdown documentation for coding agents from `site/docs` into each package's `docs` folder, which is published with the package. If a docs change fails with an unsupported MDX component or unresolved example, see [tooling/agent-docs](./tooling/agent-docs/README.md). Run `yarn build:agent-docs --check` to validate docs changes without a full build.
 
-Pattern examples are structured like component examples: one file per example in `site/src/examples/patterns/<pattern>/`, exported from its `index.ts`, and their Storybook stories re-export them. Code that several examples share lives in the file of the first example that uses it, starting with the example the pattern page shows, so that example's source is complete on the site.
+Pattern examples are structured like component examples: one file per example in `site/src/examples/patterns/<pattern>/`, exported from its `index.ts`, and their Storybook stories re-export them. Show each one on its pattern page with a `LivePreview` in the section that discusses it; `yarn build:agent-docs` fails for an example that no page shows. Code that several examples share lives in the file of the first example on the pattern page that uses it, so that example's source is complete on the site.
 
 ### How to add a new icon
 

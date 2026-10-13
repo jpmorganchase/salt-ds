@@ -9,6 +9,7 @@ import {
   SITE_ORIGIN,
   SUMMARY_MAX_LENGTH,
 } from "./config.mjs";
+import { compareText } from "./files.mjs";
 import { docLink } from "./links.mjs";
 import {
   convertMdx,
@@ -32,6 +33,47 @@ export function summarize(text, maxLength = SUMMARY_MAX_LENGTH) {
 
 function plainText(markdown) {
   return nodeText(parseMarkdown(markdown));
+}
+
+/**
+ * Links to the pages one level below `doc`, each with the first sentence of
+ * its summary, as the site lists them with `meta.data.items`.
+ */
+function childPageList(doc, shared) {
+  const prefix = `${doc.route}/`;
+  const children = (shared.documents ?? [])
+    .filter(
+      (other) =>
+        other.route.startsWith(prefix) &&
+        !other.route.slice(prefix.length).includes("/"),
+    )
+    .sort((left, right) => compareText(left.title, right.title));
+  if (children.length === 0) return [];
+  return [
+    u.list(
+      children.map((child) => {
+        const summary =
+          typeof child.summary === "string"
+            ? (/^.*?\.(?=\s|$)/.exec(plainText(child.summary).trim())?.[0] ??
+              plainText(child.summary).trim())
+            : "";
+        return u.listItem([
+          u.paragraph([
+            u.link(
+              docLink({
+                fromPackage: doc.packageName,
+                fromDocPath: doc.docPath,
+                toPackage: child.packageName,
+                toDocPath: child.docPath,
+              }),
+              [u.text(child.title)],
+            ),
+            ...(summary ? [u.text(`: ${summary}`)] : []),
+          ]),
+        ]);
+      }),
+    ),
+  ];
 }
 
 function location(page, node) {
@@ -62,6 +104,7 @@ async function convertPage(page, doc, shared) {
       shared.warnings.push(`${location(page, node)}: ${message}`),
     note: (node, message) =>
       shared.notes.push(`${location(page, node)}: ${message}`),
+    childPages: () => childPageList(doc, shared),
   };
   try {
     const { source, fragments } = stripFragments(page.body);
@@ -295,7 +338,7 @@ export function renderIndex({ packageName, version, entries, otherPackages }) {
   for (const section of INDEX_SECTIONS) {
     const sectionEntries = entries
       .filter((entry) => sectionFor(entry) === section.key)
-      .sort((left, right) => left.title.localeCompare(right.title));
+      .sort((left, right) => compareText(left.title, right.title));
     if (sectionEntries.length === 0) continue;
     lines.push(`## ${section.title}`, "");
     for (const entry of sectionEntries) {

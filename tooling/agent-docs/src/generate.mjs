@@ -1,6 +1,7 @@
 import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { toString as nodeText } from "mdast-util-to-string";
 import { agentsBlock, indexLines, MANIFEST_FILE } from "./agents-md.mjs";
 import {
   DOCS_DIRECTORY,
@@ -10,9 +11,10 @@ import {
   MAX_PAGE_LINES,
   SITE_ORIGIN,
 } from "./config.mjs";
-import { createExampleResolver } from "./examples.mjs";
-import { pathExists } from "./files.mjs";
+import { createExampleResolver, unshownPatternExamples } from "./examples.mjs";
+import { compareText, pathExists } from "./files.mjs";
 import { createLinkResolver, docLink } from "./links.mjs";
+import { parseMarkdown } from "./mdx.mjs";
 import { discoverDocuments } from "./pages.mjs";
 import { createPropsProvider } from "./props.mjs";
 import {
@@ -59,7 +61,7 @@ async function readPackages(packagesDir) {
   const packages = new Map();
   const entries = await readdir(packagesDir, { withFileTypes: true });
   for (const entry of entries.sort((left, right) =>
-    left.name.localeCompare(right.name),
+    compareText(left.name, right.name),
   )) {
     if (!entry.isDirectory()) continue;
     const manifestPath = path.join(packagesDir, entry.name, "package.json");
@@ -259,35 +261,121 @@ async function writeOutputs({ packages, packagesDir, outputs, repoRoot }) {
   }
 }
 
-const LINK_PATTERN = /\]\(([^)\s]+)\)/g;
-const FENCE_PATTERN = /^(```|~~~)[\s\S]*?^\1/gm;
+/** GitHub-style heading anchors, numbered `-1`, `-2` for repeats, plus HTML `id`s. */
+export function markdownAnchors(tree) {
+  const anchors = new Set();
+  const counts = new Map();
+  const visit = (node) => {
+    if (node.type === "heading") {
+      const base = nodeText(node)
+        .toLowerCase()
+        .trim()
+        .replace(/[^\p{L}\p{M}\p{N}\p{Pc} -]/gu, "")
+        .replace(/ /g, "-");
+      const count = counts.get(base) ?? 0;
+      counts.set(base, count + 1);
+      anchors.add(count === 0 ? base : `${base}-${count}`);
+    } else if (node.type === "html") {
+      for (const [, id] of node.value.matchAll(/\bid="([^"]+)"/g)) {
+        anchors.add(id);
+      }
+    }
+    for (const child of node.children ?? []) visit(child);
+  };
+  visit(tree);
+  return anchors;
+}
 
-/** Every generated link to another generated file must resolve. */
+/**
+ * Every generated link to another generated file must resolve, including
+ * the heading it points to. Links are read from the parsed Markdown, so code
+ * is never mistaken for a link.
+ */
 export function findBrokenLinks(outputs) {
+  const parsed = new Map();
+  const markdown = (packageName, docPath) => {
+    const key = `${packageName}/${docPath}`;
+    if (!parsed.has(key)) {
+      const content = outputs.get(packageName)?.files.get(docPath) ?? "";
+      parsed.set(key, { tree: parseMarkdown(content) });
+    }
+    return parsed.get(key);
+  };
   const broken = [];
   for (const [packageName, { files }] of outputs) {
-    for (const [docPath, content] of files) {
+    for (const docPath of files.keys()) {
       if (!docPath.endsWith(".md")) continue;
-      const prose = content.replace(FENCE_PATTERN, "");
-      for (const [, target] of prose.matchAll(LINK_PATTERN)) {
-        const url = target.replace(/^<|>$/g, "").split("#")[0];
-        if (!url || /^[a-z][a-z0-9+.-]*:/i.test(url)) continue;
-        let exists;
+      const targets = [];
+      const visit = (node) => {
+        if (node.type === "link" || node.type === "definition") {
+          targets.push(node.url);
+        }
+        for (const child of node.children ?? []) visit(child);
+      };
+      visit(markdown(packageName, docPath).tree);
+      for (const target of targets) {
+        if (!target || /^[a-z][a-z0-9+.-]*:/i.test(target)) continue;
+        const hashIndex = target.indexOf("#");
+        const url = hashIndex === -1 ? target : target.slice(0, hashIndex);
+        const anchor = hashIndex === -1 ? "" : target.slice(hashIndex + 1);
+        let targetPackage = packageName;
+        let targetPath = docPath;
         const crossPackage = /^(@salt-ds\/[a-z0-9-]+)\/docs\/(.+)$/.exec(url);
         if (crossPackage) {
-          exists = outputs.get(crossPackage[1])?.files.has(crossPackage[2]);
-        } else {
-          const resolved = path.posix.normalize(
+          [, targetPackage, targetPath] = crossPackage;
+        } else if (url) {
+          targetPath = path.posix.normalize(
             path.posix.join(path.posix.dirname(docPath), url),
           );
-          exists = files.has(resolved);
         }
-        if (!exists)
+        if (!outputs.get(targetPackage)?.files.has(targetPath)) {
           broken.push(`${packageName}/docs/${docPath}: broken link ${target}.`);
+          continue;
+        }
+        if (!anchor || !targetPath.endsWith(".md")) continue;
+        const destination = markdown(targetPackage, targetPath);
+        destination.anchors ??= markdownAnchors(destination.tree);
+        if (!destination.anchors.has(decodeURIComponent(anchor))) {
+          broken.push(
+            `${packageName}/docs/${docPath}: link ${target} points to a heading that doesn't exist.`,
+          );
+        }
       }
     }
   }
   return broken;
+}
+
+const nameKey = (name) => name.toLowerCase().replace(/[^a-z0-9]/g, "");
+
+/**
+ * Agents read `alsoKnownAs` names as other names for the same component, so
+ * this leaves out names that are another page's title, which agents would
+ * mistake for that page, and repeated spellings. Returns authoring notes.
+ */
+export function dropMisleadingAliases(documents) {
+  const titles = new Map();
+  for (const doc of documents) {
+    const key = nameKey(doc.title);
+    if (!titles.has(key)) titles.set(key, []);
+    titles.get(key).push(doc);
+  }
+  const notes = [];
+  for (const doc of documents) {
+    const seen = new Set();
+    doc.aliases = doc.aliases.filter((alias) => {
+      const key = nameKey(alias);
+      if (!key || seen.has(key)) return false;
+      seen.add(key);
+      const other = titles.get(key)?.find((page) => page !== doc);
+      if (!other) return true;
+      notes.push(
+        `site/docs/${(doc.index ?? doc.page).relativePath}: alsoKnownAs "${alias}" is the title of ${other.packageName}/docs/${other.docPath}, so the docs for agents leave it out.`,
+      );
+      return false;
+    });
+  }
+  return notes;
 }
 
 /**
@@ -320,19 +408,20 @@ export async function generateAgentDocs({
   const knownDocuments = documents.filter((doc) =>
     packages.has(doc.packageName),
   );
+  notes.push(...dropMisleadingAliases(knownDocuments));
   const routeIndex = new Map(
     knownDocuments.map((doc) => [
       doc.route,
       { packageName: doc.packageName, docPath: doc.docPath },
     ]),
   );
+  const examplesDir = path.join(repoRoot, "site", "src", "examples");
   const shared = {
     packages,
     links: createLinkResolver(routeIndex),
-    examples: createExampleResolver({
-      examplesDir: path.join(repoRoot, "site", "src", "examples"),
-    }),
+    examples: createExampleResolver({ examplesDir }),
     props: propsProvider ?? createPropsProvider({ packagesDir }),
+    documents: knownDocuments,
     componentsByTitle: new Map(
       knownDocuments
         .filter((doc) => doc.kind === "component")
@@ -386,6 +475,14 @@ export async function generateAgentDocs({
       summary: rendered.summary,
       aliases: doc.aliases,
     });
+  }
+  for (const example of await unshownPatternExamples({
+    examplesDir,
+    shown: shared.examples.shown,
+  })) {
+    errors.push(
+      `site/src/examples/${example}.tsx: no pattern page shows this example. Add a LivePreview for it to the section of the page that discusses it.`,
+    );
   }
   await addReferences({ packages, packagesDir, routeIndex, outputs });
   if (packages.has(AGENTS_MD_PACKAGE)) {
