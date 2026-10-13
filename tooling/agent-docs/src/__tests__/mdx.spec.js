@@ -144,6 +144,22 @@ describe("convertMdx", () => {
     expect(ctx.notes).toEqual(["<Diagram> /img/b.png has no alt text."]);
   });
 
+  it("leaves out a caption that repeats the alt text", async () => {
+    const markdown = await toMarkdown(
+      '<Diagram src="/img/a.png" alt="A card with a header" caption="A card with a header." />',
+    );
+    expect(markdown).toBe("_Image: A card with a header_\n");
+  });
+
+  it("keeps a disclosure's id as an anchor that links can target", async () => {
+    const markdown = await toMarkdown(
+      '<Disclosure id="legacy-theme" summary="Using the Legacy theme">\n\nUse `SaltProvider`.\n\n</Disclosure>',
+    );
+    expect(markdown).toBe(
+      '<a id="legacy-theme"></a>\n\n**Using the Legacy theme**\n\nUse `SaltProvider`.\n',
+    );
+  });
+
   it("converts JSX tables to Markdown tables", async () => {
     const markdown = await toMarkdown(
       "<Table>\n  <THead>\n    <tr>\n      <th>Key</th>\n      <th>Action</th>\n    </tr>\n  </THead>\n  <TBody>\n    <tr>\n      <td><Kbd>Ctrl</Kbd> + <Kbd>S</Kbd></td>\n      <td>Saves   the\n   document</td>\n    </tr>\n  </TBody>\n</Table>",

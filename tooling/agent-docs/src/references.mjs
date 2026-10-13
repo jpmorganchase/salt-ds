@@ -2,7 +2,7 @@ import { readFile } from "node:fs/promises";
 import path from "node:path";
 import postcss from "postcss";
 import { MAX_PAGE_BYTES } from "./config.mjs";
-import { listFiles } from "./files.mjs";
+import { compareText, listFiles } from "./files.mjs";
 import { relativeDocLink } from "./links.mjs";
 
 export const TOKEN_REFERENCE_PATH = "tokens.md";
@@ -79,7 +79,7 @@ export async function collectTokens(themeCssDir) {
     });
   }
   const sorted = [...tokens.values()].sort((left, right) =>
-    left.name.localeCompare(right.name),
+    compareText(left.name, right.name),
   );
   // Only point deprecated tokens at tokens that may be referenced directly.
   const tierByName = new Map(sorted.map((token) => [token.name, token.tier]));
@@ -284,7 +284,7 @@ export async function collectIcons(iconsDir) {
       icons.push({ name, deprecated: deprecated?.[1].trim() });
     }
   }
-  return icons.sort((left, right) => left.name.localeCompare(right.name));
+  return icons.sort((left, right) => compareText(left.name, right.name));
 }
 
 export function renderIconReference({ icons, packageVersion, links }) {

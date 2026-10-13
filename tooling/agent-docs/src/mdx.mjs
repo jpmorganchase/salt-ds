@@ -200,13 +200,23 @@ async function transformChildren(node, ctx) {
   return output;
 }
 
+const sameText = (left, right) => {
+  const key = (text) =>
+    text
+      .toLowerCase()
+      .replace(/[\s.]+$/, "")
+      .trim();
+  return key(left) === key(right);
+};
+
 function imageNodes(node, alt, hidden, caption) {
   const description = hidden ? "" : (alt?.trim() ?? "");
   const captionText = caption?.trim() ?? "";
   if (!description && !captionText) return [];
   const phrasing = [];
   if (description) phrasing.push(u.emphasis([u.text(`Image: ${description}`)]));
-  if (captionText) {
+  // A caption that repeats the alt text adds nothing.
+  if (captionText && !(description && sameText(description, captionText))) {
     if (phrasing.length > 0) phrasing.push(u.text(" "));
     phrasing.push(u.text(captionText));
   }
@@ -255,6 +265,15 @@ function expressionNodes(node, ctx) {
     return node.type === "mdxTextExpression"
       ? [u.text(literal[2])]
       : [u.paragraph([u.text(literal[2])])];
+  }
+  // Overview pages list the pages below them with `meta.data.items`.
+  if (
+    node.type === "mdxFlowExpression" &&
+    /\bmeta\.data\.items\b/.test(value) &&
+    ctx.childPages
+  ) {
+    const list = ctx.childPages();
+    if (list.length > 0) return list;
   }
   ctx.warn(node, `Dropped MDX expression {${value.slice(0, 40)}}.`);
   return [];
@@ -561,11 +580,15 @@ async function quickLinks(node, ctx) {
 }
 
 async function disclosure(node, ctx) {
-  const summary = attributeString(attributes(node), "summary");
+  const attrs = attributes(node);
+  const summary = attributeString(attrs, "summary");
+  const id = attributeString(attrs, "id");
   const children = asFlow(await transformChildren(node, ctx));
+  // Keep the id that site links point to, as an HTML anchor.
+  const anchor = id ? [{ type: "html", value: `<a id="${id}"></a>` }] : [];
   return summary
-    ? [u.paragraph([u.strong([u.text(summary)])]), ...children]
-    : children;
+    ? [...anchor, u.paragraph([u.strong([u.text(summary)])]), ...children]
+    : [...anchor, ...children];
 }
 
 /** Replaces an interactive site gallery with a link to generated reference docs. */

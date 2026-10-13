@@ -1,6 +1,14 @@
 import { readdir, stat } from "node:fs/promises";
 import path from "node:path";
 
+// A fixed locale keeps the generated docs the same on every machine.
+const collator = new Intl.Collator("en");
+
+/** Compares text in English collation order, whatever the machine's locale. */
+export function compareText(left, right) {
+  return collator.compare(left, right);
+}
+
 export function toPosix(filePath) {
   return filePath.split(path.sep).join("/");
 }

@@ -36,6 +36,8 @@ jobs:
         run: yarn run lint:style
       - name: Spellcheck
         run: yarn workspace @salt-ds/site spellcheck
+      - name: Check agent docs
+        run: yarn build:agent-docs --check
 
   dependency-check:
     name: Dependency Check
