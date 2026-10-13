@@ -81,6 +81,8 @@ Include when identity cues improve scanning or clarify ownership.
   border
 />
 
+<LivePreview componentName="patterns/comments" exampleName="WithAvatar" />
+
 Use the [`Avatar`](/salt/components/avatar) component’s categorical colors to differentiate authors.
 
 <Diagram
@@ -89,6 +91,8 @@ Use the [`Avatar`](/salt/components/avatar) component’s categorical colors to 
   alt="comments with user roles"
   border
 />
+
+<LivePreview componentName="patterns/comments" exampleName="WithCategoricalAvatar" />
 
 ## Timestamp
 
@@ -121,6 +125,8 @@ Use a short, neutral message to indicate there are no comments yet.
   - Keep it compact; avoid decorative imagery or filler.
 </GuidanceCallout>
 
+<LivePreview componentName="patterns/comments" exampleName="WithEmptyState" />
+
 ## Multiline input
 
 Use a [`MultilineInput`](/salt/components/multiline-input) when longer messages are common; this reduces scrolling while composing.
@@ -136,6 +142,8 @@ Use a [`MultilineInput`](/salt/components/multiline-input) when longer messages 
   - Use a multiline field only if a meaningful portion of users will benefit.
   - Auto‑grow to a sensible maximum height, then scroll within the field so the thread stays visible.
 </GuidanceCallout>
+
+<LivePreview componentName="patterns/comments" exampleName="WithMultilineInput" />
 
 ## Display order
 
@@ -168,5 +176,6 @@ Offer recovery without losing work by showing an inline error. Preserve the fail
   - Support stacked errors if multiple submissions fail.
 </GuidanceCallout>
 
+<LivePreview componentName="patterns/comments" exampleName="WithSubmissionError" />
 
 :fragment{src="./fragments/feedback.mdx"}
