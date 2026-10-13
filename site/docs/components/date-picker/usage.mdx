@@ -75,10 +75,7 @@ import {
 } from "@salt-ds/date-components";
 
 <LocalizationProvider DateAdapter={AdapterLuxon}>
-  <DatePicker
-    selectionVariant="single"
-    defaultSelectedDate={new DateTime().now()}
-  >
+  <DatePicker selectionVariant="single" defaultSelectedDate={DateTime.now()}>
     <DatePickerTrigger>
       <DatePickerSingleInput />
     </DatePickerTrigger>
@@ -86,14 +83,14 @@ import {
       <DatePickerSingleGridPanel />
     </DatePickerOverlay>
   </DatePicker>
-<LocalizationProvider>
+</LocalizationProvider>;
 ```
 
 ### Locale
 
 The default locale for Salt's date adapters is "enUS".
 
-`DatePicker` uses the locale of the configured date adapter provided by the nearest [LocalizationProvider] (../localization-provider).
+`DatePicker` uses the locale of the configured date adapter provided by the nearest [LocalizationProvider](../localization-provider).
 Configuration of locales is date framework specific and may require you to import specific locales from the date library you are using.
 
 For example, if you are using `date-fns`, you may need to import the specific locale you want to use, such as `es` or `frFR`.

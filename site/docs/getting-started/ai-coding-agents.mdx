@@ -37,9 +37,15 @@ lists the pages of the installed versions.
   for example after an upgrade. It checks `CLAUDE.md` too unless you also add
   `--no-claude`.
 - Add `--no-claude` to leave `CLAUDE.md` alone.
+- Add `--dir <path>` to update the `AGENTS.md` and `CLAUDE.md` in another folder
+  instead of the current one.
 - In a monorepo where `@salt-ds/core` is installed under an application, run the
   script by that path, such as
   `node apps/web/node_modules/@salt-ds/core/docs/agents-md.mjs`.
+
+Agents read the documentation from `node_modules`, which Yarn Plug'n'Play
+installs don't create. To use it with Yarn, set `nodeLinker: node-modules` in
+`.yarnrc.yml`.
 
 Generate the section with the script rather than by hand, so the index matches
 your installed versions.

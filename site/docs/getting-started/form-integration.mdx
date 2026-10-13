@@ -37,12 +37,6 @@ ListBox, ToggleButtonGroup and other controls without FormField participation ne
 explicit labels, error associations and invalid semantics on their accessible
 control/group. Do not assume wrapping any widget in FormField connects it.
 
-Lab's legacy FormField and Input-based controls use the legacy context. Their
-native prop/ref paths differ from Core: Lab's exported `Input`, `SearchInput` and
-`FormattedInput` forward their ordinary ref to the input, while the current Lab
-`ComboBox` does not. Use the relevant component API when adapting an existing Lab
-form.
-
 ### Input, MultilineInput
 
 Control `value`; a named field contributes its text to
@@ -116,9 +110,13 @@ field. Follow the component's own selection and focus API.
 
 ### FileDropZone
 
-The host owns files, validation and its native file input. Drop-zone
-status is feedback about the drop, not an input validation API. Label and focus the
-host's actual file input or browse action.
+The host owns the files and their validation. `FileDropZone` passes dropped files
+to `onDrop(event, files)`, and `FileDropZoneTrigger` passes files chosen by browsing
+to `onChange(event, files)`. The trigger's hidden file input is cleared after
+`onChange`, and dropped files never reach it, so files aren't in the form's
+`FormData`: keep files from both callbacks in the host's state and submit them from
+there. Drop-zone status is feedback about the drop, not an input validation API.
+Move focus to the trigger, not the hidden input.
 
 ## Submission and reset
 
