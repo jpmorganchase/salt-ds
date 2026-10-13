@@ -601,7 +601,7 @@ function registerAdapterTests(
           name: `${adapter.format(march2026, MONTH_YEAR_FORMAT)}, selected`,
         });
         await expect.element(selectedMonth).toHaveFocus();
-        for (const label of ["Previous year", "Year Dropdown", "Next year"]) {
+        for (const label of ["Previous year", "Select year", "Next year"]) {
           await userEvent.tab();
           await expect.element(page.getByLabelText(label)).toHaveFocus();
         }
@@ -970,7 +970,7 @@ function registerAdapterTests(
         );
         await calendarTrigger().click();
         await expect
-          .element(page.getByRole("combobox", { name: "Year Dropdown" }))
+          .element(page.getByRole("combobox", { name: "Select year" }))
           .toBeInTheDocument();
       });
 
@@ -1040,7 +1040,7 @@ function registerAdapterTests(
         );
         await calendarTrigger(0).click();
         await expect
-          .element(page.getByRole("combobox", { name: "Year Dropdown" }).nth(1))
+          .element(page.getByRole("combobox", { name: "Select year" }).nth(1))
           .toBeInTheDocument();
       });
 
@@ -1125,7 +1125,7 @@ function registerAdapterTests(
         });
         await expect.element(startMonth).toHaveFocus();
         for (const region of ["2027 months group", "2026 months group"]) {
-          for (const label of ["Previous year", "Year Dropdown", "Next year"]) {
+          for (const label of ["Previous year", "Select year", "Next year"]) {
             await userEvent.tab();
             await expect
               .element(

@@ -14,7 +14,7 @@ export const monthYearPanelMessages = {
   previousYearOutOfRange: "Past dates are out of range",
   nextYearLabel: "Next year",
   nextYearOutOfRange: "Future dates are out of range",
-  yearDropdownLabel: "Year Dropdown",
+  yearDropdownLabel: "Select year",
   yearChangedAnnouncement: (year: number) => `${year}.`,
   gridLabel: (year: number) => `${year} months group`,
   monthSelectedAriaLabel: (fullLabel: string) => `${fullLabel}, selected`,
