@@ -1,5 +1,6 @@
 import path from "node:path";
 import { toString as nodeText } from "mdast-util-to-string";
+import { siteAnchorMap } from "./anchors.mjs";
 import {
   DROPPED_FRAGMENTS,
   GENERATED_MARKER,
@@ -219,7 +220,9 @@ function firstParagraphText(nodes) {
  * first example can stay; on other pages examples can come first, so they
  * all move when the page is too long.
  */
-function finishDocument(doc, children, summary) {
+function finishDocument(doc, children, summary, segments) {
+  // Before placement, which copies the nodes.
+  const anchorMap = siteAnchorMap(children, segments);
   const placed = placeExamples(children, {
     title: doc.title,
     docPath: doc.docPath,
@@ -229,6 +232,7 @@ function finishDocument(doc, children, summary) {
     markdown: stringifyMarkdown({ type: "root", children: placed.children }),
     summary,
     files: placed.files,
+    anchorMap,
   };
 }
 
@@ -260,14 +264,17 @@ export async function renderComponentDocument(doc, shared) {
   }
   facts.push(websiteFact(doc));
 
+  const overview = await convertPage(doc.index, doc, shared);
+  const segments = [{ route: doc.route, nodes: overview }];
   const children = [
     u.heading(1, [u.text(doc.title)]),
     ...summaryNodes(doc, doc.index, shared),
     u.list(facts),
-    ...(await convertPage(doc.index, doc, shared)),
+    ...overview,
   ];
   for (const tab of doc.tabs) {
     const content = await convertPage(tab.page, doc, shared);
+    segments.push({ route: tab.page.route, nodes: content });
     if (content.length === 0) continue;
     children.push(
       u.heading(2, [u.text(tab.heading)]),
@@ -278,6 +285,7 @@ export async function renderComponentDocument(doc, shared) {
     doc,
     children,
     typeof doc.summary === "string" ? plainText(doc.summary) : "",
+    segments,
   );
 }
 
@@ -295,6 +303,7 @@ export async function renderPageDocument(doc, shared) {
     typeof doc.summary === "string"
       ? plainText(doc.summary)
       : firstParagraphText(content),
+    [{ route: doc.route, nodes: content }],
   );
 }
 

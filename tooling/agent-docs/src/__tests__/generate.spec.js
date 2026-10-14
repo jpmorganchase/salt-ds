@@ -213,7 +213,7 @@ describe("findBrokenLinks", () => {
           files: new Map([
             [
               "components/button.md",
-              "# Button\n\n## Focus\n\n## Focus\n\n[a](#focus) [b](#focus-1) [c](./dialog.md#keep-it) [d](./dialog.md#closing-a-dialog) [e](#nope)\n",
+              "# Button\n\n## Focus\n\n## Focus\n\n## Focus-1\n\n[a](#focus) [b](#focus-1) [f](#focus-1-1) [c](./dialog.md#keep-it) [d](./dialog.md#closing-a-dialog) [e](#nope)\n",
             ],
             [
               "components/dialog.md",
@@ -513,6 +513,41 @@ ${FORMS_PREVIEWS}`,
     );
     expect(result.notes).toContain(
       'site/docs/components/button/index.mdx: alsoKnownAs "Forms" is the title of @salt-ds/core/docs/patterns/forms.md, so the docs for agents leave it out.',
+    );
+  });
+
+  it("points links to a tab's headings at the same heading in the merged page", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/components/button/usage.mdx": `---
+layout: DetailComponent
+---
+
+## Focus
+
+See the [example](./examples#focus).
+`,
+      "site/docs/components/button/examples.mdx": `---
+layout: DetailComponent
+---
+
+## Focus
+
+Back to [usage](./usage#focus), or [this example](#focus).
+
+<LivePreview componentName="button" exampleName="Primary" />
+`,
+    });
+    const result = await generateAgentDocs({
+      repoRoot,
+      propsProvider,
+      write: false,
+    });
+    const button = result.outputs
+      .get("@salt-ds/core")
+      .files.get("components/button.md");
+    expect(button).toContain("See the [example](./button.md#focus-1).");
+    expect(button).toContain(
+      "Back to [usage](./button.md#focus), or [this example](#focus-1).",
     );
   });
 

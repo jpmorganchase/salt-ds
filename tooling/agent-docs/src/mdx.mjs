@@ -682,7 +682,13 @@ function wrapPhrasing(factory) {
 
 async function htmlHeading(node, ctx) {
   const depth = Number(node.name.slice(1));
-  return [u.heading(depth, asPhrasing(await transformChildren(node, ctx)))];
+  const heading = u.heading(
+    depth,
+    asPhrasing(await transformChildren(node, ctx)),
+  );
+  // The site doesn't give headings written as JSX an anchor.
+  heading.data = { jsx: true };
+  return [heading];
 }
 
 const HANDLERS = {

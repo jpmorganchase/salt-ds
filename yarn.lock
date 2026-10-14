@@ -14733,6 +14733,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "salt-agent-docs@workspace:tooling/agent-docs"
   dependencies:
+    github-slugger: "npm:^2.0.0"
     gray-matter: "npm:^4.0.3"
     mdast-util-to-string: "npm:^4.0.0"
     postcss: "npm:^8.5.24"
