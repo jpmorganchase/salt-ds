@@ -92,6 +92,21 @@ describe("createExampleResolver", () => {
     ]);
   });
 
+  it("follows every import and re-export form, but not JSX text", async () => {
+    const examples = await createExamples({
+      "button/Primary.tsx":
+        'export * as helpers from "./helpers";\nconst lazy = () => import("./lazy");\nexport const Primary = () => <p>require("./not-a-module")</p>;\n',
+      "button/helpers.ts": "export const helper = 1;\n",
+      "button/lazy.tsx": "export default () => null;\n",
+    });
+    const example = await examples.resolve("button", "Primary");
+    expect(example.error).toBeUndefined();
+    expect(example.support.map((file) => file.displayPath)).toEqual([
+      "./helpers.ts",
+      "./lazy.tsx",
+    ]);
+  });
+
   it("reports imports from unpublished package folders", async () => {
     const examples = await createExamples({
       "date-picker/Custom.tsx":
