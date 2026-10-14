@@ -130,7 +130,7 @@ Each component page is also published as Markdown in its package's `docs` folder
 Agents get the text, example source, props tables and keyboard interactions, but not images or live previews. So:
 
 - Give every image that carries information alt text, and state the key point in the text too. Leave alt text empty only for decorative images.
-- Keep examples self-contained. Import from Salt packages and files in the example's folder, not site-only helpers. Generation fails for an import from a package's `stories` or `src` folder, which isn't published.
+- Keep examples self-contained. Import from Salt packages and files in the example's folder, not site-only helpers. Generation fails for an `@salt-ds/<package>/stories/...` or `@salt-ds/<package>/src/...` import, which isn't published.
 - Keep examples focused. When a page grows past about 20 KB of Markdown, its largest examples move to separate files linked from the page, so an agent reads the guidance first and opens only the examples it needs.
 - Use `PropsTable` for components only. It shows nothing for hooks and other functions, so describe their arguments and return values in text instead.
 - Fill in `alsoKnownAs` with the names developers search for. They appear in the package's docs index, which agents use to find the right component. Agents read them as other names for the same component, so the docs for agents leave out a name that is the title of another Salt page, such as `Overlay` for Dialog.

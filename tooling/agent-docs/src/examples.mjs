@@ -30,17 +30,48 @@ const MAX_SUPPORT_DEPTH = 3;
 // Salt packages publish neither their stories nor their src folders.
 const UNPUBLISHED_IMPORT_PATTERN = /^@salt-ds\/[^/]+\/(?:stories|src)(?:\/|$)/;
 
-/** Module specifiers that a file imports or re-exports, ignoring comments. */
-function importSpecifiers(source) {
-  return ts
-    .preProcessFile(source, true, true)
-    .importedFiles.map((file) => file.fileName);
-}
+const SCRIPT_KINDS = {
+  ".tsx": ts.ScriptKind.TSX,
+  ".jsx": ts.ScriptKind.JSX,
+  ".js": ts.ScriptKind.JS,
+  ".mjs": ts.ScriptKind.JS,
+};
 
-export function localImportSpecifiers(source) {
-  return importSpecifiers(source).filter((specifier) =>
-    specifier.startsWith("."),
+/**
+ * Module specifiers that a file imports or re-exports, including
+ * `export * as ns from` and `import()`, from a full parse so that comments
+ * and JSX text are ignored.
+ */
+function importSpecifiers(source, fileName = "example.tsx") {
+  const file = ts.createSourceFile(
+    fileName,
+    source,
+    ts.ScriptTarget.Latest,
+    false,
+    SCRIPT_KINDS[path.extname(fileName)] ?? ts.ScriptKind.TS,
   );
+  const specifiers = [];
+  const visit = (node) => {
+    if (
+      (ts.isImportDeclaration(node) || ts.isExportDeclaration(node)) &&
+      node.moduleSpecifier &&
+      ts.isStringLiteral(node.moduleSpecifier)
+    ) {
+      specifiers.push(node.moduleSpecifier.text);
+    } else if (
+      ts.isCallExpression(node) &&
+      (node.expression.kind === ts.SyntaxKind.ImportKeyword ||
+        (ts.isIdentifier(node.expression) &&
+          node.expression.text === "require")) &&
+      node.arguments.length > 0 &&
+      ts.isStringLiteralLike(node.arguments[0])
+    ) {
+      specifiers.push(node.arguments[0].text);
+    }
+    ts.forEachChild(node, visit);
+  };
+  visit(file);
+  return specifiers;
 }
 
 async function resolveLocalImport(fromFile, specifier) {
@@ -82,7 +113,8 @@ export function createExampleResolver({ examplesDir }) {
 
     while (queue.length > 0) {
       const { file, code, depth } = queue.shift();
-      const unpublished = importSpecifiers(code).find((specifier) =>
+      const specifiers = importSpecifiers(code, file);
+      const unpublished = specifiers.find((specifier) =>
         UNPUBLISHED_IMPORT_PATTERN.test(specifier),
       );
       if (unpublished) {
@@ -91,7 +123,9 @@ export function createExampleResolver({ examplesDir }) {
         };
       }
       if (depth >= MAX_SUPPORT_DEPTH) continue;
-      for (const specifier of localImportSpecifiers(code)) {
+      for (const specifier of specifiers.filter((specifier) =>
+        specifier.startsWith("."),
+      )) {
         const resolved = await resolveLocalImport(file, specifier);
         if (!resolved) {
           return {
@@ -158,7 +192,7 @@ export async function unshownPatternExamples({ examplesDir, shown }) {
     if (!indexFile) continue;
     const source = await readFile(indexFile, "utf8");
     // Examples are the .tsx files beside index.ts that it re-exports.
-    for (const specifier of importSpecifiers(source)) {
+    for (const specifier of importSpecifiers(source, indexFile)) {
       const name = /^\.\/([^/]+)$/.exec(specifier)?.[1];
       if (!name) continue;
       if (!(await isFile(path.join(patternsDir, entry.name, `${name}.tsx`)))) {
