@@ -10,6 +10,12 @@ data:
 
 ## Best practices
 
+- Use a menu for a list of actions or commands, such as "More actions".
+
+### Selectable menu items
+
+- Use selectable menu items when those actions include a stateful choice that users can set and revisit, such as a mode, view options or a sort order.
+- Avoid selectable menu items when the list is really a value picker for a form control, such as choosing a year or country. Instead, use [`Dropdown`](/salt/components/dropdown) to pick from a short list, or [`ComboBox`](/salt/components/combo-box) to type and filter a long list.
 - When a selectable `MenuGroup` has no `label`, pass an `aria-label` that describes the set of options, so screen reader users know what they're choosing between.
 
 ### Disabled menu items
