@@ -40,7 +40,7 @@
 
   /* Display */
   --salt-text-display-fontFamily: var(--salt-typography-fontFamily-roboto);
-  --salt-text-display-letterSpacing: 0em;
+  --salt-text-display-letterSpacing: 0;
   --salt-text-display-textTransform: none;
   --salt-text-display-fontStyle: var(--salt-typography-fontStyle-normal);
   --salt-text-display-fontWeight: var(--salt-typography-fontWeight-light);
@@ -127,7 +127,7 @@
   --salt-text-eyebrow-lineHeight: 23px;
 
   --salt-text-notation-fontSize: 14px;
-  --salt-text-notation-lineHeight: 14px;
+  --salt-text-notation-lineHeight: 18px;
 }
 
 .salt-interim.salt-density-low {
