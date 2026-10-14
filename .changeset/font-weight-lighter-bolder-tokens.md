@@ -29,6 +29,8 @@ Renamed the `small` and `strong` font weight tokens to `lighter` and `bolder`, t
 | `--salt-text-notation-fontWeight-small`  | `--salt-text-notation-fontWeight-lighter` |
 | `--salt-text-notation-fontWeight-strong` | `--salt-text-notation-fontWeight-bolder`  |
 
-The deprecated `--salt-text-h{1-4}-fontWeight-small`, `--salt-text-h{1-4}-fontWeight-strong`, `--salt-text-display{1-4}-fontWeight-small` and `--salt-text-display{1-4}-fontWeight-strong` tokens now alias the new tokens. The experimental Salt (Interim) theme only includes the new tokens.
+The deprecated `--salt-text-h{1-4}-fontWeight-small`, `--salt-text-h{1-4}-fontWeight-strong`, `--salt-text-display{1-4}-fontWeight-small` and `--salt-text-display{1-4}-fontWeight-strong` tokens now alias the new tokens.
+
+The `small` and `strong` font weight tokens have been removed from the experimental Salt (Interim) theme without aliases. If you use the interim theme and reference them, switch to the matching `lighter` and `bolder` tokens in the table above.
 
 See [font weight](https://www.saltdesignsystem.com/salt/foundations/typography#font-weight) for how each text style uses these weights.
