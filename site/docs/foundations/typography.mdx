@@ -11,13 +11,6 @@ Typography refers to the predefined typographic styles that guide the presentati
 
 The typography foundation offers two font families for UI design: Open Sans and Amplitude, along with PT Mono for code blocks.
 
-<Image
-  src="/img/foundations/typography-fontfamily.png"
-  srcDark="/img/foundations/typography-fontfamily-dark.png"
-  alt=""
-  aria-hidden="true"
-/>
-
 Font families are used differently by each theme. For more information about the themes offered in Salt, please refer to [theme guidance](https://www.saltdesignsystem.com/salt/themes/index).
 
 Each theme uses font families differently:
@@ -39,17 +32,17 @@ Salt offers a series of text styles designed to create a visual hierarchy throug
 
 The typographic hierarchy has nine levels, with variants within some levels:
 
-| Text style | Purpose                                                                                                                                                                                                                                  |
-| ---------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Text style | Purpose                                                                                                                                                                                                                                    |
+| ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Editorial  | Editorial1 to Editorial6. Editorial styles are the largest text styles, intended for expressive headlines in mastheads, hero banners and other editorial content. Editorial5 and Editorial6 match the font sizes of Display1 and Display2. |
-| Display    | Display1 to Display4. Display styles are intended for showcasing key metrics or highlighting prominent messaging within a masthead.                                                                                                      |
-| Heading    | H1 to H4. Headings are used to divide content into a clear hierarchy and adhere to HTML standards.                                                                                                                                       |
-| Eyebrow    | Eyebrow is a short line of text placed above a heading to introduce its topic or category.                                                                                                                                               |
-| Body       | Body 1 is the default style for most components and textual content. If no specific style is applied, the text will default to Body 1. Body 2 is a larger variant, intended for introductory paragraphs and editorial content.           |
-| Action     | Reserved for actionable items such as buttons.                                                                                                                                                                                           |
-| Label      | Label 1 provides clear and concise style for form fields and data grid headings, ensuring users can easily understand and interact with various interface elements. Label 2 is a larger variant for when labels need more prominence.    |
-| Notation   | Notation provides a small font size, ideal for compact components, footnotes, and disclaimers. It ensures important but less prominent information is clearly communicated without overshadowing the main content.                       |
-| Code       | Reserved for representing code examples.                                                                                                                                                                                                 |
+| Display    | Display1 to Display4. Display styles are intended for showcasing key metrics or highlighting prominent messaging within a masthead.                                                                                                        |
+| Heading    | H1 to H4. Headings are used to divide content into a clear hierarchy and adhere to HTML standards.                                                                                                                                         |
+| Eyebrow    | Eyebrow is a short line of text placed above a heading to introduce its topic or category.                                                                                                                                                 |
+| Body       | Body 1 is the default style for most components and textual content. If no specific style is applied, the text will default to Body 1. Body 2 is a larger variant, intended for introductory paragraphs and editorial content.             |
+| Action     | Reserved for actionable items such as buttons.                                                                                                                                                                                             |
+| Label      | Label 1 provides clear and concise style for form fields and data grid headings, ensuring users can easily understand and interact with various interface elements. Label 2 is a larger variant for when labels need more prominence.      |
+| Notation   | Notation provides a small font size, ideal for compact components, footnotes, and disclaimers. It ensures important but less prominent information is clearly communicated without overshadowing the main content.                         |
+| Code       | Reserved for representing code examples.                                                                                                                                                                                                   |
 
 Use the preview settings to see each text style in a different theme, density or mode.
 
@@ -68,41 +61,5 @@ Line height controls the space between baselines in a block of text and is propo
 Font weight refers to the relative thickness of a font's stroke. Each text style in Salt offers three different weights, allowing you to establish a visual hierarchy even when using the same text style. The specific font weight is dependent on the text style and theme being used. Each text style has a default weight which can be made ‘lighter’ to de-emphasize the text or ‘bolder’ to emphasize it. Some styles don't use every weight. For example, eyebrow text can be lighter but not bolder, and editorial text in the J.P. Morgan theme always uses a light weight. In these cases, the unused weights match the default weight.
 
 In code, use the `fontWeight` prop on [`Text`](/salt/components/text/examples#font-weight): `lighter` applies the lighter weight and `bolder` applies the bolder weight. In CSS, use the `-fontWeight-lighter` and `-fontWeight-bolder` tokens of the text style, for example `--salt-text-fontWeight-lighter` and `--salt-text-heading-fontWeight-bolder`.
-
-<Image
-  src="/img/foundations/typography-fontweight.png"
-  srcDark="/img/foundations/typography-fontweight-dark.png"
-  alt="Example of small, default and strong font weights"
-/>
-
-## Case
-
-### Sentence case
-
-Sentence case is mainly used for body copy, page titles, navigation, subheadings, form titles, field labels, and chart titles and text.
-
-### Title case
-
-Title case is reserved for proper nouns and job titles, referring to specific individuals, companies, products, or objects.
-
-### All capitals
-
-All capitals are used for button labels to give them prominence and differentiate them from other non-actionable items. All caps should be avoided in general writing.
-
-<Image
-  src="/img/foundations/typography-case.png"
-  srcDark="/img/foundations/typography-case-dark.png"
-  alt="Example use case where the user's name is using title case, timezone information is using sentence case and button label is using all caps"
-/>
-
-## Italics
-
-Italics are applied sparingly to short pieces of text to help differentiate them from the surrounding content. They should be used independently of font weight changes. Full sentences or blocks of text are generally not italicized, and combining italics with font weight for emphasis is not recommended.
-
-<Image
-  src="/img/foundations/typography-italics.png"
-  srcDark="/img/foundations/typography-italics-dark.png"
-  alt="Example italics use case, using italics on the supporting helper text for a form field"
-/>
 
 :fragment{src="./fragments/feedback.mdx"}
