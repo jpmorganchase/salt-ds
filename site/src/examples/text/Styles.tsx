@@ -10,8 +10,6 @@ import {
   Editorial4,
   Editorial5,
   Editorial6,
-  Editorial7,
-  Editorial8,
   Eyebrow,
   H1,
   H2,
@@ -33,8 +31,6 @@ export const Styles = (): ReactElement => (
     <Editorial4>Editorial 4</Editorial4>
     <Editorial5>Editorial 5</Editorial5>
     <Editorial6>Editorial 6</Editorial6>
-    <Editorial7>Editorial 7</Editorial7>
-    <Editorial8>Editorial 8</Editorial8>
     <Display1>Display 1</Display1>
     <Display2>Display 2</Display2>
     <Display3>Display 3</Display3>

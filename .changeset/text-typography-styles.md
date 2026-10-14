@@ -4,7 +4,7 @@
 
 Added editorial, eyebrow, Body 2 and Label 2 text styles for expressive content such as mastheads and hero banners.
 
-- `Editorial1` to `Editorial8` components, and `editorial1` to `editorial8` `styleAs` values, for large headlines. `Editorial5` to `Editorial8` use the font sizes of `Display1` to `Display4`.
+- `Editorial1` to `Editorial6` components, and `editorial1` to `editorial6` `styleAs` values, for large headlines. `Editorial5` and `Editorial6` use the font sizes of `Display1` and `Display2`.
 - `Eyebrow` component and `eyebrow` `styleAs` value, for a short line of text that introduces a heading.
 - `body2` and `label2` `styleAs` values, for introductory paragraphs and larger labels.
 
