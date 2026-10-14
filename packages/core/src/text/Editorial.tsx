@@ -44,3 +44,47 @@ export const Editorial4 = forwardRef<
     </Text>
   );
 });
+
+export const Editorial5 = forwardRef<
+  HTMLSpanElement,
+  Omit<TextProps<"span">, "as">
+>(function Editorial5({ children, styleAs = "editorial5", ...rest }, ref) {
+  return (
+    <Text as="span" styleAs={styleAs} ref={ref} {...rest}>
+      {children}
+    </Text>
+  );
+});
+
+export const Editorial6 = forwardRef<
+  HTMLSpanElement,
+  Omit<TextProps<"span">, "as">
+>(function Editorial6({ children, styleAs = "editorial6", ...rest }, ref) {
+  return (
+    <Text as="span" styleAs={styleAs} ref={ref} {...rest}>
+      {children}
+    </Text>
+  );
+});
+
+export const Editorial7 = forwardRef<
+  HTMLSpanElement,
+  Omit<TextProps<"span">, "as">
+>(function Editorial7({ children, styleAs = "editorial7", ...rest }, ref) {
+  return (
+    <Text as="span" styleAs={styleAs} ref={ref} {...rest}>
+      {children}
+    </Text>
+  );
+});
+
+export const Editorial8 = forwardRef<
+  HTMLSpanElement,
+  Omit<TextProps<"span">, "as">
+>(function Editorial8({ children, styleAs = "editorial8", ...rest }, ref) {
+  return (
+    <Text as="span" styleAs={styleAs} ref={ref} {...rest}>
+      {children}
+    </Text>
+  );
+});
