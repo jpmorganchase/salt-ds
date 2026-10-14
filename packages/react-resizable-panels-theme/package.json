@@ -27,6 +27,6 @@
   },
   "peerDependencies": {
     "@salt-ds/theme": "workspace:^",
-    "react-resizable-panels": ">=3.0.0"
+    "react-resizable-panels": ">=3.0.0 <5.0.0"
   }
 }

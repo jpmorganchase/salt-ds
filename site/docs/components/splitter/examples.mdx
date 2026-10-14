@@ -21,16 +21,16 @@ By default, the resize handles are transparent, allowing the background color of
 />
 ## Variants
 
-Both the resize handles and the resizable panels offer three background variants.
+Both separators and resizable panels offer three background variants.
 
-**For the Panel Component:**  
+**For the Panel Component:**
 Use the following class names to apply the desired background variant:
 
 - `resizable-panel-salt-variant-primary`
 - `resizable-panel-salt-variant-secondary`
 - `resizable-panel-salt-variant-tertiary`
 
-**For the PanelResizeHandle Component:**  
+**For the Separator Component:**
 Apply these class names to select the appropriate background variant:
 
 - `resize-handle-salt-variant-primary`
@@ -43,9 +43,9 @@ Apply these class names to select the appropriate background variant:
 />
 ## Border
 
-There are 4 border directions in the the Salt React Resizable Panels theme: `top`, `bottom`, `left` and `right`. By default, the `PanelResizeHandle` components will render with no borders, to add borders to the handles, apply any of the following classNames to `PanelResizeHandle`:
+There are 4 border directions in the Salt React Resizable Panels theme: `top`, `bottom`, `left` and `right`. By default, `Separator` components render with no borders. To add borders, apply any of the following class names to `Separator`:
 
-For a PanelGroup with direction `vertical`:
+For a `Group` with `orientation="vertical"`:
 
 - `resize-handle-salt-border-top`
 - `resize-handle-salt-border-bottom`
@@ -54,7 +54,7 @@ For a PanelGroup with direction `vertical`:
   componentName="react-resizable-panels-theme"
   exampleName="Vertical"
 />
-For a PanelGroup with direction `horizontal`:
+For a `Group` with `orientation="horizontal"`:
 
 - `resize-handle-salt-border-left`
 - `resize-handle-salt-border-right`
@@ -62,6 +62,6 @@ For a PanelGroup with direction `horizontal`:
 <LivePreview
   componentName="react-resizable-panels-theme"
   exampleName="Horizontal"
-/>  
-  
+/>
+
 </ReactResizablePanelsThemeProvider>
