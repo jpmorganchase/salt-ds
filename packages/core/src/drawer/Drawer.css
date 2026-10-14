@@ -40,7 +40,7 @@
 .saltDrawer-resizable {
   --drawer-resizeHandleSize: var(--salt-size-fixed-600);
   --drawer-resizeHandleOutset: var(--salt-spacing-fixed-900);
-  --drawer-resizeHandleHitSize: calc(var(--drawer-resizeHandleSize) + var(--drawer-resizeHandleOutset));
+  --drawer-resizeHandleGutter: calc(var(--drawer-resizeHandleSize) + var(--drawer-resizeHandleOutset));
   overflow: visible;
   padding: 0;
 }
@@ -57,22 +57,21 @@
   box-sizing: border-box;
 }
 
+/* Reserve the handle's inner hit target */
 .saltDrawer-resizable.saltDrawer-left {
-  padding-right: var(--drawer-resizeHandleHitSize);
+  padding-right: var(--drawer-resizeHandleGutter);
 }
 
 .saltDrawer-resizable.saltDrawer-right {
-  padding-left: var(--drawer-resizeHandleSize);
+  padding-left: var(--drawer-resizeHandleGutter);
 }
 
-.saltDrawer-resizable.saltDrawer-top > .saltDrawer-inner {
-  clip-path: inset(0 0 var(--drawer-resizeHandleHitSize) 0);
-  scroll-padding-bottom: var(--drawer-resizeHandleHitSize);
+.saltDrawer-resizable.saltDrawer-top {
+  padding-bottom: var(--drawer-resizeHandleGutter);
 }
 
-.saltDrawer-resizable.saltDrawer-bottom > .saltDrawer-inner {
-  clip-path: inset(var(--drawer-resizeHandleHitSize) 0 0 0);
-  scroll-padding-top: var(--drawer-resizeHandleHitSize);
+.saltDrawer-resizable.saltDrawer-bottom {
+  padding-top: var(--drawer-resizeHandleGutter);
 }
 
 .saltDrawer-resizable.saltDrawer-left,

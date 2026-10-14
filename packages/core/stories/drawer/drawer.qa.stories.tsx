@@ -301,7 +301,7 @@ const ScrolledResizableDrawerTemplate = ({
 }: Pick<DrawerProps, "position">) => {
   const [drawer, setDrawer] = useState<HTMLDivElement | null>(null);
 
-  // Scrolls the block under the handle. Must run after the drawer measures its size limits, which resets the scroll.
+  // Scrolls the block up to the handle. Must run after the drawer measures its size limits, which resets the scroll.
   useEffect(() => {
     const scroller = drawer?.querySelector<HTMLElement>(".saltDrawer-inner");
     if (!scroller) return;
@@ -340,6 +340,7 @@ export const DrawerResizableHitArea: StoryFn<QAContainerProps> = (props) => {
         {...rest}
       >
         <ScrolledResizableDrawerTemplate position="left" />
+        <ScrolledResizableDrawerTemplate position="right" />
         <ScrolledResizableDrawerTemplate position="top" />
         <ScrolledResizableDrawerTemplate position="bottom" />
       </QAContainer>
