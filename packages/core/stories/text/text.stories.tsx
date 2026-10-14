@@ -9,6 +9,8 @@ import {
   Editorial4,
   Editorial5,
   Editorial6,
+  Editorial7,
+  Editorial8,
   Eyebrow as EyebrowText,
   H1,
   H2,
@@ -157,6 +159,8 @@ export const Editorial: StoryFn<typeof Text> = () => {
       <Editorial4>Editorial 4</Editorial4>
       <Editorial5>Editorial 5</Editorial5>
       <Editorial6>Editorial 6</Editorial6>
+      <Editorial7>Editorial 7</Editorial7>
+      <Editorial8>Editorial 8</Editorial8>
     </StackLayout>
   );
 };

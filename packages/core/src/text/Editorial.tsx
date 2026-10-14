@@ -66,3 +66,25 @@ export const Editorial6 = forwardRef<
     </Text>
   );
 });
+
+export const Editorial7 = forwardRef<
+  HTMLSpanElement,
+  Omit<TextProps<"span">, "as">
+>(function Editorial7({ children, styleAs = "editorial7", ...rest }, ref) {
+  return (
+    <Text as="span" styleAs={styleAs} ref={ref} {...rest}>
+      {children}
+    </Text>
+  );
+});
+
+export const Editorial8 = forwardRef<
+  HTMLSpanElement,
+  Omit<TextProps<"span">, "as">
+>(function Editorial8({ children, styleAs = "editorial8", ...rest }, ref) {
+  return (
+    <Text as="span" styleAs={styleAs} ref={ref} {...rest}>
+      {children}
+    </Text>
+  );
+});

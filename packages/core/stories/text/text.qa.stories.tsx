@@ -10,6 +10,8 @@ import {
   Editorial4,
   Editorial5,
   Editorial6,
+  Editorial7,
+  Editorial8,
   Eyebrow,
   H1,
   H2,
@@ -281,7 +283,7 @@ FontWeightGrid.parameters = {
 };
 
 export const EditorialVariantsGrid: StoryFn<QAContainerProps> = (props) => (
-  <QAContainer height={3400} width={2000} cols={1} vertical {...props}>
+  <QAContainer height={3600} width={2000} cols={1} vertical {...props}>
     <Editorial1>
       Editorial 1 <strong>strong</strong> <b>b</b>{" "}
       <LighterText>lighter</LighterText>
@@ -306,6 +308,14 @@ export const EditorialVariantsGrid: StoryFn<QAContainerProps> = (props) => (
       Editorial 6 <strong>strong</strong> <b>b</b>{" "}
       <LighterText>lighter</LighterText>
     </Editorial6>
+    <Editorial7>
+      Editorial 7 <strong>strong</strong> <b>b</b>{" "}
+      <LighterText>lighter</LighterText>
+    </Editorial7>
+    <Editorial8>
+      Editorial 8 <strong>strong</strong> <b>b</b>{" "}
+      <LighterText>lighter</LighterText>
+    </Editorial8>
   </QAContainer>
 );
 
