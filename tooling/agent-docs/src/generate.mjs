@@ -1,8 +1,8 @@
 import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { toString as nodeText } from "mdast-util-to-string";
 import { agentsBlock, indexLines, MANIFEST_FILE } from "./agents-md.mjs";
+import { markdownAnchors } from "./anchors.mjs";
 import {
   DOCS_DIRECTORY,
   GENERATED_MARKER,
@@ -261,29 +261,28 @@ async function writeOutputs({ packages, packagesDir, outputs, repoRoot }) {
   }
 }
 
-/** GitHub-style heading anchors, numbered `-1`, `-2` for repeats, plus HTML `id`s. */
-export function markdownAnchors(tree) {
-  const anchors = new Set();
-  const counts = new Map();
-  const visit = (node) => {
-    if (node.type === "heading") {
-      const base = nodeText(node)
-        .toLowerCase()
-        .trim()
-        .replace(/[^\p{L}\p{M}\p{N}\p{Pc} -]/gu, "")
-        .replace(/ /g, "-");
-      const count = counts.get(base) ?? 0;
-      counts.set(base, count + 1);
-      anchors.add(count === 0 ? base : `${base}-${count}`);
-    } else if (node.type === "html") {
-      for (const [, id] of node.value.matchAll(/\bid="([^"]+)"/g)) {
-        anchors.add(id);
+const DEFERRED_ANCHOR_PATTERN = /#salt-anchor-(\d+)/g;
+
+/**
+ * Replaces the placeholder anchors that links got while pages were converted
+ * with the anchor each heading has in its generated document, which can
+ * differ from the site's when a document merges a component's tabs.
+ */
+function resolveDeferredAnchors(outputs, deferred, anchorMaps) {
+  for (const { files } of outputs.values()) {
+    for (const [docPath, content] of files) {
+      if (!docPath.endsWith(".md") || !content.includes("#salt-anchor-")) {
+        continue;
       }
+      files.set(
+        docPath,
+        content.replace(DEFERRED_ANCHOR_PATTERN, (_match, index) => {
+          const { route, anchor } = deferred[Number(index)];
+          return `#${anchorMaps.get(route)?.get(anchor) ?? anchor}`;
+        }),
+      );
     }
-    for (const child of node.children ?? []) visit(child);
-  };
-  visit(tree);
-  return anchors;
+  }
 }
 
 /**
@@ -416,9 +415,16 @@ export async function generateAgentDocs({
     ]),
   );
   const examplesDir = path.join(repoRoot, "site", "src", "examples");
+  // Anchors in links are resolved once every document's headings are known.
+  const deferredAnchors = [];
+  const anchorMaps = new Map();
+  const deferAnchor = (route, anchor) => {
+    deferredAnchors.push({ route, anchor });
+    return `#salt-anchor-${deferredAnchors.length - 1}`;
+  };
   const shared = {
     packages,
-    links: createLinkResolver(routeIndex),
+    links: createLinkResolver(routeIndex, { deferAnchor }),
     examples: createExampleResolver({ examplesDir }),
     props: propsProvider ?? createPropsProvider({ packagesDir }),
     documents: knownDocuments,
@@ -443,6 +449,9 @@ export async function generateAgentDocs({
       doc.kind === "component"
         ? await renderComponentDocument(doc, shared)
         : await renderPageDocument(doc, shared);
+    for (const [route, anchors] of rendered.anchorMap) {
+      anchorMaps.set(route, anchors);
+    }
     const target = outputs.get(doc.packageName);
     for (const file of [
       { docPath: doc.docPath, markdown: rendered.markdown },
@@ -537,6 +546,7 @@ export async function generateAgentDocs({
     );
   }
 
+  resolveDeferredAnchors(outputs.outputs, deferredAnchors, anchorMaps);
   errors.push(...findBrokenLinks(outputs.outputs));
   if (errors.length > 0) throw new AgentDocsError(errors);
   if (write) {

@@ -22,11 +22,22 @@ export function docLink({ fromPackage, fromDocPath, toPackage, toDocPath }) {
     : `${toPackage}/docs/${toDocPath}`;
 }
 
+function decodeAnchor(hash) {
+  try {
+    return decodeURIComponent(hash.slice(1));
+  } catch {
+    return hash.slice(1);
+  }
+}
+
 /**
  * Resolves site links against the page they appear on.
  * `routeIndex` maps normalized site routes to `{ packageName, docPath }`.
+ * `deferAnchor(route, anchor)`, if given, returns the `#…` to use for an
+ * anchor on the site page at `route`, which a generated document may number
+ * differently once it merges pages.
  */
-export function createLinkResolver(routeIndex) {
+export function createLinkResolver(routeIndex, { deferAnchor } = {}) {
   function lookup(pathname) {
     const direct = routeIndex.get(pathname);
     if (direct) return direct;
@@ -38,12 +49,16 @@ export function createLinkResolver(routeIndex) {
     return undefined;
   }
 
+  const anchorFor = (route, hash) =>
+    hash && deferAnchor ? deferAnchor(route, decodeAnchor(hash)) : hash;
+
   /**
    * Returns the rewritten URL, or `null` when the link should be dropped
    * (its text is kept) because it points at a site asset.
    */
   function resolve(url, { sitePath, packageName, docPath }) {
-    if (!url || url.startsWith("#") || SCHEME_PATTERN.test(url)) return url;
+    if (!url || SCHEME_PATTERN.test(url)) return url;
+    if (url.startsWith("#")) return anchorFor(normalizeRoute(sitePath), url);
     const resolved = new URL(url, `https://salt.invalid${sitePath}`);
     const pathname = normalizeRoute(decodeURI(resolved.pathname));
     if (ASSET_PATTERN.test(pathname)) return null;
@@ -55,7 +70,7 @@ export function createLinkResolver(routeIndex) {
         fromDocPath: docPath,
         toPackage: target.packageName,
         toDocPath: target.docPath,
-      }) + resolved.hash
+      }) + anchorFor(pathname, resolved.hash)
     );
   }
 
