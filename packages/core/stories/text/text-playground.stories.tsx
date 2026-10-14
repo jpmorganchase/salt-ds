@@ -48,8 +48,6 @@ export default {
         "editorial4",
         "editorial5",
         "editorial6",
-        "editorial7",
-        "editorial8",
         "notation",
         "action",
         "code",
