@@ -68,7 +68,7 @@
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-notation-fontSize);
   line-height: var(--salt-text-notation-lineHeight);
-  font-weight: var(--salt-text-fontWeight);
+  font-weight: var(--salt-text-notation-fontWeight);
   --text-fontWeight-bolder: var(--salt-text-notation-fontWeight-bolder);
   --text-fontWeight-lighter: var(--salt-text-notation-fontWeight-lighter);
 }
