@@ -1,5 +1,61 @@
 # @salt-ds/date-components
 
+## 1.1.2
+
+### Patch Changes
+
+- e466542: `DateParserField` is now a const object with a matching union type instead of an enum. `DateParserField.START` and `DateParserField.END` work as before, as values and as types, and `"start"` or `"end"` can now be used wherever a `DateParserField` is expected.
+- 825f63d: Renamed the `small` and `strong` font weight tokens to `lighter` and `bolder`, to match the new `fontWeight` prop on `Text`. The old tokens still work as aliases but are deprecated and will be removed in a future major version. Salt components now use the new tokens, so if you override an old token, override the new one instead.
+
+  ```diff
+  - font-weight: var(--salt-text-fontWeight-strong);
+  + font-weight: var(--salt-text-fontWeight-bolder);
+  ```
+
+  | Deprecated token                         | Use instead                               |
+  | ---------------------------------------- | ----------------------------------------- |
+  | `--salt-text-fontWeight-small`           | `--salt-text-fontWeight-lighter`          |
+  | `--salt-text-fontWeight-strong`          | `--salt-text-fontWeight-bolder`           |
+  | `--salt-text-action-fontWeight-small`    | `--salt-text-action-fontWeight-lighter`   |
+  | `--salt-text-action-fontWeight-strong`   | `--salt-text-action-fontWeight-bolder`    |
+  | `--salt-text-display-fontWeight-small`   | `--salt-text-display-fontWeight-lighter`  |
+  | `--salt-text-display-fontWeight-strong`  | `--salt-text-display-fontWeight-bolder`   |
+  | `--salt-text-heading-fontWeight-small`   | `--salt-text-heading-fontWeight-lighter`  |
+  | `--salt-text-heading-fontWeight-strong`  | `--salt-text-heading-fontWeight-bolder`   |
+  | `--salt-text-label-fontWeight-small`     | `--salt-text-label-fontWeight-lighter`    |
+  | `--salt-text-label-fontWeight-strong`    | `--salt-text-label-fontWeight-bolder`     |
+  | `--salt-text-notation-fontWeight-small`  | `--salt-text-notation-fontWeight-lighter` |
+  | `--salt-text-notation-fontWeight-strong` | `--salt-text-notation-fontWeight-bolder`  |
+
+  The deprecated `--salt-text-h{1-4}-fontWeight-small`, `--salt-text-h{1-4}-fontWeight-strong`, `--salt-text-display{1-4}-fontWeight-small` and `--salt-text-display{1-4}-fontWeight-strong` tokens now alias the new tokens.
+
+  The `small` and `strong` font weight tokens have been removed from the experimental Salt (Interim) theme without aliases. If you use the interim theme and reference them, switch to the matching `lighter` and `bolder` tokens in the table above.
+
+  See [font weight](https://www.saltdesignsystem.com/salt/foundations/typography#font-weight) for how each text style uses these weights.
+
+- 55f27de: The calendar, date input and date picker components now show their names in React DevTools instead of being anonymous.
+- Updated dependencies [fd5ae98]
+- Updated dependencies [4f1b504]
+- Updated dependencies [75f2d7d]
+- Updated dependencies [61228a7]
+- Updated dependencies [f8925a2]
+- Updated dependencies [825f63d]
+- Updated dependencies [4aa4585]
+- Updated dependencies [55f27de]
+- Updated dependencies [602ddb5]
+- Updated dependencies [fd1bf44]
+- Updated dependencies [75f2d7d]
+- Updated dependencies [7182ee8]
+- Updated dependencies [7182ee8]
+- Updated dependencies [825f63d]
+- Updated dependencies [825f63d]
+- Updated dependencies [825f63d]
+- Updated dependencies [825f63d]
+- Updated dependencies [cb2e335]
+  - @salt-ds/core@1.73.0
+  - @salt-ds/styles@0.4.2
+  - @salt-ds/icons@1.18.4
+
 ## 1.1.1
 
 ### Patch Changes
