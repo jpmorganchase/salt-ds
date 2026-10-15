@@ -51,6 +51,25 @@
   width: 100%;
 }
 
+.saltMonthYearPanel-label.saltCalendarDay-content {
+  width: auto;
+  position: relative;
+  display: inline-block;
+}
+
+.saltMonthYearPanel .saltCalendarDay.saltCalendarDay-today > .saltMonthYearPanel-label::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: var(--salt-size-indicator);
+  background: var(--salt-sentiment-accent-borderColor);
+  border-radius: var(--salt-palette-corner-weak);
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--salt-spacing-50) * -1);
+}
+
 /*
  * Clamp the range-span bridge pseudo-element to the row edges so the
  * "in-between" pill does not overflow the leftmost or rightmost month cell

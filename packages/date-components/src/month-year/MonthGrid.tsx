@@ -213,6 +213,10 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
       () => buildMonthsForYear(dateAdapter, year, timezone),
       [dateAdapter, timezone, year],
     );
+    const today = useMemo(
+      () => dateAdapter.today(timezone),
+      [dateAdapter, timezone],
+    );
 
     const buttonRefs = useRef<Array<HTMLButtonElement | null>>([]);
     const containerRef = useRef<HTMLDivElement>(null);
@@ -461,6 +465,11 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
                     hoveredSpan = false,
                     changeStart = false,
                   } = rangeStatus ?? {};
+                  const currentMonth = dateAdapter.isSame(
+                    month,
+                    today,
+                    "month",
+                  );
                   const unselectableReason = isMonthUnselectable?.(month);
                   const isUnselectable = Boolean(unselectableReason);
                   let monthLabel = fullLabel;
@@ -541,6 +550,7 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
                           : undefined
                       }
                       className={clsx(withDayBaseName(), {
+                        [withDayBaseName("today")]: currentMonth,
                         [withDayBaseName("selected")]:
                           selected && !getMonthRangeStatus,
                         [withDayBaseName("selectedStart")]: selectedStart,
@@ -556,7 +566,10 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
                     >
                       <span
                         aria-hidden="true"
-                        className={withDayBaseName("content")}
+                        className={clsx(
+                          withDayBaseName("content"),
+                          withBaseName("label"),
+                        )}
                       >
                         {shortLabel}
                       </span>
