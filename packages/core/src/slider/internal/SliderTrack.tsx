@@ -82,6 +82,11 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
       return markPercentage === progressPercentage;
     };
 
+    const getMarkPositionStyle = (value: number) =>
+      ({
+        "--slider-markPosition": calculateMarkPosition(value, max, min) / 100,
+      }) as React.CSSProperties;
+
     const hasMinTick = () => {
       return marks?.some((mark) => mark.value === min) || false;
     };
@@ -129,13 +134,13 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
               style={
                 {
                   ...(progressPercentage !== undefined && {
-                    "--slider-progressPercentage": `${progressPercentage}%`,
+                    "--slider-progress": progressPercentage / 100,
                   }),
                   ...(progressPercentageRange?.[0] !== undefined && {
-                    "--slider-progressPercentageStart": `${progressPercentageRange[0]}%`,
+                    "--slider-progressStart": progressPercentageRange[0] / 100,
                   }),
                   ...(progressPercentageRange?.[1] !== undefined && {
-                    "--slider-progressPercentageEnd": `${progressPercentageRange[1]}%`,
+                    "--slider-progressEnd": progressPercentageRange[1] / 100,
                   }),
                 } as React.CSSProperties
               }
@@ -149,9 +154,7 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
                 {marks.map(({ value }) => (
                   <span
                     key={`${value}-tick`}
-                    style={{
-                      left: `${calculateMarkPosition(value, max, min)}%`,
-                    }}
+                    style={getMarkPositionStyle(value)}
                     className={clsx(
                       withBaseName("tick"),
                       {
@@ -174,10 +177,13 @@ export const SliderTrack = forwardRef<HTMLDivElement, SliderTrackProps>(
                   <span
                     data-testid="mark"
                     key={`${value}-mark`}
-                    className={withBaseName("markLabel")}
-                    style={{
-                      left: `${calculateMarkPosition(value, max, min)}%`,
-                    }}
+                    className={clsx(withBaseName("markLabel"), {
+                      [withBaseName("markLabelMin")]:
+                        calculateMarkPosition(value, max, min) === 0,
+                      [withBaseName("markLabelMax")]:
+                        calculateMarkPosition(value, max, min) === 100,
+                    })}
+                    style={getMarkPositionStyle(value)}
                   >
                     {label}
                   </span>
