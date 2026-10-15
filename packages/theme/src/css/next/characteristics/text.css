@@ -22,6 +22,7 @@
 
   /* Code */
   --salt-text-code-fontFamily: var(--salt-typography-fontFamily-ptMono);
+  --salt-text-code-fontWeight: var(--salt-typography-fontWeight-regular);
 
   /* Editorial */
   --salt-text-editorial-letterSpacing: 0;

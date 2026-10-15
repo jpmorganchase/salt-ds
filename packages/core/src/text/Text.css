@@ -88,6 +88,10 @@
 code.saltText,
 .saltText-code.saltText {
   font-family: var(--salt-text-code-fontFamily);
+  font-weight: var(--salt-text-code-fontWeight);
+  /* Code has a single weight, so lighter and bolder match the default */
+  --text-fontWeight-bolder: var(--salt-text-code-fontWeight);
+  --text-fontWeight-lighter: var(--salt-text-code-fontWeight);
 }
 
 /* Display 1 */
