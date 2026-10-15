@@ -86,6 +86,31 @@ function packagePath(directory, target) {
   return path.join(directory, target.replace(/^\.?\//, ""));
 }
 
+function listsAgentDocs(manifest) {
+  return (manifest.files ?? []).some((entry) =>
+    /^(?:\.?\/)?docs\/?$/.test(entry),
+  );
+}
+
+async function checkAgentDocs(manifest, directory) {
+  if (!listsAgentDocs(manifest)) return [];
+  // agents-md.mjs indexes manifest.json, and the core README tells consumers
+  // to run docs/agents-md.mjs.
+  const required =
+    manifest.name === "@salt-ds/core"
+      ? ["index.md", "manifest.json", "agents-md.mjs"]
+      : ["index.md", "manifest.json"];
+  const errors = [];
+  for (const file of required) {
+    if (!(await pathExists(path.join(directory, "docs", file)))) {
+      errors.push(
+        `is missing docs/${file}; run yarn build to generate agent docs`,
+      );
+    }
+  }
+  return errors;
+}
+
 async function checkCssPackage(pkg) {
   const { directory, manifest } = pkg;
   const targets = new Set([manifest.style, ...(manifest.files ?? [])]);
@@ -100,6 +125,7 @@ async function checkCssPackage(pkg) {
     }
   }
 
+  errors.push(...(await checkAgentDocs(manifest, directory)));
   return errors;
 }
 
@@ -225,6 +251,7 @@ async function checkJavaScriptPackage(pkg, temporaryDirectory) {
   errors.push(
     ...(await findUndeclaredImports(packageDirectory, packedManifest)),
   );
+  errors.push(...(await checkAgentDocs(packedManifest, packageDirectory)));
 
   return errors;
 }

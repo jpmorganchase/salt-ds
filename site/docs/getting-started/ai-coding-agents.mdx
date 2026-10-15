@@ -1,0 +1,77 @@
+---
+title: AI coding agents
+description: "Point coding agents such as GitHub Copilot, Claude Code and Codex at Salt documentation that matches the version you install."
+layout: DetailTechnical
+sidebar:
+  label: AI coding agents
+---
+
+Coding agents often write Salt code from what they learned in training, which
+can describe an older version of Salt or miss it entirely. Salt packages include
+Markdown documentation for agents, generated from this site for the version you
+install, so agents can check the components, props and guidance that match your
+code.
+
+## Set up your project
+
+Run this in the folder that holds your project's `AGENTS.md`, usually the
+repository root:
+
+```sh
+node node_modules/@salt-ds/core/docs/agents-md.mjs
+```
+
+The script adds a Salt section to `AGENTS.md` that tells agents to read the
+installed documentation before they write Salt UI, to prefer component props to
+custom CSS, and to check the props and design tokens they used against it
+before they finish, with a compressed index of every documentation page in the
+Salt packages you have installed. GitHub Copilot, Codex, Cursor and most other
+coding agents read `AGENTS.md` with every request, so they know which pages
+exist without having to decide to look them up. The script makes `CLAUDE.md`
+import `AGENTS.md` for Claude Code, and keeps your other instructions.
+
+Run the script again after you add or upgrade Salt packages, because the index
+lists the pages of the installed versions.
+
+- Add `--check` to fail a CI job when `AGENTS.md` or `CLAUDE.md` needs updating,
+  for example after an upgrade. It checks `CLAUDE.md` too unless you also add
+  `--no-claude`.
+- Add `--no-claude` to leave `CLAUDE.md` alone.
+- Add `--dir <path>` to update the `AGENTS.md` and `CLAUDE.md` in another folder
+  instead of the current one.
+- In a monorepo where `@salt-ds/core` is installed under an application, run the
+  script by that path, such as
+  `node apps/web/node_modules/@salt-ds/core/docs/agents-md.mjs`.
+
+Agents read the documentation from `node_modules`, which Yarn Plug'n'Play
+installs don't create. To use it with Yarn, set `nodeLinker: node-modules` in
+`.yarnrc.yml`.
+
+Generate the section with the script rather than by hand, so the index matches
+your installed versions.
+
+## What agents can read
+
+The index in `AGENTS.md` lists each package's pages by folder, with the other
+names people use for a component, such as "Modal" for Dialog, so agents can find
+the right page. Each package's `docs/index.md`, starting with
+`node_modules/@salt-ds/core/docs/index.md`, adds a short summary of every page.
+
+- Component pages combine the usage, examples and accessibility tabs from this
+  site with props tables and keyboard interactions.
+- Pattern, getting started, foundation and theme pages, with lists of every design
+  token, icon and country symbol.
+- Example source code. Long pages keep their guidance and link to separate files
+  for their largest examples.
+
+Each package documents its own components, such as `@salt-ds/lab/docs` for Lab
+components. Pages link to other packages' documentation by package name, so agents
+can follow the links into the Salt packages you have installed.
+
+## Review what agents build
+
+Agents still make mistakes, such as rebuilding a component that Salt already
+provides or arranging a component's parts incorrectly. Ask your agent to run your
+project's build, tests and accessibility checks, and review the result as you
+would any change. [Choosing the right primitive](./choosing-the-right-primitive)
+and [composition pitfalls](./composition-pitfalls) describe what to look for.

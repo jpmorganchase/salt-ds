@@ -40,6 +40,7 @@
   },
   "include": [
     "packages",
+    "site/src/examples/patterns",
     ".storybook/decorators",
     "docs",
     "tooling",

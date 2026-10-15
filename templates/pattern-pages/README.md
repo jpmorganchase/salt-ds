@@ -152,3 +152,13 @@ Include the below to automatically include a feedback section:
 ```
 :fragment{src="./fragments/feedback.mdx"}
 ```
+
+## Docs for coding agents
+
+Each pattern page is also published as Markdown in `@salt-ds/core/docs/patterns`, so coding agents read guidance that matches the installed version. See the [component page guide](../component-pages/README.md#6-docs-for-coding-agents) and [tooling/agent-docs](../../tooling/agent-docs/README.md).
+
+Agents don't see images, so:
+
+- Name the components and tokens that the anatomy, layout and color images show in the text as well, for example "Use `--salt-spacing-300` between sections."
+- Write alt text for informative images, and use captions for extra explanation. Both are included in the Markdown.
+- Write each of the pattern's examples in its own file, `site/src/examples/patterns/<pattern-name>/<ExampleName>.tsx`, exported from the folder's `index.ts` as component examples are, and show each one with `<LivePreview componentName="patterns/<pattern-name>" exampleName="<ExampleName>" />` in the section of the page that discusses it. Generation fails for an example that no page shows, because it would reach neither the website nor the Markdown. The website and the Markdown show each example's own source, and the pattern's Storybook stories re-export the same examples. Put code that several examples share in the file of the first example on the page that uses it, so that example's source is complete. Reference images from `site/public`, for example `/img/examples/avatar.png`, rather than importing them. Guidance-only patterns don't need examples.

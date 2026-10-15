@@ -1,0 +1,253 @@
+import { describe, expect, it } from "vitest";
+import { EXAMPLE_NODE, stringifyMarkdown, u } from "../mdx.mjs";
+import { placeExamples } from "../placement.mjs";
+
+const sharedCss = {
+  kind: "file",
+  displayPath: "./styles.css",
+  absolutePath: "/examples/button/styles.css",
+  examplePath: "button/styles.css",
+  language: "css",
+  code: ".root {}\n",
+};
+
+function example(name, { code = `export const ${name} = 1;\n`, support } = {}) {
+  return {
+    type: EXAMPLE_NODE,
+    name,
+    entry: {
+      language: "tsx",
+      code,
+      absolutePath: `/examples/button/${name}.tsx`,
+      displayPath: `button/${name}.tsx`,
+    },
+    support: support ?? [sharedCss],
+  };
+}
+
+function linesOfCode(count) {
+  return Array.from(
+    { length: count },
+    (_, index) => `export const line${index} = ${index};`,
+  ).join("\n");
+}
+
+function place(children, budget, lineBudget, keepShortFirst) {
+  const result = placeExamples(children, {
+    title: "Button",
+    docPath: "components/button.md",
+    budget,
+    lineBudget,
+    keepShortFirst,
+  });
+  return {
+    markdown: stringifyMarkdown({ type: "root", children: result.children }),
+    files: new Map(result.files.map((file) => [file.docPath, file.markdown])),
+  };
+}
+
+describe("placeExamples", () => {
+  it("shows examples inline with each supporting file once", () => {
+    const { markdown, files } = place(
+      [
+        u.heading(2, [u.text("Accented")]),
+        example("Accented"),
+        u.blockquote([example("Neutral")]),
+      ],
+      Number.POSITIVE_INFINITY,
+    );
+    expect(markdown).toContain(
+      "_Example:_ `Accented`\n\n```tsx\nexport const Accented = 1;\n```",
+    );
+    expect(markdown).toContain(
+      "Supporting file `./styles.css`:\n\n```css\n.root {}\n```",
+    );
+    expect(markdown).toContain(
+      "> Supporting file `./styles.css` is shown above.",
+    );
+    expect(files.size).toBe(0);
+  });
+
+  it("moves the largest examples off a long page, keeping the first", () => {
+    const large = `export const Large = "${"x".repeat(2000)}";\n`;
+    const { markdown, files } = place(
+      [example("Basic"), example("Large", { code: large }), example("Small")],
+      1500,
+    );
+    expect(markdown).toContain("_Example:_ `Basic`\n\n```tsx");
+    expect(markdown).toContain(
+      "_Example:_ `Large` ([source](./button/examples/large.md)).",
+    );
+    expect(markdown).toContain("_Example:_ `Small`\n\n```tsx");
+    expect([...files.keys()].sort()).toEqual([
+      "components/button/examples/files/button-styles-css.md",
+      "components/button/examples/large.md",
+    ]);
+    const moved = files.get("components/button/examples/large.md");
+    expect(moved).toContain("# Button example: Large");
+    expect(moved).toContain(
+      "Source of the `Large` example on the [Button](../../button.md) page.",
+    );
+    expect(moved).toContain(large.trimEnd());
+    // Shared with other examples, so the moved example links to it.
+    expect(moved).toContain(
+      "Supporting file `./styles.css` is in [button/styles.css](./files/button-styles-css.md).",
+    );
+  });
+
+  it("writes supporting files shared by moved examples once", () => {
+    const { markdown, files } = place(
+      [example("First"), example("Second")],
+      10,
+    );
+    expect(markdown).toContain(
+      "_Example:_ `First` ([source](./button/examples/first.md)).",
+    );
+    expect([...files.keys()].sort()).toEqual([
+      "components/button/examples/files/button-styles-css.md",
+      "components/button/examples/first.md",
+      "components/button/examples/second.md",
+    ]);
+    expect(files.get("components/button/examples/second.md")).toContain(
+      "Supporting file `./styles.css` is in [button/styles.css](./files/button-styles-css.md).",
+    );
+    expect(
+      files.get("components/button/examples/files/button-styles-css.md"),
+    ).toContain(
+      "# Button example file: button/styles.css\n\nSupporting file for examples on the [Button](../../../button.md) page.\n\n```css\n.root {}\n```",
+    );
+  });
+});
+
+describe("placeExamples with large files and repeated examples", () => {
+  it("links large supporting files instead of showing them", () => {
+    const data = {
+      ...sharedCss,
+      displayPath: "./data.tsx",
+      absolutePath: "/examples/button/data.tsx",
+      examplePath: "button/data.tsx",
+      language: "tsx",
+      code: "export const rows = [];\n",
+      large: true,
+    };
+    const { markdown, files } = place(
+      [example("Accented", { support: [data] })],
+      Number.POSITIVE_INFINITY,
+    );
+    expect(markdown).toContain(
+      "Supporting file `./data.tsx` is in [button/data.tsx](./button/examples/files/button-data-tsx.md).",
+    );
+    expect(
+      files.get("components/button/examples/files/button-data-tsx.md"),
+    ).toContain("```tsx\nexport const rows = [];\n```");
+  });
+
+  it("writes an example shown twice on a page once", () => {
+    const { markdown, files } = place(
+      [example("Accented"), example("Solid"), example("Accented")],
+      10,
+    );
+    expect([...files.keys()]).toContain(
+      "components/button/examples/accented.md",
+    );
+    expect([...files.keys()]).not.toContain(
+      "components/button/examples/accented-2.md",
+    );
+    expect(
+      markdown.match(/\[source\]\(\.\/button\/examples\/accented\.md\)/g),
+    ).toHaveLength(2);
+  });
+
+  it("names the example in a moved example's file", () => {
+    const { files } = place([example("Accented"), example("Accented")], 10);
+    expect(files.get("components/button/examples/accented.md")).toContain(
+      "# Button example: Accented\n\nSource of the `Accented` example on the [Button](../../button.md) page.",
+    );
+  });
+});
+
+describe("placeExamples with too many lines", () => {
+  const noSupport = { support: [] };
+
+  it("links supporting files before moving examples", () => {
+    const styles = { ...sharedCss, code: ".root {}\n".repeat(30) };
+    const { markdown, files } = place(
+      [example("Basic", { support: [styles] })],
+      Number.POSITIVE_INFINITY,
+      20,
+    );
+    expect(markdown).toContain("_Example:_ `Basic`\n\n```tsx");
+    expect(markdown).toContain(
+      "Supporting file `./styles.css` is in [button/styles.css](./button/examples/files/button-styles-css.md).",
+    );
+    expect([...files.keys()]).toEqual([
+      "components/button/examples/files/button-styles-css.md",
+    ]);
+  });
+
+  it("moves the longest examples, keeping a short first example", () => {
+    const { markdown, files } = place(
+      [
+        example("Basic", noSupport),
+        example("Long", { ...noSupport, code: linesOfCode(40) }),
+        example("Small", noSupport),
+      ],
+      Number.POSITIVE_INFINITY,
+      20,
+    );
+    expect(markdown).toContain("_Example:_ `Basic`\n\n```tsx");
+    expect(markdown).toContain(
+      "_Example:_ `Long` ([source](./button/examples/long.md)).",
+    );
+    expect(markdown).toContain("_Example:_ `Small`\n\n```tsx");
+    expect([...files.keys()]).toEqual(["components/button/examples/long.md"]);
+  });
+
+  it("keeps a short first example when the page is still too long", () => {
+    const { markdown } = place(
+      [
+        example("Basic", noSupport),
+        ...Array.from({ length: 30 }, () => u.paragraph([u.text("Guidance.")])),
+        example("Other", noSupport),
+      ],
+      Number.POSITIVE_INFINITY,
+      20,
+    );
+    expect(markdown).toContain("_Example:_ `Basic`\n\n```tsx");
+    expect(markdown).toContain(
+      "_Example:_ `Other` ([source](./button/examples/other.md)).",
+    );
+  });
+
+  it("moves a long first example like the others", () => {
+    const { markdown, files } = place(
+      [
+        example("Long", { ...noSupport, code: linesOfCode(40) }),
+        example("Small", noSupport),
+      ],
+      Number.POSITIVE_INFINITY,
+      20,
+    );
+    expect(markdown).toContain(
+      "_Example:_ `Long` ([source](./button/examples/long.md)).",
+    );
+    expect(markdown).toContain("_Example:_ `Small`\n\n```tsx");
+    expect([...files.keys()]).toEqual(["components/button/examples/long.md"]);
+  });
+
+  it("moves a short first example too when the page doesn't keep it", () => {
+    const { markdown } = place(
+      [
+        example("Basic", noSupport),
+        ...Array.from({ length: 30 }, () => u.paragraph([u.text("Guidance.")])),
+      ],
+      Number.POSITIVE_INFINITY,
+      20,
+      false,
+    );
+    expect(markdown).toContain(
+      "_Example:_ `Basic` ([source](./button/examples/basic.md)).",
+    );
+    expect(markdown).not.toContain("```tsx");
+  });
+});

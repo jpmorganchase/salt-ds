@@ -25,18 +25,23 @@ If focus is on a menu item, this action closes the menu and moves focus to the p
 
 - If focus is on the menu trigger, this action opens the menu and places focus on the first menu item.
 - When focus is on a menu item that has a submenu, this action opens the submenu and places focus on its first item.
-- Otherwise, this action activates the item, and closes the menu.
+- Otherwise, this action activates an enabled item and closes the menu. Disabled items cannot be activated.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Up arrow">
   
-When focus is in a menu, Up arrow moves focus to the previous item.
+When focus is in a menu, Up arrow moves focus to the previous enabled item. Navigation does not wrap past the first item.
 
 </KeyboardControl>
   
 <KeyboardControl keyOrCombos="Down arrow">
 
-When focus is in a menu, Down arrow moves focus to the next item.
+When focus is in a menu, Down arrow moves focus to the next enabled item. Navigation does not wrap past the last item.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Home / End">
+
+Home moves focus to the first enabled item in the current menu. End moves focus to the last enabled item.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Right arrow">
@@ -52,7 +57,7 @@ When focus is in a submenu of an item in a menu, Left arrow closes the submenu a
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Escape">
   
-Escape closes the menu, and sets focus to the element element that triggered opening the menu, e.g. a button or the parent menu item from which the menu was opened.
+Escape closes the open menu and its open ancestor menus, returning focus to the root menu trigger. Use Left arrow to close only a submenu and return to its parent item.
 
 </KeyboardControl>
 </KeyboardControls>

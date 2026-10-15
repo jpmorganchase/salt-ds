@@ -36,6 +36,8 @@ jobs:
         run: yarn run lint:style
       - name: Spellcheck
         run: yarn workspace @salt-ds/site spellcheck
+      - name: Check agent docs
+        run: yarn build:agent-docs --check
 
   dependency-check:
     name: Dependency Check
@@ -79,6 +81,8 @@ jobs:
         run: yarn run typecheck
       - name: Run typecheck (React 19 types)
         run: yarn run typecheck:react19
+      - name: Typecheck site and examples
+        run: yarn run typecheck:site
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest

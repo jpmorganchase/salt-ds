@@ -9,11 +9,12 @@ aliases:
 data:
   resources:
     [
-      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-experience-customization", label: "Examples" },
     ]
   components: ["Banner", "Dropdown", "Radio button", "Stepper", "Switch", "Toggle button"]
   relatedPatterns: ["Button bar", "Selectable card", "Wizard"]
 ---
+
+<LivePreview componentName="patterns/experience-customization" exampleName="StandardControls" />
 
 
 <Diagram
@@ -48,6 +49,12 @@ Typical groups of settings you might expose to your users are:
 - **Structure**: Workspace initialization, naming conventions, and project templates
 - **Feedback / notification**: Toast position, auto-dismiss, duration; notification preferences
 
+## When not to use
+
+- When choices are fixed by policy, role, permissions, or system logic and users cannot change them, do not present them as customization options.
+- When a setting only affects the current task, page, or data view, use local controls in that workflow instead of onboarding or preferences.
+- When users are entering data required to complete a business task, use the relevant form or workflow instead of the customization pattern.
+- When options expose styling, component design, implementation details, or system logic, do not include them in user-facing customization.
 
 ## How to build
 
@@ -81,6 +88,8 @@ The Experience customization pattern utilizes existing Salt components. Refer to
   background="secondary"
 />
 
+<LivePreview componentName="patterns/experience-customization" exampleName="PreferenceDialog" />
+
 ## Setup flow
 
 The steps below summarize Salt-specific user preferences that may be made available for configuration.
@@ -89,6 +98,10 @@ The steps below summarize Salt-specific user preferences that may be made avai
 2. **Data interpretation**: Ensure data is understood consistently.
 3. **Data surfaces**: Configure tables and charts, where multiple settings combine and users benefit from seeing outcomes live before finalizing selections.
 4. **Feedback**: Finalize how the system provides feedback after core reading and interpretation is set.
+
+<LivePreview componentName="patterns/experience-customization" exampleName="EndToEnd" />
+
+<LivePreview componentName="patterns/experience-customization" exampleName="EndToEndModal" />
 
 ### Ordering the experience
 
@@ -151,6 +164,8 @@ Use a dynamic live preview for report-oriented presentation choices, such as s
 **Heading hierarchy**: If the live preview includes headings or titles, ensure they follow the heading hierarchy of the surrounding page or modal.
 </GuidanceCallout>
 
+<LivePreview componentName="patterns/experience-customization" exampleName="DynamicLivePreview" />
+
 ### Card selection – Notification placement
 
 Use card selection for settings that lead to meaningful changes in the interface layout, such as notification placement. Card selection allows users to compare distinct visual states side by side, making it easier to understand and choose the desired outcome without extra cognitive effort.
@@ -166,6 +181,8 @@ Use card selection for settings that lead to meaningful changes in the interfa
 <GuidanceCallout type="positive" customPillText="Best practices">
 Switches can be used in multi-step wizards even when changes don’t take effect immediately. Use switches only for true on/off choices, and make any final behavior unmistakable—for example, label the final button 'Finish and apply changes' instead of just 'Finish'.
 </GuidanceCallout>
+
+<LivePreview componentName="patterns/experience-customization" exampleName="CardSelection" />
 
 ## Reset to default
 
@@ -218,6 +235,8 @@ Because the workflow cannot continue without this input, the interface must guid
   border
   background="secondary"
 />
+
+<LivePreview componentName="patterns/experience-customization" exampleName="MandatoryConfigurations" />
 
 ### Validation flow
 

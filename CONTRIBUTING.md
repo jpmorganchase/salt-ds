@@ -23,6 +23,12 @@ The repo contains below packages under `/packages`
 
 ## How to's
 
+### Docs for coding agents
+
+`yarn build` also generates Markdown documentation for coding agents from `site/docs` into each package's `docs` folder, which is published with the package. If a docs change fails with an unsupported MDX component or unresolved example, see [tooling/agent-docs](./tooling/agent-docs/README.md). Run `yarn build:agent-docs --check` to validate docs changes without a full build.
+
+Pattern examples are structured like component examples: one file per example in `site/src/examples/patterns/<pattern>/`, exported from its `index.ts`, and their Storybook stories re-export them. Show each one on its pattern page with a `LivePreview` in the section that discusses it; `yarn build:agent-docs` fails for an example that no page shows. Code that several examples share lives in the file of the first example on the pattern page that uses it, so that example's source is complete on the site.
+
 ### How to add a new icon
 
 1. Add the icon to the `packages/icons/src/SVG` folder. The icon should be named using kebab casing e.g. `icon-name.svg`.

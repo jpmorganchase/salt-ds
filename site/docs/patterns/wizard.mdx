@@ -9,10 +9,11 @@ aliases:
 data:
   resources:
     [
-      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-wizard", label: "Examples"},
     ]
-  components: ["Button Bar", "Dialog", "Stepper"]
+  components: ["Button bar", "Dialog", "Stepper"]
 ---
+
+<LivePreview componentName="patterns/wizard" exampleName="Horizontal" />
 
 <Diagram
   src="/img/patterns/wizard/wizard-pattern-example.png"
@@ -25,6 +26,12 @@ data:
 ## When to use
 
 Use wizards to guide users through a series of steps or tasks in a specific, linear order, often with the goal of completing a complex process (e.g., software installation, account setup/onboarding, checkout). Users must complete each step in order before moving on to the next.
+
+## When not to use
+
+- When the task can be completed in a single form or short dialog, use Forms or Dialog instead.
+- When users should move freely between unrelated sections, use Tabs or Vertical navigation instead.
+- When the content is primarily for reading or comparison, use a dashboard, table, or list-based pattern instead.
 
 ## How to build
 
@@ -82,6 +89,8 @@ The wizard pattern can be used in different containers depending on your use cas
 <GuidanceCallout type="positive" customPillText="Best practices">
   The wizard should maintain a consistent size as users navigate between steps, ensuring a stable and predictable layout throughout the workflow.
 </GuidanceCallout>
+
+<LivePreview componentName="patterns/wizard" exampleName="VerticalWithCancelConfirmation" />
 
 ## Horizontal stepper vs. vertical stepper
 
@@ -148,6 +157,8 @@ For shorter tasks that temporarily become the user’s main focus, a modal exper
 <GuidanceCallout type="positive" customPillText="Best practices">
   Don't include a close button, as it can be ambiguous whether the progress or the entered information will be saved or lost. Use a cancel button instead to clearly indicate the user’s intent to exit the flow, ensuring a conscious, deliberate action to stop the process.
 </GuidanceCallout>
+
+<LivePreview componentName="patterns/wizard" exampleName="Modal" />
 
 ## Optional step
 
@@ -240,6 +251,8 @@ When the user clicks the cancel button, display a warning message if there’s a
   caption="The warning dialog with message shows up to confirm if cancelling."
 />
 
+<LivePreview componentName="patterns/wizard" exampleName="HorizontalWithCancelConfirmation" />
+
 #### Modal wizard with the warning message
 
 <Diagram
@@ -250,6 +263,8 @@ When the user clicks the cancel button, display a warning message if there’s a
   background="secondary"
   caption="The warning message shows up to confirm if cancelling."
 />
+
+<LivePreview componentName="patterns/wizard" exampleName="ModalWithConfirmations" />
 
 ## Completion message
 
