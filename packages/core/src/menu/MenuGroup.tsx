@@ -10,6 +10,10 @@ import {
   useMemo,
 } from "react";
 import { makePrefixer, useId } from "../utils";
+import {
+  MenuAlignmentContext,
+  useMenuAlignmentScope,
+} from "./MenuAlignmentContext";
 import menuGroupCss from "./MenuGroup.css";
 import { MenuGroupContext } from "./MenuGroupContext";
 
@@ -110,22 +114,26 @@ export const MenuGroup = forwardRef<HTMLDivElement, MenuGroupProps>(
       [isSelected, select, selectionVariant],
     );
 
+    const alignment = useMenuAlignmentScope();
+
     return (
       <MenuGroupContext.Provider value={contextValue}>
-        <div
-          aria-labelledby={label ? labelId : undefined}
-          className={clsx(withBaseName(), className)}
-          role="group"
-          ref={ref}
-          {...rest}
-        >
-          {label && (
-            <div aria-hidden className={withBaseName("label")} id={labelId}>
-              {label}
-            </div>
-          )}
-          {children}
-        </div>
+        <MenuAlignmentContext.Provider value={alignment}>
+          <div
+            aria-labelledby={label ? labelId : undefined}
+            className={clsx(withBaseName(), className)}
+            role="group"
+            ref={ref}
+            {...rest}
+          >
+            {label && (
+              <div aria-hidden className={withBaseName("label")} id={labelId}>
+                {label}
+              </div>
+            )}
+            {children}
+          </div>
+        </MenuAlignmentContext.Provider>
       </MenuGroupContext.Provider>
     );
   },

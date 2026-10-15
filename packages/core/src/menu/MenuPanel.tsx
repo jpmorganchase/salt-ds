@@ -4,10 +4,13 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type ReactNode,
-  useCallback,
-  useState,
 } from "react";
 import { makePrefixer, useFloatingComponent, useForkRef } from "../utils";
+import {
+  MenuAlignmentContext,
+  useMenuAlignmentScope,
+  useSlotRegistry,
+} from "./MenuAlignmentContext";
 import { useMenuContext } from "./MenuContext";
 import { MenuPanelBase } from "./MenuPanelBase";
 import { MenuPanelContext } from "./MenuPanelContext";
@@ -20,15 +23,6 @@ export interface MenuPanelProps extends ComponentPropsWithoutRef<"div"> {
 }
 
 const withBaseName = makePrefixer("saltMenuPanel");
-
-function useSlotRegistry() {
-  const [count, setCount] = useState(0);
-  const register = useCallback(() => {
-    setCount((current) => current + 1);
-    return () => setCount((current) => current - 1);
-  }, []);
-  return [count > 0, register] as const;
-}
 
 export const MenuPanel = forwardRef<HTMLDivElement, MenuPanelProps>(
   function MenuPanel(props, ref) {
@@ -50,9 +44,9 @@ export const MenuPanel = forwardRef<HTMLDivElement, MenuPanelProps>(
 
     const handleRef = useForkRef<HTMLDivElement>(ref, refs?.setFloating);
 
-    const [reserveIconSpace, registerIcon] = useSlotRegistry();
-    const [reserveSelectionIconSpace, registerSelectionIcon] =
-      useSlotRegistry();
+    const [hasSelectionIcon, registerPanelSelectionIcon] = useSlotRegistry();
+    // Items outside a MenuGroup align with each other.
+    const alignment = useMenuAlignmentScope();
 
     return (
       <MenuPanelContext.Provider
@@ -60,36 +54,36 @@ export const MenuPanel = forwardRef<HTMLDivElement, MenuPanelProps>(
           activeIndex,
           getItemProps,
           setFocusInside,
-          reserveIconSpace,
-          reserveSelectionIconSpace,
-          registerIcon,
-          registerSelectionIcon,
+          hasSelectionIcon,
+          registerPanelSelectionIcon,
         }}
       >
-        <FloatingList elementsRef={elementsRef}>
-          <FloatingComponent
-            open={openState}
-            role="menu"
-            {...getFloatingProps()}
-            {...getPanelPosition()}
-            className={clsx(withBaseName(), className)}
-            focusManagerProps={
-              context
-                ? {
-                    context,
-                    initialFocus: isNested ? -1 : 0,
-                    returnFocus: !isNested,
-                    modal: false,
-                  }
-                : undefined
-            }
-            tabIndex={-1}
-            ref={handleRef}
-            {...rest}
-          >
-            <MenuPanelBase>{children}</MenuPanelBase>
-          </FloatingComponent>
-        </FloatingList>
+        <MenuAlignmentContext.Provider value={alignment}>
+          <FloatingList elementsRef={elementsRef}>
+            <FloatingComponent
+              open={openState}
+              role="menu"
+              {...getFloatingProps()}
+              {...getPanelPosition()}
+              className={clsx(withBaseName(), className)}
+              focusManagerProps={
+                context
+                  ? {
+                      context,
+                      initialFocus: isNested ? -1 : 0,
+                      returnFocus: !isNested,
+                      modal: false,
+                    }
+                  : undefined
+              }
+              tabIndex={-1}
+              ref={handleRef}
+              {...rest}
+            >
+              <MenuPanelBase>{children}</MenuPanelBase>
+            </FloatingComponent>
+          </FloatingList>
+        </MenuAlignmentContext.Provider>
       </MenuPanelContext.Provider>
     );
   },

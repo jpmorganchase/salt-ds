@@ -7,10 +7,8 @@ export interface MenuPanelContextValue
     MenuContextValue,
     "getItemProps" | "activeIndex" | "setFocusInside"
   > {
-  reserveIconSpace: boolean;
-  reserveSelectionIconSpace: boolean;
-  registerIcon: () => () => void;
-  registerSelectionIcon: () => () => void;
+  hasSelectionIcon: boolean;
+  registerPanelSelectionIcon: () => () => void;
 }
 
 export const MenuPanelContext = createContext<MenuPanelContextValue>(
@@ -19,10 +17,8 @@ export const MenuPanelContext = createContext<MenuPanelContextValue>(
     activeIndex: null,
     getItemProps: () => ({}),
     setFocusInside: () => undefined,
-    reserveIconSpace: false,
-    reserveSelectionIconSpace: false,
-    registerIcon: () => () => undefined,
-    registerSelectionIcon: () => () => undefined,
+    hasSelectionIcon: false,
+    registerPanelSelectionIcon: () => () => undefined,
   },
 );
 

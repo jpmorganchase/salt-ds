@@ -14,6 +14,7 @@
   cursor: var(--salt-cursor-hover);
   box-sizing: border-box;
   flex-shrink: 0;
+  --saltMenuItem-iconColumnWidth: max(var(--salt-size-icon), 12px);
 }
 
 .saltMenuItem:focus-visible {
@@ -70,7 +71,16 @@
 
 .saltMenuItem-iconPlaceholder {
   flex-shrink: 0;
-  width: max(var(--salt-size-icon), 12px);
+  width: var(--saltMenuItem-iconColumnWidth);
+}
+
+/* Account for selectable and icon token size differences, so labels after an icon line up with labels after a radio or checkbox */
+.saltMenuItem-selectionAlignedIcon {
+  --saltMenuItem-iconColumnWidth: max(var(--salt-size-selectable), var(--salt-size-icon), 12px);
+}
+
+.saltMenuItem-selectionAlignedIcon > .saltIcon:first-child {
+  margin-inline: max(0px, calc((var(--saltMenuItem-iconColumnWidth) - var(--icon-size)) / 2));
 }
 
 .saltMenuItem-expandIcon.saltIcon {

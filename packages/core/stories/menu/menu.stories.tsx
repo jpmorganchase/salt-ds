@@ -728,3 +728,117 @@ export const SelectionWithIcons: StoryFn<typeof Menu> = (args) => {
     </Menu>
   );
 };
+
+/**
+ * Icons in a group without radios or checkboxes sit in the radio and checkbox column.
+ * Their labels do not line up with labels that follow a checkbox and an icon.
+ */
+export const AlignmentSelectionWithIcons: StoryFn<typeof Menu> = (args) => {
+  const [columns, setColumns] = useState<string[]>(["owner"]);
+
+  return (
+    <Menu {...args}>
+      <MenuTrigger>
+        <Button appearance="transparent" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup
+          label="Columns"
+          selectionVariant="multiple"
+          selected={columns}
+          onSelectionChange={(_event, newSelected) => setColumns(newSelected)}
+        >
+          <MenuItem value="owner">
+            <UserIcon aria-hidden />
+            Owner
+          </MenuItem>
+          <MenuItem value="modified">
+            <CalendarIcon aria-hidden />
+            Date modified
+          </MenuItem>
+        </MenuGroup>
+        <MenuGroup label="Actions">
+          <MenuItem>
+            <CopyIcon aria-hidden />
+            Copy
+          </MenuItem>
+          <MenuItem>
+            <ExportIcon aria-hidden />
+            Export
+          </MenuItem>
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+};
+
+/**
+ * Items outside a group align with each other, not with the items in a group.
+ */
+export const AlignmentUngroupedAndGrouped: StoryFn<typeof Menu> = (args) => {
+  return (
+    <Menu {...args}>
+      <MenuTrigger>
+        <Button appearance="transparent" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuItem>
+          <CopyIcon aria-hidden />
+          Copy
+        </MenuItem>
+        <MenuItem>Paste</MenuItem>
+        <MenuGroup label="More">
+          <MenuItem>Settings</MenuItem>
+          <MenuItem>Export</MenuItem>
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+};
+
+/**
+ * Each group reserves icon space only for its own items, so a group without icons
+ * does not indent to line up with a sibling group that has them.
+ */
+export const AlignmentSiblingGroups: StoryFn<typeof Menu> = (args) => {
+  return (
+    <Menu {...args}>
+      <MenuTrigger>
+        <Button appearance="transparent" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup label="Clipboard">
+          <MenuItem>
+            <CopyIcon aria-hidden />
+            Copy
+          </MenuItem>
+          <MenuItem>
+            <PasteIcon aria-hidden />
+            Paste
+          </MenuItem>
+          <MenuItem>Clear</MenuItem>
+        </MenuGroup>
+        <MenuGroup label="Styling">
+          <MenuItem>Edit styling</MenuItem>
+          <MenuItem>Clear styling</MenuItem>
+        </MenuGroup>
+        <MenuGroup>
+          <MenuItem>
+            <EditIcon aria-hidden />
+            Rename
+          </MenuItem>
+          <MenuItem>
+            <SettingsIcon aria-hidden />
+            Settings
+          </MenuItem>
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+};

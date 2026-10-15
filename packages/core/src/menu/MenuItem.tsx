@@ -16,6 +16,7 @@ import { CheckboxIcon } from "../checkbox";
 import { RadioButtonIcon } from "../radio-button";
 import { useIcon } from "../semantic-icon-provider";
 import { makePrefixer, useForkRef, useIsomorphicLayoutEffect } from "../utils";
+import { useMenuAlignment } from "./MenuAlignmentContext";
 import { useMenuContext } from "./MenuContext";
 import { useMenuGroup } from "./MenuGroupContext";
 import menuItemCss from "./MenuItem.css";
@@ -82,11 +83,15 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
       activeIndex,
       getItemProps,
       setFocusInside,
+      hasSelectionIcon,
+      registerPanelSelectionIcon,
+    } = useMenuPanelContext();
+    const {
       reserveIconSpace,
       reserveSelectionIconSpace,
       registerIcon,
       registerSelectionIcon,
-    } = useMenuPanelContext();
+    } = useMenuAlignment();
     const { isSelected, select, selectionVariant } = useMenuGroup();
     const item = useListItem();
     const tree = useFloatingTree();
@@ -107,6 +112,13 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
       selectionVariant !== undefined && !triggersSubmenu;
     const selectable = insideSelectableGroup && value !== undefined;
     const selected = selectable && isSelected(value);
+    // When icons lead this item and another group in the panel leads with a radio
+    // or checkbox, widen the icon column to match so the labels still line up.
+    const alignIconWithSelectionIcon =
+      hasSelectionIcon &&
+      !selectable &&
+      !reserveSelectionIconSpace &&
+      (hasIcon || reserveIconSpace);
 
     useIsomorphicLayoutEffect(() => {
       setHasIcon(hasLeadingIcon(itemRef.current));
@@ -117,10 +129,17 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
       [hasIcon, registerIcon],
     );
 
-    useIsomorphicLayoutEffect(
-      () => (selectable ? registerSelectionIcon() : undefined),
-      [selectable, registerSelectionIcon],
-    );
+    useIsomorphicLayoutEffect(() => {
+      if (!selectable) {
+        return undefined;
+      }
+      const unregisterFromGroup = registerSelectionIcon();
+      const unregisterFromPanel = registerPanelSelectionIcon();
+      return () => {
+        unregisterFromGroup();
+        unregisterFromPanel();
+      };
+    }, [selectable, registerSelectionIcon, registerPanelSelectionIcon]);
 
     useEffect(() => {
       if (triggersSubmenu) {
@@ -159,6 +178,7 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
           withBaseName(),
           {
             [withBaseName("blurActive")]: blurActive,
+            [withBaseName("selectionAlignedIcon")]: alignIconWithSelectionIcon,
           },
           className,
         )}
