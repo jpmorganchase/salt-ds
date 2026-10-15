@@ -1,5 +1,69 @@
 # @salt-ds/theme
 
+## 1.48.0
+
+### Minor Changes
+
+- c319c14: Added an experimental interim mobile density, available at `@salt-ds/theme/css/experimental/mobile-interim.css`.
+
+  It gives the mobile density more compact spacing, text and size values. For example, `--salt-spacing-100` is 12px instead of 16px, `--salt-text-fontSize` is 14px instead of 16px, and `--salt-size-base` is 40px instead of 44px.
+
+  To try it, import the stylesheet after your theme stylesheets so its values take precedence, and pass `density="mobile"` to `SaltProvider`.
+
+  ```tsx
+  import "@salt-ds/theme/index.css";
+  import "@salt-ds/theme/css/experimental/mobile-interim.css";
+
+  <SaltProvider density="mobile">
+    <App />
+  </SaltProvider>;
+  ```
+
+  This density is experimental. Its tokens and values may change, or it may be removed, in any release without a major version bump. Its stylesheet will move out of the `experimental/` folder when it becomes stable. It isn't recommended for production use.
+
+- 825f63d: Renamed the `small` and `strong` font weight tokens to `lighter` and `bolder`, to match the new `fontWeight` prop on `Text`. The old tokens still work as aliases but are deprecated and will be removed in a future major version. Salt components now use the new tokens, so if you override an old token, override the new one instead.
+
+  ```diff
+  - font-weight: var(--salt-text-fontWeight-strong);
+  + font-weight: var(--salt-text-fontWeight-bolder);
+  ```
+
+  | Deprecated token                         | Use instead                               |
+  | ---------------------------------------- | ----------------------------------------- |
+  | `--salt-text-fontWeight-small`           | `--salt-text-fontWeight-lighter`          |
+  | `--salt-text-fontWeight-strong`          | `--salt-text-fontWeight-bolder`           |
+  | `--salt-text-action-fontWeight-small`    | `--salt-text-action-fontWeight-lighter`   |
+  | `--salt-text-action-fontWeight-strong`   | `--salt-text-action-fontWeight-bolder`    |
+  | `--salt-text-display-fontWeight-small`   | `--salt-text-display-fontWeight-lighter`  |
+  | `--salt-text-display-fontWeight-strong`  | `--salt-text-display-fontWeight-bolder`   |
+  | `--salt-text-heading-fontWeight-small`   | `--salt-text-heading-fontWeight-lighter`  |
+  | `--salt-text-heading-fontWeight-strong`  | `--salt-text-heading-fontWeight-bolder`   |
+  | `--salt-text-label-fontWeight-small`     | `--salt-text-label-fontWeight-lighter`    |
+  | `--salt-text-label-fontWeight-strong`    | `--salt-text-label-fontWeight-bolder`     |
+  | `--salt-text-notation-fontWeight-small`  | `--salt-text-notation-fontWeight-lighter` |
+  | `--salt-text-notation-fontWeight-strong` | `--salt-text-notation-fontWeight-bolder`  |
+
+  The deprecated `--salt-text-h{1-4}-fontWeight-small`, `--salt-text-h{1-4}-fontWeight-strong`, `--salt-text-display{1-4}-fontWeight-small` and `--salt-text-display{1-4}-fontWeight-strong` tokens now alias the new tokens.
+
+  The `small` and `strong` font weight tokens have been removed from the experimental Salt (Interim) theme without aliases. If you use the interim theme and reference them, switch to the matching `lighter` and `bolder` tokens in the table above.
+
+  See [font weight](https://www.saltdesignsystem.com/salt/foundations/typography#font-weight) for how each text style uses these weights.
+
+- 825f63d: Added `--salt-text-code-fontWeight` to all themes, to match the code text style in Figma. It's a regular weight in every theme.
+
+  `Code`, `Text` and `styleAs="code"` now use it. Code text has a single weight, so the `fontWeight` prop and nested `<b>` and `<strong>` elements no longer change its weight. Previously they used the body text weights, which made the browser draw a synthetic bold because PT Mono only has a regular weight.
+
+- 825f63d: Added tokens for the new editorial, eyebrow, Body 2 and Label 2 text styles to all themes. Compare their sizes in each theme and density with the [text styles preview](https://www.saltdesignsystem.com/salt/foundations/typography#hierarchy), or find every value in the [token index](https://www.saltdesignsystem.com/salt/themes/design-tokens/tokens).
+
+  - Editorial: `--salt-text-editorial1-fontSize` to `--salt-text-editorial6-fontSize`, `--salt-text-editorial1-lineHeight` to `--salt-text-editorial6-lineHeight`, `--salt-text-editorial-fontFamily`, `--salt-text-editorial-fontStyle`, `--salt-text-editorial-fontWeight`, `--salt-text-editorial-fontWeight-lighter`, `--salt-text-editorial-fontWeight-bolder`, `--salt-text-editorial-letterSpacing` and `--salt-text-editorial-textTransform`.
+  - Eyebrow: `--salt-text-eyebrow-fontSize`, `--salt-text-eyebrow-lineHeight`, `--salt-text-eyebrow-fontFamily`, `--salt-text-eyebrow-fontStyle`, `--salt-text-eyebrow-fontWeight`, `--salt-text-eyebrow-fontWeight-lighter`, `--salt-text-eyebrow-fontWeight-bolder`, `--salt-text-eyebrow-letterSpacing` and `--salt-text-eyebrow-textTransform`.
+  - Body 2: `--salt-text-body2-fontSize` and `--salt-text-body2-lineHeight`.
+  - Label 2: `--salt-text-label2-fontSize` and `--salt-text-label2-lineHeight`.
+
+### Patch Changes
+
+- 825f63d: Updated display text in the experimental Salt (Interim) theme to match the other themes. Display text is no longer italic or uppercase, has no letter spacing, can be made bolder with a regular weight, and has line heights of 1.3 times its font size. For the previous italic, uppercase style, use the new editorial styles.
+
 ## 1.47.0
 
 ### Minor Changes
