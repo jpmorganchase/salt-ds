@@ -17,14 +17,14 @@
 .saltFormFieldLabel-label {
   --formFieldLabel-fontSize: var(--salt-text-label-fontSize);
   --formFieldLabel-lineHeight: var(--salt-text-label-lineHeight);
-  --formFieldLabel-fontWeight: var(--salt-text-label-fontWeight-strong);
+  --formFieldLabel-fontWeight: var(--salt-text-label-fontWeight-bolder);
   --formFieldLabel-necessity-fontWeight: var(--salt-text-label-fontWeight);
 }
 
 .saltFormFieldLabel-sentence {
   --formFieldLabel-fontSize: var(--salt-text-fontSize);
   --formFieldLabel-lineHeight: var(--salt-text-lineHeight);
-  --formFieldLabel-fontWeight: var(--salt-text-fontWeight-strong);
+  --formFieldLabel-fontWeight: var(--salt-text-fontWeight-bolder);
   --formFieldLabel-necessity-fontWeight: var(--salt-text-fontWeight);
 }
 

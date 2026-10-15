@@ -19,8 +19,8 @@ export function Hero() {
       <div className={styles.content}>
         <div className={styles.eyebrow}>
           <EyebrowLogo />
-          <Display2 className={styles.title}>
-            <strong>Salt Design System</strong>
+          <Display2 className={styles.title} fontWeight="bolder">
+            Salt Design System
           </Display2>
         </div>
         <Text>

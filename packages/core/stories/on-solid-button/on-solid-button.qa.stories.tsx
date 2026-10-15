@@ -1,4 +1,4 @@
-import { OnSolidButton } from "@salt-ds/core";
+import { OnSolidButton, Text } from "@salt-ds/core";
 import { NotificationIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
@@ -55,6 +55,16 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => (
           <NotificationIcon aria-hidden />
         </OnSolidButton>
         <OnSolidButton disabled>OnSolidButton</OnSolidButton>
+        <OnSolidButton>
+          Save{" "}
+          <Text as="span" styleAs="inherit" fontWeight="lighter">
+            draft
+          </Text>{" "}
+          <b>now</b>
+        </OnSolidButton>
+        <OnSolidButton>
+          Deprecated <small>small</small>
+        </OnSolidButton>
       </Surface>
     ))}
   </QAContainer>

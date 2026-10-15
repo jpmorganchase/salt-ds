@@ -70,11 +70,19 @@
   opacity: 0.4;
 }
 
-.saltOnSolidButton strong {
-  font-weight: var(--salt-text-action-fontWeight-strong);
+/* Lets a nested Text with styleAs="inherit" use the action weights */
+.saltOnSolidButton {
+  --text-fontWeight-bolder: var(--salt-text-action-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-action-fontWeight-lighter);
 }
 
+.saltOnSolidButton strong,
+.saltOnSolidButton b {
+  font-weight: var(--salt-text-action-fontWeight-bolder);
+}
+
+/* Deprecated, use a nested Text with styleAs="inherit" and fontWeight="lighter" instead */
 .saltOnSolidButton small {
   font-size: inherit;
-  font-weight: var(--salt-text-action-fontWeight-small);
+  font-weight: var(--salt-text-action-fontWeight-lighter);
 }

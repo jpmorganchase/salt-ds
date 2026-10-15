@@ -2,6 +2,7 @@ import {
   FileDropZone,
   FileDropZoneIcon,
   FileDropZoneTrigger,
+  Text,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer } from "docs/components";
@@ -15,7 +16,9 @@ export const AllExamplesGrid: StoryFn = () => {
     <QAContainer cols={2} itemPadding={4}>
       <FileDropZone onDrop={() => console.log("files accepted")}>
         <FileDropZoneIcon />
-        <strong>Drop files here or</strong>
+        <Text styleAs="inherit" fontWeight="bolder">
+          Drop files here or
+        </Text>
         <FileDropZoneTrigger />
       </FileDropZone>
       <FileDropZone
@@ -23,7 +26,9 @@ export const AllExamplesGrid: StoryFn = () => {
         onDrop={() => console.log("files accepted")}
       >
         <FileDropZoneIcon />
-        <strong>Drop files here or</strong>
+        <Text styleAs="inherit" fontWeight="bolder">
+          Drop files here or
+        </Text>
         <FileDropZoneTrigger />
       </FileDropZone>
       <FileDropZoneTrigger appearance="bordered" />

@@ -58,11 +58,7 @@ export const AdditionalLabels = (): ReactElement => {
               <StackLayout gap={0.5}>
                 <SplitLayout
                   align="baseline"
-                  startItem={
-                    <Text>
-                      <strong>{name}</strong>
-                    </Text>
-                  }
+                  startItem={<Text fontWeight="bolder">{name}</Text>}
                   endItem={
                     <Text styleAs="label" color="secondary">
                       {state[id].length} of {accounts.length} accounts

@@ -306,5 +306,5 @@
 /* Style applied to placeholder text */
 .saltPillInput-input::placeholder {
   color: var(--salt-content-secondary-foreground);
-  font-weight: var(--salt-text-fontWeight-small);
+  font-weight: var(--salt-text-fontWeight-lighter);
 }

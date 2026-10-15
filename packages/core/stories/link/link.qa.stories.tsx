@@ -20,7 +20,11 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     </Link>
     <div style={{ width: 150 }}>
       <Link href="https://github.com/salt-ds/core" maxRows={1}>
-        View <strong>Salt Core</strong> <small>package</small> source
+        View <b>Salt Core</b>{" "}
+        <Text as="span" styleAs="inherit" fontWeight="lighter">
+          package
+        </Text>{" "}
+        source
       </Link>
     </div>
     <Link href="/salt/about/supported-platforms" color="secondary">
