@@ -24,7 +24,7 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
     disabled?: boolean;
     /**
      * Adjust the font weight using the theme's weights for the current text style.
-     * Omit to use the default weight. This is a visual change only; use `<strong>` or `<em>` to convey importance or stress.
+     * This is a visual change only and isn't conveyed to assistive technologies; use `<strong>` or `<em>` to convey importance or stress.
      */
     fontWeight?: "lighter" | "bolder";
     /**
@@ -33,8 +33,8 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
     maxRows?: number;
     /**
      * Match styling to another text component's style.
-     * Use `inherit` to match the parent element's font and color, for example to change the weight of part of a heading.
-     * `fontWeight` then uses the weights of the closest parent `Text`.
+     * Use `inherit` to inherit the font and color from the parent element.
+     * The `lighter` and `bolder` weights then come from the closest `Text`-based ancestor.
      */
     styleAs?:
       | "h1"

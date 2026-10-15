@@ -70,7 +70,7 @@ Although we don't encourage it, you may find it necessary to change an elementâ€
 
 Using the `styleAs` prop, you can maintain the correct HTML hierarchy and the appropriate visual priority. You can style headings to visually appear as different heading levels, irrespective of the underlying DOM element of a heading on the page.
 
-Set `styleAs` to `inherit` to match the font and color of the parent element. This is useful when you nest `Text` to change the weight of part of the content. The `fontWeight` prop then uses the weights of the closest parent `Text`, or the body text weights if there isn't one.
+Set `styleAs` to `inherit` to inherit the font and color from the parent element. This is useful when you nest `Text` to change the weight of part of the content. The `lighter` and `bolder` weights come from the closest `Text`-based ancestor, such as `H1` or `Eyebrow`, or from the body text weights if there isn't one.
 
 <LivePreview componentName="text" exampleName="Styling" />
 
@@ -82,7 +82,7 @@ Use the `color` prop to adjust the foreground color of any nested text. Use the 
 
 ## Font weight
 
-Use the `fontWeight` prop to make text `lighter` or `bolder` than its default weight. Omit the prop to use the default weight. The weights come from the theme and depend on the text style, so `bolder` on a heading is heavier than `bolder` on body text. Themes can set a lighter or bolder weight to the same value as the default when the brand guidelines don't allow that variation. For example, `fontWeight="bolder"` and nested `<b>` elements don't change the weight of `Eyebrow`, editorial text always uses a light weight in the J.P. Morgan theme, and `Code` always uses a regular weight.
+Use the `fontWeight` prop to make text `lighter` or `bolder` than its default weight. The weights come from the theme and depend on the text style, so `bolder` on a heading can be heavier than `bolder` on body text. Themes can set a lighter or bolder weight to the same value as the default when the brand guidelines don't allow that variation. For example, `fontWeight="bolder"` and nested `<b>` elements don't change the weight of `Eyebrow`, editorial text always uses a light weight in the J.P. Morgan theme, and `Code` always uses a regular weight.
 
 To change the weight of part of the text, nest `<Text as="span" styleAs="inherit">` with the `fontWeight` prop. It keeps the parent's text style and color, and uses that style's weights. You can also nest a `<b>` element, which uses the same weight as `bolder`.
 

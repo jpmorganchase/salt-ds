@@ -19,9 +19,11 @@ To change the weight of part of the text, nest a `Text` with the new `styleAs="i
 </H2>
 ```
 
-`<strong>`, `<b>` and `<small>` now use the weights of the closest `Text`, so a `<strong>` in a body `Text` nested in a heading uses the body weight rather than the heading weight.
+`<strong>`, `<b>` and `<small>` now use the weights of the closest `Text`-based component, so a `<strong>` in a body `Text` nested in a heading uses the body weight rather than the heading weight.
 
-Deprecated the lighter weight styling of `<small>` in `Text`. It still works but will be removed in a future major version.
+`Button` and `OnSolidButton` now give `<b>` the same weight as `<strong>`, and a nested `Text` with `styleAs="inherit"` uses their action text weights.
+
+Deprecated the lighter weight styling of `<small>` in `Text`, `Button` and `OnSolidButton`. It still works but will be removed in a future major version.
 
 ```diff
 - <Text><small>Lighter text</small></Text>
