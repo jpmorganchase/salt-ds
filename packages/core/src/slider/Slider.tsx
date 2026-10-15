@@ -23,13 +23,14 @@ export interface SliderProps
    */
   accessibleMinText?: string;
   /**
-   * When minimum and maximum labels are defined, ensure
-   * they are confined within the boundary of the slider.
-   * @default false
+   * Align the labels of marks at the minimum and maximum values to the
+   * ends of the track, so they are confined within the boundary of the slider.
+   * Set to `false` to center them on their marks.
+   * @default true
    */
   constrainLabelPosition?: boolean;
   /**
-   * The number of allowed decimal places
+   * The number of decimal places values are rounded to.
    * @default 2
    */
   decimalPlaces?: number;
@@ -43,17 +44,20 @@ export interface SliderProps
    */
   disabled?: boolean;
   /**
-   * A callback to format the display value in the tooltip, min and max labels
-   * and the `aria-valuetext` attribute.
+   * A callback to format the value displayed in the tooltip and announced by
+   * screen readers through `aria-valuetext`. It's also applied to the minimum
+   * and maximum values announced by screen readers, unless `accessibleMinText`
+   * or `accessibleMaxText` are set. It isn't applied to `minLabel`, `maxLabel`
+   * or `marks`.
    */
   format?: (value: number) => string | number;
   /**
-   * Marks that are displayed under the track.
+   * Marks that are displayed under the track, each with a `value` and a `label`.
    */
   marks?: { label: string; value: number }[];
   /**
    * Maximum slider value.
-   * @default 10
+   * @default 100
    */
   max?: number;
   /**
@@ -62,11 +66,11 @@ export interface SliderProps
    */
   min?: number;
   /**
-   * Label for maximum value.
+   * Label displayed inline, after the track, for the maximum value.
    */
   maxLabel?: string;
   /**
-   * Label for the minimum value.
+   * Label displayed inline, before the track, for the minimum value.
    */
   minLabel?: string;
   /**
@@ -103,7 +107,7 @@ export interface SliderProps
    */
   step?: number;
   /**
-   * Maximum interval the slider thumb can move when using PageUp and PageDown keys.
+   * Multiplier applied to `step` when using the Page Up and Page Down keys.
    * @default 2
    */
   stepMultiplier?: number;
@@ -120,6 +124,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     "aria-valuetext": ariaValueText,
     accessibleMaxText,
     accessibleMinText,
+    constrainLabelPosition = true,
     decimalPlaces = 2,
     disabled: disabledProp = false,
     format,
@@ -203,6 +208,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
 
   return (
     <SliderTrack
+      constrainLabelPosition={constrainLabelPosition}
       disabled={disabled}
       format={format}
       handlePointerDown={handlePointerDownOnTrack}
@@ -239,7 +245,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         max={max}
         maxLabel={maxLabel}
         name={name}
-        offsetPercentage={`${progressPercentage}%`}
+        offsetPercentage={progressPercentage}
         restrictToMarks={restrictToMarks}
         sliderValue={value}
         showTooltip={showTooltip}
