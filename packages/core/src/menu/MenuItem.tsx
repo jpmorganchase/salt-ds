@@ -208,10 +208,10 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
           },
           onClick(event: MouseEvent<HTMLDivElement>) {
             if (!disabled) {
+onClick?.(event);
               if (selectable) {
                 select(event, value);
               }
-              onClick?.(event);
               if (!triggersSubmenu && shouldCloseMenu()) {
                 tree?.events.emit("click");
               }
