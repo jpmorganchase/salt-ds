@@ -18,24 +18,18 @@ Selection of an interval of values from a `RangeSlider` track. A tooltip display
 
 ## Labels
 
-`RangeSlider`'s labels indicate the minimum and maximum values of the range, and can be located inline with the `RangeSlider` using the `minLabel` and `maxLabel` props or they can be located at the bottom of the `RangeSlider` using the `marks` prop.
+`RangeSlider` can display two kinds of labels:
+
+- **Inline labels:** set the `minLabel` and `maxLabel` props to display labels before and after the track.
+- **Mark labels:** set the `marks` prop to display labels under the track at specific values. Use `showTicks` to display a tick between the track and each mark label. Refer to [with marks](#with-marks) for more information.
+
+You can combine inline labels and mark labels.
 
 ### Best practices
 
 To make the `RangeSlider` accessible, ensure screen readers can accurately convey the range and its values. While screen readers announce the default minimum and maximum values, customizing labels with `minLabel` and `maxLabel` is best paired with updating screen reader text using `accessibleMinText` and `accessibleMaxText`. These props let you define the exact text announced for the minimum and maximum values, ensuring alignment with custom labels. For instance, if `minLabel` is "Low" and `maxLabel` is "High," set `accessibleMinText` to "Low" and `accessibleMaxText` to "High" for a more intuitive experience for assistive technology users.
 
 <LivePreview componentName="range-slider" exampleName="WithLabels" />
-
-## With constrained label position
-
-You can use the `constrainLabelPosition` prop to ensure that the bottom labels remain within the `RangeSlider`'s boundaries. When set to `true`, it prevents labels from extending beyond the `RangeSlider`, maintaining a tidy and consistent appearance. This is particularly useful for preserving layout integrity and ensuring label readability across various screen sizes.
-
-**Note:** Enabling `constrainLabelPosition` may lead to inconsistent spacing between marks. Use this option carefully to balance visual clarity and label distribution.
-
-<LivePreview
-  componentName="range-slider"
-  exampleName="WithConstrainedLabelPosition"
-/>
 
 ## With marks
 
@@ -47,9 +41,24 @@ To add non-numeric `marks` to certain values, please refer to the [example with 
 
 <LivePreview componentName="range-slider" exampleName="WithMarks" />
 
+## With constrained label position
+
+The `constrainLabelPosition` prop controls the horizontal alignment of mark labels at the minimum and maximum values. It doesn't affect inline labels or the position of other mark labels.
+
+By default, `constrainLabelPosition` is `true`, so these labels align to the ends of the track and remain within the `RangeSlider`'s boundaries. This maintains a tidy and consistent appearance, and is particularly useful for preserving layout integrity and ensuring label readability across various screen sizes.
+
+Set `constrainLabelPosition` to `false` to center these labels on their marks instead. Centered labels may extend beyond the `RangeSlider`, so ensure there is enough space around it.
+
+<LivePreview
+  componentName="range-slider"
+  exampleName="WithConstrainedLabelPosition"
+/>
+
 ## Restrict to marks
 
-The `restrictToMarks` property, when set to `true`, confines the `Slider`'s movement to predefined values specified in the `marks` array. This means that the `Slider` can only stop at these specific values, rather than any arbitrary value along the `Slider`'s range. The `step` property is ignored in this case.
+The `restrictToMarks` property, when set to `true`, confines the `RangeSlider`'s movement to predefined values specified in the `marks` array. This means that the `RangeSlider` can only stop at these specific values, rather than any arbitrary value along the `RangeSlider`'s range. The `step` property is ignored in this case.
+
+When a thumb is focused, the arrow keys and the Page Up and Page Down keys move it to the adjacent mark.
 
 <LivePreview componentName="range-slider" exampleName="WithRestrictToMarks" />
 
@@ -61,7 +70,7 @@ You can set the `RangeSlider` as disabled.
 
 ## Custom step
 
-By default, the `RangeSlider` step increment is set to 1. This can be customized by using the `step` prop. Custom step values can be set to any number, including decimal values up to two decimal places.
+By default, the `RangeSlider` step increment is set to 1. This can be customized by using the `step` prop. Custom step values can be set to any number, including decimals. Values are rounded to the number of decimal places set by the `decimalPlaces` prop, which defaults to 2.
 
 ### Best practices
 
@@ -71,11 +80,11 @@ We recommend (max - min) to be evenly divisible by the step to ensure that all v
 
 ## With formatting
 
-You can pass a callback function to the `format()` prop to format the display values in the tooltip and min/max labels. This can be useful to display units or currency.
+You can pass a callback function to the `format()` prop to format the values displayed in the tooltip. This `format()` callback will also be applied to screen reader announcements to ensure accessibility. You can use the `format()` callback to display units or currency.
 
 ### Best practices
 
-When formatting the values, it is recommended to add the same formatting to the marks if passed.
+The `format()` callback isn't applied to `minLabel`, `maxLabel` or `marks`. When formatting the values, add the same formatting to these labels.
 
 <LivePreview componentName="range-slider" exampleName="WithFormatting" />
 
@@ -96,13 +105,13 @@ You can display inputs with a `RangeSlider`. Inputs are used to enter a numeric 
 - When using inputs, ensure the `RangeSlider` is controlled (by explicitly setting the `value` prop).
 - Use the `RangeSlider`'s `onChange` callback to update the input values when the `RangeSlider` is interacted with.
 - Validate your input value changes and update the `validationStatus` prop on any inputs accordingly.
-- Only use the inline labels of the `RangeSlider` alongside an input. This ensures the size-base alignment of the overall component layout is maintained.
+- Use inline labels (`minLabel` and `maxLabel`) rather than `marks` alongside an input. This ensures the size-base alignment of the overall component layout is maintained.
 
 <LivePreview componentName="range-slider" exampleName="WithInput" />
 
 ## Hide tooltip
 
-To hide the tooltip when hovering over the `RangeSlider` thumb, you can use the `showTooltip` prop. This is beneficial in cases where your `RangeSlider` already conveys enough information, eliminating the need for a tooltip.
+By default, a tooltip displays the value when a thumb is hovered, focused or dragged. To hide it, set the `showTooltip` prop to `false`. This is beneficial in cases where your `RangeSlider` already conveys enough information, eliminating the need for a tooltip.
 
 <LivePreview componentName="range-slider" exampleName="WithHiddenTooltip" />
 
@@ -129,6 +138,6 @@ The `RangeSlider` component provides two key event handlers: `onChange` and `onC
 - `onChange` **Event**: This event is triggered continuously as the user drags the `RangeSlider` thumbs or adjusts them using keyboard controls. It provides real-time feedback by updating the value as the thumbs move or as keyboard inputs modify their value. This is particularly useful for scenarios where you want to display dynamic changes or provide immediate feedback to the user, such as updating a preview or displaying the current value.
 - `onChangeEnd` **Event**: This event is fired once the user releases the `RangeSlider` thumbs or adjusts them using keyboard controls, indicating the end of the interaction. It is ideal for scenarios where you want to perform actions that should only occur after the user has finished adjusting the `RangeSlider`, such as submitting a value, triggering a calculation, or updating a state that should not be changed continuously.
 
-**Note**: Both `onChange` and `onChange` events will be triggered simultaneously when the `RangeSlider` is interacted with using a keyboard.
+**Note**: Both `onChange` and `onChangeEnd` events will be triggered simultaneously when the `RangeSlider` is interacted with using a keyboard.
 
 <LivePreview componentName="range-slider" exampleName="WithChangeEvents" />
