@@ -12,14 +12,22 @@ import {
   Tooltip,
 } from "@salt-ds/core";
 import {
+  CalendarIcon,
+  ColumnChooserIcon,
   CopyIcon,
+  DragRowIcon,
+  EditIcon,
   ExportIcon,
+  GridIcon,
   MicroMenuIcon,
   PasteIcon,
   SettingsIcon,
+  SortAlphaAscendIcon,
+  StringNumberIcon,
+  UserIcon,
 } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { useState } from "react";
+import { type SyntheticEvent, useState } from "react";
 
 export default {
   title: "Core/Menu",
@@ -474,6 +482,362 @@ export const WithDisabledItems: StoryFn<typeof Menu> = (args) => {
         >
           Export
         </MenuItem>
+      </MenuPanel>
+    </Menu>
+  );
+};
+
+export const SingleSelection: StoryFn<typeof Menu> = (args) => {
+  const [sort, setSort] = useState<string[]>(["name"]);
+
+  return (
+    <Menu {...args}>
+      <MenuTrigger>
+        <Button appearance="transparent" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup
+          label="Sort by"
+          selectionVariant="single"
+          selected={sort}
+          onSelectionChange={(_event, newSelected) => setSort(newSelected)}
+        >
+          <MenuItem value="name">Name</MenuItem>
+          <MenuItem value="modified">Date modified</MenuItem>
+          <MenuItem value="size">Size</MenuItem>
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+};
+
+export const MultipleSelection: StoryFn<typeof Menu> = (args) => {
+  const [columns, setColumns] = useState<string[]>(["owner", "size"]);
+
+  return (
+    <Menu {...args}>
+      <MenuTrigger>
+        <Button appearance="transparent" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup
+          label="Columns"
+          selectionVariant="multiple"
+          selected={columns}
+          onSelectionChange={(_event, newSelected) => setColumns(newSelected)}
+        >
+          <MenuItem value="owner">Owner</MenuItem>
+          <MenuItem value="modified">Date modified</MenuItem>
+          <MenuItem value="size">Size</MenuItem>
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+};
+
+export const MixedSelection: StoryFn<typeof Menu> = (args) => {
+  const [sort, setSort] = useState<string[]>(["name"]);
+  const [columns, setColumns] = useState<string[]>(["owner", "size"]);
+
+  return (
+    <Menu {...args}>
+      <MenuTrigger>
+        <Button appearance="transparent" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup
+          label="Sort by"
+          selectionVariant="single"
+          selected={sort}
+          onSelectionChange={(_event, newSelected) => setSort(newSelected)}
+        >
+          <MenuItem value="name">Name</MenuItem>
+          <MenuItem value="modified">Date modified</MenuItem>
+        </MenuGroup>
+        <MenuGroup
+          label="Columns"
+          selectionVariant="multiple"
+          selected={columns}
+          onSelectionChange={(_event, newSelected) => setColumns(newSelected)}
+        >
+          <MenuItem value="owner">Owner</MenuItem>
+          <MenuItem value="size">Size</MenuItem>
+          <MenuItem disabled value="type">
+            Type
+          </MenuItem>
+        </MenuGroup>
+        <MenuGroup>
+          <EditStylingMenu />
+          <MenuItem
+            onClick={() => {
+              alert("Export");
+            }}
+          >
+            Export
+          </MenuItem>
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+};
+
+function SortByMenu(props: {
+  selected: string[];
+  onSelectionChange: (event: SyntheticEvent, newSelected: string[]) => void;
+}) {
+  return (
+    <Menu>
+      <MenuTrigger>
+        <MenuItem>Sort by</MenuItem>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup aria-label="Sort by" selectionVariant="single" {...props}>
+          <MenuItem value="name">Name</MenuItem>
+          <MenuItem value="modified">Date modified</MenuItem>
+          <MenuItem value="size">Size</MenuItem>
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+}
+
+export const SelectionInSubmenu: StoryFn<typeof Menu> = (args) => {
+  const [sort, setSort] = useState<string[]>(["name"]);
+
+  return (
+    <Menu {...args}>
+      <MenuTrigger>
+        <Button appearance="transparent" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuItem
+          onClick={() => {
+            alert("Copy");
+          }}
+        >
+          Copy
+        </MenuItem>
+        <SortByMenu
+          selected={sort}
+          onSelectionChange={(_event, newSelected) => setSort(newSelected)}
+        />
+      </MenuPanel>
+    </Menu>
+  );
+};
+
+export const SelectionWithIcons: StoryFn<typeof Menu> = (args) => {
+  const [sort, setSort] = useState<string[]>(["name"]);
+  const [columns, setColumns] = useState<string[]>(["owner", "size"]);
+
+  return (
+    <Menu {...args}>
+      <MenuTrigger>
+        <Button appearance="transparent" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup
+          label="Sort by"
+          selectionVariant="single"
+          selected={sort}
+          onSelectionChange={(_event, newSelected) => setSort(newSelected)}
+        >
+          <MenuItem value="name">
+            <SortAlphaAscendIcon aria-hidden />
+            Name
+          </MenuItem>
+          <MenuItem value="modified">
+            <CalendarIcon aria-hidden />
+            Date modified
+          </MenuItem>
+        </MenuGroup>
+        <MenuGroup
+          label="Columns"
+          selectionVariant="multiple"
+          selected={columns}
+          onSelectionChange={(_event, newSelected) => setColumns(newSelected)}
+        >
+          <MenuItem value="owner">
+            <UserIcon aria-hidden />
+            Owner
+          </MenuItem>
+          <MenuItem value="modified">
+            <CalendarIcon aria-hidden />
+            Date modified
+          </MenuItem>
+          <MenuItem value="size">
+            <StringNumberIcon aria-hidden />
+            Size
+          </MenuItem>
+        </MenuGroup>
+        <MenuGroup>
+          <MenuItem>
+            <CopyIcon aria-hidden />
+            Copy
+          </MenuItem>
+          <MenuItem>
+            <ExportIcon aria-hidden />
+            Export
+          </MenuItem>
+          <Menu>
+            <MenuTrigger>
+              <MenuItem>
+                <EditIcon aria-hidden />
+                Edit styling
+              </MenuItem>
+            </MenuTrigger>
+            <MenuPanel>
+              <MenuItem
+                onClick={() => {
+                  alert("Column");
+                }}
+              >
+                <ColumnChooserIcon aria-hidden />
+                Column
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  alert("Cell");
+                }}
+              >
+                <GridIcon aria-hidden />
+                Cell
+              </MenuItem>
+              <MenuItem
+                onClick={() => {
+                  alert("Row");
+                }}
+              >
+                <DragRowIcon aria-hidden />
+                Row
+              </MenuItem>
+            </MenuPanel>
+          </Menu>
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+};
+
+/**
+ * Icons in a group without radios or checkboxes sit in the radio and checkbox column.
+ * Their labels do not line up with labels that follow a checkbox and an icon.
+ */
+export const AlignmentSelectionWithIcons: StoryFn<typeof Menu> = (args) => {
+  const [columns, setColumns] = useState<string[]>(["owner"]);
+
+  return (
+    <Menu {...args}>
+      <MenuTrigger>
+        <Button appearance="transparent" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup
+          label="Columns"
+          selectionVariant="multiple"
+          selected={columns}
+          onSelectionChange={(_event, newSelected) => setColumns(newSelected)}
+        >
+          <MenuItem value="owner">
+            <UserIcon aria-hidden />
+            Owner
+          </MenuItem>
+          <MenuItem value="modified">
+            <CalendarIcon aria-hidden />
+            Date modified
+          </MenuItem>
+        </MenuGroup>
+        <MenuGroup label="Actions">
+          <MenuItem>
+            <CopyIcon aria-hidden />
+            Copy
+          </MenuItem>
+          <MenuItem>
+            <ExportIcon aria-hidden />
+            Export
+          </MenuItem>
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+};
+
+/**
+ * Items outside a group align with each other, not with the items in a group.
+ */
+export const AlignmentUngroupedAndGrouped: StoryFn<typeof Menu> = (args) => {
+  return (
+    <Menu {...args}>
+      <MenuTrigger>
+        <Button appearance="transparent" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuItem>
+          <CopyIcon aria-hidden />
+          Copy
+        </MenuItem>
+        <MenuItem>Paste</MenuItem>
+        <MenuGroup label="More">
+          <MenuItem>Settings</MenuItem>
+          <MenuItem>Export</MenuItem>
+        </MenuGroup>
+      </MenuPanel>
+    </Menu>
+  );
+};
+
+/**
+ * Each group reserves icon space only for its own items, so a group without icons
+ * does not indent to line up with a sibling group that has them.
+ */
+export const AlignmentSiblingGroups: StoryFn<typeof Menu> = (args) => {
+  return (
+    <Menu {...args}>
+      <MenuTrigger>
+        <Button appearance="transparent" aria-label="Open Menu">
+          <MicroMenuIcon aria-hidden />
+        </Button>
+      </MenuTrigger>
+      <MenuPanel>
+        <MenuGroup label="Clipboard">
+          <MenuItem>
+            <CopyIcon aria-hidden />
+            Copy
+          </MenuItem>
+          <MenuItem>
+            <PasteIcon aria-hidden />
+            Paste
+          </MenuItem>
+          <MenuItem>Clear</MenuItem>
+        </MenuGroup>
+        <MenuGroup label="Styling">
+          <MenuItem>Edit styling</MenuItem>
+          <MenuItem>Clear styling</MenuItem>
+        </MenuGroup>
+        <MenuGroup>
+          <MenuItem>
+            <EditIcon aria-hidden />
+            Rename
+          </MenuItem>
+          <MenuItem>
+            <SettingsIcon aria-hidden />
+            Settings
+          </MenuItem>
+        </MenuGroup>
       </MenuPanel>
     </Menu>
   );

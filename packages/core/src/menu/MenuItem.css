@@ -14,6 +14,7 @@
   cursor: var(--salt-cursor-hover);
   box-sizing: border-box;
   flex-shrink: 0;
+  --saltMenuItem-iconColumnWidth: max(var(--salt-size-icon), 12px);
 }
 
 .saltMenuItem:focus-visible {
@@ -30,7 +31,7 @@
   background: var(--salt-selectable-background-hover);
 }
 
-.saltMenuItem:active {
+.saltMenuItem[role="menuitem"]:active {
   background: var(--salt-selectable-background-selected);
   box-shadow:
     0 calc(var(--salt-size-fixed-100) * -1) 0 0 var(--salt-selectable-borderColor-selected),
@@ -57,6 +58,29 @@
 /* TODO: Find a better way of doing this */
 .saltMenuItem .saltIcon:not(.saltCheckboxIcon-icon) {
   min-height: var(--salt-text-lineHeight);
+}
+
+.saltMenuItem .saltMenuItem-selectionIcon {
+  margin: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2) 0;
+}
+
+.saltMenuItem-selectionIconPlaceholder {
+  flex-shrink: 0;
+  width: var(--salt-size-selectable);
+}
+
+.saltMenuItem-iconPlaceholder {
+  flex-shrink: 0;
+  width: var(--saltMenuItem-iconColumnWidth);
+}
+
+/* Account for selectable and icon token size differences, so labels after an icon line up with labels after a radio or checkbox */
+.saltMenuItem-selectionAlignedIcon {
+  --saltMenuItem-iconColumnWidth: max(var(--salt-size-selectable), var(--salt-size-icon), 12px);
+}
+
+.saltMenuItem-selectionAlignedIcon > .saltIcon:first-child {
+  margin-inline: max(0px, calc((var(--saltMenuItem-iconColumnWidth) - var(--icon-size)) / 2));
 }
 
 .saltMenuItem-expandIcon.saltIcon {
