@@ -125,7 +125,7 @@
 .ag-theme-salt-dark .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total),
 .ag-theme-salt-compact-light .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total),
 .ag-theme-salt-compact-dark .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total) {
-  border-top-color: var(--salt-container-bold-borderColor);
+  border-top-color: var(--salt-separable-tertiary-borderColor);
 }
 
 .ag-theme-salt-light .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total):focus,
@@ -208,30 +208,102 @@
   background-color: transparent;
 }
 
-.ag-theme-salt-light .ag-floating-filter,
-.ag-theme-salt-dark .ag-floating-filter,
-.ag-theme-salt-compact-light .ag-floating-filter,
-.ag-theme-salt-compact-dark .ag-floating-filter {
-  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
-}
-
 .ag-theme-salt-light .ag-header-cell.ag-floating-filter,
 .ag-theme-salt-dark .ag-header-cell.ag-floating-filter,
 .ag-theme-salt-compact-light .ag-header-cell.ag-floating-filter,
 .ag-theme-salt-compact-dark .ag-header-cell.ag-floating-filter {
-  padding-left: 0;
+  /* Keeps the filter box (z-index: -1) above the header background */
+  isolation: isolate;
+  padding-inline-start: 0;
+  /* 1px gap so adjacent filter boxes don't share a border */
+  padding-inline-end: var(--salt-size-fixed-100);
 }
 
-/**
-  From v31, there's a "active" state of floating filter button next to the input. So we want to put the focus ring
-  not around the whole header cell, but around the input container.
+/* The filter box replaces the line between the column header row and the floating filter row */
+.ag-theme-salt-light .ag-header-row.ag-header-row-not-first .ag-header-cell.ag-floating-filter,
+.ag-theme-salt-dark .ag-header-row.ag-header-row-not-first .ag-header-cell.ag-floating-filter,
+.ag-theme-salt-compact-light .ag-header-row.ag-header-row-not-first .ag-header-cell.ag-floating-filter,
+.ag-theme-salt-compact-dark .ag-header-row.ag-header-row-not-first .ag-header-cell.ag-floating-filter,
+.ag-theme-salt-light .ag-header-row:not(:first-child) .ag-header-cell.ag-floating-filter.ag-floating-filter,
+.ag-theme-salt-dark .ag-header-row:not(:first-child) .ag-header-cell.ag-floating-filter.ag-floating-filter,
+.ag-theme-salt-compact-light .ag-header-row:not(:first-child) .ag-header-cell.ag-floating-filter.ag-floating-filter,
+.ag-theme-salt-compact-dark .ag-header-row:not(:first-child) .ag-header-cell.ag-floating-filter.ag-floating-filter {
+  border-top: none;
+}
+
+.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-full-body,
+.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-full-body,
+.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-full-body,
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-full-body {
+  /* Used when the floating filter button is suppressed */
+  position: relative;
+}
+
+/* Reserve space for the floating filter button, which sits inside the filter box */
+.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-body,
+.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-body,
+.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-body,
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-body {
+  padding-inline-end: calc(var(--ag-icon-size) + 2 * var(--salt-spacing-100));
+}
+
+.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-button,
+.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-button,
+.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-button,
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-button {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: calc(var(--salt-spacing-100) + var(--salt-size-fixed-100));
+  align-items: center;
+  margin: 0;
+}
+
+/* Lets the filter box below be positioned against the full width floating filter body */
+.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-input,
+.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-input,
+.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-input,
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-input,
+.ag-theme-salt-light .ag-floating-filter .ag-date-floating-filter-wrapper,
+.ag-theme-salt-light .ag-floating-filter .ag-date-floating-filter-wrapper .ag-filter-filter,
+.ag-theme-salt-dark .ag-floating-filter .ag-date-floating-filter-wrapper,
+.ag-theme-salt-dark .ag-floating-filter .ag-date-floating-filter-wrapper .ag-filter-filter,
+.ag-theme-salt-compact-light .ag-floating-filter .ag-date-floating-filter-wrapper,
+.ag-theme-salt-compact-light .ag-floating-filter .ag-date-floating-filter-wrapper .ag-filter-filter,
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-date-floating-filter-wrapper,
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-date-floating-filter-wrapper .ag-filter-filter,
+.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden),
+.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden),
+.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden),
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden) {
+  position: static;
+}
+
+/*
+  Filter box (Figma "Filter cell"), drawn from the visible input field so it is not shown for columns without a
+  floating filter. Read-only filters (e.g. set filter or multiple conditions) still show the box, as they can be
+  changed from the floating filter button.
 */
-.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-body:focus-within,
-.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-body:focus-within,
-.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-body:focus-within,
-.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-body:focus-within {
-  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
-  outline-offset: -2px;
+.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden)::before,
+.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden)::before,
+.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden)::before,
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  box-sizing: border-box;
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
+  border-radius: var(--salt-palette-corner-weak, 0);
+}
+
+/* Active: focus ring around the whole box, including the floating filter button */
+.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden):focus-within::before,
+.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden):focus-within::before,
+.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden):focus-within::before,
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden):focus-within::before {
+  background-color: var(--salt-editable-primary-background);
+  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
 .ag-theme-salt-light .ag-header-cell-menu-button:hover,
@@ -299,8 +371,8 @@
 .ag-theme-salt-compact-light .ag-chart-menu-icon:hover,
 .ag-theme-salt-compact-dark .ag-chart-menu-icon:hover {
   /* Button is the same size of icon, we're copying what ag quartz theme is doing */
-  box-shadow: 0 0 0 var(--salt-spacing-50) var(--salt-actionable-subtle-background-hover);
-  background-color: var(--salt-actionable-subtle-background-hover);
+  box-shadow: 0 0 0 var(--salt-spacing-50) var(--salt-actionable-background-hover);
+  background-color: var(--salt-actionable-background-hover);
   --ag-icon-font-color: var(--salt-actionable-subtle-foreground-hover);
   --ag-icon-font-color-filter: var(--salt-actionable-subtle-foreground-hover);
   --ag-icon-font-color-menu-alt: var(--salt-actionable-subtle-foreground-hover);
@@ -331,13 +403,6 @@
   width: 0;
 }
 
-.ag-theme-salt-light .ag-ltr .ag-floating-filter-button,
-.ag-theme-salt-dark .ag-ltr .ag-floating-filter-button,
-.ag-theme-salt-compact-light .ag-ltr .ag-floating-filter-button,
-.ag-theme-salt-compact-dark .ag-ltr .ag-floating-filter-button {
-  margin-left: var(--salt-spacing-100);
-}
-
 .ag-theme-salt-light .ag-ltr .ag-floating-filter-button .ag-button:focus,
 .ag-theme-salt-dark .ag-ltr .ag-floating-filter-button .ag-button:focus,
 .ag-theme-salt-compact-light .ag-ltr .ag-floating-filter-button .ag-button:focus,
@@ -365,6 +430,7 @@
   margin-inline: var(--salt-spacing-50);
   /* Together with margin, matching Salt Input padding */
   padding: 0 var(--salt-spacing-50);
+  color: var(--salt-content-secondary-foreground);
 }
 
 .ag-theme-salt-light .ag-floating-filter-input input[class^="ag-"][type="text"],
@@ -404,7 +470,7 @@
   /* Color for menu / filter icons */
   --ag-icon-font-color: var(--salt-actionable-subtle-foreground-active);
   /** don't show hover style, don't want to flip between light / dark */
-  --salt-actionable-subtle-background-hover: var(--salt-actionable-subtle-background-active);
+  --salt-actionable-background-hover: var(--salt-actionable-subtle-background-active);
 }
 
 .ag-theme-salt-light .ag-header-cell.ag-column-menu-visible .ag-icon,
