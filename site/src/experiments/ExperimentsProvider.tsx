@@ -110,6 +110,16 @@ export function ExperimentsProvider({ children }: { children: ReactNode }) {
 
   useExperimentStylesheets(enabled);
 
+  // Lets the site's own CSS adapt to experiments, e.g. [data-salt-experiments~="rem-units"]
+  useEffect(() => {
+    const root = document.documentElement;
+    if (enabled.length) {
+      root.dataset.saltExperiments = enabled.join(" ");
+    } else {
+      delete root.dataset.saltExperiments;
+    }
+  }, [enabled]);
+
   const setExperimentEnabled = useCallback((id: ExperimentId, on: boolean) => {
     setEnabled((current) =>
       inRegistryOrder(

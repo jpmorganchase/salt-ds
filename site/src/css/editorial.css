@@ -14,6 +14,18 @@ main {
   --salt-text-h4-lineHeight: 21px;
 }
 
+/*
+ * The rem units experiment sets these with a more specific selector, except at mobile density,
+ * so they're repeated in rem to keep the larger text. Mobile density is left to the experiments,
+ * so mobile-interim.css still takes precedence when it's on.
+ */
+:root.salt-theme.salt-editorial[data-salt-experiments~="rem-units"]:not(.salt-density-mobile) {
+  --salt-text-fontSize: 1rem;
+  --salt-text-lineHeight: 1.3125rem;
+  --salt-text-h4-fontSize: 1rem;
+  --salt-text-h4-lineHeight: 1.3125rem;
+}
+
 @media not screen and (min-width: 960px) {
   .salt-theme.salt-editorial .saltText.saltText-display1 {
     font-size: var(--salt-text-display2-fontSize);
