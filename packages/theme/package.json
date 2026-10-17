@@ -18,7 +18,8 @@
   ],
   "scripts": {
     "build": "yarn node ./scripts/build.mjs",
-    "build:watch": "yarn node ./scripts/build.mjs --watch"
+    "build:watch": "yarn node ./scripts/build.mjs --watch",
+    "generate:rem-units": "yarn node ./scripts/generate-rem-units.mjs"
   },
   "devDependencies": {
     "del": "^8.0.0"

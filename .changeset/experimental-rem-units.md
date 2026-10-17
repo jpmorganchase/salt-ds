@@ -4,7 +4,7 @@
 
 Added an experimental rem units stylesheet, available at `@salt-ds/theme/css/experimental/rem-units.css`.
 
-It redefines the density-based text, size and spacing tokens for the legacy, J.P. Morgan and J.P. Morgan (Interim) themes in rem instead of px. The interface then scales with the user's browser font size setting as well as with page zoom, in the same proportions as page zoom. Tokens named `fixed`, such as `--salt-size-fixed-100` and `--salt-spacing-fixed-100`, stay in px. At the default browser font size of 16px, every value resolves to the same pixel size as before.
+It redefines the px text, size and spacing tokens for the legacy, J.P. Morgan and J.P. Morgan (Interim) themes in rem, including font sizes, line heights and letter spacing. The interface then scales with the user's browser font size setting as well as with page zoom, in the same proportions as page zoom. Hairline tokens, such as `--salt-size-fixed-100`, `--salt-spacing-fixed-100` and border widths, stay in px. At the default browser font size of 16px, every value resolves to the same pixel size as before.
 
 Import it after your theme stylesheets. If you also use `mobile-interim.css`, import it after this file so its mobile values take precedence.
 
