@@ -1,10 +1,12 @@
 .saltTag {
-  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
-  min-height: var(--salt-text-minHeight);
+  /* Grows with its content, such as wrapped labels or enlarged text */
+  height: max-content;
+  min-height: max(var(--salt-text-minHeight), calc(var(--salt-size-base) - var(--salt-spacing-100)));
   display: flex;
   column-gap: var(--salt-spacing-50);
   align-items: center;
-  padding: var(--salt-spacing-25) var(--salt-spacing-100);
+  /* No block padding, so content doesn't push the default height past min-height */
+  padding: 0 var(--salt-spacing-100);
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);

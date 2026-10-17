@@ -13,7 +13,9 @@
   cursor: var(--salt-cursor-hover);
   display: inline-flex;
   gap: var(--salt-spacing-50);
-  height: var(--salt-size-base);
+  /* Grows with its content, such as wrapped labels or enlarged text */
+  height: max-content;
+  min-height: var(--salt-size-base);
   justify-content: center;
   line-height: var(--salt-text-lineHeight);
   font-size: var(--salt-text-fontSize);

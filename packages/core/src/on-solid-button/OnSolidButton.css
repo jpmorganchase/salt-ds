@@ -14,7 +14,9 @@
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-action-fontWeight);
   gap: var(--salt-spacing-50);
-  height: var(--salt-size-base);
+  /* Grows with its content, such as wrapped labels or enlarged text */
+  height: max-content;
+  min-height: var(--salt-size-base);
   justify-content: center;
   letter-spacing: var(--salt-text-action-letterSpacing);
   line-height: var(--salt-text-lineHeight);

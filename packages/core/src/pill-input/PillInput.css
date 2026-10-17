@@ -20,11 +20,14 @@
 }
 
 .saltPillInput-truncate {
-  height: var(--salt-size-base);
+  height: max-content;
 }
 
+/* Fill the root's height so the field keeps a full-height click target */
 .saltPillInput-truncate .saltPillInput-inputWrapper {
   flex-wrap: nowrap;
+  align-self: stretch;
+  height: auto;
 }
 
 .saltPillInput:hover {
@@ -291,6 +294,11 @@
   padding: 0;
   text-align: var(--pillInput-textAlign, left);
   width: 100%;
+}
+
+.saltPillInput-truncate .saltPillInput-input {
+  align-self: stretch;
+  height: auto;
 }
 
 /* Reset in the  class */

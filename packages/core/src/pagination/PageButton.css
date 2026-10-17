@@ -1,7 +1,9 @@
 .saltPageButton {
   min-width: var(--salt-size-base);
   font-weight: var(--salt-text-fontWeight);
-  height: var(--salt-size-base);
+  /* Grows with its content, such as enlarged text */
+  height: max-content;
+  min-height: var(--salt-size-base);
   color: var(--salt-content-primary-foreground);
   background: var(--salt-selectable-background);
   appearance: none;

@@ -19,7 +19,9 @@
   text-transform: var(--saltLinkButton-textTransform, var(--salt-text-action-textTransform));
   padding: 0 var(--saltLinkButton-padding, calc(var(--salt-spacing-100) - var(--saltLinkButton-borderWidth, var(--linkButton-borderWidth))));
   margin: var(--saltLinkButton-margin, 0);
-  height: var(--saltLinkButton-height, var(--salt-size-base));
+  /* Grows with its content, such as wrapped labels or enlarged text */
+  height: var(--saltLinkButton-height, max-content);
+  min-height: var(--saltLinkButton-height, var(--salt-size-base));
   min-width: var(--saltLinkButton-minWidth, unset);
   position: relative;
   text-align: var(--saltLinkButton-textAlign, var(--salt-text-action-textAlign));

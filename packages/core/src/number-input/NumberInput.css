@@ -16,7 +16,8 @@
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   gap: var(--salt-spacing-50);
-  height: var(--salt-size-base);
+  /* Grows with its content, such as enlarged text */
+  height: max-content;
   min-height: var(--salt-size-base);
   min-width: 4em;
   overflow: hidden;

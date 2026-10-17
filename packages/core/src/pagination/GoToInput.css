@@ -7,7 +7,7 @@
 }
 
 .saltGoToInput-input {
-  height: var(--salt-size-base);
+  min-height: var(--salt-size-base);
   --saltInput-minWidth: unset;
 }
 

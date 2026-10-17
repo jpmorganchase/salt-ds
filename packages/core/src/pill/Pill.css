@@ -10,8 +10,9 @@
   border-style: solid;
   border-width: var(--pill-borderWidth);
   border-color: var(--pill-borderColor);
-  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
-  min-height: var(--salt-text-minHeight);
+  /* Grows with its content, such as enlarged text */
+  height: max-content;
+  min-height: max(var(--salt-text-minHeight), calc(var(--salt-size-base) - var(--salt-spacing-100)));
   position: relative;
   gap: var(--salt-spacing-50);
   padding: 0 calc(var(--salt-spacing-50) - var(--pill-borderWidth));

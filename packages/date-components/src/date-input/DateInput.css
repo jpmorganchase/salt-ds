@@ -9,7 +9,8 @@
   font-size: var(--saltDateInput-fontSize, var(--salt-text-fontSize));
   line-height: var(--saltDateInput-lineHeight, var(--salt-text-lineHeight));
   letter-spacing: var(--salt-text-letterSpacing);
-  height: var(--saltDateInput-height, var(--salt-size-base));
+  /* Grows with its content, such as enlarged text */
+  height: var(--saltDateInput-height, max-content);
   min-height: var(--saltDateInput-minHeight, var(--salt-size-base));
   min-width: var(--saltDateInput-minWidth, 4em);
   padding-left: var(--saltDateInput-paddingLeft, var(--salt-spacing-100));
@@ -208,6 +209,7 @@
 
 /* Style applied to inner input component */
 .saltDateInput-input {
+  align-self: stretch;
   background: none;
   border: none;
   box-sizing: content-box;
@@ -215,7 +217,6 @@
   cursor: inherit;
   display: block;
   font: inherit;
-  height: 100%;
   letter-spacing: var(--saltDateInput-letterSpacing, var(--salt-text-letterSpacing));
   margin: 0;
   min-width: 0;
