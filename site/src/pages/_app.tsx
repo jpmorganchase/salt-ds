@@ -4,6 +4,7 @@ import { LocalizationProvider } from "@salt-ds/date-components";
 import { clsx } from "clsx";
 import type { AppProps } from "next/app";
 import * as saltComponents from "../components";
+import { ExperimentsProvider } from "../experiments";
 import { amplitude, openSans, ptMono, roboto } from "../fonts";
 import * as saltLayouts from "../layouts";
 import { LayoutProvider } from "../layouts/LayoutProvider";
@@ -49,24 +50,26 @@ export default function MyApp({
   return (
     <StoreProvider value={createStore()}>
       <Metadata />
-      <LocalizationProvider DateAdapter={AdapterLuxon}>
-        <ThemeProvider
-          themeClassName={clsx(
-            "salt-editorial",
-            ptMono.variable,
-            openSans.variable,
-            amplitude.variable,
-            roboto.variable,
-          )}
-        >
-          <LayoutProvider
-            defaultLayout="DetailError"
-            layoutComponents={layoutComponents}
+      <ExperimentsProvider>
+        <LocalizationProvider DateAdapter={AdapterLuxon}>
+          <ThemeProvider
+            themeClassName={clsx(
+              "salt-editorial",
+              ptMono.variable,
+              openSans.variable,
+              amplitude.variable,
+              roboto.variable,
+            )}
           >
-            <Component components={components} {...pageProps} />
-          </LayoutProvider>
-        </ThemeProvider>
-      </LocalizationProvider>
+            <LayoutProvider
+              defaultLayout="DetailError"
+              layoutComponents={layoutComponents}
+            >
+              <Component components={components} {...pageProps} />
+            </LayoutProvider>
+          </ThemeProvider>
+        </LocalizationProvider>
+      </ExperimentsProvider>
     </StoreProvider>
   );
 }

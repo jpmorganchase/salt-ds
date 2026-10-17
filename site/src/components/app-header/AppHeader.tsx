@@ -6,6 +6,7 @@ import { useContext } from "react";
 import { LayoutContext } from "../../layouts/LayoutContext";
 import { useIsMobileView } from "../../utils/useIsMobileView";
 import { CTALink } from "../cta-link/CTALink";
+import { ExperimentsIndicator } from "../experiments/ExperimentsIndicator";
 import { LinkBase } from "../link/Link";
 import { Logo } from "../logo/Logo";
 import { ModeToggle } from "../mode-switch/ModeToggle";
@@ -61,6 +62,7 @@ export const AppHeader = () => {
               </CTALink>
             </Tooltip>
           )}
+          <ExperimentsIndicator />
           <ModeToggle appearance="transparent" />
         </div>
       </div>

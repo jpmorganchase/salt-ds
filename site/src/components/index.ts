@@ -33,6 +33,7 @@ export * from "./css-display";
 export * from "./css-display";
 export * from "./diagrams";
 export * from "./disclosure";
+export * from "./experiments";
 export * from "./footer";
 export * from "./getting-started";
 export * from "./guidance-callout";

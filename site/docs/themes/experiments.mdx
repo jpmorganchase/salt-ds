@@ -1,0 +1,32 @@
+---
+title: Experiments
+layout: DetailTechnical
+---
+
+Experiments let you try Salt features that are still in development, on this site, before they're ready for production. They can change or be removed at any time.
+
+<ExperimentSettings />
+
+Experiments apply across the whole site, including the examples, and stay on in this browser until you turn them off. While any experiment is on, an **Experiments on** link appears in the header and brings you back to this page.
+
+## Share a link with experiments on
+
+Add `?experiments=` to the address of any page on this site, followed by the IDs of the experiments to turn on, separated by commas. For example, `/salt/index?experiments=rem-units` opens the home page with rem units on. To turn every experiment off, use `?experiments=` with no IDs.
+
+| Experiment | ID | Stylesheet |
+| --- | --- | --- |
+| Rem units | `rem-units` | `@salt-ds/theme/css/experimental/rem-units.css` |
+| Mobile density (Interim) | `mobile-interim` | `@salt-ds/theme/css/experimental/mobile-interim.css` |
+
+## Try rem units
+
+Rem units only change how the site looks when your browser's default font size is different from 16px. To see the effect, increase the font size in your browser's settings, for example under **Settings > Appearance > Font size** in Chrome, then check that text, components and spacing grow together.
+
+## Use an experiment in your application
+
+Import the experiment's stylesheet after your theme stylesheets. If you use more than one, import them in the order shown in the table. Experiments aren't recommended for production use.
+
+```tsx
+import "@salt-ds/theme/index.css";
+import "@salt-ds/theme/css/experimental/rem-units.css";
+```
