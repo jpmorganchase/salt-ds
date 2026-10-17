@@ -20,7 +20,7 @@
   font-size: 100%;
 }
 
-:where(:root.salt-theme) > body {
+:root.salt-theme > body {
   font-size: var(--salt-text-fontSize);
 }
 
