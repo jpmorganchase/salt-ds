@@ -13,6 +13,8 @@ import "@salt-ds/theme/index.css";
 import "@salt-ds/theme/css/experimental/rem-units.css";
 ```
 
+Its selectors are more specific than the theme's, so it also overrides any of these tokens your app customizes. To keep a customization, redeclare it in rem with a selector that's more specific than the stylesheet's, which use up to three classes. For example, use `:root.salt-theme.salt-theme-next.my-app` when `SaltProvider` applies its classes to `<html>`.
+
 The stylesheet also sets the root element's font size to `100%` when `SaltProvider` applies its classes to `<html>`, so `1rem` resolves to the user's browser default font size rather than the density's body text size. Rem values in your own CSS will resolve against that size too.
 
 Custom properties now hold rem values, so any code that reads them with `getComputedStyle` and parses them as pixel numbers needs to convert rem to px first.

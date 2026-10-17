@@ -26,6 +26,8 @@ Rem units only change how the site looks when your browser's default font size i
 
 Import the experiment's stylesheet after your theme stylesheets. If you use more than one, import them in the order shown in the table. Experiments aren't recommended for production use.
 
+The rem units stylesheet uses more specific selectors than the theme, so it also replaces any text, size or spacing tokens your application customizes. To keep a customization, redeclare it in rem with a selector that's more specific than the stylesheet's, which use up to three classes, such as `:root.salt-theme.salt-theme-next.my-app`.
+
 ```tsx
 import "@salt-ds/theme/index.css";
 import "@salt-ds/theme/css/experimental/rem-units.css";
