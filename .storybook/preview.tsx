@@ -42,6 +42,7 @@ const preview: Preview = {
     styleInjection: "enable",
     dateAdapter: "luxon",
     theme: "brand",
+    units: "px",
   },
   globalTypes: {
     theme: {
@@ -122,6 +123,19 @@ const preview: Preview = {
           { value: "moment", title: "moment (legacy)" },
         ],
         title: "Date Adapter",
+      },
+    },
+    units: {
+      name: "Units",
+      description:
+        "Use the experimental rem units stylesheet. Change the browser's font size to see it scale.",
+      toolbar: {
+        title: "Units",
+        dynamicTitle: true,
+        items: [
+          { value: "px", title: "px" },
+          { value: "rem", title: "rem (experimental)" },
+        ],
       },
     },
   },

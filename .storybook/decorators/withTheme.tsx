@@ -5,6 +5,7 @@ import {
   SaltProviderNext,
 } from "@salt-ds/core";
 import mobileInterimCss from "@salt-ds/theme/css/experimental/mobile-interim.css?inline";
+import remUnitsCss from "@salt-ds/theme/css/experimental/rem-units.css?inline";
 import type { Decorator } from "@storybook/react-vite";
 import * as React from "react";
 
@@ -29,11 +30,33 @@ const useMobileInterimStyles = (enabled: boolean) => {
   }, [enabled]);
 };
 
+const useRemUnitsStyles = (enabled: boolean) => {
+  maybeUseInsertionEffect(() => {
+    if (!enabled) {
+      return;
+    }
+
+    const styleElement = document.createElement("style");
+    styleElement.setAttribute("data-storybook-style", "rem-units");
+    styleElement.textContent = remUnitsCss;
+    // Inserted before mobile-interim so that stylesheet still takes precedence, as documented
+    document.head.insertBefore(
+      styleElement,
+      document.head.querySelector(
+        'style[data-storybook-style="mobile-interim"]',
+      ),
+    );
+
+    return () => styleElement.remove();
+  }, [enabled]);
+};
+
 export const withTheme: Decorator = (StoryFn, context) => {
   const { mode, styleInjection, theme } = context.globals;
 
   const isMobileInterim = context.globals.density === "mobile-interim";
   const density = isMobileInterim ? "mobile" : context.globals.density;
+  useRemUnitsStyles(context.globals.units === "rem");
   useMobileInterimStyles(isMobileInterim);
 
   const Provider = theme === "brand" ? SaltProviderNext : SaltProvider;
