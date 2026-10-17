@@ -27,7 +27,7 @@ const context = await esbuild.context({
     "css/baseline.css",
     "css/experimental/mobile-interim.css",
     "css/experimental/salt-interim.css",
-    "css/experimental/rem-typography.css",
+    "css/experimental/rem-units.css",
     "css/theme.css",
     "css/global.css",
     "css/theme-next.css",

@@ -9,7 +9,8 @@
   font-size: var(--saltInput-fontSize, var(--salt-text-fontSize));
   line-height: var(--saltInput-lineHeight, var(--salt-text-lineHeight));
   letter-spacing: var(--salt-text-letterSpacing);
-  height: var(--saltInput-height, var(--salt-size-base));
+  /* Grows with its content, such as enlarged text */
+  height: var(--saltInput-height, max-content);
   min-height: var(--saltInput-minHeight, var(--salt-size-base));
   min-width: var(--saltInput-minWidth, 4em);
   padding-left: var(--saltInput-paddingLeft, var(--salt-spacing-100));
@@ -222,6 +223,7 @@
 
 /* Style applied to inner input component */
 .saltInput-input {
+  align-self: stretch;
   background: none;
   border: none;
   box-sizing: content-box;
@@ -230,7 +232,6 @@
   display: block;
   flex: 1;
   font: inherit;
-  height: 100%;
   letter-spacing: var(--saltInput-letterSpacing, var(--salt-text-letterSpacing));
   margin: 0;
   min-width: 0;

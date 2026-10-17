@@ -1,10 +1,11 @@
 /*
- * Experimental: rem-based typography
+ * Experimental: rem units
  *
- * Redefines Salt's font size, line height and text min-height tokens in rem
- * instead of px, so text scales with the user's browser font size setting as
- * well as with page zoom. At the default browser font size (16px) every value
- * resolves to the same pixel size as the standard theme.
+ * Redefines Salt's density-based text, size and spacing tokens in rem instead
+ * of px, so the interface scales with the user's browser font size setting as
+ * well as with page zoom. Tokens named "fixed", such as borders, stay in px.
+ * At the default browser font size (16px) every value resolves to the same
+ * pixel size as the standard theme.
  *
  * Import after your theme stylesheets. If you also use mobile-interim.css,
  * import it after this file so its mobile values take precedence.
@@ -28,6 +29,87 @@
  * still override them. Every other selector has one more class than the theme
  * rule it replaces.
  */
+
+/* Size and spacing (all themes) */
+.salt-theme.salt-density-touch {
+  --salt-size-adornment: 0.75rem;
+  --salt-size-bar: 0.5rem;
+  --salt-size-base: 2.75rem;
+  --salt-size-icon: 1rem;
+  --salt-size-indicator: 0.3125rem;
+  --salt-size-selectable: 1.125rem;
+  --salt-size-bar-strong: 1rem;
+
+  --salt-spacing-100: 1rem;
+}
+
+.salt-theme.salt-density-low {
+  --salt-size-adornment: 0.625rem;
+  --salt-size-bar: 0.375rem;
+  --salt-size-base: 2.25rem;
+  --salt-size-icon: 0.875rem;
+  --salt-size-indicator: 0.25rem;
+  --salt-size-selectable: 1rem;
+  --salt-size-bar-strong: 0.75rem;
+
+  --salt-spacing-100: 0.75rem;
+}
+
+.salt-theme.salt-density-medium {
+  --salt-size-adornment: 0.5rem;
+  --salt-size-bar: 0.25rem;
+  --salt-size-base: 1.75rem;
+  --salt-size-icon: 0.75rem;
+  --salt-size-indicator: 0.1875rem;
+  --salt-size-selectable: 0.875rem;
+  --salt-size-bar-strong: 0.5rem;
+
+  --salt-spacing-100: 0.5rem;
+}
+
+.salt-theme.salt-density-high {
+  --salt-size-adornment: 0.375rem;
+  --salt-size-bar: 0.125rem;
+  --salt-size-base: 1.25rem;
+  --salt-size-icon: 0.625rem;
+  --salt-size-indicator: 0.125rem;
+  --salt-size-selectable: 0.75rem;
+  --salt-size-bar-strong: 0.25rem;
+
+  --salt-spacing-100: 0.25rem;
+}
+
+.salt-theme.salt-density-mobile {
+  --salt-size-adornment: 0.75rem;
+  --salt-size-bar: 0.5rem;
+  --salt-size-base: 2.75rem;
+  --salt-size-icon: 1rem;
+  --salt-size-indicator: 0.3125rem;
+  --salt-size-selectable: 1.125rem;
+  --salt-size-bar-strong: 1rem;
+
+  --salt-spacing-25: 0.25rem;
+  --salt-spacing-50: 0.5rem;
+  --salt-spacing-75: 0.75rem;
+  --salt-spacing-100: 1rem;
+  --salt-spacing-150: 1.125rem;
+  --salt-spacing-200: 1.25rem;
+  --salt-spacing-250: 1.375rem;
+  --salt-spacing-300: 1.5rem;
+  --salt-spacing-350: 1.625rem;
+  --salt-spacing-400: 1.75rem;
+  --salt-spacing-450: 1.875rem;
+  --salt-spacing-500: 2rem;
+  --salt-spacing-550: 2.125rem;
+  --salt-spacing-600: 2.25rem;
+  --salt-spacing-650: 2.375rem;
+  --salt-spacing-700: 2.5rem;
+  --salt-spacing-750: 2.625rem;
+  --salt-spacing-800: 2.75rem;
+  --salt-spacing-850: 2.875rem;
+  --salt-spacing-900: 3rem;
+  --salt-spacing-950: 3.125rem;
+}
 
 /* Legacy (UITK) theme. Also covers theme-next mobile, which shares these values. */
 .salt-theme.salt-density-touch {
@@ -918,19 +1000,31 @@
 .salt-theme.salt-density-high {
   --salt-accent-fontSize: 0.5rem;
   --salt-accent-lineHeight: 0.6875rem;
+  --salt-icon-size-base: 0.625rem;
+  --salt-icon-size-status-adornment: 0.375rem;
+  --salt-size-basis-unit: 0.25rem;
 }
 
 .salt-theme.salt-density-medium {
   --salt-accent-fontSize: 0.625rem;
   --salt-accent-lineHeight: 0.8125rem;
+  --salt-icon-size-base: 0.75rem;
+  --salt-icon-size-status-adornment: 0.5rem;
+  --salt-size-basis-unit: 0.25rem;
 }
 
 .salt-theme.salt-density-low {
   --salt-accent-fontSize: 0.75rem;
   --salt-accent-lineHeight: 1rem;
+  --salt-icon-size-base: 0.875rem;
+  --salt-icon-size-status-adornment: 0.625rem;
+  --salt-size-basis-unit: 0.25rem;
 }
 
 .salt-theme.salt-density-touch {
   --salt-accent-fontSize: 0.875rem;
   --salt-accent-lineHeight: 1.125rem;
+  --salt-icon-size-base: 1rem;
+  --salt-icon-size-status-adornment: 0.75rem;
+  --salt-size-basis-unit: 0.25rem;
 }
