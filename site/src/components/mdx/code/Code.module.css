@@ -1,6 +1,7 @@
 .code {
-  --code-padding-vertical: 0.1rem;
-  --code-padding-horizontal: 0.25rem;
+  /* Scaled from the body text size, so they don't depend on the root font size */
+  --code-padding-vertical: calc(0.1 * var(--salt-text-fontSize));
+  --code-padding-horizontal: calc(0.25 * var(--salt-text-fontSize));
 }
 
 .code {

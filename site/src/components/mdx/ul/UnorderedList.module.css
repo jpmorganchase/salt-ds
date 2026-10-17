@@ -1,7 +1,8 @@
+/* In em, so the indent follows the list's text size rather than the root font size */
 .unorderedList {
-  padding-left: 2rem;
+  padding-left: 2em;
 }
 
 .unorderedList li + li {
-  margin-top: 0.25rem;
+  margin-top: 0.25em;
 }
