@@ -28,7 +28,7 @@
 }
 
 .saltToggleButtonGroup-horizontal .saltToggleButton {
-  min-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --toggleButton-minHeight: calc(var(--salt-size-base) - var(--salt-spacing-100));
 }
 
 .saltToggleButtonGroup-vertical {

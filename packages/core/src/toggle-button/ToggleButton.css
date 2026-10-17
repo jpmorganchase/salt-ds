@@ -1,5 +1,6 @@
 .saltToggleButton {
   --toggleButton-borderWidth: var(--salt-size-fixed-100);
+  --toggleButton-minHeight: var(--salt-size-base);
 
   align-items: center;
   appearance: none;
@@ -15,7 +16,7 @@
   gap: var(--salt-spacing-50);
   /* Grows with its content, such as wrapped labels or enlarged text */
   height: max-content;
-  min-height: var(--salt-size-base);
+  min-height: var(--toggleButton-minHeight);
   justify-content: center;
   line-height: var(--salt-text-lineHeight);
   font-size: var(--salt-text-fontSize);
@@ -24,6 +25,8 @@
   letter-spacing: var(--salt-text-action-letterSpacing);
   text-transform: var(--salt-text-action-textTransform);
   padding: 0 calc(var(--salt-spacing-100) - var(--toggleButton-borderWidth));
+  /* Centers one line within the minimum height and keeps that spacing when the label wraps */
+  padding-block: max(0px, (var(--toggleButton-minHeight) - var(--salt-text-lineHeight)) / 2 - var(--toggleButton-borderWidth));
   margin: 0;
   min-width: unset;
   position: relative;

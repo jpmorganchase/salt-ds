@@ -22,6 +22,8 @@
   line-height: var(--salt-text-lineHeight);
   margin: 0;
   padding: 0 calc(var(--salt-spacing-100) - var(--onSolidButton-borderWidth));
+  /* Centers one line within the minimum height and keeps that spacing when the label wraps */
+  padding-block: max(0px, (var(--salt-size-base) - var(--salt-text-lineHeight)) / 2 - var(--onSolidButton-borderWidth));
   position: relative;
   -webkit-tap-highlight-color: transparent;
   text-align: var(--salt-text-action-textAlign);

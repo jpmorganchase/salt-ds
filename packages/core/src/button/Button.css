@@ -18,6 +18,13 @@
   letter-spacing: var(--saltButton-letterSpacing, var(--salt-text-action-letterSpacing));
   text-transform: var(--saltButton-textTransform, var(--salt-text-action-textTransform));
   padding: 0 var(--saltButton-padding, calc(var(--salt-spacing-100) - var(--saltButton-borderWidth, var(--button-borderWidth))));
+  /* Centers one line within the minimum height and keeps that spacing when the label wraps */
+  padding-block: max(
+    0px,
+    (min(var(--salt-size-base), var(--saltButton-height, var(--salt-size-base))) - var(--saltButton-lineHeight, var(--salt-text-lineHeight))) /
+    2 -
+    var(--saltButton-borderWidth, var(--button-borderWidth))
+  );
   margin: var(--saltButton-margin, 0);
   /* Grows with its content, such as wrapped labels or enlarged text */
   height: var(--saltButton-height, max-content);
