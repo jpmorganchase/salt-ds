@@ -118,7 +118,7 @@ describe("token reference", () => {
     name,
     tier,
     group,
-    themes: new Set(["shared"]),
+    themes: new Set(["legacy", "next", "salt-interim"]),
   });
   const tokens = [
     token("--salt-actionable-bold", "characteristics", "actionable"),

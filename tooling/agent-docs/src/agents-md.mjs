@@ -1,19 +1,11 @@
 #!/usr/bin/env node
-// Points coding agents at the Salt docs installed with @salt-ds/core.
-//
-//   node node_modules/@salt-ds/core/docs/agents-md.mjs [--dir <path>] [--check] [--no-claude]
-//
-// Adds or updates the Salt block in AGENTS.md and makes CLAUDE.md import
-// AGENTS.md. The block holds a compressed index of the docs in every installed
-// @salt-ds package, so agents see which pages exist without first deciding to
-// look them up. Content outside the block is kept. With --check, changes
-// nothing and exits with 1 if either file needs updating, for example after
-// upgrading Salt.
+// Sets up the documentation for the target application's installed Salt packages.
 import {
   existsSync,
   readdirSync,
   readFileSync,
   realpathSync,
+  statSync,
   writeFileSync,
 } from "node:fs";
 import path from "node:path";
@@ -21,24 +13,11 @@ import { fileURLToPath } from "node:url";
 
 export const BEGIN_MARKER = "<!-- BEGIN:salt-ds-agent-docs -->";
 export const END_MARKER = "<!-- END:salt-ds-agent-docs -->";
-/** Lists the pages in each package's docs folder; written by tooling/agent-docs. */
 export const MANIFEST_FILE = "manifest.json";
 export const INSTRUCTIONS =
-  "This project uses the Salt Design System (`@salt-ds/*` packages), whose APIs may differ from your training data. For any Salt task, prefer retrieval-led reasoning over pre-training-led reasoning: before writing or changing UI that uses Salt, read the relevant pages from the index below. They are generated for the installed package versions. Prefer component props, such as `Text`'s `color`, to custom CSS with `--salt-*` tokens. Before you finish, check that each Salt prop you used is in its component page's props table and not deprecated, and that each `--salt-*` token is listed as a characteristic or foundation token in `theme/docs/tokens.md` or the files it links to. Index paths are relative to `root`, which is relative to this file. Names in brackets are other names for the same component, and each package's `docs/index.md` summarizes its pages.";
-const CLAUDE_IMPORT = "@AGENTS.md";
-const USAGE = `Usage: node node_modules/@salt-ds/core/docs/agents-md.mjs [options]
+  "This project uses the Salt Design System (`@salt-ds/*` packages), whose APIs may differ from your training data. For any Salt task, prefer retrieval-led reasoning over pre-training-led reasoning: before writing or changing UI that uses Salt, read the relevant pages from the index below. They are generated for the installed package versions. Prefer component props, such as `Text`'s `color`, to custom CSS with `--salt-*` tokens. Before you finish, check each Salt prop against its component page's props table and avoid deprecated props. Tables omit some inherited/native props; confirm these in the installed type declarations and check whether attributes belong on the wrapper or an inputProps slot. For each `--salt-*` token, find the installed `@salt-ds/theme` documentation in the index and check its token references for a characteristic or foundation token available in the selected theme. Index paths are relative to `root`, which is relative to this file. Names in brackets after page names are other names for the same component, and each package's `docs/index.md` summarizes its pages.";
 
-Adds or updates the Salt block, with an index of the installed Salt docs, in
-AGENTS.md and makes CLAUDE.md import AGENTS.md.
-
-Options:
-  --dir <path>  Folder that holds AGENTS.md (default: current folder)
-  --check       Change nothing; exit with 1 if either file needs updating
-  --no-claude   Leave CLAUDE.md alone
-  --help        Show this help`;
-
-/** The Salt block: instructions plus the compressed docs index. */
-export function agentsBlock({ root, lines }) {
+export function agentsBlock({ root = ".", lines }) {
   return [
     BEGIN_MARKER,
     "",
@@ -58,26 +37,28 @@ function compare(left, right) {
   return left < right ? -1 : left > right ? 1 : 0;
 }
 
-/**
- * Compresses package manifests into one line per docs folder, such as
- * `|core/docs/components:{button.md[Action],dialog.md[Modal]}`. Core comes
- * first so agents meet the main components before the other packages.
- */
+/** One line per docs folder, preserving each package's actual installed path. */
 export function indexLines(manifests) {
-  const ordered = [...manifests].sort((left, right) =>
-    left.directory === "core"
-      ? -1
-      : right.directory === "core"
-        ? 1
-        : compare(left.directory, right.directory),
-  );
+  const ordered = [...manifests].sort((left, right) => {
+    const leftCore = left.name === "@salt-ds/core" || left.directory === "core";
+    const rightCore =
+      right.name === "@salt-ds/core" || right.directory === "core";
+    return (
+      Number(rightCore) - Number(leftCore) ||
+      compare(left.name ?? left.directory, right.name ?? right.directory)
+    );
+  });
   const lines = [];
-  for (const { directory, pages } of ordered) {
+  for (const { directory, name, version, docsPath, pages } of ordered) {
+    const docsRoot = docsPath ?? `${directory}/docs`;
+    if (name && version) {
+      lines.push(`[Package ${name}@${version}]|docs: ${docsRoot}`);
+    }
     const folders = new Map();
     for (const page of pages ?? []) {
       if (typeof page?.path !== "string") continue;
       const folder = path.posix.dirname(page.path);
-      const name = path.posix.basename(page.path);
+      const pageName = path.posix.basename(page.path);
       const aliases = (Array.isArray(page.aliases) ? page.aliases : [])
         .filter((alias) => typeof alias === "string")
         .map((alias) =>
@@ -90,8 +71,9 @@ export function indexLines(manifests) {
       const key = folder === "." ? "" : `/${folder}`;
       if (!folders.has(key)) folders.set(key, []);
       folders.get(key).push({
-        name,
-        entry: aliases.length > 0 ? `${name}[${aliases.join(";")}]` : name,
+        name: pageName,
+        entry:
+          aliases.length > 0 ? `${pageName}[${aliases.join(";")}]` : pageName,
       });
     }
     for (const key of [...folders.keys()].sort(compare)) {
@@ -99,35 +81,164 @@ export function indexLines(manifests) {
         .get(key)
         .sort((left, right) => compare(left.name, right.name))
         .map(({ entry }) => entry);
-      lines.push(`|${directory}/docs${key}:{${entries.join(",")}}`);
+      lines.push(`|${docsRoot}${key}:{${entries.join(",")}}`);
     }
   }
   return lines;
 }
 
-/** Reads the docs manifest of every package installed beside @salt-ds/core. */
-export function readManifests(scopeDir) {
-  let directories;
+const CLAUDE_IMPORT = "@AGENTS.md";
+const USAGE = `Usage: node node_modules/@salt-ds/core/docs/agents-md.mjs [options]
+
+Adds an index of your project's installed Salt docs to AGENTS.md and makes
+CLAUDE.md import AGENTS.md. The script reads the packages resolved from the
+application and does not install or upgrade Salt packages.
+
+Options:
+  --project <path>  Application whose packages to index (default: --dir or cwd)
+  --dir <path>      Folder holding AGENTS.md (default: project folder)
+  --check           Change nothing; exit with 1 if either file needs updating
+  --no-claude       Leave CLAUDE.md alone
+  --help            Show this help`;
+
+function readJson(file) {
   try {
-    directories = readdirSync(scopeDir);
-  } catch {
-    return [];
+    return JSON.parse(readFileSync(file, "utf8"));
+  } catch (error) {
+    throw new Error(`Cannot read ${file}: ${error.message}`);
   }
-  const manifests = [];
-  for (const directory of directories) {
-    const manifestPath = path.join(scopeDir, directory, "docs", MANIFEST_FILE);
-    if (!existsSync(manifestPath)) continue;
-    try {
-      const { pages } = JSON.parse(readFileSync(manifestPath, "utf8"));
-      if (Array.isArray(pages)) manifests.push({ directory, pages });
-    } catch {
-      // A package with an unreadable manifest is left out of the index.
+}
+
+function requireFile(file) {
+  try {
+    if (statSync(file).isFile()) return;
+  } catch {
+    // Report directories and missing files with the same actionable diagnostic.
+  }
+  throw new Error(`Missing documentation file: ${file}`);
+}
+
+function requireDirectory(directory, option) {
+  try {
+    if (statSync(directory).isDirectory()) return;
+  } catch {
+    // The option name makes an invalid application/output folder easy to find.
+  }
+  throw new Error(`${option} must name an existing directory: ${directory}`);
+}
+
+function toPosix(value) {
+  return value.split(path.sep).join("/");
+}
+
+export function readManifest(packageDir, directory, outputDir = packageDir) {
+  const name = `@salt-ds/${directory}`;
+  const docsDir = path.join(packageDir, "docs");
+  const manifestPath = path.join(docsDir, MANIFEST_FILE);
+  if (!existsSync(manifestPath)) {
+    throw new Error(
+      `${name} is missing ${manifestPath}. Install a version of ${name} that includes agent documentation.`,
+    );
+  }
+  const installed = readJson(path.join(packageDir, "package.json"));
+  const manifest = readJson(manifestPath);
+  const invalid = (reason) => {
+    throw new Error(
+      `Invalid documentation manifest ${manifestPath}: ${reason}`,
+    );
+  };
+  if (!manifest || typeof manifest !== "object" || Array.isArray(manifest)) {
+    invalid("expected an object");
+  }
+  if (manifest.schemaVersion !== undefined && manifest.schemaVersion !== 1) {
+    invalid(`unsupported schemaVersion ${manifest.schemaVersion}`);
+  }
+  if (manifest.name !== name || installed?.name !== name) {
+    invalid(`package name must be ${name}`);
+  }
+  if (
+    typeof manifest.version !== "string" ||
+    !/^\d+\.\d+\.\d+(?:-[0-9A-Za-z.-]+)?(?:\+[0-9A-Za-z.-]+)?$/.test(
+      manifest.version,
+    ) ||
+    manifest.version !== installed.version
+  ) {
+    invalid(`version must match the installed package (${installed.version})`);
+  }
+  if (!Array.isArray(manifest.pages) || manifest.pages.length === 0) {
+    invalid("pages must be a nonempty array");
+  }
+  requireFile(path.join(docsDir, "index.md"));
+  const pagePaths = new Set();
+  for (const page of manifest.pages) {
+    if (
+      !page ||
+      typeof page.path !== "string" ||
+      !page.path.endsWith(".md") ||
+      /[\\\r\n\0]/.test(page.path) ||
+      page.path.split("/").some((part) => ["", ".", ".."].includes(part)) ||
+      typeof page.title !== "string" ||
+      page.title.trim() === "" ||
+      (page.aliases !== undefined &&
+        (!Array.isArray(page.aliases) ||
+          page.aliases.some((alias) => typeof alias !== "string")))
+    ) {
+      invalid(
+        "each page needs a relative Markdown path, title and string aliases",
+      );
     }
+    if (pagePaths.has(page.path)) invalid(`duplicate page ${page.path}`);
+    pagePaths.add(page.path);
+    requireFile(path.join(docsDir, page.path));
+  }
+  return {
+    directory,
+    name,
+    version: manifest.version,
+    docsPath: toPosix(path.relative(outputDir, docsDir)),
+    pages: manifest.pages,
+  };
+}
+
+/**
+ * Walk the real application's hierarchy, keeping package symlink paths intact.
+ * A nearer package shadows the same package above it even when it has no docs.
+ * The executable's own installation does not affect package selection.
+ */
+export function discoverManifests(project, outputDir = project) {
+  const manifests = [];
+  const seen = new Set();
+  const projectDir = realpathSync(project);
+  const instructionDir = realpathSync(outputDir);
+  for (let current = projectDir; ; current = path.dirname(current)) {
+    const scopeDir = path.join(current, "node_modules", "@salt-ds");
+    let entries = [];
+    try {
+      entries = readdirSync(scopeDir, { withFileTypes: true });
+    } catch (error) {
+      if (error.code !== "ENOENT") throw error;
+    }
+    entries.sort((left, right) => left.name.localeCompare(right.name, "en"));
+    for (const entry of entries) {
+      if (!entry.isDirectory() && !entry.isSymbolicLink()) continue;
+      if (seen.has(entry.name)) continue;
+      seen.add(entry.name);
+      const packageDir = path.join(scopeDir, entry.name);
+      if (entry.name !== "core" && !existsSync(path.join(packageDir, "docs"))) {
+        continue;
+      }
+      manifests.push(readManifest(packageDir, entry.name, instructionDir));
+    }
+    if (path.dirname(current) === current) break;
+  }
+  if (manifests.length === 0) {
+    throw new Error(
+      `No installed Salt documentation found for ${path.resolve(project)}. Install Salt packages with agent docs, or use --project to select the application that has them. Yarn Plug'n'Play requires nodeLinker: node-modules.`,
+    );
   }
   return manifests;
 }
 
-/** Replaces the Salt block in `content`, or appends it. */
 export function upsertBlock(content, block) {
   const eol = content.includes("\r\n") ? "\r\n" : "\n";
   const normalized = block.replace(/\n/g, eol);
@@ -140,7 +251,6 @@ export function upsertBlock(content, block) {
       content.slice(end + END_MARKER.length)
     );
   }
-  // Replacing from a lone marker could delete the user's own instructions.
   if (start !== -1 || content.includes(END_MARKER)) {
     throw new Error(
       `Found an incomplete Salt block. Restore both ${BEGIN_MARKER} and ${END_MARKER}, or remove them, then run again.`,
@@ -150,7 +260,6 @@ export function upsertBlock(content, block) {
   return `${content.trimEnd()}${eol}${eol}${normalized}${eol}`;
 }
 
-/** Adds the AGENTS.md import to CLAUDE.md content when it is missing. */
 export function withClaudeImport(content) {
   if (content.split(/\r?\n/).some((line) => line.trim() === CLAUDE_IMPORT)) {
     return content;
@@ -160,119 +269,102 @@ export function withClaudeImport(content) {
   return `${content.trimEnd()}${eol}${eol}${CLAUDE_IMPORT}${eol}`;
 }
 
-function toPosix(value) {
-  return value.split(path.sep).join("/");
-}
-
-/**
- * Finds the installed Salt docs: the `@salt-ds` folder that holds
- * `core/docs/index.md`, and its path relative to `dir`. Uses the path this
- * script was run from rather than its real path, so package-manager stores
- * such as pnpm's never appear in AGENTS.md.
- */
-export function findDocs(dir, scriptPath) {
-  const candidates = [];
-  if (scriptPath) candidates.push(path.dirname(path.resolve(scriptPath)));
-  for (let current = path.resolve(dir); ; current = path.dirname(current)) {
-    candidates.push(
-      path.join(current, "node_modules", "@salt-ds", "core", "docs"),
-    );
-    if (path.dirname(current) === current) break;
-  }
-  const docsDir = candidates.find((candidate) =>
-    existsSync(path.join(candidate, "index.md")),
-  );
-  if (!docsDir) return undefined;
-  const scopeDir = path.dirname(path.dirname(docsDir));
-  return {
-    scopeDir,
-    root: toPosix(path.relative(path.resolve(dir), scopeDir)) || ".",
-  };
-}
-
 function parseArguments(args) {
-  const options = {
-    dir: process.cwd(),
-    check: false,
-    claude: true,
-    help: false,
-  };
+  const options = { check: false, claude: true };
   for (let index = 0; index < args.length; index += 1) {
     const arg = args[index];
+    if (arg === "--") continue;
     if (arg === "--check") options.check = true;
     else if (arg === "--no-claude") options.claude = false;
     else if (arg === "--help" || arg === "-h") options.help = true;
-    else if (arg === "--dir" && args[index + 1]) options.dir = args[++index];
-    else if (arg.startsWith("--dir=")) options.dir = arg.slice("--dir=".length);
-    else throw new Error(`Unknown argument: ${arg}\n\n${USAGE}`);
+    else if (/^--(?:dir|project)(?:=|$)/.test(arg)) {
+      const [flag, ...inline] = arg.split("=");
+      const value = inline.length > 0 ? inline.join("=") : args[++index];
+      if (!value || value.startsWith("--")) {
+        throw new Error(`${flag} requires a path\n\n${USAGE}`);
+      }
+      options[flag.slice(2)] = value;
+    } else throw new Error(`Unknown argument: ${arg}\n\n${USAGE}`);
   }
   return options;
 }
 
 function sameFile(left, right) {
   try {
+    const leftStat = statSync(left, { bigint: true });
+    const rightStat = statSync(right, { bigint: true });
+    if (
+      leftStat.ino !== 0n &&
+      leftStat.dev === rightStat.dev &&
+      leftStat.ino === rightStat.ino
+    ) {
+      return true;
+    }
     return realpathSync(left) === realpathSync(right);
   } catch {
     return false;
   }
 }
 
-export function run(args, { scriptPath, log = console.log } = {}) {
+export function run(args, { log = console.log } = {}) {
   const options = parseArguments(args);
   if (options.help) {
     log(USAGE);
     return 0;
   }
-  const dir = path.resolve(options.dir);
-  const docs = findDocs(dir, scriptPath);
-  if (!docs) {
-    throw new Error(
-      "Cannot find the Salt docs in node_modules/@salt-ds/core/docs. Install @salt-ds/core, then run this script from that folder.",
-    );
-  }
+  const project = path.resolve(options.project ?? options.dir ?? process.cwd());
+  const dir = path.resolve(options.dir ?? project);
+  requireDirectory(project, "--project");
+  requireDirectory(dir, "--dir");
   const block = agentsBlock({
-    root: docs.root,
-    lines: indexLines(readManifests(docs.scopeDir)),
+    root: ".",
+    lines: indexLines(discoverManifests(project, dir)),
   });
   const updates = [
     { file: "AGENTS.md", update: (content) => upsertBlock(content, block) },
   ];
-  if (options.claude) {
+  if (options.claude)
     updates.push({ file: "CLAUDE.md", update: withClaudeImport });
-  }
 
-  const stale = [];
-  for (const { file, update } of updates) {
+  // Read and validate both files before writing either one.
+  const planned = updates.map(({ file, update }) => {
     const filePath = path.join(dir, file);
-    // A CLAUDE.md that links to AGENTS.md already has the block.
     if (
       file === "CLAUDE.md" &&
       sameFile(filePath, path.join(dir, "AGENTS.md"))
     ) {
-      log("CLAUDE.md is the same file as AGENTS.md.");
-      continue;
+      return { file, same: true };
     }
     const current = existsSync(filePath) ? readFileSync(filePath, "utf8") : "";
-    let next;
     try {
-      next = update(current);
+      return { file, filePath, current, next: update(current) };
     } catch (error) {
       throw new Error(`${file}: ${error.message}`);
     }
-    if (next === current) {
+  });
+
+  let stale = false;
+  for (const { file, filePath, current, next, same } of planned) {
+    // Creating AGENTS.md can make a previously dangling CLAUDE.md link resolve.
+    if (
+      same ||
+      (file === "CLAUDE.md" && sameFile(filePath, path.join(dir, "AGENTS.md")))
+    ) {
+      log("CLAUDE.md is the same file as AGENTS.md.");
+    } else if (next === current) {
       log(`${file} is up to date.`);
-      continue;
-    }
-    stale.push(file);
-    if (options.check) {
-      log(`${file} needs updating.`);
     } else {
-      writeFileSync(filePath, next);
-      log(`${current === "" ? "Created" : "Updated"} ${file}.`);
+      stale = true;
+      if (options.check) {
+        log(`${file} needs updating.`);
+      } else {
+        writeFileSync(filePath, next);
+        log(`${current === "" ? "Created" : "Updated"} ${file}.`);
+      }
     }
   }
-  if (options.check && stale.length > 0) {
-    log("Run this script without --check to update them.");
+  if (options.check && stale) {
+    log("Run this command without --check to update them.");
     return 1;
   }
   return 0;
@@ -291,9 +383,7 @@ function isInvokedDirectly() {
 
 if (isInvokedDirectly()) {
   try {
-    process.exitCode = run(process.argv.slice(2), {
-      scriptPath: process.argv[1],
-    });
+    process.exitCode = run(process.argv.slice(2));
   } catch (error) {
     console.error(error.message);
     process.exitCode = 2;

@@ -14,6 +14,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 import ts from "typescript";
+import { readManifest } from "../tooling/agent-docs/src/agents-md.mjs";
 
 const execFile = promisify(execFileCallback);
 const rootDir = path.resolve(
@@ -106,6 +107,13 @@ async function checkAgentDocs(manifest, directory) {
       errors.push(
         `is missing docs/${file}; run yarn build to generate agent docs`,
       );
+    }
+  }
+  if (errors.length === 0) {
+    try {
+      readManifest(directory, manifest.name.replace(/^@salt-ds\//, ""));
+    } catch (error) {
+      errors.push(error.message);
     }
   }
   return errors;

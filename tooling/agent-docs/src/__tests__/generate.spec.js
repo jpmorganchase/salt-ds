@@ -26,6 +26,12 @@ const fixtureFiles = {
     version: "4.5.6",
     files: ["/css", "/docs"],
   },
+  "packages/theme/src/css/theme.css":
+    '@import "./foundations/spacing.css"; @import "./deprecated/characteristics.css";',
+  "packages/theme/src/css/theme-next.css":
+    '@import "./theme.css"; @import "./next/palette/accent.css"; @import "./next/characteristics/actionable.css";',
+  "packages/theme/src/css/experimental/salt-interim.css":
+    '@import "../foundations/spacing.css";',
   "packages/theme/src/css/foundations/spacing.css":
     ".salt-theme { --salt-spacing-100: 8px; }",
   "packages/theme/src/css/next/palette/accent.css":
@@ -311,7 +317,11 @@ describe("generateAgentDocs", () => {
         "utf8",
       ),
     );
-    expect(manifest).toMatchObject({ name: "@salt-ds/core", version: "1.2.3" });
+    expect(manifest).toMatchObject({
+      schemaVersion: 1,
+      name: "@salt-ds/core",
+      version: "1.2.3",
+    });
     expect(manifest.pages).toContainEqual({
       path: "components/button.md",
       title: "Button",
@@ -340,7 +350,9 @@ describe("generateAgentDocs", () => {
     expect(tokens).toContain(
       "- `--salt-old-background`: alias of `--salt-actionable-bold-background`",
     );
-    expect(tokens).toContain("- `--salt-old-accent`\n");
+    expect(tokens).toContain(
+      "- `--salt-old-accent` (SaltProviderNext and legacy themes only)\n",
+    );
     expect(tokens).not.toContain("alias of `--salt-palette-accent`");
   });
 

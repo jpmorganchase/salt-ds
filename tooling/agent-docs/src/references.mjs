@@ -30,7 +30,7 @@ const TOKEN_TIERS = [
     key: "deprecated",
     title: "Deprecated tokens",
     guidance:
-      "Do not use these tokens in new code. Where a deprecated token is an alias of a characteristic or foundation token, that token is shown; check the theme changelog for other replacements.",
+      "Do not use these tokens in new code. An alias is shown only when every declaration directly references the same characteristic or foundation token. Check the theme changelog for other replacements.",
   },
 ];
 
@@ -42,38 +42,77 @@ function tierFor(relativePath) {
   return undefined;
 }
 
-function themeFor(relativePath) {
-  if (relativePath.startsWith("next/")) return "next";
-  if (relativePath.startsWith("legacy/")) return "legacy";
-  return "shared";
+const THEME_ENTRYPOINTS = {
+  legacy: "theme.css",
+  next: "theme-next.css",
+  "salt-interim": "experimental/salt-interim.css",
+};
+
+/** Availability follows stylesheet imports, not the directory holding a token. */
+function stylesheetThemes(stylesheets) {
+  const themes = new Map();
+  function visit(file, theme) {
+    const root = stylesheets.get(file);
+    if (!root) throw new Error(`Cannot resolve theme stylesheet: ${file}`);
+    if (!themes.has(file)) themes.set(file, new Set());
+    if (themes.get(file).has(theme)) return;
+    themes.get(file).add(theme);
+    root.walkAtRules("import", (rule) => {
+      // Local CSS imports may use url(...), url("..."), or "...".
+      const match =
+        /^(?:url\(\s*(?:"([^"]+)"|'([^']+)'|([^)'"\s]+))\s*\)|"([^"]+)"|'([^']+)')/.exec(
+          rule.params,
+        );
+      const target = match?.slice(1).find(Boolean);
+      if (!target) {
+        throw new Error(`Unsupported CSS @import in ${file}: ${rule.params}`);
+      }
+      visit(path.posix.join(path.posix.dirname(file), target), theme);
+    });
+  }
+  for (const [theme, entry] of Object.entries(THEME_ENTRYPOINTS)) {
+    visit(entry, theme);
+  }
+  return themes;
 }
 
 /** Collects every `--salt-*` custom property declared in the theme CSS. */
 export async function collectTokens(themeCssDir) {
   const files = await listFiles(themeCssDir, (file) => file.endsWith(".css"));
+  const stylesheets = new Map(
+    await Promise.all(
+      files.map(async (file) => [
+        file,
+        postcss.parse(await readFile(path.join(themeCssDir, file), "utf8")),
+      ]),
+    ),
+  );
+  const themes = stylesheetThemes(stylesheets);
   const tokens = new Map();
+  const aliasesByName = new Map();
   for (const relativePath of files) {
     const tier = tierFor(relativePath);
-    if (!tier) continue;
     const group = path.posix.basename(relativePath, ".css");
-    const root = postcss.parse(
-      await readFile(path.join(themeCssDir, relativePath), "utf8"),
-    );
+    const root = stylesheets.get(relativePath);
     root.walkDecls((declaration) => {
       if (!declaration.prop.startsWith("--salt-")) return;
+      const alias = /^var\(\s*(--salt-[A-Za-z0-9-]+)\s*\)$/.exec(
+        declaration.value.trim(),
+      )?.[1];
+      const aliases = aliasesByName.get(declaration.prop) ?? new Set();
+      // Keep undefined too: a literal, calculation or fallback is not an alias.
+      // Overrides outside the classified token files must also agree.
+      aliases.add(alias);
+      aliasesByName.set(declaration.prop, aliases);
+      if (!tier) return;
       const existing = tokens.get(declaration.prop) ?? {
         name: declaration.prop,
         tier,
         group,
         themes: new Set(),
-        alias: undefined,
       };
-      existing.themes.add(themeFor(relativePath));
-      if (tier === "deprecated" && !existing.alias) {
-        const match = /^var\((--salt-[a-z0-9-]+)\)$/.exec(
-          declaration.value.trim(),
-        );
-        if (match) existing.alias = match[1];
+      for (const theme of themes.get(relativePath) ?? []) {
+        existing.themes.add(theme);
       }
       tokens.set(declaration.prop, existing);
     });
@@ -84,9 +123,13 @@ export async function collectTokens(themeCssDir) {
   // Only point deprecated tokens at tokens that may be referenced directly.
   const tierByName = new Map(sorted.map((token) => [token.name, token.tier]));
   for (const token of sorted) {
+    const aliases = aliasesByName.get(token.name);
+    token.alias =
+      aliases.size === 1 ? aliases.values().next().value : undefined;
     const aliasTier = token.alias ? tierByName.get(token.alias) : undefined;
     token.replacement =
-      aliasTier === "characteristics" || aliasTier === "foundations"
+      token.tier === "deprecated" &&
+      (aliasTier === "characteristics" || aliasTier === "foundations")
         ? token.alias
         : undefined;
   }
@@ -94,12 +137,20 @@ export async function collectTokens(themeCssDir) {
 }
 
 function themeNote(themes) {
-  if (themes.has("shared") || (themes.has("next") && themes.has("legacy"))) {
-    return "";
+  if (themes.size === Object.keys(THEME_ENTRYPOINTS).length) return "";
+  if (themes.size === 0) {
+    return " (not included in the supported theme entrypoints)";
   }
-  if (themes.has("next")) return " (SaltProviderNext theme only)";
-  if (themes.has("legacy")) return " (legacy theme only)";
-  return "";
+  const names = [
+    ["next", "SaltProviderNext"],
+    ["legacy", "legacy"],
+    ["salt-interim", "experimental salt-interim"],
+  ]
+    .filter(([key]) => themes.has(key))
+    .map(([, name]) => name);
+  return names.length > 0
+    ? ` (${names.join(" and ")} ${names.length === 1 ? "theme" : "themes"} only)`
+    : "";
 }
 
 function tokenLine(token) {
@@ -131,6 +182,8 @@ function introLines({ packageVersion, links, split }) {
     `Every design token (CSS custom property) declared by \`@salt-ds/theme@${packageVersion}\`, grouped by tier. Values depend on the theme, mode and density; read the CSS in \`@salt-ds/theme/css\` for values.${split ? " The lists are split into files that can each be read in one go." : ""}`,
     "",
     `Read [Design tokens](${links.designTokens}) and [How to read semantic tokens](${links.howToRead}) before choosing tokens. Prefer a component prop where one does the job, and use tokens for custom styling.`,
+    "",
+    'Tokens marked experimental salt-interim require `@salt-ds/theme/css/experimental/salt-interim.css` and `theme="salt-interim"` on `SaltProvider`. This theme is experimental and is not recommended for production use.',
     "",
   ];
 }

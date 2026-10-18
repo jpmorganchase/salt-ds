@@ -14,8 +14,8 @@ code.
 
 ## Set up your project
 
-Run this in the folder that holds your project's `AGENTS.md`, usually the
-repository root:
+Run this from the application whose installed Salt packages you want agents to
+use. In a single-application repository, this is usually the repository root:
 
 ```sh
 node node_modules/@salt-ds/core/docs/agents-md.mjs
@@ -25,23 +25,37 @@ The script adds a Salt section to `AGENTS.md` that tells agents to read the
 installed documentation before they write Salt UI, to prefer component props to
 custom CSS, and to check the props and design tokens they used against it
 before they finish, with a compressed index of every documentation page in the
-Salt packages you have installed. GitHub Copilot, Codex, Cursor and most other
-coding agents read `AGENTS.md` with every request, so they know which pages
-exist without having to decide to look them up. The script makes `CLAUDE.md`
-import `AGENTS.md` for Claude Code, and keeps your other instructions.
+Salt packages resolved from that application. The script records each package's
+version and documentation path, makes `CLAUDE.md` import `AGENTS.md` for Claude
+Code, and keeps your other instructions. Instruction-file support depends on
+the agent, client and mode; see [Agent compatibility](#agent-compatibility).
 
 Run the script again after you add or upgrade Salt packages, because the index
 lists the pages of the installed versions.
 
 - Add `--check` to fail a CI job when `AGENTS.md` or `CLAUDE.md` needs updating,
   for example after an upgrade. It checks `CLAUDE.md` too unless you also add
-  `--no-claude`.
+  `--no-claude`. Setup and `--check` also fail for malformed documentation
+  manifests, mismatched package versions or missing indexed pages.
 - Add `--no-claude` to leave `CLAUDE.md` alone.
-- Add `--dir <path>` to update the `AGENTS.md` and `CLAUDE.md` in another folder
-  instead of the current one.
-- In a monorepo where `@salt-ds/core` is installed under an application, run the
-  script by that path, such as
-  `node apps/web/node_modules/@salt-ds/core/docs/agents-md.mjs`.
+- Add `--project <path>` to select another application. The script resolves each
+  package from that application's `node_modules` hierarchy, so packages can be
+  installed at different levels of a monorepo.
+- Add `--dir <path>` to choose the folder holding `AGENTS.md` and `CLAUDE.md`.
+  Without `--project`, this also selects the application to resolve packages from.
+
+For example, from a monorepo root with Core installed at the root:
+
+```sh
+node node_modules/@salt-ds/core/docs/agents-md.mjs --project apps/web
+```
+
+This writes the instructions under `apps/web`. If Core is installed there instead,
+use `apps/web/node_modules/@salt-ds/core/docs/agents-md.mjs` as the script path
+and keep `--project apps/web`. Add `--dir .` only when you want the selected
+application's index in the repository-root instructions. For applications using
+different Salt versions, keep separate application-scoped instructions and use
+the root instructions to direct agents to the appropriate application.
 
 Agents read the documentation from `node_modules`, which Yarn Plug'n'Play
 installs don't create. To use it with Yarn, set `nodeLinker: node-modules` in
@@ -49,6 +63,28 @@ installs don't create. To use it with Yarn, set `nodeLinker: node-modules` in
 
 Generate the section with the script rather than by hand, so the index matches
 your installed versions.
+
+## Agent compatibility
+
+Check your client's documentation for the instruction format and scope it loads:
+
+| Agent          | Setup                                                                                                                                                                                                                        |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Codex          | Reads `AGENTS.md`; its directory determines the scope. See [Codex instructions](https://developers.openai.com/codex/guides/agents-md).                                                                                       |
+| Cursor         | Supports `AGENTS.md`; check the installed version's [rules documentation](https://cursor.com/docs/context/rules) for scope and settings.                                                                                     |
+| Claude Code    | The generated `CLAUDE.md` imports `AGENTS.md`. See [Claude Code memory](https://code.claude.com/docs/en/memory) for loading and import behavior.                                                                             |
+| GitHub Copilot | Formats vary by client and feature. Check the [custom instructions support matrix](https://docs.github.com/en/copilot/reference/custom-instructions-support), including the JetBrains entry if you use IntelliJ or WebStorm. |
+
+If your Copilot client uses `.github/copilot-instructions.md` instead of
+`AGENTS.md`, add the generated Salt section there while preserving existing
+instructions. Adjust the index root if the client's path resolution requires it,
+and refresh the copied section after regenerating. The setup script updates
+`AGENTS.md` and `CLAUDE.md` only. Custom instructions do not apply to every
+feature, such as inline code suggestions.
+
+To verify activation, ask the agent to open the installed Button documentation
+and report the package version and file path before making a change. Confirm
+that it reads the page indexed for the intended application.
 
 ## What agents can read
 
@@ -58,7 +94,9 @@ the right page. Each package's `docs/index.md`, starting with
 `node_modules/@salt-ds/core/docs/index.md`, adds a short summary of every page.
 
 - Component pages combine the usage, examples and accessibility tabs from this
-  site with props tables and keyboard interactions.
+  site with props tables and keyboard interactions. Tables omit some inherited
+  React/native props; consult the installed TypeScript declarations for the
+  complete contract, including which element receives an attribute.
 - Pattern, getting started, foundation and theme pages, with lists of every design
   token, icon and country symbol.
 - Example source code. Long pages keep their guidance and link to separate files
