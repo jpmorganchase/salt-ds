@@ -500,6 +500,28 @@ async function imageElement(node, ctx) {
   return imageNodes(node, alt, hidden, attributeString(attrs, "caption"));
 }
 
+async function diagram(node, ctx) {
+  const image = await imageElement(node, ctx);
+  const children = await transformChildren(node, ctx);
+  const contentPosition = attributeString(attributes(node), "contentPosition");
+  return flowOrPhrasing(
+    node,
+    contentPosition === "bottom"
+      ? [...image, ...children]
+      : [...children, ...image],
+  );
+}
+
+async function agEnterpriseFeature(node) {
+  return flowOrPhrasing(node, [
+    u.text("an "),
+    u.link("https://www.ag-grid.com/react-data-grid/community-vs-enterprise/", [
+      u.text("ag grid enterprise"),
+    ]),
+    u.text(" feature"),
+  ]);
+}
+
 async function imageSwitcher(node, ctx) {
   const attrs = attributes(node);
   const images = attrs.images;
@@ -557,9 +579,13 @@ async function quickLinkItem(node, ctx) {
   const attrs = attributes(node);
   const title = attributeString(attrs, "title") ?? "Link";
   const href = attributeString(attrs, "href");
+  const description = asPhrasing(await transformChildren(node, ctx));
+  return quickLinkItemNodes({ title, href, description }, ctx);
+}
+
+function quickLinkItemNodes({ title, href, description }, ctx) {
   const url = href ? ctx.links.resolve(href, ctx) : null;
   const heading = url ? [u.link(url, [u.text(title)])] : [u.text(title)];
-  const description = asPhrasing(await transformChildren(node, ctx));
   return u.listItem([
     u.paragraph(
       description.length > 0
@@ -569,11 +595,73 @@ async function quickLinkItem(node, ctx) {
   ]);
 }
 
+/** Reads the MDX parser's syntax tree without executing author expressions. */
+function literalQuickLinks(attribute) {
+  const expression = attribute.value?.data?.estree?.body?.[0]?.expression;
+  if (expression?.type !== "ArrayExpression") return undefined;
+  const links = [];
+  for (const element of expression.elements) {
+    if (element?.type !== "ObjectExpression") return undefined;
+    const link = Object.create(null);
+    for (const property of element.properties) {
+      if (
+        property.type !== "Property" ||
+        property.kind !== "init" ||
+        property.computed ||
+        property.method ||
+        property.value.type !== "Literal" ||
+        typeof property.value.value !== "string"
+      ) {
+        return undefined;
+      }
+      const key =
+        property.key.type === "Identifier"
+          ? property.key.name
+          : property.key.value;
+      link[key] = property.value.value;
+    }
+    if (typeof link.title !== "string" || typeof link.href !== "string") {
+      return undefined;
+    }
+    links.push(link);
+  }
+  return links;
+}
+
 async function quickLinks(node, ctx) {
   const items = [];
   for (const child of node.children ?? []) {
     if (isJsx(child) && child.name === "QuickLink") {
       items.push(await quickLinkItem(child, ctx));
+    }
+  }
+  // The site prefers explicit children to the links prop.
+  if (items.length === 0) {
+    const attribute = node.attributes?.find(
+      (attribute) =>
+        attribute.type === "mdxJsxAttribute" && attribute.name === "links",
+    );
+    if (attribute) {
+      const links = literalQuickLinks(attribute);
+      if (!links) {
+        ctx.error(
+          node,
+          "QuickLinks links must be an array of literal objects with string title, href and optional description/action fields.",
+        );
+        return [];
+      }
+      for (const { title, href, description } of links) {
+        items.push(
+          quickLinkItemNodes(
+            {
+              title,
+              href,
+              description: description ? [u.text(description)] : [],
+            },
+            ctx,
+          ),
+        );
+      }
     }
   }
   return items.length > 0 ? [u.list(items)] : [];
@@ -693,7 +781,7 @@ async function htmlHeading(node, ctx) {
 
 const HANDLERS = {
   AGThemeProvider: unwrap,
-  AgEnterpriseFeature: unwrap,
+  AgEnterpriseFeature: agEnterpriseFeature,
   AllTokens: referenceTo(
     "@salt-ds/theme",
     "tokens.md",
@@ -708,7 +796,7 @@ const HANDLERS = {
     "Every country symbol is listed in the ",
     "country symbol list",
   ),
-  Diagram: imageElement,
+  Diagram: diagram,
   Diagrams: unwrap,
   Disclosure: disclosure,
   FoundationColorView: referenceTo(

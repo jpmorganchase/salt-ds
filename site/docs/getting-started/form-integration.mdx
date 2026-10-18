@@ -18,10 +18,12 @@ use: some show the error state and associate the label and helper text, while
 others only consume selected values such as the label or disabled state. Most
 don't set `aria-invalid` from the status. Set it on the native control yourself;
 for example, use `inputProps` on Input or `textAreaProps` on MultilineInput.
-NumberInput and DateInput inputs set `aria-invalid` for an error status;
-NumberInput also sets it for an out-of-range value while it has a value. Warning
-and success states don't mark a field invalid. Supply specific feedback through
-`FormFieldHelperText`.
+DateInput inputs set `aria-invalid` for an error status unless read-only.
+NumberInput sets it for an error status or an out-of-range value only when it has
+a nonempty value and is not read-only. For an empty or read-only NumberInput that
+application validation marks invalid, set `aria-invalid` explicitly through `inputProps`.
+Warning and success statuses alone don't mark a field invalid. Supply specific
+feedback through `FormFieldHelperText`.
 
 This communicates a validation result; it does not run validation or call
 `setCustomValidity`. Use native constraints or your form library to decide validity.
@@ -49,6 +51,22 @@ Use `value` and `onNumberChange` for a parsed number, or `onChange`
 for draft text. Native submission contains the displayed text, including formatting.
 Serialize the parsed value when the server expects a number. Use `inputRef` and
 `inputProps` for native focus/blur.
+
+For example, when `quantityError` contains the application's validation error,
+explicitly mark the input invalid, including when `quantity` is empty:
+
+```tsx
+<NumberInput
+  value={quantity}
+  onChange={(_event, value) => setQuantity(value)}
+  validationStatus={quantityError ? "error" : undefined}
+  inputProps={quantityError ? { "aria-invalid": true } : undefined}
+/>
+```
+
+Keep the label and specific error feedback in the owning `FormField`. Omitting
+`inputProps` when there is no application error preserves NumberInput's automatic
+out-of-range indication.
 
 ### Checkbox, RadioButton and their groups
 

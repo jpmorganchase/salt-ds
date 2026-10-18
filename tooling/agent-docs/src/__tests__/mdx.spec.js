@@ -1,3 +1,4 @@
+import { readFile } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 import {
   convertMdx,
@@ -149,6 +150,67 @@ describe("convertMdx", () => {
       '<Diagram src="/img/a.png" alt="A card with a header" caption="A card with a header." />',
     );
     expect(markdown).toBe("_Image: A card with a header_\n");
+  });
+
+  it.each(["top", "bottom"])(
+    "preserves diagram guidance in the website's %s order",
+    async (position) => {
+      const markdown = await toMarkdown(
+        `<Diagram src="/form.png" alt="Form layout" contentPosition="${position}">\n\n### Labels\n\nKeep each label near its input.\n\n- Use a visible label.\n- Explain errors.\n\n</Diagram>`,
+      );
+      expect(markdown).toContain("### Labels");
+      expect(markdown).toContain("Keep each label near its input.");
+      expect(markdown).toContain("- Use a visible label.\n- Explain errors.");
+      expect(markdown.indexOf("### Labels") < markdown.indexOf("_Image:")).toBe(
+        position === "top",
+      );
+    },
+  );
+
+  it("keeps the Enterprise qualification in an inline sentence", async () => {
+    const markdown = await toMarkdown(
+      "Context Menu is <AgEnterpriseFeature/>.",
+    );
+    expect(markdown).toBe(
+      "Context Menu is an [ag grid enterprise](https://www.ag-grid.com/react-data-grid/community-vs-enterprise/) feature.\n",
+    );
+  });
+
+  it("preserves the real getting-started navigation cards", async () => {
+    const source = await readFile(
+      new URL(
+        "../../../../site/docs/getting-started/index.mdx",
+        import.meta.url,
+      ),
+      "utf8",
+    );
+    const ctx = createContext({
+      links: { resolve: (url) => `${url}.md` },
+    });
+    const markdown = await toMarkdown(
+      source.slice(source.indexOf("<QuickLinks")),
+      ctx,
+    );
+    expect(markdown).toContain("[Developing](./developing.md)");
+    expect(markdown).toContain("Learn how to install the Salt packages");
+    expect(markdown).toContain("[Form integration](./form-integration.md)");
+    expect(markdown).toContain("[AI coding agents](./ai-coding-agents.md)");
+    expect(markdown.match(/^- /gm)).toHaveLength(8);
+    expect(ctx.errors).toEqual([]);
+  });
+
+  it("uses explicit QuickLink children when both forms are present", async () => {
+    const markdown = await toMarkdown(
+      '<QuickLinks links={[{ title: "Unused", href: "/unused" }]}><QuickLink title="Forms" href="./forms">Form guidance</QuickLink></QuickLinks>',
+    );
+    expect(markdown).toBe("- [Forms](./forms): Form guidance\n");
+  });
+
+  it("rejects dynamic QuickLinks data instead of silently dropping it", async () => {
+    const ctx = createContext();
+    await toMarkdown("<QuickLinks links={getLinks()} />", ctx);
+    expect(ctx.errors).toHaveLength(1);
+    expect(ctx.errors[0]).toContain("literal objects");
   });
 
   it("keeps a disclosure's id as an anchor that links can target", async () => {

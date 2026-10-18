@@ -327,7 +327,7 @@ export function renderManifest({ packageName, version, entries }) {
     .sort((left, right) =>
       left.path < right.path ? -1 : left.path > right.path ? 1 : 0,
     );
-  return `${JSON.stringify({ name: packageName, version, pages }, null, 2)}\n`;
+  return `${JSON.stringify({ schemaVersion: 1, name: packageName, version, pages }, null, 2)}\n`;
 }
 
 /** Renders `docs/index.md` for one package. */

@@ -525,6 +525,9 @@ export async function generateAgentDocs({
     target.files.set(MANIFEST_FILE, manifest);
     manifests.push({
       directory: packageName.replace(/^@salt-ds\//, ""),
+      name: packageName,
+      version: info.version,
+      docsPath: `node_modules/${packageName}/docs`,
       pages: JSON.parse(manifest).pages,
     });
     if (!info.files.some((entry) => /^(?:\.?\/)?docs\/?$/.test(entry))) {
@@ -536,13 +539,13 @@ export async function generateAgentDocs({
   // The block agents-md.mjs writes when every package is installed.
   const agentsBlockBytes = Buffer.byteLength(
     agentsBlock({
-      root: "node_modules/@salt-ds",
+      root: ".",
       lines: indexLines(manifests),
     }),
   );
   if (agentsBlockBytes > MAX_AGENTS_BLOCK_BYTES) {
     warnings.push(
-      `The AGENTS.md block indexing every package is ${Math.round(agentsBlockBytes / 1024)} KB. Agents receive it with every request, so keep it under ${MAX_AGENTS_BLOCK_BYTES / 1024} KB.`,
+      `The AGENTS.md block indexing every package is ${Math.round(agentsBlockBytes / 1024)} KB. Clients that load it add it to the agent's context, so keep it under ${MAX_AGENTS_BLOCK_BYTES / 1024} KB.`,
     );
   }
 
