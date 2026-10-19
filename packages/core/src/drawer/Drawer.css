@@ -41,12 +41,17 @@
   --drawer-resizeHandleSize: var(--salt-size-fixed-600);
   --drawer-resizeHandleOutset: var(--salt-spacing-fixed-900);
   --drawer-resizeHandleGutter: calc(var(--drawer-resizeHandleSize) + var(--drawer-resizeHandleOutset));
+  /* Adds up to spacing-300 with the gutter; the 4px minimum keeps targets clear of the handle (WCAG 2.5.8) */
+  --drawer-resizeHandlePadding: max(var(--salt-spacing-fixed-400), calc(var(--salt-spacing-300) - var(--drawer-resizeHandleGutter)));
   overflow: visible;
   padding: 0;
 }
 
 /* Styles applied to the scrolling inner element of a resizable drawer */
 .saltDrawer-inner {
+  /* min() keeps sectioned drawers at 0, as their sections own the padding */
+  --drawer-innerResizeHandlePadding: min(var(--drawer-padding), var(--drawer-resizeHandlePadding));
+
   display: flex;
   flex: 1 1 auto;
   flex-direction: column;
@@ -72,6 +77,57 @@
 
 .saltDrawer-resizable.saltDrawer-bottom {
   padding-top: var(--drawer-resizeHandleGutter);
+}
+
+/* Reduce the padding beside the handle */
+.saltDrawer-resizable.saltDrawer-left > .saltDrawer-inner {
+  padding-right: var(--drawer-innerResizeHandlePadding);
+}
+
+.saltDrawer-resizable.saltDrawer-right > .saltDrawer-inner {
+  padding-left: var(--drawer-innerResizeHandlePadding);
+}
+
+.saltDrawer-resizable.saltDrawer-top > .saltDrawer-inner {
+  padding-bottom: var(--drawer-innerResizeHandlePadding);
+}
+
+.saltDrawer-resizable.saltDrawer-bottom > .saltDrawer-inner {
+  padding-top: var(--drawer-innerResizeHandlePadding);
+}
+
+.saltDrawer-resizable.saltDrawer-left > .saltDrawer-inner > :is(.saltDrawerHeader, .saltDrawerContent, .saltDrawerFooter) {
+  padding-right: var(--drawer-resizeHandlePadding);
+}
+
+.saltDrawer-resizable.saltDrawer-right > .saltDrawer-inner > :is(.saltDrawerHeader, .saltDrawerContent, .saltDrawerFooter) {
+  padding-left: var(--drawer-resizeHandlePadding);
+}
+
+.saltDrawer-resizable.saltDrawer-top > .saltDrawer-inner > :is(.saltDrawerHeader, .saltDrawerContent, .saltDrawerFooter):last-child {
+  padding-bottom: var(--drawer-resizeHandlePadding);
+}
+
+.saltDrawer-resizable.saltDrawer-bottom > .saltDrawer-inner > :is(.saltDrawerHeader, .saltDrawerContent, .saltDrawerFooter):first-child {
+  padding-top: var(--drawer-resizeHandlePadding);
+}
+
+/* Keeps the header accent bar level with the header's content */
+.saltDrawer-resizable.saltDrawer-top > .saltDrawer-inner > .saltDrawerHeader-withAccent:last-child::before {
+  bottom: var(--drawer-resizeHandlePadding);
+}
+
+.saltDrawer-resizable.saltDrawer-bottom > .saltDrawer-inner > .saltDrawerHeader-withAccent:first-child::before {
+  top: var(--drawer-resizeHandlePadding);
+}
+
+/* Keeps the deprecated close button in the corner, clear of the handle */
+.saltDrawer-resizable.saltDrawer-left .saltButton-secondary.saltDrawerCloseButton {
+  margin-right: calc(-1 * var(--drawer-innerResizeHandlePadding));
+}
+
+.saltDrawer-resizable.saltDrawer-bottom .saltButton-secondary.saltDrawerCloseButton {
+  margin-top: calc(-1 * var(--drawer-innerResizeHandlePadding));
 }
 
 .saltDrawer-resizable.saltDrawer-left,
