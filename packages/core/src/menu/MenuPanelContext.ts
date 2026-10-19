@@ -6,7 +6,10 @@ export interface MenuPanelContextValue
   extends Pick<
     MenuContextValue,
     "getItemProps" | "activeIndex" | "setFocusInside"
-  > {}
+  > {
+  hasSelectionIcon: boolean;
+  registerPanelSelectionIcon: () => () => void;
+}
 
 export const MenuPanelContext = createContext<MenuPanelContextValue>(
   "MenuPanelContext",
@@ -14,6 +17,8 @@ export const MenuPanelContext = createContext<MenuPanelContextValue>(
     activeIndex: null,
     getItemProps: () => ({}),
     setFocusInside: () => undefined,
+    hasSelectionIcon: false,
+    registerPanelSelectionIcon: () => () => undefined,
   },
 );
 
