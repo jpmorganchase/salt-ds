@@ -39,10 +39,10 @@
 
 .saltDrawer-resizable {
   --drawer-resizeHandleSize: var(--salt-size-fixed-600);
-  --drawer-resizeHandleOutset: var(--salt-spacing-fixed-900);
+  --drawer-resizeHandleOutset: var(--salt-spacing-150);
   --drawer-resizeHandleGutter: calc(var(--drawer-resizeHandleSize) + var(--drawer-resizeHandleOutset));
-  /* Adds up to spacing-300 with the gutter; the 4px minimum keeps targets clear of the handle (WCAG 2.5.8) */
-  --drawer-resizeHandlePadding: max(var(--salt-spacing-fixed-400), calc(var(--salt-spacing-300) - var(--drawer-resizeHandleGutter)));
+  /* With the gutter, approximates spacing-300 beside the handle */
+  --drawer-resizeHandlePadding: var(--salt-spacing-100);
   overflow: visible;
   padding: 0;
 }
