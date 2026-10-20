@@ -3,11 +3,16 @@ import {
   BannerActions,
   BannerContent,
   Button,
+  OnSolidButton,
   StackLayout,
   Text,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
+import {
+  SystemStatus,
+  SystemStatusActions,
+  SystemStatusContent,
+} from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
@@ -69,6 +74,39 @@ export const WithTitle: StoryFn<typeof SystemStatus> = (props) => (
           <Text color="inherit">Please refresh the page.</Text>
         </StackLayout>
       </SystemStatusContent>
+    </SystemStatus>
+  </div>
+);
+
+export const WithCloseButton: StoryFn<typeof SystemStatus> = (props) => (
+  <div style={{ width: 500 }}>
+    <SystemStatus {...props}>
+      <SystemStatusContent>
+        <Text color="inherit">New feature updates are available</Text>
+      </SystemStatusContent>
+      <SystemStatusActions>
+        <OnSolidButton aria-label="Dismiss">
+          <CloseIcon aria-hidden />
+        </OnSolidButton>
+      </SystemStatusActions>
+    </SystemStatus>
+  </div>
+);
+
+export const WithActions: StoryFn<typeof SystemStatus> = (props) => (
+  <div style={{ width: 500 }}>
+    <SystemStatus status="error" {...props}>
+      <SystemStatusContent>
+        <Text color="inherit">
+          Connection interrupted. Please refresh the page.
+        </Text>
+      </SystemStatusContent>
+      <SystemStatusActions>
+        <OnSolidButton>Refresh</OnSolidButton>
+        <OnSolidButton aria-label="Dismiss">
+          <CloseIcon aria-hidden />
+        </OnSolidButton>
+      </SystemStatusActions>
     </SystemStatus>
   </div>
 );

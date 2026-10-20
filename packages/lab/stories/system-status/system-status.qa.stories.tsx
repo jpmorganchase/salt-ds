@@ -1,7 +1,8 @@
-import { Button, SplitLayout, StackLayout, Text } from "@salt-ds/core";
+import { OnSolidButton, StackLayout, Text } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import {
   SystemStatus,
+  SystemStatusActions,
   SystemStatusContent,
   type SystemStatusProps,
 } from "@salt-ds/lab";
@@ -37,27 +38,39 @@ const WarningSystemStatus = () => (
 const SuccessSystemStatus = () => (
   <BasicSystemStatusExample status={"success"} />
 );
-const WithButtonSystemStatusExample: FC<SystemStatusProps> = ({ status }) => {
+const WithCloseButtonSystemStatusExample: FC<SystemStatusProps> = ({
+  status,
+}) => {
   return (
     <SystemStatus status={status}>
       <SystemStatusContent>
         <StackLayout gap={0.5}>
-          <SplitLayout
-            startItem={
-              <Text color="inherit" fontWeight="bolder">
-                Title
-              </Text>
-            }
-            endItem={
-              <Button appearance="transparent" aria-label="close">
-                <CloseIcon aria-hidden />
-              </Button>
-            }
-          />
-
+          <Text color="inherit" fontWeight="bolder">
+            Title
+          </Text>
           <Text color="inherit">Example custom renderer</Text>
         </StackLayout>
       </SystemStatusContent>
+      <SystemStatusActions>
+        <OnSolidButton aria-label="Dismiss">
+          <CloseIcon aria-hidden />
+        </OnSolidButton>
+      </SystemStatusActions>
+    </SystemStatus>
+  );
+};
+const WithActionsSystemStatusExample: FC<SystemStatusProps> = ({ status }) => {
+  return (
+    <SystemStatus status={status}>
+      <SystemStatusContent>
+        <Text color="inherit">Example custom renderer</Text>
+      </SystemStatusContent>
+      <SystemStatusActions>
+        <OnSolidButton>Action</OnSolidButton>
+        <OnSolidButton aria-label="Dismiss">
+          <CloseIcon aria-hidden />
+        </OnSolidButton>
+      </SystemStatusActions>
     </SystemStatus>
   );
 };
@@ -67,7 +80,8 @@ export const ExamplesGrid: StoryFn = (props) => (
     <ErrorSystemStatus />
     <WarningSystemStatus />
     <SuccessSystemStatus />
-    <WithButtonSystemStatusExample />
+    <WithCloseButtonSystemStatusExample />
+    <WithActionsSystemStatusExample status="error" />
   </QAContainer>
 );
 

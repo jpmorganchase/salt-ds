@@ -6,7 +6,7 @@
   border-style: var(--saltSystemStatus-borderStyle, var(--salt-borderStyle-solid));
   box-sizing: border-box;
   display: flex;
-  gap: var(--salt-spacing-75);
+  gap: var(--salt-spacing-100);
   padding: var(--saltSystemStatus-padding, var(--salt-spacing-100) var(--salt-layout-page-margin));
   width: 100%;
   font-family: var(--salt-text-fontFamily);
@@ -20,6 +20,7 @@
 .saltSystemStatus-icon.saltIcon {
   min-height: var(--salt-size-base);
   --saltIcon-color: var(--salt-content-bold-foreground);
+  --saltIcon-size: var(--salt-text-lineHeight);
 }
 
 /* Styles applied when state = "info" */
