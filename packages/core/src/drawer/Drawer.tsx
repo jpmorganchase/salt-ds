@@ -170,12 +170,13 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
     const contextValue = useMemo(
       () => ({
         drawerId,
+        position,
         headerId,
         setHeaderId,
         descriptionId,
         setDescriptionId,
       }),
-      [drawerId, headerId, descriptionId],
+      [drawerId, position, headerId, descriptionId],
     );
 
     return (
