@@ -1,13 +1,20 @@
 /* Styles applied to Drawer component */
 .saltDrawer {
+  --drawer-padding: var(--salt-spacing-300);
+  --drawer-widthLimit: 100%;
+  --drawer-heightLimit: 100%;
+
   background: var(--drawer-background);
   display: flex;
   flex-direction: column;
-  max-height: 100%;
-  max-width: 100%;
+  /* Size limits never exceed the viewport. */
+  min-height: min(max(var(--saltDrawer-minHeight, 0px), var(--drawer-minHeight, 0px)), var(--drawer-heightLimit));
+  max-height: min(var(--saltDrawer-maxHeight, 100%), var(--drawer-heightLimit));
+  min-width: min(max(var(--saltDrawer-minWidth, 0px), var(--drawer-minWidth, 0px)), var(--drawer-widthLimit));
+  max-width: min(var(--saltDrawer-maxWidth, 100%), var(--drawer-widthLimit));
   overflow: auto;
   /* Legacy padding for unsectioned drawers only. */
-  padding: var(--salt-spacing-300);
+  padding: var(--drawer-padding);
   box-shadow: var(--salt-overlayable-shadow-modal);
   z-index: var(--salt-zIndex-drawer);
   position: fixed;
@@ -16,13 +23,67 @@
 }
 
 .saltDrawer.saltDrawer-sectioned {
-  padding: 0;
+  --drawer-padding: 0px;
+}
+
+.saltDrawer-resizing {
+  user-select: none;
 }
 
 @supports selector(:has(*)) {
-  .saltDrawer:has(> .saltDrawerHeader, > .saltDrawerContent, > .saltDrawerFooter) {
-    padding: 0;
+  .saltDrawer:has(> .saltDrawerHeader, > .saltDrawerContent, > .saltDrawerFooter),
+  .saltDrawer-inner:has(> .saltDrawerHeader, > .saltDrawerContent, > .saltDrawerFooter) {
+    --drawer-padding: 0px;
   }
+}
+
+.saltDrawer-resizable {
+  --drawer-resizeHandleSize: var(--salt-size-fixed-600);
+  --drawer-resizeHandleOutset: var(--salt-spacing-fixed-900);
+  --drawer-resizeHandleGutter: calc(var(--drawer-resizeHandleSize) + var(--drawer-resizeHandleOutset));
+  overflow: visible;
+  padding: 0;
+}
+
+/* Styles applied to the scrolling inner element of a resizable drawer */
+.saltDrawer-inner {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  min-height: 0;
+  min-width: 0;
+  overflow: auto;
+  padding: var(--drawer-padding);
+  box-sizing: border-box;
+}
+
+/* Reserve the handle's inner hit target */
+.saltDrawer-resizable.saltDrawer-left {
+  padding-right: var(--drawer-resizeHandleGutter);
+}
+
+.saltDrawer-resizable.saltDrawer-right {
+  padding-left: var(--drawer-resizeHandleGutter);
+}
+
+.saltDrawer-resizable.saltDrawer-top {
+  padding-bottom: var(--drawer-resizeHandleGutter);
+}
+
+.saltDrawer-resizable.saltDrawer-bottom {
+  padding-top: var(--drawer-resizeHandleGutter);
+}
+
+.saltDrawer-resizable.saltDrawer-left,
+.saltDrawer-resizable.saltDrawer-right {
+  --drawer-minWidth: var(--salt-size-base);
+  --drawer-widthLimit: calc(100% - var(--drawer-resizeHandleOutset));
+}
+
+.saltDrawer-resizable.saltDrawer-top,
+.saltDrawer-resizable.saltDrawer-bottom {
+  --drawer-minHeight: var(--salt-size-base);
+  --drawer-heightLimit: calc(100% - var(--drawer-resizeHandleOutset));
 }
 
 /* Styles applied when variant = "primary" */
