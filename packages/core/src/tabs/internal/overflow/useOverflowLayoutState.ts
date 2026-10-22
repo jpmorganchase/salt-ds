@@ -1,4 +1,5 @@
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useIsomorphicLayoutEffect } from "../../../utils";
 import type {
   TabListLayoutContextValue,
   TabSlotLocation,
@@ -17,6 +18,7 @@ function getOverflowStartIndex(
 }
 
 interface UseOverflowLayoutStateArgs {
+  exitOverflowMenu: () => void;
   hiddenValues: string[];
   menuOpen: boolean;
   overflowMenuOpen: boolean;
@@ -29,6 +31,7 @@ interface UseOverflowLayoutStateResult {
 }
 
 export function useOverflowLayoutState({
+  exitOverflowMenu,
   hiddenValues,
   menuOpen,
   overflowMenuOpen,
@@ -43,6 +46,8 @@ export function useOverflowLayoutState({
     }
   }, [overflowMenuOpen]);
 
+  const previousHiddenValuesRef = useRef(hiddenValues);
+
   const resolvedOverflowActiveValue = useMemo(() => {
     if (!overflowMenuOpen) {
       return null;
@@ -55,8 +60,23 @@ export function useOverflowLayoutState({
       return requestedOverflowActiveValue;
     }
 
+    // When the active overflow tab leaves the menu (e.g. it is removed), keep
+    // the active position rather than jumping back to the first tab.
+    const previousIndex = requestedOverflowActiveValue
+      ? previousHiddenValuesRef.current.indexOf(requestedOverflowActiveValue)
+      : -1;
+    if (previousIndex >= 0) {
+      return (
+        hiddenValues[Math.min(previousIndex, hiddenValues.length - 1)] ?? null
+      );
+    }
+
     return hiddenValues[0] ?? null;
   }, [hiddenValues, overflowMenuOpen, requestedOverflowActiveValue]);
+
+  useIsomorphicLayoutEffect(() => {
+    previousHiddenValuesRef.current = hiddenValues;
+  }, [hiddenValues]);
 
   const hiddenValueSet = useMemo(() => new Set(hiddenValues), [hiddenValues]);
   const visibleValueSet = useMemo(
@@ -121,12 +141,18 @@ export function useOverflowLayoutState({
 
   const tabListLayoutContext = useMemo(
     () => ({
+      exitOverflowMenu,
       getLocation,
       overflowActiveValue: resolvedOverflowActiveValue,
       setOverflowActiveValue: setRequestedOverflowActiveValue,
       moveOverflowFocus,
     }),
-    [getLocation, moveOverflowFocus, resolvedOverflowActiveValue],
+    [
+      exitOverflowMenu,
+      getLocation,
+      moveOverflowFocus,
+      resolvedOverflowActiveValue,
+    ],
   );
 
   return {

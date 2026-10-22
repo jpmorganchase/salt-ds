@@ -3,6 +3,7 @@ import {
   type RefObject,
   useCallback,
   useEffect,
+  useRef,
 } from "react";
 import { useEventCallback } from "../../../utils/useEventCallback";
 import type { Item, TabsContextValue } from "../contexts/TabsContext";
@@ -31,6 +32,7 @@ interface UseTabRemovalHandlerArgs {
   menuOpen: boolean;
   overflowButtonRef: RefObject<HTMLButtonElement | null>;
   overflowListRef: RefObject<HTMLDivElement | null>;
+  peekRemovedItems: () => Map<string, RemovedItem>;
   pendingRemovalRecoveryRef: MutableRefObject<boolean>;
   pendingRemovalRecoveryRetriesRef: MutableRefObject<number>;
   removalRecoveryRafRef: MutableRefObject<number | null>;
@@ -50,29 +52,6 @@ function hasLostDocumentFocus(doc: Document) {
   );
 }
 
-function getVisibleSelectedTab(
-  tabstrip: HTMLDivElement | null,
-  excludedId?: string,
-) {
-  if (!tabstrip) {
-    return null;
-  }
-
-  const tabs = tabstrip.querySelectorAll<HTMLElement>(
-    ':scope > [data-tabslot] [role="tab"][aria-selected="true"]',
-  );
-
-  return (
-    Array.from(tabs).find((tab) => {
-      if (excludedId && tab.id === excludedId) {
-        return false;
-      }
-
-      return tab.isConnected;
-    }) ?? null
-  );
-}
-
 export function useTabRemovalHandler({
   activeTab,
   focusElementWithRetry,
@@ -88,6 +67,7 @@ export function useTabRemovalHandler({
   menuOpen,
   overflowButtonRef,
   overflowListRef,
+  peekRemovedItems,
   pendingRemovalRecoveryRef,
   pendingRemovalRecoveryRetriesRef,
   removalRecoveryRafRef,
@@ -101,9 +81,75 @@ export function useTabRemovalHandler({
     pendingRemovalRecoveryRetriesRef.current = 0;
   }, [pendingRemovalRecoveryRef, pendingRemovalRecoveryRetriesRef]);
 
+  const replacedSelectionIdRef = useRef<string | null>(null);
+
+  const getReplacementTab = (baseIndex: number) => {
+    let nextTab =
+      (baseIndex >= 0 ? itemAt(baseIndex) : null) ??
+      (baseIndex > 0 ? itemAt(baseIndex - 1) : null) ??
+      getLast() ??
+      getFirst();
+
+    if (nextTab?.element === overflowButtonRef.current) {
+      const overflowIndex = getIndex(nextTab.id);
+      nextTab =
+        (overflowIndex > 0 ? itemAt(overflowIndex - 1) : null) ??
+        (baseIndex > 0 ? itemAt(baseIndex - 1) : null) ??
+        getFirst();
+    }
+
+    return nextTab?.element ? nextTab : null;
+  };
+
+  const afterLayout = (callback: () => void) => {
+    if (!targetWindow?.requestAnimationFrame) {
+      callback();
+      return;
+    }
+
+    targetWindow.requestAnimationFrame(() => {
+      targetWindow.requestAnimationFrame(callback);
+    });
+  };
+
+  const replaceRemovedSelection = useEventCallback(
+    (removedSelected: RemovedItem) => {
+      if (
+        menuOpen ||
+        selected !== removedSelected.value ||
+        getRenderedTab(selected) ||
+        replacedSelectionIdRef.current === removedSelected.id
+      ) {
+        return;
+      }
+
+      const nextTab = getReplacementTab(removedSelected.staleIndex ?? -1);
+      if (!nextTab) return;
+
+      replacedSelectionIdRef.current = removedSelected.id;
+      setSelected(null, nextTab.value);
+    },
+  );
+
   const handleTabRemoval = useEventCallback(() => {
     const doc = targetWindow?.document;
     if (!doc) return;
+
+    // Selection follows a removed selected tab wherever focus is, e.g. when
+    // the tab is removed by a control outside the tabs.
+    if (selected !== undefined && !menuOpen && !getRenderedTab(selected)) {
+      let removedSelected: RemovedItem | undefined;
+      for (const removed of peekRemovedItems().values()) {
+        if (removed.value === selected) {
+          removedSelected = removed;
+        }
+      }
+
+      if (removedSelected) {
+        const target = removedSelected;
+        afterLayout(() => replaceRemovedSelection(target));
+      }
+    }
 
     const activeTabWasSelected = activeTab.current?.value === selected;
 
@@ -205,50 +251,19 @@ export function useTabRemovalHandler({
         return;
       }
 
-      let nextTab =
-        (baseIndex >= 0 ? itemAt(baseIndex) : null) ??
-        (baseIndex > 0 ? itemAt(baseIndex - 1) : null) ??
-        getLast() ??
-        getFirst();
-
-      if (nextTab?.element === overflowButtonRef.current) {
-        const overflowIndex = getIndex(nextTab.id);
-        nextTab =
-          (overflowIndex > 0 ? itemAt(overflowIndex - 1) : null) ??
-          (baseIndex > 0 ? itemAt(baseIndex - 1) : null) ??
-          getFirst();
-      }
-
-      if (!nextTab?.element) return;
-
-      if (
-        removedWasSelected &&
-        !menuOpen &&
-        !getVisibleSelectedTab(tabstripRef.current, removedId)
-      ) {
-        activeTab.current = { id: nextTab.id, value: nextTab.value };
-        setSelected(null, nextTab.value);
-      }
+      const nextTab = getReplacementTab(baseIndex);
+      if (!nextTab) return;
 
       focusElementWithRetry(() => {
         if (removedWasSelected) {
-          return getSelectedTabElement() ?? nextTab?.element;
+          return getSelectedTabElement() ?? nextTab.element;
         }
 
-        return nextTab?.element;
+        return nextTab.element;
       });
     };
 
-    if (!targetWindow?.requestAnimationFrame) {
-      restoreFocus();
-      return;
-    }
-
-    targetWindow.requestAnimationFrame(() => {
-      targetWindow.requestAnimationFrame(() => {
-        restoreFocus();
-      });
-    });
+    afterLayout(restoreFocus);
   });
 
   useEffect(() => {

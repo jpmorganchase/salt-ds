@@ -57,7 +57,6 @@ export const TabTrigger = forwardRef<HTMLButtonElement, TabTriggerProps>(
       selected: selectedValue,
       activeTab,
       menuOpen,
-      setMenuOpen,
     } = useTabs();
     const { selected, value, focused, disabled, tabId, actions } = useTab();
     const tabListLayout = useTabListLayout();
@@ -126,20 +125,7 @@ export const TabTrigger = forwardRef<HTMLButtonElement, TabTriggerProps>(
 
       if (location === "overflow" && event.key === "Tab" && event.shiftKey) {
         event.preventDefault();
-        setMenuOpen(false);
-
-        const doc = event.currentTarget.ownerDocument;
-        const overflowTrigger = doc.querySelector<HTMLElement>(
-          "[data-overflowbutton]",
-        );
-        const scheduleFocus = targetWindow?.requestAnimationFrame;
-
-        if (scheduleFocus) {
-          scheduleFocus(() => overflowTrigger?.focus({ preventScroll: true }));
-        } else {
-          queueMicrotask(() => overflowTrigger?.focus({ preventScroll: true }));
-        }
-
+        tabListLayout?.exitOverflowMenu();
         return;
       }
 

@@ -93,6 +93,7 @@ export const TabsContext = createContext<TabsContextValue>("TabsContext", {
   setMenuOpen: () => undefined,
   removalVersion: 0,
   getRemovedItems: () => new Map(),
+  peekRemovedItems: () => new Map(),
 });
 
 export function useTabs() {
