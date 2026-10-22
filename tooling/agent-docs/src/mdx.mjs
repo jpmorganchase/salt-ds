@@ -4,6 +4,7 @@ import remarkMdx from "remark-mdx";
 import remarkParse from "remark-parse";
 import remarkStringify from "remark-stringify";
 import { unified } from "unified";
+import { formatPropType } from "../../../site/src/components/components/formatPropType.mjs";
 
 const mdxParser = unified().use(remarkParse).use(remarkMdx).use(remarkGfm);
 const markdownParser = unified().use(remarkParse).use(remarkGfm);
@@ -171,6 +172,16 @@ function attributeString(attrs, name) {
   return undefined;
 }
 
+/** `name`, `name="true"` and `name={true}` are all true. */
+function attributeTrue(attrs, name) {
+  const value = attrs[name];
+  return (
+    value === true ||
+    attributeString(attrs, name) === "true" ||
+    value?.expression?.trim() === "true"
+  );
+}
+
 function attributeStrings(attrs, name) {
   const value = attrs[name];
   if (typeof value === "string") return [value];
@@ -248,7 +259,7 @@ async function transformNode(node, ctx) {
   if (node.children) node.children = await transformChildren(node, ctx);
   if (node.type === "paragraph" && isBlank(node.children)) return [];
   if (node.type === "link" || node.type === "definition") {
-    const url = ctx.links.resolve(node.url, ctx);
+    const url = ctx.links.resolve(node.url, ctx, node);
     if (url === null) return node.type === "link" ? node.children : [];
     node.url = url;
   }
@@ -350,20 +361,6 @@ function propDescription(tags, text) {
   return phrasing.length > 0 ? phrasing : [u.text("-")];
 }
 
-const MAX_ENUM_VALUES = 12;
-
-function propType(type) {
-  if (type?.name !== "enum") return type?.name ?? "";
-  if (
-    Array.isArray(type.value) &&
-    type.value.length > 0 &&
-    type.value.length <= MAX_ENUM_VALUES
-  ) {
-    return type.value.map((item) => item.value).join(" | ");
-  }
-  return type.raw ?? type.name;
-}
-
 function propDefault(prop, tags) {
   const value = prop.defaultValue?.value ?? tags.get("default");
   return value === undefined || value === null || value === ""
@@ -402,7 +399,19 @@ async function propsTable(node, ctx) {
     return [];
   }
   const props = Object.values(component.props ?? {});
-  if (props.length === 0) return [];
+  if (props.length === 0) {
+    // The tables leave out inherited React and native props, as on the site,
+    // where an empty table shows nothing. Say so rather than leave a heading
+    // with nothing under it.
+    return [
+      u.paragraph([
+        u.inlineCode(componentName),
+        u.text(
+          " has no props of its own. It accepts the props of the element it renders; see its type declarations.",
+        ),
+      ]),
+    ];
+  }
   const rows = [
     [
       [u.text("Prop")],
@@ -416,7 +425,7 @@ async function propsTable(node, ctx) {
         prop.required
           ? [u.inlineCode(prop.name), u.text(" (required)")]
           : [u.inlineCode(prop.name)],
-        [u.inlineCode(propType(prop.type))],
+        [u.inlineCode(formatPropType(prop.type))],
         propDefault(prop, tags),
         propDescription(tags, text),
       ];
@@ -488,9 +497,7 @@ async function callout(node, ctx) {
 async function imageElement(node, ctx) {
   const attrs = attributes(node);
   const alt = attributeString(attrs, "alt");
-  const hidden =
-    attributeString(attrs, "aria-hidden") === "true" ||
-    attrs["aria-hidden"] === true;
+  const hidden = attributeTrue(attrs, "aria-hidden");
   if (!hidden && !alt?.trim()) {
     ctx.note(
       node,
@@ -580,11 +587,11 @@ async function quickLinkItem(node, ctx) {
   const title = attributeString(attrs, "title") ?? "Link";
   const href = attributeString(attrs, "href");
   const description = asPhrasing(await transformChildren(node, ctx));
-  return quickLinkItemNodes({ title, href, description }, ctx);
+  return quickLinkItemNodes({ title, href, description }, ctx, node);
 }
 
-function quickLinkItemNodes({ title, href, description }, ctx) {
-  const url = href ? ctx.links.resolve(href, ctx) : null;
+function quickLinkItemNodes({ title, href, description }, ctx, node) {
+  const url = href ? ctx.links.resolve(href, ctx, node) : null;
   const heading = url ? [u.link(url, [u.text(title)])] : [u.text(title)];
   return u.listItem([
     u.paragraph(
@@ -659,6 +666,7 @@ async function quickLinks(node, ctx) {
               description: description ? [u.text(description)] : [],
             },
             ctx,
+            node,
           ),
         );
       }
@@ -707,22 +715,57 @@ function collapseWhitespace(phrasing) {
   return output.filter((node) => node.type !== "text" || node.value !== "");
 }
 
+/** A cell's `colSpan`/`rowSpan` (or lowercase) as a count, defaulting to 1. */
+function cellSpan(attrs, name) {
+  const value =
+    attributeString(attrs, name) ??
+    attrs[name]?.expression ??
+    attributeString(attrs, name.toLowerCase()) ??
+    attrs[name.toLowerCase()]?.expression;
+  const span = Number.parseInt(value, 10);
+  return Number.isInteger(span) && span > 1 ? span : 1;
+}
+
+/**
+ * Converts a JSX table. Markdown has no merged cells, so a cell that spans
+ * columns or rows is repeated in each of them, which keeps every column's
+ * header above it.
+ */
 async function tableElement(node, ctx) {
   const rows = [];
+  // Cells continuing down from rows above, by column: { cell, rows }.
+  const spanning = [];
   async function collectCells(row) {
     const cells = [];
+    const fillSpanned = () => {
+      while (spanning[cells.length]?.rows > 0) {
+        const below = spanning[cells.length];
+        below.rows -= 1;
+        cells.push(below.cell);
+      }
+    };
     async function visit(parent) {
       for (const child of parent.children ?? []) {
         if (isJsx(child) && CELL_PATTERN.test(child.name)) {
-          cells.push(
-            collapseWhitespace(asPhrasing(await transformChildren(child, ctx))),
+          const attrs = attributes(child);
+          const cell = collapseWhitespace(
+            asPhrasing(await transformChildren(child, ctx)),
           );
+          const rowSpan = cellSpan(attrs, "rowSpan");
+          for (let column = 0; column < cellSpan(attrs, "colSpan"); column++) {
+            fillSpanned();
+            if (rowSpan > 1) {
+              spanning[cells.length] = { cell, rows: rowSpan - 1 };
+            }
+            cells.push(cell);
+          }
         } else if (child.children) {
           await visit(child);
         }
       }
     }
     await visit(row);
+    fillSpanned();
     return cells;
   }
   async function visit(parent) {
@@ -742,7 +785,7 @@ async function tableElement(node, ctx) {
 async function htmlLink(node, ctx) {
   const href = attributeString(attributes(node), "href");
   const children = asPhrasing(await transformChildren(node, ctx));
-  const url = href ? ctx.links.resolve(href, ctx) : null;
+  const url = href ? ctx.links.resolve(href, ctx, node) : null;
   const phrasing = url ? [u.link(url, children)] : children;
   return node.type === "mdxJsxTextElement" ? phrasing : [u.paragraph(phrasing)];
 }

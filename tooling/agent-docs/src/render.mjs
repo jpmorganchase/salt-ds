@@ -162,17 +162,20 @@ function websiteFact(doc) {
   return fact("Website", [u.link(url, [u.text(url)])]);
 }
 
+/** Rewrites links in frontmatter text, whose line numbers aren't the page's. */
 function rewriteLinks(nodes, doc, page, shared) {
   const ctx = {
     sitePath: page.sitePath,
     packageName: doc.packageName,
     docPath: doc.docPath,
+    error: (_node, message) =>
+      shared.errors.push(`${location(page)}: ${message}`),
   };
   const visit = (parent) => {
     const children = [];
     for (const node of parent.children ?? []) {
       if (node.type === "link" || node.type === "definition") {
-        const url = shared.links.resolve(node.url, ctx);
+        const url = shared.links.resolve(node.url, ctx, node);
         if (url === null) {
           if (node.type === "link") children.push(...visit(node));
           continue;

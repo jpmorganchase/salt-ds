@@ -76,7 +76,21 @@ function stylesheetThemes(stylesheets) {
   return themes;
 }
 
-/** Collects every `--salt-*` custom property declared in the theme CSS. */
+/**
+ * A theme can declare a token in a current tier file and again in a deprecated
+ * one, as when a deprecated token is reinstated; the current declaration wins.
+ */
+function preferredDeclaration(declarations) {
+  return (
+    declarations.find(({ tier }) => tier !== "deprecated") ?? declarations[0]
+  );
+}
+
+/**
+ * Collects every `--salt-*` custom property declared in the theme CSS, with
+ * one entry per tier the token has: a token can be current in one theme and
+ * deprecated in another.
+ */
 export async function collectTokens(themeCssDir) {
   const files = await listFiles(themeCssDir, (file) => file.endsWith(".css"));
   const stylesheets = new Map(
@@ -88,11 +102,13 @@ export async function collectTokens(themeCssDir) {
     ),
   );
   const themes = stylesheetThemes(stylesheets);
-  const tokens = new Map();
+  // Declarations in the classified token files, in file order.
+  const declarationsByName = new Map();
   const aliasesByName = new Map();
   for (const relativePath of files) {
     const tier = tierFor(relativePath);
     const group = path.posix.basename(relativePath, ".css");
+    const fileThemes = themes.get(relativePath) ?? new Set();
     const root = stylesheets.get(relativePath);
     root.walkDecls((declaration) => {
       if (!declaration.prop.startsWith("--salt-")) return;
@@ -105,23 +121,49 @@ export async function collectTokens(themeCssDir) {
       aliases.add(alias);
       aliasesByName.set(declaration.prop, aliases);
       if (!tier) return;
-      const existing = tokens.get(declaration.prop) ?? {
-        name: declaration.prop,
-        tier,
-        group,
-        themes: new Set(),
-      };
-      for (const theme of themes.get(relativePath) ?? []) {
-        existing.themes.add(theme);
+      if (!declarationsByName.has(declaration.prop)) {
+        declarationsByName.set(declaration.prop, []);
       }
-      tokens.set(declaration.prop, existing);
+      declarationsByName
+        .get(declaration.prop)
+        .push({ tier, group, themes: fileThemes });
     });
   }
-  const sorted = [...tokens.values()].sort((left, right) =>
-    compareText(left.name, right.name),
+
+  const tokens = [];
+  for (const [name, declarations] of declarationsByName) {
+    const entries = new Map();
+    const entryFor = ({ tier, group }) => {
+      if (!entries.has(tier)) {
+        entries.set(tier, { name, tier, group, themes: new Set() });
+      }
+      return entries.get(tier);
+    };
+    for (const theme of Object.keys(THEME_ENTRYPOINTS)) {
+      const inTheme = declarations.filter((declaration) =>
+        declaration.themes.has(theme),
+      );
+      if (inTheme.length > 0) {
+        entryFor(preferredDeclaration(inTheme)).themes.add(theme);
+      }
+    }
+    // Declared only in files that no supported entrypoint imports.
+    if (entries.size === 0) entryFor(preferredDeclaration(declarations));
+    tokens.push(...entries.values());
+  }
+  const sorted = tokens.sort(
+    (left, right) =>
+      compareText(left.name, right.name) ||
+      TOKEN_TIERS.findIndex(({ key }) => key === left.tier) -
+        TOKEN_TIERS.findIndex(({ key }) => key === right.tier),
   );
   // Only point deprecated tokens at tokens that may be referenced directly.
-  const tierByName = new Map(sorted.map((token) => [token.name, token.tier]));
+  const tierByName = new Map();
+  for (const token of sorted) {
+    if (!tierByName.has(token.name) || token.tier !== "deprecated") {
+      tierByName.set(token.name, token.tier);
+    }
+  }
   for (const token of sorted) {
     const aliases = aliasesByName.get(token.name);
     token.alias =

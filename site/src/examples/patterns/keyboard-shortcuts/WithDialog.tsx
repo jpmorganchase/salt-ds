@@ -19,9 +19,7 @@ import {
 import { FilterIcon } from "@salt-ds/icons";
 import React, { type ChangeEvent, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
-import importedStyles from "./example.module.css";
-
-const styles = importedStyles as unknown as Record<string, string>;
+import styles from "./example.module.css";
 
 export type Shortcut = {
   label: string;

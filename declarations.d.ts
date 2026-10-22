@@ -1,5 +1,7 @@
 // Declare CSS modules before plain CSS: TypeScript uses the first matching
-// wildcard declaration when the patterns have the same prefix.
+// wildcard declaration when the patterns have the same prefix. For the same
+// reason, this file comes first in the root tsconfig.json's "include", before
+// the packages' own declarations of *.css.
 declare module "*.module.css" {
   const classes: Record<string, string>;
   export default classes;

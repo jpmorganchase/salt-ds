@@ -26,7 +26,6 @@ const RESOLUTION_SUFFIXES = [
   "/index.ts",
   "/index.js",
 ];
-const MAX_SUPPORT_DEPTH = 3;
 // Salt packages publish neither their stories nor their src folders.
 const UNPUBLISHED_IMPORT_PATTERN = /^@salt-ds\/[^/]+\/(?:stories|src)(?:\/|$)/;
 
@@ -97,6 +96,19 @@ export function createExampleResolver({ examplesDir }) {
   const root = path.resolve(examplesDir);
   const inRoot = (file) => file.startsWith(`${root}${path.sep}`);
   const shown = new Set();
+  // Pages repeat examples and examples share files, so each is read once.
+  const results = new Map();
+  const sources = new Map();
+  const readSource = (file) => {
+    if (!sources.has(file)) sources.set(file, readFile(file, "utf8"));
+    return sources.get(file);
+  };
+  const specifiers = new Map();
+  const specifiersOf = (file, code) => {
+    if (!specifiers.has(file))
+      specifiers.set(file, importSpecifiers(code, file));
+    return specifiers.get(file);
+  };
 
   async function resolve(componentName, exampleName) {
     const entryFile = path.join(root, componentName, `${exampleName}.tsx`);
@@ -106,15 +118,27 @@ export function createExampleResolver({ examplesDir }) {
       };
     }
     shown.add(`${componentName}/${exampleName}`);
-    const entryCode = await readFile(entryFile, "utf8");
+    if (!results.has(entryFile)) {
+      results.set(
+        entryFile,
+        resolveEntry(componentName, exampleName, entryFile),
+      );
+    }
+    return results.get(entryFile);
+  }
+
+  async function resolveEntry(componentName, exampleName, entryFile) {
+    const entryCode = await readSource(entryFile);
     const support = [];
     const seen = new Set([entryFile]);
-    const queue = [{ file: entryFile, code: entryCode, depth: 0 }];
+    // Every local file an example needs, however deep, so its source compiles.
+    // `seen` ends import cycles.
+    const queue = [{ file: entryFile, code: entryCode }];
 
     while (queue.length > 0) {
-      const { file, code, depth } = queue.shift();
-      const specifiers = importSpecifiers(code, file);
-      const unpublished = specifiers.find((specifier) =>
+      const { file, code } = queue.shift();
+      const fileSpecifiers = specifiersOf(file, code);
+      const unpublished = fileSpecifiers.find((specifier) =>
         UNPUBLISHED_IMPORT_PATTERN.test(specifier),
       );
       if (unpublished) {
@@ -122,8 +146,7 @@ export function createExampleResolver({ examplesDir }) {
           error: `Example ${componentName}/${exampleName} imports ${unpublished}, which isn't published, so readers can't use it. Copy what it needs into the example's folder.`,
         };
       }
-      if (depth >= MAX_SUPPORT_DEPTH) continue;
-      for (const specifier of specifiers.filter((specifier) =>
+      for (const specifier of fileSpecifiers.filter((specifier) =>
         specifier.startsWith("."),
       )) {
         const resolved = await resolveLocalImport(file, specifier);
@@ -142,7 +165,7 @@ export function createExampleResolver({ examplesDir }) {
         } else if (!language) {
           support.push({ displayPath: shownPath, kind: "asset" });
         } else {
-          const content = await readFile(resolved, "utf8");
+          const content = await readSource(resolved);
           support.push({
             displayPath: shownPath,
             absolutePath: resolved,
@@ -153,7 +176,7 @@ export function createExampleResolver({ examplesDir }) {
             large: Buffer.byteLength(content) > MAX_INLINE_SUPPORT_FILE_BYTES,
           });
           if (SCRIPT_EXTENSIONS.has(extension)) {
-            queue.push({ file: resolved, code: content, depth: depth + 1 });
+            queue.push({ file: resolved, code: content });
           }
         }
       }

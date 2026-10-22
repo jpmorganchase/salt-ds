@@ -28,6 +28,27 @@ afterEach(async () => {
 });
 
 describe("createExampleResolver", () => {
+  it("includes local imports at any depth and stops at import cycles", async () => {
+    const examples = await createExamples({
+      "pattern/Entry.tsx":
+        'import { a } from "./a";\nexport const Entry = a;\n',
+      "pattern/a.ts": 'import { b } from "./b";\nexport const a = b;\n',
+      "pattern/b.ts": 'import { c } from "./c";\nexport const b = c;\n',
+      "pattern/c.ts": 'import { d } from "./d";\nexport const c = d;\n',
+      "pattern/d.ts":
+        'import { a } from "./a";\nimport "./d.css";\nexport const d = () => a;\n',
+      "pattern/d.css": ".d {}\n",
+    });
+    const example = await examples.resolve("pattern", "Entry");
+    expect(example.support.map((file) => file.displayPath)).toEqual([
+      "./a.ts",
+      "./b.ts",
+      "./c.ts",
+      "./d.ts",
+      "./d.css",
+    ]);
+  });
+
   it("resolves an example file and the local files it imports", async () => {
     const examples = await createExamples({
       "button/Primary.tsx":

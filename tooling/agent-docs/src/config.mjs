@@ -5,6 +5,11 @@ export const GENERATED_MARKER =
 
 export const DOCS_DIRECTORY = "docs";
 
+/** Whether a package.json `files` list publishes the generated docs folder. */
+export function publishesDocs(files = []) {
+  return files.some((entry) => /^(?:\.?\/)?docs\/?$/.test(entry));
+}
+
 /**
  * Component pages are split into these tabs on the site and merged into one
  * file in this order. Accessibility comes before the examples, which are the

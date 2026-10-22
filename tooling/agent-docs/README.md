@@ -50,4 +50,4 @@ JavaScript expressions are dropped with a warning, except string literals, liter
 
 CI runs `yarn build:agent-docs --check` in the Lint job, so docs changes that would fail generation fail there first.
 
-Warnings (such as a `PropsTable` with no props) don't fail generation. Authoring suggestions, such as images without alt text or components without `alsoKnownAs`, point to gaps that make the docs less useful to agents and to screen reader users.
+Warnings (such as a `PropsTable` whose component has no generated props) don't fail generation. A component whose props are all inherited React or native props gets a sentence saying so in place of its table. Authoring suggestions, such as images without alt text or components without `alsoKnownAs`, point to gaps that make the docs less useful to agents and to screen reader users.

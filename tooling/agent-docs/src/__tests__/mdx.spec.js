@@ -119,6 +119,20 @@ describe("convertMdx", () => {
     ]);
   });
 
+  it("says when a component has no props of its own", async () => {
+    const ctx = createContext({
+      props: { get: () => ({ displayName: "CardContent", props: {} }) },
+    });
+    const markdown = await toMarkdown(
+      '### `CardContent`\n\n<PropsTable componentName="CardContent" />',
+      ctx,
+    );
+    expect(markdown).toBe(
+      "### `CardContent`\n\n`CardContent` has no props of its own. It accepts the props of the element it renders; see its type declarations.\n",
+    );
+    expect(ctx.warnings).toEqual([]);
+  });
+
   it("converts keyboard controls to a list", async () => {
     const markdown = await toMarkdown(
       '<KeyboardControls>\n<KeyboardControl keyOrCombos={["Enter", "Space"]}>\n- Selects the item.\n</KeyboardControl>\n</KeyboardControls>',
@@ -143,6 +157,28 @@ describe("convertMdx", () => {
     );
     expect(markdown).toBe("_Image: A card_ Cards group content.\n");
     expect(ctx.notes).toEqual(["<Diagram> /img/b.png has no alt text."]);
+  });
+
+  it.each(["aria-hidden", 'aria-hidden="true"', "aria-hidden={true}"])(
+    "treats an image with %s as decorative",
+    async (attribute) => {
+      const ctx = createContext();
+      const markdown = await toMarkdown(
+        `<Image src="/img/a.png" alt="Decoration" ${attribute} />\n\n<Image src="/img/b.png" ${attribute} />`,
+        ctx,
+      );
+      expect(markdown).toBe("");
+      expect(ctx.notes).toEqual([]);
+    },
+  );
+
+  it("does not treat aria-hidden={false} as decorative", async () => {
+    const ctx = createContext();
+    const markdown = await toMarkdown(
+      '<Image src="/img/a.png" alt="A card" aria-hidden={false} />',
+      ctx,
+    );
+    expect(markdown).toBe("_Image: A card_\n");
   });
 
   it("leaves out a caption that repeats the alt text", async () => {
@@ -228,6 +264,24 @@ describe("convertMdx", () => {
     );
     expect(markdown).toBe(
       "| Key | Action |\n| - | - |\n| `Ctrl` + `S` | Saves the document |\n",
+    );
+  });
+
+  it("repeats a cell that spans columns so each column keeps its header", async () => {
+    const markdown = await toMarkdown(
+      '<Table>\n  <THead>\n    <tr>\n      <th colSpan="1">Platform</th>\n      <th colSpan="3">Modifiers</th>\n    </tr>\n  </THead>\n  <TBody>\n    <tr>\n      <td>macOS</td>\n      <td>Ctrl</td>\n      <td>Option</td>\n      <td>Cmd</td>\n    </tr>\n  </TBody>\n</Table>',
+    );
+    expect(markdown).toBe(
+      "| Platform | Modifiers | Modifiers | Modifiers |\n| - | - | - | - |\n| macOS | Ctrl | Option | Cmd |\n",
+    );
+  });
+
+  it("repeats a cell that spans rows in the rows below", async () => {
+    const markdown = await toMarkdown(
+      '<table>\n  <tr><th>Key</th><th>Platform</th><th>Action</th></tr>\n  <tr><td rowSpan={2}>Tab</td><td>macOS</td><td>Next</td></tr>\n  <tr><td>Windows</td><td>Next field</td></tr>\n  <tr><td>Esc</td><td colspan="2">Closes</td></tr>\n</table>',
+    );
+    expect(markdown).toBe(
+      "| Key | Platform | Action |\n| - | - | - |\n| Tab | macOS | Next |\n| Tab | Windows | Next field |\n| Esc | Closes | Closes |\n",
     );
   });
 

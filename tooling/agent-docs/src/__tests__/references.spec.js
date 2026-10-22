@@ -130,6 +130,85 @@ describe("token availability", () => {
   });
 });
 
+describe("token tiers", () => {
+  it("lists a token that a theme declares as current outside the deprecated tier", async () => {
+    // Deprecated/foundations.css sorts before foundations/, and theme.css
+    // imports both, as with the reinstated alpha foundation tokens.
+    const root = await createTheme({
+      "foundations/size.css":
+        ".salt-theme { --salt-size-separator-strokeWidth: 1px; --salt-size-reinstated: 2px; }",
+      "deprecated/foundations.css":
+        ".salt-theme { --salt-size-divider-strokeWidth: var(--salt-size-separator-strokeWidth); --salt-size-reinstated: 2px; }",
+    });
+    const tokens = await collectTokens(root);
+    const reinstated = tokens.filter(
+      (token) => token.name === "--salt-size-reinstated",
+    );
+    expect(reinstated).toHaveLength(1);
+    expect(reinstated[0]).toMatchObject({
+      tier: "foundations",
+      group: "size",
+    });
+    const markdown = render(tokens);
+    expect(markdown).toContain("- `--salt-size-reinstated`\n");
+    expect(
+      markdown.slice(markdown.indexOf("## Deprecated tokens")),
+    ).not.toContain("--salt-size-reinstated");
+  });
+
+  it("lists a token deprecated in one theme under both tiers, each with its themes", async () => {
+    const root = await createTheme({
+      "theme.css":
+        '@import url("foundations/index.css"); @import "legacy/palette/warning.css";',
+      "theme-next.css":
+        '@import url("foundations/index.css"); @import "next/deprecated/palette.css";',
+      "legacy/palette/warning.css":
+        ".salt-theme { --salt-palette-warning-hover: orange; }",
+      "next/deprecated/palette.css":
+        ".salt-theme-next { --salt-palette-warning-hover: darkorange; }",
+    });
+    const tokens = await collectTokens(root);
+    expect(
+      tokens
+        .filter((token) => token.name === "--salt-palette-warning-hover")
+        .map(({ tier, themes }) => ({ tier, themes: [...themes] })),
+    ).toEqual([
+      { tier: "palette", themes: ["legacy"] },
+      { tier: "deprecated", themes: ["next"] },
+    ]);
+    const markdown = render(tokens);
+    const deprecated = markdown.slice(markdown.indexOf("## Deprecated tokens"));
+    expect(
+      markdown.slice(0, markdown.indexOf("## Deprecated tokens")),
+    ).toContain("`--salt-palette-warning-hover` (legacy theme only)");
+    expect(deprecated).toContain(
+      "`--salt-palette-warning-hover` (SaltProviderNext theme only)",
+    );
+  });
+
+  it("classifies the reinstated alpha foundations and next-deprecated palette tokens in the real theme", async () => {
+    const tokens = await collectTokens(
+      fileURLToPath(
+        new URL("../../../../packages/theme/src/css", import.meta.url),
+      ),
+    );
+    const tiers = (name) =>
+      tokens
+        .filter((token) => token.name === name)
+        .map(({ tier, themes }) => `${tier}:${[...themes].sort().join("+")}`);
+    expect(tiers("--salt-color-black-15a")).toEqual([
+      "foundations:legacy+next+salt-interim",
+    ]);
+    expect(tiers("--salt-color-white-15a")).toEqual([
+      "foundations:legacy+next+salt-interim",
+    ]);
+    expect(tiers("--salt-palette-warning-action-hover")).toEqual([
+      "palette:legacy",
+      "deprecated:next",
+    ]);
+  });
+});
+
 describe("deprecated token aliases", () => {
   it("keeps a consistent alias even when the target's value changes", async () => {
     const root = await createTheme({

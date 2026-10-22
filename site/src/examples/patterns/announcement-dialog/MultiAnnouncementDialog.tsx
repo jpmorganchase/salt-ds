@@ -15,11 +15,9 @@ import {
 } from "@salt-ds/core";
 import { type ElementType, useEffect, useRef, useState } from "react";
 import { CloseButton } from "./AnnouncementDialog";
-import importedStyles from "./example.module.css";
+import styles from "./example.module.css";
 
 const exampleImage = "/img/examples/exampleImage4x.png";
-
-const styles = importedStyles as unknown as Record<string, string>;
 
 interface AnnouncementContent {
   preheader: string;

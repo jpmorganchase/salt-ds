@@ -208,18 +208,22 @@ export function placeExamples(
     placed = render();
   }
   if (groups.length > 0 && !fits(placed)) {
-    const sizeOf = (group) =>
-      measure(exampleNodes(group.examples[0], new Set(), () => "#"));
+    const sizes = new Map(
+      groups.map((group) => [
+        group,
+        measure(exampleNodes(group.examples[0], new Set(), () => "#")),
+      ]),
+    );
     // A short first example, usually the basic composition, can stay on the
     // page unless the page is too large to read in one call. A long one
     // moves like the others.
     const [firstGroup, ...otherGroups] = groups;
     const keepFirst =
-      keepShortFirst && sizeOf(firstGroup).lines <= lineBudget / 2;
+      keepShortFirst && sizes.get(firstGroup).lines <= lineBudget / 2;
     // Largest first, measured against whichever budget it uses more of.
     const candidates = (keepFirst ? otherGroups : groups)
       .map((group) => {
-        const size = sizeOf(group);
+        const size = sizes.get(group);
         return {
           group,
           share: Math.max(size.bytes / budget, size.lines / lineBudget),
@@ -227,11 +231,24 @@ export function placeExamples(
       })
       .sort((left, right) => right.share - left.share)
       .map(({ group }) => group);
-    for (const group of candidates) {
-      moved.add(group);
-      placed = render();
-      if (fits(placed)) break;
+    // Move the fewest of the largest examples that make the page fit. Each
+    // one moved shortens the page, so search for that number rather than
+    // rendering the whole page again after each move.
+    const moving = (count) => {
+      moved.clear();
+      for (const group of candidates.slice(0, count)) moved.add(group);
+      return render();
+    };
+    let tooFew = 0;
+    let enough = candidates.length;
+    if (fits(moving(enough))) {
+      while (enough - tooFew > 1) {
+        const middle = Math.floor((tooFew + enough) / 2);
+        if (fits(moving(middle))) enough = middle;
+        else tooFew = middle;
+      }
     }
+    placed = moving(enough);
     if (keepFirst && !withinBytes(placed)) {
       moved.add(firstGroup);
       placed = render();

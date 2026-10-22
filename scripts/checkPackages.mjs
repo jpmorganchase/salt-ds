@@ -15,6 +15,7 @@ import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 import ts from "typescript";
 import { readManifest } from "../tooling/agent-docs/src/agents-md.mjs";
+import { publishesDocs } from "../tooling/agent-docs/src/config.mjs";
 
 const execFile = promisify(execFileCallback);
 const rootDir = path.resolve(
@@ -87,14 +88,8 @@ function packagePath(directory, target) {
   return path.join(directory, target.replace(/^\.?\//, ""));
 }
 
-function listsAgentDocs(manifest) {
-  return (manifest.files ?? []).some((entry) =>
-    /^(?:\.?\/)?docs\/?$/.test(entry),
-  );
-}
-
 async function checkAgentDocs(manifest, directory) {
-  if (!listsAgentDocs(manifest)) return [];
+  if (!publishesDocs(manifest.files)) return [];
   // agents-md.mjs indexes manifest.json, and the core README tells consumers
   // to run docs/agents-md.mjs.
   const required =

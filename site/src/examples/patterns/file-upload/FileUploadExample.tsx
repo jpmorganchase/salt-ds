@@ -111,46 +111,41 @@ const FileItem = ({
   }, []);
 
   useEffect(() => {
-    if (file && validFile(file)) {
-      setTimeout(() => {
-        // emulate upload
-        setStatus("uploading");
-      }, 700);
-    } else {
+    if (!validFile(file)) {
       setStatus("failedValidation");
+      return;
     }
-  }, [file, validFile]);
-
-  useEffect(() => {
-    let timeout: ReturnType<typeof setTimeout>;
-
-    if (status === "uploading") {
-      const update = () => {
-        setCurrentSize((old) => {
-          if (old !== file.size) {
-            timeout = setTimeout(update, updateInterval);
-
-            if (badConnection && Math.random() > 0.7) {
-              setStatus("failedConnection");
-              setErrorMessage("Connection failed. Please try again.");
-              return old;
-            }
-
-            return Math.min(old + Math.random() * 1000, file.size);
-          }
-
-          setStatus("success");
-          return old;
-        });
-      };
-
-      timeout = setTimeout(update, updateInterval);
-    }
-
+    // Emulate the upload starting.
+    const timeout = setTimeout(() => {
+      setStatus("uploading");
+    }, 700);
     return () => {
       clearTimeout(timeout);
     };
-  }, [status, file.size, badConnection]);
+  }, [file, validFile]);
+
+  // Emulate upload progress: one update per interval while uploading. Each
+  // update renders again, which schedules the next one.
+  useEffect(() => {
+    if (status !== "uploading") return;
+    if (currentSize >= file.size) {
+      setStatus("success");
+      return;
+    }
+    const timeout = setTimeout(() => {
+      if (badConnection && Math.random() > 0.7) {
+        setStatus("failedConnection");
+        setErrorMessage("Connection failed. Please try again.");
+      } else {
+        setCurrentSize((size) =>
+          Math.min(size + Math.random() * 1000, file.size),
+        );
+      }
+    }, updateInterval);
+    return () => {
+      clearTimeout(timeout);
+    };
+  }, [status, currentSize, file.size, badConnection]);
 
   return (
     <StaticListItem>

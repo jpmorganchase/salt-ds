@@ -9,11 +9,12 @@ import {
   MAX_AGENTS_BLOCK_BYTES,
   MAX_PAGE_BYTES,
   MAX_PAGE_LINES,
+  publishesDocs,
   SITE_ORIGIN,
 } from "./config.mjs";
 import { createExampleResolver, unshownPatternExamples } from "./examples.mjs";
 import { compareText, pathExists } from "./files.mjs";
-import { createLinkResolver, docLink } from "./links.mjs";
+import { createLinkResolver, decodeFragment, docLink } from "./links.mjs";
 import { parseMarkdown } from "./mdx.mjs";
 import { discoverDocuments } from "./pages.mjs";
 import { createPropsProvider } from "./props.mjs";
@@ -134,7 +135,8 @@ async function addReferences({ packages, packagesDir, routeIndex, outputs }) {
       section: "reference",
       title: "Design tokens reference",
       docPath: from.docPath,
-      summary: `All ${tokens.length} design token names by tier, including deprecated tokens.`,
+      // A token current in one theme and deprecated in another is listed twice.
+      summary: `All ${new Set(tokens.map((token) => token.name)).size} design token names by tier, including deprecated tokens.`,
     });
   }
 
@@ -334,7 +336,7 @@ export function findBrokenLinks(outputs) {
         if (!anchor || !targetPath.endsWith(".md")) continue;
         const destination = markdown(targetPackage, targetPath);
         destination.anchors ??= markdownAnchors(destination.tree);
-        if (!destination.anchors.has(decodeURIComponent(anchor))) {
+        if (!destination.anchors.has(decodeFragment(anchor))) {
           broken.push(
             `${packageName}/docs/${docPath}: link ${target} points to a heading that doesn't exist.`,
           );
@@ -389,7 +391,9 @@ export async function generateAgentDocs({
   const siteDocsDir = path.join(repoRoot, "site", "docs");
   const packagesDir = path.join(repoRoot, "packages");
   const packages = await readPackages(packagesDir);
-  const { documents, errors } = await discoverDocuments({ siteDocsDir });
+  const { documents, errors, routes } = await discoverDocuments({
+    siteDocsDir,
+  });
   const warnings = [];
   // Authoring suggestions: gaps that make the docs less useful to agents.
   const notes = [];
@@ -398,16 +402,19 @@ export async function generateAgentDocs({
     if (!packages.has(doc.packageName)) {
       errors.push(`${doc.route}: unknown package ${doc.packageName}.`);
     }
+  }
+  const knownDocuments = documents.filter((doc) =>
+    packages.has(doc.packageName),
+  );
+  notes.push(...dropMisleadingAliases(knownDocuments));
+  // After the misleading aliases are dropped, which can leave none.
+  for (const doc of knownDocuments) {
     if (doc.kind === "component" && doc.aliases.length === 0) {
       notes.push(
         `site/docs/${doc.index.relativePath}: no alsoKnownAs names, so the docs index lists only its title.`,
       );
     }
   }
-  const knownDocuments = documents.filter((doc) =>
-    packages.has(doc.packageName),
-  );
-  notes.push(...dropMisleadingAliases(knownDocuments));
   const routeIndex = new Map(
     knownDocuments.map((doc) => [
       doc.route,
@@ -424,7 +431,7 @@ export async function generateAgentDocs({
   };
   const shared = {
     packages,
-    links: createLinkResolver(routeIndex, { deferAnchor }),
+    links: createLinkResolver(routeIndex, { deferAnchor, siteRoutes: routes }),
     examples: createExampleResolver({ examplesDir }),
     props: propsProvider ?? createPropsProvider({ packagesDir }),
     documents: knownDocuments,
@@ -530,7 +537,7 @@ export async function generateAgentDocs({
       docsPath: `node_modules/${packageName}/docs`,
       pages: JSON.parse(manifest).pages,
     });
-    if (!info.files.some((entry) => /^(?:\.?\/)?docs\/?$/.test(entry))) {
+    if (!publishesDocs(info.files)) {
       errors.push(
         `${packageName}: add "${DOCS_DIRECTORY}" to "files" in packages/${info.directory}/package.json so its generated docs are published.`,
       );

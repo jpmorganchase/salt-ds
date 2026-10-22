@@ -7,9 +7,7 @@ import {
   useRef,
   useState,
 } from "react";
-import importedStyles from "./ContentOverflow.module.css";
-
-const styles = importedStyles as unknown as Record<string, string>;
+import styles from "./ContentOverflow.module.css";
 
 export const ContentOverflow = ({
   children,

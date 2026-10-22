@@ -233,6 +233,25 @@ describe("findBrokenLinks", () => {
       "@salt-ds/core/docs/components/button.md: link #nope points to a heading that doesn't exist.",
     ]);
   });
+
+  it("reports a malformed percent-encoded anchor as a broken link instead of throwing", () => {
+    const outputs = new Map([
+      [
+        "@salt-ds/core",
+        {
+          files: new Map([
+            [
+              "components/button.md",
+              "# Button\n\n## 50% width\n\n[a](#50%-width) [b](#50-width)\n",
+            ],
+          ]),
+        },
+      ],
+    ]);
+    expect(findBrokenLinks(outputs)).toEqual([
+      "@salt-ds/core/docs/components/button.md: link #50%-width points to a heading that doesn't exist.",
+    ]);
+  });
 });
 
 describe("generateAgentDocs", () => {
@@ -525,6 +544,25 @@ ${FORMS_PREVIEWS}`,
     );
     expect(result.notes).toContain(
       'site/docs/components/button/index.mdx: alsoKnownAs "Forms" is the title of @salt-ds/core/docs/patterns/forms.md, so the docs for agents leave it out.',
+    );
+    expect(result.notes).not.toContain(
+      "site/docs/components/button/index.mdx: no alsoKnownAs names, so the docs index lists only its title.",
+    );
+  });
+
+  it("suggests aliases for a component whose aliases are all left out", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/components/button/index.mdx": fixtureFiles[
+        "site/docs/components/button/index.mdx"
+      ].replace('alsoKnownAs: ["Action"]', 'alsoKnownAs: ["Forms"]'),
+    });
+    const result = await generateAgentDocs({
+      repoRoot,
+      propsProvider,
+      write: false,
+    });
+    expect(result.notes).toContain(
+      "site/docs/components/button/index.mdx: no alsoKnownAs names, so the docs index lists only its title.",
     );
   });
 

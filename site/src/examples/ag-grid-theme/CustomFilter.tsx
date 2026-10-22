@@ -56,6 +56,10 @@ export const CustomFilter = () => {
     }
   };
 
+  const clearFilters = () => {
+    api?.setFilterModel(null);
+  };
+
   const clearStoredFilter = () => {
     setSavedFilterModel(null);
   };
@@ -80,6 +84,9 @@ export const CustomFilter = () => {
           onClick={restoreFilters}
         >
           Restore Saved Filters
+        </Button>
+        <Button disabled={!isGridReady} onClick={clearFilters}>
+          Clear Filters
         </Button>
         <Button
           disabled={savedFilterModel === null}

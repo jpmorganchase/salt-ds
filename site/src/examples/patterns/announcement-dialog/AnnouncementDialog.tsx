@@ -14,11 +14,9 @@ import {
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { type ElementType, useState } from "react";
-import importedStyles from "./example.module.css";
+import styles from "./example.module.css";
 
 const exampleImage = "/img/examples/exampleImage4x.png";
-
-const styles = importedStyles as unknown as Record<string, string>;
 
 export const CloseButton = ({ onClick }: { onClick: () => void }) => (
   <Button aria-label="Close" appearance="transparent" onClick={onClick}>

@@ -29,9 +29,7 @@ import {
 } from "@salt-ds/icons";
 import { type ChangeEvent, type CSSProperties, useState } from "react";
 import { usStateExampleData } from "../assets/exampleData";
-import importedStyles from "./example.module.css";
-
-const styles = importedStyles as unknown as Record<string, string>;
+import styles from "./example.module.css";
 
 interface ListProps {
   total: number;

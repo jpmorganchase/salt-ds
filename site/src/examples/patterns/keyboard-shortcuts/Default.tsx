@@ -16,15 +16,13 @@ import {
 import { FilterIcon } from "@salt-ds/icons";
 import { type ChangeEvent, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
-import importedStyles from "./example.module.css";
+import styles from "./example.module.css";
 import {
   displayKeyName,
   highlightTextMatch,
   type Shortcut,
   shortcutList,
 } from "./WithDialog";
-
-const styles = importedStyles as unknown as Record<string, string>;
 
 export const Default = () => {
   const [shortcutsEnabled, setShortcutsEnabled] = useState<boolean>(false);

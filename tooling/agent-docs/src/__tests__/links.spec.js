@@ -77,6 +77,95 @@ describe("createLinkResolver", () => {
   it("drops links to site assets", () => {
     expect(resolve("/img/diagram.png", fromButtonUsage)).toBeNull();
   });
+
+  it("resolves absolute website links to shipped pages", () => {
+    expect(
+      resolve(
+        "https://www.saltdesignsystem.com/salt/patterns/forms#layout",
+        fromButtonUsage,
+      ),
+    ).toBe("../patterns/forms.md#layout");
+    expect(
+      resolve(
+        "https://www.saltdesignsystem.com/salt/components/dialog/examples",
+        fromButtonUsage,
+      ),
+    ).toBe("./dialog.md");
+    expect(
+      resolve(
+        "https://www.saltdesignsystem.com/salt/about/roadmap",
+        fromButtonUsage,
+      ),
+    ).toBe("https://www.saltdesignsystem.com/salt/about/roadmap");
+  });
+});
+
+describe("createLinkResolver with site routes", () => {
+  const siteRoutes = new Set([
+    ...routeIndex.keys(),
+    "/salt/components/button/usage",
+    "/salt/about/roadmap",
+  ]);
+  const { resolve } = createLinkResolver(routeIndex, { siteRoutes });
+  const withErrors = () => {
+    const errors = [];
+    return {
+      errors,
+      ctx: {
+        ...fromButtonUsage,
+        error: (node, message) => errors.push({ node, message }),
+      },
+    };
+  };
+
+  it("points unshipped site pages at the website without an error", () => {
+    const { errors, ctx } = withErrors();
+    expect(resolve("/salt/about/roadmap", ctx)).toBe(
+      "https://www.saltdesignsystem.com/salt/about/roadmap",
+    );
+    expect(resolve("/salt/components/button/usage", ctx)).toBe("./button.md");
+    expect(errors).toEqual([]);
+  });
+
+  it("reports links to routes the site doesn't have, suggesting a different case", () => {
+    const { errors, ctx } = withErrors();
+    const node = { type: "link" };
+    resolve("../Dialog", ctx, node);
+    resolve("/salt/components/missing", ctx, node);
+    resolve(
+      "https://www.saltdesignsystem.com/salt/patterns/Forms/examples",
+      ctx,
+      node,
+    );
+    expect(errors).toEqual([
+      {
+        node,
+        message:
+          "Link ../Dialog points to /salt/components/Dialog, which is not a page on the site. Did you mean /salt/components/dialog?",
+      },
+      {
+        node,
+        message:
+          "Link /salt/components/missing points to /salt/components/missing, which is not a page on the site.",
+      },
+      {
+        node,
+        message:
+          "Link https://www.saltdesignsystem.com/salt/patterns/Forms/examples points to /salt/patterns/Forms/examples, which is not a page on the site. Did you mean /salt/patterns/forms?",
+      },
+    ]);
+  });
+
+  it("leaves links outside the documentation alone", () => {
+    const { errors, ctx } = withErrors();
+    expect(resolve("/blog/post", ctx)).toBe(
+      "https://www.saltdesignsystem.com/blog/post",
+    );
+    expect(resolve("https://example.com/salt/x", ctx)).toBe(
+      "https://example.com/salt/x",
+    );
+    expect(errors).toEqual([]);
+  });
 });
 
 describe("docLink", () => {
