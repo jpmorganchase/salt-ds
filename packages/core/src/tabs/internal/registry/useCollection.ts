@@ -96,6 +96,10 @@ export function useCollection({ wrap, targetWindow }: UseCollectionProps) {
     return items;
   }, []);
 
+  const peekRemovedItems = useCallback(() => {
+    return new Map(removedItems.current);
+  }, []);
+
   const rafId = useRef<number | null>(null);
 
   const scheduleSort = useCallback(() => {
@@ -253,6 +257,7 @@ export function useCollection({ wrap, targetWindow }: UseCollectionProps) {
     ),
     updateItem,
     getRemovedItems,
+    peekRemovedItems,
     removalVersion,
     sortItems,
   };

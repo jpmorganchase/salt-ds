@@ -81,6 +81,7 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
       setMenuOpen,
       sortItems,
       getRemovedItems,
+      peekRemovedItems,
       getRenderedTab,
       renderedTabs,
       removalVersion,
@@ -119,8 +120,21 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
       setBootstrapOverflowReady,
     ]);
 
+    const exitOverflowMenu = useCallback(() => {
+      setMenuOpen(false);
+
+      const focusOverflowButton = () =>
+        overflowButtonRef.current?.focus({ preventScroll: true });
+      if (targetWindow?.requestAnimationFrame) {
+        targetWindow.requestAnimationFrame(focusOverflowButton);
+      } else {
+        queueMicrotask(focusOverflowButton);
+      }
+    }, [setMenuOpen, targetWindow]);
+
     const { resolvedOverflowActiveValue, tabListLayoutContext } =
       useOverflowLayoutState({
+        exitOverflowMenu,
         hiddenValues,
         menuOpen,
         overflowMenuOpen,
@@ -249,6 +263,7 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
       menuOpen,
       overflowButtonRef,
       overflowListRef,
+      peekRemovedItems,
       pendingRemovalRecoveryRef,
       pendingRemovalRecoveryRetriesRef,
       removalRecoveryRafRef,
