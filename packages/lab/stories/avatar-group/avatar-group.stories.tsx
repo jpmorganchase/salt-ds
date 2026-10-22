@@ -37,6 +37,13 @@ export const RenderProp: StoryFn<typeof AvatarGroup> = (args) => {
     </AvatarGroup>
   );
 };
+// The visible initials and count summarise the group named in the accessible
+// name, which axe can't match as label text.
+RenderProp.parameters = {
+  axe: {
+    disabledRules: ["label-content-name-mismatch"],
+  },
+};
 
 export const Entity: StoryFn<typeof AvatarGroup> = (args) => {
   return (
