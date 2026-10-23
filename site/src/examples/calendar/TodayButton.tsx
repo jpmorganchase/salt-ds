@@ -28,14 +28,14 @@ export const TodayButton = (): ReactElement => {
         <CalendarGrid />
         <Divider />
         <Button
-          aria-label={`Change Date, ${dateAdapter.format(today, "dddd DD MMMM YYYY")}`}
+          aria-label={`Today, ${dateAdapter.format(today, "dddd DD MMMM YYYY")}`}
           style={{ margin: "var(--salt-spacing-100)" }}
           sentiment="accented"
           appearance="solid"
           onClick={() => {
             setSelectedDate(today);
             announce(
-              `${dateAdapter.format(today, "dddd D MMMM YYYY")}, selected`,
+              `${dateAdapter.format(today, "dddd DD MMMM YYYY")}, selected`,
             );
           }}
         >

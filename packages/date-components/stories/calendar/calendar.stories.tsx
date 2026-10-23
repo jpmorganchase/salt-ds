@@ -794,14 +794,14 @@ export const TodayButton: StoryFn<React.FC<CalendarSingleProps>> = ({
         <CalendarGrid />
         <Divider />
         <Button
-          aria-label={`Change Date, ${dateAdapter.format(today, "dddd DD MMMM YYYY")}`}
+          aria-label={`Today, ${dateAdapter.format(today, "dddd DD MMMM YYYY")}`}
           style={{ margin: "var(--salt-spacing-50)" }}
           sentiment="accented"
           appearance="bordered"
           onClick={() => {
             setSelectedDate(today);
             announce(
-              `${dateAdapter.format(today, "dddd D MMMM YYYY")}, selected`,
+              `${dateAdapter.format(today, "dddd DD MMMM YYYY")}, selected`,
             );
           }}
         >
@@ -835,7 +835,7 @@ export const CustomDayRendering: StoryFn<React.FC<CalendarSingleProps>> = (
         ])}
       >
         <span className={clsx({ dot: !status.outOfRange })}>
-          {dateAdapter.format(date, "D")}
+          {dateAdapter.format(date, "DD")}
         </span>
       </button>
     );
