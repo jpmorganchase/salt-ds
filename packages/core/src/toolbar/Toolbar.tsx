@@ -175,6 +175,10 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       [overflowedIds],
     );
     const previousOverflowedIdsKeyRef = useRef(overflowedIdsKey);
+    // Whether focus is in the toolbar, including its portaled overflow panels.
+    // React ignores the blur when a commit removes the focused element, so
+    // this stays true when the toolbar itself drops focus.
+    const focusWithinRef = useRef(false);
 
     const getItemHostRef = useCallback(
       (id: string, kind: ToolbarItemHostKind) => {
@@ -231,54 +235,30 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
         previousOverflowedIdsKeyRef.current !== overflowedIdsKey;
       previousOverflowedIdsKeyRef.current = overflowedIdsKey;
 
-      if (!overflowChanged) {
+      if (!overflowChanged || !targetWindow || !focusWithinRef.current) {
         return;
       }
 
-      const doc = targetWindow?.document;
-      const rememberedFocus = keyboardNavigation.rememberedFocusRef.current;
+      const doc = targetWindow.document;
 
-      if (!doc || !rememberedFocus) {
-        return;
-      }
+      // Items move to their new hosts in the commits after an overflow change,
+      // so resolve the target once they've settled. By then, focus may also
+      // have moved somewhere else.
+      targetWindow.requestAnimationFrame(() => {
+        const activeElement = doc.activeElement;
+        const focusWasLost =
+          !activeElement ||
+          activeElement === doc.body ||
+          activeElement === doc.documentElement ||
+          !activeElement.isConnected;
 
-      const activeElement = doc.activeElement;
-      const focusWasLost =
-        !activeElement ||
-        activeElement === doc.body ||
-        activeElement === doc.documentElement ||
-        !activeElement.isConnected;
-      const target = keyboardNavigation.getEntryFocusable();
-
-      if (!focusWasLost) {
-        return;
-      }
-
-      if (!target) {
-        return;
-      }
-
-      const focusTarget = () => {
-        if (target.isConnected) {
-          target.focus({ preventScroll: true });
+        if (focusWasLost) {
+          keyboardNavigation
+            .getEntryFocusable()
+            ?.focus({ preventScroll: true });
         }
-      };
-
-      if (targetWindow?.requestAnimationFrame) {
-        const frame = targetWindow.requestAnimationFrame(focusTarget);
-
-        return () => {
-          targetWindow.cancelAnimationFrame(frame);
-        };
-      }
-
-      queueMicrotask(focusTarget);
-    }, [
-      keyboardNavigation.getEntryFocusable,
-      keyboardNavigation.rememberedFocusRef,
-      overflowedIdsKey,
-      targetWindow,
-    ]);
+      });
+    }, [keyboardNavigation.getEntryFocusable, overflowedIdsKey, targetWindow]);
 
     useEffect(() => {
       if (process.env.NODE_ENV !== "production") {
@@ -313,10 +293,12 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
         {...{ [TOOLBAR_SCOPE_ROOT_ATTR]: "main" }}
         ref={handleRef}
         onBlurCapture={(event) => {
+          focusWithinRef.current = false;
           keyboardNavigation.handleBlurCapture(event);
           onBlurCapture?.(event);
         }}
         onFocusCapture={(event) => {
+          focusWithinRef.current = true;
           keyboardNavigation.handleFocusCapture(event);
           onFocusCapture?.(event);
         }}
