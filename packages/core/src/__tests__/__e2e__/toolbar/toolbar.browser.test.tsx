@@ -1042,6 +1042,44 @@ async function expectCentered(name: string) {
     .toBeLessThan(1.5);
 }
 
+function nextAnimationFrames(count: number) {
+  return new Promise<void>((resolve) => {
+    const next = (remaining: number) => {
+      if (remaining === 0) {
+        resolve();
+        return;
+      }
+      requestAnimationFrame(() => next(remaining - 1));
+    };
+    next(count);
+  });
+}
+
+// Counts the animation frames in which a control shows focus styling while it
+// doesn't have focus.
+function trackStaleFocusStyling(
+  locator: Locator,
+  rootSelector: string,
+  focusedClass: string,
+) {
+  let staleFrames = 0;
+  let frame = requestAnimationFrame(function check() {
+    for (const control of locator.elements()) {
+      if (
+        control !== document.activeElement &&
+        control.closest(rootSelector)?.classList.contains(focusedClass)
+      ) {
+        staleFrames += 1;
+      }
+    }
+    frame = requestAnimationFrame(check);
+  });
+  return () => {
+    cancelAnimationFrame(frame);
+    return staleFrames;
+  };
+}
+
 const overflowTrigger = (name: string | RegExp = /Overflow\./i) =>
   page.getByRole("button", { name });
 
@@ -1819,7 +1857,7 @@ describe("Toolbar keyboard, focus and portals", () => {
     await expect.element(combo).toHaveFocus();
   });
 
-  it("preserves the focused overflow control when its tray returns", async () => {
+  it("keeps focus on the focused overflow control when its tray returns", async () => {
     await renderWithSalt(<NamedOverflowFocusReentryTestCase />);
     await openOverflowWithKeyboard(/Filters overflow\./i);
     await userEvent.keyboard("{ArrowRight}");
@@ -1827,6 +1865,12 @@ describe("Toolbar keyboard, focus and portals", () => {
       .element(page.getByRole("button", { name: "Filters", exact: true }))
       .toHaveFocus();
     setFixtureWidth(760);
+    await expect
+      .element(page.getByRole("toolbar", { name: "Filters overflow" }))
+      .not.toBeInTheDocument();
+    await expect
+      .element(page.getByRole("button", { name: "Filters", exact: true }))
+      .toHaveFocus();
     await page.getByTestId("toolbar-before").click();
     await userEvent.tab();
     await expect
@@ -1834,26 +1878,35 @@ describe("Toolbar keyboard, focus and portals", () => {
       .toHaveFocus();
   });
 
-  it("clears Input focus styling when named overflow returns", async () => {
+  it("keeps Input focus without stale focus styling when named overflow returns", async () => {
     await renderWithSalt(<NamedOverflowInputFocusReentryTestCase />);
     await openOverflowWithKeyboard(/Actions overflow\./i);
     await userEvent.keyboard("{ArrowRight}{ArrowRight}");
-    await expect.element(page.getByPlaceholder("Search")).toHaveFocus();
+    const input = page.getByPlaceholder("Search");
+    await expect.element(input).toHaveFocus();
+    const stopTracking = trackStaleFocusStyling(
+      input,
+      ".saltInput",
+      "saltInput-focused",
+    );
     setFixtureWidth(760);
-    await expect.element(page.getByPlaceholder("Search")).not.toHaveFocus();
+    await expect
+      .element(page.getByRole("toolbar", { name: "Actions overflow" }))
+      .not.toBeInTheDocument();
+    await expect.element(input).toHaveFocus();
+    expect(stopTracking()).toBe(0);
     expect(
-      page
-        .getByPlaceholder("Search")
+      input
         .element()
         .closest(".saltInput")
         ?.classList.contains("saltInput-focused"),
-    ).toBe(false);
+    ).toBe(true);
     await page.getByTestId("toolbar-before").click();
     await userEvent.tab();
-    await expect.element(page.getByPlaceholder("Search")).toHaveFocus();
+    await expect.element(input).toHaveFocus();
   });
 
-  it("clears DateInput focus styling when shared overflow returns", async () => {
+  it("keeps DateInput focus without stale focus styling when shared overflow returns", async () => {
     await renderWithSalt(<SharedOverflowDateInputFocusReentryTestCase />, {
       dateAdapter: adapterDayjs,
     });
@@ -1861,14 +1914,23 @@ describe("Toolbar keyboard, focus and portals", () => {
     await userEvent.keyboard("{ArrowRight}");
     const input = page.getByRole("textbox", { name: "Settlement date" });
     await expect.element(input).toHaveFocus();
+    const stopTracking = trackStaleFocusStyling(
+      input,
+      ".saltDateInput",
+      "saltDateInput-focused",
+    );
     setFixtureWidth(760);
-    await expect.element(input).not.toHaveFocus();
+    await expect
+      .element(page.getByRole("toolbar", { name: "More overflow" }))
+      .not.toBeInTheDocument();
+    await expect.element(input).toHaveFocus();
+    expect(stopTracking()).toBe(0);
     expect(
       input
         .element()
         .closest(".saltDateInput")
         ?.classList.contains("saltDateInput-focused"),
-    ).toBe(false);
+    ).toBe(true);
     await page.getByTestId("toolbar-before").click();
     await userEvent.tab();
     await expect.element(input).toHaveFocus();
@@ -2259,14 +2321,7 @@ describe("Toolbar overflow focus restoration", () => {
     await expect.element(overflowTrigger(/Filters overflow\./i)).toHaveFocus();
   });
 
-  // Skipped: Toolbar's focus-restore layout effect schedules the refocus in a
-  // requestAnimationFrame, but the effect re-runs on the next render because
-  // getEntryFocusable changes identity every render. The cleanup cancels the
-  // frame and the re-run sees no overflow change, so focus is left on <body>.
-  // Making the effect fire conflicts with the "...overflow returns" tests
-  // above, which expect focus not to be restored, so the intended behaviour
-  // needs deciding first.
-  it.skip("moves focus to the group's first control when the focused overflow trigger disappears", async () => {
+  it("moves focus to the group's first control when the focused overflow trigger disappears", async () => {
     await renderWithSalt(<NamedOverflowFocusMemoryTestCase />);
     setFixtureWidth(640);
     await expectButton(/Filters overflow\./i, true);
@@ -2282,8 +2337,7 @@ describe("Toolbar overflow focus restoration", () => {
       .toHaveFocus();
   });
 
-  // Skipped for the same focus-restore bug as the test above.
-  it.skip("moves focus to the overflow trigger when the focused control overflows", async () => {
+  it("moves focus to the overflow trigger when the focused control overflows", async () => {
     await renderWithSalt(<NamedOverflowFocusMemoryTestCase />);
     await expectButton("Columns", true);
     page.getByTestId("toolbar-before").element().focus();
@@ -2296,6 +2350,22 @@ describe("Toolbar overflow focus restoration", () => {
     setFixtureWidth(640);
     await expectButton("Columns", false);
     await expect.element(overflowTrigger(/Filters overflow\./i)).toHaveFocus();
+  });
+
+  it("doesn't move focus into the toolbar when overflow changes after focus has left", async () => {
+    await renderWithSalt(<NamedOverflowFocusMemoryTestCase />);
+    await expectButton("Columns", true);
+    page.getByTestId("toolbar-before").element().focus();
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowRight}{ArrowRight}{ArrowRight}");
+    const columns = page.getByRole("button", { name: "Columns" });
+    await expect.element(columns).toHaveFocus();
+    columns.element().blur();
+
+    setFixtureWidth(640);
+    await expectButton("Columns", false);
+    await nextAnimationFrames(2);
+    expect(document.activeElement).toBe(document.body);
   });
 });
 
