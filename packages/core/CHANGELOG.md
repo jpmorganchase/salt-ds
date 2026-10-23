@@ -1,5 +1,42 @@
 # @salt-ds/core
 
+## 1.74.0
+
+### Minor Changes
+
+- 3a74bce: Updated `MenuItem` so labels align within a `MenuGroup`. If any item in a group has a leading icon, or a radio or checkbox indicator from a selectable `MenuGroup`, the other items in that group reserve the same space. Items outside a group align with each other, and each submenu aligns its own items.
+
+  When a menu contains a radio or checkbox, leading icons in groups without one sit in a column as wide as a radio or checkbox. Labels after an icon then line up with labels after a radio or checkbox that has no icon beside it.
+
+  Existing menus that mix items with and without icons will now show the labels of items without icons indented to line up with the others in the same group.
+
+- 3a74bce: Added selection to `Menu`. Set `selectionVariant` on `MenuGroup` to "single" or "multiple" to render its items as radio or checkbox menu items, give each `MenuItem` a `value`, and control the selection with `selected` and `onSelectionChange`. The menu's content unmounts when it closes, so keep the selection in state.
+
+  Clicking a selectable item keeps the menu open. Enter selects the item and closes the menu, and Space selects it and keeps the menu open.
+
+  ```tsx
+  const [sortBy, setSortBy] = useState(["name"]);
+
+  <MenuGroup
+    label="Sort by"
+    selectionVariant="single"
+    selected={sortBy}
+    onSelectionChange={(_event, newSelected) => setSortBy(newSelected)}
+  >
+    <MenuItem value="name">Name</MenuItem>
+    <MenuItem value="size">Size</MenuItem>
+  </MenuGroup>;
+  ```
+
+  Disabled `MenuItem` components can now be focused with the arrow keys so they can be discovered, but they still can't be activated.
+
+  - Fixed a submenu staying open when hovering another item in the parent menu if the submenu's last item was disabled.
+  - Fixed holding Enter on a menu trigger activating the first item once the menu opened.
+
+### Patch Changes
+
+- 0ac88c9: Fixed `LinkButton` rendering 2px taller than `Button`. It now uses `box-sizing: border-box`, so its border is included in its `--salt-size-base` height.
+
 ## 1.73.0
 
 ### Minor Changes
