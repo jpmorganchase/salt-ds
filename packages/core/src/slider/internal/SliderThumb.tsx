@@ -34,7 +34,7 @@ interface SliderThumbProps
   maxLabel?: string;
   min: number;
   minLabel?: string;
-  offsetPercentage?: string;
+  offsetPercentage?: number;
   restrictToMarks?: boolean;
   showTooltip?: boolean;
   sliderValue: [number, number] | number;
@@ -117,7 +117,11 @@ export const SliderThumb = ({
         })}
         data-testid="sliderThumb"
         onPointerDown={handlePointerDown}
-        style={{ left: offsetPercentage }}
+        style={
+          {
+            "--slider-thumbPosition": (offsetPercentage ?? 0) / 100,
+          } as React.CSSProperties
+        }
         {...(showTooltip && {
           onPointerEnter: handlePointerEnter,
           onPointerLeave: handlePointerLeave,
