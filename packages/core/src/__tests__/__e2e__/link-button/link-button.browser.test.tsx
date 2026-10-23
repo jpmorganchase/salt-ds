@@ -32,7 +32,11 @@ describe("GIVEN a LinkButton", () => {
         Action
       </LinkButton>,
     );
-    expect(selectedText(page.getByRole("link").element())).toBe("ACTION");
+    // Chromium copies the text-transformed "ACTION"; Firefox copies the source
+    // "Action" plus a trailing newline.
+    expect(selectedText(page.getByRole("link").element())?.trim()).toMatch(
+      /^action$/i,
+    );
   });
 
   it("supports a custom icon", async () => {

@@ -486,7 +486,7 @@ describe("GIVEN a ToggleButtonGroup and keyboard navigation", () => {
       </>,
     );
 
-    await page.getByRole("button", { name: "After" }).click();
+    page.getByRole("button", { name: "After" }).element().focus();
     await userEvent.tab({ shift: true });
 
     await expect
