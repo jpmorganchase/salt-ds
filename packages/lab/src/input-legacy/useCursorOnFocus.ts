@@ -193,7 +193,7 @@ export function useCursorOnFocus(
         }
       };
 
-      const eventName = isSafari() || isFirefox() ? "focusIn" : "focus";
+      const eventName = isSafari() || isFirefox() ? "focusin" : "focus";
       const input = inputRef.current;
       const doc = ownerDocument(inputRef.current);
       input?.addEventListener(eventName, handleFocusIn);
