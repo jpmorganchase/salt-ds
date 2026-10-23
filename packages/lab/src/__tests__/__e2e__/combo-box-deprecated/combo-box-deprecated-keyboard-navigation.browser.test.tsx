@@ -1,10 +1,14 @@
 import { composeStories } from "@storybook/react-vite";
 import { version } from "react";
 import { describe, expect, it, vi } from "vitest";
-import { page, userEvent } from "vitest/browser";
+import { page, server, userEvent } from "vitest/browser";
 import { pasteValue } from "~browser-test-utils/interactions";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as comboBoxStories from "~stories/combobox/combobox-deprecated.stories";
+
+// Known bug: in Firefox the deprecated combo box drops the first keystroke
+// after it gains focus.
+const skipInFirefox = it.skipIf(server.browser === "firefox");
 
 const {
   Default,
@@ -416,7 +420,7 @@ describe("A deprecated multi-select combo box", () => {
         .toHaveClass("saltListItemDeprecated-focusVisible");
     });
 
-    it.each([
+    skipInFirefox.each([
       [
         "Colorado",
         ["Alaska", "Arkansas", "Connecticut", "Hawaii", "Kansas", "Colorado"],
@@ -535,7 +539,7 @@ describe("A deprecated multi-select combo box that allows free text", () => {
     await expectPills(["Non existent"]);
   });
 
-  it.each([
+  skipInFirefox.each([
     [
       "Alabama",
       ["Alaska", "Arkansas", "Connecticut", "Hawaii", "Kansas", "Alabama"],

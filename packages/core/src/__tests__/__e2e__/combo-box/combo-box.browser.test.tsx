@@ -710,6 +710,11 @@ describe("Given a ComboBox", () => {
     await renderWithSalt(<Virtualized />);
     await input().click();
     for (const name of ["a", "b", "c", "d", "e", "f", "g"]) {
+      // react-window renders the next row after its scroll event, which WebKit
+      // dispatches a frame later, so wait for the row before moving to it.
+      await expect
+        .element(page.getByRole("option", { name, exact: true }))
+        .toBeInTheDocument();
       await userEvent.keyboard("{ArrowDown}");
       await expectActive(name);
     }
@@ -895,7 +900,7 @@ describe("given a multiselect ComboBox with pills", () => {
     // Shift-tabbing back past the input enters the pill list at its start,
     // rather than treating each pill as its own tab stop and landing on the
     // last one.
-    await userEvent.click(page.getByRole("button", { name: "After" }));
+    page.getByRole("button", { name: "After" }).element().focus();
     await userEvent.tab({ shift: true });
     await expect.element(input()).toHaveFocus();
     await userEvent.tab({ shift: true });
@@ -936,7 +941,7 @@ describe("given a multiselect ComboBox with pills", () => {
     );
 
     // Reach the last pill with the keyboard, then remove it with the mouse.
-    await userEvent.click(page.getByRole("button", { name: "After" }));
+    page.getByRole("button", { name: "After" }).element().focus();
     await userEvent.tab({ shift: true });
     await userEvent.tab({ shift: true });
     await userEvent.keyboard("{ArrowRight}{ArrowRight}");
@@ -948,7 +953,7 @@ describe("given a multiselect ComboBox with pills", () => {
 
     // The list remembered a pill that no longer exists. It must still offer a
     // tab stop, otherwise the remaining pills can never be reached again.
-    await userEvent.click(page.getByRole("button", { name: "After" }));
+    page.getByRole("button", { name: "After" }).element().focus();
     await userEvent.tab({ shift: true });
     await userEvent.tab({ shift: true });
     await expect
