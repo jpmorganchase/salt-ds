@@ -1,13 +1,20 @@
 import {
   Tab,
+  TabAction,
   TabBar,
   TabList,
   TabPanel,
   Tabs,
   TabTrigger,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { composeStories } from "@storybook/react-vite";
-import { type ReactElement, useEffect, useState } from "react";
+import {
+  type ReactElement,
+  type SyntheticEvent,
+  useEffect,
+  useState,
+} from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
@@ -370,6 +377,98 @@ function OverflowWithTrackedTabContent() {
   );
 }
 
+const removableTabs = [
+  "Home",
+  "Tx",
+  "Loans",
+  "Checks",
+  "Liquidity",
+  "With",
+  "Lots",
+];
+
+function RemovableTabs({
+  labels = removableTabs,
+  width = 520,
+  preventFocusOnDismiss = false,
+  onChange,
+}: {
+  labels?: string[];
+  width?: number;
+  preventFocusOnDismiss?: boolean;
+  onChange?: (event: SyntheticEvent | null, value: string) => void;
+}) {
+  const [tabs, setTabs] = useState(labels);
+  const remove = (value: string) =>
+    setTabs((old) => old.filter((label) => label !== value));
+  return (
+    <>
+      <div style={{ width }}>
+        <Tabs defaultValue={labels[0]} onChange={onChange}>
+          <TabBar inset divider>
+            <TabList>
+              {tabs.map((label) => (
+                <Tab key={label} value={label}>
+                  <TabTrigger
+                    onKeyDown={(event) => {
+                      if (event.key === "Delete") remove(label);
+                    }}
+                  >
+                    {label}
+                  </TabTrigger>
+                  <TabAction
+                    aria-label="Dismiss tab"
+                    // Emulates browsers (e.g. Safari) where clicking a button
+                    // does not move focus to it.
+                    onMouseDown={
+                      preventFocusOnDismiss
+                        ? (event) => event.preventDefault()
+                        : undefined
+                    }
+                    onClick={() => remove(label)}
+                  >
+                    <CloseIcon aria-hidden />
+                  </TabAction>
+                </Tab>
+              ))}
+            </TabList>
+          </TabBar>
+        </Tabs>
+      </div>
+      <button type="button" onClick={() => remove("Loans")}>
+        Remove Loans
+      </button>
+    </>
+  );
+}
+
+function ControlledRemovableTabs() {
+  const [tabs, setTabs] = useState(["Home", "Tx", "Loans", "Checks"]);
+  const [value, setValue] = useState("Loans");
+  return (
+    <Tabs value={value} onChange={(_event, newValue) => setValue(newValue)}>
+      <TabBar inset divider>
+        <TabList>
+          {tabs.map((label) => (
+            <Tab key={label} value={label}>
+              <TabTrigger>{label}</TabTrigger>
+              <TabAction
+                aria-label="Dismiss tab"
+                onClick={() => {
+                  setTabs((old) => old.filter((item) => item !== label));
+                  if (label === value) setValue("Home");
+                }}
+              >
+                <CloseIcon aria-hidden />
+              </TabAction>
+            </Tab>
+          ))}
+        </TabList>
+      </TabBar>
+    </Tabs>
+  );
+}
+
 async function mountTabs(
   element: ReactElement,
   options?: { width?: number | string },
@@ -404,6 +503,27 @@ async function clickOverflowTab(name: string | RegExp) {
 async function expectSelected(name: string | RegExp) {
   await expect.element(tab(name)).toHaveAttribute("aria-selected", "true");
 }
+
+const dismissButton = (name: string) =>
+  page.getByRole("button", { name: `${name} Dismiss tab` });
+
+// Focus recovery after removal is scheduled across several animation frames,
+// so negative assertions wait for those frames to flush first.
+async function waitForFrames(count = 10) {
+  for (let frame = 0; frame < count; frame += 1) {
+    await new Promise<void>((resolve) =>
+      requestAnimationFrame(() => resolve()),
+    );
+  }
+}
+
+const focusedOverflowTab = () => {
+  const active = document.activeElement;
+  return active?.getAttribute("role") === "tab" &&
+    overflowList().query()?.contains(active)
+    ? active.textContent
+    : null;
+};
 
 describe("Given Tabs", () => {
   it("renders the expected tab semantics", async () => {
@@ -892,5 +1012,193 @@ describe("Given Tabs", () => {
           document.documentElement.clientWidth,
       )
       .toBe(true);
+  });
+
+  it.each([
+    ["Enter", "{Enter}"],
+    ["Space", " "],
+  ])("does not select a disabled overflow tab with %s", async (_name, key) => {
+    await mountTabs(<OverflowWithDisabledHiddenTab />);
+    await openOverflow();
+    await expect.element(tab("Transactions")).toHaveFocus();
+    await userEvent.keyboard(key);
+    await waitForFrames(2);
+    await expect.element(overflowList()).toBeVisible();
+    await expect
+      .element(tab("Transactions"))
+      .toHaveAttribute("aria-selected", "false");
+    await expectSelected("Home");
+  });
+});
+
+describe("Given Tabs with removable tabs", () => {
+  it("focuses the next tab when a non-selected tab is dismissed", async () => {
+    await mountTabs(<RemovableTabs />);
+    await dismissButton("Loans").click();
+    await expect.element(tab("Loans")).not.toBeInTheDocument();
+    await expect.element(tab("Checks")).toHaveFocus();
+    await expectSelected("Home");
+  });
+
+  it("selects and focuses the previous tab when the selected last tab is removed", async () => {
+    const onChange = vi.fn();
+    await mountTabs(
+      <RemovableTabs
+        labels={["Home", "Tx", "Loans", "Checks"]}
+        onChange={onChange}
+      />,
+    );
+    await tab("Checks").click();
+    await expectSelected("Checks");
+    await userEvent.keyboard("{Delete}");
+    await tabCount(3);
+    await expectSelected("Loans");
+    await expect.element(tab("Loans")).toHaveFocus();
+    expect(onChange.mock.lastCall).toEqual([null, "Loans"]);
+  });
+
+  it("removes every tab without errors", async () => {
+    await mountTabs(<RemovableTabs labels={["Alpha", "Beta"]} />);
+    await tab("Beta").click();
+    await userEvent.keyboard("{Delete}");
+    await tabCount(1);
+    await expectSelected("Alpha");
+    await expect.element(tab("Alpha")).toHaveFocus();
+    await userEvent.keyboard("{Delete}");
+    await tabCount(0);
+    // Errors thrown during focus recovery are caught by Vitest's unhandled
+    // error check; this catches the tabs unmounting after a render error.
+    await waitForFrames();
+    await expect.element(page.getByRole("tablist")).toBeInTheDocument();
+  });
+
+  it("focuses the new selection when the selected tab is dismissed while the overflow button has focus", async () => {
+    await mountTabs(<RemovableTabs preventFocusOnDismiss />);
+    await userEvent.tab();
+    await userEvent.keyboard("{End}");
+    await expect.element(tab("Overflow")).toHaveFocus();
+    await dismissButton("Home").click();
+    await expect.element(tab("Home")).not.toBeInTheDocument();
+    await expectSelected("Tx");
+    await expect.element(tab("Tx")).toHaveFocus();
+  });
+
+  it("keeps focus on the overflow button when a non-selected tab is dismissed", async () => {
+    await mountTabs(<RemovableTabs preventFocusOnDismiss />);
+    await userEvent.tab();
+    await userEvent.keyboard("{End}");
+    await expect.element(tab("Overflow")).toHaveFocus();
+    await dismissButton("Loans").click();
+    await expect.element(tab("Loans")).not.toBeInTheDocument();
+    await waitForFrames();
+    await expect.element(tab("Overflow")).toHaveFocus();
+    await expectSelected("Home");
+  });
+
+  it("focuses the new selection when the selected tab is dismissed while another tab action has focus", async () => {
+    await mountTabs(<RemovableTabs preventFocusOnDismiss />);
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowRight}");
+    await userEvent.tab();
+    await expect.element(dismissButton("Tx")).toHaveFocus();
+    await dismissButton("Home").click({ force: true });
+    await expect.element(tab("Home")).not.toBeInTheDocument();
+    await expectSelected("Tx");
+    await expect.element(tab("Tx")).toHaveFocus();
+  });
+
+  it("does not move focus from outside the tabs when a tab is removed externally", async () => {
+    await mountTabs(<RemovableTabs />);
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowRight}{ArrowRight}");
+    await expect.element(tab("Loans")).toHaveFocus();
+    const removeLoans = page.getByRole("button", { name: "Remove Loans" });
+    await removeLoans.click();
+    await expect.element(tab("Loans")).not.toBeInTheDocument();
+    await waitForFrames();
+    await expect.element(removeLoans).toHaveFocus();
+    await expectSelected("Home");
+  });
+
+  it("restores focus to the new selection after a confirmed dismissal", async () => {
+    await mountTabs(<DismissWithConfirmation />);
+    await dismissButton("Home").click();
+    await page.getByRole("button", { name: "Yes" }).click();
+    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+    await expectSelected("Transactions");
+    await expect.element(tab("Transactions")).toHaveFocus();
+  });
+
+  it("skips the overflow button when focusing a neighbour of the removed tab", async () => {
+    await mountTabs(
+      <RemovableTabs
+        labels={[
+          "Home",
+          "Tx",
+          "Loans",
+          "Checks",
+          "A considerably longer tab label",
+          "Z",
+        ]}
+      />,
+    );
+    await tab("Checks").click();
+    await expectSelected("Checks");
+    await userEvent.keyboard("{Delete}");
+    await expect.element(tab("Checks")).not.toBeInTheDocument();
+    await expect.element(tab("Overflow")).toBeInTheDocument();
+    await expectSelected("Loans");
+    await expect.element(tab("Loans")).toHaveFocus();
+  });
+
+  it("closes the overflow menu and focuses a visible tab when the only overflow tab is removed", async () => {
+    await mountTabs(
+      <RemovableTabs labels={["Home", "Tx", "Loans", "Checks", "Liquidity"]} />,
+    );
+    await openOverflow();
+    await expect.element(tab("Liquidity")).toHaveFocus();
+    await userEvent.keyboard("{Delete}");
+    await expect.element(overflowList()).not.toBeInTheDocument();
+    await expect.element(tab("Overflow")).not.toBeInTheDocument();
+    await tabCount(4);
+    await expect.element(tab("Checks")).toHaveFocus();
+    await expectSelected("Home");
+  });
+
+  it("focuses a visible tab when the focused overflow button is removed", async () => {
+    await mountTabs(
+      <RemovableTabs
+        labels={["Home", "Tx", "Loans", "Checks", "Liquidity"]}
+        preventFocusOnDismiss
+      />,
+    );
+    await userEvent.tab();
+    await userEvent.keyboard("{End}");
+    await expect.element(tab("Overflow")).toHaveFocus();
+    await dismissButton("Loans").click();
+    await expect.element(tab("Overflow")).not.toBeInTheDocument();
+    await tabCount(4);
+    await expect.element(tab("Checks")).toHaveFocus();
+    await expectSelected("Home");
+  });
+
+  it("keeps focus on a tab in the open overflow menu when an overflow tab is dismissed from it", async () => {
+    await mountTabs(<RemovableTabs />);
+    await openOverflow();
+    await dismissButton("With").click();
+    await expect.element(tab("With")).not.toBeInTheDocument();
+    await expect.poll(focusedOverflowTab).not.toBeNull();
+    await waitForFrames();
+    await expect.element(overflowList()).toBeVisible();
+    expect(focusedOverflowTab()).not.toBeNull();
+    await expectSelected("Home");
+  });
+
+  it("focuses the tab selected by a controlled parent after the selected tab is dismissed", async () => {
+    await mountTabs(<ControlledRemovableTabs />);
+    await dismissButton("Loans").click();
+    await expect.element(tab("Loans")).not.toBeInTheDocument();
+    await expectSelected("Home");
+    await expect.element(tab("Home")).toHaveFocus();
   });
 });
