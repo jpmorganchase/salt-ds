@@ -38,7 +38,11 @@ export const SystemStatus = forwardRef<HTMLDivElement, SystemStatusProps>(
         role="status"
         {...rest}
       >
-        <StatusIndicator status={status} className={withBaseName("icon")} />
+        <StatusIndicator
+          aria-hidden
+          status={status}
+          className={withBaseName("icon")}
+        />
         {children}
       </div>
     );
