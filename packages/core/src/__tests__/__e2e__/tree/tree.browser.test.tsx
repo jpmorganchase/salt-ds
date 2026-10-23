@@ -438,6 +438,14 @@ describe("Given a Tree", () => {
         .not.toHaveAttribute("aria-selected", "true");
     });
 
+    it("selects a leaf when its expansion icon placeholder is clicked", async () => {
+      await renderWithSalt(<FlatTree />);
+      await expansionIcon("Node 1").click();
+      await expect
+        .element(treeItem("Node 1"))
+        .toHaveAttribute("aria-selected", "true");
+    });
+
     it.each(["default", "controlled"] as const)(
       "clamps %s selection to its first value",
       async (_name) => {

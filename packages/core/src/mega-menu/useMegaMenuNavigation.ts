@@ -13,8 +13,10 @@ const SELF_CONSUMING_SELECTOR =
   'input, textarea, select, [contenteditable], [role="combobox"], [role="listbox"], [role="slider"], [role="spinbutton"], [role="textbox"]';
 
 // aria-hidden / inert subtrees are out of the focus order; filtered by ancestor
-// lookup since `:not()` cannot match on an ancestor.
-const HIDDEN_ANCESTOR_SELECTOR = '[aria-hidden="true"], [inert]';
+// lookup since `:not()` cannot match on an ancestor. Floating UI focus guards
+// are only aria-hidden outside Safari, so they are excluded explicitly.
+const HIDDEN_ANCESTOR_SELECTOR =
+  '[aria-hidden="true"], [inert], [data-floating-ui-focus-guard]';
 
 function queryFocusables(root: HTMLElement): HTMLElement[] {
   return Array.from(
