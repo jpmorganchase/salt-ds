@@ -124,29 +124,15 @@ WithCustomSvg.args = {
 export const RenderElement = Template.bind({});
 RenderElement.args = {
   name: "Alex Brailescu",
-  render: <CustomAvatarButton aria-label="Alex Brailescu profile" />,
-};
-// The visible initials abbreviate the name in the accessible name, which axe
-// can't match as label text.
-RenderElement.parameters = {
-  axe: {
-    disabledRules: ["label-content-name-mismatch"],
-  },
+  render: <CustomAvatarButton aria-label="AB, Alex Brailescu profile" />,
 };
 
 export const RenderProp = Template.bind({});
 RenderProp.args = {
   name: "Alex Brailescu",
   render: (props) => (
-    <CustomAvatarButton {...props} aria-label="Alex Brailescu profile" />
+    <CustomAvatarButton {...props} aria-label="AB, Alex Brailescu profile" />
   ),
-};
-// The visible initials abbreviate the name in the accessible name, which axe
-// can't match as label text.
-RenderProp.parameters = {
-  axe: {
-    disabledRules: ["label-content-name-mismatch"],
-  },
 };
 
 export const WithCustomImg: StoryFn<typeof Avatar> = () => {
