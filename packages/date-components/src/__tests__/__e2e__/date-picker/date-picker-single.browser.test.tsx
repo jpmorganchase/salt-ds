@@ -17,10 +17,29 @@ import type { DateTime } from "luxon";
 import MockDate from "mockdate";
 import type { Moment } from "moment";
 import type { ReactNode } from "react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  onTestFinished,
+  vi,
+} from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as datePickerStories from "~stories/date-picker/date-picker.stories";
+
+// A trailing focusable lets Tab leave the picker; Firefox keeps focus on the
+// last element in the test frame. Appended to the DOM so portable story
+// localization still applies to the rendered story.
+function appendFocusableAfter() {
+  const after = document.body.appendChild(document.createElement("button"));
+  after.type = "button";
+  after.textContent = "After";
+  onTestFinished(() => after.remove());
+  return page.elementLocator(after);
+}
 
 const {
   ControlledOpen,
@@ -226,6 +245,7 @@ function registerAdapterTests(
 
     it("SHOULD be able to tab between all elements", async () => {
       await render(<Single defaultSelectedDate={initialDate} />);
+      const after = appendFocusableAfter();
       await textInput().click();
       await userEvent.keyboard("{ArrowDown}");
       const selectedDay = page.getByRole("button", {
@@ -250,7 +270,7 @@ function registerAdapterTests(
       const trigger = page.getByLabelText("Open Calendar");
       await expect.element(trigger).toHaveFocus();
       await userEvent.tab();
-      await expect.element(trigger).not.toHaveFocus();
+      await expect.element(after).toHaveFocus();
     });
 
     it("SHOULD support validation", async () => {

@@ -100,7 +100,7 @@ describe("GIVEN a CheckboxGroup", () => {
         <button type="button">end</button>
       </>,
     );
-    await page.getByRole("button", { name: "end" }).click();
+    page.getByRole("button", { name: "end" }).element().focus();
     for (const name of ["three", "two", "one"]) {
       await userEvent.tab({ shift: true });
       await expect.element(page.getByRole("checkbox", { name })).toHaveFocus();
