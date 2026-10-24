@@ -285,6 +285,60 @@ describe("convertMdx", () => {
     );
   });
 
+  it("marks deprecated tokens a page names, with their replacements", async () => {
+    const deprecated = new Map([
+      ["--salt-old-border", ["--salt-new-border"]],
+      ["--salt-old-size", ["--salt-size-a", "--salt-size-b"]],
+      ["--salt-old-gone", []],
+    ]);
+    const ctx = createContext({
+      deprecatedToken: (name) => deprecated.get(name),
+    });
+    const markdown = await toMarkdown(
+      'Use `--salt-old-border`, `--salt-old-size`, `--salt-old-gone` or `--salt-current`.\n\n<TokenTableWithControls tokens={["--salt-current", "--salt-old-border"]} />',
+      ctx,
+    );
+    expect(markdown).toBe(
+      "Use `--salt-old-border` (deprecated; use `--salt-new-border`), `--salt-old-size` (deprecated; use `--salt-size-a` or `--salt-size-b`), `--salt-old-gone` (deprecated) or `--salt-current`.\n\nTokens: `--salt-current`, `--salt-old-border` (deprecated; use `--salt-new-border`) ([token reference](@salt-ds/theme/docs/tokens.md)).\n",
+    );
+    expect(ctx.notes).toEqual([
+      "--salt-old-border is deprecated; use --salt-new-border. The docs for agents say so where the page names it.",
+      "--salt-old-size is deprecated; use --salt-size-a or --salt-size-b. The docs for agents say so where the page names it.",
+      "--salt-old-gone is deprecated. The docs for agents say so where the page names it.",
+      "--salt-old-border is deprecated; use --salt-new-border. The docs for agents say so where the page names it.",
+    ]);
+  });
+
+  it("notes an example that uses a deprecated token", async () => {
+    const ctx = createContext({
+      deprecatedToken: (name) =>
+        name === "--salt-shadow-1"
+          ? ["--salt-overlayable-shadow-scroll"]
+          : undefined,
+      examples: {
+        resolve: async () => ({
+          entry: {
+            language: "tsx",
+            code: 'const s = "var(--salt-shadow-1)";\n',
+          },
+          support: [
+            {
+              kind: "file",
+              code: ".a { color: var(--salt-content-primary-foreground); }",
+            },
+          ],
+        }),
+      },
+    });
+    await convertMdx(
+      '<LivePreview componentName="patterns/app-header" exampleName="AppHeader" />',
+      ctx,
+    );
+    expect(ctx.notes).toEqual([
+      "Example patterns/app-header/AppHeader uses the deprecated token --salt-shadow-1; use --salt-overlayable-shadow-scroll.",
+    ]);
+  });
+
   it("links interactive galleries to reference docs", async () => {
     const markdown = await toMarkdown("<IconPreview />");
     expect(markdown).toBe(

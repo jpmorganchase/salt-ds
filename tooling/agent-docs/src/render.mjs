@@ -106,6 +106,7 @@ async function convertPage(page, doc, shared) {
     note: (node, message) =>
       shared.notes.push(`${location(page, node)}: ${message}`),
     childPages: () => childPageList(doc, shared),
+    deprecatedToken: (name) => shared.deprecatedTokens?.get(name),
   };
   try {
     const { source, fragments } = stripFragments(page.body);

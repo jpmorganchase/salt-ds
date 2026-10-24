@@ -236,8 +236,34 @@ function imageNodes(node, alt, hidden, caption) {
     : [u.paragraph(phrasing)];
 }
 
+/**
+ * An inline code token, followed by a note when it is deprecated, so that a
+ * page still listing a deprecated token doesn't lead agents to use it.
+ */
+function tokenCode(value, node, ctx) {
+  const code = u.inlineCode(value);
+  const replacements = ctx.deprecatedToken?.(value);
+  if (!replacements) return [code];
+  const use = replacements.flatMap((name, index) => [
+    ...(index > 0 ? [u.text(" or ")] : []),
+    u.inlineCode(name),
+  ]);
+  ctx.note(
+    node,
+    `${value} is deprecated${replacements.length > 0 ? `; use ${replacements.join(" or ")}` : ""}. The docs for agents say so where the page names it.`,
+  );
+  return [
+    code,
+    u.text(replacements.length > 0 ? " (deprecated; use " : " (deprecated)"),
+    ...use,
+    ...(replacements.length > 0 ? [u.text(")")] : []),
+  ];
+}
+
 async function transformNode(node, ctx) {
   switch (node.type) {
+    case "inlineCode":
+      return tokenCode(node.value, node, ctx);
     case "mdxjsEsm":
       return [];
     case "mdxFlowExpression":
@@ -310,6 +336,21 @@ async function livePreview(node, ctx) {
   if (example.error) {
     ctx.error(node, example.error);
     return [];
+  }
+  // Agents copy examples, so they shouldn't use deprecated tokens.
+  const sources = [example.entry, ...example.support].filter(
+    ({ code }) => code,
+  );
+  for (const token of new Set(
+    sources.flatMap(({ code }) => code.match(/--salt-[A-Za-z0-9-]+/g) ?? []),
+  )) {
+    const replacements = ctx.deprecatedToken?.(token);
+    if (replacements) {
+      ctx.note(
+        node,
+        `Example ${componentName}/${exampleName} uses the deprecated token ${token}${replacements.length > 0 ? `; use ${replacements.join(" or ")}` : ""}.`,
+      );
+    }
   }
   // Rendered once the whole page is known; see `placeExamples`.
   return [
@@ -561,7 +602,7 @@ async function tokenTable(node, ctx) {
   const phrasing = [u.text(tokens.length === 1 ? "Token: " : "Tokens: ")];
   tokens.forEach((token, index) => {
     if (index > 0) phrasing.push(u.text(", "));
-    phrasing.push(u.inlineCode(token));
+    phrasing.push(...tokenCode(token, node, ctx));
   });
   phrasing.push(
     u.text(" ("),

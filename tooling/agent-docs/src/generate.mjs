@@ -102,12 +102,38 @@ function linkToRoute(routeIndex, from, route) {
   });
 }
 
+/** The theme's tokens, with replacements from its CSS comments and changelog. */
+async function readTokens({ packages, packagesDir, warnings }) {
+  const theme = packages.get("@salt-ds/theme");
+  if (!theme) return [];
+  const changelogPath = path.join(packagesDir, theme.directory, "CHANGELOG.md");
+  return collectTokens(path.join(packagesDir, theme.directory, "src", "css"), {
+    changelog: (await pathExists(changelogPath))
+      ? changelogReplacements(await readFile(changelogPath, "utf8"))
+      : new Map(),
+    warn: (message) =>
+      warnings.push(`packages/${theme.directory}/src/css: ${message}`),
+  });
+}
+
+/** Tokens deprecated in every theme that declares them, with replacements. */
+function deprecatedTokens(tokens) {
+  const current = new Set(
+    tokens.filter(({ tier }) => tier !== "deprecated").map(({ name }) => name),
+  );
+  return new Map(
+    tokens
+      .filter(({ tier, name }) => tier === "deprecated" && !current.has(name))
+      .map(({ name, replacements }) => [name, replacements ?? []]),
+  );
+}
+
 async function addReferences({
   packages,
   packagesDir,
   routeIndex,
   outputs,
-  warnings,
+  tokens,
 }) {
   const theme = packages.get("@salt-ds/theme");
   if (theme) {
@@ -115,21 +141,6 @@ async function addReferences({
       packageName: "@salt-ds/theme",
       docPath: TOKEN_REFERENCE_PATH,
     };
-    const changelogPath = path.join(
-      packagesDir,
-      theme.directory,
-      "CHANGELOG.md",
-    );
-    const tokens = await collectTokens(
-      path.join(packagesDir, theme.directory, "src", "css"),
-      {
-        changelog: (await pathExists(changelogPath))
-          ? changelogReplacements(await readFile(changelogPath, "utf8"))
-          : new Map(),
-        warn: (message) =>
-          warnings.push(`packages/${theme.directory}/src/css: ${message}`),
-      },
-    );
     const target = outputs.get(from.packageName);
     const files = renderTokenReference({
       tokens,
@@ -448,7 +459,9 @@ export async function generateAgentDocs({
     deferredAnchors.push({ route, anchor });
     return `#salt-anchor-${deferredAnchors.length - 1}`;
   };
+  const tokens = await readTokens({ packages, packagesDir, warnings });
   const shared = {
+    deprecatedTokens: deprecatedTokens(tokens),
     packages,
     links: createLinkResolver(routeIndex, { deferAnchor, siteRoutes: routes }),
     examples: createExampleResolver({ examplesDir }),
@@ -519,13 +532,7 @@ export async function generateAgentDocs({
       `site/src/examples/${example}.tsx: no pattern page shows this example. Add a LivePreview for it to the section of the page that discusses it.`,
     );
   }
-  await addReferences({
-    packages,
-    packagesDir,
-    routeIndex,
-    outputs,
-    warnings,
-  });
+  await addReferences({ packages, packagesDir, routeIndex, outputs, tokens });
   if (packages.has(AGENTS_MD_PACKAGE)) {
     outputs
       .get(AGENTS_MD_PACKAGE)

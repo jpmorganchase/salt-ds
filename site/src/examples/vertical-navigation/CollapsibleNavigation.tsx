@@ -62,7 +62,7 @@ export const CollapsibleNavigation = () => {
             style={{
               background: "var(--salt-container-secondary-background)",
               borderBottom:
-                "var(--salt-size-fixed-100) var(--salt-separable-borderStyle) var(--salt-separable-primary-borderColor)",
+                "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
               height: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
             }}
           />

@@ -31,11 +31,21 @@ Borders in Salt maintain a consistent style and width, providing thin, solid lin
 | borderWidth | `--salt-size-fixed-100`    |
 | borderStyle | `--salt-borderStyle-solid` |
 
-Each container background has a corresponding border color designed to be used together for a cohesive appearance. Avoid mixing container backgrounds and border colors from different levels, as this may disrupt visual consistency within your layout, depending on the theme you are using.
+A container's border color doesn't depend on its background, so primary, secondary and tertiary containers share the same border colors. Choose one by how clearly the container needs to stand apart from its surroundings: `--salt-container-borderColor` is the default, `--salt-container-bold-borderColor` gives a stronger edge, and `--salt-container-subtle-borderColor` a lighter one. Use `--salt-container-bold-borderColor-disabled` for a disabled container. Ghost containers have their own border colors, described below. Components such as `Card` offer this choice through their `borderColor` prop.
+
+<TokenTableWithControls
+  contextLabel="Container borders"
+  tokens={[
+    "--salt-container-borderColor",
+    "--salt-container-bold-borderColor",
+    "--salt-container-subtle-borderColor",
+    "--salt-container-bold-borderColor-disabled",
+  ]}
+/>
 
 ## Primary containers
 
-Primary containers combine background and border tokens to ensure a consistent container style. They serve as the dominant container within a page, providing the standard background for components such as cards, panels, drawers, and dialogs. Optional borders and shadows can be added to enhance visual appeal and adjust the container’s prominence within the visual hierarchy.
+Primary containers use the primary background to ensure a consistent container style. They serve as the dominant container within a page, providing the standard background for components such as cards, panels, drawers, and dialogs. Optional borders and shadows can be added to enhance visual appeal and adjust the container’s prominence within the visual hierarchy.
 
 <Diagram
   src="/img/theming/characteristic-primary-containers-light.png"
@@ -46,15 +56,12 @@ Primary containers combine background and border tokens to ensure a consistent c
 
 <TokenTableWithControls
   contextLabel="Primary containers"
-  tokens={[
-    "--salt-container-primary-background",
-    "--salt-container-primary-borderColor",
-  ]}
+  tokens={["--salt-container-primary-background"]}
 />
 
 ## Secondary containers
 
-Secondary containers combine secondary background and border tokens to provide an alternative container style. They are available as a variant for components such as cards and drawers, offering a different visual treatment within a layout.
+Secondary containers use the secondary background to provide an alternative container style. They are available as a variant for components such as cards and drawers, offering a different visual treatment within a layout.
 
 <Diagram
   src="/img/theming/characteristic-secondary-containers-light.png"
@@ -65,15 +72,12 @@ Secondary containers combine secondary background and border tokens to provide a
 
 <TokenTableWithControls
   contextLabel="Secondary containers"
-  tokens={[
-    "--salt-container-secondary-background",
-    "--salt-container-secondary-borderColor",
-  ]}
+  tokens={["--salt-container-secondary-background"]}
 />
 
 ## Tertiary containers
 
-Tertiary containers use tertiary background and border tokens to offer an alternative visual style within a layout. They are available as a variant for components such as cards and panels, and are typically used to highlight key content areas or provide subtle differentiation from primary and secondary containers.
+Tertiary containers use the tertiary background to offer an alternative visual style within a layout. They are available as a variant for components such as cards and panels, and are typically used to highlight key content areas or provide subtle differentiation from primary and secondary containers.
 
 <Diagram
   src="/img/theming/characteristic-tertiary-containers-light.png"
@@ -85,15 +89,12 @@ Tertiary containers use tertiary background and border tokens to offer an altern
 
 <TokenTableWithControls
   contextLabel="Tertiary containers"
-  tokens={[
-    "--salt-container-tertiary-background",
-    "--salt-container-tertiary-borderColor",
-  ]}
+  tokens={["--salt-container-tertiary-background"]}
 />
 
 ## Ghost containers
 
-Ghost containers use translucent backgrounds and borders to blend seamlessly with surrounding elements, supporting a fluid and less compartmentalized layout. They are ideal for designs that require a continuous flow of information, such as highlighting specific content over custom backgrounds, images or gradients. Borders can be used optionally to provide subtle distinction when needed.
+Ghost containers use translucent backgrounds and borders to blend seamlessly with surrounding elements, supporting a fluid and less compartmentalized layout. They are ideal for designs that require a continuous flow of information, such as highlighting specific content over custom backgrounds, images or gradients. Borders can be used optionally to provide subtle distinction when needed, in the same three strengths as other containers.
 
 <Diagram
   src="/img/theming/characteristic-ghost-containers-light.png"
@@ -107,6 +108,8 @@ Ghost containers use translucent backgrounds and borders to blend seamlessly wit
   tokens={[
     "--salt-container-ghost-background",
     "--salt-container-ghost-borderColor",
+    "--salt-container-ghost-bold-borderColor",
+    "--salt-container-ghost-subtle-borderColor",
   ]}
 />
 
@@ -135,4 +138,4 @@ Drag-and-drop targets are one of the few instances where a container’s border 
 
 ## Shadows
 
-Shadows are frequently used with containers to provide a sense of elevation, adding depth and dimension to the design. Find out more about the Overlayable characteristic and the Shadow foundation.
+Shadows are frequently used with containers to provide a sense of elevation, adding depth and dimension to the design. Find out more about the [Overlayable characteristic](./overlayable-characteristic) and the [Shadow foundation](/salt/foundations/elevation).

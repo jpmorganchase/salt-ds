@@ -161,7 +161,8 @@ const MobileAppHeader: FC<{
           left: 0,
           borderBottom:
             "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
-          boxShadow: offset > 0 ? "var(--salt-shadow-1)" : "none",
+          boxShadow:
+            offset > 0 ? "var(--salt-overlayable-shadow-scroll)" : "none",
         }}
       >
         <FlexItem
