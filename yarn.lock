@@ -4238,6 +4238,14 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"@salt-ds/cli@workspace:packages/cli":
+  version: 0.0.0-use.local
+  resolution: "@salt-ds/cli@workspace:packages/cli"
+  bin:
+    salt-ds: bin/salt-ds.mjs
+  languageName: unknown
+  linkType: soft
+
 "@salt-ds/core@npm:^1.56.0, @salt-ds/core@workspace:^, @salt-ds/core@workspace:packages/core":
   version: 0.0.0-use.local
   resolution: "@salt-ds/core@workspace:packages/core"

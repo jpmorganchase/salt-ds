@@ -112,3 +112,47 @@ export const RELATIONSHIP_LABELS = {
   contains: "contains",
   similarTo: "similar to",
 };
+
+/**
+ * Parts that salt-check reports when a component is used without them,
+ * reviewed from the candidates in `parts.mjs` (parts every site example
+ * nests inside the component). Parents and optional parts are listed in
+ * `OPTIONAL_PARTS` so that they aren't suggested again.
+ */
+export const REQUIRED_PARTS = {
+  Accordion: ["AccordionHeader", "AccordionPanel"],
+  Banner: ["BannerContent"],
+  Calendar: ["CalendarGrid"],
+  Carousel: ["CarouselSlides"],
+  Collapsible: ["CollapsibleTrigger", "CollapsiblePanel"],
+  DatePicker: ["DatePickerTrigger", "DatePickerOverlay"],
+  MegaMenu: ["MegaMenuTrigger", "MegaMenuPanel"],
+  MegaMenuList: ["MegaMenuListItem"],
+  Menu: ["MenuPanel"],
+  Overlay: ["OverlayTrigger", "OverlayPanel"],
+  OverlayPanel: ["OverlayPanelContent"],
+  SystemStatus: ["SystemStatusContent"],
+  Tab: ["TabTrigger"],
+  Toast: ["ToastContent"],
+  Toggletip: ["ToggletipTrigger", "ToggletipPanel"],
+  Tree: ["TreeNode"],
+  VerticalNavigationItem: ["VerticalNavigationItemContent"],
+};
+
+/** Candidate parts that are optional, reviewed and left out of salt-check. */
+export const OPTIONAL_PARTS = {
+  Calendar: ["CalendarNavigation"],
+  Carousel: [
+    "CarouselNextButton",
+    "CarouselPreviousButton",
+    "CarouselProgressLabel",
+  ],
+  FileDropZone: ["FileDropZoneIcon", "FileDropZoneTrigger"],
+  MegaMenuGroup: ["MegaMenuGroupHeading"],
+  Menu: ["MenuItem"],
+  Overlay: ["OverlayHeader", "OverlayPanelContent"],
+  VerticalNavigationItem: [
+    "VerticalNavigationItemLabel",
+    "VerticalNavigationItemTrigger",
+  ],
+};

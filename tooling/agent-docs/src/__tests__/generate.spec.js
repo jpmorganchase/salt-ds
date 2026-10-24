@@ -266,13 +266,13 @@ describe("generateAgentDocs", () => {
     expect(
       [...result.outputs.get("@salt-ds/core").files.keys()].sort(),
     ).toEqual([
-      "agents-md.mjs",
       "components/button.md",
       "components/dialog.md",
       "components/dialog/alert-dialog.md",
       "index.md",
       "manifest.json",
       "patterns/forms.md",
+      "salt-check.json",
     ]);
 
     const button = await readFile(
@@ -664,6 +664,63 @@ layout: DetailPattern
     expect(await pathExists(path.join(repoRoot, "packages/core/docs"))).toBe(
       false,
     );
+  });
+
+  it("writes check data for salt-check in each documented package", async () => {
+    const repoRoot = await createFixture();
+    const button = propsProvider.get("core", "Button");
+    const withDeprecated = {
+      ...button,
+      props: {
+        ...button.props,
+        variant: {
+          name: "variant",
+          type: { name: "string" },
+          description: "@deprecated since 1.36.0. Use `appearance` instead.",
+        },
+      },
+    };
+    const result = await generateAgentDocs({
+      repoRoot,
+      write: false,
+      propsProvider: {
+        get: (directory, name) =>
+          directory === "core" && name === "Button"
+            ? withDeprecated
+            : undefined,
+        all: (directory) =>
+          new Map(directory === "core" ? [["Button", withDeprecated]] : []),
+      },
+    });
+    const core = JSON.parse(
+      result.outputs.get("@salt-ds/core").files.get("salt-check.json"),
+    );
+    expect(core).toEqual({
+      schemaVersion: 1,
+      name: "@salt-ds/core",
+      version: "1.2.3",
+      components: {
+        Button: {
+          page: "components/button.md",
+          deprecatedProps: {
+            variant: "since 1.36.0. Use `appearance` instead.",
+          },
+        },
+      },
+    });
+    const theme = JSON.parse(
+      result.outputs.get("@salt-ds/theme").files.get("salt-check.json"),
+    );
+    expect(theme.tokens["--salt-spacing-100"]).toEqual([
+      "current",
+      theme.pages.indexOf("tokens.md"),
+    ]);
+    expect(theme.tokens["--salt-old-background"]).toEqual([
+      "deprecated",
+      theme.pages.indexOf("tokens.md"),
+      ["--salt-actionable-bold-background"],
+    ]);
+    expect(theme.tokens["--salt-palette-accent"][0]).toBe("palette");
   });
 
   it("writes nothing in check mode", async () => {

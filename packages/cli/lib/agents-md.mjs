@@ -1,37 +1,58 @@
-#!/usr/bin/env node
-// Sets up the documentation for the target application's installed Salt packages.
+// salt-ds init: sets up coding agents with the documentation of the target
+// application's installed Salt packages.
 import {
   existsSync,
   mkdirSync,
-  readdirSync,
   readFileSync,
   realpathSync,
   statSync,
   writeFileSync,
 } from "node:fs";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
+import { CHECK_DATA_FILE, saltPackages } from "./packages.mjs";
 
 export const BEGIN_MARKER = "<!-- BEGIN:salt-ds-agent-docs -->";
 export const END_MARKER = "<!-- END:salt-ds-agent-docs -->";
 export const MANIFEST_FILE = "manifest.json";
-const INSTRUCTIONS_BEFORE_ROOT_BASE =
-  "This project uses the Salt Design System (`@salt-ds/*` packages), whose APIs may differ from your training data. For any Salt task, prefer retrieval-led reasoning over pre-training-led reasoning: before writing or changing UI that uses Salt, read the relevant pages from the index below. They are generated for the installed package versions. Prefer component props, such as `Text`'s `color`, to custom CSS with `--salt-*` tokens. Before you finish, check each Salt prop against its component page's props table and avoid deprecated props. Tables omit some inherited/native props; confirm these in the installed type declarations and check whether attributes belong on the wrapper or an inputProps slot. For each `--salt-*` token, find the installed `@salt-ds/theme` documentation in the index and check its token references for a characteristic or foundation token available in the selected theme. Index paths are relative to `root`, which is relative to ";
-const INSTRUCTIONS_AFTER_ROOT_BASE =
-  ". Names in brackets after page names are other names for the same component, and each package's `docs/index.md` summarizes its pages.";
 
-/** `rootBase` is what the index's `root` is relative to. */
-export function instructions(rootBase = "this file") {
-  return `${INSTRUCTIONS_BEFORE_ROOT_BASE}${rootBase}${INSTRUCTIONS_AFTER_ROOT_BASE}`;
+/**
+ * The block's instructions. `rootBase` is what the index's `root` is relative
+ * to, and `check` is the salt-check command to run from that base.
+ */
+export function instructions({ rootBase = "this file", check } = {}) {
+  return [
+    "This project uses the Salt Design System (`@salt-ds/*` packages), whose APIs may differ from your training data.",
+    "For any Salt task, prefer retrieval-led reasoning over pre-training-led reasoning: before writing or changing UI that uses Salt, read the relevant pages from the index below.",
+    "They are generated for the installed package versions.",
+    "Prefer component props, such as `Text`'s `color`, to custom CSS with `--salt-*` tokens.",
+    check
+      ? `Before you finish, run \`${check}\` from ${rootBase === "this file" ? "this file's folder" : rootBase} and fix what it reports: it checks the Salt tokens, deprecated props and component parts in the files you changed against the installed docs.`
+      : "Before you finish, check each Salt prop against its component page's props table and avoid deprecated props.",
+    "Props tables omit some inherited/native props; confirm these in the installed type declarations and check whether attributes belong on the wrapper or an inputProps slot.",
+    ...(check
+      ? []
+      : [
+          "For each `--salt-*` token, find the installed `@salt-ds/theme` documentation in the index and check its token references for a characteristic or foundation token available in the selected theme.",
+        ]),
+    `Index paths are relative to \`root\`, which is relative to ${rootBase}.`,
+    "Names in brackets after page names are other names for the same component, and each package's `docs/index.md` summarizes its pages.",
+  ].join(" ");
 }
 
-export function agentsBlock({ root = ".", lines, rootBase }) {
+/** The salt-ds check command, run from `base`, for the application at `project`. */
+export function checkCommand({ base, project }) {
+  const relative = toPosix(path.relative(base, project)) || ".";
+  // The scoped name: npx uses an installed copy, or fetches this package.
+  return `npx @salt-ds/cli check${relative === "." ? "" : ` --project ${relative}`} --changed`;
+}
+
+export function agentsBlock({ root = ".", lines, rootBase, check }) {
   return [
     BEGIN_MARKER,
     "",
     "## Salt Design System",
     "",
-    instructions(rootBase),
+    instructions({ rootBase, check }),
     "",
     [`[Salt docs index]|root: ${root}`, ...lines].join("\n"),
     "",
@@ -98,10 +119,10 @@ export function indexLines(manifests) {
 
 const CLAUDE_IMPORT = "@AGENTS.md";
 const COPILOT_INSTRUCTIONS = path.join(".github", "copilot-instructions.md");
-const USAGE = `Usage: node node_modules/@salt-ds/core/docs/agents-md.mjs [options]
+const USAGE = `Usage: salt-ds init [options]
 
 Adds an index of your project's installed Salt docs to AGENTS.md and makes
-CLAUDE.md import AGENTS.md. The script reads the packages resolved from the
+CLAUDE.md import AGENTS.md. It reads the packages resolved from the
 application and does not install or upgrade Salt packages.
 
 Options:
@@ -111,6 +132,8 @@ Options:
                     the repository holding --dir, for GitHub Copilot
   --check           Change nothing; exit with 1 if any file needs updating
   --no-claude       Leave CLAUDE.md alone
+  --script <name>   Run "salt-ds check" at the end of this package.json script,
+                    such as typecheck or lint
   --help            Show this help`;
 
 function readJson(file) {
@@ -219,29 +242,10 @@ export function readManifest(packageDir, directory, outputDir = packageDir) {
  */
 export function discoverManifests(project, outputDir = project) {
   const manifests = [];
-  const seen = new Set();
-  const projectDir = realpathSync(project);
   const instructionDir = realpathSync(outputDir);
-  for (let current = projectDir; ; current = path.dirname(current)) {
-    const scopeDir = path.join(current, "node_modules", "@salt-ds");
-    let entries = [];
-    try {
-      entries = readdirSync(scopeDir, { withFileTypes: true });
-    } catch (error) {
-      if (error.code !== "ENOENT") throw error;
-    }
-    entries.sort((left, right) => left.name.localeCompare(right.name, "en"));
-    for (const entry of entries) {
-      if (!entry.isDirectory() && !entry.isSymbolicLink()) continue;
-      if (seen.has(entry.name)) continue;
-      seen.add(entry.name);
-      const packageDir = path.join(scopeDir, entry.name);
-      if (entry.name !== "core" && !existsSync(path.join(packageDir, "docs"))) {
-        continue;
-      }
-      manifests.push(readManifest(packageDir, entry.name, instructionDir));
-    }
-    if (path.dirname(current) === current) break;
+  for (const { name, packageDir } of saltPackages(realpathSync(project))) {
+    if (name !== "core" && !existsSync(path.join(packageDir, "docs"))) continue;
+    manifests.push(readManifest(packageDir, name, instructionDir));
   }
   if (manifests.length === 0) {
     throw new Error(
@@ -327,19 +331,38 @@ function repositoryRoot(start) {
   }
 }
 
-export function run(args, { log = console.log } = {}) {
+/** The salt-ds check command, when the installed packages ship its data. */
+function coreCheck({ base, project, manifests }) {
+  const core = manifests.find(({ name }) => name === "@salt-ds/core");
+  // docsPath is relative to the instructions folder's real path.
+  if (
+    !core ||
+    !existsSync(path.join(realpathSync(base), core.docsPath, CHECK_DATA_FILE))
+  ) {
+    return undefined;
+  }
+  // From the real folders, like the index's paths.
+  return checkCommand({
+    base: realpathSync(base),
+    project: realpathSync(project),
+  });
+}
+
+export function run(args, { log = console.log, cwd = process.cwd() } = {}) {
   const options = parseArguments(args);
   if (options.help) {
     log(USAGE);
     return 0;
   }
-  const project = path.resolve(options.project ?? options.dir ?? process.cwd());
-  const dir = path.resolve(options.dir ?? project);
+  const project = path.resolve(cwd, options.project ?? options.dir ?? ".");
+  const dir = path.resolve(cwd, options.dir ?? project);
   requireDirectory(project, "--project");
   requireDirectory(dir, "--dir");
+  const manifests = discoverManifests(project, dir);
   const block = agentsBlock({
     root: ".",
-    lines: indexLines(discoverManifests(project, dir)),
+    lines: indexLines(manifests),
+    check: coreCheck({ base: dir, project, manifests }),
   });
   const agentsPath = path.join(dir, "AGENTS.md");
   const updates = [
@@ -360,10 +383,16 @@ export function run(args, { log = console.log } = {}) {
     // Copilot reads one instructions file at the repository root and may not
     // tell the model where it is, so this index is relative to that root.
     const repository = repositoryRoot(dir);
+    const copilotManifests = discoverManifests(project, repository);
     const copilotBlock = agentsBlock({
       root: ".",
       rootBase: "the repository root",
-      lines: indexLines(discoverManifests(project, repository)),
+      lines: indexLines(copilotManifests),
+      check: coreCheck({
+        base: repository,
+        project,
+        manifests: copilotManifests,
+      }),
     });
     const filePath = path.join(repository, COPILOT_INSTRUCTIONS);
     updates.push({
@@ -409,24 +438,4 @@ export function run(args, { log = console.log } = {}) {
     return 1;
   }
   return 0;
-}
-
-function isInvokedDirectly() {
-  try {
-    return (
-      realpathSync(path.resolve(process.argv[1])) ===
-      realpathSync(fileURLToPath(import.meta.url))
-    );
-  } catch {
-    return false;
-  }
-}
-
-if (isInvokedDirectly()) {
-  try {
-    process.exitCode = run(process.argv.slice(2));
-  } catch (error) {
-    console.error(error.message);
-    process.exitCode = 2;
-  }
 }

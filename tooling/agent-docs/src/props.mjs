@@ -40,5 +40,9 @@ export function createPropsProvider({ packagesDir }) {
     get(packageDirectory, componentName) {
       return componentsFor(packageDirectory).get(componentName);
     },
+    /** Every component parsed from the package's entry point, by name. */
+    all(packageDirectory) {
+      return componentsFor(packageDirectory);
+    },
   };
 }

@@ -390,6 +390,14 @@ function firstParagraph(text) {
   return text.split(/\n\s*\n/)[0].trim();
 }
 
+/** A prop's `@deprecated` text, first paragraph only, or undefined. */
+export function deprecationOf(description = "") {
+  const { tags } = splitJsDocTags(description);
+  return tags.has("deprecated")
+    ? firstParagraph(tags.get("deprecated")) || "Deprecated."
+    : undefined;
+}
+
 function propDescription(tags, text) {
   const phrasing = [];
   if (tags.has("deprecated")) {
@@ -439,6 +447,7 @@ async function propsTable(node, ctx) {
     );
     return [];
   }
+  ctx.recordComponent?.(componentName);
   const props = Object.values(component.props ?? {});
   if (props.length === 0) {
     // The tables leave out inherited React and native props, as on the site,

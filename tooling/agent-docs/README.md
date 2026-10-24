@@ -8,7 +8,7 @@ yarn build:agent-docs --check    # validate without writing
 yarn build:agent-docs --verbose  # list warnings and authoring suggestions
 ```
 
-The generated folders are ignored by Git. Generation replaces a `docs` folder only when its `index.md` carries the generated marker or the folder holds no files, and otherwise fails without writing anything. `scripts/checkPackages.mjs` validates each documentation manifest's schema, package name and version, and checks that its index and every listed page exist. It also checks that Core includes the setup script.
+The generated folders are ignored by Git. Generation replaces a `docs` folder only when its `index.md` carries the generated marker or the folder holds no files, and otherwise fails without writing anything. `scripts/checkPackages.mjs` validates the schema, package name and version of each package's documentation manifest and `salt-check.json`, and checks that its index and every listed page exist.
 
 ## What it generates
 
@@ -16,8 +16,10 @@ The generated folders are ignored by Git. Generation replaces a `docs` folder on
 - One page per pattern, getting-started, foundations, themes and about page. Pattern examples are one file per example, `site/src/examples/patterns/<pattern>/<Example>.tsx`, as component examples are. Generation fails for a pattern example that the pattern's `index.ts` exports but no page shows.
 - Reference lists: every design token (`@salt-ds/theme/docs/tokens.md`), icon (`@salt-ds/icons/docs/icons.md`) and country symbol (`@salt-ds/countries/docs/country-symbols.md`). The token list is too long to read in one go, so `tokens.md` links to a file per tier, or per group for long tiers, split into parts where a group is still too long.
 - An `index.md` per package listing every page with its summary and `alsoKnownAs` names, which agents use to find the right page. Agents read these as other names for the same component, so a name that is another page's title, such as `Overlay` for Dialog, is left out with an authoring suggestion, as are repeated spellings. Summaries are shortened so the index fits in one read, and generation warns when an index grows past 20 KB.
-- A `manifest.json` per package with `schemaVersion: 1`, package name and version, and the same pages with their `alsoKnownAs` names, for `agents-md.mjs`.
-- `@salt-ds/core/docs/agents-md.mjs`, copied from [`src/agents-md.mjs`](./src/agents-md.mjs). Consumers run it to add the Salt block to their `AGENTS.md` and import that from `CLAUDE.md`. With `--copilot`, it also adds the block to `.github/copilot-instructions.md` in the Git repository holding `--dir` (or in `--dir` outside a repository), with index paths relative to the repository root, because Copilot reads that file from the root and may not tell the model where it is. The block holds instructions and a compressed index of the docs resolved from the target application: one line per docs folder, with other names in brackets. It leaves out package versions, so that the block, which projects commit, changes only when the installed packages' pages do; each page states its package version. `--project` selects the application independently of `--dir`, which selects the instruction-file folder. Setup validates manifests and indexed pages before editing instructions. Clients that load these instructions can discover relevant pages without a separate search, following the approach in [Vercel's agent evaluation](https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals). Generation reports the block's size with every package installed and warns past 8 KB (`MAX_AGENTS_BLOCK_BYTES`). The site's [AI coding agents](../../site/docs/getting-started/ai-coding-agents.mdx) page documents client support and setup for consumers.
+- A `manifest.json` per package with `schemaVersion: 1`, package name and version, and the same pages with their `alsoKnownAs` names, for `salt-ds init`.
+- A `salt-check.json` per package with the data `salt-ds check` reads; see [salt-check](#salt-check).
+
+Consumers run `salt-ds init`, from [`@salt-ds/cli`](../../packages/cli) ([`lib/agents-md.mjs`](../../packages/cli/lib/agents-md.mjs)), to add a Salt block built from the manifests to their `AGENTS.md` and import that from `CLAUDE.md`. With `--copilot`, it also adds the block to `.github/copilot-instructions.md` in the Git repository holding `--dir` (or in `--dir` outside a repository), with index paths relative to the repository root, because Copilot reads that file from the root and may not tell the model where it is. The block holds instructions and a compressed index of the docs resolved from the target application: one line per docs folder, with other names in brackets. It leaves out package versions, so that the block, which projects commit, changes only when the installed packages' pages do; each page states its package version. `--project` selects the application independently of `--dir`, which selects the instruction-file folder. Setup validates manifests and indexed pages before editing instructions. Clients that load these instructions can discover relevant pages without a separate search, following the approach in [Vercel's agent evaluation](https://vercel.com/blog/agents-md-outperforms-skills-in-our-agent-evals). Generation reports the block's size with every package installed and warns past 8 KB (`MAX_AGENTS_BLOCK_BYTES`). The site's [AI coding agents](../../site/docs/getting-started/ai-coding-agents.mdx) page documents client support and setup for consumers.
 
 Props generation uses the repository's TypeScript configuration so cross-package inherited types resolve from source in a clean checkout. Like the website, the tables omit inherited React/native props; the generated instructions direct agents to installed declarations for the complete API.
 
@@ -28,6 +30,24 @@ A deprecated token shows the token to use instead, from the first of these that 
 Palette tokens are listed as not for direct use, except in a palette group that no characteristic token references, such as the corner tokens that Salt's components use for border radius, which is marked.
 
 Links between pages in one package are relative. Links to another package use `@salt-ds/<package>/docs/...`, and links to pages that aren't shipped point to the website. Generation fails for a link to a generated file or heading that doesn't exist; a `Disclosure`'s `id` is kept as an HTML anchor so links to it still work. Headings are slugged with `github-slugger`, as on the site, and a link to a heading in one of a component's tabs points to the same heading in the merged page, even when an earlier tab repeats the heading.
+
+## salt-check
+
+`salt-ds check`, from [`@salt-ds/cli`](../../packages/cli) ([`lib/salt-check.mjs`](../../packages/cli/lib/salt-check.mjs)), checks an application's Salt usage against the docs of its installed packages. The `AGENTS.md` block tells agents to run it before they finish, as `npx @salt-ds/cli check --changed`, when Core ships check data; otherwise the block tells them to check props and tokens by hand. Each documented package ships the data it reads as `docs/salt-check.json`, so the results match the installed versions whichever CLI version runs. The data has a `schemaVersion`, and a CLI that reads an older schema skips that package with a notice to upgrade:
+
+- `@salt-ds/theme`: every token, whether it's current, deprecated in every theme that declares it (with its replacements) or a palette token that characteristics use, and the token reference page that lists it.
+- Component packages: each component's docs page, its deprecated props with their deprecation text (from every component the props parser finds), and its required parts.
+
+It reports, as `file:line:col: severity rule: message. See <page>`:
+
+- Errors: deprecated tokens, with their replacements; names that aren't tokens, with the token they spell in kebab case or a current token one segment away; and deprecated props.
+- Warnings: palette tokens outside the groups no characteristic references, and a component used without a required part, when its children in that file are all known (no variables or components other than Salt's that could hold the part).
+
+Required parts are reviewed by hand in `REQUIRED_PARTS` in [`src/config.mjs`](./src/config.mjs), from the candidates [`src/parts.mjs`](./src/parts.mjs) finds: parts that every site example of a component nests inside it. Candidates that are optional or parents go in `OPTIONAL_PARTS`; generation lists any new candidate as an authoring suggestion.
+
+Token declarations (an application's own overrides), comments and names built at runtime (`` `--salt-palette-${hue}` ``) aren't reported. Props and parts need the application's `typescript` package to parse JSX; without it, those checks are skipped with a notice. It exits with 1 for errors, and 2 when it can't run or finds no files to check. `--json` prints the results as JSON.
+
+`salt-ds init --script <name>` also makes a `package.json` script end by running `salt-ds check`, so the check runs in CI and for agents that run the project's scripts without loading `AGENTS.md`.
 
 ## Long pages
 

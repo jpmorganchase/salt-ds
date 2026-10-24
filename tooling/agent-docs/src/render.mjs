@@ -107,6 +107,15 @@ async function convertPage(page, doc, shared) {
       shared.notes.push(`${location(page, node)}: ${message}`),
     childPages: () => childPageList(doc, shared),
     deprecatedToken: (name) => shared.deprecatedTokens?.get(name),
+    // The first page whose props table documents a component is its page.
+    recordComponent: (name) => {
+      if (!shared.componentPages?.has(name)) {
+        shared.componentPages?.set(name, {
+          packageName: doc.packageName,
+          docPath: doc.docPath,
+        });
+      }
+    },
   };
   try {
     const { source, fragments } = stripFragments(page.body);

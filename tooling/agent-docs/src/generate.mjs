@@ -1,15 +1,28 @@
 import { mkdir, readdir, readFile, rm, writeFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { agentsBlock, indexLines, MANIFEST_FILE } from "./agents-md.mjs";
+import {
+  agentsBlock,
+  checkCommand,
+  indexLines,
+  MANIFEST_FILE,
+} from "../../../packages/cli/lib/agents-md.mjs";
 import { markdownAnchors } from "./anchors.mjs";
+import {
+  CHECK_DATA_FILE,
+  componentCheckData,
+  renderCheckData,
+  tokenCheckData,
+} from "./checkdata.mjs";
 import {
   DOCS_DIRECTORY,
   GENERATED_MARKER,
   MAX_AGENTS_BLOCK_BYTES,
   MAX_PAGE_BYTES,
   MAX_PAGE_LINES,
+  OPTIONAL_PARTS,
   publishesDocs,
+  REQUIRED_PARTS,
   SITE_ORIGIN,
 } from "./config.mjs";
 import { createExampleResolver, unshownPatternExamples } from "./examples.mjs";
@@ -17,6 +30,7 @@ import { compareText, pathExists } from "./files.mjs";
 import { createLinkResolver, decodeFragment, docLink } from "./links.mjs";
 import { parseMarkdown } from "./mdx.mjs";
 import { discoverDocuments } from "./pages.mjs";
+import { partCandidates } from "./parts.mjs";
 import { createPropsProvider } from "./props.mjs";
 import {
   changelogReplacements,
@@ -38,13 +52,6 @@ import {
 export const REPOSITORY_ROOT = path.resolve(
   path.dirname(fileURLToPath(import.meta.url)),
   "../../..",
-);
-
-// Consumers run this script from the installed package to set up AGENTS.md.
-const AGENTS_MD_PACKAGE = "@salt-ds/core";
-const AGENTS_MD_SCRIPT = "agents-md.mjs";
-const AGENTS_MD_SOURCE = fileURLToPath(
-  new URL("./agents-md.mjs", import.meta.url),
 );
 
 export class AgentDocsError extends Error {
@@ -410,6 +417,76 @@ export function dropMisleadingAliases(documents) {
 }
 
 /**
+ * Writes each documented package's `salt-check.json`: token data for the
+ * theme, and deprecated props, docs pages and required parts for component
+ * packages. Part candidates from the site examples that `REQUIRED_PARTS` and
+ * `OPTIONAL_PARTS` don't classify become authoring suggestions.
+ */
+async function addCheckData({
+  packages,
+  outputs,
+  shared,
+  tokens,
+  examplesDir,
+}) {
+  const candidates = await partCandidates(examplesDir);
+  for (const [component, { examples, parts }] of candidates) {
+    const reviewed = new Set([
+      ...(REQUIRED_PARTS[component] ?? []),
+      ...(OPTIONAL_PARTS[component] ?? []),
+    ]);
+    const unreviewed = parts.filter((part) => !reviewed.has(part));
+    if (unreviewed.length > 0) {
+      shared.notes.push(
+        `site/src/examples: every one of the ${examples} examples using ${component} nests ${unreviewed.join(", ")}. Add them to REQUIRED_PARTS or OPTIONAL_PARTS in tooling/agent-docs/src/config.mjs.`,
+      );
+    }
+  }
+  const placed = new Set();
+  for (const [packageName, target] of outputs) {
+    const info = packages.get(packageName);
+    let data;
+    if (packageName === "@salt-ds/theme") {
+      data = tokenCheckData({
+        tokens,
+        files: [...target.files].filter(([docPath]) =>
+          docPath.startsWith("tokens"),
+        ),
+      });
+    } else {
+      const components = shared.props.all?.(info.directory) ?? new Map();
+      const pages = new Map();
+      for (const [name, page] of shared.componentPages) {
+        if (components.has(name)) {
+          pages.set(
+            name,
+            page.packageName === packageName
+              ? page.docPath
+              : `${page.packageName}/docs/${page.docPath}`,
+          );
+        }
+      }
+      const requiredParts = Object.fromEntries(
+        Object.entries(REQUIRED_PARTS).filter(([name]) => components.has(name)),
+      );
+      for (const name of Object.keys(requiredParts)) placed.add(name);
+      data = componentCheckData({ components, pages, requiredParts });
+    }
+    target.files.set(
+      CHECK_DATA_FILE,
+      renderCheckData({ packageName, version: info.version, data }),
+    );
+  }
+  for (const name of Object.keys(REQUIRED_PARTS)) {
+    if (shared.props.all && !placed.has(name)) {
+      shared.warnings.push(
+        `REQUIRED_PARTS in tooling/agent-docs/src/config.mjs names ${name}, which no documented package exports.`,
+      );
+    }
+  }
+}
+
+/**
  * Generates `packages/<name>/docs` for every package that owns site pages.
  * Throws `AgentDocsError` listing every problem; nothing is written then.
  */
@@ -462,6 +539,8 @@ export async function generateAgentDocs({
   const tokens = await readTokens({ packages, packagesDir, warnings });
   const shared = {
     deprecatedTokens: deprecatedTokens(tokens),
+    // Component name -> the page whose props table documents it.
+    componentPages: new Map(),
     packages,
     links: createLinkResolver(routeIndex, { deferAnchor, siteRoutes: routes }),
     examples: createExampleResolver({ examplesDir }),
@@ -533,11 +612,13 @@ export async function generateAgentDocs({
     );
   }
   await addReferences({ packages, packagesDir, routeIndex, outputs, tokens });
-  if (packages.has(AGENTS_MD_PACKAGE)) {
-    outputs
-      .get(AGENTS_MD_PACKAGE)
-      .files.set(AGENTS_MD_SCRIPT, await readFile(AGENTS_MD_SOURCE, "utf8"));
-  }
+  await addCheckData({
+    packages,
+    outputs: outputs.outputs,
+    shared,
+    tokens,
+    examplesDir,
+  });
 
   const packageNames = [...outputs.outputs.keys()].sort();
   const manifests = [];
@@ -580,6 +661,7 @@ export async function generateAgentDocs({
     agentsBlock({
       root: ".",
       lines: indexLines(manifests),
+      check: checkCommand({ base: ".", project: "." }),
     }),
   );
   if (agentsBlockBytes > MAX_AGENTS_BLOCK_BYTES) {

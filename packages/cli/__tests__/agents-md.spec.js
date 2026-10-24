@@ -24,11 +24,11 @@ import {
   run,
   upsertBlock,
   withClaudeImport,
-} from "../agents-md.mjs";
+} from "../lib/agents-md.mjs";
 
 const roots = [];
 const quiet = { log: () => {} };
-const scriptPath = fileURLToPath(new URL("../agents-md.mjs", import.meta.url));
+const cliRoot = fileURLToPath(new URL("..", import.meta.url));
 const execFile = promisify(execFileCallback);
 
 function project() {
@@ -207,17 +207,25 @@ describe("application package discovery", () => {
     expect(manifest.version).toBe("1.0.0");
   });
 
-  it("uses the target application rather than the location of the script", async () => {
+  it("uses the target application rather than where the CLI is installed", async () => {
     const root = project();
+    // As npx runs a copy from its cache, beside other Salt packages.
     const cache = project();
     install(root, "core", { version: "4.0.0" });
     install(cache, "core", { version: "9.0.0" });
-    const executable = path.join(
-      cache,
-      "node_modules/@salt-ds/core/docs/agents-md.mjs",
+    const cli = path.join(cache, "node_modules/@salt-ds/cli");
+    for (const entry of ["bin", "lib", "package.json"]) {
+      cpSync(path.join(cliRoot, entry), path.join(cli, entry), {
+        recursive: true,
+      });
+    }
+    await execFile(
+      process.execPath,
+      [path.join(cli, "bin/salt-ds.mjs"), "init"],
+      {
+        cwd: root,
+      },
     );
-    cpSync(scriptPath, executable);
-    await execFile(process.execPath, [executable], { cwd: root });
     const content = readFileSync(path.join(root, "AGENTS.md"), "utf8");
     expect(content).toContain(
       "|node_modules/@salt-ds/core/docs/components:{button.md}",
@@ -521,6 +529,70 @@ describe("instruction updates", () => {
     expect(
       run([`--project=${root}`, `--dir=${root}`, "--no-claude"], quiet),
     ).toBe(0);
+  });
+});
+
+describe("salt-check instruction", () => {
+  const withCheck = (packageDir) =>
+    write(
+      packageDir,
+      "docs/salt-check.json",
+      JSON.stringify({ schemaVersion: 1 }),
+    );
+
+  it("finds check data through a symlinked instructions folder at another depth", () => {
+    const root = project();
+    const app = path.join(root, "app");
+    mkdirSync(app);
+    withCheck(install(root));
+    // The link is deeper than the folder it points to, so the docs path,
+    // relative to the real folder, doesn't resolve from the link.
+    const link = path.join(root, "a/b/app-link");
+    mkdirSync(path.dirname(link), { recursive: true });
+    symlinkSync(app, link, "junction");
+    expect(run(["--project", app, "--dir", link], quiet)).toBe(0);
+    expect(readFileSync(path.join(app, "AGENTS.md"), "utf8")).toContain(
+      "run `npx @salt-ds/cli check --changed` from this file's folder",
+    );
+  });
+
+  it("names the check command when the packages ship check data, and the manual checks otherwise", () => {
+    const root = project();
+    withCheck(install(root));
+    run(["--project", root], quiet);
+    const content = readFileSync(path.join(root, "AGENTS.md"), "utf8");
+    expect(content).toContain(
+      "Before you finish, run `npx @salt-ds/cli check --changed` from this file's folder and fix what it reports",
+    );
+    expect(content).not.toContain("check each Salt prop against");
+
+    const older = project();
+    install(older);
+    run(["--project", older], quiet);
+    expect(readFileSync(path.join(older, "AGENTS.md"), "utf8")).toContain(
+      "check each Salt prop against its component page's props table",
+    );
+  });
+
+  it("gives commands that work from each instruction file's base", () => {
+    const root = project();
+    mkdirSync(path.join(root, ".git"));
+    const app = path.join(root, "apps/web");
+    withCheck(install(app));
+    run(["--project", app, "--copilot"], quiet);
+    expect(readFileSync(path.join(app, "AGENTS.md"), "utf8")).toContain(
+      "run `npx @salt-ds/cli check --changed` from this file's folder",
+    );
+    expect(
+      readFileSync(path.join(root, ".github/copilot-instructions.md"), "utf8"),
+    ).toContain(
+      "run `npx @salt-ds/cli check --project apps/web --changed` from the repository root",
+    );
+
+    run(["--project", app, "--dir", root, "--no-claude"], quiet);
+    expect(readFileSync(path.join(root, "AGENTS.md"), "utf8")).toContain(
+      "run `npx @salt-ds/cli check --project apps/web --changed` from this file's folder",
+    );
   });
 });
 

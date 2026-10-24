@@ -14,23 +14,29 @@ code.
 
 ## Set up your project
 
-Run this from the application whose installed Salt packages you want agents to
-use. In a single-application repository, this is usually the repository root:
+Install the Salt CLI and run `salt-ds init` from the application whose installed
+Salt packages you want agents to use. In a single-application repository, this
+is usually the repository root:
 
 ```sh
-node node_modules/@salt-ds/core/docs/agents-md.mjs
+npm install --save-dev @salt-ds/cli
+npx salt-ds init --script typecheck
 ```
 
-The script adds a Salt section to `AGENTS.md` that tells agents to read the
+`salt-ds init` adds a Salt section to `AGENTS.md` that tells agents to read the
 installed documentation before they write Salt UI, to prefer component props to
-custom CSS, and to check the props and design tokens they used against it
-before they finish, with a compressed index of every documentation page in the
-Salt packages resolved from that application. The script records each package's
-documentation path, makes `CLAUDE.md` import `AGENTS.md` for Claude Code, and
-keeps your other instructions. Instruction-file support depends on the agent,
-client and mode; see [Agent compatibility](#agent-compatibility).
+custom CSS, and to [check what they wrote](#check-what-agents-write) before they
+finish, with a compressed index of every documentation page in the Salt packages
+resolved from that application. It records each package's documentation path,
+makes `CLAUDE.md` import `AGENTS.md` for Claude Code, and keeps your other
+instructions. Instruction-file support depends on the agent, client and mode;
+see [Agent compatibility](#agent-compatibility).
 
-Run the script again after you add or upgrade Salt packages, because the index
+`--script typecheck` also makes your `typecheck` script run that check, so it
+runs in CI and for agents that run your scripts without loading `AGENTS.md`. Use
+`--script lint` for a lint script instead.
+
+Run `salt-ds init` again after you add or upgrade Salt packages, because the index
 lists the pages of the installed versions. The section leaves out package
 versions, so an upgrade changes it only when it changes the pages or the other
 names they're indexed under. Each page states the version it documents.
@@ -46,22 +52,22 @@ names they're indexed under. Each page states the version it documents.
   keeping your other Copilot instructions. Its index paths are relative to the
   repository root. Copilot reads one such file per repository, so in a
   repository with several applications it indexes the application you last ran
-  the script for.
-- Add `--project <path>` to select another application. The script resolves each
-  package from that application's `node_modules` hierarchy, so packages can be
-  installed at different levels of a monorepo.
+  `salt-ds init` for.
+- Add `--project <path>` to select another application. `salt-ds init` resolves
+  each package from that application's `node_modules` hierarchy, so packages can
+  be installed at different levels of a monorepo.
 - Add `--dir <path>` to choose the folder holding `AGENTS.md` and `CLAUDE.md`.
   Without `--project`, this also selects the application to resolve packages from.
 
-For example, from a monorepo root with Core installed at the root:
+For example, from a monorepo root:
 
 ```sh
-node node_modules/@salt-ds/core/docs/agents-md.mjs --project apps/web
+npx salt-ds init --project apps/web --script typecheck
 ```
 
-This writes the instructions under `apps/web`. If Core is installed there instead,
-use `apps/web/node_modules/@salt-ds/core/docs/agents-md.mjs` as the script path
-and keep `--project apps/web`. Add `--dir .` only when you want the selected
+This writes the instructions under `apps/web` and updates the `typecheck` script
+in `apps/web/package.json`, using the Salt packages that `apps/web` resolves,
+wherever they're installed. Add `--dir .` only when you want the selected
 application's index in the repository-root instructions. For applications using
 different Salt versions, keep separate application-scoped instructions and use
 the root instructions to direct agents to the appropriate application.
@@ -70,8 +76,8 @@ Agents read the documentation from `node_modules`, which Yarn Plug'n'Play
 installs don't create. To use it with Yarn, set `nodeLinker: node-modules` in
 `.yarnrc.yml`.
 
-Generate the section with the script rather than by hand, so the index matches
-your installed versions.
+Generate the section with `salt-ds init` rather than by hand, so the index
+matches your installed versions.
 
 ## Agent compatibility
 
@@ -110,6 +116,30 @@ the right page. Each package's `docs/index.md`, starting with
 Each package documents its own components, such as `@salt-ds/lab/docs` for Lab
 components. Pages link to other packages' documentation by package name, so agents
 can follow the links into the Salt packages you have installed.
+
+## Check what agents write
+
+The section in `AGENTS.md` tells agents to run a check before they finish. It
+compares the files they changed with the docs of the Salt packages you installed,
+and reports deprecated or misspelled design tokens with the token to use
+instead, deprecated props, and components missing a part that Salt's examples
+always include, such as a `Toast` without `ToastContent`. Each report links to
+the page that explains it.
+
+You can run it yourself, or in CI, from the application folder:
+
+```sh
+npx salt-ds check
+```
+
+The check reads data that each installed Salt package ships with its docs, so it
+matches the versions you installed. Agents run it with `npx @salt-ds/cli`, which
+uses the installed CLI or downloads it.
+
+Without file or folder paths, it checks the files Git tracks or would add. Add
+`--changed` to check only files changed since the last commit, or `--json` for
+machine-readable results. It exits with 1 when it finds errors. Checking props
+and parts needs the application's `typescript` package.
 
 ## Review what agents build
 

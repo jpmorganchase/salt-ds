@@ -1,0 +1,26 @@
+{
+  "name": "@salt-ds/cli",
+  "version": "0.0.0",
+  "description": "Set up coding agents with your installed Salt docs, and check Salt code against them.",
+  "license": "Apache-2.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jpmorganchase/salt-ds.git",
+    "directory": "packages/cli"
+  },
+  "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "type": "module",
+  "bin": {
+    "salt-ds": "bin/salt-ds.mjs"
+  },
+  "files": [
+    "bin",
+    "lib"
+  ],
+  "engines": {
+    "node": ">=20.12"
+  },
+  "publishConfig": {
+    "provenance": true
+  }
+}

@@ -14,7 +14,7 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 import ts from "typescript";
-import { readManifest } from "../tooling/agent-docs/src/agents-md.mjs";
+import { readManifest } from "../packages/cli/lib/agents-md.mjs";
 import { publishesDocs } from "../tooling/agent-docs/src/config.mjs";
 
 const execFile = promisify(execFileCallback);
@@ -90,12 +90,9 @@ function packagePath(directory, target) {
 
 async function checkAgentDocs(manifest, directory) {
   if (!publishesDocs(manifest.files)) return [];
-  // agents-md.mjs indexes manifest.json, and the core README tells consumers
-  // to run docs/agents-md.mjs.
-  const required =
-    manifest.name === "@salt-ds/core"
-      ? ["index.md", "manifest.json", "agents-md.mjs"]
-      : ["index.md", "manifest.json"];
+  // salt-ds init indexes manifest.json, and salt-ds check reads
+  // salt-check.json, in each package's docs.
+  const required = ["index.md", "manifest.json", "salt-check.json"];
   const errors = [];
   for (const file of required) {
     if (!(await pathExists(path.join(directory, "docs", file)))) {
@@ -109,6 +106,18 @@ async function checkAgentDocs(manifest, directory) {
       readManifest(directory, manifest.name.replace(/^@salt-ds\//, ""));
     } catch (error) {
       errors.push(error.message);
+    }
+    const data = JSON.parse(
+      await readFile(path.join(directory, "docs", "salt-check.json"), "utf8"),
+    );
+    if (
+      data.schemaVersion !== 1 ||
+      data.name !== manifest.name ||
+      data.version !== manifest.version
+    ) {
+      errors.push(
+        "has docs/salt-check.json for another package, version or schema",
+      );
     }
   }
   return errors;
@@ -196,6 +205,58 @@ async function findUndeclaredImports(packageDirectory, manifest) {
   );
 }
 
+/** Packs a package and returns the extracted directory and packed manifest. */
+async function packPackage(manifest, temporaryDirectory) {
+  const archiveName = `${manifest.name
+    .replace(/^@/, "")
+    .replaceAll("/", "-")}.tgz`;
+  const archivePath = path.join(temporaryDirectory, archiveName);
+  const extractedDirectory = path.join(
+    temporaryDirectory,
+    archiveName.replace(/\.tgz$/, ""),
+  );
+  await run(yarn, ["workspace", manifest.name, "pack", "--out", archivePath]);
+  await mkdir(extractedDirectory);
+  await run("tar", ["-xzf", archivePath, "-C", extractedDirectory]);
+  const packageDirectory = path.join(extractedDirectory, "package");
+  return {
+    packageDirectory,
+    packedManifest: await readJson(path.join(packageDirectory, "package.json")),
+  };
+}
+
+/** A command-line package: every bin target is a packed file. */
+async function checkBinPackage(pkg, temporaryDirectory) {
+  const { packageDirectory, packedManifest } = await packPackage(
+    pkg.manifest,
+    temporaryDirectory,
+  );
+  const errors = [];
+  const bins =
+    typeof packedManifest.bin === "string"
+      ? { [packedManifest.name]: packedManifest.bin }
+      : packedManifest.bin;
+  for (const [name, target] of Object.entries(bins)) {
+    try {
+      if (!(await stat(packagePath(packageDirectory, target))).isFile()) {
+        errors.push(`bin ${name} target is not a file: ${target}`);
+      }
+    } catch {
+      errors.push(`bin ${name} points to missing file ${target}`);
+    }
+  }
+  const workspaceRanges = findWorkspaceRanges(packedManifest);
+  if (workspaceRanges.length > 0) {
+    errors.push(
+      `contains unresolved workspace ranges at ${workspaceRanges.join(", ")}`,
+    );
+  }
+  errors.push(
+    ...(await findUndeclaredImports(packageDirectory, packedManifest)),
+  );
+  return errors;
+}
+
 async function checkJavaScriptPackage(pkg, temporaryDirectory) {
   const { manifest } = pkg;
   const archiveName = `${manifest.name
@@ -270,7 +331,9 @@ try {
       ...checkBoundaries(pkg.manifest),
       ...(pkg.manifest.main
         ? await checkJavaScriptPackage(pkg, temporaryDirectory)
-        : await checkCssPackage(pkg)),
+        : pkg.manifest.bin
+          ? await checkBinPackage(pkg, temporaryDirectory)
+          : await checkCssPackage(pkg)),
     ];
 
     errors.push(
