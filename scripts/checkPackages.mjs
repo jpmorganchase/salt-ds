@@ -107,9 +107,15 @@ async function checkAgentDocs(manifest, directory) {
     } catch (error) {
       errors.push(error.message);
     }
-    const data = JSON.parse(
-      await readFile(path.join(directory, "docs", "salt-check.json"), "utf8"),
-    );
+    let data;
+    try {
+      data = JSON.parse(
+        await readFile(path.join(directory, "docs", "salt-check.json"), "utf8"),
+      );
+    } catch (error) {
+      errors.push(`has unreadable docs/salt-check.json: ${error.message}`);
+      return errors;
+    }
     if (
       data.schemaVersion !== 1 ||
       data.name !== manifest.name ||
@@ -258,23 +264,9 @@ async function checkBinPackage(pkg, temporaryDirectory) {
 }
 
 async function checkJavaScriptPackage(pkg, temporaryDirectory) {
-  const { manifest } = pkg;
-  const archiveName = `${manifest.name
-    .replace(/^@/, "")
-    .replaceAll("/", "-")}.tgz`;
-  const archivePath = path.join(temporaryDirectory, archiveName);
-  const extractedDirectory = path.join(
+  const { packageDirectory, packedManifest } = await packPackage(
+    pkg.manifest,
     temporaryDirectory,
-    archiveName.replace(/\.tgz$/, ""),
-  );
-
-  await run(yarn, ["workspace", manifest.name, "pack", "--out", archivePath]);
-  await mkdir(extractedDirectory);
-  await run("tar", ["-xzf", archivePath, "-C", extractedDirectory]);
-
-  const packageDirectory = path.join(extractedDirectory, "package");
-  const packedManifest = await readJson(
-    path.join(packageDirectory, "package.json"),
   );
   const errors = [];
   const workspaceRanges = findWorkspaceRanges(packedManifest);

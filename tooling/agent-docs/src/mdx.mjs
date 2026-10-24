@@ -432,6 +432,198 @@ function tableNode(rows) {
   };
 }
 
+// At most this many element-specific attributes are named.
+const MAX_INHERITED_NAMES = 6;
+
+/** Phrasing joined as "a, b and c". */
+function joinPhrasing(groups) {
+  return groups.flatMap((group, index) => [
+    ...(index === 0
+      ? []
+      : [u.text(index === groups.length - 1 ? " and " : ", ")]),
+    ...group,
+  ]);
+}
+
+function codeList(names) {
+  return joinPhrasing(names.map((name) => [u.inlineCode(name)]));
+}
+
+/**
+ * What a component inherits from React's types, which tables leave out:
+ * "`<td>` attributes, such as `colSpan`, and `ref`". docgen credits an
+ * attribute several elements declare to one of them, such as
+ * ButtonHTMLAttributes for a textarea's value or SVGAttributes for a link's
+ * href, so the element is named only from the props interface: `elements`,
+ * such as ["td"]. Every element-specific name docgen reports is listed.
+ */
+function inheritedPhrasing(inherited = {}, elements = []) {
+  const svg = elements.length === 1 && elements[0] === "svg";
+  const specific = [
+    ...new Set(
+      Object.entries(inherited)
+        .filter(
+          ([name]) =>
+            (/^\w+HTMLAttributes$/.test(name) &&
+              name !== "HTMLAttributes" &&
+              name !== "AllHTMLAttributes") ||
+            (name === "SVGAttributes" && !svg),
+        )
+        .flatMap(([, names]) => names),
+    ),
+  ];
+  const general = Boolean(
+    inherited.HTMLAttributes ||
+      inherited.AllHTMLAttributes ||
+      inherited.AriaAttributes ||
+      inherited.DOMAttributes ||
+      (svg && inherited.SVGAttributes),
+  );
+  const groups = [];
+  if (specific.length > 0 || general) {
+    const names = specific.slice(0, MAX_INHERITED_NAMES);
+    groups.push([
+      ...(elements.length === 1
+        ? [u.inlineCode(`<${elements[0]}>`), u.text(" attributes")]
+        : [u.text("HTML attributes")]),
+      ...(names.length > 0 ? [u.text(", such as "), ...codeList(names)] : []),
+    ]);
+  }
+  if (inherited.RefAttributes) groups.push([u.inlineCode("ref")]);
+  if (groups.length === 0) return undefined;
+  // "…, such as `a` and `b`, and `ref`": a comma before ref after a list.
+  return groups.length === 2 && specific.length > 0
+    ? [...groups[0], u.text(", and "), ...groups[1]]
+    : joinPhrasing(groups);
+}
+
+/** "Types in this table: `Value` is `string | number`; …", or undefined. */
+function typesPhrasing(definitions) {
+  if (definitions.length === 0) return undefined;
+  const items = definitions.map((definition) => {
+    if (definition.kind === "parameter") {
+      return [
+        u.inlineCode(definition.name),
+        u.text(" is a type parameter"),
+        ...(definition.constraint
+          ? [
+              u.text(" ("),
+              u.inlineCode(`extends ${definition.constraint}`),
+              u.text(")"),
+            ]
+          : []),
+        u.text(" inferred from the props you pass"),
+      ];
+    }
+    return definition.text === undefined
+      ? [
+          u.inlineCode(definition.signature),
+          u.text(" is in the type declarations of "),
+          u.inlineCode(`@salt-ds/${definition.packageDirectory}`),
+        ]
+      : [
+          u.inlineCode(definition.signature),
+          u.text(" is "),
+          u.inlineCode(definition.text),
+        ];
+  });
+  return [
+    u.text("Types in this table: "),
+    ...items.flatMap((item, index) => [
+      ...(index === 0 ? [] : [u.text("; ")]),
+      ...item,
+    ]),
+    u.text("."),
+  ];
+}
+
+/**
+ * A component's props table, what it inherits and the Salt types the table
+ * names.
+ */
+function componentApi(componentName, component, packageDirectory, ctx) {
+  const props = Object.values(component.props ?? {});
+  const inherited = inheritedPhrasing(
+    component.inherited,
+    ctx.props.elementsOf?.(packageDirectory, component),
+  );
+  const nodes = [];
+  // Sentences for the paragraph after the table.
+  const notes = [];
+  if (props.length === 0) {
+    // The tables leave out inherited React and native props, as on the site,
+    // where an empty table shows nothing. Say so rather than leave a heading
+    // with nothing under it.
+    notes.push([
+      u.inlineCode(componentName),
+      ...(inherited
+        ? [
+            u.text(" has no props of its own. It accepts "),
+            ...inherited,
+            u.text("."),
+          ]
+        : [
+            u.text(
+              " has no props of its own. It accepts the props of the element it renders; see its type declarations.",
+            ),
+          ]),
+    ]);
+  } else {
+    nodes.push(
+      tableNode([
+        [
+          [u.text("Prop")],
+          [u.text("Type")],
+          [u.text("Default")],
+          [u.text("Description")],
+        ],
+        ...props.map((prop) => {
+          const { text, tags } = splitJsDocTags(prop.description ?? "");
+          return [
+            prop.required
+              ? [u.inlineCode(prop.name), u.text(" (required)")]
+              : [u.inlineCode(prop.name)],
+            [u.inlineCode(formatPropType(prop.type))],
+            propDefault(prop, tags),
+            propDescription(tags, text),
+          ];
+        }),
+      ]),
+    );
+    if (inherited) {
+      notes.push([
+        u.text("It also accepts "),
+        ...inherited,
+        u.text(", which the table leaves out."),
+      ]);
+    }
+    // Each type is defined once per page, under the first table naming it.
+    ctx.definedTypes ??= new Set();
+    const types = typesPhrasing(
+      ctx.props.typeDefinitions?.(
+        packageDirectory,
+        component,
+        props.map((prop) => formatPropType(prop.type)),
+        ctx.definedTypes,
+      ) ?? [],
+    );
+    if (types) notes.push(types);
+  }
+  // One paragraph after the table, so the notes add little to the page's
+  // length and don't push its examples off it.
+  if (notes.length > 0) {
+    nodes.push(
+      u.paragraph(
+        notes.flatMap((note, index) => [
+          ...(index === 0 ? [] : [u.text(" ")]),
+          ...note,
+        ]),
+      ),
+    );
+  }
+  return nodes;
+}
+
 async function propsTable(node, ctx) {
   const attrs = attributes(node);
   const packageDirectory = attributeString(attrs, "packageName") ?? "core";
@@ -447,41 +639,25 @@ async function propsTable(node, ctx) {
     );
     return [];
   }
-  ctx.recordComponent?.(componentName);
-  const props = Object.values(component.props ?? {});
-  if (props.length === 0) {
-    // The tables leave out inherited React and native props, as on the site,
-    // where an empty table shows nothing. Say so rather than leave a heading
-    // with nothing under it.
-    return [
+  ctx.recordComponent?.(componentName, packageDirectory);
+  const nodes = componentApi(componentName, component, packageDirectory, ctx);
+  // Exported parts the site gives no table, such as DrawerCloseButton.
+  for (const name of ctx.subcomponents?.(packageDirectory, componentName) ??
+    []) {
+    const part = ctx.props.get(packageDirectory, name);
+    if (!part) continue;
+    ctx.recordComponent?.(name, packageDirectory);
+    nodes.push(
       u.paragraph([
+        u.strong([u.inlineCode(name)]),
+        u.text(", exported with "),
         u.inlineCode(componentName),
-        u.text(
-          " has no props of its own. It accepts the props of the element it renders; see its type declarations.",
-        ),
+        u.text(":"),
       ]),
-    ];
+      ...componentApi(name, part, packageDirectory, ctx),
+    );
   }
-  const rows = [
-    [
-      [u.text("Prop")],
-      [u.text("Type")],
-      [u.text("Default")],
-      [u.text("Description")],
-    ],
-    ...props.map((prop) => {
-      const { text, tags } = splitJsDocTags(prop.description ?? "");
-      return [
-        prop.required
-          ? [u.inlineCode(prop.name), u.text(" (required)")]
-          : [u.inlineCode(prop.name)],
-        [u.inlineCode(formatPropType(prop.type))],
-        propDefault(prop, tags),
-        propDescription(tags, text),
-      ];
-    }),
-  ];
-  return [tableNode(rows)];
+  return nodes;
 }
 
 async function keyboardControlItem(node, ctx) {

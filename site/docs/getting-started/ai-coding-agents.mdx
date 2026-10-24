@@ -105,9 +105,10 @@ the right page. Each package's `docs/index.md`, starting with
 `node_modules/@salt-ds/core/docs/index.md`, adds a short summary of every page.
 
 - Component pages combine the usage, examples and accessibility tabs from this
-  site with props tables and keyboard interactions. Tables omit some inherited
-  React/native props; consult the installed TypeScript declarations for the
-  complete contract, including which element receives an attribute.
+  site with props tables and keyboard interactions. Under each table, they list
+  the HTML attributes the component also accepts and the Salt types the table
+  names. Agents consult the installed TypeScript declarations for anything else,
+  such as which element receives an attribute.
 - Pattern, getting started, foundation and theme pages, with lists of every design
   token, icon and country symbol.
 - Example source code. Long pages keep their guidance and link to separate files

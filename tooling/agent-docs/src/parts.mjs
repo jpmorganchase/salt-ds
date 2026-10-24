@@ -5,13 +5,21 @@ import ts from "typescript";
 /** Fewest examples of a component before its parts are suggested. */
 const MIN_EXAMPLES = 3;
 
+// Each examples folder's usages, read once.
+const usagesByFolder = new Map();
+
 /**
- * Parts that every site example of a component nests inside it: for each
- * component used in at least `MIN_EXAMPLES` example files, the components
- * whose names extend it (`Toast` → `ToastContent`) and that are among its
- * JSX descendants wherever it's used. Candidates for `REQUIRED_PARTS`.
+ * Every component used as a JSX element in the site examples, with each
+ * use's file and the names of its JSX descendants.
  */
-export async function partCandidates(examplesDir) {
+export function exampleUsages(examplesDir) {
+  if (!usagesByFolder.has(examplesDir)) {
+    usagesByFolder.set(examplesDir, readUsages(examplesDir));
+  }
+  return usagesByFolder.get(examplesDir);
+}
+
+async function readUsages(examplesDir) {
   const files = (await readdir(examplesDir, { recursive: true }))
     .filter((file) => file.endsWith(".tsx"))
     .map((file) => path.join(examplesDir, file));
@@ -55,6 +63,17 @@ export async function partCandidates(examplesDir) {
     };
     visit(sourceFile);
   }
+  return usages;
+}
+
+/**
+ * Parts that every site example of a component nests inside it: for each
+ * component used in at least `MIN_EXAMPLES` example files, the components
+ * whose names extend it (`Toast` → `ToastContent`) and that are among its
+ * JSX descendants wherever it's used. Candidates for `REQUIRED_PARTS`.
+ */
+export async function partCandidates(examplesDir) {
+  const usages = await exampleUsages(examplesDir);
   const candidates = new Map();
   for (const [name, found] of usages) {
     const exampleCount = new Set(found.map(({ file }) => file)).size;

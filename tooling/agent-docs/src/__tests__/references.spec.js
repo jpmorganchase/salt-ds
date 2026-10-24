@@ -269,6 +269,28 @@ describe("deprecated token replacements", () => {
     expectNoAlias(markdown, "--salt-cycle-a");
   });
 
+  it("doesn't name a token deprecated in one theme and current in another as its own replacement", async () => {
+    const root = await createTheme({
+      "theme.css":
+        '@import url("foundations/index.css"); @import "legacy/characteristics/container.css";',
+      "theme-next.css":
+        '@import url("foundations/index.css"); @import "next/characteristics/container.css"; @import "next/deprecated/characteristics.css";',
+      "legacy/characteristics/container.css":
+        ".salt-theme { --salt-container-primary-borderColor: gray; }",
+      "next/characteristics/container.css":
+        ".salt-theme-next { --salt-container-bold-borderColor: gray; }",
+      "next/deprecated/characteristics.css":
+        ".salt-theme-next { --salt-container-primary-borderColor: gray; /* Use --salt-container-bold-borderColor */ }",
+    });
+    const markdown = render(await collectTokens(root));
+    expect(markdown).toContain(
+      "- `--salt-container-primary-borderColor`: use `--salt-container-bold-borderColor` instead (SaltProviderNext theme only)",
+    );
+    expect(markdown).not.toContain(
+      "use `--salt-container-primary-borderColor` instead",
+    );
+  });
+
   it("warns about comments naming a token that doesn't exist, isn't current or differs between themes", async () => {
     const root = await createTheme({
       "theme.css":

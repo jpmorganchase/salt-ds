@@ -59,6 +59,10 @@ export function componentCheckData({ components, pages, requiredParts }) {
   for (const [name, component] of [...components].sort(([left], [right]) =>
     left < right ? -1 : left > right ? 1 : 0,
   )) {
+    // JSX names components with a capital. The props parser also reads
+    // functions such as useId, whose "props" are its parameter's type, like
+    // String's deprecated substr.
+    if (!/^[A-Z]/.test(name)) continue;
     const entry = {};
     if (pages.has(name)) entry.page = pages.get(name);
     const deprecated = {};

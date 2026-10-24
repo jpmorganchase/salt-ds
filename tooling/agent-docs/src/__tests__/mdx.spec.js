@@ -133,6 +133,115 @@ describe("convertMdx", () => {
     expect(ctx.warnings).toEqual([]);
   });
 
+  describe("what props tables leave out", () => {
+    const components = {
+      Cell: {
+        displayName: "Cell",
+        props: {
+          value: {
+            name: "value",
+            required: false,
+            type: { name: "Value" },
+            description: "",
+          },
+        },
+        inherited: {
+          TdHTMLAttributes: ["colSpan", "rowSpan"],
+          ImgHTMLAttributes: ["width"],
+          HTMLAttributes: ["className"],
+          AriaAttributes: ["aria-label"],
+          DOMAttributes: ["onClick"],
+          RefAttributes: ["ref"],
+        },
+      },
+      CellIcon: {
+        displayName: "CellIcon",
+        props: {
+          value: {
+            name: "value",
+            required: false,
+            type: { name: "Value" },
+            description: "",
+          },
+        },
+        inherited: {
+          // docgen credits a textarea's value to ButtonHTMLAttributes.
+          ButtonHTMLAttributes: ["value"],
+          HTMLAttributes: ["className"],
+        },
+      },
+      Row: {
+        displayName: "Row",
+        props: {},
+        inherited: { HTMLAttributes: ["id"], RefAttributes: ["ref"] },
+      },
+    };
+    const props = {
+      get: (_packageDirectory, name) => components[name],
+      // Like the real provider, leaves out what the page has shown.
+      typeDefinitions: (_packageDirectory, component, _types, shown) =>
+        (component.displayName === "Row"
+          ? []
+          : [
+              {
+                name: "Value",
+                kind: "alias",
+                signature: "Value",
+                text: "string | number",
+              },
+              { name: "Item", kind: "parameter", constraint: "object" },
+              {
+                name: "Big",
+                kind: "interface",
+                signature: "Big<T>",
+                packageDirectory: "core",
+              },
+            ]
+        ).filter(
+          (definition) =>
+            !shown.has(definition.name) && shown.add(definition.name),
+        ),
+      // The props interface names the element; CellIcon's names two.
+      elementsOf: (_packageDirectory, component) =>
+        component.displayName === "Cell" ? ["td"] : ["div", "textarea"],
+    };
+
+    it("says what a component inherits and defines its types once a page", async () => {
+      const recorded = [];
+      const ctx = createContext({
+        props,
+        subcomponents: (_packageDirectory, name) =>
+          name === "Cell" ? ["CellIcon"] : [],
+        recordComponent: (name) => recorded.push(name),
+      });
+      const markdown = await toMarkdown(
+        '<PropsTable componentName="Cell" />\n\n<PropsTable componentName="Row" />',
+        ctx,
+      );
+      expect(markdown).toBe(
+        [
+          "| Prop | Type | Default | Description |",
+          "| - | - | - | - |",
+          "| `value` | `Value` | - | - |",
+          "",
+          "It also accepts `<td>` attributes, such as `colSpan`, `rowSpan` and `width`, and `ref`, which the table leaves out. Types in this table: `Value` is `string | number`; `Item` is a type parameter (`extends object`) inferred from the props you pass; `Big<T>` is in the type declarations of `@salt-ds/core`.",
+          "",
+          "**`CellIcon`**, exported with `Cell`:",
+          "",
+          "| Prop | Type | Default | Description |",
+          "| - | - | - | - |",
+          "| `value` | `Value` | - | - |",
+          "",
+          "It also accepts HTML attributes, such as `value`, which the table leaves out.",
+          "",
+          "`Row` has no props of its own. It accepts HTML attributes and `ref`.",
+          "",
+        ].join("\n"),
+      );
+      expect(recorded).toEqual(["Cell", "CellIcon", "Row"]);
+    });
+  });
+
   it("converts keyboard controls to a list", async () => {
     const markdown = await toMarkdown(
       '<KeyboardControls>\n<KeyboardControl keyOrCombos={["Enter", "Space"]}>\n- Selects the item.\n</KeyboardControl>\n</KeyboardControls>',

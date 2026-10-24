@@ -30,7 +30,7 @@ import { compareText, pathExists } from "./files.mjs";
 import { createLinkResolver, decodeFragment, docLink } from "./links.mjs";
 import { parseMarkdown } from "./mdx.mjs";
 import { discoverDocuments } from "./pages.mjs";
-import { partCandidates } from "./parts.mjs";
+import { exampleUsages, partCandidates } from "./parts.mjs";
 import { createPropsProvider } from "./props.mjs";
 import {
   changelogReplacements,
@@ -455,9 +455,12 @@ async function addCheckData({
       });
     } else {
       const components = shared.props.all?.(info.directory) ?? new Map();
+      // Only the pages of this package's own components: Lab's legacy Tab
+      // isn't Core's Tab.
       const pages = new Map();
-      for (const [name, page] of shared.componentPages) {
-        if (components.has(name)) {
+      for (const [key, page] of shared.componentPages) {
+        const name = key.slice(info.directory.length + 1);
+        if (key.startsWith(`${info.directory}/`) && components.has(name)) {
           pages.set(
             name,
             page.packageName === packageName
@@ -466,8 +469,10 @@ async function addCheckData({
           );
         }
       }
+      // REQUIRED_PARTS are reviewed from the site's examples, for the
+      // components the site documents.
       const requiredParts = Object.fromEntries(
-        Object.entries(REQUIRED_PARTS).filter(([name]) => components.has(name)),
+        Object.entries(REQUIRED_PARTS).filter(([name]) => pages.has(name)),
       );
       for (const name of Object.keys(requiredParts)) placed.add(name);
       data = componentCheckData({ components, pages, requiredParts });
@@ -484,6 +489,55 @@ async function addCheckData({
       );
     }
   }
+}
+
+/** The names that `pattern` captures in the files under `directory`. */
+async function namesInFiles(directory, extension, pattern) {
+  const names = new Set();
+  const visit = async (folder) => {
+    for (const entry of await readdir(folder, { withFileTypes: true })) {
+      const file = path.join(folder, entry.name);
+      if (entry.isDirectory()) await visit(file);
+      else if (entry.name.endsWith(extension)) {
+        for (const [, name] of (await readFile(file, "utf8")).matchAll(
+          pattern,
+        )) {
+          names.add(name);
+        }
+      }
+    }
+  };
+  await visit(directory);
+  return names;
+}
+
+/**
+ * Finds the exported components that the site's examples use but no site
+ * page gives a props table, for the table of the component whose name
+ * theirs extends: DrawerCloseButton goes with Drawer. The longest such name
+ * in the same package owns a part.
+ */
+function subcomponentFinder(props, tabled, used) {
+  const extendsName = (part, name) =>
+    part.startsWith(name) && /^[A-Z]/.test(part.slice(name.length));
+  // Package -> owner -> its parts, worked out once per package.
+  const byPackage = new Map();
+  return (packageDirectory, name) => {
+    if (!byPackage.has(packageDirectory)) {
+      const names = [...(props.all?.(packageDirectory)?.keys() ?? [])];
+      const owners = names
+        .filter((other) => tabled.has(other))
+        .sort((left, right) => right.length - left.length);
+      const parts = new Map();
+      for (const part of names) {
+        if (tabled.has(part) || !used.has(part)) continue;
+        const owner = owners.find((other) => extendsName(part, other));
+        if (owner) parts.set(owner, [...(parts.get(owner) ?? []), part]);
+      }
+      byPackage.set(packageDirectory, parts);
+    }
+    return byPackage.get(packageDirectory).get(name) ?? [];
+  };
 }
 
 /**
@@ -537,14 +591,26 @@ export async function generateAgentDocs({
     return `#salt-anchor-${deferredAnchors.length - 1}`;
   };
   const tokens = await readTokens({ packages, packagesDir, warnings });
+  const props = propsProvider ?? createPropsProvider({ packagesDir });
   const shared = {
     deprecatedTokens: deprecatedTokens(tokens),
-    // Component name -> the page whose props table documents it.
+    // "<package directory>/<component>" -> the page whose props table
+    // documents it.
     componentPages: new Map(),
     packages,
     links: createLinkResolver(routeIndex, { deferAnchor, siteRoutes: routes }),
     examples: createExampleResolver({ examplesDir }),
-    props: propsProvider ?? createPropsProvider({ packagesDir }),
+    props,
+    subcomponents: subcomponentFinder(
+      props,
+      await namesInFiles(
+        siteDocsDir,
+        ".mdx",
+        /<PropsTable\b[^>]*\bcomponentName=["']([^"']+)["']/g,
+      ),
+      // Components the examples use as JSX elements.
+      new Set((await exampleUsages(examplesDir)).keys()),
+    ),
     documents: knownDocuments,
     componentsByTitle: new Map(
       knownDocuments

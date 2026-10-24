@@ -287,7 +287,13 @@ export async function collectTokens(
   for (const token of sorted) {
     const step = token.tier === "deprecated" && steps.get(token.name);
     if (!step) continue;
-    const replacements = resolve(token.name);
+    // From its replacements: a token deprecated in one theme can be usable
+    // in another, and isn't its own replacement.
+    const replacements = [
+      ...new Set(
+        step.names.flatMap((next) => resolve(next, new Set([token.name]))),
+      ),
+    ];
     if (replacements.length > 0) {
       token.replacements = replacements;
       // Otherwise the token is an alias of its replacement.

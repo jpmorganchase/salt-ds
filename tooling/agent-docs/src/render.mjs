@@ -92,6 +92,8 @@ async function convertPage(page, doc, shared) {
     links: shared.links,
     examples: shared.examples,
     props: shared.props,
+    subcomponents: (packageDirectory, name) =>
+      shared.subcomponents?.(packageDirectory, name) ?? [],
     referenceLink: (packageName, docPath) =>
       docLink({
         fromPackage: doc.packageName,
@@ -108,9 +110,12 @@ async function convertPage(page, doc, shared) {
     childPages: () => childPageList(doc, shared),
     deprecatedToken: (name) => shared.deprecatedTokens?.get(name),
     // The first page whose props table documents a component is its page.
-    recordComponent: (name) => {
-      if (!shared.componentPages?.has(name)) {
-        shared.componentPages?.set(name, {
+    // Packages can export different components with one name, such as Lab's
+    // legacy Tab, so a page is recorded for the table's package.
+    recordComponent: (name, packageDirectory) => {
+      const key = `${packageDirectory}/${name}`;
+      if (!shared.componentPages?.has(key)) {
+        shared.componentPages?.set(key, {
           packageName: doc.packageName,
           docPath: doc.docPath,
         });

@@ -255,6 +255,43 @@ describe("findBrokenLinks", () => {
 });
 
 describe("generateAgentDocs", () => {
+  it("adds the parts examples use to their component's table", async () => {
+    const button = {
+      displayName: "Button",
+      props: propsProvider.get("core", "Button").props,
+    };
+    const parts = {
+      ButtonIcon: {
+        displayName: "ButtonIcon",
+        props: {},
+        inherited: { HTMLAttributes: ["id"] },
+      },
+      ButtonInternal: { displayName: "ButtonInternal", props: {} },
+    };
+    const components = new Map([["Button", button], ...Object.entries(parts)]);
+    const repoRoot = await createFixture({
+      "site/src/examples/button/Primary.tsx":
+        'import { Button, ButtonIcon } from "@salt-ds/core";\nexport const Primary = () => <Button><ButtonIcon /></Button>;\n',
+    });
+    const result = await generateAgentDocs({
+      repoRoot,
+      write: false,
+      propsProvider: {
+        get: (packageDirectory, name) =>
+          packageDirectory === "core" ? components.get(name) : undefined,
+        all: (packageDirectory) =>
+          packageDirectory === "core" ? components : new Map(),
+      },
+    });
+    const files = result.outputs.get("@salt-ds/core").files;
+    const page = files.get("components/button.md");
+    // Examples use ButtonIcon but not ButtonInternal.
+    expect(page).toContain(
+      "**`ButtonIcon`**, exported with `Button`:\n\n`ButtonIcon` has no props of its own. It accepts HTML attributes.",
+    );
+    expect(page).not.toContain("ButtonInternal");
+  });
+
   it("writes version-matched docs into each owning package", async () => {
     const repoRoot = await createFixture();
     const result = await generateAgentDocs({ repoRoot, propsProvider });

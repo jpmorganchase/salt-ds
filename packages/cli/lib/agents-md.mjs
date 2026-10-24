@@ -28,7 +28,7 @@ export function instructions({ rootBase = "this file", check } = {}) {
     check
       ? `Before you finish, run \`${check}\` from ${rootBase === "this file" ? "this file's folder" : rootBase} and fix what it reports: it checks the Salt tokens, deprecated props and component parts in the files you changed against the installed docs.`
       : "Before you finish, check each Salt prop against its component page's props table and avoid deprecated props.",
-    "Props tables omit some inherited/native props; confirm these in the installed type declarations and check whether attributes belong on the wrapper or an inputProps slot.",
+    "Under each props table, pages list the attributes a component also accepts and the Salt types the table names; use the installed type declarations for anything else, such as whether attributes belong on the wrapper or an inputProps slot.",
     ...(check
       ? []
       : [
