@@ -21,7 +21,7 @@ export interface DialogHeaderProps extends ComponentPropsWithoutRef<"div"> {
    */
   status?: ValidationStatus | undefined;
   /**
-   * Displays the accent bar in the Dialog Title */
+   * Hides the accent bar in the Dialog header. */
   disableAccent?: boolean;
   /**
    * Displays the header at the top of the Dialog

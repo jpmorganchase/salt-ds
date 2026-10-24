@@ -20,6 +20,10 @@ import {
 } from "@salt-ds/core";
 ```
 
+## Trigger
+
+`CollapsibleTrigger` renders no element of its own. It adds `aria-expanded`, `aria-controls` and the click handler that toggles the panel to its child, so wrap a single interactive element, such as a `Button`. Other children render as they are and don't toggle the panel.
+
 ## Props
 
 ### `Collapsible`

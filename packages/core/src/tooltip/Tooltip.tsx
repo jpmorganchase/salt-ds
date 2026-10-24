@@ -55,11 +55,11 @@ export interface TooltipProps
    */
   enterDelay?: number;
   /**
-   * Delay in milliseconds before the Tooltip is hidden. Defaults to 300ms.
+   * Delay in milliseconds before the Tooltip is hidden. Defaults to 0.
    */
   leaveDelay?: number;
   /**
-   * Option to not display the Tooltip. Can be used in conditional situations like text truncation. Defaults to 0.
+   * Option to not display the Tooltip. Can be used in conditional situations like text truncation. Defaults to `false`.
    */
   disabled?: boolean;
   /**

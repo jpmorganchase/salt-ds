@@ -262,7 +262,7 @@ const MobileAppHeader: FC<{
 };
 
 export const AppHeader = () => {
-  const isMobile = useResponsiveProp({ xs: true, sm: false }, false);
+  const isMobile = useResponsiveProp({ xs: true, md: false }, false);
 
   const items = ["Home", "About", "Services", "Contact", "Blog"];
 

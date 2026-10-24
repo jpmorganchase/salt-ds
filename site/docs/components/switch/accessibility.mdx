@@ -8,6 +8,10 @@ data:
   $ref: ./#/data
 ---
 
+## Best practices
+
+- Give every switch an accessible name with its `label` prop. When there's no space for a visible label, set an `aria-label` through `inputProps`, such as `inputProps={{ "aria-label": "Dark mode" }}`. Other props on `Switch` go to its wrapping `label` element, so an `aria-label` there doesn't name the switch.
+
 ## Keyboard interactions
 
 <KeyboardControls>

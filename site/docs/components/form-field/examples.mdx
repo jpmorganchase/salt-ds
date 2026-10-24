@@ -53,6 +53,8 @@ You can position the form field label to the left of the form control via the pr
 
 - Place your label to the left of the control if your application has limitations in vertical real estate or you have a very data-heavy, dense form that should show as many fields visible as possible without scrolling.
 
+`labelPlacement="left"` aligns the label text to the left. For the right-aligned labels that the [forms pattern](/salt/patterns/forms#left-placement) uses by default for left placement, set `labelPlacement="right"`: the label stays to the left of the control, with its text aligned to the right.
+
 <LivePreview componentName="form-field" exampleName="LabelLeft" />
 
 ## Label as question
@@ -70,6 +72,8 @@ You can display multiple controls within a single form field. Wrap the controls 
 ## Necessity label
 
 If a field is necessary, you can mark it with a "Required”, “Optional” or “\*” indicator using the `necessity` prop.
+
+`"required"` and `"asterisk"` also make the control required: `Input`, `MultilineInput`, `NumberInput` and `ComboBox` set the native `required` attribute, so the browser's own form validation applies to them, and `Dropdown` sets `aria-required`. `RadioButtonGroup` and `CheckboxGroup` only show the indicator.
 
 <LivePreview componentName="form-field" exampleName="NecessityLabel" />
 
