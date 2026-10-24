@@ -2,6 +2,7 @@
 // Sets up the documentation for the target application's installed Salt packages.
 import {
   existsSync,
+  mkdirSync,
   readdirSync,
   readFileSync,
   realpathSync,
@@ -14,16 +15,23 @@ import { fileURLToPath } from "node:url";
 export const BEGIN_MARKER = "<!-- BEGIN:salt-ds-agent-docs -->";
 export const END_MARKER = "<!-- END:salt-ds-agent-docs -->";
 export const MANIFEST_FILE = "manifest.json";
-export const INSTRUCTIONS =
-  "This project uses the Salt Design System (`@salt-ds/*` packages), whose APIs may differ from your training data. For any Salt task, prefer retrieval-led reasoning over pre-training-led reasoning: before writing or changing UI that uses Salt, read the relevant pages from the index below. They are generated for the installed package versions. Prefer component props, such as `Text`'s `color`, to custom CSS with `--salt-*` tokens. Before you finish, check each Salt prop against its component page's props table and avoid deprecated props. Tables omit some inherited/native props; confirm these in the installed type declarations and check whether attributes belong on the wrapper or an inputProps slot. For each `--salt-*` token, find the installed `@salt-ds/theme` documentation in the index and check its token references for a characteristic or foundation token available in the selected theme. Index paths are relative to `root`, which is relative to this file. Names in brackets after page names are other names for the same component, and each package's `docs/index.md` summarizes its pages.";
+const INSTRUCTIONS_BEFORE_ROOT_BASE =
+  "This project uses the Salt Design System (`@salt-ds/*` packages), whose APIs may differ from your training data. For any Salt task, prefer retrieval-led reasoning over pre-training-led reasoning: before writing or changing UI that uses Salt, read the relevant pages from the index below. They are generated for the installed package versions. Prefer component props, such as `Text`'s `color`, to custom CSS with `--salt-*` tokens. Before you finish, check each Salt prop against its component page's props table and avoid deprecated props. Tables omit some inherited/native props; confirm these in the installed type declarations and check whether attributes belong on the wrapper or an inputProps slot. For each `--salt-*` token, find the installed `@salt-ds/theme` documentation in the index and check its token references for a characteristic or foundation token available in the selected theme. Index paths are relative to `root`, which is relative to ";
+const INSTRUCTIONS_AFTER_ROOT_BASE =
+  ". Names in brackets after page names are other names for the same component, and each package's `docs/index.md` summarizes its pages.";
 
-export function agentsBlock({ root = ".", lines }) {
+/** `rootBase` is what the index's `root` is relative to. */
+export function instructions(rootBase = "this file") {
+  return `${INSTRUCTIONS_BEFORE_ROOT_BASE}${rootBase}${INSTRUCTIONS_AFTER_ROOT_BASE}`;
+}
+
+export function agentsBlock({ root = ".", lines, rootBase }) {
   return [
     BEGIN_MARKER,
     "",
     "## Salt Design System",
     "",
-    INSTRUCTIONS,
+    instructions(rootBase),
     "",
     [`[Salt docs index]|root: ${root}`, ...lines].join("\n"),
     "",
@@ -37,7 +45,11 @@ function compare(left, right) {
   return left < right ? -1 : left > right ? 1 : 0;
 }
 
-/** One line per docs folder, preserving each package's actual installed path. */
+/**
+ * One line per docs folder, preserving each package's actual installed path.
+ * Package versions are left out so that the block, which projects commit,
+ * changes only when pages do; each page states its version.
+ */
 export function indexLines(manifests) {
   const ordered = [...manifests].sort((left, right) => {
     const leftCore = left.name === "@salt-ds/core" || left.directory === "core";
@@ -49,11 +61,8 @@ export function indexLines(manifests) {
     );
   });
   const lines = [];
-  for (const { directory, name, version, docsPath, pages } of ordered) {
+  for (const { directory, docsPath, pages } of ordered) {
     const docsRoot = docsPath ?? `${directory}/docs`;
-    if (name && version) {
-      lines.push(`[Package ${name}@${version}]|docs: ${docsRoot}`);
-    }
     const folders = new Map();
     for (const page of pages ?? []) {
       if (typeof page?.path !== "string") continue;
@@ -88,6 +97,7 @@ export function indexLines(manifests) {
 }
 
 const CLAUDE_IMPORT = "@AGENTS.md";
+const COPILOT_INSTRUCTIONS = path.join(".github", "copilot-instructions.md");
 const USAGE = `Usage: node node_modules/@salt-ds/core/docs/agents-md.mjs [options]
 
 Adds an index of your project's installed Salt docs to AGENTS.md and makes
@@ -97,7 +107,9 @@ application and does not install or upgrade Salt packages.
 Options:
   --project <path>  Application whose packages to index (default: --dir or cwd)
   --dir <path>      Folder holding AGENTS.md (default: project folder)
-  --check           Change nothing; exit with 1 if either file needs updating
+  --copilot         Also add the index to .github/copilot-instructions.md in
+                    the repository holding --dir, for GitHub Copilot
+  --check           Change nothing; exit with 1 if any file needs updating
   --no-claude       Leave CLAUDE.md alone
   --help            Show this help`;
 
@@ -276,6 +288,7 @@ function parseArguments(args) {
     if (arg === "--") continue;
     if (arg === "--check") options.check = true;
     else if (arg === "--no-claude") options.claude = false;
+    else if (arg === "--copilot") options.copilot = true;
     else if (arg === "--help" || arg === "-h") options.help = true;
     else if (/^--(?:dir|project)(?:=|$)/.test(arg)) {
       const [flag, ...inline] = arg.split("=");
@@ -306,6 +319,14 @@ function sameFile(left, right) {
   }
 }
 
+/** The nearest folder at or above `start` that holds `.git`, else `start`. */
+function repositoryRoot(start) {
+  for (let current = start; ; current = path.dirname(current)) {
+    if (existsSync(path.join(current, ".git"))) return current;
+    if (path.dirname(current) === current) return start;
+  }
+}
+
 export function run(args, { log = console.log } = {}) {
   const options = parseArguments(args);
   if (options.help) {
@@ -320,21 +341,43 @@ export function run(args, { log = console.log } = {}) {
     root: ".",
     lines: indexLines(discoverManifests(project, dir)),
   });
+  const agentsPath = path.join(dir, "AGENTS.md");
   const updates = [
-    { file: "AGENTS.md", update: (content) => upsertBlock(content, block) },
+    {
+      file: "AGENTS.md",
+      filePath: agentsPath,
+      update: (content) => upsertBlock(content, block),
+    },
   ];
-  if (options.claude)
-    updates.push({ file: "CLAUDE.md", update: withClaudeImport });
+  if (options.claude) {
+    updates.push({
+      file: "CLAUDE.md",
+      filePath: path.join(dir, "CLAUDE.md"),
+      update: withClaudeImport,
+    });
+  }
+  if (options.copilot) {
+    // Copilot reads one instructions file at the repository root and may not
+    // tell the model where it is, so this index is relative to that root.
+    const repository = repositoryRoot(dir);
+    const copilotBlock = agentsBlock({
+      root: ".",
+      rootBase: "the repository root",
+      lines: indexLines(discoverManifests(project, repository)),
+    });
+    const filePath = path.join(repository, COPILOT_INSTRUCTIONS);
+    updates.push({
+      file: toPosix(path.relative(dir, filePath)),
+      filePath,
+      update: (content) => upsertBlock(content, copilotBlock),
+    });
+  }
+  const isAgentsFile = (filePath) =>
+    filePath !== agentsPath && sameFile(filePath, agentsPath);
 
-  // Read and validate both files before writing either one.
-  const planned = updates.map(({ file, update }) => {
-    const filePath = path.join(dir, file);
-    if (
-      file === "CLAUDE.md" &&
-      sameFile(filePath, path.join(dir, "AGENTS.md"))
-    ) {
-      return { file, same: true };
-    }
+  // Read and validate every file before writing any of them.
+  const planned = updates.map(({ file, filePath, update }) => {
+    if (isAgentsFile(filePath)) return { file, same: true };
     const current = existsSync(filePath) ? readFileSync(filePath, "utf8") : "";
     try {
       return { file, filePath, current, next: update(current) };
@@ -345,12 +388,9 @@ export function run(args, { log = console.log } = {}) {
 
   let stale = false;
   for (const { file, filePath, current, next, same } of planned) {
-    // Creating AGENTS.md can make a previously dangling CLAUDE.md link resolve.
-    if (
-      same ||
-      (file === "CLAUDE.md" && sameFile(filePath, path.join(dir, "AGENTS.md")))
-    ) {
-      log("CLAUDE.md is the same file as AGENTS.md.");
+    // Creating AGENTS.md can make a previously dangling link to it resolve.
+    if (same || isAgentsFile(filePath)) {
+      log(`${file} is the same file as AGENTS.md.`);
     } else if (next === current) {
       log(`${file} is up to date.`);
     } else {
@@ -358,6 +398,7 @@ export function run(args, { log = console.log } = {}) {
       if (options.check) {
         log(`${file} needs updating.`);
       } else {
+        mkdirSync(path.dirname(filePath), { recursive: true });
         writeFileSync(filePath, next);
         log(`${current === "" ? "Created" : "Updated"} ${file}.`);
       }

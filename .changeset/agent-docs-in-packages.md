@@ -11,4 +11,4 @@
 "@salt-ds/theme": minor
 ---
 
-Added documentation for coding agents in each package's `docs` folder. It is generated from the Salt website for the published version, and covers component usage, props, examples and accessibility, plus patterns, design tokens, icons and country symbols. Run `node node_modules/@salt-ds/core/docs/agents-md.mjs` to add an index of the installed docs to your project's `AGENTS.md` and import it from `CLAUDE.md`, and run it again after upgrading Salt.
+Added documentation for coding agents in each package's `docs` folder. It is generated from the Salt website for the published version, and covers component usage, props, examples and accessibility, plus patterns, design tokens, icons and country symbols. Run `node node_modules/@salt-ds/core/docs/agents-md.mjs` to add an index of the installed docs to your project's `AGENTS.md` and import it from `CLAUDE.md`, or add `--copilot` to also add it to `.github/copilot-instructions.md`. Run it again after upgrading Salt; `--check` reports when an upgrade changed the indexed pages.

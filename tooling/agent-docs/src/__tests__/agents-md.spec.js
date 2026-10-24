@@ -93,11 +93,10 @@ describe("application package discovery", () => {
     expect(run(["--project", app, "--dir", root], quiet)).toBe(0);
     const content = readFileSync(path.join(root, "AGENTS.md"), "utf8");
     expect(content).toContain("[Salt docs index]|root: .");
-    expect(content).toContain("[Package @salt-ds/core@2.0.0]");
-    expect(content).not.toContain("[Package @salt-ds/core@1.0.0]");
     expect(content).toContain(
       "|apps/web/node_modules/@salt-ds/core/docs/components:",
     );
+    expect(content).not.toContain("|node_modules/@salt-ds/core/");
     expect(content).toContain("|node_modules/@salt-ds/theme/docs/components:");
     expect(content).toContain("|node_modules/@salt-ds/lab/docs/components:");
     expect(content).not.toContain("|node_modules/@salt-ds/styles/");
@@ -123,7 +122,7 @@ describe("application package discovery", () => {
     install(root);
     expect(run(["--dir", root], quiet)).toBe(0);
     expect(readFileSync(path.join(root, "AGENTS.md"), "utf8")).toContain(
-      "[Package @salt-ds/core@1.0.0]",
+      "|node_modules/@salt-ds/core/docs/components:{button.md}",
     );
   });
 
@@ -150,14 +149,16 @@ describe("application package discovery", () => {
 
       expect(run(args, quiet)).toBe(0);
       const content = readFileSync(path.join(output, "AGENTS.md"), "utf8");
-      expect(content).toContain("[Package @salt-ds/core@2.0.0]");
-      expect(content).not.toContain("[Package @salt-ds/core@1.0.0]");
-      const docsPath = content.match(
-        /\[Package @salt-ds\/core@2\.0\.0\]\|docs: (.+)/,
-      )[1];
+      const docsPath = content.match(/\|(.+)\/components:\{button\.md\}/)[1];
       expect(docsPath).toBe(
         `${separateOutput ? ".." : "../.."}/node_modules/@salt-ds/core/docs`,
       );
+      // The repository's Core (2.0.0), not the one above it (1.0.0).
+      expect(
+        JSON.parse(
+          readFileSync(path.join(output, docsPath, "../package.json"), "utf8"),
+        ).version,
+      ).toBe("2.0.0");
       expect(
         readFileSync(
           path.join(output, docsPath, "components/button.md"),
@@ -218,8 +219,9 @@ describe("application package discovery", () => {
     cpSync(scriptPath, executable);
     await execFile(process.execPath, [executable], { cwd: root });
     const content = readFileSync(path.join(root, "AGENTS.md"), "utf8");
-    expect(content).toContain("[Package @salt-ds/core@4.0.0]");
-    expect(content).not.toContain("9.0.0");
+    expect(content).toContain(
+      "|node_modules/@salt-ds/core/docs/components:{button.md}",
+    );
     expect(content).not.toContain(cache);
     expect(existsSync(path.join(cache, "AGENTS.md"))).toBe(false);
   });
@@ -353,12 +355,32 @@ describe("instruction updates", () => {
     expect(readFileSync(path.join(root, "AGENTS.md"), "utf8")).toBe(before);
   });
 
-  it("detects a changed installed version even when the page list stays the same", () => {
+  it("needs no update for a new installed version with the same pages", () => {
     const root = project();
     install(root);
     run(["--project", root], quiet);
+    const before = readFileSync(path.join(root, "AGENTS.md"), "utf8");
     install(root, "core", { version: "1.0.1" });
+    expect(run(["--project", root, "--check"], quiet)).toBe(0);
+    expect(run(["--project", root], quiet)).toBe(0);
+    expect(readFileSync(path.join(root, "AGENTS.md"), "utf8")).toBe(before);
+    expect(before).not.toContain("1.0.0");
+  });
+
+  it("detects a changed page list after an upgrade", () => {
+    const root = project();
+    const core = install(root);
+    run(["--project", root], quiet);
+    install(root, "core", { version: "1.1.0" });
+    write(core, "docs/components/dialog.md", "# Dialog");
+    changeManifest(core, (manifest) => {
+      manifest.pages.push({ path: "components/dialog.md", title: "Dialog" });
+    });
     expect(run(["--project", root, "--check"], quiet)).toBe(1);
+    expect(run(["--project", root], quiet)).toBe(0);
+    expect(readFileSync(path.join(root, "AGENTS.md"), "utf8")).toContain(
+      "|node_modules/@salt-ds/core/docs/components:{button.md,dialog.md}",
+    );
   });
 
   it("validates both output files before writing", () => {
@@ -498,6 +520,119 @@ describe("instruction updates", () => {
     install(root);
     expect(
       run([`--project=${root}`, `--dir=${root}`, "--no-claude"], quiet),
+    ).toBe(0);
+  });
+});
+
+describe("GitHub Copilot instructions", () => {
+  const copilotFile = (root) =>
+    path.join(root, ".github", "copilot-instructions.md");
+
+  it("is only written with --copilot", () => {
+    const root = project();
+    mkdirSync(path.join(root, ".git"));
+    install(root);
+    expect(run(["--project", root], quiet)).toBe(0);
+    expect(existsSync(path.join(root, ".github"))).toBe(false);
+  });
+
+  it("adds the index to the repository's file, keeping its other instructions", () => {
+    const root = project();
+    mkdirSync(path.join(root, ".git"));
+    install(root);
+    write(root, ".github/copilot-instructions.md", "# Team rules\n");
+
+    const log = [];
+    expect(
+      run(["--project", root, "--copilot"], { log: (line) => log.push(line) }),
+    ).toBe(0);
+    expect(log).toContain("Updated .github/copilot-instructions.md.");
+    const content = readFileSync(copilotFile(root), "utf8");
+    expect(content).toMatch(
+      /^# Team rules\n\n<!-- BEGIN:salt-ds-agent-docs -->/,
+    );
+    expect(content).toContain(
+      "Index paths are relative to `root`, which is relative to the repository root.",
+    );
+    expect(content).toContain(
+      "[Salt docs index]|root: .\n|node_modules/@salt-ds/core/docs/components:{button.md}",
+    );
+    // AGENTS.md keeps paths relative to itself.
+    expect(readFileSync(path.join(root, "AGENTS.md"), "utf8")).toContain(
+      "which is relative to this file.",
+    );
+
+    expect(run(["--project", root, "--copilot", "--check"], quiet)).toBe(0);
+    expect(run(["--project", root, "--copilot"], quiet)).toBe(0);
+    expect(readFileSync(copilotFile(root), "utf8")).toBe(content);
+  });
+
+  it("indexes an application's packages relative to the repository root", () => {
+    const root = project();
+    // A worktree or submodule has a .git file rather than a folder.
+    write(root, ".git", "gitdir: ../main/.git/worktrees/root\n");
+    const app = path.join(root, "apps/web");
+    install(app);
+    install(root, "theme");
+
+    expect(run(["--project", app, "--copilot"], quiet)).toBe(0);
+    const content = readFileSync(copilotFile(root), "utf8");
+    expect(content).toContain(
+      "|apps/web/node_modules/@salt-ds/core/docs/components:{button.md}",
+    );
+    expect(content).toContain(
+      "|node_modules/@salt-ds/theme/docs/components:{button.md}",
+    );
+    expect(existsSync(path.join(app, ".github"))).toBe(false);
+    expect(readFileSync(path.join(app, "AGENTS.md"), "utf8")).toContain(
+      "|../../node_modules/@salt-ds/theme/docs/components:",
+    );
+  });
+
+  it("uses --dir outside a Git repository", () => {
+    const root = project();
+    install(root);
+    expect(run(["--project", root, "--copilot"], quiet)).toBe(0);
+    expect(readFileSync(copilotFile(root), "utf8")).toContain(
+      "|node_modules/@salt-ds/core/docs/components:{button.md}",
+    );
+  });
+
+  it("reports a missing file with --check without creating it", () => {
+    const root = project();
+    mkdirSync(path.join(root, ".git"));
+    install(root);
+    run(["--project", root], quiet);
+    const log = [];
+    expect(
+      run(["--project", root, "--copilot", "--check"], {
+        log: (line) => log.push(line),
+      }),
+    ).toBe(1);
+    expect(log).toContain(".github/copilot-instructions.md needs updating.");
+    expect(existsSync(path.join(root, ".github"))).toBe(false);
+  });
+
+  it("leaves a Copilot file that is AGENTS.md to the AGENTS.md block", () => {
+    const root = project();
+    mkdirSync(path.join(root, ".git"));
+    install(root);
+    mkdirSync(path.join(root, ".github"));
+    symlinkSync("../AGENTS.md", copilotFile(root));
+    const log = [];
+    expect(
+      run(["--project", root, "--copilot", "--no-claude"], {
+        log: (line) => log.push(line),
+      }),
+    ).toBe(0);
+    expect(log).toContain(
+      ".github/copilot-instructions.md is the same file as AGENTS.md.",
+    );
+    expect(readFileSync(copilotFile(root), "utf8")).toContain(
+      "which is relative to this file.",
+    );
+    expect(
+      run(["--project", root, "--copilot", "--no-claude", "--check"], quiet),
     ).toBe(0);
   });
 });

@@ -24,13 +24,13 @@ const TOKEN_TIERS = [
     key: "palette",
     title: "Palette tokens",
     guidance:
-      "Intermediate values used by characteristic tokens to support modes. Never reference palette tokens directly.",
+      "Intermediate values used by characteristic tokens to support modes. Don't reference palette tokens directly, except in a group that no characteristic token references, which is marked.",
   },
   {
     key: "deprecated",
     title: "Deprecated tokens",
     guidance:
-      "Do not use these tokens in new code. An alias is shown only when every declaration directly references the same characteristic or foundation token. Check the theme changelog for other replacements.",
+      "Do not use these tokens in new code. A replacement is shown when the theme CSS names one, and an alias when every declaration directly references the same characteristic or foundation token. Check the theme changelog for other replacements.",
   },
 ];
 
@@ -87,11 +87,74 @@ function preferredDeclaration(declarations) {
 }
 
 /**
+ * The replacement a deprecated declaration's trailing comment names, as in
+ * `/* Use --salt-x *\/`, `/* Use ---salt-x *\/` or `/* --salt-x *\/`.
+ */
+function namedReplacement(declaration) {
+  const comment = declaration.next();
+  if (
+    comment?.type !== "comment" ||
+    comment.source?.start?.line !== declaration.source?.end?.line
+  ) {
+    return undefined;
+  }
+  return /^(?:use\s+)?-*(--salt-[A-Za-z0-9-]+)$/i.exec(
+    comment.text.trim(),
+  )?.[1];
+}
+
+/**
+ * Replacements in the theme changelog's tables whose second column is a
+ * replacement, as `token -> [options]`. The newest release comes first and
+ * wins. A cell other than tokens joined by "or", such as a calculation or
+ * "None", names no replacement.
+ */
+export function changelogReplacements(markdown) {
+  const replacements = new Map();
+  const seen = new Set();
+  const cells = (line) =>
+    line
+      .trim()
+      .split("|")
+      .slice(1, -1)
+      .map((cell) => cell.trim());
+  const lines = markdown.split("\n");
+  let replacing = false;
+  lines.forEach((line, index) => {
+    if (/^\s*\|[\s:|-]+\|\s*$/.test(line)) {
+      replacing = /^replacement/i.test(cells(lines[index - 1] ?? "")[1] ?? "");
+      return;
+    }
+    if (!line.trim().startsWith("|")) {
+      replacing = false;
+      return;
+    }
+    if (!replacing) return;
+    const [from, to = ""] = cells(line);
+    const token = /^`?(--salt-[\w-]+)`?$/.exec(from)?.[1];
+    if (!token || seen.has(token)) return;
+    seen.add(token);
+    if (/^`?--salt-[\w-]+`?(?:\s+or\s+`?--salt-[\w-]+`?)*$/.test(to)) {
+      replacements.set(
+        token,
+        [...to.matchAll(/--salt-[\w-]+/g)].map(([name]) => name),
+      );
+    }
+  });
+  return replacements;
+}
+
+/**
  * Collects every `--salt-*` custom property declared in the theme CSS, with
  * one entry per tier the token has: a token can be current in one theme and
- * deprecated in another.
+ * deprecated in another. `changelog` holds the replacements from
+ * `changelogReplacements`, and `warn` reports named replacements that can't
+ * be used.
  */
-export async function collectTokens(themeCssDir) {
+export async function collectTokens(
+  themeCssDir,
+  { changelog = new Map(), warn = () => {} } = {},
+) {
   const files = await listFiles(themeCssDir, (file) => file.endsWith(".css"));
   const stylesheets = new Map(
     await Promise.all(
@@ -105,6 +168,10 @@ export async function collectTokens(themeCssDir) {
   // Declarations in the classified token files, in file order.
   const declarationsByName = new Map();
   const aliasesByName = new Map();
+  // Replacements that deprecated declarations' comments name.
+  const namedByName = new Map();
+  // Tokens that characteristic tokens reference.
+  const referencedByCharacteristics = new Set();
   for (const relativePath of files) {
     const tier = tierFor(relativePath);
     const group = path.posix.basename(relativePath, ".css");
@@ -121,6 +188,20 @@ export async function collectTokens(themeCssDir) {
       aliases.add(alias);
       aliasesByName.set(declaration.prop, aliases);
       if (!tier) return;
+      if (tier === "characteristics") {
+        for (const [, name] of declaration.value.matchAll(
+          /var\(\s*(--salt-[A-Za-z0-9-]+)/g,
+        )) {
+          referencedByCharacteristics.add(name);
+        }
+      }
+      const named = tier === "deprecated" && namedReplacement(declaration);
+      if (named) {
+        if (!namedByName.has(declaration.prop)) {
+          namedByName.set(declaration.prop, new Set());
+        }
+        namedByName.get(declaration.prop).add(named);
+      }
       if (!declarationsByName.has(declaration.prop)) {
         declarationsByName.set(declaration.prop, []);
       }
@@ -164,19 +245,91 @@ export async function collectTokens(themeCssDir) {
       tierByName.set(token.name, token.tier);
     }
   }
+  const usable = (name) => {
+    const tier = tierByName.get(name);
+    return tier === "characteristics" || tier === "foundations";
+  };
+  // Each deprecated token's next step: the replacement its theme CSS names,
+  // then the theme changelog's, then an alias inferred from its values.
+  const steps = new Map();
   for (const token of sorted) {
     const aliases = aliasesByName.get(token.name);
     token.alias =
       aliases.size === 1 ? aliases.values().next().value : undefined;
-    const aliasTier = token.alias ? tierByName.get(token.alias) : undefined;
-    token.replacement =
-      token.tier === "deprecated" &&
-      (aliasTier === "characteristics" || aliasTier === "foundations")
-        ? token.alias
-        : undefined;
+    if (token.tier !== "deprecated") continue;
+    const named = namedByName.get(token.name);
+    if (named?.size > 1) {
+      warn(
+        `${token.name}: the theme CSS names different replacements in different themes (${[...named].join(", ")}), so none is shown.`,
+      );
+    } else if (named) {
+      steps.set(token.name, { names: [...named], source: "the theme CSS" });
+    } else if (changelog.has(token.name)) {
+      steps.set(token.name, {
+        names: changelog.get(token.name),
+        source: "the theme changelog",
+      });
+    } else if (token.alias) {
+      steps.set(token.name, { names: [token.alias] });
+    }
+  }
+  // Follows replacements that are themselves deprecated to current tokens.
+  const resolve = (name, seen = new Set()) => {
+    if (usable(name)) return [name];
+    if (seen.has(name)) return [];
+    seen.add(name);
+    return [
+      ...new Set(
+        (steps.get(name)?.names ?? []).flatMap((next) => resolve(next, seen)),
+      ),
+    ];
+  };
+  for (const token of sorted) {
+    const step = token.tier === "deprecated" && steps.get(token.name);
+    if (!step) continue;
+    const replacements = resolve(token.name);
+    if (replacements.length > 0) {
+      token.replacements = replacements;
+      // Otherwise the token is an alias of its replacement.
+      token.replacementNamed =
+        Boolean(step.source) ||
+        replacements.length > 1 ||
+        replacements[0] !== token.alias;
+      continue;
+    }
+    // A replacement that is deprecated with no replacement of its own, as the
+    // shadow colors are, leaves the token without one. Only the theme CSS's
+    // comments can be corrected; the changelog records past releases.
+    for (const name of step.source === "the theme CSS" ? step.names : []) {
+      if (!tierByName.has(name)) {
+        warn(
+          `${token.name}: ${step.source} names ${name} as its replacement, which is not a token, so none is shown.`,
+        );
+      } else if (tierByName.get(name) !== "deprecated") {
+        warn(
+          `${token.name}: ${step.source} names ${name} as its replacement, which is a ${tierByName.get(name)} token, so it isn't shown.`,
+        );
+      }
+    }
+  }
+  // Palette groups that no characteristic references are used directly, as
+  // Salt's components use the corner tokens for border radius.
+  const paletteGroups = new Map();
+  for (const token of sorted.filter(({ tier }) => tier === "palette")) {
+    if (!paletteGroups.has(token.group)) paletteGroups.set(token.group, []);
+    paletteGroups.get(token.group).push(token);
+  }
+  for (const group of paletteGroups.values()) {
+    const direct = group.every(
+      (token) => !referencedByCharacteristics.has(token.name),
+    );
+    for (const token of group) token.direct = direct;
   }
   return sorted;
 }
+
+const DIRECT_PALETTE_NOTE =
+  "No characteristic token references these, so reference them directly.";
 
 function themeNote(themes) {
   if (themes.size === Object.keys(THEME_ENTRYPOINTS).length) return "";
@@ -196,9 +349,14 @@ function themeNote(themes) {
 }
 
 function tokenLine(token) {
-  const replacement = token.replacement
-    ? `: alias of \`${token.replacement}\``
-    : "";
+  const replacements = (token.replacements ?? [])
+    .map((name) => `\`${name}\``)
+    .join(" or ");
+  const replacement = token.replacementNamed
+    ? `: use ${replacements} instead`
+    : replacements
+      ? `: alias of ${replacements}`
+      : "";
   return `- \`${token.name}\`${replacement}${themeNote(token.themes)}`;
 }
 
@@ -209,12 +367,18 @@ function groupNames(tokens) {
 /** Token lines, under a heading per group unless `grouped` is false. */
 function tokenListLines(tokens, { grouped, headingLevel }) {
   if (!grouped) return [...tokens.map(tokenLine), ""];
-  return groupNames(tokens).flatMap((group) => [
-    `${"#".repeat(headingLevel)} ${group}`,
-    "",
-    ...tokens.filter((token) => token.group === group).map(tokenLine),
-    "",
-  ]);
+  return groupNames(tokens).flatMap((group) => {
+    const groupTokens = tokens.filter((token) => token.group === group);
+    return [
+      `${"#".repeat(headingLevel)} ${group}`,
+      "",
+      ...(groupTokens.every((token) => token.direct)
+        ? [DIRECT_PALETTE_NOTE, ""]
+        : []),
+      ...groupTokens.map(tokenLine),
+      "",
+    ];
+  });
 }
 
 function introLines({ packageVersion, links, split }) {
@@ -340,17 +504,20 @@ export function renderTokenReference({
         const label = part
           ? `${group}, part ${part} of ${chunks.length}`
           : group;
+        const direct = chunk.every((token) => token.direct);
         fileFor({
           docPath,
           title: `${tier.title}: ${label}`,
-          guidance: tier.guidance,
+          guidance: direct
+            ? `${tier.guidance} ${DIRECT_PALETTE_NOTE}`
+            : tier.guidance,
           list: tokenListLines(chunk, { grouped: false }),
         });
         const range = part
           ? `, \`${chunk[0].name}\` to \`${chunk.at(-1).name}\``
           : "";
         overview.push(
-          `- [${label}](${docPath}): ${tokenCount(chunk)}${range}.`,
+          `- [${label}](${docPath}): ${tokenCount(chunk)}${range}.${direct ? ` ${DIRECT_PALETTE_NOTE}` : ""}`,
         );
       });
     }

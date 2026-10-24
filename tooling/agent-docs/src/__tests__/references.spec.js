@@ -3,7 +3,11 @@ import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
-import { collectTokens, renderTokenReference } from "../references.mjs";
+import {
+  changelogReplacements,
+  collectTokens,
+  renderTokenReference,
+} from "../references.mjs";
 
 const roots = [];
 afterEach(async () => {
@@ -206,6 +210,200 @@ describe("token tiers", () => {
       "palette:legacy",
       "deprecated:next",
     ]);
+  });
+});
+
+describe("deprecated token replacements", () => {
+  // A theme with characteristic, palette and deprecated tokens.
+  const theme = (deprecated) =>
+    createTheme({
+      "theme.css":
+        '@import url("foundations/index.css"); @import "next/palette/corner.css"; @import "next/palette/neutral.css"; @import "next/characteristics/container.css"; @import "deprecated/characteristics.css";',
+      "next/palette/corner.css":
+        ".salt-theme { --salt-palette-corner: 4px; --salt-palette-corner-weak: 2px; }",
+      "next/palette/neutral.css":
+        ".salt-theme { --salt-palette-neutral-border: gray; }",
+      "next/characteristics/container.css":
+        ".salt-theme { --salt-container-bold-borderColor: var(--salt-palette-neutral-border); --salt-container-subtle-borderColor: var(--salt-palette-neutral-border); }",
+      "deprecated/characteristics.css": `.salt-theme { ${deprecated} }`,
+    });
+
+  it("uses the replacement a deprecated declaration's comment names, in any of its forms", async () => {
+    const root = await theme(`
+      --salt-old-a: gray; /* Use --salt-container-bold-borderColor */
+      --salt-old-b: gray; /* Use ---salt-container-bold-borderColor */
+      --salt-old-c: gray; /* --salt-container-subtle-borderColor */
+      --salt-old-d: var(--salt-container-subtle-borderColor); /* Use --salt-container-bold-borderColor */
+    `);
+    const markdown = render(await collectTokens(root));
+    expect(markdown).toContain(
+      "- `--salt-old-a`: use `--salt-container-bold-borderColor` instead",
+    );
+    expect(markdown).toContain(
+      "- `--salt-old-b`: use `--salt-container-bold-borderColor` instead",
+    );
+    expect(markdown).toContain(
+      "- `--salt-old-c`: use `--salt-container-subtle-borderColor` instead",
+    );
+    // The comment wins over the alias the value implies.
+    expect(markdown).toContain(
+      "- `--salt-old-d`: use `--salt-container-bold-borderColor` instead",
+    );
+  });
+
+  it("follows replacements that are themselves deprecated", async () => {
+    const root = await theme(`
+      --salt-oldest: gray; /* Use --salt-older */
+      --salt-older: gray; /* Use --salt-old */
+      --salt-old: var(--salt-container-bold-borderColor);
+      --salt-cycle-a: gray; /* Use --salt-cycle-b */
+      --salt-cycle-b: gray; /* Use --salt-cycle-a */
+    `);
+    const markdown = render(await collectTokens(root));
+    expect(markdown).toContain(
+      "- `--salt-oldest`: use `--salt-container-bold-borderColor` instead",
+    );
+    expect(markdown).toContain(
+      "- `--salt-old`: alias of `--salt-container-bold-borderColor`",
+    );
+    expectNoAlias(markdown, "--salt-cycle-a");
+  });
+
+  it("warns about comments naming a token that doesn't exist, isn't current or differs between themes", async () => {
+    const root = await createTheme({
+      "theme.css":
+        '@import url("foundations/index.css"); @import "next/palette/neutral.css"; @import "legacy/deprecated/characteristics.css";',
+      "theme-next.css":
+        '@import url("foundations/index.css"); @import "next/palette/neutral.css"; @import "next/deprecated/characteristics.css";',
+      "next/palette/neutral.css":
+        ".salt-theme { --salt-palette-neutral-border: gray; }",
+      "legacy/deprecated/characteristics.css":
+        ".salt-theme { --salt-old-missing: gray; /* Use --salt-nope */ --salt-old-palette: gray; /* Use --salt-palette-neutral-border */ --salt-old-split: gray; /* Use --salt-size-separator-strokeWidth */ }",
+      "next/deprecated/characteristics.css":
+        ".salt-theme-next { --salt-old-split: gray; /* Use --salt-spacing-100 */ }",
+    });
+    const warnings = [];
+    const markdown = render(
+      await collectTokens(root, { warn: (message) => warnings.push(message) }),
+    );
+    expect(warnings).toEqual([
+      "--salt-old-split: the theme CSS names different replacements in different themes (--salt-size-separator-strokeWidth, --salt-spacing-100), so none is shown.",
+      "--salt-old-missing: the theme CSS names --salt-nope as its replacement, which is not a token, so none is shown.",
+      "--salt-old-palette: the theme CSS names --salt-palette-neutral-border as its replacement, which is a palette token, so it isn't shown.",
+    ]);
+    for (const name of [
+      "--salt-old-missing",
+      "--salt-old-palette",
+      "--salt-old-split",
+    ]) {
+      expectNoAlias(markdown, name);
+      expect(markdown).not.toMatch(new RegExp(`\`${name}\`: use`));
+    }
+  });
+
+  it("uses the changelog's replacements after the theme CSS's, listing alternatives", async () => {
+    const root = await theme(`
+      --salt-old-a: gray;
+      --salt-old-b: gray; /* Use --salt-container-subtle-borderColor */
+      --salt-old-c: gray;
+    `);
+    const changelog = new Map([
+      [
+        "--salt-old-a",
+        [
+          "--salt-container-bold-borderColor",
+          "--salt-container-subtle-borderColor",
+        ],
+      ],
+      ["--salt-old-b", ["--salt-container-bold-borderColor"]],
+      ["--salt-old-c", ["--salt-palette-neutral-border"]],
+    ]);
+    const warnings = [];
+    const markdown = render(
+      await collectTokens(root, {
+        changelog,
+        warn: (message) => warnings.push(message),
+      }),
+    );
+    expect(markdown).toContain(
+      "- `--salt-old-a`: use `--salt-container-bold-borderColor` or `--salt-container-subtle-borderColor` instead",
+    );
+    expect(markdown).toContain(
+      "- `--salt-old-b`: use `--salt-container-subtle-borderColor` instead",
+    );
+    // A palette replacement isn't shown, and the changelog can't be corrected.
+    expect(markdown).not.toMatch(/`--salt-old-c`: use/);
+    expect(warnings).toEqual([]);
+  });
+
+  it("marks palette groups that no characteristic references as used directly", async () => {
+    const root = await theme("--salt-old: gray;");
+    const markdown = render(await collectTokens(root));
+    const note =
+      "No characteristic token references these, so reference them directly.";
+    expect(markdown).toContain(
+      `### corner\n\n${note}\n\n- \`--salt-palette-corner\``,
+    );
+    expect(markdown).toContain(
+      "### neutral\n\n- `--salt-palette-neutral-border`",
+    );
+  });
+});
+
+describe("changelogReplacements", () => {
+  it("reads replacement tables, newest first, and only tokens joined by or", () => {
+    const changelog = `# @salt-ds/theme
+
+## 2.0.0
+
+- Deprecated tokens.
+
+  | Deprecated token | Replacement token |
+  | ---------------- | ----------------- |
+  | \`--salt-a\` | \`--salt-b\` or \`--salt-c\` |
+  | --salt-d | None |
+  | \`--salt-e\` | \`--salt-f\` + \`--salt-g\` |
+
+## 1.0.0
+
+  | Name | Replacement |
+  | - | - |
+  | \`--salt-a\` | \`--salt-old\` |
+  | \`--salt-d\` | \`--salt-old\` |
+  | \`--salt-h\` | \`--salt-i\` |
+
+  | Token | Old value | New value |
+  | - | - | - |
+  | \`--salt-j\` | \`--salt-k\` | \`--salt-l\` |
+`;
+    expect(changelogReplacements(changelog)).toEqual(
+      new Map([
+        ["--salt-a", ["--salt-b", "--salt-c"]],
+        ["--salt-h", ["--salt-i"]],
+      ]),
+    );
+  });
+
+  it("finds the replacements for the tokens agents used from older Salt versions", async () => {
+    const themeDir = fileURLToPath(
+      new URL("../../../../packages/theme", import.meta.url),
+    );
+    const { readFile } = await import("node:fs/promises");
+    const changelog = changelogReplacements(
+      await readFile(path.join(themeDir, "CHANGELOG.md"), "utf8"),
+    );
+    const markdown = render(
+      await collectTokens(path.join(themeDir, "src", "css"), { changelog }),
+    );
+    expect(markdown).toContain(
+      "- `--salt-size-border`: use `--salt-spacing-fixed-100` or `--salt-size-fixed-100` instead",
+    );
+    expect(markdown).toContain(
+      "- `--salt-container-secondary-borderColor`: use `--salt-container-bold-borderColor` instead",
+    );
+    expect(markdown).toContain(
+      "- `--salt-container-borderStyle`: use `--salt-borderStyle-solid` instead",
+    );
   });
 });
 

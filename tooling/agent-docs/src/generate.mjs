@@ -19,6 +19,7 @@ import { parseMarkdown } from "./mdx.mjs";
 import { discoverDocuments } from "./pages.mjs";
 import { createPropsProvider } from "./props.mjs";
 import {
+  changelogReplacements,
   collectCountrySymbols,
   collectIcons,
   collectTokens,
@@ -101,15 +102,33 @@ function linkToRoute(routeIndex, from, route) {
   });
 }
 
-async function addReferences({ packages, packagesDir, routeIndex, outputs }) {
+async function addReferences({
+  packages,
+  packagesDir,
+  routeIndex,
+  outputs,
+  warnings,
+}) {
   const theme = packages.get("@salt-ds/theme");
   if (theme) {
     const from = {
       packageName: "@salt-ds/theme",
       docPath: TOKEN_REFERENCE_PATH,
     };
+    const changelogPath = path.join(
+      packagesDir,
+      theme.directory,
+      "CHANGELOG.md",
+    );
     const tokens = await collectTokens(
       path.join(packagesDir, theme.directory, "src", "css"),
+      {
+        changelog: (await pathExists(changelogPath))
+          ? changelogReplacements(await readFile(changelogPath, "utf8"))
+          : new Map(),
+        warn: (message) =>
+          warnings.push(`packages/${theme.directory}/src/css: ${message}`),
+      },
     );
     const target = outputs.get(from.packageName);
     const files = renderTokenReference({
@@ -500,7 +519,13 @@ export async function generateAgentDocs({
       `site/src/examples/${example}.tsx: no pattern page shows this example. Add a LivePreview for it to the section of the page that discusses it.`,
     );
   }
-  await addReferences({ packages, packagesDir, routeIndex, outputs });
+  await addReferences({
+    packages,
+    packagesDir,
+    routeIndex,
+    outputs,
+    warnings,
+  });
   if (packages.has(AGENTS_MD_PACKAGE)) {
     outputs
       .get(AGENTS_MD_PACKAGE)
