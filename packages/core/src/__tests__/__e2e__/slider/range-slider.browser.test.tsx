@@ -81,6 +81,60 @@ describe("Given a Range Slider", () => {
     expect(onChangeEnd.mock.lastCall?.[1]).toEqual([0, 7]);
   });
 
+  it.each([
+    ["mouse", 0],
+    ["mouse", 1],
+    ["touch", 0],
+    ["touch", 1],
+  ] as const)(
+    "keeps endpoint thumb %s/%i unchanged when dragging vertically",
+    async (pointerType, index) => {
+      const onChange = vi.fn();
+      const onChangeEnd = vi.fn();
+      await renderWithSalt(
+        <Default
+          min={0}
+          max={100}
+          defaultValue={[0, 100]}
+          style={{ width: 100 }}
+          onChange={onChange}
+          onChangeEnd={onChangeEnd}
+        />,
+      );
+      const target = page.getByTestId("sliderThumb").nth(index);
+      const rect = target.element().getBoundingClientRect();
+      const clientX = rect.left + rect.width / 2;
+      const clientY = rect.top + rect.height / 2;
+
+      await dispatchPointer(
+        target.element(),
+        "pointerdown",
+        pointerType,
+        clientX,
+        clientY,
+      );
+      await nextFrame();
+      await dispatchPointer(
+        window,
+        "pointermove",
+        pointerType,
+        clientX,
+        clientY + 2,
+      );
+      await dispatchPointer(
+        window,
+        "pointerup",
+        pointerType,
+        clientX,
+        clientY + 2,
+      );
+
+      await expectValues("0", "100");
+      expect(onChange).not.toHaveBeenCalled();
+      expect(onChangeEnd.mock.lastCall?.[1]).toEqual([0, 100]);
+    },
+  );
+
   it.each(["mouse", "touch"] as const)(
     "drags the second thumb with a %s pointer and stops on release",
     async (pointerType) => {
