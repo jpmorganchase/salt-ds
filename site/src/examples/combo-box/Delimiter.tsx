@@ -26,12 +26,19 @@ export const Delimiter = (): ReactElement => {
   const [value, setValue] = useState("");
   const [selectedValues, setSelectedValues] = useState<string[]>([]);
 
+  const addItems = (text: string) => {
+    const newItems = text
+      .split(delimiter)
+      .map((item) => item.trim())
+      .filter(Boolean);
+    setSelectedValues((old) => Array.from(new Set([...old, ...newItems])));
+  };
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const value = event.target.value;
 
     if (value.includes(delimiter)) {
-      const newItems = value.split(delimiter).filter(Boolean);
-      setSelectedValues((old) => old.concat(newItems));
+      addItems(value);
       setValue("");
       return;
     }
@@ -54,13 +61,8 @@ export const Delimiter = (): ReactElement => {
   };
 
   const handlePaste = (event: ClipboardEvent) => {
-    event?.preventDefault();
-    // This can be changed to support different delimiters
-    const newItems = event.clipboardData
-      .getData("Text")
-      .trim()
-      .split(delimiter);
-    setSelectedValues((old) => old.concat(newItems));
+    event.preventDefault();
+    addItems(event.clipboardData.getData("Text"));
   };
 
   return (
