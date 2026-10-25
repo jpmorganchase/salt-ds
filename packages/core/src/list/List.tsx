@@ -29,6 +29,8 @@ export const List = forwardRef<HTMLUListElement, ListProps>(function List(
   });
 
   return renderProps("ul", {
+    // Safari needs an explicit role to preserve lists without markers.
+    role: "list",
     ...rest,
     className: clsx(withBaseName(), className),
     ref,
