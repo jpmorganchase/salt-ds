@@ -469,20 +469,34 @@ function ControlledRemovableTabs() {
   );
 }
 
-function ControlledRemovableTabsIgnoringChange({
+function RestorableTabs({
+  ignoreChanges = false,
   onChange,
 }: {
+  ignoreChanges?: boolean;
   onChange: (event: SyntheticEvent | null, value: string) => void;
 }) {
   const [tabs, setTabs] = useState(["Home", "Tx", "Loans", "Checks"]);
   return (
     <>
-      <Tabs value="Loans" onChange={onChange}>
+      <Tabs
+        defaultValue="Loans"
+        value={ignoreChanges ? "Loans" : undefined}
+        onChange={onChange}
+      >
         <TabBar inset divider>
           <TabList>
             {tabs.map((label) => (
-              <Tab key={label} value={label}>
-                <TabTrigger>{label}</TabTrigger>
+              <Tab id={`restorable-${label}`} key={label} value={label}>
+                <TabTrigger
+                  onKeyDown={(event) => {
+                    if (event.key === "Delete") {
+                      setTabs((old) => old.filter((tab) => tab !== label));
+                    }
+                  }}
+                >
+                  {label}
+                </TabTrigger>
               </Tab>
             ))}
           </TabList>
@@ -493,6 +507,12 @@ function ControlledRemovableTabsIgnoringChange({
         onClick={() => setTabs((old) => old.filter((tab) => tab !== "Loans"))}
       >
         Remove Loans
+      </button>
+      <button
+        type="button"
+        onClick={() => setTabs(["Home", "Tx", "Loans", "Checks"])}
+      >
+        Restore Loans
       </button>
     </>
   );
@@ -1195,16 +1215,47 @@ describe("Given Tabs with removable tabs", () => {
     expect(onChange).toHaveBeenCalledTimes(2);
   });
 
-  it("reports the automatic selection once when a controlled parent keeps the removed value", async () => {
+  it("selects the next tab each time a tab with the same explicit id is dismissed", async () => {
     const onChange = vi.fn();
-    await mountTabs(
-      <ControlledRemovableTabsIgnoringChange onChange={onChange} />,
-    );
+    await mountTabs(<RestorableTabs onChange={onChange} />);
+    await tab("Loans").click();
+    const loansId = tab("Loans").element().id;
+    await userEvent.keyboard("{Delete}");
+    await expect.element(tab("Loans")).not.toBeInTheDocument();
+    await expectSelected("Checks");
+    expect(onChange.mock.calls).toEqual([[null, "Checks"]]);
+
+    await page.getByRole("button", { name: "Restore Loans" }).click();
+    await expect.element(tab("Loans")).toHaveAttribute("id", loansId);
+    await tab("Loans").click();
+    await expectSelected("Loans");
+    await userEvent.keyboard("{Delete}");
+    await expect.element(tab("Loans")).not.toBeInTheDocument();
+    await expectSelected("Checks");
+    await expect.element(tab("Checks")).toHaveFocus();
+    expect(onChange.mock.lastCall).toEqual([null, "Checks"]);
+    expect(onChange).toHaveBeenCalledTimes(3);
+  });
+
+  it("reports selection once per removal when a controlled parent restores the same id and ignores changes", async () => {
+    const onChange = vi.fn();
+    await mountTabs(<RestorableTabs ignoreChanges onChange={onChange} />);
+    const loansId = tab("Loans").element().id;
     await page.getByRole("button", { name: "Remove Loans" }).click();
     await expect.element(tab("Loans")).not.toBeInTheDocument();
     await expect.poll(() => onChange.mock.calls).toEqual([[null, "Checks"]]);
     await waitForFrames(30);
     expect(onChange).toHaveBeenCalledTimes(1);
+
+    await page.getByRole("button", { name: "Restore Loans" }).click();
+    await expect.element(tab("Loans")).toHaveAttribute("id", loansId);
+    await expectSelected("Loans");
+    await page.getByRole("button", { name: "Remove Loans" }).click();
+    await expect.element(tab("Loans")).not.toBeInTheDocument();
+    await expect.poll(() => onChange.mock.calls.length).toBe(2);
+    expect(onChange.mock.lastCall).toEqual([null, "Checks"]);
+    await waitForFrames(30);
+    expect(onChange).toHaveBeenCalledTimes(2);
   });
 
   it("restores focus to the new selection after a confirmed dismissal", async () => {

@@ -81,7 +81,9 @@ export function useTabRemovalHandler({
     pendingRemovalRecoveryRetriesRef.current = 0;
   }, [pendingRemovalRecoveryRef, pendingRemovalRecoveryRetriesRef]);
 
-  const replacedSelectionIdRef = useRef<string | null>(null);
+  // Collection retries share the same removal record, but restoring and
+  // removing a tab creates a new one, even when its explicit id is reused.
+  const replacedSelectionsRef = useRef(new WeakSet<RemovedItem>());
 
   const getReplacementTab = (baseIndex: number) => {
     let nextTab =
@@ -118,7 +120,7 @@ export function useTabRemovalHandler({
         menuOpen ||
         selected !== removedSelected.value ||
         getRenderedTab(selected) ||
-        replacedSelectionIdRef.current === removedSelected.id
+        replacedSelectionsRef.current.has(removedSelected)
       ) {
         return;
       }
@@ -126,7 +128,7 @@ export function useTabRemovalHandler({
       const nextTab = getReplacementTab(removedSelected.staleIndex ?? -1);
       if (!nextTab) return;
 
-      replacedSelectionIdRef.current = removedSelected.id;
+      replacedSelectionsRef.current.add(removedSelected);
       setSelected(null, nextTab.value);
     },
   );
