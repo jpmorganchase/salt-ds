@@ -541,6 +541,13 @@ describe("convertMdx", () => {
     );
   });
 
+  it("links the text styles preview to the design tokens reference", async () => {
+    const markdown = await toMarkdown("<TextStylesPreview />");
+    expect(markdown).toBe(
+      "The font size and line height of each text style, in each theme and density, are set by the text characteristic tokens in the [design tokens reference](@salt-ds/theme/docs/tokens.md).\n",
+    );
+  });
+
   it("rewrites links through the resolver and drops asset links", async () => {
     const ctx = createContext({
       links: {

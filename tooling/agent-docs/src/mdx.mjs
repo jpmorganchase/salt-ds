@@ -1145,6 +1145,12 @@ const HANDLERS = {
   QuickLinks: quickLinks,
   ReactResizablePanelsThemeProvider: unwrap,
   Table: tableElement,
+  TextStylesPreview: referenceTo(
+    "@salt-ds/theme",
+    "tokens.md",
+    "The font size and line height of each text style, in each theme and density, are set by the text characteristic tokens in the ",
+    "design tokens reference",
+  ),
   TokenTableWithControls: tokenTable,
   a: htmlLink,
   b: wrapPhrasing(u.strong),
