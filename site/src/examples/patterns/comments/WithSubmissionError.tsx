@@ -109,9 +109,7 @@ export const WithSubmissionError = () => {
           <Banner status="error" variant="secondary">
             <BannerContent>
               <StackLayout gap={1}>
-                <Text>
-                  <strong>Couldn't post your comment</strong>
-                </Text>
+                <Text fontWeight="bolder">Couldn't post your comment</Text>
                 <Text>{submissionErrorMessage}</Text>
               </StackLayout>
             </BannerContent>

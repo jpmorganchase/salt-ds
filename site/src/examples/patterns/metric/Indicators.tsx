@@ -5,9 +5,7 @@ export const Indicators = () => {
   return (
     <StackLayout direction={"row"} gap={8}>
       <StackLayout gap={0}>
-        <Text>
-          <strong>Performance</strong>
-        </Text>
+        <Text fontWeight="bolder">Performance</Text>
         <Text color="secondary">Interactions</Text>
         <Display1>
           801
@@ -27,9 +25,7 @@ export const Indicators = () => {
         </Text>
       </StackLayout>
       <StackLayout gap={0}>
-        <Text>
-          <strong>Performance</strong>
-        </Text>
+        <Text fontWeight="bolder">Performance</Text>
         <Text color="secondary">Interactions</Text>
         <Display1>
           801

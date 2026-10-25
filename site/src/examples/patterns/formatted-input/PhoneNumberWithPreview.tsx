@@ -122,7 +122,7 @@ export const PhoneNumberWithPreview = () => {
         </FormField>
         {inputValue.length > 0 && (
           <Text color="secondary" styleAs="label">
-            Value for submission: <strong>{inputValue}</strong>
+            Value for submission: <b>{inputValue}</b>
           </Text>
         )}
       </StackLayout>
@@ -172,7 +172,7 @@ export const PhoneNumberWithPreview = () => {
         </FormField>
         {inputValue2.length > 0 && (
           <Text color="secondary" styleAs="label">
-            Value for submission: <strong>{inputValue2}</strong>
+            Value for submission: <b>{inputValue2}</b>
           </Text>
         )}
       </StackLayout>

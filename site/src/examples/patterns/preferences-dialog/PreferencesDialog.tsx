@@ -186,11 +186,7 @@ function PreferencesContent({
             <FormFieldLabel>Widget export width</FormFieldLabel>
             <NumberInput
               value="360"
-              endAdornment={
-                <Text>
-                  <strong>PX</strong>
-                </Text>
-              }
+              endAdornment={<Text fontWeight="bolder">PX</Text>}
             />
           </FormField>
           <FormField labelPlacement="left">

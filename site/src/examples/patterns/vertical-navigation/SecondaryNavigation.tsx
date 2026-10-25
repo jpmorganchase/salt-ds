@@ -39,11 +39,7 @@ export const SecondaryNavigation = () => {
                 backgroundColor: "var(--salt-container-tertiary-background)",
               }}
             >
-              <Text
-                style={{ fontWeight: "var(--salt-text-fontWeight-strong)" }}
-              >
-                {item.name}
-              </Text>
+              <Text fontWeight="bolder">{item.name}</Text>
             </section>
           ))}
         </StackLayout>

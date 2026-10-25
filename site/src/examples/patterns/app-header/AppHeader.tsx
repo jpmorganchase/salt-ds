@@ -69,9 +69,7 @@ export const DesktopAppHeader: FC<{
                 height: "calc(var(--salt-size-base) - var(--salt-spacing-150))",
               }}
             />
-            <Text style={{ fontWeight: "var(--salt-text-fontWeight-strong)" }}>
-              Atlas
-            </Text>
+            <Text fontWeight="bolder">Atlas</Text>
           </StackLayout>
         </FlexItem>
         {showNavigation ? (
@@ -203,9 +201,7 @@ const MobileAppHeader: FC<{
                 height: "calc(var(--salt-size-base) - var(--salt-spacing-150))",
               }}
             />
-            <Text style={{ fontWeight: "var(--salt-text-fontWeight-strong)" }}>
-              Atlas
-            </Text>
+            <Text fontWeight="bolder">Atlas</Text>
           </StackLayout>
         </FlexItem>
       </StackLayout>
