@@ -282,7 +282,7 @@ function List({
           }}
           selected={selected}
         >
-          {sortedOptions.map((option, index) => (
+          {sortedOptions.map((option) => (
             <Option key={option} value={option} />
           ))}
         </ListBox>
