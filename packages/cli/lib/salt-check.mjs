@@ -383,7 +383,7 @@ function deprecationText(text) {
   return `${since ? ` since ${since[1]}` : ""}${rest ? `${since ? "." : ":"} ${rest}` : ""}`;
 }
 
-/** Salt components a file imports: local name -> { name, packageName }. */
+/** Salt components a file imports, resolved through their lexical bindings. */
 function saltImports(ts, sourceFile) {
   const named = new Map();
   const namespaces = new Map();
@@ -398,21 +398,45 @@ function saltImports(ts, sourceFile) {
     const bindings = statement.importClause?.namedBindings;
     if (bindings && ts.isNamedImports(bindings)) {
       for (const element of bindings.elements) {
-        named.set(element.name.text, {
+        named.set(element, {
           name: (element.propertyName ?? element.name).text,
           packageName,
         });
       }
     } else if (bindings && ts.isNamespaceImport(bindings)) {
-      namespaces.set(bindings.name.text, packageName);
+      namespaces.set(bindings, packageName);
     }
   }
+
+  if (named.size === 0 && namespaces.size === 0) return () => undefined;
+
+  // Bind just this source file. Resolving imported package types isn't needed
+  // to distinguish an import from a parameter or local variable that shadows
+  // it, and would make the check depend on the application's compiler setup.
+  const options = { noLib: true, noResolve: true, allowJs: true };
+  const host = ts.createCompilerHost(options);
+  const isSource = (file) =>
+    path.resolve(file) === path.resolve(sourceFile.fileName);
+  host.getSourceFile = (file) => (isSource(file) ? sourceFile : undefined);
+  host.fileExists = isSource;
+  host.readFile = (file) => (isSource(file) ? sourceFile.text : undefined);
+  const checker = ts
+    .createProgram([sourceFile.fileName], options, host)
+    .getTypeChecker();
+  const imported = (node, imports) => {
+    const declarations = checker.getSymbolAtLocation(node)?.declarations ?? [];
+    for (const declaration of declarations) {
+      if (imports.has(declaration)) return imports.get(declaration);
+    }
+    return undefined;
+  };
   return (tag) => {
-    if (named.has(tag)) return named.get(tag);
-    const [namespace, name] = tag.split(".");
-    return name && namespaces.has(namespace)
-      ? { name, packageName: namespaces.get(namespace) }
-      : undefined;
+    if (ts.isIdentifier(tag)) return imported(tag, named);
+    if (ts.isPropertyAccessExpression(tag) && ts.isIdentifier(tag.expression)) {
+      const packageName = imported(tag.expression, namespaces);
+      if (packageName) return { name: tag.name.text, packageName };
+    }
+    return undefined;
   };
 }
 
@@ -464,7 +488,7 @@ function checkScript({ ts, text, file, data, problems, page }) {
       else if (
         (ts.isJsxOpeningElement(child) || ts.isJsxSelfClosingElement(child)) &&
         /^[A-Z]/.test(tagOf(child)) &&
-        !resolve(tagOf(child))
+        !resolve(child.tagName)
       )
         open = true;
       else ts.forEachChild(child, visit);
@@ -476,7 +500,7 @@ function checkScript({ ts, text, file, data, problems, page }) {
     const names = new Set();
     const visit = (child) => {
       if (ts.isJsxOpeningElement(child) || ts.isJsxSelfClosingElement(child)) {
-        const salt = resolve(tagOf(child));
+        const salt = resolve(child.tagName);
         if (salt) names.add(salt.name);
       }
       ts.forEachChild(child, visit);
@@ -510,7 +534,7 @@ function checkScript({ ts, text, file, data, problems, page }) {
         ? node
         : undefined;
     if (opening) {
-      const salt = resolve(tagOf(opening));
+      const salt = resolve(opening.tagName);
       const entry =
         salt && data.components.get(salt.packageName)?.get(salt.name);
       if (entry) {

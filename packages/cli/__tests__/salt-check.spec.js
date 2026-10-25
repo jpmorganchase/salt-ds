@@ -177,6 +177,39 @@ export const padding = "a\\tb\\tc var(--salt-size-border)";
     ]);
   });
 
+  it("only checks Salt imports where local bindings do not shadow them", () => {
+    const root = project({
+      "src/App.tsx": `import { Button, Button as SaltButton, Toast, ToastContent } from "@salt-ds/core";
+import * as Salt from "@salt-ds/core";
+export const Before = () => <Button variant="cta" />;
+export function Parameter({ Button, Salt }) {
+  return <><Button variant="custom" /><Salt.Button variant="custom" /></>;
+}
+export function Local() {
+  const Button = ({ variant }) => <span>{variant}</span>;
+  const Salt = { Button };
+  return <><Button variant="custom" /><Salt.Button variant="custom" /></>;
+}
+export function Aliased(SaltButton) {
+  return <SaltButton variant="custom" />;
+}
+export function CustomPart(ToastContent) {
+  return <Toast><ToastContent /></Toast>;
+}
+export const After = () => <><SaltButton variant="cta" /><Salt.Button variant="cta" /><Toast>Saved</Toast></>;
+`,
+    });
+    const { code, log } = check(root, ["src", "--json"]);
+    expect(code).toBe(1);
+    const result = JSON.parse(log.join("\n"));
+    expect(result.problems.map(({ line, rule }) => ({ line, rule }))).toEqual([
+      { line: 3, rule: "deprecated-prop" },
+      { line: 18, rule: "deprecated-prop" },
+      { line: 18, rule: "deprecated-prop" },
+      { line: 18, rule: "missing-part" },
+    ]);
+  });
+
   it("reads a protocol-relative URL in Sass as a URL, not a comment", () => {
     const root = project({
       "src/a.scss": `// --salt-size-border in a comment
