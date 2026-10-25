@@ -140,31 +140,38 @@
   outline-offset: var(--salt-focused-outlineOffset);
 }
 
+/* v4 panels need data-panel-collapsed="true" when onResize reports zero size. */
 /* two handles touching horizontally */
-.react-resizable-panels-theme-salt div[data-resize-handle][data-panel-group-direction="horizontal"] + div[data-panel-size="0.0"] + div[data-resize-handle][data-panel-group-direction="horizontal"] {
+.react-resizable-panels-theme-salt div[data-resize-handle][data-panel-group-direction="horizontal"] + div[data-panel-size="0.0"] + div[data-resize-handle][data-panel-group-direction="horizontal"],
+.react-resizable-panels-theme-salt div[data-separator][aria-orientation="vertical"] + div[data-panel][data-panel-collapsed="true"] + div[data-separator][aria-orientation="vertical"] {
   margin-left: -1px;
 }
 
 /* two handles touching vertically */
-.react-resizable-panels-theme-salt div[data-resize-handle][data-panel-group-direction="vertical"] + div[data-panel-size="0.0"] + div[data-resize-handle][data-panel-group-direction="vertical"] {
+.react-resizable-panels-theme-salt div[data-resize-handle][data-panel-group-direction="vertical"] + div[data-panel-size="0.0"] + div[data-resize-handle][data-panel-group-direction="vertical"],
+.react-resizable-panels-theme-salt div[data-separator][aria-orientation="horizontal"] + div[data-panel][data-panel-collapsed="true"] + div[data-separator][aria-orientation="horizontal"] {
   margin-top: -1px;
 }
 
 /* handle touching the side of a container */
 @supports selector(:has(*)) {
-  .react-resizable-panels-theme-salt div[data-panel]:first-of-type[data-panel-size="0.0"] + .resize-handle-salt-border-left[data-panel-group-direction="horizontal"] {
+  .react-resizable-panels-theme-salt div[data-panel]:first-of-type[data-panel-size="0.0"] + .resize-handle-salt-border-left[data-panel-group-direction="horizontal"],
+  .react-resizable-panels-theme-salt div[data-panel]:first-of-type[data-panel-collapsed="true"] + .resize-handle-salt-border-left[data-separator][aria-orientation="vertical"] {
     margin-left: -1px;
   }
 
-  .react-resizable-panels-theme-salt div[data-panel]:first-of-type[data-panel-size="0.0"] + .resize-handle-salt-border-top[data-panel-group-direction="vertical"] {
+  .react-resizable-panels-theme-salt div[data-panel]:first-of-type[data-panel-size="0.0"] + .resize-handle-salt-border-top[data-panel-group-direction="vertical"],
+  .react-resizable-panels-theme-salt div[data-panel]:first-of-type[data-panel-collapsed="true"] + .resize-handle-salt-border-top[data-separator][aria-orientation="horizontal"] {
     margin-top: -1px;
   }
 
-  .react-resizable-panels-theme-salt .resize-handle-salt-border-right[data-resize-handle][data-panel-group-direction="horizontal"]:has(+ div[data-panel]:last-of-type[data-panel-size="0.0"]) {
+  .react-resizable-panels-theme-salt .resize-handle-salt-border-right[data-resize-handle][data-panel-group-direction="horizontal"]:has(+ div[data-panel]:last-of-type[data-panel-size="0.0"]),
+  .react-resizable-panels-theme-salt .resize-handle-salt-border-right[data-separator][aria-orientation="vertical"]:has(+ div[data-panel]:last-of-type[data-panel-collapsed="true"]) {
     margin-right: -1px;
   }
 
-  .react-resizable-panels-theme-salt .resize-handle-salt-border-bottom[data-panel-group-direction="vertical"]:has(+ div[data-panel]:last-of-type[data-panel-size="0.0"]) {
+  .react-resizable-panels-theme-salt .resize-handle-salt-border-bottom[data-panel-group-direction="vertical"]:has(+ div[data-panel]:last-of-type[data-panel-size="0.0"]),
+  .react-resizable-panels-theme-salt .resize-handle-salt-border-bottom[data-separator][aria-orientation="horizontal"]:has(+ div[data-panel]:last-of-type[data-panel-collapsed="true"]) {
     margin-bottom: -1px;
   }
 }

@@ -324,7 +324,8 @@ export function CollapsibleTo0() {
             collapsedSize="0%"
             minSize="10%"
             maxSize="30%"
-            onResize={(size) => setExpanded(size.asPercentage > 0)}
+            data-panel-collapsed={!expanded}
+            onResize={(size) => setExpanded(size.asPercentage !== 0)}
             panelRef={ref}
             id="left"
             className="center"
