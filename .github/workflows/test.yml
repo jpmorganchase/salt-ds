@@ -60,6 +60,10 @@ jobs:
         run: yarn build
       - name: Check packages
         run: node ./scripts/checkPackages.mjs
+      # Agents and people copy the site examples, so they're checked against
+      # the docs just built: deprecated tokens and props, and missing parts.
+      - name: Check site examples
+        run: yarn run check:examples
       - name: Check consumer types (React 16-19)
         run: yarn run typecheck:consumer
   type-checks:
