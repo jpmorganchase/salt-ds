@@ -74,8 +74,14 @@ describe("createLinkResolver", () => {
     expect(resolve("#props", fromButtonUsage)).toBe("#props");
   });
 
-  it("drops links to site assets", () => {
+  it("drops relative links to site assets but keeps absolute ones", () => {
     expect(resolve("/img/diagram.png", fromButtonUsage)).toBeNull();
+    expect(
+      resolve(
+        "https://www.saltdesignsystem.com/files/salt-icons.zip",
+        fromButtonUsage,
+      ),
+    ).toBe("https://www.saltdesignsystem.com/files/salt-icons.zip");
   });
 
   it("resolves absolute website links to shipped pages", () => {

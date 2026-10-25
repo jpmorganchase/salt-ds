@@ -182,6 +182,13 @@ function walk(directory, files = []) {
 }
 
 function listFiles({ project, paths, changed, cwd }) {
+  // Build output and dependencies that Git lists are left out; files and
+  // folders passed explicitly are checked wherever they are.
+  const inSkippedFolder = (file) =>
+    path
+      .relative(project, file)
+      .split(path.sep)
+      .some((part) => SKIPPED_DIRECTORIES.has(part));
   let files;
   if (paths.length > 0) {
     files = paths.flatMap((target) => {
@@ -195,7 +202,9 @@ function listFiles({ project, paths, changed, cwd }) {
       files = [
         ...git(project, ["diff", "--name-only", "--relative", "HEAD"]),
         ...git(project, ["ls-files", "--others", "--exclude-standard"]),
-      ].map((file) => path.join(project, file));
+      ]
+        .map((file) => path.join(project, file))
+        .filter((file) => !inSkippedFolder(file));
     } catch {
       throw new SetupError(
         "--changed needs a Git repository with a commit. Pass the files to check instead.",
@@ -208,7 +217,9 @@ function listFiles({ project, paths, changed, cwd }) {
         "--cached",
         "--others",
         "--exclude-standard",
-      ]).map((file) => path.join(project, file));
+      ])
+        .map((file) => path.join(project, file))
+        .filter((file) => !inSkippedFolder(file));
     } catch {
       files = walk(project);
     }
@@ -217,13 +228,6 @@ function listFiles({ project, paths, changed, cwd }) {
     .filter(
       (file) =>
         existsSync(file) && (SCRIPT_FILE.test(file) || STYLE_FILE.test(file)),
-    )
-    .filter(
-      (file) =>
-        !path
-          .relative(project, file)
-          .split(path.sep)
-          .some((part) => SKIPPED_DIRECTORIES.has(part)),
     )
     .sort();
 }
@@ -245,7 +249,8 @@ function blankComments(text, { lineComments }) {
   let result = text.replace(/\/\*[\s\S]*?\*\//g, blank);
   if (lineComments)
     result = result.replace(
-      /(^|[^:"'`\\])\/\/[^\n]*/g,
+      // After `:` or `(` it's a URL, as in `url(//cdn…)`, not a comment.
+      /(^|[^:("'`\\])\/\/[^\n]*/g,
       (match, before) => before + blank(match.slice(before.length)),
     );
   return result;
@@ -255,18 +260,14 @@ function blankComments(text, { lineComments }) {
  * Token uses in text: names built at runtime (`--salt-palette-${hue}`) and
  * declarations (`--salt-x: …`, an app's own overrides) are left out.
  */
-function tokenUses(text, offset = 0, { dynamicEnd = false } = {}) {
+function tokenUses(text, offset = 0) {
   const uses = [];
   for (const match of text.matchAll(TOKEN)) {
     const name = match[0];
     const end = match.index + name.length;
     const after = text.slice(end);
     if (name.endsWith("-")) continue;
-    if (
-      /^(?:\$\{|#\{|@\{|\s*\+)/.test(after) ||
-      (dynamicEnd && end === text.length)
-    )
-      continue;
+    if (/^(?:\$\{|#\{|@\{|\s*\+)/.test(after)) continue;
     if (/^["']?\s*:/.test(after)) continue;
     uses.push({ name, index: offset + match.index });
   }
@@ -444,6 +445,15 @@ function checkScript({ ts, text, file, data, problems, page }) {
     let open = false;
     const visit = (child) => {
       if (open) return;
+      // Attribute values don't add children, unless they pass them.
+      if (ts.isJsxAttributes(child)) {
+        open = child.properties.some(
+          (attribute) =>
+            ts.isJsxSpreadAttribute(attribute) ||
+            attribute.name.getText(sourceFile) === "children",
+        );
+        return;
+      }
       if (
         ts.isJsxExpression(child) &&
         child.expression &&
@@ -488,13 +498,10 @@ function checkScript({ ts, text, file, data, problems, page }) {
           node.parent.arguments[0] === node &&
           /\.setProperty$/.test(node.parent.expression.getText(sourceFile)));
       if (!declared && node.text.includes("--salt-")) {
-        // The literal's text starts after its opening quote or backtick.
-        const start = node.getStart(sourceFile) + 1;
-        uses.push(
-          ...tokenUses(node.text, start, {
-            dynamicEnd: ts.isTemplateHead(node) || ts.isTemplateMiddle(node),
-          }),
-        );
+        // The source text, quotes and all, so escapes such as `\t` don't
+        // shift positions; a template part ends with the `${` that follows.
+        const start = node.getStart(sourceFile);
+        uses.push(...tokenUses(text.slice(start, node.getEnd()), start));
       }
     }
     const opening = ts.isJsxElement(node)
@@ -511,7 +518,10 @@ function checkScript({ ts, text, file, data, problems, page }) {
         for (const attribute of attributes) {
           if (!ts.isJsxAttribute(attribute)) continue;
           const prop = attribute.name.getText(sourceFile);
-          if (entry.deprecatedProps?.[prop]) {
+          if (
+            entry.deprecatedProps &&
+            Object.hasOwn(entry.deprecatedProps, prop)
+          ) {
             problems.push({
               ...at(attribute),
               severity: "error",
@@ -562,7 +572,13 @@ export function run(
       log(USAGE);
       return 0;
     }
-    const project = realpathSync(path.resolve(cwd, options.project ?? "."));
+    const projectPath = path.resolve(cwd, options.project ?? ".");
+    if (!existsSync(projectPath) || !statSync(projectPath).isDirectory()) {
+      throw new SetupError(
+        `--project must name an existing directory: ${options.project ?? "."}`,
+      );
+    }
+    const project = realpathSync(projectPath);
     const data = loadData(project);
     const files = listFiles({
       project,

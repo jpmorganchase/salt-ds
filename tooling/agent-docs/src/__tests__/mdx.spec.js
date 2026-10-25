@@ -438,6 +438,24 @@ describe("convertMdx", () => {
     ]);
   });
 
+  it("leaves deprecated tokens in headings and link text as written", async () => {
+    const ctx = createContext({
+      deprecatedToken: (name) =>
+        name === "--salt-old-border" ? ["--salt-new-border"] : undefined,
+    });
+    const markdown = await toMarkdown(
+      "### `--salt-old-border`\n\nSee [`--salt-old-border`](/salt/themes/tokens).",
+      ctx,
+    );
+    expect(markdown).toBe(
+      "### `--salt-old-border`\n\nSee [`--salt-old-border`](/salt/themes/tokens).\n",
+    );
+    expect(ctx.notes).toEqual([
+      "--salt-old-border is deprecated; use --salt-new-border.",
+      "--salt-old-border is deprecated; use --salt-new-border.",
+    ]);
+  });
+
   it("notes an example that uses a deprecated token", async () => {
     const ctx = createContext({
       deprecatedToken: (name) =>

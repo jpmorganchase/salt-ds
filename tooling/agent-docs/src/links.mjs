@@ -92,7 +92,9 @@ export function createLinkResolver(
       `https://salt.invalid${sitePath}`,
     );
     const pathname = normalizeRoute(decodeURI(resolved.pathname));
-    if (ASSET_PATTERN.test(pathname)) return null;
+    // Site assets don't ship with the docs: an absolute link to one still
+    // works, and a relative one keeps only its text.
+    if (ASSET_PATTERN.test(pathname)) return relativeUrl ? url : null;
     const target = lookup(pathname);
     if (!target) {
       if (

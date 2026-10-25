@@ -19,6 +19,7 @@ import { promisify } from "node:util";
 import { afterEach, describe, expect, it } from "vitest";
 import {
   agentsBlock,
+  checkCommand,
   discoverManifests,
   indexLines,
   run,
@@ -592,6 +593,20 @@ describe("salt-check instruction", () => {
     run(["--project", app, "--dir", root, "--no-claude"], quiet);
     expect(readFileSync(path.join(root, "AGENTS.md"), "utf8")).toContain(
       "run `npx @salt-ds/cli check --project apps/web --changed` from this file's folder",
+    );
+  });
+});
+
+describe("check command", () => {
+  it("quotes an application path a shell would split", () => {
+    expect(checkCommand({ base: "/repo", project: "/repo/apps/web" })).toBe(
+      "npx @salt-ds/cli check --project apps/web --changed",
+    );
+    expect(checkCommand({ base: "/repo", project: "/repo/apps/my app" })).toBe(
+      'npx @salt-ds/cli check --project "apps/my app" --changed',
+    );
+    expect(checkCommand({ base: "/repo", project: "/repo" })).toBe(
+      "npx @salt-ds/cli check --changed",
     );
   });
 });

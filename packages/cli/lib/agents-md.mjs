@@ -42,8 +42,12 @@ export function instructions({ rootBase = "this file", check } = {}) {
 /** The salt-ds check command, run from `base`, for the application at `project`. */
 export function checkCommand({ base, project }) {
   const relative = toPosix(path.relative(base, project)) || ".";
+  // Quoted when it has spaces or other characters a shell would split on.
+  const argument = /^[\w@%+=:,./-]+$/.test(relative)
+    ? relative
+    : `"${relative.replace(/["\\$`]/g, "\\$&")}"`;
   // The scoped name: npx uses an installed copy, or fetches this package.
-  return `npx @salt-ds/cli check${relative === "." ? "" : ` --project ${relative}`} --changed`;
+  return `npx @salt-ds/cli check${relative === "." ? "" : ` --project ${argument}`} --changed`;
 }
 
 export function agentsBlock({ root = ".", lines, rootBase, check }) {

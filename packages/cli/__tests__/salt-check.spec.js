@@ -154,6 +154,61 @@ document.body.style.setProperty("--salt-size-border", "2px");
     ]);
   });
 
+  it("checks parts past attribute expressions and isn't fooled by Object.prototype names or escapes", () => {
+    const source = `import { Button, Toast } from "@salt-ds/core";
+export const App = ({ save, props }) => (
+  <>
+    <Toast><Button onClick={save} constructor="x">Undo</Button></Toast>
+    <Toast><Button {...props} /></Toast>
+  </>
+);
+export const padding = "a\\tb\\tc var(--salt-size-border)";
+`;
+    const root = project({ "src/App.tsx": source });
+    const { code, log } = check(root);
+    expect(code).toBe(1);
+    const tokenLine = source.split("\n")[7];
+    expect(log).toEqual([
+      // An attribute such as onClick doesn't hide what the children are; a
+      // spread can pass children, so it does.
+      "src/App.tsx:4:5: warning missing-part: Toast has no ToastContent, which every Salt example of it includes. See node_modules/@salt-ds/core/docs/components/toast.md.",
+      `src/App.tsx:8:${tokenLine.indexOf("--salt-size-border") + 1}: error deprecated-token: --salt-size-border is deprecated; use --salt-size-fixed-100 instead. See node_modules/@salt-ds/theme/docs/tokens/deprecated.md.`,
+      "salt-check: checked 1 file: 1 error, 1 warning.",
+    ]);
+  });
+
+  it("reads a protocol-relative URL in Sass as a URL, not a comment", () => {
+    const root = project({
+      "src/a.scss": `// --salt-size-border in a comment
+.a { background: url(//cdn.example.com/a.png); padding: var(--salt-size-border); }
+`,
+    });
+    const { code, log } = check(root);
+    expect(code).toBe(1);
+    expect(log[0]).toMatch(
+      /^src\/a\.scss:2:\d+: error deprecated-token: --salt-size-border /,
+    );
+    expect(log.at(-1)).toBe("salt-check: checked 1 file: 1 error, 0 warnings.");
+  });
+
+  it("checks files passed explicitly in a build folder, and reports a missing project", () => {
+    const root = project({
+      "out/shared/a.css": ".a { color: var(--salt-size-border); }\n",
+    });
+    expect(check(root, ["out/shared/a.css"]).code).toBe(1);
+    // Without paths, build output is left out.
+    expect(check(root, [])).toEqual({
+      code: 2,
+      log: [
+        "salt-check: No files to check. Pass the files or folders to check.",
+      ],
+    });
+    expect(check(root, ["--project", "missing"])).toEqual({
+      code: 2,
+      log: ["salt-check: --project must name an existing directory: missing"],
+    });
+  });
+
   it("checks tokens without TypeScript and says the other checks were skipped", () => {
     const root = project({
       "src/App.jsx":

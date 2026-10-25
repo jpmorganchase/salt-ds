@@ -261,8 +261,9 @@ function tokenCode(value, node, ctx) {
   ]);
   ctx.note(
     node,
-    `${value} is deprecated${replacements.length > 0 ? `; use ${replacements.join(" or ")}` : ""}. The docs for agents say so where the page names it.`,
+    `${value} is deprecated${replacements.length > 0 ? `; use ${replacements.join(" or ")}` : ""}.${ctx.plainTokens ? "" : " The docs for agents say so where the page names it."}`,
   );
+  if (ctx.plainTokens) return [code];
   return [
     code,
     u.text(replacements.length > 0 ? " (deprecated; use " : " (deprecated)"),
@@ -293,7 +294,17 @@ async function transformNode(node, ctx) {
     default:
       break;
   }
-  if (node.children) node.children = await transformChildren(node, ctx);
+  if (node.children) {
+    // A heading or link keeps its text as on the site, so its anchor and
+    // label match; a deprecated token in it isn't annotated.
+    const plain = node.type === "heading" || node.type === "link";
+    if (plain) ctx.plainTokens = (ctx.plainTokens ?? 0) + 1;
+    try {
+      node.children = await transformChildren(node, ctx);
+    } finally {
+      if (plain) ctx.plainTokens -= 1;
+    }
+  }
   if (node.type === "paragraph" && isBlank(node.children)) return [];
   if (node.type === "link" || node.type === "definition") {
     const url = ctx.links.resolve(node.url, ctx, node);
