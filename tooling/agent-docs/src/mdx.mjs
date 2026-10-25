@@ -542,6 +542,14 @@ function typesPhrasing(definitions) {
           u.inlineCode(definition.signature),
           u.text(" is in the type declarations of "),
           u.inlineCode(`@salt-ds/${definition.packageDirectory}`),
+          // Such as a conditional type's, which reads better than its text.
+          ...(definition.description
+            ? [
+                u.text(": "),
+                // The note punctuates between and after definitions.
+                ...markdownPhrasing(definition.description.replace(/\.$/, "")),
+              ]
+            : []),
         ]
       : [
           u.inlineCode(definition.signature),
@@ -565,6 +573,15 @@ function typesPhrasing(definitions) {
  */
 function componentApi(componentName, component, packageDirectory, ctx) {
   const props = Object.values(component.props ?? {});
+  // docgen prints a type that resolves to any, such as DateFrameworkType
+  // before an adapter adds its date type, as `any`; the declaration says more.
+  const typeOf = (prop) => {
+    const formatted = formatPropType(prop.type);
+    return formatted === "any"
+      ? (ctx.props.declaredType?.(packageDirectory, component, prop.name) ??
+          formatted)
+      : formatted;
+  };
   const inherited = inheritedPhrasing(
     component.inherited,
     ctx.props.elementsOf?.(packageDirectory, component),
@@ -605,7 +622,7 @@ function componentApi(componentName, component, packageDirectory, ctx) {
             prop.required
               ? [u.inlineCode(prop.name), u.text(" (required)")]
               : [u.inlineCode(prop.name)],
-            [u.inlineCode(formatPropType(prop.type))],
+            [u.inlineCode(typeOf(prop))],
             propDefault(prop, tags),
             propDescription(tags, text),
           ];
@@ -625,7 +642,7 @@ function componentApi(componentName, component, packageDirectory, ctx) {
       ctx.props.typeDefinitions?.(
         packageDirectory,
         component,
-        props.map((prop) => formatPropType(prop.type)),
+        props.map(typeOf),
         ctx.definedTypes,
       ) ?? [],
     );

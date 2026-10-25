@@ -186,6 +186,48 @@ it("finds the elements a component's props extend", async () => {
   expect(elements("Field", "field/Field.tsx")).toEqual(["div", "textarea"]);
 });
 
+it("gives a prop's declared type, each type of a union of props types, and describes a conditional type", async () => {
+  const root = await packages({
+    "adapters/src/types.ts": `export interface DateMap {}
+      /**
+       * The date object of the adapter, such as \`Date\`.
+       *
+       * More detail.
+       */
+      export type DateType = keyof DateMap extends never ? any : DateMap[keyof DateMap];`,
+    "core/src/picker/Picker.tsx": `import type { DateType } from "../../../adapters/src/types";
+      interface BaseProps<Selection> { value?: Selection; min?: DateType }
+      export interface SingleProps extends BaseProps<DateType> { selected?: DateType | null; onPick?: (a: string | null) => void }
+      export interface RangeProps extends BaseProps<Range> { selected?: Range | null }
+      export type PickerProps = SingleProps | RangeProps;
+      export const Picker = (props: PickerProps) => null;`,
+  });
+  const index = createTypeIndex({ packagesDir: root });
+  const file = path.join(root, "core/src/picker/Picker.tsx");
+  expect(index.declaredPropType("Picker", file, "selected")).toBe(
+    "DateType | Range | null",
+  );
+  expect(index.declaredPropType("Picker", file, "min")).toBe("DateType");
+  // An arrow function's `=>` doesn't split it.
+  expect(index.declaredPropType("Picker", file, "onPick")).toBe(
+    "(a: string | null) => void",
+  );
+  // Declared as a generic's own parameter, which means nothing here.
+  expect(index.declaredPropType("Picker", file, "value")).toBeUndefined();
+  expect(
+    index.definitions(["DateType"], { file, componentName: "Picker" }),
+  ).toEqual([
+    {
+      name: "DateType",
+      kind: "alias",
+      signature: "DateType",
+      text: undefined,
+      description: "The date object of the adapter, such as `Date`.",
+      packageDirectory: "adapters",
+    },
+  ]);
+});
+
 it("finds capitalized type names outside string literals", () => {
   expect(
     namesIn(['"Pending" | Status', "(event: SyntheticEvent) => Item[]"]),

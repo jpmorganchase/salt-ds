@@ -108,6 +108,54 @@ describe("convertMdx", () => {
     );
   });
 
+  it("shows a prop's declared type where docgen prints any, and a type's description", async () => {
+    const ctx = createContext({
+      props: {
+        get: () => ({
+          displayName: "Picker",
+          props: {
+            selected: {
+              name: "selected",
+              required: false,
+              type: { name: "any" },
+              description: "",
+            },
+            other: {
+              name: "other",
+              required: false,
+              type: { name: "any" },
+              description: "",
+            },
+          },
+        }),
+        declaredType: (_packageDirectory, _component, name) =>
+          name === "selected" ? "DateType | null" : undefined,
+        typeDefinitions: (_packageDirectory, _component, types) =>
+          types.includes("DateType | null")
+            ? [
+                {
+                  name: "DateType",
+                  kind: "alias",
+                  signature: "DateType",
+                  description:
+                    "The date object of the adapter, such as `Date`.",
+                  packageDirectory: "date-adapters",
+                },
+              ]
+            : [],
+      },
+    });
+    const markdown = await toMarkdown(
+      '<PropsTable componentName="Picker" />',
+      ctx,
+    );
+    expect(markdown).toContain("| `selected` | `DateType \\| null` | - | - |");
+    expect(markdown).toContain("| `other` | `any` | - | - |");
+    expect(markdown).toContain(
+      "Types in this table: `DateType` is in the type declarations of `@salt-ds/date-adapters`: The date object of the adapter, such as `Date`.",
+    );
+  });
+
   it("warns instead of failing when a PropsTable has no props", async () => {
     const ctx = createContext();
     const markdown = await toMarkdown(

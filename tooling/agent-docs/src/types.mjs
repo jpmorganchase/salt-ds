@@ -100,6 +100,19 @@ function readFile(file, packageDirectory) {
         ? print(parameter.constraint)
         : undefined,
     }));
+  // Property name -> its printed type, for an interface's or type literal's
+  // members.
+  const membersOf = (members) =>
+    new Map(
+      members
+        .filter(
+          (member) =>
+            ts.isPropertySignature(member) &&
+            member.type &&
+            (ts.isIdentifier(member.name) || ts.isStringLiteral(member.name)),
+        )
+        .map((member) => [member.name.text, print(member.type)]),
+    );
   const propsOfFunction = (fn) => {
     const annotation = fn?.parameters?.[0]?.type;
     return annotation ? print(annotation) : undefined;
@@ -189,6 +202,19 @@ function readFile(file, packageDirectory) {
         : `${heritage ? `${heritage} ` : ""}{ ${node.members
             .map((member) => print(member).replace(/;$/, ""))
             .join("; ")} }`;
+      // An alias's own members are its type literals', as in A & { … }.
+      const literals = alias
+        ? [
+            node.type,
+            ...(ts.isIntersectionTypeNode(node.type) ? node.type.types : []),
+          ].filter((type) => ts.isTypeLiteralNode(type))
+        : [];
+      // The first paragraph of its doc comment.
+      const description = ts
+        .getTextOfJSDocComment(node.jsDoc?.at(-1)?.comment)
+        ?.split(/\n\s*\n/)[0]
+        .replace(/\s+/g, " ")
+        .trim();
       // The first declaration of a name in a file wins.
       if (!info.declarations.has(name)) {
         info.declarations.set(name, {
@@ -197,7 +223,15 @@ function readFile(file, packageDirectory) {
           signature: `${name}${typeParameterText(node)}`,
           text,
           heritage,
+          members: alias
+            ? new Map(
+                literals.flatMap((literal) => [...membersOf(literal.members)]),
+              )
+            : membersOf(node.members),
           parameters: parametersOf(node),
+          // A conditional type, which its description explains better.
+          conditional: alias && ts.isConditionalTypeNode(node.type),
+          description: description || undefined,
           exported: isExported(node),
           file,
           packageDirectory,
@@ -363,6 +397,33 @@ export function createTypeIndex({ packagesDir }) {
       }
       return [...elements];
     },
+    /**
+     * A prop's type as the component's props types declare it, such as
+     * `DateFrameworkType` where docgen prints the `any` it resolves to. Props
+     * types combined in a union each give theirs, so the date picker's
+     * `selectedDate` is `DateFrameworkType | DateRangeSelection | null`.
+     */
+    declaredPropType(componentName, file, propName) {
+      const parts = [];
+      for (const declaration of propsDeclarations(componentName, file)) {
+        const text = declaration.members.get(propName);
+        // A generic's own parameters, such as Selection, mean nothing here.
+        const own = declaration.parameters.map(({ name }) => name);
+        if (!text || namesIn([text]).some((name) => own.includes(name))) {
+          continue;
+        }
+        for (const part of unionParts(text)) {
+          if (!parts.includes(part)) parts.push(part);
+        }
+      }
+      if (parts.length === 0) return undefined;
+      // `null` and `undefined` read best last.
+      const empty = (part) => part === "null" || part === "undefined";
+      return [
+        ...parts.filter((part) => !empty(part)),
+        ...parts.filter(empty),
+      ].join(" | ");
+    },
     /** The file declaring a package's exported value, when only one does. */
     declaringFile(packageDirectory, name) {
       load();
@@ -414,12 +475,15 @@ export function createTypeIndex({ packagesDir }) {
             if (found) break;
           }
           if (!found) continue;
-          const short = found.text.length <= MAX_DEFINITION_LENGTH;
+          const described = found.conditional && found.description;
+          const short =
+            !described && found.text.length <= MAX_DEFINITION_LENGTH;
           definition = {
             name,
             kind: found.kind,
             signature: found.signature,
             text: short ? found.text : undefined,
+            ...(described ? { description: found.description } : {}),
             packageDirectory: found.packageDirectory,
           };
           if (short && depth === 0) {
@@ -449,6 +513,26 @@ export function createTypeIndex({ packagesDir }) {
       return definitions;
     },
   };
+}
+
+/** The members of a printed union type, split outside brackets. */
+function unionParts(text) {
+  const parts = [];
+  let depth = 0;
+  let start = 0;
+  for (let index = 0; index < text.length; index += 1) {
+    const char = text[index];
+    if ("([{<".includes(char)) depth += 1;
+    // The `>` of an arrow function's `=>` closes nothing.
+    else if (")]}".includes(char) || (char === ">" && text[index - 1] !== "="))
+      depth -= 1;
+    else if (char === "|" && depth === 0) {
+      parts.push(text.slice(start, index).trim());
+      start = index + 1;
+    }
+  }
+  parts.push(text.slice(start).trim());
+  return parts.filter(Boolean);
 }
 
 /** The capitalized type names in type strings, outside string literals. */

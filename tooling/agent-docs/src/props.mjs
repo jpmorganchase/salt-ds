@@ -84,6 +84,13 @@ export function createPropsProvider({ packagesDir }) {
           )
         : [];
     },
+    /** A prop's declared type, for props docgen prints as `any`. */
+    declaredType(packageDirectory, component, propName) {
+      const file = sourceOf(packageDirectory, component);
+      return file
+        ? types.declaredPropType(component.displayName, file, propName)
+        : undefined;
+    },
     /** The elements whose attributes a component's props extend, such as ["td"]. */
     elementsOf(packageDirectory, component) {
       const file = sourceOf(packageDirectory, component);
