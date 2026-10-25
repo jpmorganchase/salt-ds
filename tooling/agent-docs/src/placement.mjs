@@ -1,6 +1,8 @@
+import path from "node:path";
+import GithubSlugger from "github-slugger";
 import { MAX_PAGE_BYTES, MAX_PAGE_LINES } from "./config.mjs";
 import { relativeDocLink } from "./links.mjs";
-import { EXAMPLE_NODE, stringifyMarkdown, u } from "./mdx.mjs";
+import { EXAMPLE_NODE, PROPS_NODE, stringifyMarkdown, u } from "./mdx.mjs";
 
 function slugify(value) {
   return value
@@ -71,12 +73,39 @@ function exampleNodes(example, shown, linkShared, { label = true } = {}) {
   ];
 }
 
-function collectExamples(nodes, examples = []) {
+function collectNodes(nodes, type, found = []) {
   for (const node of nodes) {
-    if (node.type === EXAMPLE_NODE) examples.push(node);
-    else if (node.children) collectExamples(node.children, examples);
+    if (node.type === type) found.push(node);
+    else if (node.children) collectNodes(node.children, type, found);
   }
-  return examples;
+  return found;
+}
+
+/** `nodes` with their relative links rewritten for a file at `toDocPath`. */
+function rebaseLinks(nodes, fromDocPath, toDocPath) {
+  return nodes.map((node) => {
+    const copy = node.children
+      ? {
+          ...node,
+          children: rebaseLinks(node.children, fromDocPath, toDocPath),
+        }
+      : node;
+    // Leave URLs, root-relative paths and package-qualified links to other
+    // packages' docs, which don't depend on the file's folder.
+    if (
+      node.type !== "link" ||
+      /^(?:[a-z][a-z0-9+.-]*:|@|\/)/i.test(node.url)
+    ) {
+      return copy;
+    }
+    const hashAt = node.url.indexOf("#");
+    const target = hashAt === -1 ? node.url : node.url.slice(0, hashAt);
+    const hash = hashAt === -1 ? "" : node.url.slice(hashAt);
+    const resolved = target
+      ? path.posix.join(path.posix.dirname(fromDocPath), target)
+      : fromDocPath;
+    return { ...copy, url: `${relativeDocLink(toDocPath, resolved)}${hash}` };
+  });
 }
 
 function measure(nodes) {
@@ -119,14 +148,16 @@ function groupExamples(examples, base) {
 }
 
 /**
- * Renders the LivePreview examples on a page. When the page would exceed
- * `budget` bytes or `lineBudget` lines, it links its examples' supporting
- * files instead of showing them, then moves the largest examples to files
- * under `<page>/examples/`, linked from the page, until it fits. With
+ * Renders the LivePreview examples and props tables on a page. When the page
+ * would exceed `budget` bytes or `lineBudget` lines, it links its examples'
+ * supporting files instead of showing them, then moves the largest examples
+ * to files under `<page>/examples/`, linked from the page, until it fits. With
  * `keepShortFirst`, a first example of up to half of `lineBudget` stays unless
  * the page is still over `budget` without the others. Large supporting files,
  * and those that more than one moved example uses, are always written once
- * under `<page>/examples/files/` and linked.
+ * under `<page>/examples/files/` and linked. When the page would exceed
+ * `budget` even with every example moved, its props tables move to
+ * `<page>/props.md`, leaving the headings and guidance around them.
  */
 export function placeExamples(
   children,
@@ -138,10 +169,36 @@ export function placeExamples(
     keepShortFirst = true,
   },
 ) {
-  const examples = collectExamples(children);
+  const examples = collectNodes(children, EXAMPLE_NODE);
   const base = docPath.replace(/\.md$/, "");
   const groups = groupExamples(examples, base);
   const moved = new Set();
+
+  const propsNodes = collectNodes(children, PROPS_NODE);
+  const propsDocPath = `${base}/props.md`;
+  const propsTitle = `${title} props`;
+  // The props file has a heading for each table, under its title.
+  const propsSlugger = new GithubSlugger();
+  propsSlugger.slug(propsTitle);
+  const propsAnchors = new Map(
+    propsNodes.map((node) => [node, propsSlugger.slug(node.names[0])]),
+  );
+  let moveProps = false;
+  const propsLink = (node) =>
+    u.paragraph([
+      u.emphasis([u.text("Props:")]),
+      u.text(" "),
+      ...node.names.flatMap((name, index) => [
+        ...(index === 0 ? [] : [u.text(", ")]),
+        u.inlineCode(name),
+      ]),
+      u.text(" ("),
+      u.link(
+        `${relativeDocLink(docPath, propsDocPath)}#${propsAnchors.get(node)}`,
+        [u.text(node.names.length > 1 ? "tables" : "table")],
+      ),
+      u.text(")."),
+    ]);
 
   // Supporting files written once under `<page>/examples/files/` and linked.
   const sharedFiles = new Map();
@@ -188,6 +245,9 @@ export function placeExamples(
             ]),
           ];
         }
+        if (node.type === PROPS_NODE) {
+          return moveProps ? [propsLink(node)] : replace(node.children);
+        }
         return node.children
           ? [{ ...node, children: replace(node.children) }]
           : [node];
@@ -200,6 +260,16 @@ export function placeExamples(
     const size = measure(nodes);
     return size.bytes <= budget && size.lines <= lineBudget;
   };
+
+  if (propsNodes.length > 0 && !withinBytes(render())) {
+    // Props tables move only when moving every example leaves the page too
+    // large to read in one call.
+    linkSupport = true;
+    for (const group of groups) moved.add(group);
+    moveProps = !withinBytes(render());
+    linkSupport = false;
+    moved.clear();
+  }
 
   let placed = render();
   if (groups.length > 0 && !fits(placed)) {
@@ -315,6 +385,28 @@ export function placeExamples(
     }
     return { docPath: group.docPath, markdown };
   });
+  if (moveProps) {
+    files.push({
+      docPath: propsDocPath,
+      // Generation warns when the props file itself is too large.
+      props: true,
+      markdown: stringifyMarkdown({
+        type: "root",
+        children: [
+          u.heading(1, [u.text(propsTitle)]),
+          u.paragraph([
+            u.text("Props tables for the "),
+            backLink(propsDocPath),
+            u.text(" page."),
+          ]),
+          ...propsNodes.flatMap((node) => [
+            u.heading(2, [u.inlineCode(node.names[0])]),
+            ...rebaseLinks(node.children, docPath, propsDocPath),
+          ]),
+        ],
+      }),
+    });
+  }
   for (const { file, docPath: sharedPath } of sharedFiles.values()) {
     files.push({
       docPath: sharedPath,

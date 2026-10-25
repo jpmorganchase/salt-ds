@@ -662,6 +662,14 @@ export async function generateAgentDocs({
         `${doc.packageName}/docs/${doc.docPath} is ${pageLines} lines, and agents often stop reading after about ${MAX_PAGE_LINES}, so its later sections may go unread. Consider shortening site/docs/${source}.`,
       );
     }
+    for (const file of rendered.files) {
+      const fileBytes = Buffer.byteLength(file.markdown);
+      if (file.props && fileBytes > MAX_PAGE_BYTES) {
+        warnings.push(
+          `${doc.packageName}/docs/${file.docPath}, which holds the props tables moved off ${doc.docPath}, is ${Math.round(fileBytes / 1024)} KB, so agents may not read it in one go. Consider giving fewer props tables in site/docs/${source}.`,
+        );
+      }
+    }
     target.entries.push({
       title: doc.title,
       docPath: doc.docPath,

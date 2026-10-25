@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { EXAMPLE_NODE, stringifyMarkdown, u } from "../mdx.mjs";
+import { EXAMPLE_NODE, PROPS_NODE, stringifyMarkdown, u } from "../mdx.mjs";
 import { placeExamples } from "../placement.mjs";
 
 const sharedCss = {
@@ -249,5 +249,88 @@ describe("placeExamples with too many lines", () => {
       "_Example:_ `Basic` ([source](./button/examples/basic.md)).",
     );
     expect(markdown).not.toContain("```tsx");
+  });
+});
+
+describe("placeExamples with props tables", () => {
+  // A props table, standing in for its rows, and a part's table.
+  const propsNode = (size) => ({
+    type: PROPS_NODE,
+    names: ["Button", "ButtonIcon"],
+    children: [
+      u.paragraph([u.text("x".repeat(size))]),
+      u.paragraph([
+        u.link("./input.md#value", [u.text("Input")]),
+        u.text(", "),
+        u.link("#usage", [u.text("usage")]),
+        u.text(", "),
+        u.link("@salt-ds/theme/docs/index.md", [u.text("tokens")]),
+        u.text(", "),
+        u.link("/salt/components/input", [u.text("site")]),
+        u.text(" and "),
+        u.link("https://example.com", [u.text("elsewhere")]),
+      ]),
+    ],
+  });
+  const large = `export const Large = "${"x".repeat(2000)}";\n`;
+
+  it("keeps props tables on a page that fits with its examples moved", () => {
+    const { markdown, files } = place(
+      [
+        u.heading(2, [u.text("Props")]),
+        propsNode(500),
+        example("Basic"),
+        example("Large", { code: large }),
+      ],
+      1500,
+    );
+    expect(markdown).toContain("x".repeat(500));
+    expect(markdown).toContain(
+      "_Example:_ `Large` ([source](./button/examples/large.md)).",
+    );
+    expect([...files.keys()]).not.toContain("components/button/props.md");
+  });
+
+  it("moves props tables to a props file when moving examples isn't enough", () => {
+    const { markdown, files } = place(
+      [
+        u.heading(2, [u.text("Props")]),
+        propsNode(2000),
+        u.paragraph([u.text("Guidance.")]),
+        example("Basic"),
+      ],
+      1500,
+    );
+    // The page keeps its guidance and examples, which now fit.
+    expect(markdown).toBe(
+      [
+        "## Props",
+        "",
+        "_Props:_ `Button`, `ButtonIcon` ([tables](./button/props.md#button)).",
+        "",
+        "Guidance.",
+        "",
+        "_Example:_ `Basic`",
+        "",
+        "```tsx",
+        "export const Basic = 1;",
+        "```",
+        "",
+        "Supporting file `./styles.css`:",
+        "",
+        "```css",
+        ".root {}",
+        "```",
+        "",
+      ].join("\n"),
+    );
+    const props = files.get("components/button/props.md");
+    expect(props).toContain(
+      "# Button props\n\nProps tables for the [Button](../button.md) page.\n\n## `Button`\n\nxxx",
+    );
+    // Links are rewritten for the props file's folder.
+    expect(props).toContain(
+      "[Input](../input.md#value), [usage](../button.md#usage), [tokens](@salt-ds/theme/docs/index.md), [site](/salt/components/input) and [elsewhere](https://example.com)",
+    );
   });
 });

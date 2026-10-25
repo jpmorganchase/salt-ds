@@ -58,6 +58,8 @@ Coding agents read a file from the top a couple of hundred lines at a time and o
 
 The page links to each moved example, and each moved example links back. An example shown twice on a page is written once. Supporting files over 8 KB, usually example data, are always written once to `<page>/examples/files/` and linked, as are files that more than one moved example uses and the largest files of an example that is still too long.
 
+A page that would still be over 20 KB with all of its examples moved, such as the date picker pages with the props tables of every part, also moves its props tables to `<page>/props.md`. The headings and guidance around each table stay, with a link to the table, and the props file links back.
+
 Generation warns about a page that is still over 20 KB with its examples moved out, and lists a page still over 200 lines as an authoring suggestion, because only shortening its site pages can fix them.
 
 ## Where pages go

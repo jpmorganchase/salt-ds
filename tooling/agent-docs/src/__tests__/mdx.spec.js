@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import {
   convertMdx,
   EXAMPLE_NODE,
+  PROPS_NODE,
   stringifyMarkdown,
   stripFragments,
 } from "../mdx.mjs";
@@ -239,6 +240,25 @@ describe("convertMdx", () => {
         ].join("\n"),
       );
       expect(recorded).toEqual(["Cell", "CellIcon", "Row"]);
+    });
+
+    it("wraps each table and its parts' tables in a props node for placement", async () => {
+      const ctx = createContext({
+        props,
+        subcomponents: (_packageDirectory, name) =>
+          name === "Cell" ? ["CellIcon"] : [],
+      });
+      const nodes = await convertMdx(
+        '<PropsTable componentName="Cell" />\n\n<PropsTable componentName="Row" />',
+        ctx,
+      );
+      expect(
+        nodes.map((node) => [node.type, node.names, node.children.length]),
+      ).toEqual([
+        // Cell's table and notes, then CellIcon's label, table and notes.
+        [PROPS_NODE, ["Cell", "CellIcon"], 5],
+        [PROPS_NODE, ["Row"], 1],
+      ]);
     });
   });
 

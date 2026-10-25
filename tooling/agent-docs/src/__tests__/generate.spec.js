@@ -514,6 +514,43 @@ ${FORMS_PREVIEWS}`,
     );
   });
 
+  it("moves props tables too large for the page to a props file, and warns when that is too large", async () => {
+    const props = Object.fromEntries(
+      Array.from({ length: 200 }, (_, index) => [
+        `prop${index}`,
+        {
+          name: `prop${index}`,
+          type: { name: "string" },
+          description: `Prop ${index}. ${"Describes the prop at length. ".repeat(4)}`,
+        },
+      ]),
+    );
+    const repoRoot = await createFixture();
+    const result = await generateAgentDocs({
+      repoRoot,
+      write: false,
+      propsProvider: {
+        get: (packageDirectory, name) =>
+          packageDirectory === "core" && name === "Button"
+            ? { props }
+            : undefined,
+      },
+    });
+    const files = result.outputs.get("@salt-ds/core").files;
+    expect(files.get("components/button.md")).toContain(
+      "_Props:_ `Button` ([table](./button/props.md#button)).",
+    );
+    expect(files.get("components/button/props.md")).toContain(
+      "# Button props\n\nProps tables for the [Button](../button.md) page.\n\n## `Button`\n\n| Prop |",
+    );
+    // The page now fits; its props file doesn't.
+    expect(result.warnings).toEqual([
+      expect.stringMatching(
+        /^@salt-ds\/core\/docs\/components\/button\/props\.md, which holds the props tables moved off components\/button\.md, is \d+ KB, .*site\/docs\/components\/button\/\.$/,
+      ),
+    ]);
+  });
+
   it("suggests shortening a page longer than agents usually read", async () => {
     const repoRoot = await createFixture({
       "site/docs/patterns/forms.mdx": `---

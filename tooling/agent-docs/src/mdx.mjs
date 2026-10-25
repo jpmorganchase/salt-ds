@@ -6,6 +6,12 @@ import remarkStringify from "remark-stringify";
 import { unified } from "unified";
 import { formatPropType } from "../../../site/src/components/components/formatPropType.mjs";
 
+/**
+ * A props table and its notes, which `placeExamples` keeps on the page or
+ * moves to the page's props file. `names` are the components it documents.
+ */
+export const PROPS_NODE = "agentDocsProps";
+
 const mdxParser = unified().use(remarkParse).use(remarkMdx).use(remarkGfm);
 const markdownParser = unified().use(remarkParse).use(remarkGfm);
 const serializer = unified()
@@ -17,6 +23,11 @@ const serializer = unified()
     listItemIndent: "one",
     rule: "-",
     strong: "*",
+    // Props tables left on the page render as their contents.
+    handlers: {
+      [PROPS_NODE]: (node, _parent, state, info) =>
+        state.containerFlow(node, info),
+    },
   });
 
 export function parseMdx(source) {
@@ -640,6 +651,7 @@ async function propsTable(node, ctx) {
     return [];
   }
   ctx.recordComponent?.(componentName, packageDirectory);
+  const names = [componentName];
   const nodes = componentApi(componentName, component, packageDirectory, ctx);
   // Exported parts the site gives no table, such as DrawerCloseButton.
   for (const name of ctx.subcomponents?.(packageDirectory, componentName) ??
@@ -647,6 +659,7 @@ async function propsTable(node, ctx) {
     const part = ctx.props.get(packageDirectory, name);
     if (!part) continue;
     ctx.recordComponent?.(name, packageDirectory);
+    names.push(name);
     nodes.push(
       u.paragraph([
         u.strong([u.inlineCode(name)]),
@@ -657,7 +670,8 @@ async function propsTable(node, ctx) {
       ...componentApi(name, part, packageDirectory, ctx),
     );
   }
-  return nodes;
+  // Rendered once the whole page is known; see `placeExamples`.
+  return [{ type: PROPS_NODE, names, children: nodes }];
 }
 
 async function keyboardControlItem(node, ctx) {
