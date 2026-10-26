@@ -1,7 +1,8 @@
-import { mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { afterEach, describe, expect, it } from "vitest";
+import { run as initAgentDocs } from "../../../../packages/cli/lib/agents-md.mjs";
 import { GENERATED_MARKER } from "../config.mjs";
 import { pathExists } from "../files.mjs";
 import {
@@ -320,6 +321,9 @@ describe("generateAgentDocs", () => {
       "# Button\n\n`Button` triggers an action. See [dialogs](./dialog.md).",
     );
     expect(button).toContain("- Package: `@salt-ds/core@1.2.3`");
+    expect(button).not.toContain("External dependency:");
+    expect(button).not.toContain("Compatible versions:");
+    expect(button).not.toContain("License required:");
     expect(button).toContain("- Also known as: Action");
     expect(button).toContain("[Dialog](./dialog.md) (similar to)");
     expect(button).toContain("[Forms](../patterns/forms.md)");
@@ -410,6 +414,102 @@ describe("generateAgentDocs", () => {
       "- `--salt-old-accent` (SaltProviderNext and legacy themes only)\n",
     );
     expect(tokens).not.toContain("alias of `--salt-palette-accent`");
+  });
+
+  it("preserves external dependency details and links from component frontmatter", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/components/button/index.mdx": fixtureFiles[
+        "site/docs/components/button/index.mdx"
+      ].replace(
+        "  package:\n",
+        `  externalDependency:
+    name: "example-library"
+    description: "Uses \`example-library\` with [dialogs](../dialog)."
+    url: "https://example.com/library"
+    compatibleVersions: ">=8 <10"
+    licenseRequired: true
+  package:
+`,
+      ),
+    });
+    const result = await generateAgentDocs({
+      repoRoot,
+      write: false,
+      propsProvider,
+    });
+    const button = result.outputs
+      .get("@salt-ds/core")
+      .files.get("components/button.md");
+    expect(button).toContain(
+      "- External dependency: [`example-library`](https://example.com/library)",
+    );
+    expect(button).toContain("- Compatible versions: `>=8 <10`");
+    expect(button).toContain("- License required: Yes");
+    expect(button).toContain(
+      "Uses `example-library` with [dialogs](./dialog.md).",
+    );
+  });
+
+  it("keeps an external dependency name without inventing optional details", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/components/button/index.mdx": fixtureFiles[
+        "site/docs/components/button/index.mdx"
+      ].replace(
+        "  package:\n",
+        `  externalDependency:
+    name: "example-library"
+    licenseRequired: false
+  package:
+`,
+      ),
+    });
+    const result = await generateAgentDocs({
+      repoRoot,
+      write: false,
+      propsProvider,
+    });
+    const button = result.outputs
+      .get("@salt-ds/core")
+      .files.get("components/button.md");
+    expect(button).toContain("- External dependency: `example-library`\n");
+    expect(button).not.toContain("Compatible versions:");
+    expect(button).not.toContain("License required:");
+  });
+
+  it("measures the same guidance block that init writes from generated packages", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/getting-started/fixing-accessibility.mdx": `---
+title: Fixing accessibility
+---
+
+Reproduce the problem before changing the component.
+`,
+    });
+    const result = await generateAgentDocs({ repoRoot, propsProvider });
+    await Promise.all(
+      ["core", "theme"].map((name) =>
+        cp(
+          path.join(repoRoot, "packages", name),
+          path.join(repoRoot, "node_modules/@salt-ds", name),
+          { recursive: true },
+        ),
+      ),
+    );
+    expect(
+      initAgentDocs(["--project", repoRoot, "--no-claude"], {
+        log: () => {},
+      }),
+    ).toBe(0);
+    const instructions = await readFile(
+      path.join(repoRoot, "AGENTS.md"),
+      "utf8",
+    );
+    expect(instructions).toContain(
+      "node_modules/@salt-ds/core/docs/getting-started/fixing-accessibility.md",
+    );
+    expect(result.agentsBlockBytes).toBe(
+      Buffer.byteLength(instructions.trimEnd()),
+    );
   });
 
   it("replaces previously generated docs", async () => {

@@ -15,27 +15,52 @@ export const BEGIN_MARKER = "<!-- BEGIN:salt-ds-agent-docs -->";
 export const END_MARKER = "<!-- END:salt-ds-agent-docs -->";
 export const MANIFEST_FILE = "manifest.json";
 
+const GUIDANCE_PAGES = {
+  choose: "getting-started/choosing-the-right-primitive.md",
+  review: "getting-started/composition-pitfalls.md",
+  accessibility: "getting-started/fixing-accessibility.md",
+};
+
+/** Optional guides from the application's installed Core documentation. */
+export function guidancePages(manifests) {
+  const core = manifests.find(({ name }) => name === "@salt-ds/core");
+  if (!core) return {};
+  return Object.fromEntries(
+    Object.entries(GUIDANCE_PAGES).flatMap(([purpose, expectedPath]) => {
+      const page = core.pages.find(({ path }) => path === expectedPath);
+      return page ? [[purpose, path.posix.join(core.docsPath, page.path)]] : [];
+    }),
+  );
+}
+
 /**
  * The block's instructions. `rootBase` is what the index's `root` is relative
- * to, and `check` is the salt-check command to run from that base.
+ * to, `guidance` uses the same paths, and `check` runs from that base.
  */
-export function instructions({ rootBase = "this file", check } = {}) {
+export function instructions({
+  rootBase = "this file",
+  check,
+  guidance = {},
+} = {}) {
   return [
-    "This project uses the Salt Design System (`@salt-ds/*` packages), whose APIs may differ from your training data.",
-    "For any Salt task, prefer retrieval-led reasoning over pre-training-led reasoning: before writing or changing UI that uses Salt, read the relevant pages from the index below.",
-    "They are generated for the installed package versions.",
-    "Prefer component props, such as `Text`'s `color`, to custom CSS with `--salt-*` tokens.",
+    "This project uses Salt (`@salt-ds/*`). Inspect its conventions first. Before writing or changing Salt UI, read the relevant indexed docs for the installed versions; prefer this evidence to training data.",
+    `For new UI, choosing or replacing components, or changes to the interaction model, establish user intent and read ${guidance.choose ? `\`${guidance.choose}\`` : "the relevant component usage guidance"} before selecting a primitive.`,
+    `When changing component composition, review ${guidance.review ? `\`${guidance.review}\`` : "the relevant usage and accessibility guidance"}.`,
+    `For accessibility repairs or failing accessibility tests, reproduce the issue and read ${guidance.accessibility ? `\`${guidance.accessibility}\` and ` : ""}component usage/accessibility guidance. Identify application wiring, composition or Salt ownership; verify affected behaviour and report unperformed checks.`,
+    "When docs and code disagree, distinguish current behaviour from intended requirements: check disputed APIs against installed public types and exports, and reproduce disputed runtime behaviour.",
+    "Preserve project conventions when compatible with the request; existing usage is not proof of correctness for repairs or migrations. Stay within scope and report material discrepancies.",
+    "Prefer props such as `Text`'s `color` to custom CSS with `--salt-*` tokens.",
     check
-      ? `Before you finish, run \`${check}\` from ${rootBase === "this file" ? "this file's folder" : rootBase} and fix what it reports: it checks the Salt tokens, deprecated props and component parts in the files you changed against the installed docs.`
+      ? `Before you finish, run \`${check}\` from ${rootBase === "this file" ? "this file's folder" : rootBase} and fix what it reports: it checks changed files' tokens, deprecated props and component parts against installed data.`
       : "Before you finish, check each Salt prop against its component page's props table and avoid deprecated props.",
-    "Under each props table, pages list the attributes a component also accepts and the Salt types the table names; use the installed type declarations for anything else, such as whether attributes belong on the wrapper or an inputProps slot.",
+    "Props pages list additional attributes and named Salt types. Resolve remaining details in installed declarations, including wrapper versus `inputProps` attributes.",
     ...(check
       ? []
       : [
           "For each `--salt-*` token, find the installed `@salt-ds/theme` documentation in the index and check its token references for a characteristic or foundation token available in the selected theme.",
         ]),
-    `Index paths are relative to \`root\`, which is relative to ${rootBase}.`,
-    "Names in brackets after page names are other names for the same component, and each package's `docs/index.md` summarizes its pages.",
+    `Guide and index paths are relative to \`root\`, which is relative to ${rootBase}.`,
+    "Brackets after page names give aliases; each package's `docs/index.md` summarizes its pages.",
   ].join(" ");
 }
 
@@ -50,13 +75,13 @@ export function checkCommand({ base, project }) {
   return `npx @salt-ds/cli check${relative === "." ? "" : ` --project ${argument}`} --changed`;
 }
 
-export function agentsBlock({ root = ".", lines, rootBase, check }) {
+export function agentsBlock({ root = ".", lines, rootBase, check, guidance }) {
   return [
     BEGIN_MARKER,
     "",
     "## Salt Design System",
     "",
-    instructions({ rootBase, check }),
+    instructions({ rootBase, check, guidance }),
     "",
     [`[Salt docs index]|root: ${root}`, ...lines].join("\n"),
     "",
@@ -366,6 +391,7 @@ export function run(args, { log = console.log, cwd = process.cwd() } = {}) {
   const block = agentsBlock({
     root: ".",
     lines: indexLines(manifests),
+    guidance: guidancePages(manifests),
     check: coreCheck({ base: dir, project, manifests }),
   });
   const agentsPath = path.join(dir, "AGENTS.md");
@@ -392,6 +418,7 @@ export function run(args, { log = console.log, cwd = process.cwd() } = {}) {
       root: ".",
       rootBase: "the repository root",
       lines: indexLines(copilotManifests),
+      guidance: guidancePages(copilotManifests),
       check: coreCheck({
         base: repository,
         project,

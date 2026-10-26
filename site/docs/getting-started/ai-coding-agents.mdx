@@ -23,11 +23,12 @@ npm install --save-dev @salt-ds/cli
 npx salt-ds init --script typecheck
 ```
 
-`salt-ds init` adds a Salt section to `AGENTS.md` that tells agents to read the
-installed documentation before they write Salt UI, to prefer component props to
-custom CSS, and to [check what they wrote](#check-what-agents-write) before they
-finish, with a compressed index of every documentation page in the Salt packages
-resolved from that application. It records each package's documentation path,
+`salt-ds init` adds a Salt section to `AGENTS.md` that tells agents to inspect the
+application and read the relevant installed guidance before they change Salt UI,
+to prefer component props to custom CSS, and to
+[check what they wrote](#check-what-agents-write) before they finish. It includes
+a compressed index of every documentation page in the Salt packages resolved
+from that application. It records each package's documentation path,
 makes `CLAUDE.md` import `AGENTS.md` for Claude Code, and keeps your other
 instructions. Instruction-file support depends on the agent, client and mode;
 see [Agent compatibility](#agent-compatibility).
@@ -36,10 +37,10 @@ see [Agent compatibility](#agent-compatibility).
 runs in CI and for agents that run your scripts without loading `AGENTS.md`. Use
 `--script lint` for a lint script instead.
 
-Run `salt-ds init` again after you add or upgrade Salt packages, because the index
-lists the pages of the installed versions. The section leaves out package
-versions, so an upgrade changes it only when it changes the pages or the other
-names they're indexed under. Each page states the version it documents.
+Run `salt-ds init` again after you add or upgrade Salt packages or update the CLI.
+Salt package changes can update the indexed pages, and CLI changes can update the
+instructions even when the page list stays the same. The section leaves out
+package versions; each page states the version it documents.
 
 - Add `--check` to fail a CI job when an instruction file needs updating, for
   example after an upgrade that adds pages. It checks every file the same
@@ -78,6 +79,32 @@ installs don't create. To use it with Yarn, set `nodeLinker: node-modules` in
 
 Generate the section with `salt-ds init` rather than by hand, so the index
 matches your installed versions.
+
+## How agents use the guidance
+
+The generated instructions ask agents to inspect the application and its
+conventions, then read the guidance relevant to the change:
+
+| Task                                                                                                                 | Guidance                                                                                                                                                                                               |
+| -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Build new UI, choose or replace a component, or change an interaction model.                                         | Read [Choosing the right primitive](./choosing-the-right-primitive) before settling on a component, then its usage and accessibility guidance.                                                         |
+| Change how components are composed.                                                                                  | Review [composition pitfalls](./composition-pitfalls).                                                                                                                                                 |
+| Repair an accessibility issue or investigate a failing accessibility check, including one found during another task. | Follow [Fixing accessibility](./fixing-accessibility) and the affected components' usage and accessibility guidance. Revisit component selection when the diagnosis points to an unsuitable primitive. |
+
+Small changes such as correcting copy do not require repeating component
+selection. The generated instructions link these guides only when the installed
+Core manifest includes them, using the resolved documentation paths for the
+instructions folder. Older packages still get instructions to consult their
+relevant indexed documentation. Copilot paths are resolved separately from the
+repository root.
+
+When documentation and code disagree, distinguish current behavior from intended
+behavior. Verify disputed APIs against the installed public types and exports,
+and disputed runtime behavior with a focused reproduction. Existing application
+usage can itself contain a bug: preserve conventions only when they are compatible
+with the requested change, including accessibility repairs and migrations.
+Agents should report material discrepancies, the evidence used to resolve them
+and verification they could not perform.
 
 ## Agent compatibility
 
@@ -149,3 +176,6 @@ provides or arranging a component's parts incorrectly. Ask your agent to run you
 project's build, tests and accessibility checks, and review the result as you
 would any change. [Choosing the right primitive](./choosing-the-right-primitive)
 and [composition pitfalls](./composition-pitfalls) describe what to look for.
+[Fixing accessibility](./fixing-accessibility) explains how to diagnose an issue
+and verify the affected behavior. A passing `salt-ds check` or automated
+accessibility scan does not establish that the whole application is accessible.

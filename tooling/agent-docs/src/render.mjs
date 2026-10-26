@@ -205,9 +205,9 @@ function rewriteLinks(nodes, doc, page, shared) {
   return visit({ children: nodes });
 }
 
-function summaryNodes(doc, page, shared) {
-  return typeof doc.summary === "string" && doc.summary.trim()
-    ? rewriteLinks(parseMarkdown(doc.summary).children, doc, page, shared)
+function frontmatterNodes(value, doc, page, shared) {
+  return typeof value === "string" && value.trim()
+    ? rewriteLinks(parseMarkdown(value).children, doc, page, shared)
     : [];
 }
 
@@ -256,6 +256,38 @@ function finishDocument(doc, children, summary, segments) {
 
 export async function renderComponentDocument(doc, shared) {
   const facts = commonFacts(doc, shared);
+  const dependency = doc.index.frontmatter.data?.externalDependency;
+  if (typeof dependency?.name === "string" && dependency.name.trim()) {
+    const name = [u.inlineCode(dependency.name)];
+    facts.push(
+      ...rewriteLinks(
+        [
+          fact(
+            "External dependency",
+            typeof dependency.url === "string" && dependency.url.trim()
+              ? [u.link(dependency.url, name)]
+              : name,
+          ),
+        ],
+        doc,
+        doc.index,
+        shared,
+      ),
+    );
+  }
+  if (
+    typeof dependency?.compatibleVersions === "string" &&
+    dependency.compatibleVersions.trim()
+  ) {
+    facts.push(
+      fact("Compatible versions", [
+        u.inlineCode(dependency.compatibleVersions),
+      ]),
+    );
+  }
+  if (dependency?.licenseRequired === true) {
+    facts.push(fact("License required", [u.text("Yes")]));
+  }
   if (doc.aliases.length > 0) {
     facts.push(fact("Also known as", [u.text(doc.aliases.join(", "))]));
   }
@@ -286,7 +318,8 @@ export async function renderComponentDocument(doc, shared) {
   const segments = [{ route: doc.route, nodes: overview }];
   const children = [
     u.heading(1, [u.text(doc.title)]),
-    ...summaryNodes(doc, doc.index, shared),
+    ...frontmatterNodes(doc.summary, doc, doc.index, shared),
+    ...frontmatterNodes(dependency?.description, doc, doc.index, shared),
     u.list(facts),
     ...overview,
   ];
@@ -311,7 +344,7 @@ export async function renderPageDocument(doc, shared) {
   const content = await convertPage(doc.page, doc, shared);
   const children = [
     u.heading(1, [u.text(doc.title)]),
-    ...summaryNodes(doc, doc.page, shared),
+    ...frontmatterNodes(doc.summary, doc, doc.page, shared),
     u.list([...commonFacts(doc, shared), websiteFact(doc)]),
     ...content,
   ];

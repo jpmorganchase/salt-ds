@@ -76,6 +76,26 @@ function changeManifest(packageDir, update) {
   writeFileSync(file, JSON.stringify(manifest));
 }
 
+const guidePages = [
+  {
+    path: "getting-started/choosing-the-right-primitive.md",
+    title: "Choosing the right primitive",
+  },
+  {
+    path: "getting-started/composition-pitfalls.md",
+    title: "Composition pitfalls",
+  },
+  {
+    path: "getting-started/fixing-accessibility.md",
+    title: "Fixing accessibility",
+  },
+];
+
+function addGuides(packageDir, pages = guidePages) {
+  for (const page of pages) write(packageDir, `docs/${page.path}`, page.title);
+  changeManifest(packageDir, (manifest) => manifest.pages.push(...pages));
+}
+
 afterEach(() => {
   for (const root of roots.splice(0))
     rmSync(root, { recursive: true, force: true });
@@ -239,6 +259,90 @@ describe("application package discovery", () => {
     const root = project();
     expect(() => run(["--project", root], quiet)).toThrow("--project");
     expect(existsSync(path.join(root, "AGENTS.md"))).toBe(false);
+  });
+});
+
+describe("task guidance", () => {
+  it("resolves each guide from the selected app for AGENTS and Copilot", () => {
+    const root = project();
+    mkdirSync(path.join(root, ".git"));
+    const app = path.join(root, "apps/web");
+    const output = path.join(root, "instructions");
+    mkdirSync(output);
+    addGuides(install(root, "core", { version: "1.0.0" }));
+    addGuides(install(app, "core", { version: "2.0.0" }));
+    const args = ["--project", app, "--dir", output, "--copilot"];
+
+    expect(run(args, quiet)).toBe(0);
+    const agents = readFileSync(path.join(output, "AGENTS.md"), "utf8");
+    const copilot = readFileSync(
+      path.join(root, ".github/copilot-instructions.md"),
+      "utf8",
+    );
+    for (const page of guidePages) {
+      const fromRoot = `apps/web/node_modules/@salt-ds/core/docs/${page.path}`;
+      expect(agents).toContain(`\`../${fromRoot}\``);
+      expect(copilot).toContain(`\`${fromRoot}\``);
+      expect(readFileSync(path.join(output, "..", fromRoot), "utf8")).toBe(
+        page.title,
+      );
+    }
+    expect(run([...args, "--check"], quiet)).toBe(0);
+    expect(run(args, quiet)).toBe(0);
+    expect(readFileSync(path.join(output, "AGENTS.md"), "utf8")).toBe(agents);
+    expect(
+      readFileSync(path.join(root, ".github/copilot-instructions.md"), "utf8"),
+    ).toBe(copilot);
+  });
+
+  it("uses fallback guidance for older packages without borrowing newer guides", () => {
+    const root = project();
+    const app = path.join(root, "apps/web");
+    addGuides(install(root, "core", { version: "2.0.0" }));
+    const core = install(app, "core", { version: "1.0.0" });
+    changeManifest(core, (manifest) => {
+      delete manifest.schemaVersion;
+    });
+
+    expect(run(["--project", app], quiet)).toBe(0);
+    const content = readFileSync(path.join(app, "AGENTS.md"), "utf8");
+    for (const page of guidePages) expect(content).not.toContain(page.path);
+    expect(content).toContain("before selecting a primitive");
+    expect(content).toContain("When changing component composition");
+    expect(content).toContain(
+      "For accessibility repairs or failing accessibility tests",
+    );
+    expect(content).not.toContain("undefined");
+  });
+
+  it("adds only guides present in the upgraded manifest", () => {
+    const root = project();
+    const core = install(root);
+    run(["--project", root], quiet);
+    addGuides(core, [guidePages[2]]);
+
+    expect(run(["--project", root, "--check"], quiet)).toBe(1);
+    expect(run(["--project", root], quiet)).toBe(0);
+    const content = readFileSync(path.join(root, "AGENTS.md"), "utf8");
+    expect(content).toContain(
+      "`node_modules/@salt-ds/core/docs/getting-started/fixing-accessibility.md`",
+    );
+    expect(content).not.toContain(guidePages[0].path);
+    expect(content).not.toContain(guidePages[1].path);
+    expect(run(["--project", root, "--check"], quiet)).toBe(0);
+  });
+
+  it("rejects a listed guide missing from the package before updating files", () => {
+    const root = project();
+    const core = install(root);
+    run(["--project", root], quiet);
+    const before = readFileSync(path.join(root, "AGENTS.md"), "utf8");
+    changeManifest(core, (manifest) => manifest.pages.push(guidePages[2]));
+
+    expect(() => run(["--project", root], quiet)).toThrow(
+      "Missing documentation file:",
+    );
+    expect(readFileSync(path.join(root, "AGENTS.md"), "utf8")).toBe(before);
   });
 });
 
@@ -639,7 +743,7 @@ describe("GitHub Copilot instructions", () => {
       /^# Team rules\n\n<!-- BEGIN:salt-ds-agent-docs -->/,
     );
     expect(content).toContain(
-      "Index paths are relative to `root`, which is relative to the repository root.",
+      "Guide and index paths are relative to `root`, which is relative to the repository root.",
     );
     expect(content).toContain(
       "[Salt docs index]|root: .\n|node_modules/@salt-ds/core/docs/components:{button.md}",

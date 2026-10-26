@@ -1,6 +1,6 @@
 # Agent docs
 
-Generates Markdown documentation for coding agents from the Salt website source and writes it into each published package's `docs` folder. Consumers point their agent at `node_modules/@salt-ds/core/docs/index.md` (see the [core README](../../packages/core/README.md)). Because the docs ship inside each package, they always match the installed version.
+Generates Markdown documentation for coding agents from the Salt website source and writes it into each published package's `docs` folder. Consumers point their agent at `node_modules/@salt-ds/core/docs/index.md` (see the [core README](../../packages/core/README.md)). The docs are generated and published with that package version. The generated index points to the documentation shipped with the target application's installed packages. Version matching does not establish that every description or existing application usage is correct.
 
 ```sh
 yarn build:agent-docs            # write packages/*/docs (also run by yarn build)
@@ -12,7 +12,7 @@ The generated folders are ignored by Git. Generation replaces a `docs` folder on
 
 ## What it generates
 
-- One page per component: the overview frontmatter and the usage, accessibility and examples tabs merged into one file, in that order so that accessibility guidance comes before the long examples. `PropsTable` becomes a props table (from `react-docgen-typescript`, as on the site), and each `LivePreview` becomes the example's source plus the local files it imports.
+- One page per component: the overview frontmatter and the usage, accessibility and examples tabs merged into one file, in that order so that accessibility guidance comes before the long examples. Authored external dependency names, links, descriptions, compatible versions and license requirements are retained. `PropsTable` becomes a props table (from `react-docgen-typescript`, as on the site), and each `LivePreview` becomes the example's source plus the local files it imports.
 - One page per pattern, getting-started, foundations, themes and about page. Pattern examples are one file per example, `site/src/examples/patterns/<pattern>/<Example>.tsx`, as component examples are. Generation fails for a pattern example that the pattern's `index.ts` exports but no page shows.
 - Reference lists: every design token (`@salt-ds/theme/docs/tokens.md`), icon (`@salt-ds/icons/docs/icons.md`) and country symbol (`@salt-ds/countries/docs/country-symbols.md`). The token list is too long to read in one go, so `tokens.md` links to a file per tier, or per group for long tiers, split into parts where a group is still too long.
 - An `index.md` per package listing every page with its summary and `alsoKnownAs` names, which agents use to find the right page. Agents read these as other names for the same component, so a name that is another page's title, such as `Overlay` for Dialog, is left out with an authoring suggestion, as are repeated spellings. Summaries are shortened so the index fits in one read, and generation warns when an index grows past 20 KB.
@@ -30,6 +30,40 @@ A deprecated token shows the token to use instead, from the first of these that 
 Palette tokens are listed as not for direct use, except in a palette group that no characteristic token references, such as the corner tokens that Salt's components use for border radius, which is marked.
 
 Links between pages in one package are relative. Links to another package use `@salt-ds/<package>/docs/...`, and links to pages that aren't shipped point to the website. Generation fails for a link to a generated file or heading that doesn't exist; a `Disclosure`'s `id` is kept as an HTML anchor so links to it still work. Headings are slugged with `github-slugger`, as on the site, and a link to a heading in one of a component's tabs points to the same heading in the merged page, even when an earlier tab repeats the heading.
+
+## Task guidance
+
+The generated instructions ask agents to inspect the application before choosing components. New UI, component replacement and changes to the interaction model route to [Choosing the right primitive](../../site/docs/getting-started/choosing-the-right-primitive.mdx); composition changes also route to [Composition pitfalls](../../site/docs/getting-started/composition-pitfalls.mdx). Accessibility repairs, including failures discovered during another task, route independently to [Fixing accessibility](../../site/docs/getting-started/fixing-accessibility.mdx). A small text edit does not require repeating the full component-choice workflow.
+
+`guidancePages` resolves these optional guide paths from the target application's installed Core manifest. It uses the same relative base as that instruction block, including the repository-root base for Copilot. Older packages without a guide keep the general task instructions and component-page lookup; a guide listed in the manifest but missing from the package remains an error. The block-size calculation uses the same guide paths and instruction generator as `salt-ds init`.
+
+When sources disagree, the instructions distinguish facts about the installed public API and observed runtime behaviour from requirements for the requested outcome. Existing application conventions are useful context, but copying them can preserve an accessibility defect or defeat an intentional migration. Agents should verify disputed facts, make changes within the requested scope and report material discrepancies and verification gaps.
+
+Consumers rerun `salt-ds init` after upgrading the CLI as well as after changing their Salt packages. CLI instruction changes can make a block stale even when the installed documentation pages are unchanged. Changes to shipped guidance also need an owning-package release; see [contributing guidance](../../CONTRIBUTING.md#documentation-shipped-with-packages).
+
+## Evaluating agent workflows
+
+Unit tests establish routing, path resolution, manifest validation and deterministic output. Generation validates the corpus and internal links. Package checks validate packed JavaScript-package documentation and CLI contents, as well as CSS-package documentation in the workspace. These checks do not establish whether a coding agent reads the guidance or produces the intended interaction.
+
+Before comparing instruction delivery approaches, agree the client and model versions, task set and run budget. Hold the documentation corpus, installed runtime, task, creator/reviewer tools and workflow, and available budget constant. Use fresh sessions and repeated attempts, retain held-out tasks, and record the actual pages retrieved, functional correctness, component and interaction choice, accessibility behaviour, regressions, correction effort and cost. A CLI or skill with different content is an end-to-end comparison, not an isolated test of delivery format.
+
+Include cases where existing code is correct and cases where it is the defect to fix:
+
+| Case                                                   | Expected evidence                                                                                                        |
+| ------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------ |
+| New UI with several plausible primitives               | The chooser is consulted before committing to a component; the selected interaction fits the user's intent.              |
+| A presentation switch for the same records             | Shared filters, query and selection survive the switch.                                                                  |
+| A small label correction                               | The edit stays focused without an unnecessary component replacement.                                                     |
+| Invalid form control                                   | The rendered control exposes the intended name, invalid state and error association; visual styling alone does not pass. |
+| Dialog trigger removed by an action                    | Focus moves to a logical surviving target, with the outcome communicated appropriately.                                  |
+| Documentation names an unsupported API                 | Installed public types and exports are checked; no prop is invented to match the prose.                                  |
+| Existing usage contains an accessibility defect        | The requested repair is verified instead of copying the defective convention.                                            |
+| An intentional migration conflicts with existing usage | The requested target is implemented without rewriting unrelated code.                                                    |
+| Two applications install different Salt versions       | Each application reads and checks its own installed documentation.                                                       |
+
+Also exercise a fresh consumer using packed packages and the packed CLI, including `init --check` with the original options and `salt-ds check`. Record this separately from a model evaluation. A passing automated accessibility scan or Salt check is only evidence for the checks it performs; keyboard, focus and assistive-technology behaviour need appropriate verification.
+
+Stable semantic page IDs, a structured contract for example portability and dependency requirements, and additional skill or retrieval interfaces remain separate design work. Add them for demonstrated consumer needs, and preserve the canonical documentation across delivery surfaces.
 
 ## salt-check
 

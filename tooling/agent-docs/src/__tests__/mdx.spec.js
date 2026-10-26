@@ -408,7 +408,10 @@ describe("convertMdx", () => {
     expect(markdown).toContain("Learn how to install the Salt packages");
     expect(markdown).toContain("[Form integration](./form-integration.md)");
     expect(markdown).toContain("[AI coding agents](./ai-coding-agents.md)");
-    expect(markdown.match(/^- /gm)).toHaveLength(8);
+    expect(markdown).toContain(
+      "[Fixing accessibility](./fixing-accessibility.md)",
+    );
+    expect(markdown.match(/^- /gm)).toHaveLength(9);
     expect(ctx.errors).toEqual([]);
   });
 

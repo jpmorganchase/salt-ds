@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import {
   agentsBlock,
   checkCommand,
+  guidancePages,
   indexLines,
   MANIFEST_FILE,
 } from "../../../packages/cli/lib/agents-md.mjs";
@@ -735,6 +736,7 @@ export async function generateAgentDocs({
     agentsBlock({
       root: ".",
       lines: indexLines(manifests),
+      guidance: guidancePages(manifests),
       check: checkCommand({ base: ".", project: "." }),
     }),
   );
