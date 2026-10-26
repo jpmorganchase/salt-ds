@@ -31,6 +31,10 @@ import {
   useIsomorphicLayoutEffect,
 } from "../utils";
 import { MenuContext } from "./MenuContext";
+import {
+  defaultMenuGroupContextValue,
+  MenuGroupContext,
+} from "./MenuGroupContext";
 
 export interface MenuBaseProps {
   children?: ReactNode;
@@ -91,10 +95,15 @@ export function MenuBase(props: MenuBaseProps) {
 
   const isNested = parentId != null;
 
+  const handleOpenChange = (newOpen: boolean) => {
+    if (newOpen && triggerDisabled) return;
+    setOpen(newOpen);
+  };
+
   const { x, y, strategy, elements, refs, context } = useFloatingUI({
     nodeId,
     open: openState,
-    onOpenChange: setOpen,
+    onOpenChange: handleOpenChange,
     strategy: !getVirtualElement ? "absolute" : "fixed",
     placement:
       placement ??
@@ -140,6 +149,7 @@ export function MenuBase(props: MenuBaseProps) {
         activeIndex,
         nested: isNested,
         onNavigate: setActiveIndex,
+        disabledIndices: (index) => elementsRef.current[index] == null,
       }),
     ],
   );
@@ -186,7 +196,9 @@ export function MenuBase(props: MenuBaseProps) {
           setTriggerDisabled,
         }}
       >
-        {children}
+        <MenuGroupContext.Provider value={defaultMenuGroupContextValue}>
+          {children}
+        </MenuGroupContext.Provider>
       </MenuContext.Provider>
     </FloatingNode>
   );

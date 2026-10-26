@@ -1,5 +1,127 @@
 # @salt-ds/core
 
+## 1.73.0
+
+### Minor Changes
+
+- fd5ae98: Added a `render` element prop to `CollapsiblePanel` for customizing its root element.
+
+  `CollapsiblePanel` animations now respect reduced motion preferences, and changes to the panel's top and bottom padding now animate.
+
+- 75f2d7d: Deprecated `setRef`. Use `useForkRef` to merge refs instead, which also runs the cleanup functions that callback refs can return from React 19.
+- 602ddb5: Added `OnSolidButton`, a button for low-emphasis actions on solid backgrounds.
+
+  ```tsx
+  import { OnSolidButton } from "@salt-ds/core";
+
+  <OnSolidButton>Dismiss</OnSolidButton>;
+  ```
+
+- 825f63d: Added a `fontWeight` prop to `Text` and the components built on it, so you can make text `lighter` or `bolder` without using `<small>` or `<strong>`, which carry meaning for assistive technologies.
+
+  ```tsx
+  <H2 fontWeight="lighter">Lighter heading</H2>
+  ```
+
+  To change the weight of part of the text, nest a `Text` with the new `styleAs="inherit"` value, which keeps the parent's style, or use `<b>`, which now has the same weight as `<strong>`.
+
+  ```tsx
+  <H2>
+    Quarterly results{" "}
+    <Text as="span" styleAs="inherit" fontWeight="lighter">
+      (unaudited)
+    </Text>
+  </H2>
+  ```
+
+  `<strong>`, `<b>` and `<small>` now use the weights of the closest `Text`-based component, so a `<strong>` in a body `Text` nested in a heading uses the body weight rather than the heading weight.
+
+  `Button` and `OnSolidButton` now give `<b>` the same weight as `<strong>`, and a nested `Text` with `styleAs="inherit"` uses their action text weights.
+
+  Deprecated the lighter weight styling of `<small>` in `Text`, `Button` and `OnSolidButton`. It still works but will be removed in a future major version.
+
+  ```diff
+  - <Text><small>Lighter text</small></Text>
+  + <Text fontWeight="lighter">Lighter text</Text>
+  ```
+
+  See [font weight](https://www.saltdesignsystem.com/salt/components/text/examples#font-weight) for more examples.
+
+- 825f63d: Added editorial, eyebrow, Body 2 and Label 2 text styles for expressive content such as mastheads and hero banners.
+
+  - `Editorial1` to `Editorial6` components, and `editorial1` to `editorial6` `styleAs` values, for large headlines. `Editorial5` and `Editorial6` use the font sizes of `Display1` and `Display2`.
+  - `Eyebrow` component and `eyebrow` `styleAs` value, for a short line of text that introduces a heading.
+  - `body2` and `label2` `styleAs` values, for introductory paragraphs and larger labels.
+
+  The new styles work with the `fontWeight` prop and nested `<b>` and `<strong>` elements. Eyebrow text can be lighter but not bolder, and editorial text always uses a light weight in the J.P. Morgan theme.
+
+  ```tsx
+  <Eyebrow>Market insights</Eyebrow>
+  <H1 styleAs="editorial4">The year ahead</H1>
+  <Text styleAs="body2">Introductory paragraph.</Text>
+  <Label styleAs="label2">Account name</Label>
+  ```
+
+  See [editorial content](https://www.saltdesignsystem.com/salt/components/text/examples#editorial-content) for how to use them together.
+
+### Patch Changes
+
+- 4f1b504: Fixed references to undeclared dependencies, which could fail to resolve under strict package managers such as Yarn PnP, or pnpm with hoisting disabled.
+
+  - `@salt-ds/styles` now depends on `clsx`.
+  - `@salt-ds/embla-carousel` now depends on `@salt-ds/styles` and `@salt-ds/window`, and takes Embla's types from `embla-carousel-react` instead of importing the undeclared `embla-carousel`, so `embla-carousel` no longer needs to be installed for its types.
+  - `@salt-ds/core` types now only reference `@floating-ui/react`, instead of its transitive dependencies `@floating-ui/core`, `@floating-ui/dom`, `@floating-ui/react-dom` and `@floating-ui/utils`. `margin` takes its `Middleware` type from `@floating-ui/react`, `useTooltip` has an explicit return type, and `DEFAULT_FLOATING_UI_MIDDLEWARE` is typed as `Middleware[]`.
+
+- 61228a7: `SaltProvider` warnings about multiple root providers and `applyClassesToChild` are now only logged in development.
+- f8925a2: Fixed `Stepper`'s injected style id to use lowercase `salt-stepper`, matching the other components.
+- 825f63d: Renamed the `small` and `strong` font weight tokens to `lighter` and `bolder`, to match the new `fontWeight` prop on `Text`. The old tokens still work as aliases but are deprecated and will be removed in a future major version. Salt components now use the new tokens, so if you override an old token, override the new one instead.
+
+  ```diff
+  - font-weight: var(--salt-text-fontWeight-strong);
+  + font-weight: var(--salt-text-fontWeight-bolder);
+  ```
+
+  | Deprecated token                         | Use instead                               |
+  | ---------------------------------------- | ----------------------------------------- |
+  | `--salt-text-fontWeight-small`           | `--salt-text-fontWeight-lighter`          |
+  | `--salt-text-fontWeight-strong`          | `--salt-text-fontWeight-bolder`           |
+  | `--salt-text-action-fontWeight-small`    | `--salt-text-action-fontWeight-lighter`   |
+  | `--salt-text-action-fontWeight-strong`   | `--salt-text-action-fontWeight-bolder`    |
+  | `--salt-text-display-fontWeight-small`   | `--salt-text-display-fontWeight-lighter`  |
+  | `--salt-text-display-fontWeight-strong`  | `--salt-text-display-fontWeight-bolder`   |
+  | `--salt-text-heading-fontWeight-small`   | `--salt-text-heading-fontWeight-lighter`  |
+  | `--salt-text-heading-fontWeight-strong`  | `--salt-text-heading-fontWeight-bolder`   |
+  | `--salt-text-label-fontWeight-small`     | `--salt-text-label-fontWeight-lighter`    |
+  | `--salt-text-label-fontWeight-strong`    | `--salt-text-label-fontWeight-bolder`     |
+  | `--salt-text-notation-fontWeight-small`  | `--salt-text-notation-fontWeight-lighter` |
+  | `--salt-text-notation-fontWeight-strong` | `--salt-text-notation-fontWeight-bolder`  |
+
+  The deprecated `--salt-text-h{1-4}-fontWeight-small`, `--salt-text-h{1-4}-fontWeight-strong`, `--salt-text-display{1-4}-fontWeight-small` and `--salt-text-display{1-4}-fontWeight-strong` tokens now alias the new tokens.
+
+  The `small` and `strong` font weight tokens have been removed from the experimental Salt (Interim) theme without aliases. If you use the interim theme and reference them, switch to the matching `lighter` and `bolder` tokens in the table above.
+
+  See [font weight](https://www.saltdesignsystem.com/salt/foundations/typography#font-weight) for how each text style uses these weights.
+
+- 4aa4585: Fixed `MegaMenuListItem` showing the hover background while pressed. A pressed item now shows the active styling.
+- 55f27de: `Code` and `OverlayPanelCloseButton` now show their own names in React DevTools instead of `TextAction` and `OverlayPanelButton`, and `CollapsiblePanel` and `FormField` are no longer anonymous.
+- fd1bf44: Fixed the checkbox in multiselect `Option` being misaligned with the option's text, impacting `ComboBox`, `Dropdown` and `ListBox`.
+- 75f2d7d: Fixed cleanup functions returned from callback refs, which are supported from React 19, not being called when the ref is passed to a Salt component. The cleanup function now runs when the element is removed, instead of the ref being called with `null`. `useForkRef` supports these cleanup functions in the same way.
+- 7182ee8: Fixed types when using Salt with version 19 of `@types/react`:
+
+  - APIs that take a ref object, such as `useResizeObserver`, accept refs created with `useRef(null)`. Version 19 types these as `RefObject<T | null>`, which caused a type error.
+  - Types no longer use the global `JSX` namespace, which version 19 removed. Types that used it, such as the return types of `ComboBox`, `Dropdown` and `ListBox`, resolved to `any`, or caused errors in Salt's declaration files when `skipLibCheck` is disabled. `ToggleButtonProps` also caused an error when `skipLibCheck` is disabled.
+
+- 7182ee8: Fixed cleanup functions returned from callback refs, which are supported from React 19, not being called when the ref is passed to `getTriggerProps` from `useSidePanel`. The cleanup function now runs when the element is removed, instead of the ref being called with `null`.
+- 825f63d: Added `--salt-text-code-fontWeight` to all themes, to match the code text style in Figma. It's a regular weight in every theme.
+
+  `Code`, `Text` and `styleAs="code"` now use it. Code text has a single weight, so the `fontWeight` prop and nested `<b>` and `<strong>` elements no longer change its weight. Previously they used the body text weights, which made the browser draw a synthetic bold because PT Mono only has a regular weight.
+
+- 825f63d: Fixed `TextNotation` and `Text` with `styleAs="notation"` using the body text font weight instead of `--salt-text-notation-fontWeight`. Notation text now has a semibold weight by default, matching the design and other components that use notation text, such as `Avatar` and `Badge`.
+- cb2e335: Fixed `Toolbar` moving items that fit into its overflow menu, and not restoring focus to the previously focused control, when rendered in React Strict Mode.
+- Updated dependencies [4f1b504]
+  - @salt-ds/styles@0.4.2
+  - @salt-ds/icons@1.18.4
+
 ## 1.72.0
 
 ### Minor Changes

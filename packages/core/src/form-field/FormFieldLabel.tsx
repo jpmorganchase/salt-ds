@@ -12,7 +12,7 @@ import formFieldLabelCss from "./FormFieldLabel.css";
 const withBaseName = makePrefixer("saltFormFieldLabel");
 
 export interface FormFieldLabelProps
-  extends Omit<TextProps<"label">, "variant" | "styleAs"> {
+  extends Omit<TextProps<"label">, "variant" | "styleAs" | "fontWeight"> {
   /**
    * Intent for the label.
    *

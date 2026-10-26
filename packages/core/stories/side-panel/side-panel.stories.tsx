@@ -870,7 +870,7 @@ const Nav = () => (
       whiteSpace: "nowrap",
     }}
   >
-    <Text styleAs="label" style={{ fontWeight: "bold" }}>
+    <Text styleAs="label" fontWeight="bolder">
       Nav
     </Text>
     <Text>Item 1</Text>

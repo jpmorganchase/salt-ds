@@ -14,7 +14,7 @@
   border-radius: var(--salt-palette-corner-weaker);
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-label-fontSize);
-  font-weight: var(--salt-text-label-fontWeight-strong);
+  font-weight: var(--salt-text-label-fontWeight-bolder);
   margin: var(--salt-spacing-25);
   padding: var(--salt-spacing-25) var(--salt-spacing-75);
   box-shadow: var(--salt-shadow-200-color) 0px 2px;

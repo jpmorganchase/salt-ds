@@ -218,6 +218,15 @@ export const buildAxisOptions = (
         : showAxesGridLines
           ? tokens["--salt-size-fixed-100"]
           : 0,
+      stackLabels: {
+        style: {
+          color: tokens["--salt-content-primary-foreground"],
+          fontFamily: tokens["--salt-text-fontFamily"],
+          fontSize: tokens["--salt-text-label-fontSize"],
+          fontWeight: tokens["--salt-text-label-fontWeight-bolder"],
+          lineHeight: tokens["--salt-text-label-lineHeight"],
+        },
+      },
       title: {
         margin: tokens["--salt-spacing-200"],
         style: {
@@ -335,7 +344,7 @@ export const buildPlotOptions = (
           color: tokens["--salt-content-bold-foreground"],
           fontFamily: tokens["--salt-text-fontFamily"],
           fontSize: tokens["--salt-text-label-fontSize"],
-          fontWeight: tokens["--salt-text-label-fontWeight-strong"],
+          fontWeight: tokens["--salt-text-label-fontWeight-bolder"],
           lineHeight: tokens["--salt-text-label-lineHeight"],
           textOutline,
         },
@@ -391,7 +400,7 @@ export const buildPlotOptions = (
           color: tokens["--salt-content-bold-foreground"],
           fontFamily: tokens["--salt-text-fontFamily"],
           fontSize: tokens["--salt-text-label-fontSize"],
-          fontWeight: tokens["--salt-text-label-fontWeight-strong"],
+          fontWeight: tokens["--salt-text-label-fontWeight-bolder"],
           lineHeight: tokens["--salt-text-label-lineHeight"],
           textOutline: strongTextOutline,
         },
@@ -487,7 +496,7 @@ export const buildPlotOptions = (
           color: tokens["--salt-content-bold-foreground"],
           fontFamily: tokens["--salt-text-fontFamily"],
           fontSize: tokens["--salt-text-label-fontSize"],
-          fontWeight: tokens["--salt-text-label-fontWeight-strong"],
+          fontWeight: tokens["--salt-text-label-fontWeight-bolder"],
           lineHeight: tokens["--salt-text-label-lineHeight"],
           textOutline,
         },

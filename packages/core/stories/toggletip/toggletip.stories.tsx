@@ -76,9 +76,7 @@ export const InteractiveContent: StoryFn<typeof Toggletip> = (args) => (
     </ToggletipTrigger>
     <ToggletipPanel>
       <StackLayout gap={1}>
-        <Text>
-          <strong>Title</strong>
-        </Text>
+        <Text fontWeight="bolder">Title</Text>
         <Text>Content</Text>
         <Link href="#">Link</Link>
       </StackLayout>
@@ -89,9 +87,7 @@ export const InteractiveContent: StoryFn<typeof Toggletip> = (args) => (
 export const WithMetric: StoryFn<typeof Toggletip> = (args) => (
   <StackLayout gap={0}>
     <StackLayout direction="row" align="center" gap={0.75}>
-      <Text>
-        <strong>Active users</strong>
-      </Text>
+      <Text fontWeight="bolder">Active users</Text>
       <Toggletip {...args}>
         <ToggletipTrigger aria-label="Active users explanation">
           <HelpCircleIcon aria-hidden />

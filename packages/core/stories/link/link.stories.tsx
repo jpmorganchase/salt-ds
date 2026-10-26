@@ -65,22 +65,25 @@ TargetBlankCustomIcon.args = {
   IconComponent: CustomTearOutIcon,
 };
 
-export const Strong = LinkTemplate.bind({});
-Strong.args = {
+export const Bold = LinkTemplate.bind({});
+Bold.args = {
   href: "https://github.com/salt-ds/core",
   children: (
     <span>
-      View <strong>source</strong>
+      View <b>source</b>
     </span>
   ),
 };
 
-export const Small = LinkTemplate.bind({});
-Small.args = {
+export const Lighter = LinkTemplate.bind({});
+Lighter.args = {
   href: "https://github.com/salt-ds/core",
   children: (
     <span>
-      View <small>source</small>
+      View{" "}
+      <Text as="span" styleAs="inherit" fontWeight="lighter">
+        source
+      </Text>
     </span>
   ),
 };

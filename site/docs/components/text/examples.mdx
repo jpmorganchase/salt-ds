@@ -12,14 +12,22 @@ data:
 
 `Text` supports these sets of styles:
 
+- Editorial
 - Display
 - Headings
-- Body
-- Label
+- Eyebrow
+- Body 1 and Body 2
+- Label 1 and Label 2
 - Code
 
 These alternative components display text in commonly used styles. Where relevant, use them instead of `Text` to simplify syntax:
 
+- `Editorial1`
+- `Editorial2`
+- `Editorial3`
+- `Editorial4`
+- `Editorial5`
+- `Editorial6`
 - `Display1`
 - `Display2`
 - `Display3`
@@ -28,12 +36,23 @@ These alternative components display text in commonly used styles. Where relevan
 - `H2`
 - `H3`
 - `H4`
+- `Eyebrow`
 - `Label`
 - `Code`
 - `TextNotation`
 - `TextAction`
 
+`Text` and `Label` use the Body 1 and Label 1 styles by default. To use Body 2 or Label 2, set `styleAs="body2"` on `Text` or `styleAs="label2"` on `Label`.
+
 <LivePreview componentName="text" exampleName="Styles" />
+
+## Editorial content
+
+Use the editorial styles for large, expressive headlines, such as in a masthead or hero banner. Pair them with `Eyebrow` to introduce a topic above the heading, and the Body 2 style for introductory paragraphs.
+
+Editorial components render a `<span>`. To keep the correct HTML hierarchy, use the `styleAs` prop to apply an editorial style to a heading element.
+
+<LivePreview componentName="text" exampleName="EditorialContent" />
 
 ## Truncation
 
@@ -51,19 +70,34 @@ Although we don't encourage it, you may find it necessary to change an elementâ€
 
 Using the `styleAs` prop, you can maintain the correct HTML hierarchy and the appropriate visual priority. You can style headings to visually appear as different heading levels, irrespective of the underlying DOM element of a heading on the page.
 
+Set `styleAs` to `inherit` to inherit the font and color from the parent element. This is useful when you nest `Text` to change the weight of part of the content. The `lighter` and `bolder` weights come from the closest `Text`-based ancestor, such as `H1` or `Eyebrow`, or from the body text weights if there isn't one.
+
 <LivePreview componentName="text" exampleName="Styling" />
 
 ## Color
 
 Use the `color` prop to adjust the foreground color of any nested text. Use the `primary` color most of the time, the `secondary` color for supporting text or to create visual hierarchy, and `inherit` to inherit text color from the parent element.
 
-Read our [guidance on how to use text color](/salt/foundations/typography#color).
-
 <LivePreview componentName="text" exampleName="Color" />
 
 ## Font weight
 
-Nest `<strong>` or `<small>` elements inside `Text` to adjust font weight.
+Use the `fontWeight` prop to make text `lighter` or `bolder` than its default weight. The weights come from the theme and depend on the text style, so `bolder` on a heading can be heavier than `bolder` on body text. Themes can set a lighter or bolder weight to the same value as the default when the brand guidelines don't allow that variation. For example, `fontWeight="bolder"` and nested `<b>` elements don't change the weight of `Eyebrow`, editorial text always uses a light weight in the J.P. Morgan theme, and `Code` always uses a regular weight.
+
+To change the weight of part of the text, nest `<Text as="span" styleAs="inherit">` with the `fontWeight` prop. It keeps the parent's text style and color, and uses that style's weights. You can also nest a `<b>` element, which uses the same weight as `bolder`.
+
+```tsx
+<H2>
+  Quarterly results{" "}
+  <Text as="span" styleAs="inherit" fontWeight="lighter">
+    (unaudited)
+  </Text>
+</H2>
+```
+
+`fontWeight` and `<b>` change appearance only. Use `<strong>` when the text is important, such as a warning or a key term in a legal disclosure, and `<em>` for stressed emphasis, because these elements convey meaning to assistive technologies. Don't use `<strong>` or `<small>` just to change the weight, and don't wrap the entire content of a heading in `<strong>`.
+
+**Note:** Styling nested `<small>` elements with a lighter weight is deprecated and will be removed in a future major version. Use `fontWeight="lighter"` instead, or nest `<Text as="span" styleAs="inherit" fontWeight="lighter">` for part of the text.
 
 Read our [guidance on how to use font weight](/salt/foundations/typography#font-weight).
 
@@ -74,7 +108,5 @@ Read our [guidance on how to use font weight](/salt/foundations/typography#font-
 **Note:** This prop is deprecated. Use the `color` prop instead.
 
 Use the `variant` prop to adjust the foreground color of any nested text. Use the `primary` variant most often, and the `secondary` variant for supporting text or creating a visual hierarchy.
-
-Read our [guidance on how to use text color](/salt/foundations/typography#color).
 
 <LivePreview componentName="text" exampleName="Variant" />

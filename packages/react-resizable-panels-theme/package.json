@@ -23,7 +23,7 @@
     "provenance": true
   },
   "devDependencies": {
-    "del": "^8.0.0"
+    "del": "^9.0.0"
   },
   "peerDependencies": {
     "@salt-ds/theme": "workspace:^",

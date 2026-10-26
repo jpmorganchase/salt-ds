@@ -72,12 +72,12 @@ export const CountrySymbolPreview = () => {
       <StackLayout className={styles.notFound} gap={3} align="center">
         <StatusIndicator status="info" size={2} />
         <StackLayout gap={1} align="center">
-          <Text styleAs="h4">
-            <strong>No country symbols found</strong>
+          <Text styleAs="h4" fontWeight="bolder">
+            No country symbols found
           </Text>
           <Text>
             No country symbols found for the search term: "
-            <strong>{deferredSearch}</strong>"
+            <b>{deferredSearch}</b>"
           </Text>
         </StackLayout>
       </StackLayout>
