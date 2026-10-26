@@ -249,9 +249,14 @@ const ResizableDrawerFrame = ({
   </div>
 );
 
+// Opts right drawers into the accent bar, which they hide by default.
 const ResizableDrawerSections = () => (
   <>
-    <DrawerHeader header="Title" actions={<CloseButton />} />
+    <DrawerHeader
+      header="Title"
+      actions={<CloseButton />}
+      disableAccent={false}
+    />
     <DrawerContent>
       <Text>{loremText}</Text>
       <Text>{loremText}</Text>
