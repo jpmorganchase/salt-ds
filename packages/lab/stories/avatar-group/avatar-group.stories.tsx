@@ -27,12 +27,12 @@ export const Default: StoryFn<typeof AvatarGroup> = (args) => {
 export const RenderProp: StoryFn<typeof AvatarGroup> = (args) => {
   return (
     <AvatarGroup
-      render={<CustomAvatarButton aria-label="Team members" />}
+      render={<CustomAvatarButton aria-label="AB PP JD +1, Team members" />}
       {...args}
     >
-      <Avatar name="Alex Brailescu" src={persona1} />
-      <Avatar name="Peter Piper" color="category-2" />
-      <Avatar name="John Doe" color="category-3" />
+      <Avatar name="Alex Brailescu" src={persona1} />{" "}
+      <Avatar name="Peter Piper" color="category-2" />{" "}
+      <Avatar name="John Doe" color="category-3" />{" "}
       <AvatarGroupCount count={1} />
     </AvatarGroup>
   );
