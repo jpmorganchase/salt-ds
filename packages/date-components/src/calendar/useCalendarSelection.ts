@@ -590,7 +590,8 @@ export function useCalendarSelectionDay({ date }: { date: DateFrameworkType }) {
   const hoveredSpan = isHoveredSpan(date);
   const hoveredEnd = isHoveredEnd(date);
 
-  const formattedDate = dateAdapter.format(date, "dddd D MMMM YYYY");
+  // Use a two-digit day so the accessible name contains the visible day text (WCAG 2.5.3 Label in Name).
+  const formattedDate = dateAdapter.format(date, "dddd DD MMMM YYYY");
 
   // Determine aria-label based on selection state
   let ariaLabel = formattedDate;
