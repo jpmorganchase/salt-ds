@@ -111,6 +111,62 @@ DeprecatedClosedButton.parameters = {
   },
 };
 
+const StatusDialog = ({
+  status,
+  header,
+}: Pick<DialogProps, "status"> & { header: string }) => (
+  <Dialog open status={status}>
+    <DialogHeader header={header} />
+    <DialogContent>Dialog content</DialogContent>
+    <DialogActions>
+      <Button sentiment="accented" appearance="transparent">
+        Cancel
+      </Button>
+      <Button sentiment="accented">Ok</Button>
+    </DialogActions>
+  </Dialog>
+);
+
+export const InfoStatus: StoryFn = () => (
+  <StatusDialog status="info" header="Info Dialog" />
+);
+
+InfoStatus.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+  },
+};
+
+export const ErrorStatus: StoryFn = () => (
+  <StatusDialog status="error" header="Error Dialog" />
+);
+
+ErrorStatus.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+  },
+};
+
+export const WarningStatus: StoryFn = () => (
+  <StatusDialog status="warning" header="Warning Dialog" />
+);
+
+WarningStatus.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+  },
+};
+
+export const SuccessStatus: StoryFn = () => (
+  <StatusDialog status="success" header="Success Dialog" />
+);
+
+SuccessStatus.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+  },
+};
+
 export const StatusVariants: StoryFn = () => {
   const DensityValues = ["high", "medium", "low", "touch"] as const;
   const { themeNext } = useTheme();
