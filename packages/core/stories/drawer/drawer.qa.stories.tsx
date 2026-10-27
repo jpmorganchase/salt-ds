@@ -224,10 +224,11 @@ const resizableDrawerStyle = (position: DrawerProps["position"]) =>
 
 const ResizableDrawerFrame = ({
   position,
+  resizable = true,
   drawerRef,
   className,
   children,
-}: Pick<DrawerProps, "position" | "children" | "className"> & {
+}: Pick<DrawerProps, "position" | "resizable" | "children" | "className"> & {
   drawerRef?: Ref<HTMLDivElement>;
 }) => (
   // `contain: layout` positions the fixed drawer within this frame instead of the viewport.
@@ -238,7 +239,7 @@ const ResizableDrawerFrame = ({
     <Drawer
       className="noAnimation"
       open
-      resizable
+      resizable={resizable}
       disableScrim
       position={position}
       ref={drawerRef}
@@ -312,11 +313,11 @@ export const DrawerResizableAccent: StoryFn<QAContainerProps> = (props) => {
   return (
     <FloatingComponentProvider Component={InlineFloatingComponent}>
       <QAContainer
-        cols={2}
+        cols={3}
         height="auto"
         itemPadding={20}
         itemWidthAuto
-        width={1000}
+        width={1500}
         {...rest}
       >
         <ResizableDrawerFrame position="right">
@@ -327,6 +328,9 @@ export const DrawerResizableAccent: StoryFn<QAContainerProps> = (props) => {
             header="Accent enabled"
             disableAccent={false}
           />
+        </ResizableDrawerFrame>
+        <ResizableDrawerFrame position="right" resizable={false}>
+          <ResizableDrawerSections header="Not resizable" />
         </ResizableDrawerFrame>
       </QAContainer>
     </FloatingComponentProvider>
