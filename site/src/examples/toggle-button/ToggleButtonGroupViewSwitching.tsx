@@ -97,22 +97,15 @@ export const ToggleButtonGroupViewSwitching = () => {
             style={{ width: "100%", gridAutoRows: "1fr" }}
           >
             {visibleIncidents.map((incident) => (
-              <InteractableCard
-                key={incident.id}
-                value={incident.id}
-                aria-labelledby={`${id}-${incident.id}-title`}
-                aria-describedby={`${id}-${incident.id}`}
-              >
+              <InteractableCard key={incident.id} value={incident.id}>
                 <StackLayout gap={1}>
-                  <H3 id={`${id}-${incident.id}-title`} style={{ margin: 0 }}>
-                    {incident.service}
-                  </H3>
+                  <H3 style={{ margin: 0 }}>{incident.service}</H3>
                   <StackLayout direction="row" gap={1}>
                     <RadioButtonIcon
                       aria-hidden
                       checked={selectedId === incident.id}
                     />
-                    <Text id={`${id}-${incident.id}`}>
+                    <Text>
                       {incident.team}: {incident.summary}
                     </Text>
                   </StackLayout>
@@ -135,17 +128,10 @@ export const ToggleButtonGroupViewSwitching = () => {
           style={{ width: "100%" }}
         >
           {visibleIncidents.map((incident) => (
-            <Option
-              key={incident.id}
-              value={incident.id}
-              aria-labelledby={`${id}-${incident.id}-title`}
-              aria-describedby={`${id}-${incident.id}`}
-            >
+            <Option key={incident.id} value={incident.id}>
               <StackLayout gap={0.5}>
-                <Text id={`${id}-${incident.id}-title`}>
-                  {incident.service}
-                </Text>
-                <Text id={`${id}-${incident.id}`} color="inherit">
+                <Text>{incident.service}</Text>
+                <Text color="inherit">
                   {incident.team}: {incident.summary}
                 </Text>
               </StackLayout>

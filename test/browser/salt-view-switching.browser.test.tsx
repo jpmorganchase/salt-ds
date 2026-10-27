@@ -21,11 +21,9 @@ describe("Incident presentation switching", () => {
     });
     const gatewayOption = incidentList.getByRole("option", {
       name: "Order gateway",
-      exact: true,
     });
     const pricingOption = incidentList.getByRole("option", {
       name: "Pricing feed",
-      exact: true,
     });
     const incidents = page.getByRole("radiogroup", {
       name: "Select an incident",
@@ -33,15 +31,12 @@ describe("Incident presentation switching", () => {
     });
     const gateway = incidents.getByRole("radio", {
       name: "Order gateway",
-      exact: true,
     });
     const pricing = incidents.getByRole("radio", {
       name: "Pricing feed",
-      exact: true,
     });
     const settlement = page.getByRole("radio", {
       name: "Settlement queue",
-      exact: true,
     });
 
     await filter.fill("Trading");
@@ -132,7 +127,6 @@ describe("Incident presentation switching", () => {
       .element(
         incidentList.getByRole("option", {
           name: "Settlement queue",
-          exact: true,
         }),
       )
       .not.toBeInTheDocument();
