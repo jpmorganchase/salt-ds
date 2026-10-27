@@ -187,7 +187,8 @@ export function useDrawerResize({
   const [sizeState, setSizeState] = useState<number | undefined>(undefined);
   // Drop the size when `position` switches axis.
   const [sizeAxisHorizontal, setSizeAxisHorizontal] = useState(horizontal);
-  const size = sizeAxisHorizontal === horizontal ? sizeState : undefined;
+  const size =
+    enabled && sizeAxisHorizontal === horizontal ? sizeState : undefined;
 
   const [interaction, setInteraction] = useState<Interaction>("inactive");
   const [metrics, setMetrics] = useState<(Bounds & { current: number }) | null>(
@@ -549,7 +550,9 @@ export function useDrawerResize({
     if (!showResizeCursor || !targetWindow) return;
     return setDocumentCursor(
       targetWindow.document,
-      horizontal ? "ew-resize" : "ns-resize",
+      horizontal
+        ? "var(--salt-cursor-drag-ew, ew-resize)"
+        : "var(--salt-cursor-drag-ns, ns-resize)",
     );
   }, [showResizeCursor, targetWindow, horizontal]);
 

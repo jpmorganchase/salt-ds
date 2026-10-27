@@ -1,7 +1,7 @@
 import type { DrawerProps } from "@salt-ds/core";
 import { Drawer } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
-import type { CSSProperties } from "react";
+import { type CSSProperties, useLayoutEffect } from "react";
 import { afterEach, describe, expect, it } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { runAxeScan } from "~browser-test-utils/accessibility";
@@ -197,18 +197,25 @@ async function renderResizableStory({
 describe("GIVEN a resizable Drawer", () => {
   describe("size", () => {
     it("returns to its declared size when resizing is turned off", async () => {
-      const { rerender } = await renderWithSalt(
-        <ResizableDrawer style={limitsStyle("left")} />,
-      );
+      const sizesWhenTurnedOff: number[] = [];
+      function ToggleFixture({ resizable }: { resizable: boolean }) {
+        useLayoutEffect(() => {
+          if (!resizable) sizesWhenTurnedOff.push(drawerSize("left"));
+        }, [resizable]);
+        return (
+          <ResizableDrawer resizable={resizable} style={limitsStyle("left")} />
+        );
+      }
+      const { rerender } = await renderWithSalt(<ToggleFixture resizable />);
       await waitForOpen();
 
       await dragHandleBy("left", 100);
       await expect.poll(() => drawerSize("left")).toBeCloseTo(400, 0);
 
-      await rerender(
-        <ResizableDrawer resizable={false} style={limitsStyle("left")} />,
-      );
+      await rerender(<ToggleFixture resizable={false} />);
 
+      expect(sizesWhenTurnedOff).toHaveLength(1);
+      expect(sizesWhenTurnedOff[0]).toBeCloseTo(300, 0);
       await expect.poll(() => drawerSize("left")).toBeCloseTo(300, 0);
       await expect.element(separator()).not.toBeInTheDocument();
     });
