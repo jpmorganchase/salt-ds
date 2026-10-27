@@ -2,7 +2,7 @@
 "@salt-ds/core": minor
 ---
 
-Added resizing to `Drawer`. With `resizable`, users can drag the drawer's edge, click the edge and then click its new position, or use the arrow keys to adjust its size. Set size limits with the `--saltDrawer-minWidth` and `--saltDrawer-maxWidth` CSS variables for left and right drawers, and `--saltDrawer-minHeight` and `--saltDrawer-maxHeight` for top and bottom drawers.
+Added resizing to `Drawer`. With `resizable`, users can drag the drawer's edge, click the edge and then click its new position, or use the arrow keys to adjust its size. Set size limits with the `--saltDrawer-resizeMin` and `--saltDrawer-resizeMax` CSS variables, which apply to the width of left and right drawers and the height of top and bottom drawers.
 
 ```tsx
 <Drawer resizable style={{ width: 320 }}>

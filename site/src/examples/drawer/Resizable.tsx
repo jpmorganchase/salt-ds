@@ -30,8 +30,8 @@ export const Resizable = (): ReactElement => {
         style={
           {
             width: 320,
-            "--saltDrawer-minWidth": "200px",
-            "--saltDrawer-maxWidth": "640px",
+            "--saltDrawer-resizeMin": "200px",
+            "--saltDrawer-resizeMax": "640px",
           } as CSSProperties
         }
       >

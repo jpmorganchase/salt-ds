@@ -30,10 +30,8 @@ const ResizableDrawer = (props: DrawerProps) => (
     {...props}
     style={
       {
-        "--saltDrawer-minWidth": undefined,
-        "--saltDrawer-maxWidth": undefined,
-        "--saltDrawer-minHeight": undefined,
-        "--saltDrawer-maxHeight": undefined,
+        "--saltDrawer-resizeMin": undefined,
+        "--saltDrawer-resizeMax": undefined,
         animation: "none",
         ...props.style,
       } as CSSProperties
@@ -475,8 +473,8 @@ describe("GIVEN a resizable Drawer", () => {
           style={
             {
               width: 300,
-              "--saltDrawer-minWidth": "200px",
-              "--saltDrawer-maxWidth": "400px",
+              "--saltDrawer-resizeMin": "200px",
+              "--saltDrawer-resizeMax": "400px",
             } as CSSProperties
           }
         />,
@@ -497,8 +495,8 @@ describe("GIVEN a resizable Drawer", () => {
           style={
             {
               height: 300,
-              "--saltDrawer-minHeight": "10vh",
-              "--saltDrawer-maxHeight": "50vh",
+              "--saltDrawer-resizeMin": "10vh",
+              "--saltDrawer-resizeMax": "50vh",
             } as CSSProperties
           }
         />,
@@ -1003,11 +1001,7 @@ describe("GIVEN a resizable Drawer", () => {
 
     it("scrolls the sections together when they don't fit", async () => {
       await renderWithSalt(
-        <ResizableDrawer
-          style={
-            { width: 300, "--saltDrawer-maxHeight": "120px" } as CSSProperties
-          }
-        />,
+        <ResizableDrawer style={{ width: 300, maxHeight: 120 }} />,
       );
       await waitForOpen();
 

@@ -69,9 +69,9 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    * */
   disableScrim?: boolean;
   /**
-   * Allow the user to resize the drawer. Set size limits with the `--saltDrawer-minWidth`/`--saltDrawer-maxWidth`
-   * variables (`--saltDrawer-minHeight`/`--saltDrawer-maxHeight` for `top` and `bottom`). The drawer never shrinks
-   * below `--salt-size-base`, unless `min-width`/`min-height` is set directly.
+   * Allow the user to resize the drawer. Set size limits with the `--saltDrawer-resizeMin`/`--saltDrawer-resizeMax`
+   * variables, which apply to the width of `left` and `right` drawers and the height of `top` and `bottom` drawers.
+   * The drawer never shrinks below `--salt-size-base`, unless `min-width`/`min-height` is set directly.
    * */
   resizable?: boolean;
   /**
