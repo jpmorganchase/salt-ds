@@ -59,7 +59,7 @@ Selection controls have their own behavior. In a single-select `ComboBox`, clear
 
 Keep keyboard focus in the filter control while results update. When a clear button clears an input, return focus to that input. Do not move focus into the results just because they have arrived.
 
-The application should announce a useful result count or no-match message politely after updates settle, rather than announcing every keystroke or reading the whole list. Avoid competing announcements. A response to an older query must not replace results for a newer query. Follow [Content status guidance](/salt/patterns/content-status#choosing-how-to-communicate-loading-and-recovery) for loading, retained results, and failures.
+The application should [announce](/salt/components/aria-announcer/usage#announcing-from-an-event) a useful result count or no-match message politely after updates settle, rather than announcing every keystroke or reading the whole list. Avoid competing announcements. A response to an older query must not replace results for a newer query. Follow [Content status guidance](/salt/patterns/content-status#choosing-how-to-communicate-loading-and-recovery) for loading, retained results, and failures.
 
 ## Filter logic
 

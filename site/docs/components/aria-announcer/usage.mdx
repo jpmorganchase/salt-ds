@@ -1,0 +1,123 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+Use `useAriaAnnouncer` or `AriaAnnounce` to tell screen reader users about a
+change they wouldn't otherwise hear, such as the number of results after
+filtering, or that a save has finished. The message goes to a visually hidden
+live region, so it isn't shown on screen. Show anything users need to find again
+on the page as well.
+
+The root `SaltProvider` or `SaltProviderNext` already includes an
+`AriaAnnouncerProvider`, so most applications don't add one.
+
+### When to use
+
+- When content changes away from the user's focus, such as a result count or a list that updates after an action.
+- When an action completes without moving focus or changing the focused control, such as saving a draft.
+
+### When not to use
+
+- When focus moves to the changed content, or the focused control's name or state already describes the change. Screen readers read those without an announcement.
+- For changes Salt components already announce. [`Spinner`](/salt/components/spinner) announces its label while it's shown and its `completionAnnouncement` when it's removed, and [`Pagination`](/salt/components/pagination) announces the new page.
+- For every keystroke or intermediate state. Announce once the change settles, using the `debounce` option.
+
+## Announcing from an event
+
+Call `announce` from `useAriaAnnouncer` in the handler or effect that makes the
+change:
+
+```tsx
+const { announce } = useAriaAnnouncer();
+
+const handleSave = () => {
+  saveDraft();
+  announce("Draft saved");
+};
+```
+
+`announce(message, options)` takes these options:
+
+| Option     | Default    | Description                                                                                                                                                                    |
+| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `ariaLive` | `"polite"` | `"polite"` waits until the screen reader finishes speaking; `"assertive"` interrupts it. Use `"assertive"` only for urgent messages.                                           |
+| `duration` | `300`      | How long the message stays in the live region, in milliseconds.                                                                                                                |
+| `target`   |            | Sends the message to the `AriaAnnouncerProvider` with the same `target`, or to the nearest provider if none is mounted; see [Announcing in a dialog](#announcing-in-a-dialog). |
+
+`useAriaAnnouncer({ debounce })` waits until calls to `announce` have stopped for
+`debounce` milliseconds, then announces only the last message.
+
+## Announcing from state
+
+`AriaAnnounce` announces its `announcement` when it mounts and whenever the text
+changes. It renders nothing, and takes the same `ariaLive`, `duration` and
+`target` options as props. Use it for state that changes now and then, such as an
+upload finishing:
+
+```tsx
+<AriaAnnounce announcement={uploaded ? "Upload complete" : undefined} />
+```
+
+It has no debounce, and rendering the same text again doesn't repeat the
+announcement. For a value that changes as the user types, or a message that can
+repeat, call `announce` instead.
+
+## Announcing in a dialog
+
+A modal [`Dialog`](/salt/components/dialog) or [`Drawer`](/salt/components/drawer)
+sets `aria-modal="true"`, which lets assistive technologies treat content outside
+it as unavailable, including the root provider's live region. Wrap the dialog's
+content in its own `AriaAnnouncerProvider`, as Salt does for DatePicker's
+overlay; `useAriaAnnouncer` inside it then uses that provider. To announce into
+the dialog from code outside the provider, give the provider a `target`, such as
+`target="settings-dialog"`, and pass the same `target` to `announce`.
+
+```tsx
+<Dialog open={open} onOpenChange={setOpen}>
+  <AriaAnnouncerProvider>
+    <SettingsContent />
+  </AriaAnnouncerProvider>
+</Dialog>
+```
+
+The dialog's provider unmounts with the dialog, so a message sent as the dialog
+closes may not be read. Send it from outside the dialog instead, such as from
+the component that controls `open`.
+
+## Deprecations and migrations
+
+`delay` is deprecated, both as `AriaAnnounce`'s `delay` prop and as a number
+passed as `announce`'s second argument. Use `duration` to keep a message in the
+live region for longer, or your own `setTimeout` to announce later.
+
+## Import
+
+To import the announcer from the core Salt package, use:
+
+```js
+import {
+  AriaAnnounce,
+  AriaAnnouncerProvider,
+  useAriaAnnouncer,
+} from "@salt-ds/core";
+```
+
+## Props
+
+### AriaAnnouncerProvider
+
+<PropsTable packageName="core" componentName="AriaAnnouncerProvider" />
+
+### AriaAnnounce
+
+`AriaAnnounce` takes `announcement`, the text to announce, and the `ariaLive`,
+`duration` and `target` options described in
+[Announcing from an event](#announcing-from-an-event).

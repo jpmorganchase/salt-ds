@@ -1,0 +1,30 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Announcing a result
+
+Announce the result of an action that doesn't move focus. Here, saving a draft
+updates text away from the button, which screen readers don't read on their own.
+
+<LivePreview componentName="aria-announcer" exampleName="AnnounceResult" />
+
+## Result count
+
+Announce the number of matches once typing pauses, rather than after every
+keystroke. `debounce` announces only the last message.
+
+<LivePreview componentName="aria-announcer" exampleName="ResultCount" />
+
+## In a dialog
+
+Wrap a modal dialog's content in its own `AriaAnnouncerProvider`, so messages
+sent while it's open reach a live region inside the dialog.
+
+<LivePreview componentName="aria-announcer" exampleName="InDialog" />
