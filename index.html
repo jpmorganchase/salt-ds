@@ -1,0 +1,455 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>salt-eval</title><style>:root{--bg:#fff;--fg:#1c2128;--muted:#5b6672;--line:#e3e7ec;--side:#f6f8fa;--accent:#0b5cad;--code:#f1f3f5;--ok:#1a7f4b;--warn:#a15c00;--box:#eef5fc}
+@media (prefers-color-scheme:dark){:root{--bg:#0f1318;--fg:#e4e8ec;--muted:#8d99a6;--line:#27303a;--side:#151a21;--accent:#6cb2f2;--code:#1a2029;--ok:#4cc38a;--warn:#e0a24a;--box:#16212e}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--fg);font:16px/1.65 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;display:flex;min-height:100vh}
+nav{width:250px;flex:none;background:var(--side);border-right:1px solid var(--line);padding:24px 18px;position:sticky;top:0;height:100vh;overflow:auto}
+nav .brand{font-weight:700;font-size:18px;margin-bottom:2px}
+nav .sub{color:var(--muted);font-size:13px;margin-bottom:20px}
+nav a{display:block;padding:6px 10px;border-radius:6px;color:var(--fg);text-decoration:none;font-size:14.5px}
+nav a:hover{background:var(--line)}
+nav a.on{background:var(--accent);color:#fff}
+nav .n{color:var(--muted);margin-right:6px;font-variant-numeric:tabular-nums}
+nav a.on .n{color:#dbeafe}
+main{flex:1;min-width:0;max-width:820px;padding:40px 48px 80px;margin:0 auto}
+h1{font-size:32px;line-height:1.2;margin:0 0 8px}
+.lead{font-size:18px;color:var(--muted);margin:0 0 28px}
+h2{font-size:22px;margin:40px 0 8px;padding-top:8px;border-top:1px solid var(--line)}
+h3{font-size:17px;margin:26px 0 4px}
+p,li{max-width:70ch}
+code{background:var(--code);padding:1px 5px;border-radius:4px;font:13.5px ui-monospace,SFMono-Regular,Menlo,monospace}
+pre{background:var(--code);padding:14px 16px;border-radius:8px;overflow:auto;font:13px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace}
+pre code{background:none;padding:0}
+table{border-collapse:collapse;width:100%;margin:14px 0;font-size:14.5px}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:12.5px;text-transform:uppercase;letter-spacing:.04em;color:var(--muted)}
+a{color:var(--accent)}
+.box{background:var(--box);border-left:3px solid var(--accent);padding:10px 16px;border-radius:0 8px 8px 0;margin:18px 0}
+.box.warn{border-color:var(--warn)}
+.ok{color:var(--ok);font-weight:600}.todo{color:var(--warn);font-weight:600}
+.pager{display:flex;justify-content:space-between;margin-top:56px;padding-top:16px;border-top:1px solid var(--line);font-size:14.5px}
+svg{max-width:100%;height:auto;margin:12px 0}
+svg text{fill:var(--fg);font:13px -apple-system,sans-serif}
+svg .b{fill:var(--box);stroke:var(--accent);stroke-width:1.2}
+svg .g{fill:var(--side);stroke:var(--muted);stroke-width:1.2}
+svg .l{stroke:var(--muted);stroke-width:1.4;fill:none}
+svg .arr{fill:var(--muted)}
+.road th.next,.road td.next{background:var(--box)}
+.road th.next{color:var(--accent)}
+.road td:first-child{white-space:nowrap}
+@media (max-width:760px){body{display:block}nav{position:static;width:auto;height:auto;border-right:0;border-bottom:1px solid var(--line)}main{padding:24px 16px 60px}}
+@media print{nav{display:none}main>section[hidden]{display:block}main>section{break-after:page}}
+</style></head><body>
+<nav><div class="brand">salt-eval</div><div class="sub">Documentation</div><a href="#index" data-to="index"><span class="n">1</span>Start here</a><a href="#why" data-to="why"><span class="n">2</span>Why it exists</a><a href="#concepts" data-to="concepts"><span class="n">3</span>Vocabulary</a><a href="#architecture" data-to="architecture"><span class="n">4</span>How a trial runs</a><a href="#tasks" data-to="tasks"><span class="n">5</span>Tasks</a><a href="#grading" data-to="grading"><span class="n">6</span>Grading and attribution</a><a href="#running" data-to="running"><span class="n">7</span>Running it</a><a href="#status" data-to="status"><span class="n">8</span>Status and next steps</a></nav>
+<main><section id="index" data-title="salt-eval"><h1>salt-eval</h1><p class="lead">A benchmark that tells the Salt team whether giving AI coding agents Salt context makes the UI they build better.</p><h2 style="border:0;margin-top:0">The problem</h2>
+<p>Salt is a design system. Teams increasingly ask AI coding agents (Claude Code, Cursor, Codex) to build Salt interfaces. Several groups are making things that are meant to help those agents: an MCP server, a CLI, a skill, docs bundled into the npm packages. Nobody can currently say whether any of them works, or what to fix when it doesn't.</p>
+<h2>What salt-eval is</h2>
+<p>A repeatable experiment. It gives an agent a realistic request ("add navigation down the left side"), lets it work in an isolated sandbox, then grades the app it produced with automated browser checks. Run the same requests under different <em>arms</em>, where an arm differs only in what Salt context the agent gets, and compare pass rates.</p>
+<p>It exists to answer two questions:</p>
+<ol>
+<li><strong>Does Salt context help agents produce better UI?</strong> Compare arms task by task, with a noise floor so a difference means something.</li>
+<li><strong>When it doesn't, what should we improve?</strong> Trace every failed check to a cause: a guidance gap, unclear guidance, a retrieval miss, tool misuse, misinterpretation, a prior override, an implementation error, or an eval defect. Each cause points to a different fix.</li>
+</ol>
+<div class="box"><strong>In one sentence:</strong> salt-eval grades the UI an agent built, not the tool that helped it, so any context product can be compared on equal terms.</div>
+<div class="box warn"><strong>Where it stands:</strong> the harness runs tasks end to end as a prototype, on a cheap development model, with no added context. Product arms, the oracle arm, attribution and comparisons are designed but not built yet. See <a href="#status">Status</a>.</div>
+<h2>The system in one picture</h2>
+<svg viewBox="0 0 760 150" role="img" aria-label="Task and arm go into a sandboxed trial, the output is graded, failures are attributed">
+<defs><marker id="index-a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8z" class="arr"/></marker></defs>
+<rect class="b" x="5" y="15" width="120" height="50" rx="8"/><text x="65" y="45" text-anchor="middle">Task</text>
+<rect class="b" x="5" y="85" width="120" height="50" rx="8"/><text x="65" y="115" text-anchor="middle">Arm</text>
+<path class="l" d="M125 40 L170 70 M125 110 L170 80" marker-end="url(#index-a)"/>
+<rect class="g" x="175" y="45" width="150" height="60" rx="8"/><text x="250" y="72" text-anchor="middle">Trial</text><text x="250" y="90" text-anchor="middle" style="font-size:11px">agent in a sandbox</text>
+<path class="l" d="M325 75 L375 75" marker-end="url(#index-a)"/>
+<rect class="b" x="380" y="45" width="130" height="60" rx="8"/><text x="445" y="72" text-anchor="middle">Output</text><text x="445" y="90" text-anchor="middle" style="font-size:11px">diff + built app</text>
+<path class="l" d="M510 75 L555 75" marker-end="url(#index-a)"/>
+<rect class="g" x="560" y="45" width="190" height="60" rx="8"/><text x="655" y="72" text-anchor="middle">Verdicts</text><text x="655" y="90" text-anchor="middle" style="font-size:11px">checks → attribution → scorecard</text>
+</svg>
+<h2>How to read this site</h2>
+<table>
+<tr><th>If you want</th><th>Read</th></tr>
+<tr><td>The reasoning behind the design</td><td><a href="#why">Why it exists</a></td></tr>
+<tr><td>The words used everywhere</td><td><a href="#concepts">Vocabulary</a></td></tr>
+<tr><td>What happens between "run" and "result"</td><td><a href="#architecture">How a trial runs</a></td></tr>
+<tr><td>What a good task is, with a worked example</td><td><a href="#tasks">Tasks</a></td></tr>
+<tr><td>How outputs become verdicts and verdicts become fixes</td><td><a href="#grading">Grading and attribution</a></td></tr>
+<tr><td>To run something yourself</td><td><a href="#running">Running it</a></td></tr>
+<tr><td>What is built, what isn't, and what comes next</td><td><a href="#status">Status and next steps</a></td></tr>
+</table>
+<p>Read in order and you will understand the whole system in about thirty minutes. The source of truth is the <code>salt-eval/</code> folder on the <code>salt-eval-v2</code> branch of the Salt repository (it isn't on <code>main</code> yet); this site is a guided tour of it.</p>
+<div class="pager"><span></span><a href="#why">Why it exists →</a></div></section><section id="why" data-title="Why it exists"><h1>Why it exists</h1><p class="lead">The rationale: what we decided, what we rejected, and the rules that keep the comparison fair.</p><h2 style="border:0;margin-top:0">Principles</h2>
+<ol>
+<li><strong>Tasks before infrastructure.</strong> The task bank is the product. Build only the harness the current tasks need.</li>
+<li><strong>Every metric maps to a decision.</strong> If a number can't change what we do next, we don't report it.</li>
+<li><strong>Grade outcomes, not imports.</strong> Importing Salt or using a token proves nothing. Rendered behaviour, composition and cited guidance do.</li>
+<li><strong>Grade only what the request or Salt guidance states.</strong> If two Salt experts could disagree on a verdict, it isn't a check.</li>
+<li><strong>The agent never sees the answers.</strong> Trials run outside the repository. Held-out tasks and outputs never enter git.</li>
+<li><strong>Read transcripts before trusting numbers.</strong> A score tells you which transcripts to read, not what happened.</li>
+<li><strong>Change one thing at a time</strong>, and report every difference with its noise floor.</li>
+</ol>
+<h2>What it is not</h2>
+<ul>
+<li>Not a contract test for any one product. The MCP server's own evals stay with the MCP.</li>
+<li>Not a model leaderboard, and not a single "Salt compliance" score.</li>
+<li>Not a merge gate for Salt pull requests, until its numbers earn that.</li>
+<li>Not about migration from other UI to Salt. That needs visual regression and is out of scope. Work types are <em>create</em>, <em>extend</em> and <em>fix</em>.</li>
+</ul>
+<h2>Fairness rules</h2>
+<p>These make it an experiment rather than a demo. Where a rule can be checked before a run, the launcher refuses rather than warns: inexact pins, a loosened network or verifier, instruction files in the image. Some are checked after the agent runs and fail the trial as a harness failure: pins, model, request and agent configuration. The comparison, statistics and split rules (marked <em>planned</em>) have no code behind them yet, because there are no comparisons yet.</p>
+<table>
+<tr><th>Rule</th><th>In practice</th></tr>
+<tr><td>One variable per comparison</td><td>Agent version, harness, gateway, model, Salt versions, task version and starting tree are recorded in <code>pins.json</code> for every trial. The harness commit carries a flag for uncommitted changes, and DeepSeek's model, which has no exact identifier, is pinned by name and reported display name.</td></tr>
+<tr><td>Same agent and model for every arm</td><td>A product comparison never changes the model. <em>Planned;</em> the measured agent and model are still to be chosen.</td></tr>
+<tr><td>The agent never sees the answers</td><td>Single-commit starting points; checks and reference solutions never enter the sandbox; the image is scanned for stray instruction files.</td></tr>
+<tr><td>Clean agent configuration</td><td>What the agent program reports loading at startup is checked at runtime.</td></tr>
+<tr><td>Network by arm</td><td>A baseline reaches only the model gateway. Web tools are disabled so the network rule can't be bypassed through the model API. <em>Known gap:</em> today the allowlist works by host, so every port on the gateway's host is reachable; <code>pins.json</code> records this, and it must close before the first measured run.</td></tr>
+<tr><td>Checks are proven from both sides</td><td>Every required check must pass each reference solution and fail the known-bad output that targets it, and the untouched starting point must fail. <code>salt-eval test-checks</code> proves this; it is a rule to follow before running agents, not something <code>run</code> checks.</td></tr>
+<tr><td>Tasks are the statistical unit</td><td>Report the paired difference over tasks, with an interval and a noise floor from a pilot. <em>Planned.</em></td></tr>
+<tr><td>Split the bank</td><td>Dev tasks are public and diagnostic. Held-out tasks will live in a private store and confirm an improvement once. <em>Planned;</em> every task so far is dev.</td></tr>
+</table>
+<h2>Decisions on record</h2>
+<p>Every trial so far is plumbing or harness development: Claude Code on DeepSeek, which isn't a model Salt consumers use. ADR 0003 allows three exceptions for that (no spend cap, no exact model pin, the all-ports network gap) that don't hold for measured runs.</p>
+<p>Five architecture decision records (ADRs) live in <code>salt-eval/docs/adr/</code>. Each lists what was considered and what would make us revisit it.</p>
+<table>
+<tr><th>ADR</th><th>Decision</th><th>Main reason</th></tr>
+<tr><td>0001</td><td>salt-eval lives at <code>salt-eval/</code> in the Salt repo</td><td>Guidance, anchors and evidence change in one branch. It sits outside <code>packages/</code> so no starting-point app resolves <code>@salt-ds/*</code> to local source. Held-out material goes in a private store.</td></tr>
+<tr><td>0002</td><td>Harbor runs trials</td><td>Isolation is easy to get subtly wrong and isn't Salt-specific. Harbor gives containers, headless agents, network phases, a separate verifier and a common trajectory format.</td></tr>
+<tr><td>0003</td><td>Agents reach models through a LiteLLM gateway</td><td>Provider keys never enter a sandbox, and there is a record of exactly what reached the model, including system prompts the agent program doesn't save.</td></tr>
+<tr><td>0004</td><td>A task is a Harbor directory; prose lives in its README</td><td>Readable without tools, runnable as it stands. Reference solutions and known-bad outputs are patches.</td></tr>
+<tr><td>0005</td><td>Graders are TypeScript, in a separate offline verifier</td><td>Playwright and axe-core are Node-first, and Salt reviewers read TypeScript. A separate verifier grades the output where the agent never ran.</td></tr>
+</table>
+<div class="box warn"><strong>Status of the ADRs:</strong> 0002 and 0003 are accepted. 0001, 0004 and 0005 are still <em>proposed</em>.</div>
+<div class="pager"><a href="#index">← Start here</a><a href="#concepts">Vocabulary →</a></div></section><section id="concepts" data-title="Vocabulary"><h1>Vocabulary</h1><p class="lead">The terms used in the code, the docs and conversation. Use them exactly.</p><p>The full glossary is <code>salt-eval/CONTEXT.md</code>. This is the part you need to follow everything else, grouped by when you meet it.</p>
+<h2 style="border:0;margin-top:0">What is being tested</h2>
+<table>
+<tr><th>Term</th><th>Meaning</th></tr>
+<tr><td><strong>Task</strong></td><td>One frontend request, the starting point it runs from, the checks that grade it and the Salt guidance it depends on.</td></tr>
+<tr><td><strong>Request</strong></td><td>The message the agent receives, written as a product engineer or designer would ask. In Harbor it is <code>instruction.md</code>.</td></tr>
+<tr><td><strong>Starting point</strong></td><td>The frozen app a task begins from: source, locked dependencies, a single-commit git history.</td></tr>
+<tr><td><strong>Work type</strong></td><td><em>Create</em> new UI, <em>extend</em> existing Salt UI, or <em>fix</em> Salt misuse.</td></tr>
+<tr><td><strong>Fidelity</strong></td><td>Prototype or production. It limits what checks may penalise: placeholder links are fine in a prototype.</td></tr>
+<tr><td><strong>Decision type</strong></td><td>The kind of Salt decision a task turns on: setup and integration, component choice, composition, pattern, foundation, accessibility, content, API currency.</td></tr>
+<tr><td><strong>Guidance anchor</strong></td><td>A pointer from a check or rubric item to the passage of Salt guidance (docs, API types, deprecation notices) that justifies it, or an explicit "none". A "none" is a <strong>guidance gap</strong>.</td></tr>
+</table>
+<h2>What it is tested with</h2>
+<table>
+<tr><th>Term</th><th>Meaning</th></tr>
+<tr><td><strong>Agent</strong></td><td>An agent program (such as Claude Code) plus a model and its settings.</td></tr>
+<tr><td><strong>Context product</strong></td><td>A named, versioned way of delivering Salt guidance: an MCP server, a skill, bundled docs, a CLI, the Salt website, a DESIGN.md file.</td></tr>
+<tr><td><strong>Arm</strong></td><td>One complete configuration trials run under: the agent, Salt version and the context products enabled. Arms in a comparison differ in exactly one thing.</td></tr>
+<tr><td><strong>Baseline arm</strong></td><td>The arm everything is measured against. "No context" still includes whatever the installed packages ship, such as types and <code>CHANGELOG.md</code>. Every baseline states what it includes.</td></tr>
+<tr><td><strong>Oracle arm</strong></td><td>Diagnostic only: baseline plus the anchored passages pasted into the request. It shows the ceiling when retrieval is perfect. It is <em>not</em> a product, and not Harbor's "oracle agent".</td></tr>
+<tr><td><strong>Model gateway</strong></td><td>The service outside every sandbox that all model calls pass through. It holds provider keys and logs what reached the model.</td></tr>
+<tr><td><strong>Pins</strong></td><td>The versions and hashes that make a trial reproducible. Written to <code>pins.json</code>.</td></tr>
+</table>
+<h2>What happens in a run</h2>
+<table>
+<tr><th>Term</th><th>Meaning</th></tr>
+<tr><td><strong>Trial</strong></td><td>One attempt by one arm at one task, from a fresh copy of the starting point.</td></tr>
+<tr><td><strong>Sandbox</strong></td><td>The isolated container a trial runs in. Nothing from the host reaches it unless the arm attaches it (with one known network gap, see <a href="#architecture">How a trial runs</a>).</td></tr>
+<tr><td><strong>Workspace → output</strong></td><td>The copy of the starting point the agent edits. When the trial ends it becomes the output: the diff plus the built app.</td></tr>
+<tr><td><strong>Transcript / trace</strong></td><td>The raw record in the agent's own format / the normalised record: messages, tool calls with full results, commands, tokens.</td></tr>
+<tr><td><strong>Harness failure</strong></td><td>The trial went wrong because of salt-eval or what it depends on (sandbox, gateway, provider). It says nothing about the agent, and is never counted. A harness failure wins over an agent failure.</td></tr>
+<tr><td><strong>Agent failure</strong></td><td>The agent, correctly set up, ran out of time, context or output tokens, or refused.</td></tr>
+</table>
+<h2>How grading speaks</h2>
+<table>
+<tr><th>Term</th><th>Meaning</th></tr>
+<tr><td><strong>Check</strong></td><td>An automated pass/fail test of one property of an output. <em>Required</em> checks decide task pass; <em>diagnostic</em> ones explain failures.</td></tr>
+<tr><td><strong>Gate</strong></td><td>The required check an output must pass before anything else is graded (C1 in task 1): it builds, and every page renders with no uncaught or console error. If it fails, every other check is unscorable.</td></tr>
+<tr><td><strong>Verdict</strong></td><td><code>pass</code>, <code>fail</code>, <code>unscorable</code> (grading couldn't decide, never counts against the agent) or <code>not applicable</code> (a conditional check whose condition doesn't hold).</td></tr>
+<tr><td><strong>Task pass</strong></td><td>Every required check passes or is not applicable (and, once built, every required rubric item).</td></tr>
+<tr><td><strong>Route</strong></td><td>One of several valid ways Salt guidance allows a request to be met, such as <code>VerticalNavigation</code> or a stack of <code>NavigationItem</code>s. Each route gets its own reference solution.</td></tr>
+<tr><td><strong>Reference solution</strong></td><td>A known-good output used to prove checks pass valid work. Not the only acceptable answer.</td></tr>
+<tr><td><strong>Known-bad output</strong></td><td>A realistic wrong output used to prove a check catches the mistake it targets.</td></tr>
+<tr><td><strong>Rubric item</strong></td><td>A yes/no claim needing judgement, answered by a model judge only after it is shown to agree with human reviewers. <em>Not built yet.</em></td></tr>
+<tr><td><strong>Eval defect</strong></td><td>A failure caused by salt-eval itself: ambiguous request, wrong check, broken starting point. Fixed, version-bumped and rescored, never counted.</td></tr>
+</table>
+<div class="box">One naming trap: Harbor calls a batch of trials a <em>job</em> and a single one a <em>trial</em>. salt-eval says <em>run</em> for the batch. Harbor's <code>oracle</code> agent replays a reference solution; salt-eval's <em>oracle arm</em> is something else entirely.</div>
+<div class="pager"><a href="#why">← Why it exists</a><a href="#architecture">How a trial runs →</a></div></section><section id="architecture" data-title="How a trial runs"><h1>How a trial runs</h1><p class="lead">From the command you type to a sealed record of what happened.</p><h2 style="border:0;margin-top:0">Three pieces on your machine</h2>
+<p><code>salt-eval run</code> is a Python <strong>launcher</strong> wrapped around two things it does not implement:</p>
+<ul>
+<li><strong>Harbor</strong> runs the trial: it starts the sandbox from the image the launcher built, runs the agent, collects results, and runs the verifier.</li>
+<li><strong>A LiteLLM model gateway</strong> sits between the agent and the model provider. It holds the real API key and logs every request.</li>
+</ul>
+<p>The launcher prepares everything, hands Harbor one task and one arm, then reads what Harbor wrote and decides the outcome. The launcher and Harbor run on the Mac. The sandbox and the gateway run as containers in OrbStack.</p>
+<svg viewBox="0 0 760 270" role="img" aria-label="Launcher builds images and starts gateway, Harbor runs the sandbox, the sandbox reaches the model only through the gateway, a separate verifier grades the output">
+<defs><marker id="architecture-a" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto"><path d="M0,0 L8,4 L0,8z" class="arr"/></marker></defs>
+<rect class="g" x="5" y="5" width="750" height="260" rx="10" fill="none"/><text x="18" y="24" style="font-size:11px">YOUR MAC</text>
+<rect class="b" x="25" y="40" width="150" height="55" rx="8"/><text x="100" y="64" text-anchor="middle">Launcher</text><text x="100" y="82" text-anchor="middle" style="font-size:11px">salt-eval run</text>
+<rect class="b" x="25" y="150" width="150" height="55" rx="8"/><text x="100" y="174" text-anchor="middle">Store</text><text x="100" y="192" text-anchor="middle" style="font-size:11px">run records</text>
+<path class="l" d="M100 95 L100 148" marker-end="url(#architecture-a)"/>
+<path class="l" d="M175 62 L245 62" marker-end="url(#architecture-a)"/>
+<rect class="b" x="250" y="40" width="130" height="55" rx="8"/><text x="315" y="64" text-anchor="middle">Harbor</text><text x="315" y="82" text-anchor="middle" style="font-size:11px">runs the trial</text>
+<path class="l" d="M380 55 L440 55" marker-end="url(#architecture-a)"/>
+<rect class="g" x="445" y="35" width="150" height="75" rx="8"/><text x="520" y="60" text-anchor="middle">Sandbox</text><text x="520" y="78" text-anchor="middle" style="font-size:11px">agent + workspace</text><text x="520" y="94" text-anchor="middle" style="font-size:11px">no network except gateway</text>
+<path class="l" d="M520 110 L520 150" marker-end="url(#architecture-a)"/>
+<rect class="g" x="445" y="152" width="150" height="55" rx="8"/><text x="520" y="176" text-anchor="middle">Model gateway</text><text x="520" y="194" text-anchor="middle" style="font-size:11px">LiteLLM, holds the key</text>
+<path class="l" d="M595 180 L650 180" marker-end="url(#architecture-a)"/>
+<rect class="b" x="655" y="152" width="90" height="55" rx="8"/><text x="700" y="184" text-anchor="middle">Provider</text>
+<path class="l" d="M315 95 L315 235 L645 235" marker-end="url(#architecture-a)"/>
+<rect class="g" x="650" y="212" width="100" height="42" rx="8"/><text x="700" y="231" text-anchor="middle" style="font-size:12px">Verifier</text><text x="700" y="246" text-anchor="middle" style="font-size:10px">no network</text>
+</svg>
+<h2>The steps of one run</h2>
+<p>Each named step appends a line to <code>launcher.jsonl</code> with what it observed and, if it failed, why. A refusal at any step still leaves a sealed record.</p>
+<ol>
+<li><strong>lock</strong> Take a lock on the store so two runs can't collide. Remove a gateway container that a crashed run of the same store left behind; refuse one from anywhere else.</li>
+<li><strong>pins.resolve</strong> Read the arm, task and gateway image. Refuse any inexact pin (including an undigested image or a Harbor version that doesn't match the lockfile) or any setting that loosens isolation. Only allow-listed <code>task.toml</code> keys and arm fields are accepted.</li>
+<li><strong>docker.check</strong> Require macOS with OrbStack.</li>
+<li><strong>image.build</strong> Build up to three layered images (below).</li>
+<li><strong>image.scan</strong> Search the sandbox image for files Claude Code would read as instructions (<code>CLAUDE.md</code>, <code>.mcp.json</code> …). Refuse any outside the installed packages.</li>
+<li><strong>gateway.start / health</strong> Read the DeepSeek key from the Keychain and start a fresh gateway with a new master key and a new token for this run.</li>
+<li><strong>balance.before</strong> Ask DeepSeek directly (not through the gateway) for the balance and model list. Refuse below $1 or if the model can't be pinned.</li>
+<li><strong>harbor.run</strong> Run Harbor with a scrubbed environment: only <code>PATH</code>, <code>HOME</code>, telemetry off and the gateway token.</li>
+<li><strong>balance.after, gateway.stop</strong> Re-read balance, then stop the gateway so its log is complete.</li>
+<li><strong>request.check</strong> The request the agent received (the first user message in the trajectory) must equal <code>instruction.md</code> byte for byte.</li>
+<li><strong>pins.check</strong> Write <code>pins.json</code>; fail if what ran differs from what the arm asked for.</li>
+<li><strong>model.check</strong> Fail if the model's display name changed mid-run or any response names another model.</li>
+<li><strong>config.check</strong> Compare what Claude Code reported loading with a reviewed snapshot for its version. Whatever the snapshot says, web tools and MCP servers must be absent.</li>
+<li><strong>secret.scan</strong> Once the gateway has started, fail if any of the run's three secrets (whole, or its last 20 characters) appears in the run's job, run or gateway records.</li>
+<li><strong>seal</strong> Make the trial directory and <code>runs/&lt;id&gt;/</code> read-only.</li>
+</ol>
+<p>Between the checks and the scan, two unlogged steps copy the trial's gateway lines into the trial directory and classify the outcome: <em>harness ok/failed</em> and <em>agent completed/failed/timed-out/not-run</em>, from Harbor's result, the transcript, the gateway log and the verdicts. The reward number is never read.</p>
+<p>Exit codes: <code>0</code> harness ok and agent completed (whether or not the task passed), <code>1</code> agent failed or timed out, <code>2</code> harness failure or refusal.</p>
+<h2>Three images</h2>
+<p>Harbor 0.24.0 can't swap a task's image per run, so the task names a moving tag (<code>…:current</code>) and the launcher builds each image with that tag before Harbor starts.</p>
+<table>
+<tr><th>Layer</th><th>Contains</th><th>Used by</th></tr>
+<tr><td><strong>Starting point</strong></td><td>A Node image pinned by digest, the app, <code>npm ci</code>, one git commit with a fixed author and date, so its hash is identical on every rebuild.</td><td>Base of the others</td></tr>
+<tr><td><strong>Agent layer</strong></td><td>Starting point plus Claude Code at the arm's exact version.</td><td>The sandbox</td></tr>
+<tr><td><strong>Grader layer</strong></td><td>Starting point plus the graders project, Playwright, Chromium and axe-core. The app's <code>node_modules</code> moves aside so Harbor can upload the agent's output into <code>/app</code>.</td><td>The verifier (Harbor adds the task's <code>tests/</code> on top)</td></tr>
+</table>
+<h2>Isolation, in plain terms</h2>
+<ul>
+<li>The agent runs in a container, never on the host, so it can't read the repository or your user-level Claude config.</li>
+<li>While it works, the only reachable host is the gateway. The agent runs as root, but the firewall rules are set by a sidecar whose network it shares; only the sidecar has <code>NET_ADMIN</code>, so the agent can't change them.</li>
+<li>Real provider keys never enter the sandbox (the launcher and the gateway hold them). The agent holds a token valid only for this run's model, and the gateway redacts it from the log.</li>
+<li>Checks and reference solutions are never uploaded to the sandbox.</li>
+<li>For every graded task, grading happens afterwards in a <em>different</em> container with no network, so the agent can't tamper with the grader and leftovers can't affect the verdict.</li>
+</ul>
+<div class="box warn"><strong>Known gap:</strong> Harbor's allowlist works by host, not port, so the sandbox can reach every port on the Mac. That must be closed before the first baseline run. Each trial's <code>pins.json</code> records it honestly as "gateway host, all ports".</div>
+<h2>What gets recorded</h2>
+<p>Everything lives in a private store (<code>SALT_EVAL_STORE</code>, default <code>~/salt-eval-store/</code>) outside git: <code>runs.jsonl</code>, <code>runs/&lt;id&gt;/</code> (launcher log, <code>run.json</code>, job config, build, Harbor and gateway logs, DeepSeek model lists), <code>gateway/&lt;id&gt;/requests.jsonl</code> (every request as sent and as forwarded) and <code>jobs/&lt;id&gt;/&lt;trial&gt;/</code> (Harbor's trial directory plus <code>pins.json</code>, <code>status.json</code>, the trial's gateway lines and a copy of the launcher log). The trial directory and <code>runs/&lt;id&gt;/</code> are sealed; <code>runs.jsonl</code> stays appendable.</p>
+<div class="pager"><a href="#concepts">← Vocabulary</a><a href="#tasks">Tasks →</a></div></section><section id="tasks" data-title="Tasks"><h1>Tasks</h1><p class="lead">The task bank is the product. This page covers what a good task is, how one is laid out, and task 1 end to end.</p><h2 style="border:0;margin-top:0">What makes a good Salt task</h2>
+<ol>
+<li><strong>It mirrors real Salt work.</strong> It reads like something a product team would ask an agent.</li>
+<li><strong>It turns on 2–5 Salt decisions</strong>: which component, how to compose it, what guidance says about states, layout or accessibility. Not generic React or CSS puzzles.</li>
+<li><strong>Two Salt experts would agree on every verdict.</strong> Everything graded is in the request or anchored to guidance.</li>
+<li><strong>It accepts every valid solution</strong> by checking rendered properties, not one way of writing code.</li>
+<li><strong>It respects its fidelity</strong>: a prototype never fails for placeholder links or mock data.</li>
+<li><strong>It runs offline and repeatably.</strong></li>
+</ol>
+<p>Each task also states <em>why it's hard</em> in one line, naming how an agent's prior knowledge would go wrong. A decision where the agent would likely get it right anyway can't be the reason a task exists. This is how we avoid choosing tasks just because today's model fails them.</p>
+<h2>Anatomy</h2>
+<p>A task is a Harbor task directory (ADR 0004). Harbor never uploads the README to the sandbox, so the anatomy sits beside the request without reaching the agent.</p>
+<pre><code>tasks/&lt;slug&gt;/
+  task.toml            Harbor settings + [metadata]: work_type, fidelity, specificity,
+                       primary_decision_type, split (and variant_of)
+  instruction.md       the request, byte for byte what the agent gets
+  README.md            the anatomy, under 12 fixed headings (ADR 0004): why it's hard,
+                       anchors, checks, rubric items, not checked, reference solutions,
+                       known-bad outputs, what failures tell us, provenance …
+  solution/            solve.sh + reference.patch (the primary reference solution)
+  references/          one patch per other valid route
+  known-bad/           one patch per realistic mistake
+  tests/               Dockerfile, test.sh, checks.ts (the graders' input)</code></pre>
+<p>Reference solutions and known-bad outputs are <strong>patches</strong> against the starting point's single commit. Each header says what it is for: <code>Route:</code> on a reference, <code>Targets:</code> (and optionally <code>Also fails:</code>) on a known-bad output. <code>git apply</code> skips those lines.</p>
+<h2>Two starting points</h2>
+<table>
+<tr><th>Name</th><th>What it is</th></tr>
+<tr><td><code>empty-salt-app</code></td><td>Vite, React, Salt installed and a provider configured. Used for "create" tasks.</td></tr>
+<tr><td><code>existing-salt-app</code></td><td>"Client Portal": React Router, five sections, an app header, no navigation. Used for "extend" tasks. A task needing something more will start here with its own patch applied (decided; the mechanism isn't built yet).</td></tr>
+</table>
+<p>Each has a README written as the app's own team would write it. It never mentions benchmarks or Salt how-to, and is always <code>README.md</code>, never <code>AGENTS.md</code> or <code>CLAUDE.md</code>, so the harness doesn't mistake it for an instruction file.</p>
+<h2>Worked example: task 1, left navigation</h2>
+<p><strong>Extend · production · outcome-level · primary decision type: composition.</strong></p>
+<div class="box"><strong>The request, verbatim:</strong> Our app has five sections: Overview, Accounts, Payments, Reports and Settings. There's no way to move between them. Add navigation down the left side that shows which section the user is on. We use React Router.</div>
+<h3>Why it's hard</h3>
+<p>Salt offers two routes to a left navigation. The newer, <code>VerticalNavigation</code>, is a compound component whose canonical composition nests <code>VerticalNavigationItemContent</code> around each trigger. No prose says it is required, only examples show it. An agent that leaves it out gets code that typechecks and renders, but each trigger's click area then covers the whole list, so clicking any item opens the last section.</p>
+<h3>Checks</h3>
+<table>
+<tr><th>Id</th><th>Layer</th><th>Property</th></tr>
+<tr><td>C1</td><td>gate</td><td>Build passes; every section renders with no uncaught or console error</td></tr>
+<tr><td>C2</td><td>behaviour</td><td>Clicking "Payments" at the centre of its item shows the Payments page without a full reload</td></tr>
+<tr><td>C3</td><td>behaviour</td><td>The Payments item has <code>aria-current="page"</code>, and no other item does</td></tr>
+<tr><td>C4</td><td>structure</td><td>The five items are rendered by Salt navigation components, not a hand-built list</td></tr>
+<tr><td>C5</td><td>structure</td><td>The <code>nav</code> has an accessible name (if <code>VerticalNavigation</code> is used)</td></tr>
+<tr><td>C6</td><td>structure</td><td>Every trigger sits inside an item-content wrapper (if <code>VerticalNavigation</code> is used)</td></tr>
+<tr><td>C7</td><td>structure</td><td>The navigation runs down the left side at 1280 × 720</td></tr>
+<tr><td>C8</td><td>behaviour</td><td>Salt actually <em>draws</em> Payments active, and no other (if Payments is in a Salt navigation component)</td></tr>
+<tr><td>D1</td><td>structure (diagnostic)</td><td>Which route was taken: <code>vertical-navigation</code>, <code>navigation-item</code> or <code>other</code></td></tr>
+</table>
+<p>C5 and C6 return <em>not applicable</em> on the other route, and C8 on a navigation not built from Salt components, so neither route is penalised. C8 was added after the first real trials: React Router's <code>NavLink</code> sets <code>aria-current</code> itself, so an output with <em>no</em> <code>active</code> prop passed C3 while showing nothing highlighted. C3 was too weak, the task went to version 2, and the three earlier trials were regraded for free.</p>
+<h3>The fixtures that prove the checks</h3>
+<p>Two reference solutions (one per route) and seven known-bad outputs, each aimed at one mistake: a full-page-reload link, no active item, <code>NavLink</code> with no <code>active</code>, a hand-built list, an unnamed nav, triggers without the content wrapper, and a horizontal header. Each known-bad's header names the check it <code>Targets:</code> and, on an <code>Also fails:</code> line, any other required checks the same mistake breaks. <code>salt-eval test-checks</code> grades all of these plus the untouched starting point and fails if any gets a verdict it shouldn't.</p>
+<h2>Decision types: how the bank gets its spread</h2>
+<p>Where Salt guidance lives decides what a failure points at. The first bank of about 30 tasks aims for a target spread.</p>
+<table>
+<tr><th>Decision type</th><th>Target</th><th>A failure usually points to</th></tr>
+<tr><td>Setup and integration</td><td>3</td><td>Getting-started docs, how context products read a project</td></tr>
+<tr><td>Component choice</td><td>5</td><td>Retrieval: search terms, aliases, cross-links</td></tr>
+<tr><td>Composition</td><td>5</td><td>Rules shown only in examples</td></tr>
+<tr><td>Pattern</td><td>5</td><td>Pattern pages</td></tr>
+<tr><td>Foundation</td><td>3</td><td>Token guidance, lint rules</td></tr>
+<tr><td>Accessibility</td><td>3</td><td>Accessibility pages, component defaults</td></tr>
+<tr><td>Content</td><td>2</td><td>Content guidance (thin)</td></tr>
+<tr><td>API currency</td><td>4</td><td>Deprecation mappings, codemods</td></tr>
+</table>
+<p>Writing tasks is itself a result: every anchor marked "none" and every unclear passage goes on the <strong>guidance issues list</strong> (G1–G24 so far). It is meant for the Salt docs owners as a first result that doesn't depend on any agent run.</p>
+<div class="pager"><a href="#architecture">← How a trial runs</a><a href="#grading">Grading and attribution →</a></div></section><section id="grading" data-title="Grading and attribution"><h1>Grading and attribution</h1><p class="lead">How an output gets verdicts, and how a failure gets a cause.</p><h2 style="border:0;margin-top:0">Layers, cheapest first</h2>
+<table>
+<tr><th>Layer</th><th>Question</th><th>How</th><th>Status</th></tr>
+<tr><td>Plumbing</td><td>Did the trial run properly?</td><td>Exit status, timeouts, API errors</td><td class="ok">built</td></tr>
+<tr><td>Gate</td><td>Can the output be graded?</td><td>Build, render every route, no uncaught or console error</td><td class="ok">built</td></tr>
+<tr><td>Behaviour and structure</td><td>Does the UI do what was asked, the Salt way?</td><td>Playwright on the built app: interactions, roles, names, rendered <code>salt*</code> classes (axe-core is installed but no check uses it yet)</td><td class="ok">built</td></tr>
+<tr><td>Source</td><td>What only code shows</td><td>Deprecated or nonexistent APIs from pinned types, files changed outside scope. (The typecheck already runs in the gate, as part of <code>npm run build</code>.)</td><td class="todo">not yet</td></tr>
+<tr><td>Rubric</td><td>What checks can't decide</td><td>A model judge, validated against human labels</td><td class="todo">not yet</td></tr>
+</table>
+<p>If plumbing or the gate fails, nothing else runs. After that every check runs on every gradable output so attribution sees all failures. Prefer behaviour checks to source checks: they accept any implementation that produces the right result.</p>
+<h2>Seven rules for writing a check</h2>
+<ol>
+<li>One property per check, named for the property, not the implementation.</li>
+<li>Justify it with the request or a guidance anchor. A check is required only if its justification rules out the alternatives it fails; guidance that recommends one option without ruling out others supports only a diagnostic check.</li>
+<li>An anchor of "none" makes the check diagnostic, and goes on the guidance issues list.</li>
+<li>Prove it: it passes the reference solution and fails the known-bad output it targets.</li>
+<li>Allow every valid route; make route-specific checks conditional.</li>
+<li>Respect fidelity; never check what "Not checked" excludes.</li>
+<li>Read deprecations and exports from the pinned version's types, not a hand-kept list.</li>
+</ol>
+<h2>How the verifier works</h2>
+<p>After the agent stops, Harbor starts a separate container with no network, uploads the agent's workspace into <code>/app</code>, and runs the graders:</p>
+<ol>
+<li>Copy the workspace, link the starting point's installed packages and run <code>npm run build</code> (60 s limit).</li>
+<li>Serve <code>dist/</code> on localhost, falling back to <code>index.html</code> for client-side routes.</li>
+<li>Open each route in headless Chromium. A route fails the gate on an uncaught error <em>or</em> a console error, because React Router swallows render errors and only logs them.</li>
+<li>If the gate passed, run each check on a fresh page. A timeout is a fail; any other error is the grader's, so <em>unscorable</em>.</li>
+<li>Write <code>verdicts.json</code> with each check's verdict and evidence, plus task pass.</li>
+</ol>
+<p>If a grader crashes or writes no verdicts, that is a <strong>harness failure</strong>, not an agent failure. Unscorable never counts against the agent: after a passed gate it makes the trial a harness failure. A failed gate is different: every other check is unscorable, and the task fails.</p>
+<h2>Testing the tests</h2>
+<p><code>salt-eval test-checks tasks/left-navigation</code> grades every reference solution, every known-bad output and the untouched starting point, no model needed, about two minutes. Task 1's output:</p>
+<pre><code>output                             C1    C2    C3    C4    C5    C6    C7    C8    D1
+solution/reference.patch           pass  pass  pass  pass  pass  pass  pass  pass  vertical-navigation
+references/navigation-item.patch   pass  pass  pass  pass  n/a   n/a   pass  pass  navigation-item
+known-bad/full-reload.patch        pass  fail  pass  pass  pass  pass  pass  pass  vertical-navigation
+known-bad/no-item-content.patch    pass  fail  pass  pass  pass  fail  pass  fail  vertical-navigation
+the starting point                 pass  fail  fail  fail  n/a   n/a   fail  fail  other</code></pre>
+<p>(Excerpt; an unexpected verdict is marked <code>!</code> with the reason under the table.) A reference must pass every required check or be not applicable, and D1 must record the route its <code>Route:</code> line names. A known-bad must fail its <code>Targets:</code> check and every check on its <code>Also fails:</code> line, and nothing else. The starting point must pass the gate and fail, or be not applicable on, every other required check, with at least one fail. Diagnostic checks aren't compared. This catches checks that are too weak or too narrow <em>before</em> an agent is paid for.</p>
+<p><code>salt-eval regrade &lt;trial&gt;</code> reruns the current checks on a stored output with no agent and no model, in under a minute once the images are built. When a check is fixed, old trials are rescored instead of rerun.</p>
+<h2>Failure attribution</h2>
+<p>For each failed required check, walk these steps in order. The first match wins.</p>
+<ol>
+<li><strong>Is salt-eval at fault?</strong> → <em>eval defect</em>. Fix, version the task, rescore, never count.</li>
+<li><strong>Right intent, broken code?</strong> → <em>implementation error</em>. (A Salt export or prop that doesn't exist is a knowledge failure: continue.)</li>
+<li><strong>Is the anchor "none"?</strong> → <em>guidance gap</em>.</li>
+<li><strong>Did the anchored passage reach the agent?</strong> Search the trace's tool results, file reads and fetched pages (and the gateway's request log) for its text ("exposure").
+<ul>
+<li>No, because the agent misused a context product → <em>tool misuse</em></li>
+<li>No, otherwise → <em>retrieval miss</em> (record whether it never looked or looked and wasn't given it)</li>
+<li>Yes, but the output follows an older or foreign convention → <em>prior override</em></li>
+<li>Yes, otherwise → <em>misinterpretation</em></li>
+</ul></li>
+<li><strong>Split misinterpretation with the oracle arm.</strong> If the oracle (passage in the request) fails too, the passage itself doesn't communicate → <em>unclear guidance</em>. If it passes, the passage works when prominent, and the product's presentation is the suspect.</li>
+</ol>
+<p>An attribution is a hypothesis for the next experiment, not a proven root cause.</p>
+<h2>The anchor scorecard</h2>
+<p>One row per guidance passage across a run: exposure rate, pass rate when exposed, pass rate when not, oracle pass rate, main attribution. It turns numbers into the next change:</p>
+<table>
+<tr><th>Pattern</th><th>What to change</th></tr>
+<tr><td>Low exposure, high pass when exposed</td><td>Retrieval: search terms, aliases, tool descriptions</td></tr>
+<tr><td>High exposure, low pass when exposed, high oracle</td><td>Presentation: put the rule earlier, shorten the example</td></tr>
+<tr><td>Low oracle pass rate</td><td>The passage itself, or the component (a dev warning, simpler composition)</td></tr>
+<tr><td>High pass when not exposed</td><td>The model already knows this</td></tr>
+<tr><td>Anchor "none"</td><td>Write the guidance, then promote the check to required</td></tr>
+</table>
+<h2>What is never reported</h2>
+<p>Salt import counts, token references, lint counts, tool calls, tokens or time as a quality win, a weighted "compliance score", 1–10 judge ratings, and percentages without task counts and intervals. Each one rewards the wrong thing, hides which decision failed, or can't be told apart from noise.</p>
+<div class="pager"><a href="#tasks">← Tasks</a><a href="#running">Running it →</a></div></section><section id="running" data-title="Running it"><h1>Running it</h1><p class="lead">What you need, the four commands, and how to read what comes back.</p><div class="box warn"><strong>A proof of concept, set up for local development.</strong> salt-eval is tightly coupled to one developer's machine today: macOS with OrbStack, a model key in the Keychain, a model gateway started per run, and a results folder in your home directory. That is deliberate for a proof of concept, and it is acknowledged that a real deployment needs its own design: where trials run, how secrets arrive, a shared gateway and results store. See <a href="#status">Status</a>.</div>
+<h2>Prerequisites</h2>
+<ul>
+<li>macOS with <a href="https://orbstack.dev">OrbStack</a> (<code>orb start</code> if <code>docker info</code> fails). Other platforms are refused for now.</li>
+<li><code>uv</code> at exactly 0.10.9 (pinned in <code>pyproject.toml</code>). Install: <code>curl -LsSf https://astral.sh/uv/0.10.9/install.sh | sh</code>.</li>
+<li>A DeepSeek API key in the Keychain item <code>salt-eval-deepseek</code>: <code>security add-generic-password -a "$USER" -s salt-eval-deepseek -w</code>. Only needed for <code>run</code>.</li>
+</ul>
+<p>You do not set up Python. The first <code>uv run</code> creates the environment and installs Harbor 0.24.0 from the lockfile.</p>
+<h2>Commands</h2>
+<p>Run from the <code>salt-eval/</code> folder.</p>
+<table>
+<tr><th>Command</th><th>What it does</th><th>Needs</th></tr>
+<tr><td><code>uv run pytest</code></td><td>The harness's own tests, the task layout and the starting points. About 380 tests.</td><td>Nothing (no Docker, no model)</td></tr>
+<tr><td><code>uv run salt-eval test-checks tasks/left-navigation</code></td><td>Grades every reference, known-bad output and the untouched starting point; compares verdicts to expectations. Exits 1 if any output gets a verdict it shouldn't.</td><td>Docker</td></tr>
+<tr><td><code>uv run salt-eval run --arm claude-code-deepseek-flash tasks/left-navigation</code></td><td>One real trial: agent in a sandbox, then graded. A few cents.</td><td>Docker and the DeepSeek key</td></tr>
+<tr><td><code>uv run salt-eval regrade &lt;trial directory&gt;</code></td><td>Regrades a stored trial with the current checks into a <em>new</em> trial directory; the original is never changed.</td><td>Docker</td></tr>
+<tr><td><code>uv run salt-eval serve &lt;trial directory&gt;</code></td><td>Builds a trial's output with no network and serves it at <code>http://127.0.0.1:4173</code> so you can look at it (<code>--port</code> to change).</td><td>Docker</td></tr>
+</table>
+<p>The plumbing trial (<code>plumbing-trial</code> in place of the task path) is a throwaway request that proves the harness works end to end. It grades nothing and never counts.</p>
+<h2>Reading a result</h2>
+<pre><code>salt-eval: run left-navigation-&lt;timestamp&gt;: harness ok, agent completed, exit 0
+salt-eval: task pass: yes; C1 pass, C2 pass, ... C8 pass, D1 vertical-navigation
+salt-eval: trial directory …
+salt-eval: run records …</code></pre>
+<p>(Abridged; any refusal or failure reasons print first, one line each.)</p>
+<ul>
+<li><strong>harness ok / failed</strong>: did salt-eval itself behave? A failure here means the trial says nothing about the agent.</li>
+<li><strong>agent completed / failed / timed-out / not-run</strong>: did the agent finish? <em>not-run</em> means the run stopped before the agent started.</li>
+<li><strong>task pass</strong>: every required check passed or was not applicable. A failed task still exits 0: the exit code is about the harness and the agent, not the task.</li>
+<li><strong>D1</strong> shows the route taken rather than a verdict.</li>
+</ul>
+<p>Exit codes: <code>0</code> harness ok and agent completed, <code>1</code> agent failed or timed out, <code>2</code> harness failure or refusal.</p>
+<h2>Where the evidence lives</h2>
+<pre><code>~/salt-eval-store/
+  runs.jsonl                         one line per invocation
+  run.lock                           held while a run is in progress
+  runs/&lt;run id&gt;/launcher.jsonl       one line per step: what it observed, why it failed
+  runs/&lt;run id&gt;/                    also run.json, build/Harbor/gateway logs
+  gateway/&lt;run id&gt;/requests.jsonl    every model request, as sent and as forwarded
+  jobs/&lt;run id&gt;/&lt;trial&gt;/
+     pins.json  status.json          what was pinned; the outcome
+     gateway/  launcher.jsonl        this trial's gateway lines; a copy of the launcher log
+     agent/ artifacts/ verifier/     transcript, trajectory; workspace and diff; verdicts.json</code></pre>
+<p>Once a run ends, its trial directory and <code>runs/&lt;run id&gt;/</code> are read-only. To experiment without touching your store: <code>SALT_EVAL_STORE=$(mktemp -d) uv run salt-eval run …</code>.</p>
+<h2>When something is refused</h2>
+<p>Refusals are deliberate. Loosening a task's network mode, naming an unpinned version, adding an unlisted <code>task.toml</code> key or a verifier that isn't the task's own grader layer each stop the run at <code>pins.resolve</code> with a message naming the rule, before Docker builds anything. The first trial on any new Claude Code version fails at <code>config.check</code> on purpose, and writes what it observed so a human can review and commit a snapshot. The README shows how to trigger each refusal that can be triggered by hand and which tests cover the rest; the rules themselves are in <code>src/salt_eval/refusals.py</code>.</p>
+<div class="pager"><a href="#grading">← Grading and attribution</a><a href="#status">Status and next steps →</a></div></section><section id="status" data-title="Status and next steps"><h1>Status and next steps</h1><p class="lead">Where salt-eval stands, the question that matters most now, and the phases ahead.</p><h2 style="border:0;margin-top:0">Where we are</h2>
+<p>We are building out the question bank: the Salt tasks the benchmark grades agents on.</p>
+<p>Everything so far runs outside J.P. Morgan, on a development model no Salt consumer uses, with no Salt context products attached.</p>
+<h2>Top priority: what can we mirror inside J.P. Morgan?</h2>
+<div class="box warn"><strong>This comes before any other harness work.</strong> salt-eval's numbers only matter if trials run where Salt's consumers work, with the agents and models they actually use. The prototype was built on a laptop against an outside model provider. Until we know which of its parts can be reproduced in J.P. Morgan infrastructure, building more of it risks building the wrong thing.</div>
+<p>For each part of the prototype, we need to find out whether it can run inside as it is, needs an internal substitute, or is blocked:</p>
+<table>
+<tr><th>Part</th><th>In the prototype</th><th>What we need to find out</th></tr>
+<tr><td><strong>Sandboxes</strong></td><td>Containers on a Mac</td><td>Can we run isolated containers with their network locked down?</td></tr>
+<tr><td><strong>Trial runner</strong></td><td>Harbor, an open-source tool</td><td>Can it be installed and run internally, or do we need an equivalent?</td></tr>
+<tr><td><strong>Agents and models</strong></td><td>Claude Code on an outside model</td><td>Which agent programs and models are approved and used by Salt consumers, and can their traffic go through a gateway we control and log?</td></tr>
+<tr><td><strong>Salt and its packages</strong></td><td>Installed from public npm</td><td>Can every package a task needs be installed from the internal registry, offline?</td></tr>
+<tr><td><strong>Context products</strong></td><td>None attached yet</td><td>Can the MCP server, skill, CLI and bundled docs be attached to an internal agent the way consumers attach them?</td></tr>
+<tr><td><strong>Grading</strong></td><td>A headless browser, no network</td><td>Can a headless browser run in the internal environment?</td></tr>
+<tr><td><strong>Results store</strong></td><td>A folder on a laptop</td><td>Where can transcripts, outputs and held-back tasks live, and who can see them?</td></tr>
+</table>
+<p>The outcome is a map of what runs where. It decides the shape of everything in the architecture track below.</p>
+<h2>Roadmap</h2>
+<p>Two tracks move together: the <strong>architecture</strong> that runs trials, and the <strong>question bank</strong> of tasks it runs. Each phase ends when both tracks have reached its "done when", and each phase answers a bigger question than the one before.</p>
+<table class="road">
+<tr><th></th><th class="now">1. Prove the method</th><th class="next">2. Bring it inside</th><th>3. First answer</th><th>4. Compare and improve</th></tr>
+<tr><td><strong>Architecture</strong></td><td class="now">A working prototype on a laptop <span class="ok">✓</span></td><td class="next">Map what J.P. Morgan infrastructure can mirror, then stand the harness up there</td><td>Attach any context product fairly, including a "perfect context" arm as the ceiling</td><td>Repeated runs at scale, comparison reports and a scorecard of which guidance lands</td></tr>
+<tr><td><strong>Question bank</strong></td><td class="now">First tasks built and proven <span class="ok">✓</span></td><td class="next">A seed bank of tasks written and their checks proven</td><td>The seed bank run with no added context and with perfect context</td><td>Grow to a full bank across every kind of Salt decision, with some tasks held back to confirm results</td></tr>
+<tr><td><strong>Done when</strong></td><td class="now">A task runs, grades and is understood end to end</td><td class="next">The same task runs inside and gets the same verdicts</td><td>We know whether Salt context <em>could</em> help on these tasks at all</td><td>Each product is compared to the baseline, and one fix the scorecard points to has been shipped and measured</td></tr>
+</table>
+<p><strong>We are here:</strong> phase 1 is complete and phase 2 starts with the J.P. Morgan infrastructure map. Seed tasks continue to be written on paper alongside it, so the bank is ready when the harness is.</p>
+<h2>Next steps</h2>
+<ol>
+<li><strong>Map J.P. Morgan infrastructure</strong> against the table above, with the teams that own each part.</li>
+<li><strong>Keep the harness as it is until the map exists.</strong> The prototype has done its job. New harness work waits for what the map says can run inside.</li>
+<li><strong>Keep writing seed tasks.</strong> Tasks don't depend on where they run, and writing them already finds gaps in Salt guidance (24 so far).</li>
+</ol>
+<h2>Open questions</h2>
+<ul>
+<li>Which agent programs and models do Salt consumers inside J.P. Morgan use? That decides what gets measured.</li>
+<li>Can model traffic go through a gateway we control, so we have a record of exactly what each agent saw?</li>
+<li>Where should results and held-back tasks live, and who owns that store?</li>
+<li>What does "no added context" mean inside? Salt's installed packages already teach agents some answers (the shipped changelog shows how to compose task 1's navigation), and every baseline has to state what it includes.</li>
+</ul>
+<div class="pager"><a href="#running">← Running it</a><span></span></div></section></main><script>const pages=[...document.querySelectorAll("main>section")],links=[...document.querySelectorAll("nav a")];
+function show(){const p=pages.find(s=>s.id===location.hash.slice(1))||pages[0];
+pages.forEach(s=>s.hidden=s!==p);links.forEach(a=>a.classList.toggle("on",a.dataset.to===p.id));
+document.title=(p.id==="index"?"":p.dataset.title+" · ")+"salt-eval";scrollTo(0,0)}
+addEventListener("hashchange",show);show();</script></body></html>
