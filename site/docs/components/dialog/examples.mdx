@@ -96,6 +96,14 @@ In this destructive example, `initialFocus` points to Cancel so the [documented 
 
 <LivePreview componentName="dialog" exampleName="MandatoryAction" />
 
+## Deletion with focus
+
+When confirming deletion removes the button that opened a dialog, choose a surviving control that lets the user continue. This example focuses the next record's Delete button, the previous record when the deleted record was last, or Add record when the list is empty. Cancel receives initial focus; Cancel and Escape leave the collection unchanged and return focus to the originating button.
+
+This example removes local data synchronously and uses the default web floating component. It keeps the record mounted until the closing dialog element is removed, then commits deletion and moves focus after the list updates. Keeping these steps separate preserves the exit animation and avoids focusing a destination while the background is inert. A persistent status message announces the outcome separately from moving focus. Follow the [destructive action guidance](./usage#destructive-actions) for remote requests, progress and recovery.
+
+<LivePreview componentName="dialog" exampleName="DeletionWithFocus" />
+
 ## Disable scrim
 
 Use the `disableScrim` prop to prevent the scrim from rendering.

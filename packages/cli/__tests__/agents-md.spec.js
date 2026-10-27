@@ -263,7 +263,7 @@ describe("application package discovery", () => {
 });
 
 describe("task guidance", () => {
-  it("resolves each guide from the selected app for AGENTS and Copilot", () => {
+  it("routes distinct task bullets to the selected app's guides for AGENTS and Copilot", () => {
     const root = project();
     mkdirSync(path.join(root, ".git"));
     const app = path.join(root, "apps/web");
@@ -281,11 +281,35 @@ describe("task guidance", () => {
     );
     for (const page of guidePages) {
       const fromRoot = `apps/web/node_modules/@salt-ds/core/docs/${page.path}`;
-      expect(agents).toContain(`\`../${fromRoot}\``);
-      expect(copilot).toContain(`\`${fromRoot}\``);
       expect(readFileSync(path.join(output, "..", fromRoot), "utf8")).toBe(
         page.title,
       );
+    }
+    for (const [content, prefix] of [
+      [agents, "../"],
+      [copilot, ""],
+    ]) {
+      const workflows = content
+        .split("\n")
+        .filter((line) => line.startsWith("- **"));
+      expect(workflows).toEqual([
+        expect.stringContaining(
+          "**Accessibility repairs or failing accessibility tests:** Read ",
+        ),
+        expect.stringContaining(
+          "**New UI, component choice or interaction changes:**",
+        ),
+        expect.stringContaining("**Composition changes:**"),
+      ]);
+      const routes = [guidePages[2], guidePages[0], guidePages[1]];
+      for (const [index, page] of routes.entries()) {
+        expect(workflows[index]).toContain(
+          `\`${prefix}apps/web/node_modules/@salt-ds/core/docs/${page.path}\``,
+        );
+        for (const other of routes.filter((route) => route !== page)) {
+          expect(workflows[index]).not.toContain(other.path);
+        }
+      }
     }
     expect(run([...args, "--check"], quiet)).toBe(0);
     expect(run(args, quiet)).toBe(0);
@@ -307,11 +331,20 @@ describe("task guidance", () => {
     expect(run(["--project", app], quiet)).toBe(0);
     const content = readFileSync(path.join(app, "AGENTS.md"), "utf8");
     for (const page of guidePages) expect(content).not.toContain(page.path);
-    expect(content).toContain("before selecting a primitive");
-    expect(content).toContain("When changing component composition");
-    expect(content).toContain(
-      "For accessibility repairs or failing accessibility tests",
-    );
+    const workflows = content
+      .split("\n")
+      .filter((line) => line.startsWith("- **"));
+    expect(workflows).toEqual([
+      expect.stringContaining(
+        "**Accessibility repairs or failing accessibility tests:** Read component usage/accessibility guidance.",
+      ),
+      expect.stringContaining(
+        "read the relevant component usage guidance before choosing or replacing a primitive.",
+      ),
+      expect.stringContaining(
+        "**Composition changes:** Review the relevant usage and accessibility guidance.",
+      ),
+    ]);
     expect(content).not.toContain("undefined");
   });
 

@@ -42,7 +42,10 @@ For focus lost after closing a dialog, follow
 [Returning focus after an action](/salt/components/dialog/accessibility#returning-focus-after-an-action).
 Whether the trigger survives and where the user should continue are part of the
 application's workflow. Check the installed API before proposing a focus prop or
-callback.
+callback. The [Deletion with focus example](/salt/components/dialog/examples#deletion-with-focus)
+coordinates a local removal with the dialog's closing lifecycle. Setting
+`open={false}` does not immediately make the background interactive; verify that
+the destination can receive focus instead of guessing a delay.
 
 ## Identify who owns the repair
 

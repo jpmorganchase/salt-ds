@@ -35,6 +35,12 @@ If successful deletion removes the record and its trigger, the application must 
 
 The current Dialog API provides `initialFocus` for opening, but no dedicated return-focus target or after-close callback. Verify these transitions with the current components before adopting a composition that unmounts its trigger. The [WAI-ARIA dialog pattern](https://www.w3.org/WAI/ARIA/apg/patterns/dialog-modal/) describes returning focus to a logical workflow target when the invoking element no longer exists.
 
+Closing is a transition: setting `open={false}` does not immediately remove the dialog or make the background interactive. A focus call can be ignored while the destination is still inert. A fixed delay or a single animation frame does not establish that closing has finished.
+
+The [Deletion with focus example](./examples#deletion-with-focus) shows a synchronous local removal using the default web floating component. It keeps the record and its trigger mounted during closing, observes removal of the dialog element through its public ref, then commits the deletion. A subsequent effect moves focus after the surviving controls have been committed. Cancel and Escape keep the record and use Dialog's existing focus restoration. This preserves the exit animation without guessing its duration.
+
+If your application supplies a custom floating component, verify its ref and closing lifecycle before using this composition. For asynchronous deletion, also handle a user who closes the dialog and continues elsewhere while the request is pending; a later success must not steal their focus.
+
 ### Scrollable content
 
 When content in the dialog is scrollable, it will receive keyboard focus (with a visible focus indicator). This allows keyboard and screen reader reliant users to navigate and scroll the content using arrow keys, satisfying [WCAG 2.1.1](https://www.w3.org/TR/WCAG21/#keyboard) and related accessibility requirements.

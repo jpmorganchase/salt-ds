@@ -44,11 +44,14 @@ export function instructions({
 } = {}) {
   return [
     "This project uses Salt (`@salt-ds/*`). Inspect its conventions first. Before writing or changing Salt UI, read the relevant indexed docs for the installed versions; prefer this evidence to training data.",
-    `For new UI, choosing or replacing components, or changes to the interaction model, establish user intent and read ${guidance.choose ? `\`${guidance.choose}\`` : "the relevant component usage guidance"} before selecting a primitive.`,
-    `When changing component composition, review ${guidance.review ? `\`${guidance.review}\`` : "the relevant usage and accessibility guidance"}.`,
-    `For accessibility repairs or failing accessibility tests, reproduce the issue and read ${guidance.accessibility ? `\`${guidance.accessibility}\` and ` : ""}component usage/accessibility guidance. Identify application wiring, composition or Salt ownership; verify affected behaviour and report unperformed checks.`,
+    "",
+    `- **Accessibility repairs or failing accessibility tests:** Read ${guidance.accessibility ? `\`${guidance.accessibility}\` and ` : ""}component usage/accessibility guidance. Reproduce the issue; identify application wiring, composition or Salt ownership; verify affected behaviour and report unperformed checks.`,
+    `- **New UI, component choice or interaction changes:** Establish user intent and read ${guidance.choose ? `\`${guidance.choose}\`` : "the relevant component usage guidance"} before choosing or replacing a primitive.`,
+    `- **Composition changes:** Review ${guidance.review ? `\`${guidance.review}\`` : "the relevant usage and accessibility guidance"}.`,
+    "",
     "When docs and code disagree, distinguish current behaviour from intended requirements: check disputed APIs against installed public types and exports, and reproduce disputed runtime behaviour.",
     "Preserve project conventions when compatible with the request; existing usage is not proof of correctness for repairs or migrations. Stay within scope and report material discrepancies.",
+    "",
     "Prefer props such as `Text`'s `color` to custom CSS with `--salt-*` tokens.",
     check
       ? `Before you finish, run \`${check}\` from ${rootBase === "this file" ? "this file's folder" : rootBase} and fix what it reports: it checks changed files' tokens, deprecated props and component parts against installed data.`
@@ -59,9 +62,10 @@ export function instructions({
       : [
           "For each `--salt-*` token, find the installed `@salt-ds/theme` documentation in the index and check its token references for a characteristic or foundation token available in the selected theme.",
         ]),
+    "",
     `Guide and index paths are relative to \`root\`, which is relative to ${rootBase}.`,
     "Brackets after page names give aliases; each package's `docs/index.md` summarizes its pages.",
-  ].join(" ");
+  ].join("\n");
 }
 
 /** The salt-ds check command, run from `base`, for the application at `project`. */
