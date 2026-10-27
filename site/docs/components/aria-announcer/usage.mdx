@@ -46,11 +46,11 @@ const handleSave = () => {
 
 `announce(message, options)` takes these options:
 
-| Option     | Default    | Description                                                                                                                                                                    |
-| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| `ariaLive` | `"polite"` | `"polite"` waits until the screen reader finishes speaking; `"assertive"` interrupts it. Use `"assertive"` only for urgent messages.                                           |
-| `duration` | `300`      | How long the message stays in the live region, in milliseconds.                                                                                                                |
-| `target`   |            | Sends the message to the `AriaAnnouncerProvider` with the same `target`, or to the nearest provider if none is mounted; see [Announcing in a dialog](#announcing-in-a-dialog). |
+| Option     | Default    | Description                                                                                                                                                                          |
+| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `ariaLive` | `"polite"` | `"polite"` waits until the screen reader finishes speaking; `"assertive"` interrupts it. Use `"assertive"` only for urgent messages.                                                 |
+| `duration` | `300`      | How long the message stays in the live region, in milliseconds.                                                                                                                      |
+| `target`   |            | Sends the message to the `AriaAnnouncerProvider` with the same `target`, or to the nearest provider if none is mounted; see [Content in another window](#content-in-another-window). |
 
 `useAriaAnnouncer({ debounce })` waits until calls to `announce` have stopped for
 `debounce` milliseconds, then announces only the last message.
@@ -70,27 +70,32 @@ It has no debounce, and rendering the same text again doesn't repeat the
 announcement. For a value that changes as the user types, or a message that can
 repeat, call `announce` instead.
 
-## Announcing in a dialog
+## Content in another window
 
-A modal [`Dialog`](/salt/components/dialog) or [`Drawer`](/salt/components/drawer)
-sets `aria-modal="true"`, which lets assistive technologies treat content outside
-it as unavailable, including the root provider's live region. Wrap the dialog's
-content in its own `AriaAnnouncerProvider`, as Salt does for DatePicker's
-overlay; `useAriaAnnouncer` inside it then uses that provider. To announce into
-the dialog from code outside the provider, give the provider a `target`, such as
-`target="settings-dialog"`, and pass the same `target` to `announce`.
+Only the root `SaltProvider` includes an `AriaAnnouncerProvider`; a `SaltProvider`
+nested inside it doesn't. Content rendered in another window, such as an overlay
+portaled into a separate window under a nested `SaltProvider`, would otherwise
+send its messages to the main window's live region. Wrap that content in its own
+`AriaAnnouncerProvider`, so its live region renders beside it; `useAriaAnnouncer`
+inside it then uses that provider. Salt's own overlays, such as DatePicker's,
+include one because they can open outside the root provider or in another
+window.
+
+To announce into that provider from code outside it, give the provider a
+`target`, such as `target="order-ticket"`, and pass the same `target` to
+`announce`.
 
 ```tsx
-<Dialog open={open} onOpenChange={setOpen}>
-  <AriaAnnouncerProvider>
-    <SettingsContent />
+// Rendered into the other window, under a nested SaltProvider.
+<SaltProvider>
+  <AriaAnnouncerProvider target="order-ticket">
+    <OrderTicket />
   </AriaAnnouncerProvider>
-</Dialog>
+</SaltProvider>
 ```
 
-The dialog's provider unmounts with the dialog, so a message sent as the dialog
-closes may not be read. Send it from outside the dialog instead, such as from
-the component that controls `open`.
+A nested provider unmounts with its content, so a message sent as that content
+closes may not be read. Send it from outside the provider instead.
 
 ## Deprecations and migrations
 
