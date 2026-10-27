@@ -21,8 +21,8 @@ data:
 The application or form library decides when a value is invalid. Set
 `validationStatus="error"` to show that result on the field and its participating
 controls, and supply specific feedback through `FormFieldHelperText`. Input,
-Dropdown, ComboBox and the other text and date inputs show the matching
-[status adornment](/salt/components/status-adornment) themselves. Most controls
+Dropdown, ComboBox and the other text and date inputs show the matching status
+icon themselves, so don't add a `StatusAdornment`. Most controls
 don't set `aria-invalid` from the status, so set it on the native control; for
 example, use `inputProps` on Input. See [Form integration](/salt/getting-started/form-integration)
 for control-specific value, ref and submission bindings.
