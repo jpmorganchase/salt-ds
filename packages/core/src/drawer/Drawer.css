@@ -128,20 +128,20 @@
 /* Resize limits stay at least --salt-size-base and leave room on screen for the handle's outside target */
 .saltDrawer-resizable {
   --drawer-resizeLimit: calc(100% - var(--drawer-resizeHandleOutset));
-  --drawer-resizeMin: min(max(var(--saltDrawer-resizeMin, 0px), var(--salt-size-base)), var(--drawer-resizeLimit));
-  --drawer-resizeMax: min(var(--saltDrawer-resizeMax, 100%), var(--drawer-resizeLimit));
+  --drawer-minResize: min(max(var(--saltDrawer-minResize, 0px), var(--salt-size-base)), var(--drawer-resizeLimit));
+  --drawer-maxResize: min(var(--saltDrawer-maxResize, 100%), var(--drawer-resizeLimit));
 }
 
 .saltDrawer-resizable.saltDrawer-left,
 .saltDrawer-resizable.saltDrawer-right {
-  min-width: var(--drawer-resizeMin);
-  max-width: var(--drawer-resizeMax);
+  min-width: var(--drawer-minResize);
+  max-width: var(--drawer-maxResize);
 }
 
 .saltDrawer-resizable.saltDrawer-top,
 .saltDrawer-resizable.saltDrawer-bottom {
-  min-height: var(--drawer-resizeMin);
-  max-height: var(--drawer-resizeMax);
+  min-height: var(--drawer-minResize);
+  max-height: var(--drawer-maxResize);
 }
 
 /* Styles applied when variant = "primary" */

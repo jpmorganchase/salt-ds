@@ -30,8 +30,8 @@ const ResizableDrawer = (props: DrawerProps) => (
     {...props}
     style={
       {
-        "--saltDrawer-resizeMin": undefined,
-        "--saltDrawer-resizeMax": undefined,
+        "--saltDrawer-minResize": undefined,
+        "--saltDrawer-maxResize": undefined,
         animation: "none",
         ...props.style,
       } as CSSProperties
@@ -473,8 +473,8 @@ describe("GIVEN a resizable Drawer", () => {
           style={
             {
               width: 300,
-              "--saltDrawer-resizeMin": "200px",
-              "--saltDrawer-resizeMax": "400px",
+              "--saltDrawer-minResize": "200px",
+              "--saltDrawer-maxResize": "400px",
             } as CSSProperties
           }
         />,
@@ -495,8 +495,8 @@ describe("GIVEN a resizable Drawer", () => {
           style={
             {
               height: 300,
-              "--saltDrawer-resizeMin": "10vh",
-              "--saltDrawer-resizeMax": "50vh",
+              "--saltDrawer-minResize": "10vh",
+              "--saltDrawer-maxResize": "50vh",
             } as CSSProperties
           }
         />,

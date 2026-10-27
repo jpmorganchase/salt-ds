@@ -586,8 +586,8 @@ export const Resizable: StoryFn<DrawerProps> = ({
         style={{
           ...(isHorizontal ? { width: 320 } : { height: 280 }),
           ...({
-            "--saltDrawer-resizeMin": isHorizontal ? "200px" : "160px",
-            "--saltDrawer-resizeMax": isHorizontal ? "640px" : "520px",
+            "--saltDrawer-minResize": isHorizontal ? "200px" : "160px",
+            "--saltDrawer-maxResize": isHorizontal ? "640px" : "520px",
           } as CSSProperties),
           ...style,
         }}
