@@ -169,7 +169,6 @@ export const TreeNodeTrigger = forwardRef<
           <CheckboxIcon
             checked={selected}
             indeterminate={indeterminate}
-            disabled={disabled}
             className={withNodeBaseName("checkbox")}
           />
         )}

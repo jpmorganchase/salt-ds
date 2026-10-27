@@ -111,7 +111,7 @@ function registerAdapterTests(
       await expect
         .element(
           page.getByRole("button", {
-            name: adapter.format(today, "dddd D MMMM YYYY"),
+            name: adapter.format(today, "dddd DD MMMM YYYY"),
           }),
         )
         .toHaveAttribute("aria-current", "date");
@@ -128,7 +128,7 @@ function registerAdapterTests(
         await expect
           .element(
             page.getByRole("button", {
-              name: adapter.format(expected, "dddd D MMMM YYYY"),
+              name: adapter.format(expected, "dddd DD MMMM YYYY"),
             }),
           )
           .toBeVisible();
@@ -154,7 +154,7 @@ function registerAdapterTests(
       await expect
         .element(
           page.getByRole("button", {
-            name: adapter.format(nextMonth, "dddd D MMMM YYYY"),
+            name: adapter.format(nextMonth, "dddd DD MMMM YYYY"),
           }),
         )
         .toBeVisible();
@@ -179,7 +179,7 @@ function registerAdapterTests(
       await expect
         .element(
           page.getByRole("button", {
-            name: adapter.format(nextYear, "dddd D MMMM YYYY"),
+            name: adapter.format(nextYear, "dddd DD MMMM YYYY"),
           }),
         )
         .toBeVisible();
@@ -191,7 +191,7 @@ function registerAdapterTests(
       nextMonth = adapter.add(nextMonth, { days: 1 });
       await page
         .getByRole("button", {
-          name: adapter.format(nextMonth, "dddd D MMMM YYYY"),
+          name: adapter.format(nextMonth, "dddd DD MMMM YYYY"),
         })
         .click();
       await expect
@@ -203,7 +203,7 @@ function registerAdapterTests(
       await render(basicCalendar());
       let date = testDate;
       let day = page.getByRole("button", {
-        name: adapter.format(date, "dddd D MMMM YYYY"),
+        name: adapter.format(date, "dddd DD MMMM YYYY"),
       });
       focus(day);
       await expectFocusedDay(day);
@@ -219,7 +219,7 @@ function registerAdapterTests(
             ? adapter.add(date, { days: amount.days })
             : adapter.add(date, { weeks: amount.weeks });
         day = page.getByRole("button", {
-          name: adapter.format(date, "dddd D MMMM YYYY"),
+          name: adapter.format(date, "dddd DD MMMM YYYY"),
         });
         await expectFocusedDay(day);
       }
@@ -246,13 +246,13 @@ function registerAdapterTests(
         await render(basicCalendar());
         focus(
           page.getByRole("button", {
-            name: adapter.format(testDate, "dddd D MMMM YYYY"),
+            name: adapter.format(testDate, "dddd DD MMMM YYYY"),
           }),
         );
         await userEvent.keyboard(keys);
         await expectFocusedDay(
           page.getByRole("button", {
-            name: adapter.format(expectedDate, "dddd D MMMM YYYY"),
+            name: adapter.format(expectedDate, "dddd DD MMMM YYYY"),
           }),
         );
       });
@@ -286,13 +286,13 @@ function registerAdapterTests(
       const today = adapter.today();
       await page
         .getByRole("button", {
-          name: `Change Date, ${adapter.format(today, "dddd DD MMMM YYYY")}`,
+          name: `Today, ${adapter.format(today, "dddd DD MMMM YYYY")}`,
         })
         .click();
       await expect
         .element(
           page.getByRole("button", {
-            name: adapter.format(today, "dddd D MMMM YYYY"),
+            name: adapter.format(today, "dddd DD MMMM YYYY"),
           }),
         )
         .toHaveAttribute("aria-current", "date");
@@ -301,7 +301,7 @@ function registerAdapterTests(
     it("SHOULD render custom day", async () => {
       await render(<CustomDayRendering defaultVisibleMonth={testDate} />);
       const button = Array.from(document.querySelectorAll("button")).find(
-        (element) => element.textContent?.trim() === "1",
+        (element) => element.textContent?.trim() === "01",
       );
       expect(button).toBeDefined();
       expect(button?.querySelector("span.dot")).toBeInTheDocument();
@@ -317,10 +317,10 @@ function registerAdapterTests(
         />,
       );
       for (const name of [
-        `Start new range: ${adapter.format(adapter.startOf(testDate, "month"), "dddd D MMMM YYYY")}`,
-        `Start date: ${adapter.format(testDate, "dddd D MMMM YYYY")}, selected`,
-        `End range: ${adapter.format(endDate, "dddd D MMMM YYYY")}, selected`,
-        adapter.format(adapter.endOf(endDate, "month"), "dddd D MMMM YYYY"),
+        `Start new range: ${adapter.format(adapter.startOf(testDate, "month"), "dddd DD MMMM YYYY")}`,
+        `Start date: ${adapter.format(testDate, "dddd DD MMMM YYYY")}, selected`,
+        `End range: ${adapter.format(endDate, "dddd DD MMMM YYYY")}, selected`,
+        adapter.format(adapter.endOf(endDate, "month"), "dddd DD MMMM YYYY"),
       ]) {
         await expect
           .element(page.getByRole("button", { name }))
@@ -380,7 +380,7 @@ function registerAdapterTests(
         await expect
           .element(
             page.getByRole("button", {
-              name: adapter.format(date, "dddd D MMMM YYYY"),
+              name: adapter.format(date, "dddd DD MMMM YYYY"),
             }),
           )
           .toHaveAttribute("aria-disabled", "true");
@@ -389,7 +389,7 @@ function registerAdapterTests(
         await expect
           .element(
             page.getByRole("button", {
-              name: adapter.format(date, "dddd D MMMM YYYY"),
+              name: adapter.format(date, "dddd DD MMMM YYYY"),
             }),
           )
           .not.toHaveAttribute("aria-disabled", "true");
@@ -456,13 +456,13 @@ function registerAdapterTests(
         </Calendar>,
       );
       const day = page.getByRole("button", {
-        name: "Saturday 2 March 2024",
+        name: "Saturday 02 March 2024",
       });
       await day.hover();
       await day.click();
       const [, date] = lastCall(selectionChange);
-      expect(adapter.format(date, "dddd D MMMM YYYY")).toBe(
-        "Saturday 2 March 2024",
+      expect(adapter.format(date, "dddd DD MMMM YYYY")).toBe(
+        "Saturday 02 March 2024",
       );
     });
 
@@ -479,7 +479,7 @@ function registerAdapterTests(
       );
       for (const date of weekendDates) {
         const day = page.getByRole("button", {
-          name: adapter.format(date, "dddd D MMMM YYYY"),
+          name: adapter.format(date, "dddd DD MMMM YYYY"),
         });
         await expect.element(day).toHaveAttribute("aria-disabled", "true");
         await day.hover();
@@ -491,12 +491,12 @@ function registerAdapterTests(
     it("SHOULD navigate across un-selectable dates using keyboard", async () => {
       await render(<UnselectableDates defaultVisibleMonth={testDate} />);
       const friday = page.getByRole("button", {
-        name: "Friday 1 March 2024",
+        name: "Friday 01 March 2024",
       });
       focus(friday);
       await userEvent.keyboard("{ArrowRight}");
       const saturday = page.getByRole("button", {
-        name: "Saturday 2 March 2024",
+        name: "Saturday 02 March 2024",
       });
       await expect.element(saturday).toHaveFocus();
       await expect.element(saturday).toHaveAttribute("aria-disabled", "true");
@@ -504,13 +504,13 @@ function registerAdapterTests(
       await expectTooltipContent(saturday, "weekends are un-selectable");
       await userEvent.keyboard("{ArrowRight}");
       const sunday = page.getByRole("button", {
-        name: "Sunday 3 March 2024",
+        name: "Sunday 03 March 2024",
       });
       await expect.element(sunday).toHaveFocus();
       await expect.element(sunday).toHaveAttribute("aria-disabled", "true");
       await userEvent.keyboard("{ArrowRight}");
       const monday = page.getByRole("button", {
-        name: "Monday 4 March 2024",
+        name: "Monday 04 March 2024",
       });
       await expect.element(monday).toHaveFocus();
       await expect.element(monday).not.toHaveAttribute("aria-disabled", "true");
