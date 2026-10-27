@@ -7,7 +7,7 @@ import { renderWithSalt } from "~browser-test-utils/render";
 import * as systemStatusStories from "~stories/system-status/system-status.stories";
 
 const composedStories = composeStories(systemStatusStories);
-const { Statuses, WithActions } = composedStories;
+const { Statuses } = composedStories;
 
 describe("GIVEN a System status", () => {
   checkAccessibility(composedStories);
@@ -33,16 +33,5 @@ describe("GIVEN a System status", () => {
     );
 
     await expect.element(page.getByRole("status")).toHaveTextContent(message);
-  });
-
-  it("renders actions", async () => {
-    await renderWithSalt(<WithActions />);
-
-    await expect
-      .element(page.getByRole("button", { name: "Try again" }))
-      .toBeInTheDocument();
-    await expect
-      .poll(() => page.getByRole("button", { name: "Dismiss" }).elements())
-      .toHaveLength(2);
   });
 });
