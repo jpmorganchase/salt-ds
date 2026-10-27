@@ -1,7 +1,6 @@
 import {
   Banner,
   BannerContent,
-  Button,
   H1,
   Link,
   OnSolidButton,
@@ -16,7 +15,6 @@ import {
   SystemStatusContent,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { useState } from "react";
 
 export default {
   title: "Lab/System Status",
@@ -169,43 +167,33 @@ export const LongContent: StoryFn<typeof SystemStatus> = (args) => (
   </div>
 );
 
-export const Placement: StoryFn<typeof SystemStatus> = (args) => {
-  const [open, setOpen] = useState(true);
-
-  return (
-    <StackLayout gap={0}>
-      {open && (
-        <SystemStatus {...args}>
-          <SystemStatusContent>
-            <Text color="inherit">New feature updates are available.</Text>
-          </SystemStatusContent>
-          <SystemStatusActions>
-            <OnSolidButton aria-label="Dismiss" onClick={() => setOpen(false)}>
-              <CloseIcon aria-hidden />
-            </OnSolidButton>
-          </SystemStatusActions>
-        </SystemStatus>
-      )}
-      <StackLayout
-        align="start"
-        style={{
-          padding: "var(--salt-spacing-300) var(--salt-layout-page-margin)",
-        }}
-      >
-        <H1 styleAs="display2">Payment activity</H1>
-        <Banner status="warning" variant="secondary">
-          <BannerContent>
-            You have outstanding checks more than 30 days old. Review to prevent
-            fraud.
-          </BannerContent>
-        </Banner>
-        {!open && (
-          <Button onClick={() => setOpen(true)}>Show system status</Button>
-        )}
-      </StackLayout>
+export const Placement: StoryFn<typeof SystemStatus> = (args) => (
+  <StackLayout gap={0}>
+    <SystemStatus {...args}>
+      <SystemStatusContent>
+        <Text color="inherit">New feature updates are available.</Text>
+      </SystemStatusContent>
+      <SystemStatusActions>
+        <OnSolidButton aria-label="Dismiss">
+          <CloseIcon aria-hidden />
+        </OnSolidButton>
+      </SystemStatusActions>
+    </SystemStatus>
+    <StackLayout
+      style={{
+        padding: "var(--salt-spacing-300) var(--salt-layout-page-margin)",
+      }}
+    >
+      <H1 styleAs="display2">Payment activity</H1>
+      <Banner status="warning" variant="secondary">
+        <BannerContent>
+          You have outstanding checks more than 30 days old. Review to prevent
+          fraud.
+        </BannerContent>
+      </Banner>
     </StackLayout>
-  );
-};
+  </StackLayout>
+);
 
 Placement.parameters = {
   layout: "fullscreen",
