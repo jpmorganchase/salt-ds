@@ -1,0 +1,48 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+`StatusAdornment` is the icon Salt's input controls show at their end for a
+validation status. [`Input`](/salt/components/input),
+[`MultilineInput`](/salt/components/multiline-input),
+[`NumberInput`](/salt/components/number-input),
+[`Dropdown`](/salt/components/dropdown), [`ComboBox`](/salt/components/combo-box)
+and the date inputs render it when `validationStatus` is set on the control or
+its [`FormField`](/salt/components/form-field). Don't add a `StatusAdornment` to
+these controls yourself, for example through `endAdornment`: the icon would show
+twice.
+
+`status` takes `"error"`, `"warning"` or `"success"`; there is no info
+adornment. Controls don't show the adornment while they're disabled.
+
+### When to use
+
+- In a custom control that isn't one of Salt's inputs, to show its validation status the way Salt's inputs do.
+
+### When not to use
+
+- In Salt's input controls, which render it from `validationStatus`.
+- To show a status outside a control. Use [`StatusIndicator`](/salt/components/status-indicator) instead.
+
+To replace the icons, map `ErrorStatusAdornment`, `WarningStatusAdornment` and
+`SuccessStatusAdornment` in a [`SemanticIconProvider`](/salt/components/semantic-icon-provider).
+
+## Import
+
+To import `StatusAdornment` from the core Salt package, use:
+
+```js
+import { StatusAdornment } from "@salt-ds/core";
+```
+
+## Props
+
+<PropsTable packageName="core" componentName="StatusAdornment" />

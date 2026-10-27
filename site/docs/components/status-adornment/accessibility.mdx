@@ -1,0 +1,16 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+`StatusAdornment`'s accessible name is its status: "error", "warning" or
+"success". The icon alone doesn't tell users what's wrong or how to fix it, so
+describe the issue in text, such as `FormFieldHelperText`. In a custom control,
+hide the adornment with `aria-hidden` if visible text already states the status.
