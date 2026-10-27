@@ -68,7 +68,7 @@
     "ag-grid-community": "^36.0.0",
     "ag-grid-enterprise": "^36.0.0",
     "ag-grid-react": "^36.0.0",
-    "axe-core": "^4.13.0",
+    "axe-core": "^4.14.0",
     "chromatic": "^18.0.0",
     "ci-info": "^4.0.0",
     "clsx": "^2.0.0",

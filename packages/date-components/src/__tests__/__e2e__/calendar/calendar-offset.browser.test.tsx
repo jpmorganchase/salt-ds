@@ -43,11 +43,11 @@ async function assertRangeSelected(
 ) {
   for (let index = 0; index <= days; index++) {
     const date = adapter.add(baseDate, { days: index });
-    let label = `In range: ${adapter.format(date, "dddd D MMMM YYYY")}, selected`;
+    let label = `In range: ${adapter.format(date, "dddd DD MMMM YYYY")}, selected`;
     if (index === 0) {
-      label = `Start date: ${adapter.format(date, "dddd D MMMM YYYY")}, selected`;
+      label = `Start date: ${adapter.format(date, "dddd DD MMMM YYYY")}, selected`;
     } else if (index === days) {
-      label = `End range: ${adapter.format(date, "dddd D MMMM YYYY")}, selected`;
+      label = `End range: ${adapter.format(date, "dddd DD MMMM YYYY")}, selected`;
     }
     await expect
       .element(page.getByRole("button", { name: label }))
@@ -65,7 +65,7 @@ async function assertRangeUnselected(
     await expect
       .element(
         page.getByRole("button", {
-          name: adapter.format(date, "dddd D MMMM YYYY"),
+          name: adapter.format(date, "dddd DD MMMM YYYY"),
         }),
       )
       .toBeInTheDocument();
@@ -110,12 +110,12 @@ function registerAdapterTests(
       );
       await page
         .getByRole("button", {
-          name: adapter.format(testDate, "dddd D MMMM YYYY"),
+          name: adapter.format(testDate, "dddd DD MMMM YYYY"),
         })
         .hover();
       for (const [index, date] of datesInRange.entries()) {
         let expectedClass = "saltCalendarDay-hoveredSpan";
-        let expectedLabel = adapter.format(date, "dddd D MMMM YYYY");
+        let expectedLabel = adapter.format(date, "dddd DD MMMM YYYY");
         if (index === 0) {
           expectedClass = "saltCalendarDay-hoveredStart";
           expectedLabel = `Start new range: ${expectedLabel}`;
@@ -129,7 +129,7 @@ function registerAdapterTests(
       }
       await page
         .getByRole("button", {
-          name: `Start new range: ${adapter.format(testDate, "dddd D MMMM YYYY")}`,
+          name: `Start new range: ${adapter.format(testDate, "dddd DD MMMM YYYY")}`,
         })
         .click();
       await assertRangeSelected(adapter, testDate, 4);
@@ -137,7 +137,7 @@ function registerAdapterTests(
       const newBaseDate = adapter.add(testDate, { weeks: 1 });
       await page
         .getByRole("button", {
-          name: adapter.format(newBaseDate, "dddd D MMMM YYYY"),
+          name: adapter.format(newBaseDate, "dddd DD MMMM YYYY"),
         })
         .click();
       await assertRangeSelected(adapter, newBaseDate, 4);
@@ -176,12 +176,12 @@ function registerAdapterTests(
       );
       await page
         .getByRole("button", {
-          name: adapter.format(weekBeforeEnd, "dddd D MMMM YYYY"),
+          name: adapter.format(weekBeforeEnd, "dddd DD MMMM YYYY"),
         })
         .click();
       await userEvent.keyboard("{ArrowDown}");
       const next = page.getByRole("button", {
-        name: `Start new range: ${adapter.format(nextMonth, "dddd D MMMM YYYY")}`,
+        name: `Start new range: ${adapter.format(nextMonth, "dddd DD MMMM YYYY")}`,
       });
       await expect.element(next).toHaveFocus();
       await expect.element(next).toHaveClass(/saltCalendarDay-focused/);
@@ -190,7 +190,7 @@ function registerAdapterTests(
         .toHaveTextContent(adapter.format(nextMonth, "MMM"));
       await userEvent.keyboard("{ArrowUp}");
       const previous = page.getByRole("button", {
-        name: `Start date: ${adapter.format(weekBeforeEnd, "dddd D MMMM YYYY")}, selected`,
+        name: `Start date: ${adapter.format(weekBeforeEnd, "dddd DD MMMM YYYY")}, selected`,
       });
       await expect.element(previous).toHaveFocus();
       await expect.element(previous).toHaveClass(/saltCalendarDay-focused/);
@@ -223,7 +223,7 @@ function registerAdapterTests(
       );
       await focusNextMonthAndTab();
       const selected = page.getByRole("button", {
-        name: `Start date: ${adapter.format(firstStartDate, "dddd D MMMM YYYY")}, selected`,
+        name: `Start date: ${adapter.format(firstStartDate, "dddd DD MMMM YYYY")}, selected`,
       });
       await expect.element(selected).toHaveFocus();
       await expect.element(selected).toHaveClass(/saltCalendarDay-focused/);
@@ -256,7 +256,7 @@ function registerAdapterTests(
         );
         await focusNextMonthAndTab();
         const todayButton = page.getByRole("button", {
-          name: `Start new range: ${adapter.format(today, "dddd D MMMM YYYY")}`,
+          name: `Start new range: ${adapter.format(today, "dddd DD MMMM YYYY")}`,
         });
         await expect.element(todayButton).toHaveFocus();
         await expect
@@ -287,7 +287,7 @@ function registerAdapterTests(
         { months: 2 },
       );
       const day = page.getByRole("button", {
-        name: `Start new range: ${adapter.format(startOfMonth, "dddd D MMMM YYYY")}`,
+        name: `Start new range: ${adapter.format(startOfMonth, "dddd DD MMMM YYYY")}`,
       });
       await expect.element(day).toHaveFocus();
       await expect.element(day).toHaveClass(/saltCalendarDay-focused/);
@@ -330,21 +330,21 @@ function registerAdapterTests(
       );
       await page
         .getByRole("button", {
-          name: `Start new range: ${adapter.format(today, "dddd D MMMM YYYY")}`,
+          name: `Start new range: ${adapter.format(today, "dddd DD MMMM YYYY")}`,
         })
         .click();
       await page
         .getByRole("button", {
           name: adapter.format(
             adapter.startOf(today, "month"),
-            "dddd D MMMM YYYY",
+            "dddd DD MMMM YYYY",
           ),
         })
         .hover();
       await assertRangeSelected(adapter, today);
       await page
         .getByRole("button", {
-          name: `Start date: ${adapter.format(today, "dddd D MMMM YYYY")}, selected`,
+          name: `Start date: ${adapter.format(today, "dddd DD MMMM YYYY")}, selected`,
         })
         .click();
       await page
@@ -353,7 +353,7 @@ function registerAdapterTests(
             `${escapeRegExp(
               adapter.format(
                 adapter.startOf(today, "month"),
-                "dddd D MMMM YYYY",
+                "dddd DD MMMM YYYY",
               ),
             )}$`,
           ),
@@ -361,7 +361,7 @@ function registerAdapterTests(
         .hover();
       await assertRangeUnselected(adapter, today);
       const focused = page.getByRole("button", {
-        name: adapter.format(today, "dddd D MMMM YYYY"),
+        name: adapter.format(today, "dddd DD MMMM YYYY"),
       });
       await expect.element(focused).toHaveFocus();
       await userEvent.keyboard("{Enter}");

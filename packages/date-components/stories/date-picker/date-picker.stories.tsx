@@ -420,6 +420,7 @@ export const RangeControlled: StoryFn<DatePickerRangeProps> = ({
         </FlexItem>
         <FlexItem>
           <Button
+            aria-label={"set end date to today"}
             onClick={() =>
               setSelectedDate({
                 ...selectedDate,
@@ -432,7 +433,7 @@ export const RangeControlled: StoryFn<DatePickerRangeProps> = ({
         </FlexItem>
         <FlexItem>
           <Button
-            aria-label={"set end date to today"}
+            aria-label={"set end date to tomorrow"}
             onClick={() =>
               setSelectedDate({
                 ...selectedDate,
@@ -454,7 +455,7 @@ export const RangeControlled: StoryFn<DatePickerRangeProps> = ({
       >
         <FlexItem>
           <Button
-            aria-label={"set end date to tomorrow"}
+            aria-label={"reset both"}
             onClick={() =>
               setSelectedDate({
                 startDate: null,
@@ -467,7 +468,7 @@ export const RangeControlled: StoryFn<DatePickerRangeProps> = ({
         </FlexItem>
         <FlexItem>
           <Button
-            aria-label={"reset both"}
+            aria-label={"set start date to today and end date to tomorrow"}
             onClick={() =>
               setSelectedDate({
                 startDate: dateAdapter.today(),
@@ -2468,7 +2469,7 @@ export const CustomDayRendering: StoryFn<DatePickerSingleProps> = ({
         className={clsx([{ buttonWithDot: !status.outOfRange }, className])}
       >
         <span className={clsx({ dot: !status.outOfRange })}>
-          {dateAdapter.format(date, "D")}
+          {dateAdapter.format(date, "DD")}
         </span>
         {status.today ? <span className={"today"} /> : null}
       </button>
