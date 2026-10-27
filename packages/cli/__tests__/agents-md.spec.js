@@ -336,10 +336,10 @@ describe("task guidance", () => {
       .filter((line) => line.startsWith("- **"));
     expect(workflows).toEqual([
       expect.stringContaining(
-        "**Accessibility repairs or failing accessibility tests:** Read component usage/accessibility guidance.",
+        "**Accessibility repairs or failing accessibility tests:** Read the affected components' usage and accessibility guidance.",
       ),
       expect.stringContaining(
-        "read the relevant component usage guidance before choosing or replacing a primitive.",
+        "Read the relevant component usage guidance before choosing or replacing a component.",
       ),
       expect.stringContaining(
         "**Composition changes:** Review the relevant usage and accessibility guidance.",

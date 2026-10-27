@@ -23,9 +23,9 @@ npm install --save-dev @salt-ds/cli
 npx salt-ds init --script typecheck
 ```
 
-`salt-ds init` adds a Salt section to `AGENTS.md` that tells agents to inspect the
-application and read the relevant installed guidance before they change Salt UI,
-to prefer component props to custom CSS, and to
+`salt-ds init` adds a Salt section to `AGENTS.md` that tells agents to read the
+relevant installed guidance before they change Salt UI, to prefer component
+props to custom CSS, and to
 [check what they wrote](#check-what-agents-write) before they finish. It includes
 a compressed index of every documentation page in the Salt packages resolved
 from that application. It records each package's documentation path,
@@ -82,8 +82,8 @@ matches your installed versions.
 
 ## How agents use the guidance
 
-The generated instructions ask agents to inspect the application and its
-conventions, then read the guidance relevant to the change:
+The generated instructions send agents to the guidance for the change they're
+making:
 
 | Task                                                                                                                 | Guidance                                                                                                                                                                                               |
 | -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
@@ -91,20 +91,8 @@ conventions, then read the guidance relevant to the change:
 | Change how components are composed.                                                                                  | Review [composition pitfalls](./composition-pitfalls).                                                                                                                                                 |
 | Repair an accessibility issue or investigate a failing accessibility check, including one found during another task. | Follow [Fixing accessibility](./fixing-accessibility) and the affected components' usage and accessibility guidance. Revisit component selection when the diagnosis points to an unsuitable primitive. |
 
-Small changes such as correcting copy do not require repeating component
-selection. The generated instructions link these guides only when the installed
-Core manifest includes them, using the resolved documentation paths for the
-instructions folder. Older packages still get instructions to consult their
-relevant indexed documentation. Copilot paths are resolved separately from the
-repository root.
-
-When documentation and code disagree, distinguish current behavior from intended
-behavior. Verify disputed APIs against the installed public types and exports,
-and disputed runtime behavior with a focused reproduction. Existing application
-usage can itself contain a bug: preserve conventions only when they are compatible
-with the requested change, including accessibility repairs and migrations.
-Agents should report material discrepancies, the evidence used to resolve them
-and verification they could not perform.
+The instructions link these guides when the installed Core docs include them.
+Older packages get the general instruction to read the relevant component pages.
 
 ## Agent compatibility
 
