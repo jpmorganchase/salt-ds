@@ -413,17 +413,6 @@ describe("GIVEN a Drawer with a DrawerHeader", () => {
       .element(page.getByRole("button", { name: "Close drawer" }))
       .toBeVisible();
   });
-
-  it("hides the accent bar by default when position=right", async () => {
-    await renderWithSalt(
-      <Drawer open position="right">
-        <DrawerHeader header="Notifications" />
-      </Drawer>,
-    );
-
-    await expect.element(page.getByRole("dialog")).toBeVisible();
-    expect(document.querySelector(".saltDrawerHeader-withAccent")).toBeNull();
-  });
 });
 
 describe("GIVEN a Drawer with DrawerFooter", () => {

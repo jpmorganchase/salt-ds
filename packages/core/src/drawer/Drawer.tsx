@@ -171,12 +171,13 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       () => ({
         drawerId,
         position,
+        resizable,
         headerId,
         setHeaderId,
         descriptionId,
         setDescriptionId,
       }),
-      [drawerId, position, headerId, descriptionId],
+      [drawerId, position, resizable, headerId, descriptionId],
     );
 
     return (

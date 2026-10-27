@@ -249,13 +249,18 @@ const ResizableDrawerFrame = ({
   </div>
 );
 
-// Opts right drawers into the accent bar, which they hide by default.
-const ResizableDrawerSections = () => (
+const ResizableDrawerSections = ({
+  disableAccent,
+  header = "Title",
+}: {
+  disableAccent?: boolean;
+  header?: string;
+}) => (
   <>
     <DrawerHeader
-      header="Title"
+      header={header}
       actions={<CloseButton />}
-      disableAccent={false}
+      disableAccent={disableAccent}
     />
     <DrawerContent>
       <Text>{loremText}</Text>
@@ -298,6 +303,36 @@ export const DrawerResizable: StoryFn<QAContainerProps> = (props) => {
   );
 };
 DrawerResizable.parameters = {
+  chromatic: { disableSnapshot: false },
+};
+
+export const DrawerResizableAccent: StoryFn<QAContainerProps> = (props) => {
+  const { ...rest } = props;
+
+  return (
+    <FloatingComponentProvider Component={InlineFloatingComponent}>
+      <QAContainer
+        cols={2}
+        height="auto"
+        itemPadding={20}
+        itemWidthAuto
+        width={1000}
+        {...rest}
+      >
+        <ResizableDrawerFrame position="right">
+          <ResizableDrawerSections header="Default" />
+        </ResizableDrawerFrame>
+        <ResizableDrawerFrame position="right">
+          <ResizableDrawerSections
+            header="Accent enabled"
+            disableAccent={false}
+          />
+        </ResizableDrawerFrame>
+      </QAContainer>
+    </FloatingComponentProvider>
+  );
+};
+DrawerResizableAccent.parameters = {
   chromatic: { disableSnapshot: false },
 };
 

@@ -34,7 +34,7 @@ Use the `position` prop to anchor the drawer to the `left`, `right`, `top` or `b
 
 ## Header
 
-`DrawerHeader` follows our standardized header for container components and app regions, and it can be added to provide a structured header for drawer. The header includes a title and actions that follow our [Header Block pattern](/salt/patterns/header-block).
+`DrawerHeader` follows our standardized header for container components, and it can be added to provide a structured header for drawer. The header includes a title and actions that follow our [Header Block pattern](/salt/patterns/header-block).
 
 Use the `header` prop to set the title of your drawer. You can use the optional `preheader` prop to render a preheader above the main header, and the optional `description` prop to render a description below it.
 
@@ -54,9 +54,7 @@ Use the `--saltDrawer-minWidth` and `--saltDrawer-maxWidth` CSS variables to set
 
 The drawer starts at the width or height set in its styles and keeps the size the user sets, including when it closes and opens again.
 
-### Best practices
-
-- For the best user experience, don't use the accent bar in a resizable right drawer, as it sits next to the resize handle. `DrawerHeader` hides it by default in right drawers.
+The accent bar is hidden by default in resizable right drawers.
 
 <LivePreview componentName="drawer" exampleName="Resizable" />
 
@@ -68,7 +66,7 @@ This example uses the `disableDismiss` prop to prevent the drawer closing on cli
 
 ## Disable accent
 
-The accent bar is always rendered unless you pass the `disableAccent` prop to `DrawerHeader`, which hides it.
+The accent bar is rendered by default, except in resizable right drawers. Use the `disableAccent` prop on `DrawerHeader` to hide or show it.
 
 <LivePreview componentName="drawer" exampleName="DisableAccent" />
 

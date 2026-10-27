@@ -15,7 +15,7 @@ const withBaseName = makePrefixer("saltDrawerHeader");
 
 export interface DrawerHeaderProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Hides the accent bar in the Drawer Header. Defaults to `true` when the Drawer is positioned `right`, otherwise `false`.
+   * Hides the accent bar in the Drawer Header. Defaults to `true` when the Drawer is resizable and positioned `right`, otherwise `false`.
    */
   disableAccent?: boolean;
   /**
@@ -55,8 +55,10 @@ export const DrawerHeader = forwardRef<HTMLDivElement, DrawerHeaderProps>(
       window: targetWindow,
     });
 
-    const { position, setHeaderId, setDescriptionId } = useDrawerContext();
-    const disableAccent = disableAccentProp ?? position === "right";
+    const { position, resizable, setHeaderId, setDescriptionId } =
+      useDrawerContext();
+    const disableAccent =
+      disableAccentProp ?? (Boolean(resizable) && position === "right");
     const headingId = useId();
     const descriptionId = useId();
     const hasHeading = Boolean(header || preheader);
