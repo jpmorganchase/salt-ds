@@ -116,22 +116,46 @@ const measure = (element: HTMLElement, horizontal: boolean) => {
   return horizontal ? width : height;
 };
 
+const restoreStyle = (
+  style: CSSStyleDeclaration,
+  property: string,
+  value: string,
+  priority: string,
+) => {
+  if (value) {
+    style.setProperty(property, value, priority);
+  } else {
+    style.removeProperty(property);
+  }
+};
+
 /** Resolves the drawer's CSS min/max size by briefly forcing it to both extremes. */
 const probeBounds = (element: HTMLElement, horizontal: boolean): Bounds => {
   const property = horizontal ? "width" : "height";
-  const previousValue = element.style.getPropertyValue(property);
-  const previousPriority = element.style.getPropertyPriority(property);
+  const { style } = element;
+  const previousValue = style.getPropertyValue(property);
+  const previousPriority = style.getPropertyPriority(property);
+  const previousTransition = style.getPropertyValue("transition-property");
+  const previousTransitionPriority = style.getPropertyPriority(
+    "transition-property",
+  );
 
-  element.style.setProperty(property, "0px", "important");
+  // A transition would report the current size at both extremes.
+  style.setProperty("transition-property", "none", "important");
+  style.setProperty(property, "0px", "important");
   const min = measure(element, horizontal);
-  element.style.setProperty(property, `${PROBE_SIZE}px`, "important");
+  style.setProperty(property, `${PROBE_SIZE}px`, "important");
   const max = measure(element, horizontal);
 
-  if (previousValue) {
-    element.style.setProperty(property, previousValue, previousPriority);
-  } else {
-    element.style.removeProperty(property);
-  }
+  restoreStyle(style, property, previousValue, previousPriority);
+  // Applies the restored size before transitions return, so it doesn't animate.
+  measure(element, horizontal);
+  restoreStyle(
+    style,
+    "transition-property",
+    previousTransition,
+    previousTransitionPriority,
+  );
 
   return { min, max: Math.max(min, max) };
 };

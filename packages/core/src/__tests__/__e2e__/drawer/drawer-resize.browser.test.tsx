@@ -516,6 +516,21 @@ describe("GIVEN a resizable Drawer", () => {
         .toBeCloseTo(window.innerHeight * 0.5, 0);
     });
 
+    it("finds its limits when its size is animated", async () => {
+      await renderResizable({
+        style: { ...limitsStyle("left"), transition: "width 200ms" },
+      });
+
+      await expect.element(separator()).toHaveAttribute("aria-valuemin", "100");
+      await expect.element(separator()).toHaveAttribute("aria-valuemax", "600");
+
+      await act(async () => handle().focus());
+      expect(drawer().getAnimations()).toHaveLength(0);
+
+      await userEvent.keyboard("{End}");
+      await expect.poll(() => drawerSize("left")).toBeCloseTo(600, 0);
+    });
+
     const handleOuterEdge = (position: Position) => {
       const rect = handle().getBoundingClientRect();
       switch (position) {
