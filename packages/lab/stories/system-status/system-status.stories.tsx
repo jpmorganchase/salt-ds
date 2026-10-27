@@ -187,7 +187,6 @@ export const Placement: StoryFn<typeof SystemStatus> = (args) => {
         </SystemStatus>
       )}
       <StackLayout
-        gap={3}
         align="start"
         style={{
           padding: "var(--salt-spacing-300) var(--salt-layout-page-margin)",

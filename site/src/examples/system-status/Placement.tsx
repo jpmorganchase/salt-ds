@@ -27,7 +27,6 @@ export const Placement = (): ReactElement => (
       </SystemStatusActions>
     </SystemStatus>
     <StackLayout
-      gap={3}
       style={{
         padding: "var(--salt-spacing-300) var(--salt-layout-page-margin)",
       }}
