@@ -16,8 +16,6 @@ export const END_MARKER = "<!-- END:salt-ds-agent-docs -->";
 export const MANIFEST_FILE = "manifest.json";
 
 const GUIDANCE_PAGES = {
-  choose: "getting-started/choosing-the-right-primitive.md",
-  review: "getting-started/composition-pitfalls.md",
   accessibility: "getting-started/fixing-accessibility.md",
 };
 
@@ -43,12 +41,14 @@ export function instructions({
   guidance = {},
 } = {}) {
   return [
-    "This project uses the Salt Design System (`@salt-ds/*` packages), whose APIs may differ from your training data. Before writing or changing UI that uses Salt, read the relevant pages from the index below; they are generated for the installed package versions.",
-    "",
-    `- **Accessibility repairs or failing accessibility tests:** Read ${guidance.accessibility ? `\`${guidance.accessibility}\` and ` : ""}the affected components' usage and accessibility guidance.`,
-    `- **New UI, component choice or interaction changes:** Read ${guidance.choose ? `\`${guidance.choose}\`` : "the relevant component usage guidance"} before choosing or replacing a component.`,
-    `- **Composition changes:** Review ${guidance.review ? `\`${guidance.review}\`` : "the relevant usage and accessibility guidance"}.`,
-    "",
+    "This project uses the Salt Design System (`@salt-ds/*` packages), whose APIs may differ from your training data.",
+    "For any Salt task, prefer retrieval-led reasoning over pre-training-led reasoning: before writing or changing UI that uses Salt, read the relevant pages from the index below.",
+    "They are generated for the installed package versions.",
+    ...(guidance.accessibility
+      ? [
+          `For an accessibility repair or a failing accessibility check, also read \`${guidance.accessibility}\` and the affected components' accessibility guidance.`,
+        ]
+      : []),
     "Prefer component props, such as `Text`'s `color`, to custom CSS with `--salt-*` tokens.",
     check
       ? `Before you finish, run \`${check}\` from ${rootBase === "this file" ? "this file's folder" : rootBase} and fix what it reports: it checks the Salt tokens, deprecated props and component parts in the files you changed against the installed docs.`
@@ -59,10 +59,9 @@ export function instructions({
       : [
           "For each `--salt-*` token, find the installed `@salt-ds/theme` documentation in the index and check its token references for a characteristic or foundation token available in the selected theme.",
         ]),
-    "",
-    `Guide and index paths are relative to \`root\`, which is relative to ${rootBase}.`,
+    `${guidance.accessibility ? "Guide and index paths" : "Index paths"} are relative to \`root\`, which is relative to ${rootBase}.`,
     "Names in brackets after page names are other names for the same component, and each package's `docs/index.md` summarizes its pages.",
-  ].join("\n");
+  ].join(" ");
 }
 
 /** The salt-ds check command, run from `base`, for the application at `project`. */

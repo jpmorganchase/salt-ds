@@ -12,8 +12,6 @@ npx salt-ds init --script typecheck
 
 Both read the docs and check data that each installed Salt package ships in its `docs` folder, so they match the installed Salt versions. They need Salt packages that ship agent docs; a package whose check data is newer than the CLI reads is skipped with a notice to upgrade the CLI. See [AI coding agents](https://www.saltdesignsystem.com/salt/getting-started/ai-coding-agents) for the options and client support.
 
-The generated instructions send new UI and component choices to the primitive chooser, and composition changes to the composition guidance. Accessibility repairs and failing accessibility checks have their own workflow: diagnose the behavior, read the affected components' usage and accessibility guidance, identify the owner of the repair, and verify it. Component selection is revisited when the diagnosis points to an unsuitable primitive.
-
-Guide links come from the target application's installed Core manifest and resolved documentation path. Older packages without those guides retain the general instructions to consult their indexed documentation. `--copilot` resolves its paths from the repository root separately from the `AGENTS.md` location.
+The generated instructions also send agents repairing an accessibility issue or a failing accessibility check to Core's Fixing accessibility guide. Its path comes from the target application's installed Core manifest and resolved documentation path; with older packages that don't ship the guide, the instructions leave that sentence out. `--copilot` resolves its paths from the repository root separately from the `AGENTS.md` location.
 
 Rerun `salt-ds init` after updating the CLI or adding or upgrading Salt packages. Use `salt-ds init --check` with the same setup options to detect stale generated instructions, including changes to the guidance when the indexed page list stays the same.

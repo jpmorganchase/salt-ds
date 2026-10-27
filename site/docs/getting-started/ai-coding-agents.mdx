@@ -80,19 +80,14 @@ installs don't create. To use it with Yarn, set `nodeLinker: node-modules` in
 Generate the section with `salt-ds init` rather than by hand, so the index
 matches your installed versions.
 
-## How agents use the guidance
+## Accessibility repairs
 
-The generated instructions send agents to the guidance for the change they're
-making:
-
-| Task                                                                                                                 | Guidance                                                                                                                                                                                               |
-| -------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Build new UI, choose or replace a component, or change an interaction model.                                         | Read [Choosing the right primitive](./choosing-the-right-primitive) before settling on a component, then its usage and accessibility guidance.                                                         |
-| Change how components are composed.                                                                                  | Review [composition pitfalls](./composition-pitfalls).                                                                                                                                                 |
-| Repair an accessibility issue or investigate a failing accessibility check, including one found during another task. | Follow [Fixing accessibility](./fixing-accessibility) and the affected components' usage and accessibility guidance. Revisit component selection when the diagnosis points to an unsuitable primitive. |
-
-The instructions link these guides when the installed Core docs include them.
-Older packages get the general instruction to read the relevant component pages.
+When the installed Core docs include it, the generated instructions also send
+agents repairing an accessibility issue or a failing accessibility check to
+[Fixing accessibility](./fixing-accessibility) and the affected components'
+accessibility guidance. [Choosing the right primitive](./choosing-the-right-primitive)
+and [composition pitfalls](./composition-pitfalls) are in the index with the
+other pages.
 
 ## Agent compatibility
 

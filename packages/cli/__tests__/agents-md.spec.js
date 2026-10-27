@@ -263,7 +263,7 @@ describe("application package discovery", () => {
 });
 
 describe("task guidance", () => {
-  it("routes distinct task bullets to the selected app's guides for AGENTS and Copilot", () => {
+  it("points accessibility repairs to the selected app's guide for AGENTS and Copilot", () => {
     const root = project();
     mkdirSync(path.join(root, ".git"));
     const app = path.join(root, "apps/web");
@@ -279,37 +279,22 @@ describe("task guidance", () => {
       path.join(root, ".github/copilot-instructions.md"),
       "utf8",
     );
-    for (const page of guidePages) {
-      const fromRoot = `apps/web/node_modules/@salt-ds/core/docs/${page.path}`;
-      expect(readFileSync(path.join(output, "..", fromRoot), "utf8")).toBe(
-        page.title,
-      );
-    }
+    const guide = `apps/web/node_modules/@salt-ds/core/docs/${guidePages[2].path}`;
+    expect(readFileSync(path.join(root, guide), "utf8")).toBe(
+      guidePages[2].title,
+    );
     for (const [content, prefix] of [
       [agents, "../"],
       [copilot, ""],
     ]) {
-      const workflows = content
-        .split("\n")
-        .filter((line) => line.startsWith("- **"));
-      expect(workflows).toEqual([
-        expect.stringContaining(
-          "**Accessibility repairs or failing accessibility tests:** Read ",
-        ),
-        expect.stringContaining(
-          "**New UI, component choice or interaction changes:**",
-        ),
-        expect.stringContaining("**Composition changes:**"),
-      ]);
-      const routes = [guidePages[2], guidePages[0], guidePages[1]];
-      for (const [index, page] of routes.entries()) {
-        expect(workflows[index]).toContain(
-          `\`${prefix}apps/web/node_modules/@salt-ds/core/docs/${page.path}\``,
-        );
-        for (const other of routes.filter((route) => route !== page)) {
-          expect(workflows[index]).not.toContain(other.path);
-        }
+      expect(content).toContain(
+        `For an accessibility repair or a failing accessibility check, also read \`${prefix}${guide}\` and the affected components' accessibility guidance.`,
+      );
+      // The other guides are in the index, without a route of their own.
+      for (const page of guidePages.slice(0, 2)) {
+        expect(content).not.toContain(`docs/${page.path}`);
       }
+      expect(content).toContain("Guide and index paths are relative to");
     }
     expect(run([...args, "--check"], quiet)).toBe(0);
     expect(run(args, quiet)).toBe(0);
@@ -319,7 +304,7 @@ describe("task guidance", () => {
     ).toBe(copilot);
   });
 
-  it("uses fallback guidance for older packages without borrowing newer guides", () => {
+  it("leaves the accessibility line out for older packages without borrowing newer guides", () => {
     const root = project();
     const app = path.join(root, "apps/web");
     addGuides(install(root, "core", { version: "2.0.0" }));
@@ -331,20 +316,8 @@ describe("task guidance", () => {
     expect(run(["--project", app], quiet)).toBe(0);
     const content = readFileSync(path.join(app, "AGENTS.md"), "utf8");
     for (const page of guidePages) expect(content).not.toContain(page.path);
-    const workflows = content
-      .split("\n")
-      .filter((line) => line.startsWith("- **"));
-    expect(workflows).toEqual([
-      expect.stringContaining(
-        "**Accessibility repairs or failing accessibility tests:** Read the affected components' usage and accessibility guidance.",
-      ),
-      expect.stringContaining(
-        "Read the relevant component usage guidance before choosing or replacing a component.",
-      ),
-      expect.stringContaining(
-        "**Composition changes:** Review the relevant usage and accessibility guidance.",
-      ),
-    ]);
+    expect(content).not.toContain("accessibility repair");
+    expect(content).toContain("Index paths are relative to");
     expect(content).not.toContain("undefined");
   });
 
@@ -776,7 +749,7 @@ describe("GitHub Copilot instructions", () => {
       /^# Team rules\n\n<!-- BEGIN:salt-ds-agent-docs -->/,
     );
     expect(content).toContain(
-      "Guide and index paths are relative to `root`, which is relative to the repository root.",
+      "Index paths are relative to `root`, which is relative to the repository root.",
     );
     expect(content).toContain(
       "[Salt docs index]|root: .\n|node_modules/@salt-ds/core/docs/components:{button.md}",
