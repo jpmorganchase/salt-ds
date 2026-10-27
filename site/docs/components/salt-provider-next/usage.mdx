@@ -20,7 +20,9 @@ import { SaltProviderNext } from "@salt-ds/core";
 
 Use `SaltProviderNext` when your application uses the J.P. Morgan theme. It adds
 the `salt-theme-next` class used by the J.P. Morgan theme CSS and accepts the
-brand-aware `accent`, `corner`, `actionFont` and `headingFont` props.
+brand-aware `accent`, `corner`, `actionFont` and `headingFont` props. Set them
+as below for the J.P. Morgan brand; without them, the provider uses a blue
+accent, sharp corners and Open Sans.
 
 `SaltProviderNext` otherwise follows the same provider model as `SaltProvider`,
 including `mode`, `density`, `breakpoints`, `applyClassesTo` and style injection
