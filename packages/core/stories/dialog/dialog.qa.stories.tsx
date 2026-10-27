@@ -5,9 +5,10 @@ import {
   DialogCloseButton,
   DialogContent,
   type DialogContentProps,
-  DialogContext,
   DialogHeader,
   type DialogProps,
+  type FloatingComponentProps,
+  FloatingComponentProvider,
   SaltProvider,
   SaltProviderNext,
   StackLayout,
@@ -19,25 +20,21 @@ import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import "./dialog.stories.css";
 import { CloseIcon } from "@salt-ds/icons";
-import { Fragment } from "react";
+import { Fragment, forwardRef } from "react";
 
 export default {
   title: "Core/Dialog/Dialog QA",
   component: Dialog,
 } as Meta<typeof Dialog>;
 
-function FakeDialog({ children, status, id }: DialogProps) {
-  return (
-    <DialogContext.Provider
-      value={{
-        status,
-        id,
-      }}
-    >
-      <div className="fakeDialogWindow">{children}</div>
-    </DialogContext.Provider>
-  );
-}
+// Renders the dialog in place instead of portalling it to the body.
+const InlineFloatingComponent = forwardRef<
+  HTMLDivElement,
+  FloatingComponentProps
+>(function InlineFloatingComponent(props, ref) {
+  const { open, focusManagerProps, lockScroll, width, height, ...rest } = props;
+  return open ? <div ref={ref} {...rest} /> : null;
+});
 
 type TemplateProps = Omit<DialogProps, "content"> & {
   header?: string;
@@ -59,27 +56,29 @@ const DialogTemplate = ({
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
   return (
     <div style={{ width: 1000, maxHeight: maxHeight, padding: "0 200px" }}>
-      <FakeDialog status={status} open>
-        <DialogHeader header={header ?? defaultHeader} />
-        <DialogContent className={longDialog ? "longDialog" : ""}>
-          {content ?? defaultContent}
-        </DialogContent>
-        <DialogActions>
-          <Button
-            style={{ marginRight: "auto" }}
-            sentiment="accented"
-            appearance="transparent"
-          >
-            Cancel
-          </Button>
-          <Button sentiment="accented" appearance="bordered">
-            Previous
-          </Button>
-          <Button sentiment="accented" appearance="solid">
-            Next
-          </Button>
-        </DialogActions>
-      </FakeDialog>
+      <FloatingComponentProvider Component={InlineFloatingComponent}>
+        <Dialog className="inlineDialog" status={status} open disableScrim>
+          <DialogHeader header={header ?? defaultHeader} />
+          <DialogContent className={longDialog ? "longDialog" : ""}>
+            {content ?? defaultContent}
+          </DialogContent>
+          <DialogActions>
+            <Button
+              style={{ marginRight: "auto" }}
+              sentiment="accented"
+              appearance="transparent"
+            >
+              Cancel
+            </Button>
+            <Button sentiment="accented" appearance="bordered">
+              Previous
+            </Button>
+            <Button sentiment="accented" appearance="solid">
+              Next
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </FloatingComponentProvider>
     </div>
   );
 };
@@ -106,62 +105,6 @@ export const DeprecatedClosedButton: StoryFn = () => {
 };
 
 DeprecatedClosedButton.parameters = {
-  chromatic: {
-    disableSnapshot: false,
-  },
-};
-
-const StatusDialog = ({
-  status,
-  header,
-}: Pick<DialogProps, "status"> & { header: string }) => (
-  <Dialog open status={status}>
-    <DialogHeader header={header} />
-    <DialogContent>Dialog content</DialogContent>
-    <DialogActions>
-      <Button sentiment="accented" appearance="transparent">
-        Cancel
-      </Button>
-      <Button sentiment="accented">Ok</Button>
-    </DialogActions>
-  </Dialog>
-);
-
-export const InfoStatus: StoryFn = () => (
-  <StatusDialog status="info" header="Info Dialog" />
-);
-
-InfoStatus.parameters = {
-  chromatic: {
-    disableSnapshot: false,
-  },
-};
-
-export const ErrorStatus: StoryFn = () => (
-  <StatusDialog status="error" header="Error Dialog" />
-);
-
-ErrorStatus.parameters = {
-  chromatic: {
-    disableSnapshot: false,
-  },
-};
-
-export const WarningStatus: StoryFn = () => (
-  <StatusDialog status="warning" header="Warning Dialog" />
-);
-
-WarningStatus.parameters = {
-  chromatic: {
-    disableSnapshot: false,
-  },
-};
-
-export const SuccessStatus: StoryFn = () => (
-  <StatusDialog status="success" header="Success Dialog" />
-);
-
-SuccessStatus.parameters = {
   chromatic: {
     disableSnapshot: false,
   },
