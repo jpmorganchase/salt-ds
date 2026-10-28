@@ -18,13 +18,16 @@
   ],
   "scripts": {
     "build": "yarn node ./scripts/build.mjs",
-    "build-watch": "yarn node ./scripts/build.mjs --watch"
+    "build-watch": "yarn node ./scripts/build.mjs --watch",
+    "build:icons": "yarn node ./scripts/build-icons.mjs"
   },
   "publishConfig": {
     "provenance": true
   },
   "devDependencies": {
-    "del": "^9.0.0"
+    "del": "^9.0.0",
+    "fantasticon": "^3.0.0",
+    "svgpath": "^2.6.0"
   },
   "peerDependencies": {
     "@salt-ds/theme": "workspace:^",
