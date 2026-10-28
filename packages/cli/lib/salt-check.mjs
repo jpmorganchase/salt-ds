@@ -16,6 +16,8 @@ export const SCHEMA_VERSION = 1;
 
 const SCRIPT_FILE = /\.[cm]?[jt]sx?$/;
 const STYLE_FILE = /\.(?:css|scss|sass|less)$/;
+// Scripts bound together in one TypeScript program.
+const SCRIPT_BATCH = 100;
 const SKIPPED_DIRECTORIES = new Set([
   ".cache",
   ".git",
@@ -435,8 +437,36 @@ function deprecationText(text) {
   return `${since ? ` since ${since[1]}` : ""}${rest ? `${since ? "." : ":"} ${rest}` : ""}`;
 }
 
+/**
+ * A type checker for parsed scripts, used only for their bindings. One
+ * program for many files is much faster than a program for each.
+ */
+function bindingChecker(ts, sourceFiles) {
+  // Resolving imported package types isn't needed to distinguish an import
+  // from a parameter or local variable that shadows it, and would make the
+  // check depend on the application's compiler setup.
+  const options = { noLib: true, noResolve: true, allowJs: true };
+  const byPath = new Map(
+    sourceFiles.map((sourceFile) => [
+      path.resolve(sourceFile.fileName),
+      sourceFile,
+    ]),
+  );
+  const host = ts.createCompilerHost(options);
+  host.getSourceFile = (file) => byPath.get(path.resolve(file));
+  host.fileExists = (file) => byPath.has(path.resolve(file));
+  host.readFile = (file) => byPath.get(path.resolve(file))?.text;
+  return ts
+    .createProgram(
+      sourceFiles.map(({ fileName }) => fileName),
+      options,
+      host,
+    )
+    .getTypeChecker();
+}
+
 /** Salt components a file imports, resolved through their lexical bindings. */
-function saltImports(ts, sourceFile) {
+function saltImports(ts, sourceFile, checker) {
   const named = new Map();
   const namespaces = new Map();
   for (const statement of sourceFile.statements) {
@@ -462,19 +492,6 @@ function saltImports(ts, sourceFile) {
 
   if (named.size === 0 && namespaces.size === 0) return () => undefined;
 
-  // Bind just this source file. Resolving imported package types isn't needed
-  // to distinguish an import from a parameter or local variable that shadows
-  // it, and would make the check depend on the application's compiler setup.
-  const options = { noLib: true, noResolve: true, allowJs: true };
-  const host = ts.createCompilerHost(options);
-  const isSource = (file) =>
-    path.resolve(file) === path.resolve(sourceFile.fileName);
-  host.getSourceFile = (file) => (isSource(file) ? sourceFile : undefined);
-  host.fileExists = isSource;
-  host.readFile = (file) => (isSource(file) ? sourceFile.text : undefined);
-  const checker = ts
-    .createProgram([sourceFile.fileName], options, host)
-    .getTypeChecker();
   const imported = (node, imports) => {
     const declarations = checker.getSymbolAtLocation(node)?.declarations ?? [];
     for (const declaration of declarations) {
@@ -499,15 +516,27 @@ function scriptKind(ts, file) {
   return ts.ScriptKind.JSX;
 }
 
-function checkScript({ ts, text, file, data, problems, page }) {
-  const sourceFile = ts.createSourceFile(
+function parseScript(ts, file, text) {
+  return ts.createSourceFile(
     file,
     text,
     ts.ScriptTarget.Latest,
     true,
     scriptKind(ts, file),
   );
-  const resolve = saltImports(ts, sourceFile);
+}
+
+function checkScript({
+  ts,
+  checker,
+  sourceFile,
+  text,
+  file,
+  data,
+  problems,
+  page,
+}) {
+  const resolve = saltImports(ts, sourceFile, checker);
   const uses = [];
   const at = (node) => ({
     file,
@@ -688,6 +717,29 @@ export function run(
         : undefined;
     };
     const problems = [];
+    // Scripts are bound in batches: a program for each file is slow, and one
+    // for every file would hold them all in memory.
+    let scripts = [];
+    const checkScripts = () => {
+      const checker = bindingChecker(
+        ts,
+        scripts.map(({ sourceFile }) => sourceFile),
+      );
+      for (const { sourceFile, text, file, hasTokens } of scripts) {
+        const uses = checkScript({
+          ts,
+          checker,
+          sourceFile,
+          text,
+          file,
+          data,
+          problems,
+          page,
+        });
+        if (hasTokens) checkTokens({ uses, text, file, data, problems, page });
+      }
+      scripts = [];
+    };
     for (const file of files) {
       const text = readFileSync(file, "utf8");
       const hasTokens = data.themeDocs && text.includes("--salt-");
@@ -702,8 +754,9 @@ export function run(
           checkTokens({ uses, text, file, data, problems, page });
         }
       } else if (ts && (text.includes("@salt-ds/") || hasTokens)) {
-        const uses = checkScript({ ts, text, file, data, problems, page });
-        if (hasTokens) checkTokens({ uses, text, file, data, problems, page });
+        const sourceFile = parseScript(ts, file, text);
+        scripts.push({ sourceFile, text, file, hasTokens });
+        if (scripts.length === SCRIPT_BATCH) checkScripts();
       } else if (hasTokens) {
         checkTokens({
           uses: tokenUses(blankComments(text, { lineComments: true })),
@@ -715,6 +768,7 @@ export function run(
         });
       }
     }
+    if (scripts.length > 0) checkScripts();
     problems.sort((left, right) =>
       left.file < right.file
         ? -1

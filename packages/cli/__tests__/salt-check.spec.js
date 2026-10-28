@@ -210,6 +210,35 @@ export const After = () => <><SaltButton variant="cta" /><Salt.Button variant="c
     ]);
   });
 
+  it("keeps each file's bindings to itself when checking many files", () => {
+    const files = {
+      // A script, whose declarations are global, and a module with its own
+      // Button, both mentioning Salt so they're checked with the others.
+      "src/global.jsx": `// Not @salt-ds/core's Button.
+function Button({ variant }) { return <span>{variant}</span>; }
+`,
+      "src/Local.tsx": `// Not @salt-ds/core's Button.
+const Button = ({ variant }) => <span>{variant}</span>;
+export const Local = () => <Button variant="cta" />;
+`,
+    };
+    // More files than are bound in one program.
+    for (let index = 0; index < 120; index += 1) {
+      files[`src/App${index}.tsx`] = `import { Button } from "@salt-ds/core";
+export const App = () => <Button variant="cta" />;
+`;
+    }
+    const { log } = check(project(files), ["src", "--json"]);
+    const { problems } = JSON.parse(log.join("\n"));
+    expect(problems).toHaveLength(120);
+    expect(
+      problems.every(
+        ({ file, line, rule }) =>
+          /App\d+\.tsx$/.test(file) && line === 2 && rule === "deprecated-prop",
+      ),
+    ).toBe(true);
+  });
+
   it("doesn't take a slash-star inside a string or url() for a comment", () => {
     const root = project({
       "src/a.scss": `.a { background: url("img/*.png"); }
