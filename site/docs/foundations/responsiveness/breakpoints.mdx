@@ -84,15 +84,17 @@ value, rather than its default: `GridLayout` with `columns={{ md: 3 }}` shows a
 single column below `md`, not its default of 12, and `StackLayout` with
 `direction={{ md: "row" }}` lays out as a row there, not a column.
 
-| Component                    | Responsive props                                                     |
-| ---------------------------- | -------------------------------------------------------------------- |
-| `FlexLayout`                 | `direction`, `gap`, `wrap`, `margin`, `padding`                      |
-| `StackLayout`                | `direction`, `gap`, `margin`, `padding`                              |
-| `FlowLayout`                 | `gap`, `margin`, `padding`                                           |
-| `FlexItem`                   | `basis`, `grow`, `shrink`, `margin`, `padding`                       |
-| `GridLayout`                 | `columns`, `rows`, `gap`, `columnGap`, `rowGap`, `margin`, `padding` |
-| `GridItem`                   | `colSpan`, `rowSpan`, `margin`, `padding`                            |
-| `BorderLayout`, `BorderItem` | `margin`, `padding`                                                  |
+| Component      | Responsive props                                                     |
+| -------------- | -------------------------------------------------------------------- |
+| `FlexLayout`   | `direction`, `gap`, `wrap`, `margin`, `padding`                      |
+| `StackLayout`  | `direction`, `gap`, `margin`, `padding`                              |
+| `SplitLayout`  | `direction`, `gap`, `margin`, `padding`                              |
+| `FlowLayout`   | `gap`, `margin`, `padding`                                           |
+| `FlexItem`     | `basis`, `grow`, `shrink`, `margin`, `padding`                       |
+| `GridLayout`   | `columns`, `rows`, `gap`, `columnGap`, `rowGap`, `margin`, `padding` |
+| `GridItem`     | `colSpan`, `rowSpan`, `margin`, `padding`                            |
+| `BorderLayout` | `gap`, `columnGap`, `rowGap`, `margin`, `padding`                    |
+| `BorderItem`   | `margin`, `padding`                                                  |
 
 ### Responsive values in your own code
 
