@@ -289,6 +289,32 @@ export const After = () => <><SaltButton variant="cta" /><Salt.Button variant="c
     expect(log.at(-1)).toBe("salt-check: checked 1 file: 1 error, 0 warnings.");
   });
 
+  it("checks every file with --changed before the first commit", () => {
+    const root = project({
+      "src/staged.css": ".a { color: var(--salt-size-border); }\n",
+      "src/untracked.css": ".b { color: var(--salt-size-border); }\n",
+    });
+    execFileSync("git", ["init", "-q"], { cwd: root });
+    execFileSync("git", ["add", "src/staged.css"], { cwd: root });
+    const { code, log } = check(root, ["--changed"]);
+    expect(code).toBe(1);
+    expect(log.at(-1)).toBe(
+      "salt-check: checked 2 files: 2 errors, 0 warnings.",
+    );
+  });
+
+  it("explains that --changed needs Git outside a repository", () => {
+    const root = project({
+      "src/a.css": ".a { color: var(--salt-size-border); }\n",
+    });
+    expect(check(root, ["--changed"])).toEqual({
+      code: 2,
+      log: [
+        "salt-check: --changed needs a Git repository. Pass the files to check instead.",
+      ],
+    });
+  });
+
   it("checks JSX in .js files, and reports a malformed token instead of failing", () => {
     const root = project({
       "src/App.js": `import { Toast } from "@salt-ds/core";

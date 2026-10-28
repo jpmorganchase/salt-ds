@@ -198,16 +198,25 @@ function listFiles({ project, paths, changed, cwd }) {
       return statSync(full).isDirectory() ? walk(full) : [full];
     });
   } else if (changed) {
+    let hasCommit = true;
+    try {
+      git(project, ["rev-parse", "--verify", "--quiet", "HEAD"]);
+    } catch {
+      hasCommit = false;
+    }
     try {
       files = [
-        ...git(project, ["diff", "--name-only", "--relative", "HEAD"]),
+        // Before the first commit, every file in the repository is new.
+        ...(hasCommit
+          ? git(project, ["diff", "--name-only", "--relative", "HEAD"])
+          : git(project, ["ls-files", "--cached"])),
         ...git(project, ["ls-files", "--others", "--exclude-standard"]),
       ]
         .map((file) => path.join(project, file))
         .filter((file) => !inSkippedFolder(file));
     } catch {
       throw new SetupError(
-        "--changed needs a Git repository with a commit. Pass the files to check instead.",
+        "--changed needs a Git repository. Pass the files to check instead.",
       );
     }
   } else {
