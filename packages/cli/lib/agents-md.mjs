@@ -259,6 +259,7 @@ export function readManifest(packageDir, directory, outputDir = packageDir) {
     directory,
     name,
     version: manifest.version,
+    docsDir,
     docsPath: toPosix(path.relative(outputDir, docsDir)),
     pages: manifest.pages,
   };
@@ -413,7 +414,11 @@ export function run(args, { log = console.log, cwd = process.cwd() } = {}) {
     // Copilot reads one instructions file at the repository root and may not
     // tell the model where it is, so this index is relative to that root.
     const repository = repositoryRoot(dir);
-    const copilotManifests = discoverManifests(project, repository);
+    const repositoryDir = realpathSync(repository);
+    const copilotManifests = manifests.map((manifest) => ({
+      ...manifest,
+      docsPath: toPosix(path.relative(repositoryDir, manifest.docsDir)),
+    }));
     const copilotBlock = agentsBlock({
       root: ".",
       rootBase: "the repository root",
