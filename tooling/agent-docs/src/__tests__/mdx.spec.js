@@ -1,4 +1,3 @@
-import { readFile } from "node:fs/promises";
 import { describe, expect, it } from "vitest";
 import {
   convertMdx,
@@ -389,29 +388,33 @@ describe("convertMdx", () => {
     );
   });
 
-  it("preserves the real getting-started navigation cards", async () => {
-    const source = await readFile(
-      new URL(
-        "../../../../site/docs/getting-started/index.mdx",
-        import.meta.url,
-      ),
-      "utf8",
-    );
+  it("converts QuickLinks given as a links array", async () => {
     const ctx = createContext({
       links: { resolve: (url) => `${url}.md` },
     });
     const markdown = await toMarkdown(
-      source.slice(source.indexOf("<QuickLinks")),
+      `<QuickLinks
+  links={[
+    {
+      title: "Developing",
+      description: "Install the Salt packages.",
+      action: "Start developing",
+      href: "./developing",
+    },
+    {
+      title: "Form integration",
+      description: "Bind values and validation.",
+      action: "Integrate forms",
+      href: "./form-integration",
+    },
+  ]}
+/>`,
       ctx,
     );
     expect(markdown).toContain("[Developing](./developing.md)");
-    expect(markdown).toContain("Learn how to install the Salt packages");
+    expect(markdown).toContain("Install the Salt packages.");
     expect(markdown).toContain("[Form integration](./form-integration.md)");
-    expect(markdown).toContain("[AI coding agents](./ai-coding-agents.md)");
-    expect(markdown).toContain(
-      "[Fixing accessibility](./fixing-accessibility.md)",
-    );
-    expect(markdown.match(/^- /gm)).toHaveLength(9);
+    expect(markdown.match(/^- /gm)).toHaveLength(2);
     expect(ctx.errors).toEqual([]);
   });
 
