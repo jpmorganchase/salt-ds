@@ -1,0 +1,81 @@
+---
+title: Layering
+layout: DetailTechnical
+sidebar:
+  priority: 3
+---
+
+Layering separates an application's UI from its content using Salt's container
+backgrounds. The UI background, behind everything else, uses the secondary
+container background, and content sits in primary containers, such as cards and
+panels. Containers can be flat on the background (layering) or lifted off it
+with a shadow (elevation).
+
+| Layer         | Background | Token                                   |
+| ------------- | ---------- | --------------------------------------- |
+| UI background | Secondary  | `--salt-container-secondary-background` |
+| Content       | Primary    | `--salt-container-primary-background`   |
+
+## Layering
+
+Place flat primary containers on the secondary background. The change of fill
+separates the content from the UI around it. `Panel` is flat by default; set
+`elevation="flat"` on `Card`, which is raised by default.
+
+<LivePreview componentName="layering" exampleName="Layering" />
+
+## Elevation
+
+Raise primary containers with a shadow to lift them off the background. `Card`
+is raised by default; set `elevation="raised"` on `Panel`. For a container of
+your own, use the region shadow, `--salt-overlayable-shadow-region`; see
+[shadow](/salt/foundations/elevation/index) for the shadow ramp.
+
+Flat containers suit data-dense interfaces, where users scan and compare
+information; raised containers give content more prominence. See
+[Card elevation](/salt/components/card/examples#elevation).
+
+<LivePreview componentName="layering" exampleName="Elevation" />
+
+## Other backgrounds
+
+An interface can also use primary throughout. Its containers then share the
+background's fill, so give them a shadow or a border to stand apart.
+
+Tertiary is used less often, to highlight key content areas. See the
+[container characteristic](/salt/themes/design-tokens/container-characteristic)
+for each background's uses.
+
+## In code
+
+Salt doesn't paint a page background. Set the UI background on `body` with the
+container token:
+
+```css
+body {
+  background: var(--salt-container-secondary-background);
+}
+```
+
+The root `SaltProvider` puts the theme classes on `<html>`, so the token
+resolves on `body` and follows the mode and theme. If the provider uses
+`applyClassesTo="scope"` or `"child"`, set the background on the element that
+gets the classes instead.
+
+`Card`, `Panel` and `Drawer` default to the primary variant, so content in them
+reads as primary on the secondary background without extra props.
+
+## Regions in another mode
+
+A nested `SaltProvider` with another mode sets its region's text color, but not
+a background. Put the region's content in a container, such as a `Panel`, so it
+gets that mode's fill:
+
+```tsx
+<SaltProvider mode="dark">
+  <Panel>{/* Content of the dark region */}</Panel>
+</SaltProvider>
+```
+
+See [mixing modes](/salt/foundations/modes#mixing-modes) for when to use a
+region in another mode.
