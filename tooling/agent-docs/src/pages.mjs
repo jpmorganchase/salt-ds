@@ -168,5 +168,5 @@ export async function discoverDocuments({ siteDocsDir }) {
   documents.sort((left, right) => compareText(left.route, right.route));
   // Every route the site serves, including pages that aren't shipped.
   const routes = new Set([...pages.values()].map((page) => page.route));
-  return { documents, errors, routes };
+  return { documents, errors, routes, pages: [...pages.values()] };
 }

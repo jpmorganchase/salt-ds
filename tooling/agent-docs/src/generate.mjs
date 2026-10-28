@@ -493,25 +493,6 @@ async function addCheckData({
 }
 
 /** The names that `pattern` captures in the files under `directory`. */
-async function namesInFiles(directory, extension, pattern) {
-  const names = new Set();
-  const visit = async (folder) => {
-    for (const entry of await readdir(folder, { withFileTypes: true })) {
-      const file = path.join(folder, entry.name);
-      if (entry.isDirectory()) await visit(file);
-      else if (entry.name.endsWith(extension)) {
-        for (const [, name] of (await readFile(file, "utf8")).matchAll(
-          pattern,
-        )) {
-          names.add(name);
-        }
-      }
-    }
-  };
-  await visit(directory);
-  return names;
-}
-
 /**
  * Finds the exported components that the site's examples use but no site
  * page gives a props table, for the table of the component whose name
@@ -553,7 +534,7 @@ export async function generateAgentDocs({
   const siteDocsDir = path.join(repoRoot, "site", "docs");
   const packagesDir = path.join(repoRoot, "packages");
   const packages = await readPackages(packagesDir);
-  const { documents, errors, routes } = await discoverDocuments({
+  const { documents, errors, routes, pages } = await discoverDocuments({
     siteDocsDir,
   });
   const warnings = [];
@@ -604,10 +585,15 @@ export async function generateAgentDocs({
     props,
     subcomponents: subcomponentFinder(
       props,
-      await namesInFiles(
-        siteDocsDir,
-        ".mdx",
-        /<PropsTable\b[^>]*\bcomponentName=["']([^"']+)["']/g,
+      // Components a site page, shipped or not, gives a props table.
+      new Set(
+        pages.flatMap((page) =>
+          [
+            ...page.body.matchAll(
+              /<PropsTable\b[^>]*\bcomponentName=["']([^"']+)["']/g,
+            ),
+          ].map(([, name]) => name),
+        ),
       ),
       // Components the examples use as JSX elements.
       new Set((await exampleUsages(examplesDir)).keys()),
