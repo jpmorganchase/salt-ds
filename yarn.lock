@@ -13068,7 +13068,7 @@ __metadata:
     tar: "npm:^6.1.2"
     which: "npm:^2.0.2"
   bin:
-    node-gyp: ./bin/node-gyp.js
+    node-gyp: bin/node-gyp.js
   checksum: 10/329b109b138e48cb0416a6bca56e171b0e479d6360a548b80f06eced4bef3cf37652a3d20d171c20023fb18d996bd7446a49d4297ddb59fc48100178a92f432d
   languageName: node
   linkType: hard
@@ -15126,7 +15126,7 @@ __metadata:
   dependencies:
     glob: "npm:^7.1.3"
   bin:
-    rimraf: ./bin.js
+    rimraf: bin.js
   checksum: 10/063ffaccaaaca2cfd0ef3beafb12d6a03dd7ff1260d752d62a6077b5dfff6ae81bea571f655bb6b589d366930ec1bdd285d40d560c0dae9b12f125e54eb743d5
   languageName: node
   linkType: hard
@@ -16257,7 +16257,7 @@ __metadata:
     microbuffer: "npm:^1.0.0"
     svgpath: "npm:^2.1.5"
   bin:
-    svg2ttf: ./svg2ttf.js
+    svg2ttf: svg2ttf.js
   checksum: 10/95360eadb8fccf5b601486bbb00d85d36458fa032ebd70f06b2af51a02a4ae361d9a839a3f59ad55e48015424f1adc658d3ac3d99576ea3a39a5f3c35b26327d
   languageName: node
   linkType: hard
@@ -16802,7 +16802,7 @@ __metadata:
   dependencies:
     argparse: "npm:^2.0.1"
   bin:
-    ttf2eot: ./ttf2eot.js
+    ttf2eot: ttf2eot.js
   checksum: 10/1660d713c207779af73c8dcb2bbcbb6ff795e7d5edbf5b02d94e3f044932b573ec77764329ad50f57f6567cbe594a0ad2cf3bdc67c2bea4acea2a29138f54ff7
   languageName: node
   linkType: hard
@@ -16828,7 +16828,7 @@ __metadata:
     argparse: "npm:^2.0.1"
     pako: "npm:^1.0.0"
   bin:
-    ttf2woff: ./ttf2woff.js
+    ttf2woff: ttf2woff.js
   checksum: 10/c8fca24616e1d4356c4141c7ec2e3d7f839185b7b6f3baf0bfb13f2eebba64e5ab3620f9f882161ac71e7c36980a70c6fc2548599ea2f66876e5947acaf65765
   languageName: node
   linkType: hard
