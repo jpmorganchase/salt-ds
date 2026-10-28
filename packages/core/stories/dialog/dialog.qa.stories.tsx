@@ -7,7 +7,6 @@ import {
   type DialogContentProps,
   DialogHeader,
   type DialogProps,
-  type FloatingComponentProps,
   FloatingComponentProvider,
   SaltProvider,
   SaltProviderNext,
@@ -17,24 +16,19 @@ import {
   VALIDATION_NAMED_STATUS,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { QAContainer, type QAContainerProps } from "docs/components";
+import {
+  InlineFloatingComponent,
+  QAContainer,
+  type QAContainerProps,
+} from "docs/components";
 import "./dialog.stories.css";
 import { CloseIcon } from "@salt-ds/icons";
-import { Fragment, forwardRef } from "react";
+import { Fragment } from "react";
 
 export default {
   title: "Core/Dialog/Dialog QA",
   component: Dialog,
 } as Meta<typeof Dialog>;
-
-// Renders the dialog in place instead of portalling it to the body.
-const InlineFloatingComponent = forwardRef<
-  HTMLDivElement,
-  FloatingComponentProps
->(function InlineFloatingComponent(props, ref) {
-  const { open, focusManagerProps, lockScroll, width, height, ...rest } = props;
-  return open ? <div ref={ref} {...rest} /> : null;
-});
 
 type TemplateProps = Omit<DialogProps, "content"> & {
   header?: string;
