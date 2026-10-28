@@ -8,9 +8,20 @@ data:
   $ref: ./#/data
 ---
 
-By default, the `SystemStatus` component has the role `"status"`. This means a screen reader will announce the message at the next available opportunity.
-
 ## Best practices
 
-- If the status is critical and requires immediate attention, apply `role="alert"` to ensure the message is announced immediately.
-- If the status is not critical, consider applying `role="region"`.
+Check and test any focusable elements included in the system status content.
+
+When using a system status to alert the user, apply `role="alert"`. When using a system status to notify the user, use the default `role="status"`.
+
+- **Note:** There are known screen reader announcement issues when dynamically inserting content with `role="status"`, which a system status has by default. During your testing, check that a system status added to the page is properly announced using a screen reader.
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+Tab moves focus through the interactive elements.
+
+</KeyboardControl>
+</KeyboardControls>
