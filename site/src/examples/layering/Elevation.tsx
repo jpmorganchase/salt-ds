@@ -2,7 +2,7 @@ import { Card, GridLayout, H3, Text } from "@salt-ds/core";
 import type { ReactElement } from "react";
 
 export const Elevation = (): ReactElement => (
-  // Stands in for the page: in an app, set this background on `body`.
+  // Stands in for the application background in this preview.
   <div
     style={{
       background: "var(--salt-container-secondary-background)",

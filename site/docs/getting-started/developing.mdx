@@ -220,7 +220,17 @@ Salt injects component styles at runtime by default, so you don’t need to impo
 
 #### Set the page background
 
-Salt doesn't paint a page background, so the page shows the browser's default in both modes. Set it on `body` as described in [layering](/salt/foundations/elevation/layering#in-code).
+Salt doesn't paint the application's background. With the default root provider,
+set it on `body` using a container token. For a secondary page background:
+
+```css
+body {
+  background: var(--salt-container-secondary-background);
+}
+```
+
+The token follows the active theme and mode. See [Application backgrounds](./application-backgrounds)
+for background choices and applications that scope their provider to part of a page.
 
 #### (Optional) Apply the CSS baseline reset
 

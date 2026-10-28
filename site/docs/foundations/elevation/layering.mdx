@@ -1,81 +1,59 @@
 ---
 title: Layering
+description: "Use background contrast and elevation to keep content and data in focus."
 layout: DetailTechnical
 sidebar:
   priority: 3
 ---
 
-Layering separates an application's UI from its content using Salt's container
-backgrounds. The UI background, behind everything else, uses the secondary
-container background, and content sits in primary containers, such as cards and
-panels. Containers can be flat on the background (layering) or lifted off it
-with a shadow (elevation).
+Layering helps establish visual hierarchy so users can focus on the content and
+data relevant to their task. Background contrast can make content regions more
+prominent while keeping the surrounding application interface visually quieter.
 
-| Layer         | Background | Token                                   |
-| ------------- | ---------- | --------------------------------------- |
-| UI background | Secondary  | `--salt-container-secondary-background` |
-| Content       | Primary    | `--salt-container-primary-background`   |
+## Backgrounds
 
-## Layering
+A common arrangement places primary content containers, such as cards and
+panels, on a secondary application background. The difference in fill separates
+the content regions from their surroundings.
 
-Place flat primary containers on the secondary background. The change of fill
-separates the content from the UI around it. `Panel` is flat by default; set
-`elevation="flat"` on `Card`, which is raised by default.
+| Region in this arrangement | Background | Token                                   |
+| -------------------------- | ---------- | --------------------------------------- |
+| Application background     | Secondary  | `--salt-container-secondary-background` |
+| Content containers         | Primary    | `--salt-container-primary-background`   |
 
-<LivePreview componentName="layering" exampleName="Layering" />
-
-## Elevation
-
-Raise primary containers with a shadow to lift them off the background. `Card`
-is raised by default; set `elevation="raised"` on `Panel`. For a container of
-your own, use the region shadow, `--salt-overlayable-shadow-region`; see
-[shadow](/salt/foundations/elevation/index) for the shadow ramp.
-
-Flat containers suit data-dense interfaces, where users scan and compare
-information; raised containers give content more prominence. See
-[Card elevation](/salt/components/card/examples#elevation).
-
-<LivePreview componentName="layering" exampleName="Elevation" />
-
-## Other backgrounds
-
-An interface can also use primary throughout. Its containers then share the
-background's fill, so give them a shadow or a border to stand apart.
+Choose backgrounds to suit the layout and content. An interface can also use
+primary throughout. If a region needs a visible boundary against a matching
+background, use a border or elevation to distinguish it.
 
 Tertiary is used less often, to highlight key content areas. See the
 [container characteristic](/salt/themes/design-tokens/container-characteristic)
 for each background's uses.
 
-## In code
+Background variant and elevation are independent choices. Containers can be
+flat or raised, depending on the prominence their content needs.
 
-Salt doesn't paint a page background. Set the UI background on `body` with the
-container token:
+## Flat containers
 
-```css
-body {
-  background: var(--salt-container-secondary-background);
-}
-```
+Flat containers suit data-dense interfaces, where users scan and compare
+information with minimal visual noise. In this example, primary cards stand
+apart from the secondary background without a shadow.
 
-The root `SaltProvider` puts the theme classes on `<html>`, so the token
-resolves on `body` and follows the mode and theme. If the provider uses
-`applyClassesTo="scope"` or `"child"`, set the background on the element that
-gets the classes instead.
+`Panel` is flat by default. Set `elevation="flat"` on `Card` to remove its
+shadow.
 
-`Card`, `Panel` and `Drawer` default to the primary variant, so content in them
-reads as primary on the secondary background without extra props.
+<LivePreview componentName="layering" exampleName="Layering" />
 
-## Regions in another mode
+## Raised containers
 
-A nested `SaltProvider` with another mode sets its region's text color, but not
-a background. Put the region's content in a container, such as a `Panel`, so it
-gets that mode's fill:
+Raised containers use a shadow to give content more prominence and separation
+from its surroundings. `Card` is raised by default; set `elevation="raised"`
+on `Panel`. See [Card elevation](/salt/components/card/examples#elevation).
 
-```tsx
-<SaltProvider mode="dark">
-  <Panel>{/* Content of the dark region */}</Panel>
-</SaltProvider>
-```
+For a container of your own, use the region shadow,
+`--salt-overlayable-shadow-region`; see
+[shadow](/salt/foundations/elevation/index) for the shadow ramp.
 
-See [mixing modes](/salt/foundations/modes#mixing-modes) for when to use a
-region in another mode.
+<LivePreview componentName="layering" exampleName="Elevation" />
+
+For implementation guidance, see
+[Application backgrounds](/salt/getting-started/application-backgrounds).
