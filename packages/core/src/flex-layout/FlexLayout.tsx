@@ -118,10 +118,12 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(function FlexLayout<
   const separatorAlignment = separators === true ? "center" : separators;
 
   const { matchedBreakpoints } = useBreakpoint();
-  const flexGap = resolveResponsiveValue(gap, matchedBreakpoints);
+  // An object without a value for the current breakpoint uses the default.
+  const flexGap = resolveResponsiveValue(gap, matchedBreakpoints) ?? 3;
   const flexMargin = resolveResponsiveValue(margin, matchedBreakpoints);
   const flexPadding = resolveResponsiveValue(padding, matchedBreakpoints);
-  const flexDirection = resolveResponsiveValue(direction, matchedBreakpoints);
+  const flexDirection =
+    resolveResponsiveValue(direction, matchedBreakpoints) ?? "row";
   const flexWrap = resolveResponsiveValue(wrap, matchedBreakpoints);
   const flexLayoutStyles = {
     ...style,
@@ -141,11 +143,9 @@ export const FlexLayout: FlexLayoutComponent = forwardRef(function FlexLayout<
         {
           [withBaseName("separator")]: separatorAlignment && !wrap,
           [withBaseName(
-            `separator-${flexDirection ?? "row"}-${
-              separatorAlignment ?? "center"
-            }`,
+            `separator-${flexDirection}-${separatorAlignment ?? "center"}`,
           )]: separatorAlignment && !wrap,
-          [withBaseName(`separator-${flexDirection ?? "row"}`)]:
+          [withBaseName(`separator-${flexDirection}`)]:
             separatorAlignment && !wrap,
         },
         className,

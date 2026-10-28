@@ -90,9 +90,11 @@ export const StackLayout: StackLayoutComponent = forwardRef(
 
     const { matchedBreakpoints } = useBreakpoint();
 
-    const flexGap = resolveResponsiveValue(gap, matchedBreakpoints);
+    // An object without a value for the current breakpoint uses the default.
+    const flexGap = resolveResponsiveValue(gap, matchedBreakpoints) ?? 3;
     const separatorAlignment = separators === true ? "center" : separators;
-    const flexDirection = resolveResponsiveValue(direction, matchedBreakpoints);
+    const flexDirection =
+      resolveResponsiveValue(direction, matchedBreakpoints) ?? "column";
     const stackLayoutStyles = {
       ...style,
       "--stackLayout-gap": parseSpacing(flexGap),
@@ -103,7 +105,7 @@ export const StackLayout: StackLayoutComponent = forwardRef(
         className={clsx(
           withBaseName(),
           {
-            [withBaseName(flexDirection ?? "")]: flexDirection,
+            [withBaseName(flexDirection)]: flexDirection,
             [withBaseName("separator")]: !!separatorAlignment,
             [separatorAlignment
               ? withBaseName(`separator-${separatorAlignment}`)
@@ -112,7 +114,7 @@ export const StackLayout: StackLayoutComponent = forwardRef(
           className,
         )}
         ref={ref}
-        direction={direction}
+        direction={flexDirection}
         style={stackLayoutStyles}
         wrap={false}
         gap={flexGap}
