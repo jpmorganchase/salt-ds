@@ -133,7 +133,6 @@ const legacyReactAliases: Alias[] =
     : [];
 
 export default defineConfig({
-  publicDir: path.resolve(rootDir, "./site/public"),
   plugins: [rootDevelopmentPathsPlugin(), react(), cssInline()],
   define: {
     "process.env": {},
