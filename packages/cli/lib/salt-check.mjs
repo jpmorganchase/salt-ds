@@ -252,16 +252,59 @@ function loadTypeScript(project, cwd) {
   return undefined;
 }
 
-/** Comments replaced by spaces, keeping offsets and line breaks. */
-function blankComments(text, { lineComments }) {
-  const blank = (match) => match.replace(/[^\n]/g, " ");
-  let result = text.replace(/\/\*[\s\S]*?\*\//g, blank);
-  if (lineComments)
-    result = result.replace(
+/**
+ * Comments replaced by spaces, keeping offsets and line breaks. Quoted strings,
+ * and in style files unquoted `url(…)` values, are kept as they are, so a `/*`
+ * or `//` inside them doesn't start a comment.
+ */
+function blankComments(text, { lineComments, style = false }) {
+  const blank = (part) => part.replace(/[^\n]/g, " ");
+  let result = "";
+  let i = 0;
+  while (i < text.length) {
+    const char = text[i];
+    const next = text[i + 1];
+    let end;
+    if (char === '"' || char === "'" || char === "`") {
+      // To the closing quote; a quote or apostrophe that isn't closed, as in
+      // JSX text, ends with its line.
+      end = i + 1;
+      while (end < text.length && text[end] !== char) {
+        if (text[end] === "\\") end += 1;
+        else if (text[end] === "\n" && char !== "`") break;
+        end += 1;
+      }
+      end = Math.min(end + 1, text.length);
+      result += text.slice(i, end);
+    } else if (
+      style &&
+      text.startsWith("url(", i) &&
+      !/[\w-]/.test(text[i - 1] ?? "") &&
+      !/^url\(\s*["']/.test(text.slice(i, i + 64))
+    ) {
+      const close = text.indexOf(")", i);
+      end = close < 0 ? text.length : close + 1;
+      result += text.slice(i, end);
+    } else if (char === "/" && next === "*") {
+      const close = text.indexOf("*/", i + 2);
+      end = close < 0 ? text.length : close + 2;
+      result += blank(text.slice(i, end));
+    } else if (
+      lineComments &&
+      char === "/" &&
+      next === "/" &&
       // After `:` or `(` it's a URL, as in `url(//cdn…)`, not a comment.
-      /(^|[^:("'`\\])\/\/[^\n]*/g,
-      (match, before) => before + blank(match.slice(before.length)),
-    );
+      !/[:(\\]/.test(text[i - 1] ?? "")
+    ) {
+      const close = text.indexOf("\n", i);
+      end = close < 0 ? text.length : close;
+      result += blank(text.slice(i, end));
+    } else {
+      end = i + 1;
+      result += char;
+    }
+    i = end;
+  }
   return result;
 }
 
@@ -651,7 +694,10 @@ export function run(
       if (STYLE_FILE.test(file)) {
         if (hasTokens) {
           const uses = tokenUses(
-            blankComments(text, { lineComments: !file.endsWith(".css") }),
+            blankComments(text, {
+              lineComments: !file.endsWith(".css"),
+              style: true,
+            }),
           );
           checkTokens({ uses, text, file, data, problems, page });
         }

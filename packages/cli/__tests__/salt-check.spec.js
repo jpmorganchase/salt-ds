@@ -210,6 +210,24 @@ export const After = () => <><SaltButton variant="cta" /><Salt.Button variant="c
     ]);
   });
 
+  it("doesn't take a slash-star inside a string or url() for a comment", () => {
+    const root = project({
+      "src/a.scss": `.a { background: url("img/*.png"); }
+.b { background: url(img/*.png); color: var(--salt-size-border); }
+/* end */
+`,
+      "src/App.jsx": `const prefix = "/*";
+export const A = () => <b style={{ padding: "var(--salt-size-border)" }} />;
+/* end */
+`,
+    });
+    const { code, log } = check(root, ["src"], { typescript: null });
+    expect(code).toBe(1);
+    expect(
+      log.filter((line) => line.includes("deprecated-token")),
+    ).toHaveLength(2);
+  });
+
   it("reads a protocol-relative URL in Sass as a URL, not a comment", () => {
     const root = project({
       "src/a.scss": `// --salt-size-border in a comment
