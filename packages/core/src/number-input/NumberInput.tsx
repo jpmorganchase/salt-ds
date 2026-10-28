@@ -23,6 +23,7 @@ import {
 import { Button } from "../button";
 import {
   type FormFieldValidationStatus,
+  useFormFieldAriaLabelWarning,
   useFormFieldProps,
 } from "../form-field-context";
 import { useIcon } from "../semantic-icon-provider";
@@ -342,6 +343,12 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       necessity: formFieldRequired,
       validationStatus: formFieldValidationStatus,
     } = useFormFieldProps();
+
+    useFormFieldAriaLabelWarning(
+      "NumberInput",
+      inputProps["aria-label"] ?? ariaLabel,
+      formFieldLabelledBy,
+    );
 
     const isDisabled = disabled || formFieldDisabled;
     const isReadOnly = readOnly || formFieldReadOnly;

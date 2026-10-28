@@ -39,7 +39,6 @@ export const ResponsiveLayout = (): ReactElement => {
           <FormFieldLabel>Columns</FormFieldLabel>
           <RadioButtonGroup
             direction={"horizontal"}
-            aria-label="Columns Controls"
             name="columns"
             onChange={handleChange}
             value={columns.toString()}

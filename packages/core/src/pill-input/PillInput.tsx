@@ -18,6 +18,7 @@ import {
 } from "react";
 import {
   type FormFieldValidationStatus,
+  useFormFieldAriaLabelWarning,
   useFormFieldProps,
 } from "../form-field-context";
 import { Pill } from "../pill";
@@ -159,6 +160,12 @@ export const PillInput = forwardRef(function PillInput(
     "aria-label": ariaLabel,
     "aria-owns": ariaOwns,
   };
+
+  useFormFieldAriaLabelWarning(
+    "ComboBox",
+    inputProps["aria-label"] ?? ariaLabel,
+    formFieldLabelledBy,
+  );
 
   const isDisabled = disabled || formFieldDisabled;
   const isReadOnly = readOnlyProp || formFieldReadOnly;

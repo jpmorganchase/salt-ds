@@ -10,7 +10,10 @@ import {
   type Ref,
   useRef,
 } from "react";
-import { useFormFieldProps } from "../form-field-context";
+import {
+  useFormFieldAriaLabelWarning,
+  useFormFieldProps,
+} from "../form-field-context";
 import type { AdornmentValidationStatus } from "../status-adornment";
 import type { DataAttributes } from "../types";
 import {
@@ -154,6 +157,14 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       readOnly: formFieldReadOnly,
       validationStatus: formFieldValidationStatus,
     } = useFormFieldProps();
+
+    useFormFieldAriaLabelWarning(
+      "Checkbox",
+      inputProps["aria-label"] ?? ariaLabel,
+      checkboxGroup === undefined
+        ? formFieldA11yProps?.["aria-labelledby"]
+        : undefined,
+    );
 
     const disabled =
       checkboxGroup?.disabled || formFieldDisabled || disabledProp;

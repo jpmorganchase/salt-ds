@@ -9,7 +9,10 @@ import {
   forwardRef,
   type ReactNode,
 } from "react";
-import { useFormFieldProps } from "../form-field-context";
+import {
+  useFormFieldAriaLabelWarning,
+  useFormFieldProps,
+} from "../form-field-context";
 import type { DataAttributes } from "../types";
 import { makePrefixer, useControlled } from "../utils";
 
@@ -117,6 +120,12 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(
       disabled: formFieldDisabled,
       readOnly: formFieldReadOnly,
     } = useFormFieldProps();
+
+    useFormFieldAriaLabelWarning(
+      "Switch",
+      inputProps["aria-label"] ?? ariaLabel,
+      formFieldA11yProps?.["aria-labelledby"],
+    );
 
     const disabled = formFieldDisabled || disabledProp;
     const readOnly = formFieldReadOnly || readOnlyProp;

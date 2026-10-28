@@ -530,7 +530,6 @@ export const SingleWithTimezone: StoryFn<typeof DateInputSingle> = (args) => {
         <FormField>
           <FormFieldLabel>Enter a timezone</FormFieldLabel>
           <Dropdown
-            aria-label="timezone dropdown"
             selected={[selectedTimezone]}
             onSelectionChange={handleTimezoneSelect}
           >
@@ -745,7 +744,6 @@ export const RangeWithTimezone: StoryFn<typeof DateInputRange> = (args) => {
         <FormField>
           <FormFieldLabel>Select a Timezone</FormFieldLabel>
           <Dropdown
-            aria-label="timezone dropdown"
             selected={[selectedTimezone]}
             onSelectionChange={handleTimezoneSelect}
             style={{ minWidth: "120px", width: "min-content" }}

@@ -1,15 +1,28 @@
 import {
   Button,
   Checkbox,
+  CheckboxGroup,
+  ComboBox,
+  Dropdown,
   FormField,
   FormFieldHelperText,
   FormFieldLabel,
   Input,
+  MultilineInput,
+  NumberInput,
+  Option,
+  Pill,
+  PillGroup,
   RadioButton,
+  RadioButtonGroup,
+  RangeSlider,
+  Rating,
+  Slider,
+  Switch,
   Tooltip,
 } from "@salt-ds/core";
-import { Fragment } from "react";
-import { describe, expect, it } from "vitest";
+import { Fragment, type ReactNode } from "react";
+import { describe, expect, it, vi } from "vitest";
 import { page } from "vitest/browser";
 import { runAxeScan } from "~browser-test-utils/accessibility";
 import { renderWithSalt } from "~browser-test-utils/render";
@@ -191,6 +204,131 @@ describe("GIVEN a FormField", () => {
           .element(page.getByText("Helper text"))
           .toHaveClass("saltText-warning");
       });
+    });
+  });
+
+  describe("WHEN a form control has an aria-label", () => {
+    const ariaLabel = "Work email address";
+    const controls: [string, ReactNode][] = [
+      ["Input", <Input key="control" aria-label={ariaLabel} />],
+      [
+        "MultilineInput",
+        <MultilineInput key="control" aria-label={ariaLabel} />,
+      ],
+      ["NumberInput", <NumberInput key="control" aria-label={ariaLabel} />],
+      [
+        "ComboBox",
+        <ComboBox key="control" aria-label={ariaLabel}>
+          <Option value="One" />
+        </ComboBox>,
+      ],
+      [
+        "Dropdown",
+        <Dropdown key="control" aria-label={ariaLabel}>
+          <Option value="One" />
+        </Dropdown>,
+      ],
+      ["Checkbox", <Checkbox key="control" aria-label={ariaLabel} />],
+      [
+        "RadioButton",
+        <RadioButton key="control" aria-label={ariaLabel} value="one" />,
+      ],
+      ["Switch", <Switch key="control" aria-label={ariaLabel} />],
+      ["Slider", <Slider key="control" aria-label={ariaLabel} />],
+      ["RangeSlider", <RangeSlider key="control" aria-label={ariaLabel} />],
+      ["Rating", <Rating key="control" aria-label={ariaLabel} />],
+      [
+        "CheckboxGroup",
+        <CheckboxGroup key="control" aria-label={ariaLabel}>
+          <Checkbox label="One" value="one" />
+        </CheckboxGroup>,
+      ],
+      [
+        "RadioButtonGroup",
+        <RadioButtonGroup key="control" aria-label={ariaLabel}>
+          <RadioButton label="One" value="one" />
+        </RadioButtonGroup>,
+      ],
+      [
+        "PillGroup",
+        <PillGroup key="control" aria-label={ariaLabel}>
+          <Pill value="one">One</Pill>
+        </PillGroup>,
+      ],
+    ];
+
+    it.each(controls)(
+      "THEN %s warns that the aria-label is ignored when a FormFieldLabel is rendered",
+      async (name, control) => {
+        const consoleSpy = vi
+          .spyOn(console, "warn")
+          .mockImplementation(() => undefined);
+        await renderWithSalt(
+          <FormField>
+            <FormFieldLabel>Email</FormFieldLabel>
+            {control}
+          </FormField>,
+        );
+        await expect
+          .poll(() => consoleSpy)
+          .toHaveBeenCalledWith(
+            `Salt: ${name} \`aria-label\` "${ariaLabel}" is ignored because FormFieldLabel "Email" provides the accessible name. Use \`aria-labelledby\` to add to the name, or \`aria-describedby\` to add a description.`,
+          );
+        consoleSpy.mockRestore();
+      },
+    );
+
+    it("THEN it warns once when the control re-renders", async () => {
+      const consoleSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
+      const { rerender } = await renderWithSalt(
+        <FormField>
+          <FormFieldLabel>Email</FormFieldLabel>
+          <Input aria-label={ariaLabel} />
+        </FormField>,
+      );
+      await rerender(
+        <FormField>
+          <FormFieldLabel>Email</FormFieldLabel>
+          <Input aria-label={ariaLabel} placeholder="name@example.com" />
+        </FormField>,
+      );
+      expect(
+        consoleSpy.mock.calls.filter(([message]) =>
+          String(message).includes("is ignored because FormFieldLabel"),
+        ),
+      ).toHaveLength(1);
+      consoleSpy.mockRestore();
+    });
+
+    it("THEN it does not warn without a FormFieldLabel, outside a FormField, or for a Checkbox in a CheckboxGroup", async () => {
+      const consoleSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
+      await renderWithSalt(
+        <>
+          <FormField>
+            <Input aria-label={ariaLabel} />
+          </FormField>
+          <Input aria-label={ariaLabel} />
+          <FormField>
+            <FormFieldLabel>Email</FormFieldLabel>
+            <CheckboxGroup>
+              <Checkbox aria-label={ariaLabel} value="one" />
+            </CheckboxGroup>
+          </FormField>
+        </>,
+      );
+      await expect
+        .element(page.getByRole("textbox", { name: ariaLabel }).first())
+        .toBeInTheDocument();
+      expect(
+        consoleSpy.mock.calls.filter(([message]) =>
+          String(message).includes("is ignored because FormFieldLabel"),
+        ),
+      ).toHaveLength(0);
+      consoleSpy.mockRestore();
     });
   });
 

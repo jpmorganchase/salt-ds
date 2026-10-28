@@ -28,6 +28,7 @@ import {
 } from "react";
 import {
   type FormFieldValidationStatus,
+  useFormFieldAriaLabelWarning,
   useFormFieldProps,
 } from "../form-field-context";
 import {
@@ -178,6 +179,12 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     necessity: formFieldRequired,
     validationStatus: formFieldValidationStatus,
   } = useFormFieldProps();
+
+  useFormFieldAriaLabelWarning(
+    "Dropdown",
+    rest["aria-label"],
+    formFieldLabelledBy,
+  );
 
   const disabled = Boolean(disabledProp) || formFieldDisabled;
   const readOnly = Boolean(readOnlyProp) || formFieldReadOnly;

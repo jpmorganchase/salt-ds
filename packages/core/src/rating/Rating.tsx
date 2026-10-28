@@ -8,7 +8,10 @@ import {
   type MouseEvent,
   useState,
 } from "react";
-import { useFormFieldProps } from "../form-field-context";
+import {
+  useFormFieldAriaLabelWarning,
+  useFormFieldProps,
+} from "../form-field-context";
 import { capitalize, makePrefixer, useControlled, useId } from "../utils";
 import ratingCss from "./Rating.css";
 import { RatingItem } from "./RatingItem";
@@ -100,6 +103,8 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
       "aria-labelledby": formFieldLabelledBy,
     } = {},
   } = useFormFieldProps();
+
+  useFormFieldAriaLabelWarning("Rating", ariaLabel, formFieldLabelledBy);
 
   const disabled = formFieldDisabled || disabledProp;
   const readOnly = formFieldReadOnly || readOnlyProp;

@@ -11,7 +11,7 @@ data:
 ## Best practices
 
 - `FormField` names the form control with `FormFieldLabel` and describes it with `FormFieldHelperText`. Pass `aria-labelledby` and `aria-describedby` to the form control itself, not through props such as `inputProps`. These values are added after the `FormField` ones, so the visible label stays in the accessible name.
-- An `aria-label` on the form control doesn't replace the `FormFieldLabel`. This keeps the visible label in the accessible name for speech input users ([WCAG 2.5.3 Label in Name](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html)). Use `aria-label` only on form controls that don't have a visible label.
+- When a `FormFieldLabel` is rendered, it provides the form control's accessible name and any `aria-label` on the control is ignored. Salt logs a warning in development when this happens. To add words to the name, use `aria-labelledby`. Its text is added after the label, so the name still starts with the visible label text ([WCAG 2.5.3 Label in Name](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html)). To add context, use `aria-describedby`.
 
 ## Keyboard interactions
 
