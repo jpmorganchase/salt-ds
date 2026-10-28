@@ -12,7 +12,14 @@ data:
 
 The primary purpose of the system status is to provide information and, if necessary, prompt further action.
 
-We advise against embedding excessive content into the system status due to potential color contrast issues. If you need to include additional components within the system status, it will be the responsibility of the application team to ensure accessibility compliance.
+Always position the system status at the very top of the screen, spanning the full width of the page. See the [placement example](/salt/components/system-status/examples#placement) for more information.
+
+Configure it to close when:
+
+- The event that triggered it is resolved, such as when service is restored after an outage.
+- The information is no longer relevant, such as when scheduled maintenance has finished.
+
+We advise against embedding excessive content into the system status due to potential color contrast issues. If you need to include supporting actions, such as dismiss, use [`OnSolidButton`](/salt/components/button/examples#on-solid) within `SystemStatusActions`. If you need to include additional components within the system status, it will be the responsibility of the application team to ensure accessibility compliance.
 
 ### When to use
 
