@@ -5,10 +5,7 @@ import {
   type HTMLAttributes,
   useRef,
 } from "react";
-import {
-  useFormFieldAriaLabelWarning,
-  useFormFieldProps,
-} from "../form-field-context";
+import { useFormFieldProps } from "../form-field-context";
 import { useControlled } from "../utils";
 import { SliderThumb } from "./internal/SliderThumb";
 import { SliderTrack } from "./internal/SliderTrack";
@@ -165,8 +162,6 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       } = {},
       disabled: formFieldDisabled,
     } = useFormFieldProps();
-
-    useFormFieldAriaLabelWarning("RangeSlider", ariaLabel, formFieldLabelledBy);
 
     const disabled = formFieldDisabled || disabledProp;
     const inputRefs = [

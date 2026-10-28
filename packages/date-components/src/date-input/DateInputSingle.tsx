@@ -3,7 +3,6 @@ import {
   StatusAdornment,
   useControlled,
   useForkRef,
-  useFormFieldAriaLabelWarning,
   useFormFieldProps,
   useId,
 } from "@salt-ds/core";
@@ -283,13 +282,10 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
     const inputAriaDescribedBy =
       clsx(formFieldDescribedBy, dateInputDescribedBy, restAriaDescribedBy) ||
       undefined;
-    const inputAriaLabel = dateInputAriaLabel ?? ariaLabel ?? "date input";
-
-    useFormFieldAriaLabelWarning(
-      "DateInputSingle",
-      dateInputAriaLabel ?? ariaLabel,
-      formFieldLabelledBy,
-    );
+    const inputAriaLabel =
+      dateInputAriaLabel ??
+      ariaLabel ??
+      (inputAriaLabelledBy ? undefined : "date input");
 
     const isRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)

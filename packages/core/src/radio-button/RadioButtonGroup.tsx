@@ -6,10 +6,7 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
 } from "react";
-import {
-  useFormFieldAriaLabelWarning,
-  useFormFieldProps,
-} from "../form-field-context";
+import { useFormFieldProps } from "../form-field-context";
 import { makePrefixer, useControlled, useId } from "../utils";
 import { RadioGroupContext } from "./internal/RadioGroupContext";
 import radioButtonGroupCss from "./RadioButtonGroup.css";
@@ -90,12 +87,6 @@ export const RadioButtonGroup = forwardRef<
     readOnly: formFieldReadOnly,
     validationStatus: formFieldValidationStatus,
   } = useFormFieldProps();
-
-  useFormFieldAriaLabelWarning(
-    "RadioButtonGroup",
-    rest["aria-label"],
-    a11yProps?.["aria-labelledby"],
-  );
 
   const disabled = formFieldDisabled || disabledProp;
   const readOnly = formFieldReadOnly || readOnlyProp;

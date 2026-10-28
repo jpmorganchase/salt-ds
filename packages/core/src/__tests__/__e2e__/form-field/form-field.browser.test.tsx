@@ -259,7 +259,7 @@ describe("GIVEN a FormField", () => {
 
     it.each(controls)(
       "THEN %s warns that the aria-label is ignored when a FormFieldLabel is rendered",
-      async (name, control) => {
+      async (_name, control) => {
         const consoleSpy = vi
           .spyOn(console, "warn")
           .mockImplementation(() => undefined);
@@ -272,7 +272,8 @@ describe("GIVEN a FormField", () => {
         await expect
           .poll(() => consoleSpy)
           .toHaveBeenCalledWith(
-            `Salt: ${name} \`aria-label\` "${ariaLabel}" is ignored because FormFieldLabel "Email" provides the accessible name. Use \`aria-labelledby\` to add to the name, or \`aria-describedby\` to add a description.`,
+            `Salt: aria-label "${ariaLabel}" is ignored because FormFieldLabel "Email" provides the accessible name. Use aria-labelledby to add to the name, or aria-describedby to add a description.`,
+            expect.any(HTMLElement),
           );
         consoleSpy.mockRestore();
       },
@@ -302,12 +303,16 @@ describe("GIVEN a FormField", () => {
       consoleSpy.mockRestore();
     });
 
-    it("THEN it does not warn without a FormFieldLabel, outside a FormField, or for a Checkbox in a CheckboxGroup", async () => {
+    it("THEN it does not warn when the aria-label is already in the name, without a FormFieldLabel, outside a FormField, or for a Checkbox in a CheckboxGroup", async () => {
       const consoleSpy = vi
         .spyOn(console, "warn")
         .mockImplementation(() => undefined);
       await renderWithSalt(
         <>
+          <FormField>
+            <FormFieldLabel>Work email address</FormFieldLabel>
+            <Input aria-label="work email" />
+          </FormField>
           <FormField>
             <Input aria-label={ariaLabel} />
           </FormField>

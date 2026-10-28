@@ -8,10 +8,7 @@ import {
   useCallback,
   useMemo,
 } from "react";
-import {
-  useFormFieldAriaLabelWarning,
-  useFormFieldProps,
-} from "../form-field-context";
+import { useFormFieldProps } from "../form-field-context";
 import { makePrefixer, useControlled } from "../utils";
 import pillGroupCss from "./PillGroup.css";
 import { PillGroupContext } from "./PillGroupContext";
@@ -80,12 +77,6 @@ export const PillGroup = forwardRef<HTMLFieldSetElement, PillGroupProps>(
 
     const { a11yProps: formFieldA11yProps, disabled: formFieldDisabled } =
       useFormFieldProps();
-
-    useFormFieldAriaLabelWarning(
-      "PillGroup",
-      rest["aria-label"],
-      formFieldA11yProps?.["aria-labelledby"],
-    );
 
     const disabled = formFieldDisabled || disabledProp;
 

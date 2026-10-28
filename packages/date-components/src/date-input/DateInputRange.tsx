@@ -457,6 +457,11 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         restAriaDescribedBy,
       ) || undefined;
 
+    // The hidden labels only hold each input's own label. A top-level
+    // aria-label names the whole field, so an external label replaces it.
+    const startInputLabel = startInputPropsAriaLabel ?? "Start date";
+    const endInputLabel = endInputPropsAriaLabel ?? "End date";
+
     const startAriaLabel =
       startInputPropsAriaLabel ??
       (ariaLabel ? `Start date ${ariaLabel}` : "Start date");
@@ -678,10 +683,10 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         </div>
         <div className={withBaseName("activationIndicator")} />
         <span id={startDateLabelId} className={withBaseName("visuallyHidden")}>
-          {startAriaLabel}
+          {startInputLabel}
         </span>
         <span id={endDateLabelId} className={withBaseName("visuallyHidden")}>
-          {endAriaLabel}
+          {endInputLabel}
         </span>
       </div>
     );

@@ -15,7 +15,6 @@ import {
 } from "react";
 import {
   type FormFieldValidationStatus,
-  useFormFieldAriaLabelWarning,
   useFormFieldProps,
 } from "../form-field-context";
 import { StatusAdornment } from "../status-adornment";
@@ -157,12 +156,6 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       necessity: formFieldRequired,
       validationStatus: formFieldValidationStatus,
     } = useFormFieldProps();
-
-    useFormFieldAriaLabelWarning(
-      "MultilineInput",
-      textAreaProps["aria-label"] ?? ariaLabel,
-      formFieldLabelledBy,
-    );
 
     const isDisabled = disabled || formFieldDisabled;
     const isReadOnly = readOnly || formFieldReadOnly;

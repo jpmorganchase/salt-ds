@@ -16,7 +16,6 @@ import {
 } from "react";
 import {
   type FormFieldValidationStatus,
-  useFormFieldAriaLabelWarning,
   useFormFieldProps,
 } from "../form-field-context";
 import { StatusAdornment } from "../status-adornment";
@@ -147,12 +146,6 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
       "aria-label": ariaLabel,
       "aria-owns": ariaOwns,
     };
-
-    useFormFieldAriaLabelWarning(
-      "Input",
-      inputProps["aria-label"] ?? ariaLabel,
-      formFieldLabelledBy,
-    );
 
     const isDisabled = disabled || formFieldDisabled;
     const isReadOnly = readOnlyProp || formFieldReadOnly;

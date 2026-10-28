@@ -7,10 +7,7 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
 } from "react";
-import {
-  useFormFieldAriaLabelWarning,
-  useFormFieldProps,
-} from "../form-field-context";
+import { useFormFieldProps } from "../form-field-context";
 import type { AdornmentValidationStatus } from "../status-adornment";
 import { makePrefixer, useControlled } from "../utils";
 import checkboxGroupCss from "./CheckboxGroup.css";
@@ -94,12 +91,6 @@ export const CheckboxGroup = forwardRef<
     readOnly: formFieldReadOnly,
     validationStatus: formFieldValidationStatus,
   } = useFormFieldProps();
-
-  useFormFieldAriaLabelWarning(
-    "CheckboxGroup",
-    other["aria-label"],
-    a11yProps?.["aria-labelledby"],
-  );
 
   const disabled = formFieldDisabled || disabledProp;
   const readOnly = formFieldReadOnly || readOnlyProp;
