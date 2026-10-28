@@ -55,7 +55,7 @@
     "@storybook/addon-links": "10.6.3",
     "@storybook/react-vite": "10.6.3",
     "@testing-library/dom": "^10.0.0",
-    "@types/node": "^24.0.0",
+    "@types/node": "^26.0.0",
     "@types/react": "^18.3.22",
     "@types/react-color": "^3.0.6",
     "@types/react-dom": "^18.3.7",
