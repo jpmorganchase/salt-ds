@@ -15,6 +15,11 @@ beyond prop forwarding.
 
 - Keep the text description short, ideally one to three words and no more than five. If you’re including an icon with the text, use no more than three words.
 
+`Button` defaults to `type="button"`, unlike the native `<button>`, so it doesn't
+submit a form unless you set `type="submit"`. While `loading` is set, a submit
+button doesn't submit. See
+[Form integration](/salt/getting-started/form-integration#submission-and-reset).
+
 ### When to use
 
 To allow the user to execute an action, such as “submit”, “merge” or “upload”. Buttons are typically placed in components and contexts such as [dialogs](../dialog), [cards](../card) and [forms](/salt/patterns/forms).
