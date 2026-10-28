@@ -4490,7 +4490,7 @@ __metadata:
     "@storybook/addon-links": "npm:10.6.3"
     "@storybook/react-vite": "npm:10.6.3"
     "@testing-library/dom": "npm:^10.0.0"
-    "@types/node": "npm:^24.0.0"
+    "@types/node": "npm:^26.0.0"
     "@types/react": "npm:^18.3.22"
     "@types/react-color": "npm:^3.0.6"
     "@types/react-dom": "npm:^18.3.7"
@@ -4560,7 +4560,7 @@ __metadata:
     "@jpmorganchase/mosaic-store": "npm:0.1.0-beta.98"
     "@next/env": "npm:^16.0.0"
     "@types/luxon": "npm:^3.7.1"
-    "@types/node": "npm:^24.0.0"
+    "@types/node": "npm:^26.0.0"
     "@types/react": "npm:^18.3.22"
     concurrently: "npm:^9.0.0"
     cross-env: "npm:^10.0.0"
@@ -6546,12 +6546,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:^24.0.0":
-  version: 24.10.1
-  resolution: "@types/node@npm:24.10.1"
+"@types/node@npm:^26.0.0":
+  version: 26.6.5
+  resolution: "@types/node@npm:26.6.5"
   dependencies:
-    undici-types: "npm:~7.16.0"
-  checksum: 10/ddac8c97be5f7401e31ea0e9316c6e864993c6cd06689b7f9874ecfb576ef8349f2d14298248a08b94a6dd029570a46a285cddc4d50e524817f1a3730b29a86e
+    undici-types: "npm:~8.9.0"
+  checksum: 10/03780cc68280b566af47c0f673318e665258dbdcc953737a83c11593424d55aecb8b2642a573da33f76cb4dd5457379548388b78ab284cb3b762030e5d58b252
   languageName: node
   linkType: hard
 
@@ -16975,10 +16975,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"undici-types@npm:~7.16.0":
-  version: 7.16.0
-  resolution: "undici-types@npm:7.16.0"
-  checksum: 10/db43439f69c2d94cc29f75cbfe9de86df87061d6b0c577ebe9bb3255f49b22c50162a7d7eb413b0458b6510b8ca299ac7cff38c3a29fbd31af9f504bcf7fbc0d
+"undici-types@npm:~8.9.0":
+  version: 8.9.0
+  resolution: "undici-types@npm:8.9.0"
+  checksum: 10/8785591929de2b71d281c684e915c4a8c41becc225adbf42a3e89148f8b384724a21533494c30a1cbb85b4cbccd088d020788ff4f2d605013eb2863cd47a1639
   languageName: node
   linkType: hard
 
