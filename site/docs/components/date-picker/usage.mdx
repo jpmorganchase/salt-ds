@@ -170,6 +170,13 @@ When using a modal `DatePicker` with confirmation controls, you must explicitly 
 
 If you are creating your own confirmation controls instead of using `DatePickerActions`, you must also explicitly set `enableApply={true}` on the `DatePicker` component.
 
+### DatePickerHelperText
+
+`DatePickerHelperText` is `FormFieldHelperText` for a `DatePicker` in a
+`FormField`, and takes the same props. Place it inside `DatePicker`: it reads the
+overlay's state and is hidden while the calendar is open, so give the panel the
+same text through its `helperText` prop.
+
 ### useDatePickerContext
 
 Inside a `DatePicker`, the `useDatePickerContext` hook returns the picker state

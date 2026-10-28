@@ -44,6 +44,8 @@ The `columns` and `numberOfVisibleMonths` properties are responsive, allowing yo
 
 A `DatePicker` with `selectionVariant` set to "single", inside a `FormField`, provides the field with a visible label, help text, and a status message for validation feedback.
 
+Put the field's helper text in `DatePickerHelperText`, inside `DatePicker`. It's hidden while the calendar is open, keeping its space, so pass the same text to the panel's `helperText` prop (`DatePickerSingleGridPanel`) to show it in the calendar.
+
 <LivePreview componentName="date-picker" exampleName="SingleWithFormField" />
 
 ## Initial error
