@@ -145,6 +145,28 @@ describe("salt-ds init", () => {
     });
   });
 
+  it("recognises a script that already runs the check through npx", async () => {
+    for (const lint of [
+      "npx @salt-ds/cli check --changed",
+      "eslint . && npx @salt-ds/cli@1.0.0 check",
+    ]) {
+      const root = project({ manifest: { name: "app", scripts: { lint } } });
+      for (const extra of [[], ["--check"]]) {
+        const result = await salt(root, [
+          "init",
+          "--project",
+          root,
+          "--script",
+          "lint",
+          ...extra,
+        ]);
+        expect(result.code).toBe(0);
+        expect(result.log).toContain("The lint script runs salt-ds check.");
+      }
+      expect(readManifest(root).scripts.lint).toBe(lint);
+    }
+  });
+
   it("writes nothing when --script's package.json is missing or broken", async () => {
     const root = project();
     writeFileSync(path.join(root, "package.json"), "{ not json");

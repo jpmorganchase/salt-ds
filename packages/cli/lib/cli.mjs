@@ -8,6 +8,8 @@ import { run as init } from "./agents-md.mjs";
 import { run as check } from "./salt-check.mjs";
 
 const CHECK_COMMAND = "salt-ds check";
+// A script already runs the check through the bin, npx or node.
+const RUNS_CHECK = /\bsalt-ds(?:\.mjs)? check\b|@salt-ds\/cli(?:@\S+)? check\b/;
 
 const USAGE = `Usage: salt-ds <command> [options]
 
@@ -66,7 +68,7 @@ function readScriptTarget(project) {
 function addCheckToScript({ target, name, check: checkOnly, log }) {
   const { file, text, manifest } = target;
   const current = manifest.scripts?.[name];
-  if (current && /\bsalt-ds check\b/.test(current)) {
+  if (current && RUNS_CHECK.test(current)) {
     log(`The ${name} script runs salt-ds check.`);
     return 0;
   }
