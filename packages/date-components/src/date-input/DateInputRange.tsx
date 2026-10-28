@@ -462,13 +462,23 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
     const startInputLabel = startInputPropsAriaLabel ?? "Start date";
     const endInputLabel = endInputPropsAriaLabel ?? "End date";
 
+    // An external label replaces a top-level aria-label, so keep the consumer's
+    // own text, which FormFieldLabel's warning quotes.
     const startAriaLabel =
       startInputPropsAriaLabel ??
-      (ariaLabel ? `Start date ${ariaLabel}` : "Start date");
+      (ariaLabel
+        ? hasStartExternalLabel
+          ? ariaLabel
+          : `Start date ${ariaLabel}`
+        : "Start date");
 
     const endAriaLabel =
       endInputPropsAriaLabel ??
-      (ariaLabel ? `End date ${ariaLabel}` : "End date");
+      (ariaLabel
+        ? hasEndExternalLabel
+          ? ariaLabel
+          : `End date ${ariaLabel}`
+        : "End date");
 
     const endInputIsRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)

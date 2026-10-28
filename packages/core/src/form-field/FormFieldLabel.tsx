@@ -19,15 +19,20 @@ function getControlsWithIgnoredAriaLabel(
   formField: HTMLElement,
   labelId: string,
 ) {
+  // Match ids in JS rather than in the selector, so ids needing CSS escaping can't throw.
   return Array.from(
-    formField.querySelectorAll(`[aria-label][aria-labelledby~="${labelId}"]`),
+    formField.querySelectorAll("[aria-label][aria-labelledby]"),
   ).filter((control) => {
     const ariaLabel = control.getAttribute("aria-label")?.trim();
     const labelledByIds = (control.getAttribute("aria-labelledby") ?? "")
       .split(/\s+/)
       .filter(Boolean);
     // A control that references itself keeps its aria-label in the name.
-    if (!ariaLabel || labelledByIds.includes(control.id)) {
+    if (
+      !ariaLabel ||
+      !labelledByIds.includes(labelId) ||
+      labelledByIds.includes(control.id)
+    ) {
       return false;
     }
 
@@ -76,14 +81,23 @@ export const FormFieldLabel = ({
         return;
       }
 
+      // Group by text, so a control that puts one aria-label on several elements warns once.
+      const controlsByAriaLabel = new Map<string, Element[]>();
       for (const control of getControlsWithIgnoredAriaLabel(formField, id)) {
         if (warnedRef.current.has(control)) {
           continue;
         }
         warnedRef.current.add(control);
-        console.warn(
-          `Salt: aria-label "${control.getAttribute("aria-label")?.trim()}" is ignored because FormFieldLabel "${label.textContent?.trim()}" provides the accessible name. Use aria-labelledby to add to the name, or aria-describedby to add a description.`,
+        const ariaLabel = control.getAttribute("aria-label")?.trim() ?? "";
+        controlsByAriaLabel.set(ariaLabel, [
+          ...(controlsByAriaLabel.get(ariaLabel) ?? []),
           control,
+        ]);
+      }
+      for (const [ariaLabel, controls] of controlsByAriaLabel) {
+        console.warn(
+          `Salt: aria-label "${ariaLabel}" is ignored because FormFieldLabel "${label.textContent?.trim()}" provides the accessible name. Use aria-labelledby to add to the name, or aria-describedby to add a description.`,
+          ...controls,
         );
       }
     }

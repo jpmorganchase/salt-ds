@@ -259,7 +259,7 @@ describe("GIVEN a FormField", () => {
 
     it.each(controls)(
       "THEN %s warns that the aria-label is ignored when a FormFieldLabel is rendered",
-      async (_name, control) => {
+      async (name, control) => {
         const consoleSpy = vi
           .spyOn(console, "warn")
           .mockImplementation(() => undefined);
@@ -270,11 +270,21 @@ describe("GIVEN a FormField", () => {
           </FormField>,
         );
         await expect
-          .poll(() => consoleSpy)
-          .toHaveBeenCalledWith(
-            `Salt: aria-label "${ariaLabel}" is ignored because FormFieldLabel "Email" provides the accessible name. Use aria-labelledby to add to the name, or aria-describedby to add a description.`,
-            expect.any(HTMLElement),
-          );
+          .poll(() =>
+            consoleSpy.mock.calls.filter(
+              ([message]) =>
+                message ===
+                `Salt: aria-label "${ariaLabel}" is ignored because FormFieldLabel "Email" provides the accessible name. Use aria-labelledby to add to the name, or aria-describedby to add a description.`,
+            ),
+          )
+          .toEqual([
+            [
+              expect.any(String),
+              expect.any(HTMLElement),
+              // RangeSlider puts the aria-label on both thumbs.
+              ...(name === "RangeSlider" ? [expect.any(HTMLElement)] : []),
+            ],
+          ]);
         consoleSpy.mockRestore();
       },
     );

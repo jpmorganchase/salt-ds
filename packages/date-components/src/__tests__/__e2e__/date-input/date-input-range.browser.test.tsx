@@ -297,7 +297,8 @@ function registerAdapterTests(
         .element(inputs.nth(1))
         .toHaveAccessibleName("Trade period End date");
       expect(consoleSpy).toHaveBeenCalledWith(
-        'Salt: aria-label "Start date trade dates" is ignored because FormFieldLabel "Trade period" provides the accessible name. Use aria-labelledby to add to the name, or aria-describedby to add a description.',
+        'Salt: aria-label "trade dates" is ignored because FormFieldLabel "Trade period" provides the accessible name. Use aria-labelledby to add to the name, or aria-describedby to add a description.',
+        expect.any(HTMLElement),
         expect.any(HTMLElement),
       );
       consoleSpy.mockRestore();
