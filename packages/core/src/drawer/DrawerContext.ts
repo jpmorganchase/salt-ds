@@ -1,8 +1,11 @@
 import { useContext } from "react";
 import { createContext } from "../utils";
+import type { DrawerProps } from "./Drawer";
 
 export interface DrawerContextValue {
   drawerId?: string;
+  position?: DrawerProps["position"];
+  resizable?: boolean;
   headerId?: string;
   setHeaderId?: (id: string | undefined) => void;
   descriptionId?: string;
@@ -13,6 +16,8 @@ export const DrawerContext = createContext<DrawerContextValue>(
   "DrawerContext",
   {
     drawerId: undefined,
+    position: undefined,
+    resizable: false,
     headerId: undefined,
     setHeaderId: () => {},
     descriptionId: undefined,
