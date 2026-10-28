@@ -107,6 +107,35 @@ describe("Given an Interactable Card", () => {
     expect(onClick).not.toHaveBeenCalled();
     expect(onChange).not.toHaveBeenCalled();
   });
+
+  it("should respect a consumer-provided tabIndex", async () => {
+    await renderWithSalt(
+      <>
+        <button type="button">Before</button>
+        <InteractableCard>Card 1</InteractableCard>
+        <InteractableCard tabIndex={-1}>Card 2</InteractableCard>
+        <button type="button">After</button>
+      </>,
+    );
+
+    await expect
+      .element(page.getByRole("button", { name: "Card 2" }))
+      .toHaveAttribute("tabindex", "-1");
+    await expect
+      .element(page.getByRole("button", { name: "Card 1" }))
+      .toHaveAttribute("tabindex", "0");
+
+    await userEvent.tab();
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "Card 1" }))
+      .toHaveFocus();
+
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "After" }))
+      .toHaveFocus();
+  });
 });
 
 describe("GIVEN a multiselect InteractableCardGroup", () => {
