@@ -9,6 +9,18 @@
   animation: none;
 }
 
+.fakeDialogWindow {
+  padding-top: var(--salt-spacing-300);
+  padding-bottom: var(--salt-spacing-300);
+  background: var(--salt-container-primary-background);
+  box-shadow: var(--salt-overlayable-shadow-modal);
+  z-index: var(--salt-zIndex-drawer);
+  height: min-content;
+  border-width: var(--salt-size-fixed-100);
+  border-style: var(--salt-borderStyle-solid);
+  border-color: var(--salt-container-borderColor);
+}
+
 .longDialog {
   height: 200px;
 }
