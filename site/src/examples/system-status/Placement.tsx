@@ -1,52 +1,45 @@
 import {
   Banner,
-  BannerActions,
   BannerContent,
-  Button,
+  H1,
+  OnSolidButton,
   StackLayout,
   Text,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
-
+import {
+  SystemStatus,
+  SystemStatusActions,
+  SystemStatusContent,
+} from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
-export const Placement = (): ReactElement => {
-  return (
+export const Placement = (): ReactElement => (
+  <StackLayout gap={0} style={{ width: "100%" }}>
+    <SystemStatus>
+      <SystemStatusContent>
+        <Text color="inherit">
+          All users will sign in through the company portal on their next visit.
+        </Text>
+      </SystemStatusContent>
+      <SystemStatusActions>
+        <OnSolidButton aria-label="Dismiss">
+          <CloseIcon aria-hidden />
+        </OnSolidButton>
+      </SystemStatusActions>
+    </SystemStatus>
     <StackLayout
       style={{
-        width: "100%",
-        background: "var( --salt-container-primary-background)",
+        padding: "var(--salt-spacing-300) var(--salt-layout-page-margin)",
       }}
     >
-      <SystemStatus>
-        <SystemStatusContent>
-          <Text color="inherit">
-            All users will sign in through the company portal on their next
-            visit.
-          </Text>
-        </SystemStatusContent>
-      </SystemStatus>
-      <StackLayout
-        gap={4.5}
-        style={{
-          padding:
-            "var(--salt-spacing-100) var(--salt-spacing-300) calc(var(--salt-spacing-100)*4.5) ",
-        }}
-      >
-        <Text styleAs="display2"> Payment Activity</Text>
-        <Banner status="warning" variant="secondary">
-          <BannerContent role="status">
-            You have outstanding checks more than 30 days old. Review to prevent
-            fraud.
-          </BannerContent>
-          <BannerActions>
-            <Button aria-label="Dismiss" appearance="transparent">
-              <CloseIcon aria-hidden />
-            </Button>
-          </BannerActions>
-        </Banner>
-      </StackLayout>
+      <H1 styleAs="display2">Payment activity</H1>
+      <Banner status="warning" variant="secondary">
+        <BannerContent>
+          You have outstanding checks more than 30 days old. Review to prevent
+          fraud.
+        </BannerContent>
+      </Banner>
     </StackLayout>
-  );
-};
+  </StackLayout>
+);

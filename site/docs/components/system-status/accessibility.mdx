@@ -16,3 +16,14 @@ data:
 - Describe the impact and any necessary action in text rather than relying on color or the status icon.
 - Announce meaningful changes, not each polling response. Avoid repeating an unchanged message or announcing the same issue through multiple live regions.
 - Test announcements and keyboard access to actions with the browsers and screen readers you support. A role does not guarantee an announcement or focus its actions.
+- Screen readers don't always announce content inserted dynamically into a `role="status"` region, which a system status has by default. When testing, check that a system status added to the page is announced.
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Tab">
+
+Tab moves focus through the interactive elements.
+
+</KeyboardControl>
+</KeyboardControls>
