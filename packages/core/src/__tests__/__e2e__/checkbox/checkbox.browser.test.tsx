@@ -11,6 +11,44 @@ describe("GIVEN a Checkbox", () => {
     await expect.element(page.getByTestId("customInput")).toBeChecked();
   });
 
+  it("applies aria-label to the input element", async () => {
+    await renderWithSalt(<Checkbox aria-label="Select row" />);
+    await expect
+      .element(page.getByRole("checkbox"))
+      .toHaveAccessibleName("Select row");
+    expect(
+      document.querySelector(".saltCheckbox")?.hasAttribute("aria-label"),
+    ).toBe(false);
+  });
+
+  it("prefers aria-label from inputProps over aria-label", async () => {
+    await renderWithSalt(
+      <Checkbox aria-label="Outer" inputProps={{ "aria-label": "Inner" }} />,
+    );
+    await expect
+      .element(page.getByRole("checkbox"))
+      .toHaveAccessibleName("Inner");
+  });
+
+  it("applies aria-labelledby and aria-describedby to the input element", async () => {
+    await renderWithSalt(
+      <>
+        <span id="external-label">Select row</span>
+        <span id="external-description">Row 1</span>
+        <Checkbox
+          aria-labelledby="external-label"
+          aria-describedby="external-description"
+        />
+      </>,
+    );
+    const checkbox = page.getByRole("checkbox");
+    await expect.element(checkbox).toHaveAccessibleName("Select row");
+    await expect.element(checkbox).toHaveAccessibleDescription("Row 1");
+    const root = document.querySelector(".saltCheckbox");
+    expect(root?.hasAttribute("aria-labelledby")).toBe(false);
+    expect(root?.hasAttribute("aria-describedby")).toBe(false);
+  });
+
   it("sets the indeterminate property", async () => {
     await renderWithSalt(<Checkbox indeterminate />);
     expect(

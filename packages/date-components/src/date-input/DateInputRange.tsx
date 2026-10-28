@@ -419,23 +419,31 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       startInputPropsAriaLabel !== undefined || ariaLabel !== undefined;
     const hasEndExplicitAriaLabel =
       endInputPropsAriaLabel !== undefined || ariaLabel !== undefined;
+    const hasStartExternalLabel = Boolean(
+      formFieldLabelledBy || startInputPropsLabelledBy || restAriaLabelledBy,
+    );
+    const hasEndExternalLabel = Boolean(
+      formFieldLabelledBy || endInputPropsLabelledBy || restAriaLabelledBy,
+    );
 
-    const startAriaLabelledBy = hasStartExplicitAriaLabel
-      ? undefined
-      : clsx(
-          formFieldLabelledBy,
-          startDateLabelId,
-          startInputPropsLabelledBy,
-          restAriaLabelledBy,
-        ) || undefined;
-    const endAriaLabelledBy = hasEndExplicitAriaLabel
-      ? undefined
-      : clsx(
-          formFieldLabelledBy,
-          endDateLabelId,
-          endInputPropsLabelledBy,
-          restAriaLabelledBy,
-        ) || undefined;
+    const startAriaLabelledBy =
+      hasStartExplicitAriaLabel && !hasStartExternalLabel
+        ? undefined
+        : clsx(
+            formFieldLabelledBy,
+            startDateLabelId,
+            startInputPropsLabelledBy,
+            restAriaLabelledBy,
+          ) || undefined;
+    const endAriaLabelledBy =
+      hasEndExplicitAriaLabel && !hasEndExternalLabel
+        ? undefined
+        : clsx(
+            formFieldLabelledBy,
+            endDateLabelId,
+            endInputPropsLabelledBy,
+            restAriaLabelledBy,
+          ) || undefined;
     const startAriaDescribedBy =
       clsx(
         formFieldDescribedBy,
@@ -670,10 +678,10 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         </div>
         <div className={withBaseName("activationIndicator")} />
         <span id={startDateLabelId} className={withBaseName("visuallyHidden")}>
-          Start date
+          {startAriaLabel}
         </span>
         <span id={endDateLabelId} className={withBaseName("visuallyHidden")}>
-          End date
+          {endAriaLabel}
         </span>
       </div>
     );

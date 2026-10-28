@@ -44,6 +44,7 @@ interface SliderThumbProps
 }
 
 export const SliderThumb = ({
+  "aria-describedby": ariaDescribedBy,
   "aria-label": ariaLabel,
   "aria-valuetext": ariaValueText,
   "aria-labelledby": ariaLabelledBy,
@@ -143,7 +144,7 @@ export const SliderThumb = ({
           aria-valuenow={value}
           aria-valuetext={ariaValueText || format?.(value).toString()}
           aria-label={ariaLabel}
-          aria-describedby={accessibleTextId}
+          aria-describedby={clsx(accessibleTextId, ariaDescribedBy)}
           min={min}
           max={max}
           step={step}

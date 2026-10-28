@@ -95,6 +95,9 @@ export interface CheckboxProps
 export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
   function Checkbox(
     {
+      "aria-describedby": ariaDescribedBy,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
       checked: checkedProp,
       className,
       defaultChecked,
@@ -200,6 +203,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
         {...rest}
       >
         <input
+          aria-label={ariaLabel}
           aria-readonly={readOnly || undefined}
           aria-describedby={
             clsx(
@@ -207,6 +211,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
                 ? formFieldA11yProps?.["aria-describedby"]
                 : undefined,
               inputDescribedBy,
+              ariaDescribedBy,
             ) || undefined
           }
           aria-labelledby={
@@ -215,6 +220,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
                 ? formFieldA11yProps?.["aria-labelledby"]
                 : undefined,
               inputLabelledBy,
+              ariaLabelledBy,
             ) || undefined
           }
           name={name}

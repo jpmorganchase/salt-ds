@@ -284,6 +284,9 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       props,
     );
     const {
+      "aria-describedby": ariaDescribedBy,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
       "aria-valuetext": ariaValueTextProp,
       bordered,
       clamp,
@@ -608,10 +611,12 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         {/* biome-ignore lint/a11y/useAriaPropsSupportedByRole: Biome can't detect the role is determined by variable, aria-valuemax is only used when the role is appropriate. */}
         <input
           aria-describedby={
-            clsx(formFieldDescribedBy, inputDescribedBy) || undefined
+            clsx(formFieldDescribedBy, inputDescribedBy, ariaDescribedBy) ||
+            undefined
           }
           aria-labelledby={
-            clsx(formFieldLabelledBy, inputLabelledBy) || undefined
+            clsx(formFieldLabelledBy, inputLabelledBy, ariaLabelledBy) ||
+            undefined
           }
           aria-invalid={
             !isReadOnly && renderedValue.length
@@ -619,6 +624,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
                 validationStatus === "error"
               : undefined
           }
+          aria-label={ariaLabel}
           className={clsx(
             withBaseName("input"),
             withBaseName(`inputTextAlign${capitalize(textAlign)}`),
