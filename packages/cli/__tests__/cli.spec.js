@@ -8,7 +8,7 @@ import {
 } from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { run } from "../lib/cli.mjs";
 
 const roots = [];
@@ -219,6 +219,24 @@ describe("salt-ds init", () => {
       '{\r\n\t"name": "app",\r\n\t"devDependencies": {\r\n\t\t"@salt-ds/cli": "^0.1.0"\r\n\t},\r\n\t"scripts": {\r\n\t\t"lint": "salt-ds check"\r\n\t}\r\n}\r\n',
     );
     expect(log.at(-1)).toBe("Added the lint script to run salt-ds check.");
+  });
+
+  it("doesn't report a bug in init as a usage error", async () => {
+    vi.resetModules();
+    vi.doMock("../lib/agents-md.mjs", () => ({
+      run: () => {
+        throw new TypeError("Cannot read properties of undefined");
+      },
+    }));
+    try {
+      const { run: runWithBug } = await import("../lib/cli.mjs");
+      await expect(
+        runWithBug(["init"], { cwd: project(), log: () => {} }),
+      ).rejects.toThrow(TypeError);
+    } finally {
+      vi.doUnmock("../lib/agents-md.mjs");
+      vi.resetModules();
+    }
   });
 });
 

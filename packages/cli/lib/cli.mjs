@@ -114,6 +114,9 @@ function runInit(args, { log, cwd }) {
   try {
     code = init(rest, { log, cwd });
   } catch (error) {
+    // init reports bad arguments and missing or broken docs as plain Errors.
+    // Anything else is a bug, so it keeps its type and stack.
+    if (error.constructor !== Error) throw error;
     throw new UsageError(error.message);
   }
   if (help) return code;
