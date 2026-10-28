@@ -50,7 +50,6 @@ export const LayoutPosition = (): ReactElement => {
           <FormFieldLabel>Align</FormFieldLabel>
           <RadioButtonGroup
             direction={"horizontal"}
-            aria-label="Align Controls"
             name="align"
             onChange={handleAlignChange}
             value={align}
@@ -71,7 +70,6 @@ export const LayoutPosition = (): ReactElement => {
           <FormFieldLabel>Justify</FormFieldLabel>
           <RadioButtonGroup
             direction={"horizontal"}
-            aria-label="Justify Controls"
             name="justify"
             onChange={handleJustifyChange}
             value={justify}

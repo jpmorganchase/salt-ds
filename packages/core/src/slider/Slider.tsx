@@ -5,7 +5,10 @@ import {
   type HTMLAttributes,
   useRef,
 } from "react";
-import { useFormFieldProps } from "../form-field-context";
+import {
+  useFormFieldAriaLabelWarning,
+  useFormFieldProps,
+} from "../form-field-context";
 import { useControlled } from "../utils";
 import { SliderThumb } from "./internal/SliderThumb";
 import { SliderTrack } from "./internal/SliderTrack";
@@ -155,6 +158,8 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     } = {},
     disabled: formFieldDisabled,
   } = useFormFieldProps();
+
+  useFormFieldAriaLabelWarning("Slider", ariaLabel, formFieldLabelledBy);
 
   const disabled = formFieldDisabled || disabledProp;
   const inputRef = useRef<HTMLInputElement>(null);

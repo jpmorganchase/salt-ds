@@ -93,9 +93,9 @@ function lastCall(spy: ReturnType<typeof vi.fn>) {
 }
 
 async function chooseTimezone(timezone: string) {
-  const dropdown = document.querySelector<HTMLButtonElement>(
-    'button[aria-label="timezone dropdown"]',
-  );
+  const dropdown = page
+    .getByRole("combobox", { name: /(select|enter) a timezone/i })
+    .query();
   if (!dropdown) throw new Error("Timezone dropdown was not rendered");
   await page.elementLocator(dropdown).click();
   const option = page.getByRole("option", { name: timezone });

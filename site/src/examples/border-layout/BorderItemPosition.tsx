@@ -70,7 +70,6 @@ export const BorderItemPosition = (): ReactElement => {
           <FormFieldLabel>Position</FormFieldLabel>
           <RadioButtonGroup
             direction={"horizontal"}
-            aria-label="Position Controls"
             name="position"
             onChange={handleChange}
             value={position}

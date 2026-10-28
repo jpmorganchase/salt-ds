@@ -64,7 +64,6 @@ export const LayoutDirection = (): ReactElement => {
           <FormFieldLabel>Direction</FormFieldLabel>
           <RadioButtonGroup
             direction={"horizontal"}
-            aria-label="Direction Controls"
             name="direction"
             onChange={handleDirectionChange}
             value={direction}

@@ -543,9 +543,9 @@ function registerAdapterTests(
       for (const { timezone, startDate, endDate } of cases) {
         it(`SHOULD render date in the ${timezone} timezone`, async () => {
           await render(<RangeWithTimezone />);
-          const dropdown = document.querySelector<HTMLButtonElement>(
-            'button[aria-label="timezone dropdown"]',
-          );
+          const dropdown = page
+            .getByRole("combobox", { name: /(select|enter) a timezone/i })
+            .query();
           if (!dropdown) throw new Error("Timezone dropdown was not rendered");
           await page.elementLocator(dropdown).click();
           const option = page.getByRole("option", { name: timezone });
