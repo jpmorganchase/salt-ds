@@ -251,6 +251,41 @@ function registerAdapterTests(
       }
     });
 
+    it("SHOULD combine the FormField label with per-input aria-labels", async () => {
+      await render(
+        <FormField>
+          <FormFieldLabel>Trade period</FormFieldLabel>
+          <DateInputRange
+            startInputProps={{ "aria-label": "Trade date" }}
+            endInputProps={{ "aria-label": "Settlement date" }}
+          />
+        </FormField>,
+      );
+      const inputs = page.getByRole("textbox");
+      await expect
+        .element(inputs.nth(0))
+        .toHaveAccessibleName("Trade period Trade date");
+      await expect
+        .element(inputs.nth(1))
+        .toHaveAccessibleName("Trade period Settlement date");
+    });
+
+    it("SHOULD combine the FormField label with top-level aria-label", async () => {
+      await render(
+        <FormField>
+          <FormFieldLabel>Trade period</FormFieldLabel>
+          <DateInputRange aria-label="trade dates" />
+        </FormField>,
+      );
+      const inputs = page.getByRole("textbox");
+      await expect
+        .element(inputs.nth(0))
+        .toHaveAccessibleName("Trade period Start date trade dates");
+      await expect
+        .element(inputs.nth(1))
+        .toHaveAccessibleName("Trade period End date trade dates");
+    });
+
     it("SHOULD render value, even when not a valid date", async () => {
       await render(
         <DateInputRange

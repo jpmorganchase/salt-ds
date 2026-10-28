@@ -700,4 +700,37 @@ describe("Number Input", () => {
     );
     await expect.element(input()).toHaveAttribute("name", "override");
   });
+
+  it("applies aria-label to the input with inputProps taking precedence", async () => {
+    await renderWithSalt(<NumberInput aria-label="Quantity" />);
+    await expect.element(input()).toHaveAccessibleName("Quantity");
+    expect(
+      document.querySelector(".saltNumberInput")?.hasAttribute("aria-label"),
+    ).toBe(false);
+
+    await renderWithSalt(
+      <NumberInput aria-label="Outer" inputProps={{ "aria-label": "Inner" }} />,
+    );
+    await expect.element(input()).toHaveAccessibleName("Inner");
+  });
+
+  it("applies aria-labelledby and aria-describedby to the input", async () => {
+    await renderWithSalt(
+      <>
+        <span id="external-label">Quantity</span>
+        <span id="external-description">Whole units only</span>
+        <NumberInput
+          aria-labelledby="external-label"
+          aria-describedby="external-description"
+        />
+      </>,
+    );
+    await expect.element(input()).toHaveAccessibleName("Quantity");
+    await expect
+      .element(input())
+      .toHaveAccessibleDescription("Whole units only");
+    const root = document.querySelector(".saltNumberInput");
+    expect(root?.hasAttribute("aria-labelledby")).toBe(false);
+    expect(root?.hasAttribute("aria-describedby")).toBe(false);
+  });
 });

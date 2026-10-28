@@ -119,6 +119,7 @@ export interface RangeSliderProps
 export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
   function RangeSlider(
     {
+      "aria-describedby": ariaDescribedBy,
       "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledBy,
       "aria-valuetext": ariaValueText,
@@ -155,7 +156,10 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     const lastValueRef = useRef<[number, number]>(valueState);
 
     const {
-      a11yProps: { "aria-labelledby": formFieldLabelledBy } = {},
+      a11yProps: {
+        "aria-describedby": formFieldDescribedBy,
+        "aria-labelledby": formFieldLabelledBy,
+      } = {},
       disabled: formFieldDisabled,
     } = useFormFieldProps();
 
@@ -222,6 +226,8 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     });
 
     const thumbProps = {
+      "aria-describedby":
+        clsx(formFieldDescribedBy, ariaDescribedBy) || undefined,
       "aria-label": ariaLabel,
       "aria-labelledby": clsx(formFieldLabelledBy, ariaLabelledBy),
       "aria-valuemax": max,

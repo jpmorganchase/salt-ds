@@ -8,6 +8,11 @@ data:
   $ref: ./#/data
 ---
 
+## Best practices
+
+- `FormField` names the form control with `FormFieldLabel` and describes it with `FormFieldHelperText`. Pass `aria-labelledby` and `aria-describedby` to the form control itself, not through props such as `inputProps`. These values are added after the `FormField` ones, so the visible label stays in the accessible name.
+- An `aria-label` on the form control doesn't replace the `FormFieldLabel`. This keeps the visible label in the accessible name for speech input users ([WCAG 2.5.3 Label in Name](https://www.w3.org/WAI/WCAG22/Understanding/label-in-name.html)). Use `aria-label` only on form controls that don't have a visible label.
+
 ## Keyboard interactions
 
 All keyboard interactions are supplied by the underlying wrapped components, rather than the `FormField` component.

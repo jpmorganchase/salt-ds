@@ -469,7 +469,7 @@ export const InitialFocusIndex: StoryFn<DrawerProps> = (args) => {
           <StackLayout>
             <Button>First</Button>
             <Button>Second</Button>
-            <Input inputProps={{ "aria-label": "Third" }} />
+            <Input aria-label="Third" />
             <Button>Fourth</Button>
           </StackLayout>
         </DrawerContent>
@@ -496,7 +496,7 @@ export const InitialFocusRef: StoryFn<DrawerProps> = (args) => {
           <StackLayout>
             <Button>First</Button>
             <Button>Second</Button>
-            <Input inputRef={inputRef} inputProps={{ "aria-label": "Third" }} />
+            <Input inputRef={inputRef} aria-label="Third" />
             <Button>Fourth</Button>
           </StackLayout>
         </DrawerContent>

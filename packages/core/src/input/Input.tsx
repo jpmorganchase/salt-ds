@@ -96,7 +96,10 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
     );
     const {
       "aria-activedescendant": ariaActiveDescendant,
+      "aria-describedby": ariaDescribedBy,
       "aria-expanded": ariaExpanded,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
       "aria-owns": ariaOwns,
       disabled,
       emptyReadOnlyMarker = "—",
@@ -140,6 +143,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
     const restA11yProps = {
       "aria-activedescendant": ariaActiveDescendant,
       "aria-expanded": ariaExpanded,
+      "aria-label": ariaLabel,
       "aria-owns": ariaOwns,
     };
 
@@ -229,10 +233,12 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
         )}
         <input
           aria-describedby={
-            clsx(formFieldDescribedBy, inputDescribedBy) || undefined
+            clsx(formFieldDescribedBy, inputDescribedBy, ariaDescribedBy) ||
+            undefined
           }
           aria-labelledby={
-            clsx(formFieldLabelledBy, inputLabelledBy) || undefined
+            clsx(formFieldLabelledBy, inputLabelledBy, ariaLabelledBy) ||
+            undefined
           }
           className={clsx(withBaseName("input"), inputProps?.className)}
           disabled={isDisabled}

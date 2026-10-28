@@ -83,7 +83,10 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
   function MultilineInput(
     {
       "aria-activedescendant": ariaActiveDescendant,
+      "aria-describedby": ariaDescribedBy,
       "aria-expanded": ariaExpanded,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
       "aria-owns": ariaOwns,
       bordered = false,
       className: classNameProp,
@@ -127,6 +130,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
     const restA11yProps = {
       "aria-activedescendant": ariaActiveDescendant,
       "aria-expanded": ariaExpanded,
+      "aria-label": ariaLabel,
       "aria-owns": ariaOwns,
     };
 
@@ -245,10 +249,15 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
         <div className={withBaseName("wrapper")}>
           <textarea
             aria-describedby={
-              clsx(formFieldDescribedBy, textAreaDescribedBy) || undefined
+              clsx(
+                formFieldDescribedBy,
+                textAreaDescribedBy,
+                ariaDescribedBy,
+              ) || undefined
             }
             aria-labelledby={
-              clsx(formFieldLabelledBy, textAreaLabelledBy) || undefined
+              clsx(formFieldLabelledBy, textAreaLabelledBy, ariaLabelledBy) ||
+              undefined
             }
             className={clsx(withBaseName("textarea"), textAreaProps?.className)}
             disabled={isDisabled}

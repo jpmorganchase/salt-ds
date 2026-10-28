@@ -1,4 +1,10 @@
-import { Button, FormField, FormFieldLabel, Input } from "@salt-ds/core";
+import {
+  Button,
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
+  Input,
+} from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
 import { type ChangeEvent, useState } from "react";
 import { describe, expect, it, vi } from "vitest";
@@ -27,6 +33,72 @@ describe("GIVEN an Input", () => {
       <Input inputProps={{ "data-testId": "customInput" }} value="value" />,
     );
     await expect.element(page.getByTestId("customInput")).toHaveValue("value");
+  });
+
+  it("SHOULD apply aria-label to the input element", async () => {
+    await renderWithSalt(<Input aria-label="Search" />);
+    await expect.element(textbox()).toHaveAccessibleName("Search");
+    expect(
+      document.querySelector(".saltInput")?.hasAttribute("aria-label"),
+    ).toBe(false);
+  });
+
+  it("SHOULD prefer aria-label from inputProps over aria-label", async () => {
+    await renderWithSalt(
+      <Input aria-label="Outer" inputProps={{ "aria-label": "Inner" }} />,
+    );
+    await expect.element(textbox()).toHaveAccessibleName("Inner");
+  });
+
+  it("SHOULD apply aria-labelledby and aria-describedby to the input element", async () => {
+    await renderWithSalt(
+      <>
+        <span id="external-label">Search</span>
+        <span id="external-description">Enter a keyword</span>
+        <Input
+          aria-labelledby="external-label"
+          aria-describedby="external-description"
+        />
+      </>,
+    );
+    await expect.element(textbox()).toHaveAccessibleName("Search");
+    await expect
+      .element(textbox())
+      .toHaveAccessibleDescription("Enter a keyword");
+    const root = document.querySelector(".saltInput");
+    expect(root?.hasAttribute("aria-labelledby")).toBe(false);
+    expect(root?.hasAttribute("aria-describedby")).toBe(false);
+  });
+
+  it("SHOULD merge aria-labelledby and aria-describedby with FormField and inputProps", async () => {
+    await renderWithSalt(
+      <>
+        <span id="root-label">Root label</span>
+        <span id="input-label">Input label</span>
+        <span id="root-description">Root description</span>
+        <span id="input-description">Input description</span>
+        <FormField>
+          <FormFieldLabel>Field label</FormFieldLabel>
+          <Input
+            aria-labelledby="root-label"
+            aria-describedby="root-description"
+            inputProps={{
+              "aria-labelledby": "input-label",
+              "aria-describedby": "input-description",
+            }}
+          />
+          <FormFieldHelperText>Helper text</FormFieldHelperText>
+        </FormField>
+      </>,
+    );
+    await expect
+      .element(textbox())
+      .toHaveAccessibleName("Field label Input label Root label");
+    await expect
+      .element(textbox())
+      .toHaveAccessibleDescription(
+        "Helper text Input description Root description",
+      );
   });
 
   describe("WHEN rendered as an uncontrolled component", () => {

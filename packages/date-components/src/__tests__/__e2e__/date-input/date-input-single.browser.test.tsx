@@ -162,6 +162,33 @@ function registerAdapterTests(adapter: SaltDateAdapter<any>) {
       await expect.element(input).not.toHaveAttribute("aria-labelledby");
     });
 
+    it("SHOULD keep the FormField label when aria-label is set", async () => {
+      await render(
+        <FormField>
+          <FormFieldLabel>Trade date</FormFieldLabel>
+          <DateInputSingle aria-label="Custom label" />
+        </FormField>,
+      );
+      await expect
+        .element(page.getByRole("textbox"))
+        .toHaveAccessibleName("Trade date");
+    });
+
+    it("SHOULD keep aria-labelledby when aria-label is set", async () => {
+      await render(
+        <>
+          <span id="external-label">Settlement date</span>
+          <DateInputSingle
+            aria-label="Custom label"
+            aria-labelledby="external-label"
+          />
+        </>,
+      );
+      await expect
+        .element(page.getByRole("textbox"))
+        .toHaveAccessibleName("Settlement date");
+    });
+
     it("SHOULD call onDateChange only if value changes", async () => {
       const onDateChange = vi.fn();
       const onDateValueChange = vi.fn();
