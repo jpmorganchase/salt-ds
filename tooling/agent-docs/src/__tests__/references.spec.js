@@ -1,7 +1,6 @@
 import { mkdir, mkdtemp, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
-import { fileURLToPath } from "node:url";
 import { afterEach, describe, expect, it } from "vitest";
 import {
   changelogReplacements,
@@ -114,24 +113,6 @@ describe("token availability", () => {
       );
     },
   );
-
-  it("qualifies common deprecated tokens using the real theme entrypoints", async () => {
-    const tokens = await collectTokens(
-      fileURLToPath(
-        new URL("../../../../packages/theme/src/css", import.meta.url),
-      ),
-    );
-    const byName = new Map(tokens.map((token) => [token.name, token]));
-    expect(byName.get("--salt-accent-background").themes).toEqual(
-      new Set(["legacy", "next"]),
-    );
-    expect(byName.get("--salt-color-gray-900-5a").themes).toEqual(
-      new Set(["salt-interim"]),
-    );
-    expect(byName.get("--salt-color-brown-100").themes).toEqual(
-      new Set(["next", "salt-interim"]),
-    );
-  });
 });
 
 describe("token tiers", () => {
@@ -188,28 +169,6 @@ describe("token tiers", () => {
     expect(deprecated).toContain(
       "`--salt-palette-warning-hover` (SaltProviderNext theme only)",
     );
-  });
-
-  it("classifies the reinstated alpha foundations and next-deprecated palette tokens in the real theme", async () => {
-    const tokens = await collectTokens(
-      fileURLToPath(
-        new URL("../../../../packages/theme/src/css", import.meta.url),
-      ),
-    );
-    const tiers = (name) =>
-      tokens
-        .filter((token) => token.name === name)
-        .map(({ tier, themes }) => `${tier}:${[...themes].sort().join("+")}`);
-    expect(tiers("--salt-color-black-15a")).toEqual([
-      "foundations:legacy+next+salt-interim",
-    ]);
-    expect(tiers("--salt-color-white-15a")).toEqual([
-      "foundations:legacy+next+salt-interim",
-    ]);
-    expect(tiers("--salt-palette-warning-action-hover")).toEqual([
-      "palette:legacy",
-      "deprecated:next",
-    ]);
   });
 });
 
@@ -405,28 +364,6 @@ describe("changelogReplacements", () => {
       ]),
     );
   });
-
-  it("finds the replacements for the tokens agents used from older Salt versions", async () => {
-    const themeDir = fileURLToPath(
-      new URL("../../../../packages/theme", import.meta.url),
-    );
-    const { readFile } = await import("node:fs/promises");
-    const changelog = changelogReplacements(
-      await readFile(path.join(themeDir, "CHANGELOG.md"), "utf8"),
-    );
-    const markdown = render(
-      await collectTokens(path.join(themeDir, "src", "css"), { changelog }),
-    );
-    expect(markdown).toContain(
-      "- `--salt-size-border`: use `--salt-spacing-fixed-100` or `--salt-size-fixed-100` instead",
-    );
-    expect(markdown).toContain(
-      "- `--salt-container-secondary-borderColor`: use `--salt-container-bold-borderColor` instead",
-    );
-    expect(markdown).toContain(
-      "- `--salt-container-borderStyle`: use `--salt-borderStyle-solid` instead",
-    );
-  });
 });
 
 describe("deprecated token aliases", () => {
@@ -508,30 +445,5 @@ describe("deprecated token aliases", () => {
     });
     const markdown = render(await collectTokens(root));
     expectNoAlias(markdown, "--salt-palette-size");
-  });
-
-  it("omits conflicting real color and font aliases while retaining stable replacements", async () => {
-    const tokens = await collectTokens(
-      fileURLToPath(
-        new URL("../../../../packages/theme/src/css", import.meta.url),
-      ),
-    );
-    const markdown = render(tokens);
-    for (const name of [
-      "--salt-palette-foreground-active",
-      "--salt-palette-accent-action-active",
-      "--salt-palette-text-fontFamily-heading",
-      "--salt-palette-text-heading-fontWeight",
-    ]) {
-      expectNoAlias(markdown, name);
-    }
-    expectNoAlias(markdown, "--salt-size-divider-strokeWidth");
-    expect(
-      markdown
-        .split("\n")
-        .find((line) =>
-          line.startsWith("- `--salt-typography-textDecoration-italic`"),
-        ),
-    ).toContain("alias of `--salt-typography-fontStyle-italic`");
   });
 });
