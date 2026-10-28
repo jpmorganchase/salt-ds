@@ -10,7 +10,6 @@ import {
   type OptionProps,
   Tooltip,
   type TooltipProps,
-  useFormFieldProps,
   useIcon,
   useListControlContext,
 } from "@salt-ds/core";
@@ -271,9 +270,6 @@ export const CalendarNavigation = forwardRef<
   } = props;
 
   const { dateAdapter } = useLocalization();
-  // Keep a surrounding FormField's disabled and readOnly state, but not its label.
-  const { a11yProps: _formFieldA11yProps, ...formFieldProps } =
-    useFormFieldProps();
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -401,9 +397,8 @@ export const CalendarNavigation = forwardRef<
           <PreviousIcon aria-hidden />
         </Button>
       </ConditionalTooltip>
-      <FormFieldContext.Provider
-        value={formFieldProps as FormFieldContextValue}
-      >
+      {/* Keep a surrounding FormField's label off the month and year dropdowns. */}
+      <FormFieldContext.Provider value={{} as FormFieldContextValue}>
         <div
           className={clsx({ [withBaseName("dropdowns")]: !hideYearDropdown })}
         >
