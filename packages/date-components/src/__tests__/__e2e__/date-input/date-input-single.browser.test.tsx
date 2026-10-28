@@ -176,7 +176,8 @@ function registerAdapterTests(adapter: SaltDateAdapter<any>) {
         .element(page.getByRole("textbox"))
         .toHaveAccessibleName("Trade date");
       expect(consoleSpy).toHaveBeenCalledWith(
-        'Salt: DateInputSingle `aria-label` "Custom label" is ignored because FormFieldLabel "Trade date" provides the accessible name. Use `aria-labelledby` to add to the name, or `aria-describedby` to add a description.',
+        'Salt: aria-label "Custom label" is ignored because FormFieldLabel "Trade date" provides the accessible name. Use aria-labelledby to add to the name, or aria-describedby to add a description.',
+        expect.any(HTMLElement),
       );
       consoleSpy.mockRestore();
     });
@@ -502,10 +503,8 @@ function registerAdapterTests(adapter: SaltDateAdapter<any>) {
           </FormField>,
         );
         const input = page.getByRole("textbox");
-        const labelledBy = input.element().getAttribute("aria-labelledby");
-        const label = input.element().getAttribute("aria-label");
-        expect(labelledBy).toBeTruthy();
-        expect(label).toBeTruthy();
+        expect(input.element().getAttribute("aria-labelledby")).toBeTruthy();
+        await expect.element(input).toHaveAccessibleName("Date");
       });
     });
   });

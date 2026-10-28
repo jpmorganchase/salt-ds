@@ -252,6 +252,9 @@ function registerAdapterTests(
     });
 
     it("SHOULD combine the FormField label with per-input aria-labels", async () => {
+      const consoleSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
       await render(
         <FormField>
           <FormFieldLabel>Trade period</FormFieldLabel>
@@ -268,9 +271,18 @@ function registerAdapterTests(
       await expect
         .element(inputs.nth(1))
         .toHaveAccessibleName("Trade period Settlement date");
+      expect(
+        consoleSpy.mock.calls.filter(([message]) =>
+          String(message).includes("is ignored because FormFieldLabel"),
+        ),
+      ).toHaveLength(0);
+      consoleSpy.mockRestore();
     });
 
-    it("SHOULD combine the FormField label with top-level aria-label", async () => {
+    it("SHOULD replace the top-level aria-label with the FormField label", async () => {
+      const consoleSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
       await render(
         <FormField>
           <FormFieldLabel>Trade period</FormFieldLabel>
@@ -280,10 +292,15 @@ function registerAdapterTests(
       const inputs = page.getByRole("textbox");
       await expect
         .element(inputs.nth(0))
-        .toHaveAccessibleName("Trade period Start date trade dates");
+        .toHaveAccessibleName("Trade period Start date");
       await expect
         .element(inputs.nth(1))
-        .toHaveAccessibleName("Trade period End date trade dates");
+        .toHaveAccessibleName("Trade period End date");
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Salt: aria-label "Start date trade dates" is ignored because FormFieldLabel "Trade period" provides the accessible name. Use aria-labelledby to add to the name, or aria-describedby to add a description.',
+        expect.any(HTMLElement),
+      );
+      consoleSpy.mockRestore();
     });
 
     it("SHOULD render value, even when not a valid date", async () => {

@@ -443,6 +443,9 @@ describe("Given a ComboBox", () => {
     await expect
       .element(input())
       .toHaveAccessibleDescription("Pick a US state");
+    await expect
+      .element(page.getByRole("button"))
+      .toHaveAccessibleName("Show options State");
     await page.getByText("State", { exact: true }).click();
     await expect.element(input()).toHaveFocus();
     await expect.element(listbox()).toBeInTheDocument();

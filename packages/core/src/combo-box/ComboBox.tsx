@@ -428,6 +428,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
   const showOptionsButton = (
     <Button
+      id={buttonId}
       aria-labelledby={clsx(buttonId, formFieldLabelledBy)}
       aria-label="Show options"
       aria-expanded={openState}

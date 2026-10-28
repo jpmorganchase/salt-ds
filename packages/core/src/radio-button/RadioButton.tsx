@@ -10,10 +10,7 @@ import {
   type ReactNode,
   type Ref,
 } from "react";
-import {
-  useFormFieldAriaLabelWarning,
-  useFormFieldProps,
-} from "../form-field-context";
+import { useFormFieldProps } from "../form-field-context";
 import type { AdornmentValidationStatus } from "../status-adornment";
 import type { DataAttributes } from "../types";
 import { makePrefixer, useControlled } from "../utils";
@@ -125,14 +122,6 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
     } = useFormFieldProps();
 
     const radioGroup = useRadioGroup();
-
-    useFormFieldAriaLabelWarning(
-      "RadioButton",
-      inputProps["aria-label"] ?? ariaLabel,
-      radioGroup === undefined
-        ? formFieldA11yProps?.["aria-labelledby"]
-        : undefined,
-    );
 
     const {
       "aria-describedby": inputDescribedBy,
