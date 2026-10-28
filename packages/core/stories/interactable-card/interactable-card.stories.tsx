@@ -360,13 +360,3 @@ export const InteractableCardGroupCheckbox: StoryFn<typeof InteractableCard> = (
     </InteractableCardGroup>
   );
 };
-
-export const ButtonGroup = () => {
-  return (
-    <StackLayout>
-      <InteractableCard tabIndex={-1}>Page 1</InteractableCard>
-      <InteractableCard tabIndex={0}>Page 2</InteractableCard>
-      <InteractableCard tabIndex={-1}>Page 3</InteractableCard>
-    </StackLayout>
-  );
-};
