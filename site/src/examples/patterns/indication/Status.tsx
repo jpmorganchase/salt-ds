@@ -1,4 +1,4 @@
-import { FlowLayout } from "@salt-ds/core";
+import { Code, FlexLayout, FlowLayout } from "@salt-ds/core";
 import {
   ErrorIcon,
   InfoIcon,
@@ -9,13 +9,38 @@ import {
 export const Status = () => {
   return (
     <FlowLayout>
-      <InfoIcon size={2} style={{ color: "var(--salt-color-blue-500)" }} />
-      <WarningIcon size={2} style={{ color: "var(--salt-color-orange-500)" }} />
-      <ErrorIcon size={2} style={{ color: "var(--salt-color-red-500)" }} />
-      <SuccessCircleIcon
-        size={2}
-        style={{ color: "var(--salt-color-blue-500)" }}
-      />
+      <FlexLayout gap={0.5} align="center">
+        <InfoIcon
+          aria-hidden
+          size={2}
+          style={{ color: "var(--salt-color-blue-500)" }}
+        />
+        <Code>info</Code>
+      </FlexLayout>
+      <FlexLayout gap={0.5} align="center">
+        <WarningIcon
+          aria-hidden
+          size={2}
+          style={{ color: "var(--salt-color-orange-500)" }}
+        />
+        <Code>warning</Code>
+      </FlexLayout>
+      <FlexLayout gap={0.5} align="center">
+        <ErrorIcon
+          aria-hidden
+          size={2}
+          style={{ color: "var(--salt-color-red-500)" }}
+        />
+        <Code>error</Code>
+      </FlexLayout>
+      <FlexLayout gap={0.5} align="center">
+        <SuccessCircleIcon
+          aria-hidden
+          size={2}
+          style={{ color: "var(--salt-color-green-500)" }}
+        />
+        <Code>success-circle</Code>
+      </FlexLayout>
     </FlowLayout>
   );
 };
