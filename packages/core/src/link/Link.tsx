@@ -33,7 +33,7 @@ export interface LinkProps
    * Render prop to enable customisation of anchor element.
    */
   render?: RenderPropsType["render"];
-  /*
+  /**
    * The color of the text. Defaults to "primary".
    */
   color?: "inherit" | "primary" | "secondary" | "accent";
