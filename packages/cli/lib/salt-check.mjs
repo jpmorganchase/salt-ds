@@ -135,11 +135,17 @@ function loadData(project) {
     } catch (error) {
       throw new SetupError(`Cannot read ${file}: ${error.message}`);
     }
-    if (data.schemaVersion > SCHEMA_VERSION) {
+    const schemaVersion = data?.schemaVersion;
+    if (typeof schemaVersion === "number" && schemaVersion > SCHEMA_VERSION) {
       notices.push(
         `${manifest.name}@${manifest.version} has newer check data than this @salt-ds/cli reads, so its checks are skipped; upgrade @salt-ds/cli to check it.`,
       );
       continue;
+    }
+    if (schemaVersion !== SCHEMA_VERSION) {
+      throw new SetupError(
+        `Invalid check data ${file}: schemaVersion must be ${SCHEMA_VERSION}.`,
+      );
     }
     if (data.tokens) {
       themeDocs = docsDir;

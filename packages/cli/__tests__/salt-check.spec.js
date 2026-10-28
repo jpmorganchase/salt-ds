@@ -398,6 +398,26 @@ export const App = () => <Toast>Saved</Toast>;
     expect(check(root, ["--nope"]).code).toBe(2);
   });
 
+  it.each([
+    ["no schemaVersion", { name: "@salt-ds/theme", version: "2.0.0" }],
+    ["a string schemaVersion", { ...THEME, schemaVersion: "2" }],
+    ["JSON that isn't an object", null],
+  ])("reports check data with %s as a setup problem", (_label, data) => {
+    const root = project({
+      "src/a.css": ".a { color: var(--salt-size-border); }\n",
+    });
+    const file = path.join(
+      root,
+      "node_modules/@salt-ds/theme/docs/salt-check.json",
+    );
+    writeFileSync(file, JSON.stringify(data));
+    const { code, log } = check(root);
+    expect(code).toBe(2);
+    expect(log).toEqual([
+      `salt-check: Invalid check data ${file}: schemaVersion must be 1.`,
+    ]);
+  });
+
   it("prints JSON with --json", () => {
     const root = project({
       "src/a.css": ".a { color: var(--salt-size-border); }\n",
