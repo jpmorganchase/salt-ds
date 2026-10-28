@@ -37,8 +37,10 @@ You can use the default [Salt breakpoints](/salt/foundations/responsiveness/brea
 A responsive property is a property that takes either multiple values (one value per breakpoint) or a single value that would take effect across all different screen sizes. An example is a layout that will responsively change from 12 columns to two and then to one as the space decreases:
 
 ```js
-columns={{ xs: 1, sm: 2, lg: 12, md: 12, xl: 12 }}
+columns={{ xs: 1, sm: 2, md: 12 }}
 ```
+
+Each value applies from its breakpoint up; see [responsive props](/salt/foundations/responsiveness/breakpoints#responsive-props).
 
 ### Best practices
 
