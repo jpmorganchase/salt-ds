@@ -102,24 +102,19 @@ function compare(left, right) {
  */
 export function indexLines(manifests) {
   const ordered = [...manifests].sort((left, right) => {
-    const leftCore = left.name === "@salt-ds/core" || left.directory === "core";
-    const rightCore =
-      right.name === "@salt-ds/core" || right.directory === "core";
+    const leftCore = left.name === "@salt-ds/core";
+    const rightCore = right.name === "@salt-ds/core";
     return (
-      Number(rightCore) - Number(leftCore) ||
-      compare(left.name ?? left.directory, right.name ?? right.directory)
+      Number(rightCore) - Number(leftCore) || compare(left.name, right.name)
     );
   });
   const lines = [];
-  for (const { directory, docsPath, pages } of ordered) {
-    const docsRoot = docsPath ?? `${directory}/docs`;
+  for (const { docsPath, pages } of ordered) {
     const folders = new Map();
-    for (const page of pages ?? []) {
-      if (typeof page?.path !== "string") continue;
+    for (const page of pages) {
       const folder = path.posix.dirname(page.path);
       const pageName = path.posix.basename(page.path);
-      const aliases = (Array.isArray(page.aliases) ? page.aliases : [])
-        .filter((alias) => typeof alias === "string")
+      const aliases = (page.aliases ?? [])
         .map((alias) =>
           alias
             .replace(UNSAFE_ALIAS_CHARACTERS, " ")
@@ -140,7 +135,7 @@ export function indexLines(manifests) {
         .get(key)
         .sort((left, right) => compare(left.name, right.name))
         .map(({ entry }) => entry);
-      lines.push(`|${docsRoot}${key}:{${entries.join(",")}}`);
+      lines.push(`|${docsPath}${key}:{${entries.join(",")}}`);
     }
   }
   return lines;
@@ -214,8 +209,8 @@ export function readManifest(packageDir, directory, outputDir = packageDir) {
   if (!manifest || typeof manifest !== "object" || Array.isArray(manifest)) {
     invalid("expected an object");
   }
-  if (manifest.schemaVersion !== undefined && manifest.schemaVersion !== 1) {
-    invalid(`unsupported schemaVersion ${manifest.schemaVersion}`);
+  if (manifest.schemaVersion !== 1) {
+    invalid("schemaVersion must be 1");
   }
   if (manifest.name !== name || installed?.name !== name) {
     invalid(`package name must be ${name}`);

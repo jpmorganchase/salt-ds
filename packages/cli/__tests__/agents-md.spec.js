@@ -308,10 +308,7 @@ describe("task guidance", () => {
     const root = project();
     const app = path.join(root, "apps/web");
     addGuides(install(root, "core", { version: "2.0.0" }));
-    const core = install(app, "core", { version: "1.0.0" });
-    changeManifest(core, (manifest) => {
-      delete manifest.schemaVersion;
-    });
+    install(app, "core", { version: "1.0.0" });
 
     expect(run(["--project", app], quiet)).toBe(0);
     const content = readFileSync(path.join(app, "AGENTS.md"), "utf8");
@@ -358,6 +355,12 @@ describe("manifest validation", () => {
       "schema",
       (manifest) => {
         manifest.schemaVersion = 2;
+      },
+    ],
+    [
+      "missing schema",
+      (manifest) => {
+        delete manifest.schemaVersion;
       },
     ],
     [
@@ -420,15 +423,6 @@ describe("manifest validation", () => {
       "# Existing instructions\n",
     );
     expect(existsSync(path.join(root, "CLAUDE.md"))).toBe(false);
-  });
-
-  it("accepts the previous manifest format without a schema version", () => {
-    const root = project();
-    const core = install(root);
-    changeManifest(core, (manifest) => {
-      delete manifest.schemaVersion;
-    });
-    expect(run(["--project", root], quiet)).toBe(0);
   });
 
   it.each(["index.md", "manifest.json", "components/button.md"])(
@@ -835,14 +829,19 @@ describe("GitHub Copilot instructions", () => {
 });
 
 describe("compressed index", () => {
-  it("keeps core first, aliases safe, and legacy generator entries supported", () => {
+  it("keeps core first and makes aliases safe", () => {
     expect(
       indexLines([
-        { directory: "theme", pages: [{ path: "tokens.md" }] },
         {
-          directory: "core",
+          name: "@salt-ds/theme",
+          docsPath: "theme/docs",
+          pages: [{ path: "tokens.md" }],
+        },
+        {
+          name: "@salt-ds/core",
+          docsPath: "core/docs",
           pages: [
-            { path: "components/button.md", aliases: ["a,b", "c|d", "[e]", 3] },
+            { path: "components/button.md", aliases: ["a,b", "c|d", "[e]"] },
           ],
         },
       ]),
