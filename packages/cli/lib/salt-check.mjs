@@ -200,9 +200,11 @@ function listFiles({ project, paths, changed, cwd }) {
   let files;
   if (paths.length > 0) {
     files = paths.flatMap((target) => {
-      const full = path.resolve(cwd, target);
-      if (!existsSync(full))
+      const given = path.resolve(cwd, target);
+      if (!existsSync(given))
         throw new SetupError(`No such file or folder: ${target}`);
+      // Real, like the cwd, so that paths from one print relative to it.
+      const full = realpathSync(given);
       return statSync(full).isDirectory() ? walk(full) : [full];
     });
   } else if (changed) {
@@ -674,9 +676,13 @@ function checkScript({
 
 export function run(
   args,
-  { log = console.log, cwd = process.cwd(), typescript } = {},
+  { log = console.log, cwd: givenCwd = process.cwd(), typescript } = {},
 ) {
   let options;
+  // The project's files are found under its real path, so paths are printed
+  // relative to the real cwd too: through a symlink, such as macOS's /var to
+  // /private/var, they'd climb out to the root and back.
+  const cwd = existsSync(givenCwd) ? realpathSync(givenCwd) : givenCwd;
   try {
     options = parseArguments(args);
     if (options.help) {

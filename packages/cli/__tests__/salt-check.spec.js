@@ -1,5 +1,12 @@
 import { execFileSync } from "node:child_process";
-import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from "node:fs";
+import {
+  mkdirSync,
+  mkdtempSync,
+  realpathSync,
+  rmSync,
+  symlinkSync,
+  writeFileSync,
+} from "node:fs";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import ts from "typescript";
@@ -121,6 +128,21 @@ describe("salt-check", () => {
       "src/app.css:8:22: error unknown-token: --salt-container-bold-border-color isn't a Salt token; did you mean --salt-container-bold-borderColor? See node_modules/@salt-ds/theme/docs/tokens/characteristics.md.",
       "salt-check: checked 1 file: 4 errors, 1 warning.",
     ]);
+  });
+
+  it("prints paths relative to a current folder reached through a symlink", () => {
+    const root = project({
+      "src/app.css": ".a { color: var(--salt-size-border); }\n",
+    });
+    const link = `${root}-link`;
+    symlinkSync(root, link, "dir");
+    roots.push(link);
+    for (const args of [["src"], [path.join(link, "src")], []]) {
+      const { log } = check(link, args);
+      expect(log[0]).toBe(
+        "src/app.css:1:17: error deprecated-token: --salt-size-border is deprecated; use --salt-size-fixed-100 instead. See node_modules/@salt-ds/theme/docs/tokens/deprecated.md.",
+      );
+    }
   });
 
   it("checks props, parts and tokens in TSX, leaving out names built at runtime", () => {
@@ -414,7 +436,8 @@ export const App = () => <Toast>Saved</Toast>;
     const { code, log } = check(root);
     expect(code).toBe(2);
     expect(log).toEqual([
-      `salt-check: Invalid check data ${file}: schemaVersion must be 1.`,
+      // The real path: the temp folder can be a symlink, as on macOS.
+      `salt-check: Invalid check data ${realpathSync(file)}: schemaVersion must be 1.`,
     ]);
   });
 
