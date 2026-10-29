@@ -203,6 +203,28 @@ export const ClosedExamples: StoryFn<QAContainerProps> = () => (
       <FormFieldHelperText>This is some help text</FormFieldHelperText>
     </FormField>
     <FormField>
+      <FormFieldLabel>Disabled tertiary example</FormFieldLabel>
+      <ComboBox variant="tertiary" disabled>
+        {first5States.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </ComboBox>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
+    </FormField>
+    <FormField>
+      <FormFieldLabel>Disabled tertiary bordered example</FormFieldLabel>
+      <ComboBox variant="tertiary" bordered disabled>
+        {first5States.map((state) => (
+          <Option value={state} key={state}>
+            {state}
+          </Option>
+        ))}
+      </ComboBox>
+      <FormFieldHelperText>This is some help text</FormFieldHelperText>
+    </FormField>
+    <FormField>
       <FormFieldLabel>Success Multiselect example</FormFieldLabel>
       <ComboBox
         validationStatus="success"
