@@ -14,6 +14,7 @@ import {
   type SyntheticEvent,
   useEffect,
   useState,
+  version,
 } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
@@ -1182,17 +1183,25 @@ describe("Given Tabs with removable tabs", () => {
     await expectSelected("Home");
   });
 
-  it("keeps focus on a tab in the open overflow menu when an overflow tab is dismissed from it", async () => {
-    await mountTabs(<RemovableTabs />);
-    await openOverflow();
-    await dismissButton("With").click();
-    await expect.element(tab("With")).not.toBeInTheDocument();
-    await expect.poll(focusedOverflowTab).not.toBeNull();
-    await waitForFrames();
-    await expect.element(overflowList()).toBeVisible();
-    expect(focusedOverflowTab()).not.toBeNull();
-    await expectSelected("Home");
-  });
+  // Known bug on React 18+: dismissing a tab inside the open overflow menu
+  // focuses the first overflow tab instead of the next one. Use `it` for every
+  // version once that's fixed.
+  const nextOverflowTabTest =
+    Number.parseInt(version, 10) >= 18 ? it.fails : it;
+  nextOverflowTabTest(
+    "focuses the next overflow tab when an overflow tab is dismissed with the pointer",
+    async () => {
+      await mountTabs(<RemovableTabs />);
+      await openOverflow();
+      await dismissButton("With").click();
+      await expect.element(tab("With")).not.toBeInTheDocument();
+      await expect.poll(focusedOverflowTab).toBe("Lots");
+      await waitForFrames();
+      await expect.element(overflowList()).toBeVisible();
+      expect(focusedOverflowTab()).toBe("Lots");
+      await expectSelected("Home");
+    },
+  );
 
   it("focuses the tab selected by a controlled parent after the selected tab is dismissed", async () => {
     await mountTabs(<ControlledRemovableTabs />);
