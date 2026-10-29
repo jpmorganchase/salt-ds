@@ -3,6 +3,9 @@
 import type { StoryObj } from "@storybook/react-vite";
 import { AgGridReact } from "ag-grid-react";
 import { expect, userEvent, within } from "storybook/test";
+import { useAgGridHelpers } from "../src/dependencies/useAgGridHelpers";
+import { validationCellExampleColumns } from "../src/dependencies/validationExampleColumns";
+import { validationExampleData } from "../src/dependencies/validationExampleData";
 import {
   ColumnGroup,
   ContextMenu as ContextMenuGrid,
@@ -524,5 +527,63 @@ WrappedHeaderRowSelection.play = async ({ canvasElement }) => {
   for (const row of rows) {
     await userEvent.click(within(row).getByRole("checkbox"));
     await expect(row).toHaveClass("ag-row-selected");
+  }
+};
+
+// Validation status adornments must not replace the range selection border on cells at the edge of a range.
+export const CellValidationInRangeSelection: StoryObj<
+  typeof AgGridReact
+> = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={validationExampleData}
+        columnDefs={validationCellExampleColumns}
+        cellSelection
+        onFirstDataRendered={({ api }) => {
+          // Rows 6 - 8 are error / warning / error, so every edge of the range has validation cells
+          // in editable (Status, Value) and read-only (Color) columns.
+          api.addCellRange({
+            rowStartIndex: 6,
+            rowEndIndex: 8,
+            columnStart: "status",
+            columnEnd: "color",
+          });
+        }}
+      />
+    </div>
+  );
+};
+CellValidationInRangeSelection.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Do findAll here so this will also work in `side-by-side` mode
+  const grids = await canvas.findAllByRole("grid");
+
+  for (const grid of grids) {
+    const anchorCell = grid.querySelector<HTMLElement>(
+      '[row-index="6"] [col-id="status"]',
+    )!;
+
+    // Focus an editable error cell, then extend the range from it, so the top left corner of the range
+    // shows the edit flag, range border and status adornment together.
+    await userEvent.click(anchorCell);
+    await userEvent.keyboard(
+      "{Shift>}{ArrowDown}{ArrowDown}{ArrowRight}{ArrowRight}{/Shift}",
+    );
+
+    await expect(anchorCell).toHaveClass(
+      "error-cell",
+      "ag-cell-focus",
+      "ag-cell-range-top",
+      "ag-cell-range-left",
+    );
+    // Read-only error cell at the top right corner of the range
+    await expect(
+      grid.querySelector('[row-index="6"] [col-id="color"]'),
+    ).toHaveClass("error-cell", "ag-cell-range-top", "ag-cell-range-right");
   }
 };
