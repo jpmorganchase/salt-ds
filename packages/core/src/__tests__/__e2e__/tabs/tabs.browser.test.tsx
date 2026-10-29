@@ -913,6 +913,7 @@ describe("Given Tabs", () => {
     await mountTabs(<Dismissible />);
     await page.getByRole("button", { name: "Liquidity Dismiss tab" }).click();
     await tabCount(4);
+    await expect.element(tab("Liquidity")).not.toBeInTheDocument();
     await expectSelected("Home");
     await expect.element(tab("Checks")).toHaveFocus();
     await page.getByRole("button", { name: "Home Dismiss tab" }).click();
@@ -1112,14 +1113,6 @@ describe("Given Tabs", () => {
 });
 
 describe("Given Tabs with removable tabs", () => {
-  it("focuses the next tab when a non-selected tab is dismissed", async () => {
-    await mountTabs(<RemovableTabs />);
-    await dismissButton("Loans").click();
-    await expect.element(tab("Loans")).not.toBeInTheDocument();
-    await expect.element(tab("Checks")).toHaveFocus();
-    await expectSelected("Home");
-  });
-
   it("selects and focuses the previous tab when the selected last tab is removed", async () => {
     const onChange = vi.fn();
     await mountTabs(
