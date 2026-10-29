@@ -128,6 +128,7 @@ In `theme/src/css/deprecated/characteristics.css`, add these 3 tokens:
 - Small pull requests are preferred, as they are easier to review and test. If you have a large change, consider breaking it down into smaller pull requests.
 - Pull requests should include tests for any new functionality or changes to existing functionality. These can either be behavioral tests using Vitest browser mode or visual tests using Chromatic.
 - Browser tests run with React 16, 17, 18 and 19 in CI, using Strict Mode from React 18, and fail if React logs a warning about an API that is deprecated or behaves differently in other versions.
+- Browser tests run in Chrome by default. They also run nightly in Firefox and WebKit. To run them locally in another browser, install it with `yarn playwright install <browser>` and set `TEST_BROWSER`, e.g. `TEST_BROWSER=webkit yarn test:components`.
 - Pull request titles and commits should be written in the present tense, e.g. "Add new icon" or "Fix bug in component".
 - Each user-facing change should be documented in a changeset. The changeset should be written in past tense, e.g. "Added new icon" or "Fixed bug in component".
 - To help efficiency, please self-review your pull request before submitting it.
