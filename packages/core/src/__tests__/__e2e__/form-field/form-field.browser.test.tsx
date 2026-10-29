@@ -313,6 +313,28 @@ describe("GIVEN a FormField", () => {
       consoleSpy.mockRestore();
     });
 
+    it("THEN it warns when the aria-label only appears inside a word of the name", async () => {
+      const consoleSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
+      await renderWithSalt(
+        <FormField>
+          <FormFieldLabel>Update frequency</FormFieldLabel>
+          <Input aria-label="Date" />
+        </FormField>,
+      );
+      await expect
+        .poll(() =>
+          consoleSpy.mock.calls.filter(
+            ([message]) =>
+              message ===
+              'Salt: aria-label "Date" is ignored because FormFieldLabel "Update frequency" provides the accessible name. Use aria-labelledby to add to the name, or aria-describedby to add a description.',
+          ),
+        )
+        .toHaveLength(1);
+      consoleSpy.mockRestore();
+    });
+
     it("THEN it does not warn when the aria-label is already in the name, without a FormFieldLabel, outside a FormField, or for a Checkbox in a CheckboxGroup", async () => {
       const consoleSpy = vi
         .spyOn(console, "warn")

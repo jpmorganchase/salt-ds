@@ -38,10 +38,24 @@ function getControlsWithIgnoredAriaLabel(
 
     const name = labelledByIds
       .map((id) => control.ownerDocument.getElementById(id)?.textContent ?? "")
-      .join(" ")
-      .toLowerCase();
-    return !name.includes(ariaLabel.toLowerCase());
+      .join(" ");
+    return !containsWords(name, ariaLabel);
   });
+}
+
+/**
+ * Whether `text` contains `phrase` as whole words, ignoring case and whitespace
+ * differences, so "date" is found in "Trade date" but not in "Update frequency".
+ */
+function containsWords(text: string, phrase: string) {
+  const escapedPhrase = phrase
+    .trim()
+    .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
+    .replace(/\s+/g, "\\s+");
+  return new RegExp(
+    `(?<![\\p{L}\\p{N}])${escapedPhrase}(?![\\p{L}\\p{N}])`,
+    "iu",
+  ).test(text);
 }
 
 export interface FormFieldLabelProps
