@@ -371,6 +371,16 @@ describe("Given a Range Slider", () => {
       await expect.element(page.getByText(text)).toBeInTheDocument();
   });
 
+  it("doesn't add an empty aria-labelledby without a FormFieldLabel", async () => {
+    await renderWithSalt(
+      <FormField>
+        <RangeSlider aria-label="Range" defaultValue={[2, 4]} />
+      </FormField>,
+    );
+    for (const input of await sliders().elements())
+      expect(input).not.toHaveAttribute("aria-labelledby");
+  });
+
   it("is disabled and omitted from tab order", async () => {
     await renderWithSalt(<Default disabled defaultValue={[2, 4]} />);
     for (const input of await sliders().elements())

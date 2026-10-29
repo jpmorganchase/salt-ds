@@ -207,6 +207,122 @@ describe("GIVEN a FormField", () => {
     });
   });
 
+  describe("WHEN FormFieldLabel or FormFieldHelperText isn't rendered", () => {
+    function WrappedLabel() {
+      return (
+        <div>
+          <FormFieldLabel>Label</FormFieldLabel>
+        </div>
+      );
+    }
+
+    function WrappedHelperText() {
+      return (
+        <div>
+          <FormFieldHelperText>Helper text</FormFieldHelperText>
+        </div>
+      );
+    }
+
+    it("THEN the control isn't described by missing helper text", async () => {
+      await renderWithSalt(
+        <FormField id="test-id">
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Input />
+        </FormField>,
+      );
+      const input = page.getByRole("textbox");
+      await expect
+        .element(input)
+        .toHaveAttribute("aria-labelledby", "label-test-id");
+      await expect.element(input).not.toHaveAttribute("aria-describedby");
+    });
+
+    it("THEN the control is described by helper text added and removed later", async () => {
+      const { rerender } = await renderWithSalt(
+        <FormField id="test-id">
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Input />
+        </FormField>,
+      );
+      const input = page.getByRole("textbox");
+      await expect.element(input).not.toHaveAttribute("aria-describedby");
+
+      await rerender(
+        <FormField id="test-id">
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Input />
+          <FormFieldHelperText>Helper text</FormFieldHelperText>
+        </FormField>,
+      );
+      await expect
+        .element(input)
+        .toHaveAttribute("aria-describedby", "helperText-test-id");
+      await expect.element(input).toHaveAccessibleDescription("Helper text");
+
+      await rerender(
+        <FormField id="test-id">
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Input />
+        </FormField>,
+      );
+      await expect.element(input).not.toHaveAttribute("aria-describedby");
+    });
+
+    it("THEN the control isn't labelled by a missing label, until one is added", async () => {
+      const { rerender } = await renderWithSalt(
+        <FormField id="test-id">
+          <Input aria-label="Input label" />
+        </FormField>,
+      );
+      const input = page.getByRole("textbox");
+      await expect.element(input).not.toHaveAttribute("aria-labelledby");
+      await expect.element(input).toHaveAccessibleName("Input label");
+
+      const consoleSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
+      await rerender(
+        <FormField id="test-id">
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Input aria-label="Input label" />
+        </FormField>,
+      );
+      await expect
+        .element(input)
+        .toHaveAttribute("aria-labelledby", "label-test-id");
+      await expect.element(input).toHaveAccessibleName("Label");
+      consoleSpy.mockRestore();
+    });
+
+    it("THEN a label and helper text inside other components are associated with the control", async () => {
+      const { rerender } = await renderWithSalt(
+        <FormField id="test-id">
+          <WrappedLabel />
+          <Input />
+          <WrappedHelperText />
+        </FormField>,
+      );
+      const input = page.getByRole("textbox");
+      await expect.element(input).toHaveAccessibleName("Label");
+      await expect.element(input).toHaveAccessibleDescription("Helper text");
+      await expect
+        .element(page.getByText("Label"))
+        .toHaveAttribute("id", "label-test-id");
+      await expect
+        .element(page.getByText("Helper text"))
+        .toHaveAttribute("id", "helperText-test-id");
+
+      await rerender(
+        <FormField id="test-id">
+          <Input />
+        </FormField>,
+      );
+      await expect.element(input).not.toHaveAttribute("aria-labelledby");
+      await expect.element(input).not.toHaveAttribute("aria-describedby");
+    });
+  });
+
   describe("WHEN a form control has an aria-label", () => {
     const ariaLabel = "Work email address";
     const controls: [string, ReactNode][] = [
@@ -519,6 +635,20 @@ describe("GIVEN a FormField", () => {
         await renderWithSalt(tooltipForm({}));
         await page.getByLabelText("Label").hover();
         await expect.element(page.getByRole("tooltip")).toBeVisible();
+      });
+
+      it("THEN the input is described by the tooltip while it's shown", async () => {
+        await renderWithSalt(tooltipForm({ id: "test-id" }));
+        const input = page.getByRole("textbox");
+        await expect.element(input).not.toHaveAttribute("aria-describedby");
+        await input.hover();
+        await expect.element(page.getByRole("tooltip")).toBeVisible();
+        await expect
+          .element(input)
+          .toHaveAttribute(
+            "aria-describedby",
+            expect.stringMatching(/(^| )helperText-test-id( |$)/),
+          );
       });
 
       it("THEN should have the corresponding id", async () => {
