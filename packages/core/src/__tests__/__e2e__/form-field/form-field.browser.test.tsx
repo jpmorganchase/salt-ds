@@ -335,6 +335,77 @@ describe("GIVEN a FormField", () => {
       consoleSpy.mockRestore();
     });
 
+    it("THEN it checks the name without regex lookbehind, which older Safari versions don't support", async () => {
+      const consoleSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
+      // Simulate Safari < 16.4, which throws a SyntaxError for lookbehind.
+      vi.stubGlobal(
+        "RegExp",
+        new Proxy(RegExp, {
+          construct(target, args: ConstructorParameters<typeof RegExp>) {
+            if (/\(\?<[=!]/.test(String(args[0]))) {
+              throw new SyntaxError("Invalid regular expression");
+            }
+            return Reflect.construct(target, args);
+          },
+        }),
+      );
+      try {
+        await renderWithSalt(
+          <FormField>
+            <FormFieldLabel>Update frequency</FormFieldLabel>
+            <Input aria-label="Date" />
+          </FormField>,
+        );
+        await expect
+          .poll(() =>
+            consoleSpy.mock.calls.filter(([message]) =>
+              String(message).startsWith('Salt: aria-label "Date" is ignored'),
+            ),
+          )
+          .toHaveLength(1);
+      } finally {
+        vi.unstubAllGlobals();
+        consoleSpy.mockRestore();
+      }
+    });
+
+    it("THEN it matches the aria-label inside words for scripts written without spaces", async () => {
+      const consoleSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
+      await renderWithSalt(
+        <>
+          <FormField>
+            <FormFieldLabel>開始日付</FormFieldLabel>
+            <Input aria-label="日付" />
+          </FormField>
+          <FormField>
+            <FormFieldLabel>メールアドレス</FormFieldLabel>
+            <Input aria-label="メール" />
+          </FormField>
+          <FormField>
+            <FormFieldLabel>วันที่เริ่มต้น</FormFieldLabel>
+            <Input aria-label="วันที่" />
+          </FormField>
+          <FormField>
+            <FormFieldLabel>開始Date</FormFieldLabel>
+            <Input aria-label="Date" />
+          </FormField>
+        </>,
+      );
+      await expect
+        .element(page.getByRole("textbox", { name: "開始日付" }))
+        .toBeInTheDocument();
+      expect(
+        consoleSpy.mock.calls.filter(([message]) =>
+          String(message).includes("is ignored because FormFieldLabel"),
+        ),
+      ).toHaveLength(0);
+      consoleSpy.mockRestore();
+    });
+
     it("THEN it does not warn when the aria-label is already in the name, without a FormFieldLabel, outside a FormField, or for a Checkbox in a CheckboxGroup", async () => {
       const consoleSpy = vi
         .spyOn(console, "warn")
@@ -344,6 +415,14 @@ describe("GIVEN a FormField", () => {
           <FormField>
             <FormFieldLabel>Work email address</FormFieldLabel>
             <Input aria-label="work email" />
+          </FormField>
+          <FormField>
+            <FormFieldLabel>Your e-mail</FormFieldLabel>
+            <Input aria-label="E-MAIL" />
+          </FormField>
+          <FormField>
+            <FormFieldLabel>Date:</FormFieldLabel>
+            <Input aria-label="date" />
           </FormField>
           <FormField>
             <Input aria-label={ariaLabel} />

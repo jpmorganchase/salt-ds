@@ -43,19 +43,31 @@ function getControlsWithIgnoredAriaLabel(
   });
 }
 
+// Scripts usually written without spaces between words.
+const unspacedScript =
+  "\\p{scx=Han}\\p{scx=Hiragana}\\p{scx=Katakana}\\p{scx=Thai}\\p{scx=Lao}\\p{scx=Khmer}\\p{scx=Myanmar}";
+
 /**
  * Whether `text` contains `phrase` as whole words, ignoring case and whitespace
  * differences, so "date" is found in "Trade date" but not in "Update frequency".
+ * Words in scripts written without spaces, such as Chinese, Japanese or Thai,
+ * can't be told apart, so "日付" is found in "開始日付".
  */
 function containsWords(text: string, phrase: string) {
-  const escapedPhrase = phrase
-    .trim()
+  const trimmedPhrase = phrase.trim();
+  const escapedPhrase = trimmedPhrase
     .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
     .replace(/\s+/g, "\\s+");
-  return new RegExp(
-    `(?<![\\p{L}\\p{N}])${escapedPhrase}(?![\\p{L}\\p{N}])`,
-    "iu",
-  ).test(text);
+  // A character that isn't a letter or number, or is in an unspaced script.
+  const boundary = `[^\\p{L}\\p{N}]|[${unspacedScript}]`;
+  // Use a prefix rather than lookbehind, which Safari < 16.4 doesn't support.
+  const before = new RegExp(`^[${unspacedScript}]`, "u").test(trimmedPhrase)
+    ? ""
+    : `(?:^|${boundary})`;
+  const after = new RegExp(`[${unspacedScript}]$`, "u").test(trimmedPhrase)
+    ? ""
+    : `(?=$|${boundary})`;
+  return new RegExp(`${before}${escapedPhrase}${after}`, "iu").test(text);
 }
 
 export interface FormFieldLabelProps
