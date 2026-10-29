@@ -52,6 +52,7 @@ export interface TooltipProps
   status?: FormFieldValidationStatus | ValidationStatus;
   /**
    * Delay in milliseconds before the Tooltip is shown.
+   * @default 300
    */
   enterDelay?: number;
   /**
@@ -70,6 +71,17 @@ export interface TooltipProps
    * Option to remove the focus listener.
    */
   disableFocusListener?: boolean;
+  /**
+   * Whether the Tooltip is shown. When set, it's controlled: use
+   * `onOpenChange` to update it. Leave it unset for the Tooltip to show and
+   * hide itself as its trigger is hovered or focused.
+   */
+  open?: UseFloatingUIProps["open"];
+  /**
+   * Where to place the Tooltip relative to its trigger.
+   * @default "right"
+   */
+  placement?: UseFloatingUIProps["placement"];
 }
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
