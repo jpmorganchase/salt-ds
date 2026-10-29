@@ -4481,7 +4481,7 @@ __metadata:
     dom-accessibility-api: "npm:^0.7.1"
     execa: "npm:^10.0.0"
     get-tsconfig: "npm:^4.7.5"
-    highcharts: "npm:10.3.3"
+    highcharts: "npm:11.4.9"
     highcharts-react-official: "npm:^3.2.2"
     mockdate: "npm:^3.0.5"
     playwright: "npm:1.64.1"
@@ -10138,10 +10138,18 @@ __metadata:
   languageName: node
   linkType: hard
 
-"highcharts@npm:10.3.3":
-  version: 10.3.3
-  resolution: "highcharts@npm:10.3.3"
-  checksum: 10/7085b584379fe35cc9a45ffeac950ed1c0de8ee4bd0efaaa3224f3772b4ec1c92e225b10188172286cfbb6bb75ae8b4ffbf0bbbe3e6cb3147d04481637015097
+"highcharts@npm:11.4.9":
+  version: 11.4.9
+  resolution: "highcharts@npm:11.4.9"
+  peerDependencies:
+    jspdf: ^4.1.0
+    svg2pdf.js: ^2.7.0
+  peerDependenciesMeta:
+    jspdf:
+      optional: true
+    svg2pdf.js:
+      optional: true
+  checksum: 10/a96270ed5df1593ed00574c469f3755802f902f530fc0a98680fbfa6526c87ec551e21606e947b890bf997fe3bed32fd6d254054ef838064bc381561f6107e7b
   languageName: node
   linkType: hard
 
