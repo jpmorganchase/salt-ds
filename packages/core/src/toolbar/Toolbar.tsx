@@ -64,6 +64,16 @@ function cloneMeasureDecorations(
   });
 }
 
+function hasLostFocus(doc: Document) {
+  const activeElement = doc.activeElement;
+  return (
+    !activeElement ||
+    activeElement === doc.body ||
+    activeElement === doc.documentElement ||
+    !activeElement.isConnected
+  );
+}
+
 export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
   function Toolbar(
     {
@@ -97,6 +107,24 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       [content],
     );
 
+    // Whether focus is in the toolbar, including its portaled overflow panels.
+    // React ignores the blur when a commit removes the focused element, so
+    // this can stay true after focus has fallen back to the document body.
+    const focusWithinRef = useRef(false);
+    // Whether focus was in the toolbar just before the latest overflow update,
+    // i.e. before that update could move the focused control.
+    const focusWithinBeforeOverflowUpdateRef = useRef(false);
+    const restoreFocusFrameRef = useRef<number | null>(null);
+
+    const handleBeforeOverflowUpdate = useCallback(() => {
+      const doc = targetWindow?.document;
+      if (focusWithinRef.current && doc && hasLostFocus(doc)) {
+        // The focused control was removed without a blur.
+        focusWithinRef.current = false;
+      }
+      focusWithinBeforeOverflowUpdateRef.current = focusWithinRef.current;
+    }, [targetWindow]);
+
     const {
       containerRef,
       getBandRef,
@@ -108,7 +136,10 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       overflowGroups,
       overflowTriggerGroups,
       overflowedIds,
-    } = useToolbarOverflow({ content: overflowContent });
+    } = useToolbarOverflow({
+      content: overflowContent,
+      onBeforeOverflowUpdate: handleBeforeOverflowUpdate,
+    });
 
     const handleRef = useForkRef(ref, containerRef);
     const invalidCompositionWarnedRef = useRef(false);
@@ -175,10 +206,6 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       [overflowedIds],
     );
     const previousOverflowedIdsKeyRef = useRef(overflowedIdsKey);
-    // Whether focus is in the toolbar, including its portaled overflow panels.
-    // React ignores the blur when a commit removes the focused element, so
-    // this stays true when the toolbar itself drops focus.
-    const focusWithinRef = useRef(false);
 
     const getItemHostRef = useCallback(
       (id: string, kind: ToolbarItemHostKind) => {
@@ -235,30 +262,42 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
         previousOverflowedIdsKeyRef.current !== overflowedIdsKey;
       previousOverflowedIdsKeyRef.current = overflowedIdsKey;
 
-      if (!overflowChanged || !targetWindow || !focusWithinRef.current) {
+      if (
+        !overflowChanged ||
+        !targetWindow ||
+        !focusWithinBeforeOverflowUpdateRef.current
+      ) {
         return;
       }
 
       const doc = targetWindow.document;
 
+      if (restoreFocusFrameRef.current != null) {
+        targetWindow.cancelAnimationFrame(restoreFocusFrameRef.current);
+      }
+
       // Items move to their new hosts in the commits after an overflow change,
       // so resolve the target once they've settled. By then, focus may also
       // have moved somewhere else.
-      targetWindow.requestAnimationFrame(() => {
-        const activeElement = doc.activeElement;
-        const focusWasLost =
-          !activeElement ||
-          activeElement === doc.body ||
-          activeElement === doc.documentElement ||
-          !activeElement.isConnected;
+      restoreFocusFrameRef.current = targetWindow.requestAnimationFrame(() => {
+        restoreFocusFrameRef.current = null;
 
-        if (focusWasLost) {
+        if (hasLostFocus(doc)) {
           keyboardNavigation
             .getEntryFocusable()
             ?.focus({ preventScroll: true });
         }
       });
     }, [keyboardNavigation.getEntryFocusable, overflowedIdsKey, targetWindow]);
+
+    useEffect(() => {
+      return () => {
+        if (restoreFocusFrameRef.current != null) {
+          targetWindow?.cancelAnimationFrame(restoreFocusFrameRef.current);
+          restoreFocusFrameRef.current = null;
+        }
+      };
+    }, [targetWindow]);
 
     useEffect(() => {
       if (process.env.NODE_ENV !== "production") {

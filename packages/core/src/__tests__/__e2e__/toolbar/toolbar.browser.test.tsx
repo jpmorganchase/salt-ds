@@ -1080,6 +1080,11 @@ function trackStaleFocusStyling(
   };
 }
 
+const focusedButtonName = () =>
+  document.activeElement === document.body
+    ? "body"
+    : document.activeElement?.textContent;
+
 const overflowTrigger = (name: string | RegExp = /Overflow\./i) =>
   page.getByRole("button", { name });
 
@@ -1991,7 +1996,26 @@ const focusMemoryFilters = [
   ["Columns", 5],
 ] as const;
 
-function NamedOverflowFocusMemoryTestCase() {
+// Removes itself when clicked, without the toolbar re-rendering.
+function SelfDismissingButton() {
+  const [dismissed, setDismissed] = useState(false);
+  return dismissed ? null : (
+    <Button
+      appearance="transparent"
+      style={{ width: 80 }}
+      onClick={() => setDismissed(true)}
+    >
+      Dismiss
+    </Button>
+  );
+}
+
+function NamedOverflowFocusMemoryTestCase({
+  dismissible,
+}: {
+  dismissible?: "parent" | "self";
+}) {
+  const [dismissed, setDismissed] = useState(false);
   return (
     <div
       className="Flexbox"
@@ -2023,6 +2047,16 @@ function NamedOverflowFocusMemoryTestCase() {
         </ToolbarContent>
         <ToolbarContent position="end">
           <Tooltray overflowMode="none">
+            {dismissible === "self" ? <SelfDismissingButton /> : null}
+            {dismissible === "parent" && !dismissed ? (
+              <Button
+                appearance="transparent"
+                style={{ width: 80 }}
+                onClick={() => setDismissed(true)}
+              >
+                Dismiss
+              </Button>
+            ) : null}
             <Button appearance="transparent" style={{ width: 100 }}>
               Refresh
             </Button>
@@ -2367,6 +2401,35 @@ describe("Toolbar overflow focus restoration", () => {
     await nextAnimationFrames(2);
     expect(document.activeElement).toBe(document.body);
   });
+
+  it.each([
+    ["the app", "parent"],
+    ["the control itself", "self"],
+  ] as const)(
+    "doesn't move focus into the toolbar when overflow changes after %s removed the focused control",
+    async (_name, dismissible) => {
+      await renderWithSalt(
+        <NamedOverflowFocusMemoryTestCase dismissible={dismissible} />,
+      );
+      const dismiss = page.getByRole("button", { name: "Dismiss" });
+      page.getByTestId("toolbar-before").element().focus();
+      await userEvent.tab();
+      await userEvent.keyboard("{ArrowLeft}{ArrowLeft}{ArrowLeft}");
+      await expect.element(dismiss).toHaveFocus();
+      await userEvent.keyboard("{Enter}");
+      await expect.element(dismiss).not.toBeInTheDocument();
+      await expectButton("Columns", true);
+      await nextAnimationFrames(2);
+      expect(focusedButtonName()).toBe("body");
+      // Clicking non-focusable page content doesn't blur anything either.
+      await userEvent.click(document.body, { position: { x: 5, y: 5 } });
+
+      setFixtureWidth(640);
+      await expectButton("Columns", false);
+      await nextAnimationFrames(2);
+      expect(focusedButtonName()).toBe("body");
+    },
+  );
 });
 
 describe("Toolbar overflow menu focus", () => {
