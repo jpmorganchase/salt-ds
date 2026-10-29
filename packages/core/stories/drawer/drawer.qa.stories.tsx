@@ -5,17 +5,19 @@ import {
   DrawerFooter,
   DrawerHeader,
   type DrawerProps,
-  type FloatingComponentProps,
   FloatingComponentProvider,
   StackLayout,
   Text,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { QAContainer, type QAContainerProps } from "docs/components";
+import {
+  InlineFloatingComponent,
+  QAContainer,
+  type QAContainerProps,
+} from "docs/components";
 import "./drawer.qa.stories.css";
 import {
-  forwardRef,
   type ReactNode,
   type Ref,
   useEffect,
@@ -207,15 +209,6 @@ export const DrawerOverflow: StoryFn<QAContainerProps> = (props) => {
 DrawerOverflow.parameters = {
   chromatic: { disableSnapshot: false },
 };
-
-// Renders the drawer in place instead of portalling it to the body.
-const InlineFloatingComponent = forwardRef<
-  HTMLDivElement,
-  FloatingComponentProps
->(function InlineFloatingComponent(props, ref) {
-  const { open, focusManagerProps, width, height, ...rest } = props;
-  return open ? <div ref={ref} {...rest} /> : null;
-});
 
 const resizableDrawerStyle = (position: DrawerProps["position"]) =>
   position === "left" || position === "right"

@@ -1,3 +1,14 @@
+/* Lays a real Dialog out in the page flow, so a story can show several at once. The size classes' percentages would resolve against the story's layout. */
+.saltDialog.inlineDialog {
+  position: relative;
+  width: auto;
+  max-height: none;
+}
+
+.inlineDialog.saltDialog.saltDialog-enterAnimation {
+  animation: none;
+}
+
 .fakeDialogWindow {
   padding-top: var(--salt-spacing-300);
   padding-bottom: var(--salt-spacing-300);
@@ -7,7 +18,7 @@
   height: min-content;
   border-width: var(--salt-size-fixed-100);
   border-style: var(--salt-borderStyle-solid);
-  border-color: var(--salt-separable-tertiary-borderColor);
+  border-color: var(--salt-container-borderColor);
 }
 
 .longDialog {
