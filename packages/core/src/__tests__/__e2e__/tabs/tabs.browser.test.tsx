@@ -865,6 +865,7 @@ describe("Given Tabs", () => {
     await mountTabs(<Dismissible />);
     await page.getByRole("button", { name: "Liquidity Dismiss tab" }).click();
     await tabCount(4);
+    await expect.element(tab("Liquidity")).not.toBeInTheDocument();
     await expectSelected("Home");
     await expect.element(tab("Checks")).toHaveFocus();
     await page.getByRole("button", { name: "Home Dismiss tab" }).click();
@@ -1033,14 +1034,6 @@ describe("Given Tabs", () => {
 });
 
 describe("Given Tabs with removable tabs", () => {
-  it("focuses the next tab when a non-selected tab is dismissed", async () => {
-    await mountTabs(<RemovableTabs />);
-    await dismissButton("Loans").click();
-    await expect.element(tab("Loans")).not.toBeInTheDocument();
-    await expect.element(tab("Checks")).toHaveFocus();
-    await expectSelected("Home");
-  });
-
   it("selects and focuses the previous tab when the selected last tab is removed", async () => {
     const onChange = vi.fn();
     await mountTabs(
@@ -1183,25 +1176,23 @@ describe("Given Tabs with removable tabs", () => {
     await expectSelected("Home");
   });
 
-  // Known bug on React 18+: dismissing a tab inside the open overflow menu
-  // focuses the first overflow tab instead of the next one. Use `it` for every
-  // version once that's fixed.
-  const nextOverflowTabTest =
-    Number.parseInt(version, 10) >= 18 ? it.fails : it;
-  nextOverflowTabTest(
-    "focuses the next overflow tab when an overflow tab is dismissed with the pointer",
-    async () => {
-      await mountTabs(<RemovableTabs />);
-      await openOverflow();
-      await dismissButton("With").click();
-      await expect.element(tab("With")).not.toBeInTheDocument();
-      await expect.poll(focusedOverflowTab).toBe("Lots");
-      await waitForFrames();
-      await expect.element(overflowList()).toBeVisible();
-      expect(focusedOverflowTab()).toBe("Lots");
-      await expectSelected("Home");
-    },
-  );
+  it("focuses an overflow tab when an overflow tab is dismissed with the pointer", async () => {
+    // Documents a known bug: on React 18+ focus lands on the first overflow
+    // tab ("Liquidity") instead of the tab after the dismissed one ("Lots").
+    // React 16/17 already focus "Lots". Once fixed, expect "Lots" on every
+    // React version.
+    const expectedFocus =
+      Number.parseInt(version, 10) >= 18 ? "Liquidity" : "Lots";
+    await mountTabs(<RemovableTabs />);
+    await openOverflow();
+    await dismissButton("With").click();
+    await expect.element(tab("With")).not.toBeInTheDocument();
+    await expect.poll(focusedOverflowTab).toBe(expectedFocus);
+    await waitForFrames();
+    await expect.element(overflowList()).toBeVisible();
+    expect(focusedOverflowTab()).toBe(expectedFocus);
+    await expectSelected("Home");
+  });
 
   it("focuses the tab selected by a controlled parent after the selected tab is dismissed", async () => {
     await mountTabs(<ControlledRemovableTabs />);
