@@ -229,7 +229,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       "aria-describedby":
         clsx(formFieldDescribedBy, ariaDescribedBy) || undefined,
       "aria-label": ariaLabel,
-      "aria-labelledby": clsx(formFieldLabelledBy, ariaLabelledBy),
+      "aria-labelledby": clsx(formFieldLabelledBy, ariaLabelledBy) || undefined,
       "aria-valuemax": max,
       "aria-valuemin": min,
       "aria-valuetext": ariaValueText,

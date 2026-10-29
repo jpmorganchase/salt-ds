@@ -9,6 +9,7 @@ import {
   isValidElement,
   type ReactNode,
   useCallback,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -22,6 +23,7 @@ import { capitalize, makePrefixer, useForkRef, useId } from "../utils";
 import formFieldCss from "./FormField.css";
 import { FormFieldHelperText } from "./FormFieldHelperText";
 import { FormFieldLabel } from "./FormFieldLabel";
+import { FormFieldInternalContext } from "./internal/FormFieldInternalContext";
 
 export type FormFieldLabelPlacement = "top" | "left" | "right";
 
@@ -61,18 +63,55 @@ export interface FormFieldProps
 
 const withBaseName = makePrefixer("saltFormField");
 
-function hasFormFieldControls(children: ReactNode): boolean {
-  return Children.toArray(children).some((child) => {
+interface FormFieldChildren {
+  hasControls: boolean;
+  hasLabel: boolean;
+  hasHelperText: boolean;
+}
+
+function getFormFieldChildren(
+  children: ReactNode,
+  result: FormFieldChildren = {
+    hasControls: false,
+    hasLabel: false,
+    hasHelperText: false,
+  },
+): FormFieldChildren {
+  for (const child of Children.toArray(children)) {
     if (!isValidElement<{ children?: ReactNode }>(child)) {
-      return true;
+      result.hasControls = true;
+    } else if (child.type === Fragment) {
+      getFormFieldChildren(child.props.children, result);
+    } else if (child.type === FormFieldLabel) {
+      result.hasLabel = true;
+    } else if (child.type === FormFieldHelperText) {
+      result.hasHelperText = true;
+    } else {
+      result.hasControls = true;
     }
+  }
+  return result;
+}
 
-    if (child.type === Fragment) {
-      return hasFormFieldControls(child.props.children);
-    }
-
-    return child.type !== FormFieldLabel && child.type !== FormFieldHelperText;
-  });
+/**
+ * Tracks whether any elements are registered, so nested or conditionally
+ * rendered ones are found. Starting from whether they're in FormField's
+ * children avoids a re-render when they register.
+ */
+function useRegisteredElements(initialValue: boolean) {
+  const countRef = useRef(0);
+  const [isRendered, setIsRendered] = useState(initialValue);
+  const register = useCallback(() => {
+    countRef.current += 1;
+    setIsRendered(true);
+    return () => {
+      countRef.current -= 1;
+      if (countRef.current === 0) {
+        setIsRendered(false);
+      }
+    };
+  }, []);
+  return [isRendered, register] as const;
 }
 
 export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
@@ -101,16 +140,33 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     const handleRef = useForkRef(ref, formFieldRef);
 
     const formId = useId(idProp);
-    const hasControls = hasFormFieldControls(children);
+    const formFieldChildren = getFormFieldChildren(children);
 
-    const [labelCount, setLabelCount] = useState(0);
-    const registerLabel = useCallback(() => {
-      setLabelCount((count) => count + 1);
-      return () => setLabelCount((count) => count - 1);
-    }, []);
+    const [isLabelRegistered, registerLabel] = useRegisteredElements(
+      formFieldChildren.hasLabel,
+    );
+    const [isHelperTextRegistered, registerHelperText] = useRegisteredElements(
+      formFieldChildren.hasHelperText,
+    );
+    // Children are included before they register, so markup rendered before
+    // effects run, such as on the server, refers to them.
+    const hasLabel = isLabelRegistered || formFieldChildren.hasLabel;
+    const hasHelperText =
+      isHelperTextRegistered || formFieldChildren.hasHelperText;
 
     const labelId = formId ? `label-${formId}` : undefined;
     const helperTextId = formId ? `helperText-${formId}` : undefined;
+
+    const internalContextValue = useMemo(
+      () => ({
+        formFieldRef,
+        labelId,
+        helperTextId,
+        registerLabel,
+        registerHelperText,
+      }),
+      [labelId, helperTextId, registerLabel, registerHelperText],
+    );
 
     return (
       <div
@@ -119,7 +175,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
-            [withBaseName("hasControls")]: hasControls,
+            [withBaseName("hasControls")]: formFieldChildren.hasControls,
             [withBaseName(`label${capitalize(labelPlacement)}`)]:
               labelPlacement,
           },
@@ -130,19 +186,19 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
         <FormFieldContext.Provider
           value={{
             a11yProps: {
-              "aria-labelledby": labelId,
-              "aria-describedby": helperTextId,
+              "aria-labelledby": hasLabel ? labelId : undefined,
+              "aria-describedby": hasHelperText ? helperTextId : undefined,
             },
             disabled,
             necessity,
             readOnly,
             validationStatus,
             formFieldRef,
-            hasLabel: labelCount > 0,
-            registerLabel,
           }}
         >
-          {children}
+          <FormFieldInternalContext.Provider value={internalContextValue}>
+            {children}
+          </FormFieldInternalContext.Provider>
         </FormFieldContext.Provider>
       </div>
     );

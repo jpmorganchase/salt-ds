@@ -31,14 +31,6 @@ export interface FormFieldContextValue {
   readOnly: boolean;
   validationStatus: FormFieldValidationStatus | undefined;
   formFieldRef?: RefObject<HTMLDivElement | null>;
-  /**
-   * Whether a FormFieldLabel is rendered, so `a11yProps["aria-labelledby"]` refers to a label.
-   */
-  hasLabel?: boolean;
-  /**
-   * Registers a rendered FormFieldLabel. Returns a function that unregisters it.
-   */
-  registerLabel?: () => () => void;
 }
 
 export const FormFieldContext = createContext(

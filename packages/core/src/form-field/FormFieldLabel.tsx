@@ -5,9 +5,10 @@ import { type MouseEvent, useEffect, useRef } from "react";
 
 import { useFormFieldProps } from "../form-field-context";
 import { Label, type TextProps } from "../text";
-import { capitalize, makePrefixer, useIsomorphicLayoutEffect } from "../utils";
+import { capitalize, makePrefixer } from "../utils";
 
 import formFieldLabelCss from "./FormFieldLabel.css";
+import { useFormFieldLabelId } from "./internal/FormFieldInternalContext";
 
 const withBaseName = makePrefixer("saltFormFieldLabel");
 
@@ -88,8 +89,7 @@ export const FormFieldLabel = ({
   onClick,
   ...restProps
 }: FormFieldLabelProps) => {
-  const { a11yProps, disabled, necessity, formFieldRef, registerLabel } =
-    useFormFieldProps();
+  const { disabled, necessity, formFieldRef } = useFormFieldProps();
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-form-field-label",
@@ -97,9 +97,7 @@ export const FormFieldLabel = ({
     window: targetWindow,
   });
 
-  const id = a11yProps?.["aria-labelledby"];
-
-  useIsomorphicLayoutEffect(() => registerLabel?.(), [registerLabel]);
+  const id = useFormFieldLabelId();
 
   const warnedRef = useRef(new WeakSet<Element>());
   useEffect(() => {
