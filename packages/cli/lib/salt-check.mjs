@@ -10,7 +10,7 @@ import {
 } from "node:fs";
 import { createRequire } from "node:module";
 import path from "node:path";
-import { CHECK_DATA_FILE, saltPackages } from "./packages.mjs";
+import { CHECK_DATA_FILE, realPath, saltPackages } from "./packages.mjs";
 
 export const SCHEMA_VERSION = 1;
 
@@ -680,9 +680,8 @@ export function run(
 ) {
   let options;
   // The project's files are found under its real path, so paths are printed
-  // relative to the real cwd too: through a symlink, such as macOS's /var to
-  // /private/var, they'd climb out to the root and back.
-  const cwd = existsSync(givenCwd) ? realpathSync(givenCwd) : givenCwd;
+  // relative to the real cwd too.
+  const cwd = realPath(givenCwd);
   try {
     options = parseArguments(args);
     if (options.help) {

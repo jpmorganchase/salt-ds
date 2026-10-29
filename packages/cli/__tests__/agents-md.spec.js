@@ -806,6 +806,36 @@ describe("GitHub Copilot instructions", () => {
     ]);
   });
 
+  it("names the files it writes relative to a current folder reached through a symlink", () => {
+    const root = project();
+    mkdirSync(path.join(root, ".git"));
+    install(root);
+    const link = `${root}-link`;
+    symlinkSync(root, link, "junction");
+    roots.push(link);
+    // A shell in the link passes it as $PWD, while the process's cwd is real.
+    for (const [cwd, option, target] of [
+      [root, "--dir", link],
+      [root, "--project", link],
+      [link, "--dir", root],
+      [link, "--project", root],
+    ]) {
+      rmSync(path.join(root, "AGENTS.md"), { force: true });
+      rmSync(path.join(root, ".github"), { recursive: true, force: true });
+      const log = [];
+      expect(
+        run([option, target, "--copilot", "--no-claude"], {
+          log: (line) => log.push(line),
+          cwd,
+        }),
+      ).toBe(0);
+      expect(log).toEqual([
+        "Created AGENTS.md.",
+        "Created .github/copilot-instructions.md.",
+      ]);
+    }
+  });
+
   it("uses --dir outside a Git repository", () => {
     const root = project();
     install(root);

@@ -1,10 +1,28 @@
 // The Salt packages an application resolves, which salt-ds init and
 // salt-ds check both read.
-import { readdirSync } from "node:fs";
+import { readdirSync, realpathSync } from "node:fs";
 import path from "node:path";
 
 /** The file in each Salt package's docs folder that salt-ds check reads. */
 export const CHECK_DATA_FILE = "salt-check.json";
+
+/**
+ * `target`'s real path, through symlinks in it or the folders above it. The
+ * part that doesn't exist yet, such as a file about to be created, is kept.
+ * Paths printed relative to the real cwd need it: a process's cwd is real,
+ * so a path through a symlink, such as $PWD in a linked folder or macOS's
+ * /var to /private/var, would climb out of it and back in.
+ */
+export function realPath(target) {
+  const resolved = path.resolve(target);
+  try {
+    return realpathSync(resolved);
+  } catch {
+    const parent = path.dirname(resolved);
+    if (parent === resolved) return resolved;
+    return path.join(realPath(parent), path.basename(resolved));
+  }
+}
 
 /**
  * The Salt packages the application at `projectDir` resolves: those in each

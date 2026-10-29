@@ -9,7 +9,7 @@ import {
   writeFileSync,
 } from "node:fs";
 import path from "node:path";
-import { CHECK_DATA_FILE, saltPackages } from "./packages.mjs";
+import { CHECK_DATA_FILE, realPath, saltPackages } from "./packages.mjs";
 
 export const BEGIN_MARKER = "<!-- BEGIN:salt-ds-agent-docs -->";
 export const END_MARKER = "<!-- END:salt-ds-agent-docs -->";
@@ -390,8 +390,16 @@ export function run(args, { log = console.log, cwd = process.cwd() } = {}) {
     guidance: guidancePages(manifests),
     check: coreCheck({ base: dir, project, manifests }),
   });
-  // Files are named as paths from the current folder, where they're run.
-  const shown = (filePath) => toPosix(path.relative(cwd, filePath));
+  // Files are named as paths from the current folder, where they're run,
+  // between real folders. The file itself may be a link, so keep its name.
+  const realCwd = realPath(cwd);
+  const shown = (filePath) =>
+    toPosix(
+      path.relative(
+        realCwd,
+        path.join(realPath(path.dirname(filePath)), path.basename(filePath)),
+      ),
+    );
   const agentsPath = path.join(dir, "AGENTS.md");
   const agentsFile = shown(agentsPath);
   const updates = [
