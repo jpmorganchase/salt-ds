@@ -117,7 +117,6 @@ export function useTabRemovalHandler({
   const replaceRemovedSelection = useEventCallback(
     (removedSelected: RemovedItem) => {
       if (
-        menuOpen ||
         selected !== removedSelected.value ||
         getRenderedTab(selected) ||
         replacedSelectionsRef.current.has(removedSelected)
@@ -129,7 +128,7 @@ export function useTabRemovalHandler({
       if (!nextTab) return;
 
       replacedSelectionsRef.current.add(removedSelected);
-      setSelected(null, nextTab.value);
+      setSelected(null, nextTab.value, "removal");
     },
   );
 
@@ -138,8 +137,9 @@ export function useTabRemovalHandler({
     if (!doc) return;
 
     // Selection follows a removed selected tab wherever focus is, e.g. when
-    // the tab is removed by a control outside the tabs.
-    if (selected !== undefined && !menuOpen && !getRenderedTab(selected)) {
+    // the tab is removed by a control outside the tabs or while the overflow
+    // menu is open.
+    if (selected !== undefined && !getRenderedTab(selected)) {
       let removedSelected: RemovedItem | undefined;
       for (const removed of peekRemovedItems().values()) {
         if (removed.value === selected) {

@@ -65,6 +65,7 @@ type OverflowTestWindow = Window & {
   __setResponsiveOverflowWidth?: (width: number) => void;
   __setDynamicOverflowWidth?: (width: number) => void;
   __setPortalContractWidth?: (width: number) => void;
+  __removeTab?: (value: string) => void;
 };
 
 let nextTrackedTabInstanceId = 0;
@@ -391,22 +392,33 @@ function RemovableTabs({
   labels = removableTabs,
   width = 520,
   preventFocusOnDismiss = false,
+  fillTabList = false,
   onChange,
 }: {
   labels?: string[];
   width?: number;
   preventFocusOnDismiss?: boolean;
+  fillTabList?: boolean;
   onChange?: (event: SyntheticEvent | null, value: string) => void;
 }) {
   const [tabs, setTabs] = useState(labels);
   const remove = (value: string) =>
     setTabs((old) => old.filter((label) => label !== value));
+  useEffect(() => {
+    // Lets tests remove a tab without moving focus or closing the overflow
+    // menu, like an update pushed by the application.
+    (window as OverflowTestWindow).__removeTab = (value) =>
+      setTabs((old) => old.filter((label) => label !== value));
+    return () => {
+      delete (window as OverflowTestWindow).__removeTab;
+    };
+  }, []);
   return (
     <>
       <div style={{ width }}>
         <Tabs defaultValue={labels[0]} onChange={onChange}>
           <TabBar inset divider>
-            <TabList>
+            <TabList style={fillTabList ? { flex: "1 1 auto" } : undefined}>
               {tabs.map((label) => (
                 <Tab key={label} value={label}>
                   <TabTrigger
@@ -1249,6 +1261,29 @@ describe("Given Tabs with removable tabs", () => {
     expect(onChange.mock.lastCall).toEqual([null, "Checks"]);
     await waitForFrames(30);
     expect(onChange).toHaveBeenCalledTimes(2);
+  });
+
+  it("selects a neighbour and keeps the overflow menu open when the selected tab is removed while the menu is open", async () => {
+    const onChange = vi.fn();
+    // A tab list that fills its container keeps its width when a tab is
+    // removed, so the overflow menu stays open.
+    await mountTabs(<RemovableTabs fillTabList onChange={onChange} />);
+    await openOverflow();
+    await expect.poll(focusedOverflowTab).toBe("Liquidity");
+    (window as OverflowTestWindow).__removeTab?.("Home");
+    await expect.element(tab("Home")).not.toBeInTheDocument();
+    await expectSelected("Tx");
+    expect(onChange.mock.calls).toEqual([[null, "Tx"]]);
+    await waitForFrames();
+    await expect.element(overflowList()).toBeVisible();
+    // "Liquidity" moves into the space "Home" left in the main row, so focus
+    // stays at the same position in the menu.
+    expect(focusedOverflowTab()).toBe("With");
+    await userEvent.keyboard("{Escape}");
+    await expect.element(overflowList()).not.toBeInTheDocument();
+    await expect.element(tab("Overflow")).toHaveFocus();
+    await expectSelected("Tx");
+    expect(onChange).toHaveBeenCalledTimes(1);
   });
 
   it("restores focus to the new selection after a confirmed dismissal", async () => {
