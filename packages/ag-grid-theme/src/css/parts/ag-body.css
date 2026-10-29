@@ -457,15 +457,24 @@
 .ag-theme-salt-compact-dark .ag-cell.editable-numeric-cell.ag-cell-focus:focus::before,
 .ag-theme-salt-compact-dark .ag-cell.editable-cell.ag-cell-focus:focus-within::before,
 .ag-theme-salt-compact-dark .editable-cell.ag-cell-inline-editing::before {
-  border-bottom: calc(var(--salt-size-adornment) + 4px) solid transparent;
-  border-left: calc(var(--salt-size-adornment) + 4px) solid var(--salt-focused-outlineColor);
-  border-top: 0 solid transparent;
-  /* Follow the cell's top left corner */
-  border-top-left-radius: var(--salt-palette-corner-weak, 0);
+  /*
+    The corner adornment is painted as a background so it can share ::before with the range selection border
+    (both use the focus color), leaving ::after free for the validation status adornment.
+  */
+  background-image: linear-gradient(to bottom right, var(--salt-focused-outlineColor) calc(50% - 0.5px), transparent calc(50% + 0.5px));
+  background-origin: border-box;
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-size: calc(var(--salt-size-adornment) + 4px) calc(var(--salt-size-adornment) + 4px);
+  /* Follow the cell's corners */
+  border-radius: inherit;
   content: "";
-  left: 0;
-  position: absolute;
   top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  pointer-events: none;
+  position: absolute;
   z-index: 2;
 }
 
@@ -583,12 +592,12 @@
     inset 0 calc(var(--salt-size-fixed-100) * -1) 0 var(--salt-selectable-borderColor-selected);
 }
 
-/* Range selection cross cells "fake" outlines */
+/* Range selection cross cells "fake" outlines, drawn with ::before as ::after is used by the validation status adornment */
 
-.ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after,
-.ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after,
-.ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after,
-.ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after {
+.ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::before,
+.ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::before,
+.ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::before,
+.ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::before {
   content: "";
   top: 0;
   right: 0;
@@ -598,10 +607,10 @@
   border-top: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
-.ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::after,
-.ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::after,
-.ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::after,
-.ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::after {
+.ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::before,
+.ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::before,
+.ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::before,
+.ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::before {
   content: "";
   top: 0;
   right: 0;
@@ -611,10 +620,10 @@
   border-right: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
-.ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::after,
-.ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::after,
-.ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::after,
-.ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::after {
+.ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::before,
+.ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::before,
+.ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::before,
+.ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::before {
   content: "";
   top: 0;
   right: 0;
@@ -624,10 +633,10 @@
   border-bottom: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
-.ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after,
-.ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after,
-.ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after,
-.ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after {
+.ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::before,
+.ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::before,
+.ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::before,
+.ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::before {
   content: "";
   top: 0;
   right: 0;
@@ -673,9 +682,9 @@
   border-bottom-left-radius: var(--salt-palette-corner-weak, 0);
 }
 
-.ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell)::after,
-.ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell)::after,
-.ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell)::after,
-.ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell)::after {
+.ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell)::before,
+.ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell)::before,
+.ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell)::before,
+.ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell)::before {
   border-radius: inherit;
 }
