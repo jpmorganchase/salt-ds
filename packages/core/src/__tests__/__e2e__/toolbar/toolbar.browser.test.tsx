@@ -2403,10 +2403,10 @@ describe("Toolbar overflow focus restoration", () => {
   });
 
   it.each([
-    ["the app", "parent"],
-    ["the control itself", "self"],
+    ["the app removes the focused control", "parent"],
+    ["the focused control removes itself", "self"],
   ] as const)(
-    "doesn't move focus into the toolbar when overflow changes after %s removed the focused control",
+    "doesn't move focus into the toolbar when overflow changes after %s",
     async (_name, dismissible) => {
       await renderWithSalt(
         <NamedOverflowFocusMemoryTestCase dismissible={dismissible} />,
