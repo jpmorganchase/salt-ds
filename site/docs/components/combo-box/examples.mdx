@@ -186,8 +186,8 @@ Use `OverlayProps` to pass props to the overlay that is rendered when the combo 
 
 <LivePreview componentName="combo-box" exampleName="OverlayProps" />
 
-## Delimiter character
+## Multiselect with delimiter
 
-In some cases, you may want to enable users to select multiple options by typing a delimiter character. This can be by using a controlled `ComboBox` and the `onPaste` event handler.
+To let users select multiple options at once by pasting or typing a list of entries separated by a delimiter character, use a controlled multiselect `ComboBox`. Split the text on the delimiter in the `onChange` and `onPaste` event handlers, select each entry that matches an option, and keep any unmatched entries in the input so users can correct them.
 
 <LivePreview componentName="combo-box" exampleName="Delimiter" />
