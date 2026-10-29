@@ -575,12 +575,27 @@ function componentApi(componentName, component, packageDirectory, ctx) {
   const props = Object.values(component.props ?? {});
   // docgen prints a type that resolves to any, such as DateFrameworkType
   // before an adapter adds its date type, as `any`; the declaration says more.
+  // A type declared as another component's prop's, as BorderLayout's `gap`
+  // is GridLayout's, is that prop's type in its component's table.
   const typeOf = (prop) => {
     const formatted = formatPropType(prop.type);
-    return formatted === "any"
-      ? (ctx.props.declaredType?.(packageDirectory, component, prop.name) ??
-          formatted)
-      : formatted;
+    if (formatted !== "any") return formatted;
+    const source = ctx.props.propSource?.(
+      packageDirectory,
+      component,
+      prop.name,
+    );
+    const sourceProp =
+      source &&
+      ctx.props.get?.(source.packageDirectory, source.componentName)?.props?.[
+        source.propName
+      ];
+    const sourceType = sourceProp && formatPropType(sourceProp.type);
+    if (sourceType && sourceType !== "any") return sourceType;
+    return (
+      ctx.props.declaredType?.(packageDirectory, component, prop.name) ??
+      formatted
+    );
   };
   const inherited = inheritedPhrasing(
     component.inherited,

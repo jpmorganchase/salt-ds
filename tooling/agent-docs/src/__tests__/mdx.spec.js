@@ -155,6 +155,52 @@ describe("convertMdx", () => {
     );
   });
 
+  it("shows the type of the prop a prop is declared as where docgen prints any", async () => {
+    const components = {
+      BorderLayout: {
+        displayName: "BorderLayout",
+        props: {
+          gap: { name: "gap", type: { name: "any" }, description: "" },
+          rowGap: { name: "rowGap", type: { name: "any" }, description: "" },
+        },
+      },
+      GridLayout: {
+        displayName: "GridLayout",
+        props: {
+          gap: {
+            name: "gap",
+            type: { name: "ResponsiveProp<string | number>" },
+            description: "",
+          },
+          rowGap: { name: "rowGap", type: { name: "any" }, description: "" },
+        },
+      },
+    };
+    const ctx = createContext({
+      props: {
+        get: (_packageDirectory, name) => components[name],
+        propSource: (packageDirectory, _component, propName) => ({
+          packageDirectory,
+          componentName: "GridLayout",
+          propName,
+        }),
+        declaredType: (_packageDirectory, _component, name) =>
+          name === "rowGap" ? 'GridLayoutProps<T>["rowGap"]' : undefined,
+      },
+    });
+    const markdown = await toMarkdown(
+      '<PropsTable componentName="BorderLayout" />',
+      ctx,
+    );
+    expect(markdown).toContain(
+      "| `gap` | `ResponsiveProp<string \\| number>` | - | - |",
+    );
+    // When that prop is `any` too, the declaration is shown.
+    expect(markdown).toContain(
+      '| `rowGap` | `GridLayoutProps<T>["rowGap"]` | - | - |',
+    );
+  });
+
   it("warns instead of failing when a PropsTable has no props", async () => {
     const ctx = createContext();
     const markdown = await toMarkdown(

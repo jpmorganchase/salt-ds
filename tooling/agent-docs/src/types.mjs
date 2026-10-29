@@ -202,12 +202,19 @@ function readFile(file, packageDirectory) {
         : `${heritage ? `${heritage} ` : ""}{ ${node.members
             .map((member) => print(member).replace(/;$/, ""))
             .join("; ")} }`;
-      // An alias's own members are its type literals', as in A & { … }.
+      // An alias's own members are its type literals', as in A & { … } or
+      // PolymorphicComponentPropWithRef<T, { … }>.
       const literals = alias
         ? [
             node.type,
             ...(ts.isIntersectionTypeNode(node.type) ? node.type.types : []),
-          ].filter((type) => ts.isTypeLiteralNode(type))
+          ]
+            .flatMap((type) =>
+              ts.isTypeReferenceNode(type)
+                ? (type.typeArguments ?? [])
+                : [type],
+            )
+            .filter((type) => ts.isTypeLiteralNode(type))
         : [];
       // The first paragraph of its doc comment.
       const description = ts
@@ -423,6 +430,27 @@ export function createTypeIndex({ packagesDir }) {
         ...parts.filter((part) => !empty(part)),
         ...parts.filter(empty),
       ].join(" | ");
+    },
+    /**
+     * The component and prop whose type a prop is declared as, as
+     * BorderLayout's `gap` is `GridLayoutProps<T>["gap"]`, which docgen
+     * prints as `any` but types for the component it names.
+     */
+    indexedPropSource(componentName, file, propName) {
+      for (const declaration of propsDeclarations(componentName, file)) {
+        const match = /^([A-Z]\w*)Props(?:<.*>)?\["(\w+)"\]$/.exec(
+          declaration.members.get(propName) ?? "",
+        );
+        const source = match && resolve(`${match[1]}Props`, declaration.file);
+        if (source) {
+          return {
+            packageDirectory: source.packageDirectory,
+            componentName: match[1],
+            propName: match[2],
+          };
+        }
+      }
+      return undefined;
     },
     /** The file declaring a package's exported value, when only one does. */
     declaringFile(packageDirectory, name) {

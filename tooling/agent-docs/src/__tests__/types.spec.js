@@ -186,6 +186,32 @@ it("finds the elements a component's props extend", async () => {
   expect(elements("Field", "field/Field.tsx")).toEqual(["div", "textarea"]);
 });
 
+it("finds the component and prop a prop's type is declared as", async () => {
+  const root = await packages({
+    "core/src/grid/Grid.tsx": `import type { PolymorphicComponentPropWithRef } from "../utils";
+      export type GridProps<T> = PolymorphicComponentPropWithRef<T, { gap?: number }>;
+      export const Grid = (props: GridProps<"div">) => null;`,
+    "core/src/border/Border.tsx": `import { type GridProps } from "../grid/Grid";
+      import type { PolymorphicComponentPropWithRef } from "../utils";
+      export type BorderProps<T> = PolymorphicComponentPropWithRef<
+        T,
+        { gap?: GridProps<T>["gap"]; size?: number; other?: Other["gap"] }
+      >;
+      export const Border = (props: BorderProps<"div">) => null;`,
+  });
+  const index = createTypeIndex({ packagesDir: root });
+  const file = path.join(root, "core/src/border/Border.tsx");
+  expect(index.indexedPropSource("Border", file, "gap")).toEqual({
+    packageDirectory: "core",
+    componentName: "Grid",
+    propName: "gap",
+  });
+  expect(index.indexedPropSource("Border", file, "size")).toBeUndefined();
+  expect(index.indexedPropSource("Border", file, "other")).toBeUndefined();
+  // Members of the props a helper type wraps are the alias's own.
+  expect(index.declaredPropType("Border", file, "size")).toBe("number");
+});
+
 it("gives a prop's declared type, each type of a union of props types, and describes a conditional type", async () => {
   const root = await packages({
     "adapters/src/types.ts": `export interface DateMap {}

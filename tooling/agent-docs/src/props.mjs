@@ -91,6 +91,16 @@ export function createPropsProvider({ packagesDir }) {
         ? types.declaredPropType(component.displayName, file, propName)
         : undefined;
     },
+    /**
+     * The component and prop a prop's type is declared as, such as
+     * GridLayout's `gap` for `GridLayoutProps<T>["gap"]`.
+     */
+    propSource(packageDirectory, component, propName) {
+      const file = sourceOf(packageDirectory, component);
+      return file
+        ? types.indexedPropSource(component.displayName, file, propName)
+        : undefined;
+    },
     /** The elements whose attributes a component's props extend, such as ["td"]. */
     elementsOf(packageDirectory, component) {
       const file = sourceOf(packageDirectory, component);
