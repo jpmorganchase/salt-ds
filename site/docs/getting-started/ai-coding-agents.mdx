@@ -35,7 +35,10 @@ see [Agent compatibility](#agent-compatibility).
 
 `--script typecheck` also makes your `typecheck` script run that check, so it
 runs in CI and for agents that run your scripts without loading `AGENTS.md`. Use
-`--script lint` for a lint script instead.
+`--script lint` for a lint script instead. The check reports deprecated props
+and deprecated or unknown tokens as errors, which make the script fail with exit
+code 1, so fix any your code already uses before you add it to a script that
+gates your builds. Palette tokens and missing parts are warnings, which don't.
 
 Run `salt-ds init` again after you add or upgrade Salt packages or update the CLI.
 Salt package changes can update the indexed pages, and CLI changes can update the
@@ -133,7 +136,7 @@ can follow the links into the Salt packages you have installed.
 The section in `AGENTS.md` tells agents to run a check before they finish. It
 compares the files they changed with the docs of the Salt packages you installed,
 and reports deprecated or misspelled design tokens with the token to use
-instead, deprecated props, and components missing a part that Salt's examples
+instead when one is recorded, deprecated props, and components missing a part that Salt's examples
 always include, such as a `Toast` without `ToastContent`. Each report links to
 the page that explains it.
 
