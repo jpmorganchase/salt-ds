@@ -80,7 +80,8 @@
 
 /* resize handle hover and active styles */
 .react-resizable-panels-theme-salt div[data-resize-handle][data-resize-handle-state="hover"],
-.react-resizable-panels-theme-salt div[data-separator="hover"] {
+.react-resizable-panels-theme-salt div[data-separator="hover"],
+.react-resizable-panels-theme-salt div[data-separator="focus"]:hover {
   background: var(--splitHandle-background-hover);
 }
 
@@ -110,7 +111,8 @@
 }
 
 .react-resizable-panels-theme-salt div[data-resize-handle][data-resize-handle-state="hover"]::after,
-.react-resizable-panels-theme-salt div[data-separator="hover"]::after {
+.react-resizable-panels-theme-salt div[data-separator="hover"]::after,
+.react-resizable-panels-theme-salt div[data-separator="focus"]:hover::after {
   fill: var(--splitHandle-dot-background-hover);
   background: var(--splitHandle-dot-background-hover);
 }
