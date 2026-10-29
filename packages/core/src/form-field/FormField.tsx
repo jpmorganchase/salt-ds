@@ -8,7 +8,9 @@ import {
   type HTMLAttributes,
   isValidElement,
   type ReactNode,
+  useCallback,
   useRef,
+  useState,
 } from "react";
 import {
   type A11yValueProps,
@@ -101,6 +103,12 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     const formId = useId(idProp);
     const hasControls = hasFormFieldControls(children);
 
+    const [labelCount, setLabelCount] = useState(0);
+    const registerLabel = useCallback(() => {
+      setLabelCount((count) => count + 1);
+      return () => setLabelCount((count) => count - 1);
+    }, []);
+
     const labelId = formId ? `label-${formId}` : undefined;
     const helperTextId = formId ? `helperText-${formId}` : undefined;
 
@@ -130,6 +138,8 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             readOnly,
             validationStatus,
             formFieldRef,
+            hasLabel: labelCount > 0,
+            registerLabel,
           }}
         >
           {children}

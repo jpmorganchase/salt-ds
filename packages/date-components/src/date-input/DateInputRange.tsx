@@ -377,6 +377,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         "aria-labelledby": formFieldLabelledBy,
       } = {},
       disabled: formFieldDisabled,
+      hasLabel: formFieldHasLabel,
       readOnly: formFieldReadOnly,
       necessity: formFieldRequired,
       validationStatus: formFieldValidationStatus,
@@ -419,10 +420,12 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       startInputPropsAriaLabel !== undefined || ariaLabel !== undefined;
     const hasEndExplicitAriaLabel =
       endInputPropsAriaLabel !== undefined || ariaLabel !== undefined;
-    // A FormField label or top-level aria-labelledby names the whole field, so
+    // A FormFieldLabel or top-level aria-labelledby names the whole field, so
     // it replaces a top-level aria-label. A per-input aria-labelledby only adds
     // to that input's name.
-    const hasFieldLabel = Boolean(formFieldLabelledBy || restAriaLabelledBy);
+    const hasFieldLabel = Boolean(
+      (formFieldHasLabel && formFieldLabelledBy) || restAriaLabelledBy,
+    );
 
     const startAriaLabelledBy =
       hasStartExplicitAriaLabel && !hasFieldLabel && !startInputPropsLabelledBy
