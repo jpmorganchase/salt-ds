@@ -735,7 +735,10 @@ describe("GitHub Copilot instructions", () => {
 
     const log = [];
     expect(
-      run(["--project", root, "--copilot"], { log: (line) => log.push(line) }),
+      run(["--project", root, "--copilot"], {
+        log: (line) => log.push(line),
+        cwd: root,
+      }),
     ).toBe(0);
     expect(log).toContain("Updated .github/copilot-instructions.md.");
     const content = readFileSync(copilotFile(root), "utf8");
@@ -780,6 +783,29 @@ describe("GitHub Copilot instructions", () => {
     );
   });
 
+  it("names the files it writes relative to the current folder", () => {
+    const root = project();
+    mkdirSync(path.join(root, ".git"));
+    const app = path.join(root, "apps/web");
+    install(app);
+    const log = [];
+    const options = { log: (line) => log.push(line), cwd: root };
+    expect(run(["--project", "apps/web", "--copilot"], options)).toBe(0);
+    expect(log).toEqual([
+      "Created apps/web/AGENTS.md.",
+      "Created apps/web/CLAUDE.md.",
+      "Created .github/copilot-instructions.md.",
+    ]);
+
+    log.length = 0;
+    expect(run(["--copilot"], { ...options, cwd: app })).toBe(0);
+    expect(log).toEqual([
+      "AGENTS.md is up to date.",
+      "CLAUDE.md is up to date.",
+      "../../.github/copilot-instructions.md is up to date.",
+    ]);
+  });
+
   it("uses --dir outside a Git repository", () => {
     const root = project();
     install(root);
@@ -798,6 +824,7 @@ describe("GitHub Copilot instructions", () => {
     expect(
       run(["--project", root, "--copilot", "--check"], {
         log: (line) => log.push(line),
+        cwd: root,
       }),
     ).toBe(1);
     expect(log).toContain(".github/copilot-instructions.md needs updating.");
@@ -814,6 +841,7 @@ describe("GitHub Copilot instructions", () => {
     expect(
       run(["--project", root, "--copilot", "--no-claude"], {
         log: (line) => log.push(line),
+        cwd: root,
       }),
     ).toBe(0);
     expect(log).toContain(

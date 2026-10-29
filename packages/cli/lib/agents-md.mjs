@@ -390,18 +390,22 @@ export function run(args, { log = console.log, cwd = process.cwd() } = {}) {
     guidance: guidancePages(manifests),
     check: coreCheck({ base: dir, project, manifests }),
   });
+  // Files are named as paths from the current folder, where they're run.
+  const shown = (filePath) => toPosix(path.relative(cwd, filePath));
   const agentsPath = path.join(dir, "AGENTS.md");
+  const agentsFile = shown(agentsPath);
   const updates = [
     {
-      file: "AGENTS.md",
+      file: agentsFile,
       filePath: agentsPath,
       update: (content) => upsertBlock(content, block),
     },
   ];
   if (options.claude) {
+    const claudePath = path.join(dir, "CLAUDE.md");
     updates.push({
-      file: "CLAUDE.md",
-      filePath: path.join(dir, "CLAUDE.md"),
+      file: shown(claudePath),
+      filePath: claudePath,
       update: withClaudeImport,
     });
   }
@@ -427,7 +431,7 @@ export function run(args, { log = console.log, cwd = process.cwd() } = {}) {
     });
     const filePath = path.join(repository, COPILOT_INSTRUCTIONS);
     updates.push({
-      file: toPosix(path.relative(dir, filePath)),
+      file: shown(filePath),
       filePath,
       update: (content) => upsertBlock(content, copilotBlock),
     });
@@ -450,7 +454,7 @@ export function run(args, { log = console.log, cwd = process.cwd() } = {}) {
   for (const { file, filePath, current, next, same } of planned) {
     // Creating AGENTS.md can make a previously dangling link to it resolve.
     if (same || isAgentsFile(filePath)) {
-      log(`${file} is the same file as AGENTS.md.`);
+      log(`${file} is the same file as ${agentsFile}.`);
     } else if (next === current) {
       log(`${file} is up to date.`);
     } else {
