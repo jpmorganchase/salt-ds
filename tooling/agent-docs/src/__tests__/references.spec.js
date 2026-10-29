@@ -454,6 +454,68 @@ ${fence}
       ]),
     );
   });
+
+  it("reads tokens mentioned as undeprecated in any spelling as having no replacement", () => {
+    const changelog = `## 3.0.0
+
+- Undeprecate \`--salt-a\`
+- Un-deprecated \`--salt-c\`.
+- Undeprecated \`--salt-e\`.
+
+## 1.0.0
+
+  | Deprecated token | Replacement token |
+  | - | - |
+  | --salt-a | --salt-b |
+  | --salt-c | --salt-d |
+  | --salt-e | --salt-f |
+  | --salt-g | --salt-h |
+`;
+    expect(changelogReplacements(changelog)).toEqual(
+      new Map([["--salt-g", ["--salt-h"]]]),
+    );
+  });
+
+  it("reads no replacements from diff hunks listing old values", () => {
+    const fence = "```";
+    const changelog = `## 2.0.0
+
+${fence}diff
+- --salt-x: 1px;
+- --salt-y: 2px;
++ --salt-y: 3px;
++ --salt-x: 4px;
+
+- --salt-p: 1px;
+- --salt-q: 2px;
++ --salt-r: 3px;
+
+- --salt-m
+- --salt-n
++ --salt-n
++ --salt-o
+
+- --salt-s
++ --salt-t: 1px;
+${fence}
+
+## 1.0.0
+
+  | Deprecated token | Replacement token |
+  | - | - |
+  | --salt-x | --salt-table |
+  | --salt-p | --salt-table |
+`;
+    expect(changelogReplacements(changelog)).toEqual(
+      new Map([
+        // Skipped hunks name no replacement, so an older one is used.
+        ["--salt-x", ["--salt-table"]],
+        ["--salt-p", ["--salt-table"]],
+        // An added line may give the new token's value.
+        ["--salt-s", ["--salt-t"]],
+      ]),
+    );
+  });
 });
 
 describe("deprecated token aliases", () => {

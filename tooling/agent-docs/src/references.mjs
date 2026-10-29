@@ -108,10 +108,12 @@ const TOKEN_LIST = /^`?--salt-[\w-]+`?(?:\s+or\s+`?--salt-[\w-]+`?)*$/;
 /**
  * Replacements a ```diff block's hunk records: a run of removed tokens then a
  * run of added ones, which pair up in order when there are as many of each,
- * or all go to the one added token. Other hunks are ambiguous, and a hunk
- * with a removed or added line that isn't a token, such as a CSS
- * declaration using one, isn't a list of tokens. A token paired with itself
- * had its value changed. A removed token's own comment, as in
+ * or all go to the one added token. Other hunks are ambiguous. A hunk with a
+ * line that isn't a token, such as a CSS declaration using one, isn't a list
+ * of tokens. An added line may declare its token, giving the new token's
+ * value, but a removed line that declares one, `- --salt-a: 1px;`, gives its
+ * old value, so the hunk lists value changes, as does a hunk with a token on
+ * both sides, however they're ordered. A removed token's own comment, as in
  * `- --salt-a /* Use --salt-b *\/`, names its replacement when it names only
  * a token, and otherwise records that it has none.
  */
@@ -123,13 +125,15 @@ function diffHunkReplacements({ removed, added }) {
     const named = /^use\s+(--salt-[\w-]+)$/i.exec(comment)?.[1];
     entries.push({ line, token, names: named ? [named] : undefined });
   }
+  const addedTokens = new Set(added.map(({ token }) => token));
   if (
     paired.length > 0 &&
-    (added.length === paired.length || added.length === 1)
+    (added.length === paired.length || added.length === 1) &&
+    !removed.some(({ token }) => addedTokens.has(token))
   ) {
     paired.forEach(({ token, line }, index) => {
       const to = added[added.length === 1 ? 0 : index].token;
-      if (to !== token) entries.push({ line, token, names: [to] });
+      entries.push({ line, token, names: [to] });
     });
   }
   return entries;
@@ -179,7 +183,7 @@ export function changelogReplacements(markdown) {
       const token = /^--salt-[\w-]+/.exec(text)?.[0];
       if (sign === "-" && hunk?.added.length > 0) endHunk();
       hunk ??= { removed: [], added: [] };
-      if (!token) {
+      if (!token || (sign === "-" && /^--salt-[\w-]+\s*:/.test(text))) {
         hunk.invalid = true;
       } else if (sign === "+") {
         hunk.added.push({ token });
@@ -194,8 +198,9 @@ export function changelogReplacements(markdown) {
       column = -1;
       return;
     }
-    // A token that was undeprecated lost the replacement it had.
-    if (/\bundeprecated\b/i.test(line)) {
+    // A token that was undeprecated lost the replacement it had, whether
+    // "Undeprecated", "Undeprecate" or "Un-deprecated".
+    if (/\bun-?deprecat/i.test(line)) {
       for (const [token] of line.matchAll(/--salt-[\w-]+/g)) {
         entries.push({ line: index, token, names: undefined });
       }
