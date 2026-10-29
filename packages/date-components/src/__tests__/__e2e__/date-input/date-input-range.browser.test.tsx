@@ -304,6 +304,46 @@ function registerAdapterTests(
       consoleSpy.mockRestore();
     });
 
+    it("SHOULD keep the top-level aria-label when an input has its own aria-labelledby", async () => {
+      await render(
+        <>
+          <span id="external-start-label">External</span>
+          <DateInputRange
+            aria-label="Period"
+            startInputProps={{ "aria-labelledby": "external-start-label" }}
+          />
+        </>,
+      );
+      const inputs = page.getByRole("textbox");
+      await expect
+        .element(inputs.nth(0))
+        .toHaveAccessibleName("Start date Period External");
+      await expect
+        .element(inputs.nth(1))
+        .toHaveAccessibleName("End date Period");
+    });
+
+    it("SHOULD add an input's own aria-labelledby to the FormField label", async () => {
+      await render(
+        <>
+          <span id="external-end-label">External</span>
+          <FormField>
+            <FormFieldLabel>Trade period</FormFieldLabel>
+            <DateInputRange
+              endInputProps={{ "aria-labelledby": "external-end-label" }}
+            />
+          </FormField>
+        </>,
+      );
+      const inputs = page.getByRole("textbox");
+      await expect
+        .element(inputs.nth(0))
+        .toHaveAccessibleName("Trade period Start date");
+      await expect
+        .element(inputs.nth(1))
+        .toHaveAccessibleName("Trade period End date External");
+    });
+
     it("SHOULD render value, even when not a valid date", async () => {
       await render(
         <DateInputRange
