@@ -446,6 +446,145 @@ describe("manifest validation", () => {
   });
 });
 
+/** A package built on Salt with agent docs in `agentDocs`, as pattern packages ship. */
+function installExtension(
+  root,
+  name = "@acme/patterns",
+  { agentDocs = "docs", version = "1.0.0", installedName = name } = {},
+) {
+  const packageDir = path.join(root, "node_modules", ...name.split("/"));
+  write(
+    packageDir,
+    "package.json",
+    JSON.stringify({ name: installedName, version, salt: { agentDocs } }),
+  );
+  write(packageDir, `${agentDocs}/index.md`, `# ${name}`);
+  write(packageDir, `${agentDocs}/patterns/view-filter.md`, "# View filter");
+  write(
+    packageDir,
+    `${agentDocs}/manifest.json`,
+    JSON.stringify({
+      schemaVersion: 1,
+      name: installedName,
+      version,
+      pages: [
+        {
+          path: "patterns/view-filter.md",
+          title: "View filter",
+          aliases: ["Filter bar"],
+        },
+      ],
+    }),
+  );
+  return packageDir;
+}
+
+function dependOn(root, ...names) {
+  write(
+    root,
+    "package.json",
+    JSON.stringify({
+      name: "app",
+      dependencies: Object.fromEntries(names.map((name) => [name, "1.0.0"])),
+    }),
+  );
+}
+
+describe("packages built on Salt", () => {
+  it("indexes a dependency that declares agent docs after Salt's packages", () => {
+    const root = project();
+    install(root, "core");
+    install(root, "theme");
+    installExtension(root);
+    write(
+      root,
+      "node_modules/left-pad/package.json",
+      JSON.stringify({ name: "left-pad", version: "1.0.0" }),
+    );
+    dependOn(root, "@acme/patterns", "left-pad");
+    expect(run(["--project", root], quiet)).toBe(0);
+    const content = readFileSync(path.join(root, "AGENTS.md"), "utf8");
+    const lines = content.split("\n").filter((line) => line.startsWith("|"));
+    expect(lines).toEqual([
+      "|node_modules/@salt-ds/core/docs/components:{button.md}",
+      "|node_modules/@salt-ds/theme/docs/components:{button.md}",
+      "|node_modules/@acme/patterns/docs/patterns:{view-filter.md[Filter bar]}",
+    ]);
+    expect(content).toContain(
+      "This project uses the Salt Design System (`@salt-ds/*` packages) and packages built on it,",
+    );
+    expect(content).not.toContain("left-pad");
+  });
+
+  it("leaves out packages built on Salt that the application doesn't depend on", () => {
+    const root = project();
+    install(root, "core");
+    installExtension(root);
+    dependOn(root);
+    expect(run(["--project", root], quiet)).toBe(0);
+    const content = readFileSync(path.join(root, "AGENTS.md"), "utf8");
+    expect(content).not.toContain("@acme/patterns");
+    expect(content).toContain(
+      "This project uses the Salt Design System (`@salt-ds/*` packages), whose",
+    );
+  });
+
+  it("reads agent docs from the folder the package declares", () => {
+    const root = project();
+    install(root, "core");
+    installExtension(root, "acme-patterns", { agentDocs: "dist/agent-docs" });
+    dependOn(root, "acme-patterns");
+    const manifests = discoverManifests(root);
+    expect(manifests.map(({ name, docsPath }) => [name, docsPath])).toEqual([
+      ["@salt-ds/core", "node_modules/@salt-ds/core/docs"],
+      ["acme-patterns", "node_modules/acme-patterns/dist/agent-docs"],
+    ]);
+  });
+
+  it.each([
+    [
+      "a folder outside the package",
+      (root) => installExtension(root, "@acme/patterns", { agentDocs: "../x" }),
+      "must name a folder inside the package",
+    ],
+    [
+      "a manifest for another package",
+      (root) =>
+        changeManifest(installExtension(root), (manifest) => {
+          manifest.name = "@acme/other";
+        }),
+      "Invalid documentation manifest",
+    ],
+    [
+      "no manifest",
+      (root) => rmSync(path.join(installExtension(root), "docs/manifest.json")),
+      "is missing",
+    ],
+  ])(
+    "rejects a package built on Salt that declares %s",
+    (_label, setUp, error) => {
+      const root = project();
+      install(root, "core");
+      setUp(root);
+      dependOn(root, "@acme/patterns");
+      expect(() => run(["--project", root], quiet)).toThrow(error);
+      expect(existsSync(path.join(root, "AGENTS.md"))).toBe(false);
+    },
+  );
+
+  it("skips a package installed under another name, as an npm alias is", () => {
+    const root = project();
+    install(root, "core");
+    installExtension(root, "patterns-alias", {
+      installedName: "@acme/patterns",
+    });
+    dependOn(root, "patterns-alias");
+    expect(discoverManifests(root).map(({ name }) => name)).toEqual([
+      "@salt-ds/core",
+    ]);
+  });
+});
+
 describe("instruction updates", () => {
   it("preserves existing instructions and line endings and is idempotent", () => {
     const root = project();

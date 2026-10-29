@@ -39,9 +39,10 @@ export function instructions({
   rootBase = "this file",
   check,
   guidance = {},
+  extensions = false,
 } = {}) {
   return [
-    "This project uses the Salt Design System (`@salt-ds/*` packages), whose APIs may differ from your training data.",
+    `This project uses the Salt Design System (\`@salt-ds/*\` packages)${extensions ? " and packages built on it" : ""}, whose APIs may differ from your training data.`,
     "For any Salt task, prefer retrieval-led reasoning over pre-training-led reasoning: before writing or changing UI that uses Salt, read the relevant pages from the index below.",
     "They are generated for the installed package versions.",
     ...(guidance.accessibility
@@ -75,13 +76,20 @@ export function checkCommand({ base, project }) {
   return `npx @salt-ds/cli check${relative === "." ? "" : ` --project ${argument}`} --changed`;
 }
 
-export function agentsBlock({ root = ".", lines, rootBase, check, guidance }) {
+export function agentsBlock({
+  root = ".",
+  lines,
+  rootBase,
+  check,
+  guidance,
+  extensions,
+}) {
   return [
     BEGIN_MARKER,
     "",
     "## Salt Design System",
     "",
-    instructions({ rootBase, check, guidance }),
+    instructions({ rootBase, check, guidance, extensions }),
     "",
     [`[Salt docs index]|root: ${root}`, ...lines].join("\n"),
     "",
@@ -95,19 +103,21 @@ function compare(left, right) {
   return left < right ? -1 : left > right ? 1 : 0;
 }
 
+/** Whether a package is one of Salt's own, rather than one built on Salt. */
+export const isSaltPackage = (name) => name.startsWith("@salt-ds/");
+
 /**
- * One line per docs folder, preserving each package's actual installed path.
+ * One line per docs folder, preserving each package's actual installed path:
+ * Core first, then Salt's other packages, then the packages built on Salt.
  * Package versions are left out so that the block, which projects commit,
  * changes only when pages do; each page states its version.
  */
 export function indexLines(manifests) {
-  const ordered = [...manifests].sort((left, right) => {
-    const leftCore = left.name === "@salt-ds/core";
-    const rightCore = right.name === "@salt-ds/core";
-    return (
-      Number(rightCore) - Number(leftCore) || compare(left.name, right.name)
-    );
-  });
+  const rank = ({ name }) =>
+    name === "@salt-ds/core" ? 0 : isSaltPackage(name) ? 1 : 2;
+  const ordered = [...manifests].sort(
+    (left, right) => rank(left) - rank(right) || compare(left.name, right.name),
+  );
   const lines = [];
   for (const { docsPath, pages } of ordered) {
     const folders = new Map();
@@ -190,9 +200,14 @@ function toPosix(value) {
   return value.split(path.sep).join("/");
 }
 
-export function readManifest(packageDir, directory, outputDir = packageDir) {
-  const name = `@salt-ds/${directory}`;
-  const docsDir = path.join(packageDir, "docs");
+/**
+ * A package's validated docs manifest: `name` is the package the application
+ * resolves, from saltPackages, and its manifest and package.json must agree.
+ */
+export function readManifest(
+  { name, packageDir, docsDir = path.join(packageDir, "docs") },
+  outputDir = packageDir,
+) {
   const manifestPath = path.join(docsDir, MANIFEST_FILE);
   if (!existsSync(manifestPath)) {
     throw new Error(
@@ -251,7 +266,6 @@ export function readManifest(packageDir, directory, outputDir = packageDir) {
     requireFile(path.join(docsDir, page.path));
   }
   return {
-    directory,
     name,
     version: manifest.version,
     docsDir,
@@ -268,9 +282,17 @@ export function readManifest(packageDir, directory, outputDir = packageDir) {
 export function discoverManifests(project, outputDir = project) {
   const manifests = [];
   const instructionDir = realpathSync(outputDir);
-  for (const { name, packageDir } of saltPackages(realpathSync(project))) {
-    if (name !== "core" && !existsSync(path.join(packageDir, "docs"))) continue;
-    manifests.push(readManifest(packageDir, name, instructionDir));
+  for (const installed of saltPackages(realpathSync(project))) {
+    // Salt packages without docs, such as @salt-ds/styles, are skipped; a
+    // package built on Salt that declares agent docs must have them.
+    if (
+      isSaltPackage(installed.name) &&
+      installed.name !== "@salt-ds/core" &&
+      !existsSync(installed.docsDir)
+    ) {
+      continue;
+    }
+    manifests.push(readManifest(installed, instructionDir));
   }
   if (manifests.length === 0) {
     throw new Error(
@@ -384,8 +406,10 @@ export function run(args, { log = console.log, cwd = process.cwd() } = {}) {
   requireDirectory(project, "--project");
   requireDirectory(dir, "--dir");
   const manifests = discoverManifests(project, dir);
+  const extensions = manifests.some(({ name }) => !isSaltPackage(name));
   const block = agentsBlock({
     root: ".",
+    extensions,
     lines: indexLines(manifests),
     guidance: guidancePages(manifests),
     check: coreCheck({ base: dir, project, manifests }),
@@ -417,6 +441,7 @@ export function run(args, { log = console.log, cwd = process.cwd() } = {}) {
     const copilotBlock = agentsBlock({
       root: ".",
       rootBase: "the repository root",
+      extensions,
       lines: indexLines(copilotManifests),
       guidance: guidancePages(copilotManifests),
       check: coreCheck({

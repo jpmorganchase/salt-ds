@@ -72,6 +72,7 @@ function parseArguments(args) {
 /**
  * Salt packages with agent docs resolved from the application, nearest first
  * as Node resolves them: a nearer package shadows the same package above it.
+ * Packages built on Salt that declare agent docs come after Salt's own.
  */
 function installedPackages(project) {
   const found = [];
@@ -83,8 +84,7 @@ function installedPackages(project) {
       `Cannot read the installed packages: ${error.message}`,
     );
   }
-  for (const { name, packageDir } of packages) {
-    const docsDir = path.join(packageDir, "docs");
+  for (const { name, packageDir, docsDir } of packages) {
     // Packages without agent docs, such as @salt-ds/styles, have nothing to
     // check; a manifest marks agent docs from before salt-check.
     if (
@@ -101,7 +101,7 @@ function installedPackages(project) {
     } catch {
       continue;
     }
-    found.push({ name: `@salt-ds/${name}`, version, docsDir });
+    found.push({ name, version, docsDir });
   }
   if (found.length === 0) {
     throw new SetupError(
@@ -117,7 +117,6 @@ function loadData(project) {
   const tokens = new Map();
   const components = new Map();
   const docsDirs = new Map();
-  let tokenPages = [];
   let themeDocs;
   for (const manifest of installedPackages(project)) {
     const { docsDir } = manifest;
@@ -148,13 +147,21 @@ function loadData(project) {
       );
     }
     if (data.tokens) {
-      themeDocs = docsDir;
-      tokenPages = data.pages ?? [];
+      themeDocs ??= docsDir;
+      const tokenPages = data.pages ?? [];
       for (const [
         name,
         [state, pageIndex, replacements = []],
       ] of Object.entries(data.tokens)) {
-        tokens.set(name, { state, page: tokenPages[pageIndex], replacements });
+        // Salt's theme comes first, and a package built on Salt, such as a
+        // brand theme, adds its own tokens without changing Salt's.
+        if (tokens.has(name)) continue;
+        tokens.set(name, {
+          state,
+          page: tokenPages[pageIndex],
+          replacements,
+          packageName: manifest.name,
+        });
       }
     }
     if (data.components) {
@@ -420,7 +427,7 @@ function checkTokens({ uses, text, file, data, problems, page }) {
         severity: "error",
         rule: "deprecated-token",
         message: `${name} is deprecated${info.replacements.length > 0 ? `; use ${info.replacements.join(" or ")} instead` : " and has no replacement"}`,
-        page: page(info.page),
+        page: page(info.page, info.packageName),
       });
     } else if (info.state === "palette") {
       problems.push({
@@ -428,7 +435,7 @@ function checkTokens({ uses, text, file, data, problems, page }) {
         severity: "warning",
         rule: "palette-token",
         message: `${name} is a palette token, which characteristic tokens use to support modes. Use a characteristic or foundation token instead`,
-        page: page(info.page),
+        page: page(info.page, info.packageName),
       });
     }
   }
@@ -471,8 +478,11 @@ function bindingChecker(ts, sourceFiles) {
     .getTypeChecker();
 }
 
-/** Salt components a file imports, resolved through their lexical bindings. */
-function saltImports(ts, sourceFile, checker) {
+/**
+ * Salt components a file imports, resolved through their lexical bindings:
+ * from Salt's packages, and from `checked` packages built on Salt.
+ */
+function saltImports(ts, sourceFile, checker, checked) {
   const named = new Map();
   const namespaces = new Map();
   for (const statement of sourceFile.statements) {
@@ -482,7 +492,9 @@ function saltImports(ts, sourceFile, checker) {
     )
       continue;
     const packageName = statement.moduleSpecifier.text;
-    if (!/^@salt-ds\/[\w-]+$/.test(packageName)) continue;
+    if (!/^@salt-ds\/[\w-]+$/.test(packageName) && !checked.has(packageName)) {
+      continue;
+    }
     const bindings = statement.importClause?.namedBindings;
     if (bindings && ts.isNamedImports(bindings)) {
       for (const element of bindings.elements) {
@@ -542,7 +554,7 @@ function checkScript({
   problems,
   page,
 }) {
-  const resolve = saltImports(ts, sourceFile, checker);
+  const resolve = saltImports(ts, sourceFile, checker, data.docsDirs);
   const uses = [];
   const at = (node) => ({
     file,
@@ -713,13 +725,13 @@ export function run(
       );
     const page = (docPath, packageName = "@salt-ds/theme") => {
       if (!docPath) return undefined;
-      const qualified = /^(@salt-ds\/[\w-]+)\/docs\/(.+)$/.exec(docPath);
-      const docsDir = data.docsDirs.get(qualified ? qualified[1] : packageName);
+      // "<package>/docs/<page>" names another package's page.
+      const qualified = /^((?:@[\w.-]+\/)?[\w.-]+)\/docs\/(.+)$/.exec(docPath);
+      const owner =
+        qualified && data.docsDirs.has(qualified[1]) ? qualified : undefined;
+      const docsDir = data.docsDirs.get(owner ? owner[1] : packageName);
       return docsDir
-        ? path.relative(
-            cwd,
-            path.join(docsDir, qualified ? qualified[2] : docPath),
-          )
+        ? path.relative(cwd, path.join(docsDir, owner ? owner[2] : docPath))
         : undefined;
     };
     const problems = [];
@@ -746,6 +758,13 @@ export function run(
       }
       scripts = [];
     };
+    // Scripts that may import Salt's packages or the packages built on it.
+    const importNames = [
+      "@salt-ds/",
+      ...[...data.docsDirs.keys()].filter(
+        (name) => !name.startsWith("@salt-ds/"),
+      ),
+    ];
     for (const file of files) {
       const text = readFileSync(file, "utf8");
       const hasTokens = data.themeDocs && text.includes("--salt-");
@@ -759,7 +778,10 @@ export function run(
           );
           checkTokens({ uses, text, file, data, problems, page });
         }
-      } else if (ts && (text.includes("@salt-ds/") || hasTokens)) {
+      } else if (
+        ts &&
+        (importNames.some((name) => text.includes(name)) || hasTokens)
+      ) {
         const sourceFile = parseScript(ts, file, text);
         scripts.push({ sourceFile, text, file, hasTokens });
         if (scripts.length === SCRIPT_BATCH) checkScripts();

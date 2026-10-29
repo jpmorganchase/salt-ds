@@ -31,6 +31,22 @@ Palette tokens are listed as not for direct use, except in a palette group that 
 
 Links between pages in one package are relative. Links to another package use `@salt-ds/<package>/docs/...`, and links to pages that aren't shipped point to the website. Generation fails for a link to a generated file or heading that doesn't exist; a `Disclosure`'s `id` is kept as an HTML anchor so links to it still work. Headings are slugged with `github-slugger`, as on the site, and a link to a heading in one of a component's tabs points to the same heading in the merged page, even when an earlier tab repeats the heading.
 
+## Packages built on Salt
+
+`salt-ds init` and `salt-ds check` also read agent docs from packages built on Salt, such as pattern or brand theme packages, when the application depends on them directly. Such a package names the folder in its `package.json`:
+
+```json
+{ "salt": { "agentDocs": "docs" } }
+```
+
+The folder holds the same files as Salt's packages:
+
+- `manifest.json`: `schemaVersion: 1`, the package's `name` and `version`, matching its `package.json`, and its `pages`, each with a relative `.md` `path`, a `title` and optional `aliases`.
+- `index.md` and the pages it lists. Links to Salt's pages use the package-qualified form, such as `@salt-ds/core/docs/components/button.md`.
+- Optionally, `salt-check.json` with `schemaVersion: 1`: `components`, whose deprecated props and parts are checked wherever the package is imported, and `tokens`, with the `pages` they link to. Tokens add to Salt's theme data; they can't change a token that Salt's theme defines.
+
+The index lists these packages after Salt's own, and the instructions then say the project uses Salt "and packages built on it". Only direct dependencies are read, because they are the packages the application imports. A package installed under another name, as an npm alias is, is skipped. A declared folder outside the package, or a missing or mismatched manifest, stops `salt-ds init` before it changes anything.
+
 ## Task guidance
 
 The generated instructions send accessibility repairs, including failures discovered during another task, to [Fixing accessibility](../../site/docs/getting-started/fixing-accessibility.mdx). [Choosing the right primitive](../../site/docs/getting-started/choosing-the-right-primitive.mdx) and [Composition pitfalls](../../site/docs/getting-started/composition-pitfalls.mdx) are indexed like other pages, without a route: in an evaluation on 16 build tasks, agents told to read the primitive chooser before choosing a component never opened it, and scored no better than with the instructions alone.

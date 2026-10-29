@@ -418,6 +418,82 @@ export const App = () => <Toast>Saved</Toast>;
     ]);
   });
 
+  it("checks the components and tokens of packages built on Salt", () => {
+    const root = project({
+      "src/App.tsx": `import { FilterBar, FilterBarItem } from "@acme/patterns";
+export const App = () => (
+  <>
+    <FilterBar compact><FilterBarItem /></FilterBar>
+    <FilterBar>Status</FilterBar>
+  </>
+);
+`,
+      "src/app.css":
+        ".a { color: var(--salt-acme-accent); border-color: var(--salt-container-primary-borderColor); }\n",
+    });
+    // A dependency that declares agent docs, with its own check data.
+    const name = "@acme/patterns";
+    const packageDir = path.join(root, "node_modules", "@acme", "patterns");
+    write(packageDir, "package.json", {
+      name,
+      version: "1.0.0",
+      salt: { agentDocs: "docs" },
+    });
+    write(packageDir, "docs/salt-check.json", {
+      schemaVersion: 1,
+      name,
+      version: "1.0.0",
+      pages: ["tokens.md"],
+      tokens: {
+        "--salt-acme-accent": ["current", 0],
+        // Salt's theme deprecates it, which a package built on Salt can't undo.
+        "--salt-container-primary-borderColor": ["current", 0],
+      },
+      components: {
+        FilterBar: {
+          page: "patterns/view-filter.md",
+          deprecatedProps: { compact: "since 2.0.0. Use `density` instead." },
+          parts: ["FilterBarItem"],
+        },
+        FilterBarItem: { page: "patterns/view-filter.md" },
+      },
+    });
+    write(root, "package.json", {
+      name: "app",
+      dependencies: { [name]: "1.0.0" },
+    });
+    const { log } = check(root, ["src", "--json"]);
+    const { problems } = JSON.parse(log.join("\n"));
+    const page = (...parts) => path.join("node_modules", ...parts);
+    expect(
+      problems.map(({ file, line, rule, page }) => ({
+        file,
+        line,
+        rule,
+        page,
+      })),
+    ).toEqual([
+      {
+        file: "src/App.tsx",
+        line: 4,
+        rule: "deprecated-prop",
+        page: page("@acme", "patterns", "docs", "patterns", "view-filter.md"),
+      },
+      {
+        file: "src/App.tsx",
+        line: 5,
+        rule: "missing-part",
+        page: page("@acme", "patterns", "docs", "patterns", "view-filter.md"),
+      },
+      {
+        file: "src/app.css",
+        line: 1,
+        rule: "deprecated-token",
+        page: page("@salt-ds", "theme", "docs", "tokens", "deprecated.md"),
+      },
+    ]);
+  });
+
   it("prints JSON with --json", () => {
     const root = project({
       "src/a.css": ".a { color: var(--salt-size-border); }\n",
