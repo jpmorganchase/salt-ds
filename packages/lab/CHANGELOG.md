@@ -1,5 +1,23 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.107
+
+### Patch Changes
+
+- 4cacf5b: Updated `SystemStatus` to match the design, sizing the status icon to the line height of the content, increasing the gap between the icon and the content, and removing the border. This removes the `--saltSystemStatus-borderColor`, `--saltSystemStatus-borderWidth` and `--saltSystemStatus-borderStyle` CSS variables.
+
+  Fixed the status indicator in `SystemStatus` being visible to screen readers, matching `Banner`.
+
+- Updated dependencies [20db4be]
+- Updated dependencies [0ac88c9]
+- Updated dependencies [20db4be]
+- Updated dependencies [3a74bce]
+- Updated dependencies [20db4be]
+- Updated dependencies [cdae245]
+- Updated dependencies [cdae245]
+- Updated dependencies [3a74bce]
+  - @salt-ds/core@1.74.0
+
 ## 1.0.0-alpha.106
 
 ### Minor Changes
