@@ -39,6 +39,9 @@ runs in CI and for agents that run your scripts without loading `AGENTS.md`. Use
 and deprecated or unknown tokens as errors, which make the script fail with exit
 code 1, so fix any your code already uses before you add it to a script that
 gates your builds. Palette tokens and missing parts are warnings, which don't.
+The check also fails the script, with exit code 2, when it can't run, for
+example with "No files to check" in an application without script or style
+files, or when no installed Salt package ships its docs.
 
 Run `salt-ds init` again after you add or upgrade Salt packages or update the CLI.
 Salt package changes can update the indexed pages, and CLI changes can update the
@@ -152,8 +155,9 @@ uses the installed CLI or downloads it.
 
 Without file or folder paths, it checks the files Git tracks or would add. Add
 `--changed` to check only files changed since the last commit, or `--json` for
-machine-readable results. It exits with 1 when it finds errors. Checking props
-and parts needs the application's `typescript` package.
+machine-readable results. It exits with 1 when it finds errors, and 2 when it
+can't run. Checking props and parts needs the application's `typescript`
+package.
 
 ## Review what agents build
 
