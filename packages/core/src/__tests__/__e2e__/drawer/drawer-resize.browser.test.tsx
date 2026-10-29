@@ -98,6 +98,8 @@ const valueNow = () =>
 
 async function waitForOpen() {
   await expect.element(page.getByRole("dialog")).toBeVisible();
+  // The drawer's initial focus lands a frame after it opens, so wait for it before focusing anything.
+  await expect.poll(() => drawer().contains(document.activeElement)).toBe(true);
 }
 
 function handleCenter() {
