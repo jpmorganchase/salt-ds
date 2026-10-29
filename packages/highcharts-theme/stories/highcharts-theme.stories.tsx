@@ -137,6 +137,26 @@ export const ZoomableLineChart = {
   },
 };
 
+const legendTitleLineOptions: Options = {
+  ...lineOptions,
+  legend: {
+    ...lineOptions.legend,
+    title: {
+      text: "Currencies",
+    },
+  },
+};
+
+export const LegendTitleLineChart = {
+  render: (args: ChartStoryArgs) => (
+    <LineChartComponent {...getChromaticStableArgs(args)} />
+  ),
+  args: {
+    fillPatterns: false,
+    options: legendTitleLineOptions,
+  },
+};
+
 export const DualAxisChart = {
   render: (args: ChartStoryArgs) => (
     <DualAxisChartComponent {...getChromaticStableArgs(args)} />
@@ -265,6 +285,26 @@ export const StackedBarChart = {
   args: {
     fillPatterns: false,
     options: stackedBarOptions,
+  },
+};
+
+const stackLabelsBarOptions: Options = {
+  ...stackedBarOptions,
+  yAxis: {
+    ...stackedBarOptions.yAxis,
+    stackLabels: {
+      enabled: true,
+    },
+  },
+};
+
+export const StackLabelsBarChart = {
+  render: (args: ChartStoryArgs) => (
+    <StackedBarChartComponent {...getChromaticStableArgs(args)} />
+  ),
+  args: {
+    fillPatterns: false,
+    options: stackLabelsBarOptions,
   },
 };
 

@@ -237,9 +237,8 @@ export const useList = <Item, Selection extends SelectionStrategy = "default">({
     // resolves the clicked item directly from the event target, we must
     // explicitly suppress the handler here.
     onClick: disabled ? undefined : selectionHook.listHandlers.onClick,
-    // MouseEnter would be much better for this. There is a bug in Cypress
-    // wheby it emits spurious MouseEnter (and MouseOver) events around
-    // keypress events, which break many tests.
+    // Retain mousemove semantics so keyboard events cannot synthesize hover
+    // transitions and unexpectedly change the highlighted item.
     onMouseMove: handleMouseMove,
   };
 

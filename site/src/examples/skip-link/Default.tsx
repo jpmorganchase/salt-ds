@@ -68,12 +68,16 @@ export const Default = (): ReactElement => {
               <H3 styleAs="h1" id={headerId} className={styles.header}>
                 Glossary
               </H3>
-              <H4 styleAs="h2">Characteristics</H4>
+              <H4 styleAs="h2" className={styles.sectionHeading}>
+                Characteristics
+              </H4>
               <p>
                 A Salt characteristic refers to a design token that aligns with
                 a holistic semantic used throughout the design language.
               </p>
-              <H4 styleAs="h2">Components</H4>
+              <H4 styleAs="h2" className={styles.sectionHeading}>
+                Components
+              </H4>
               <p>
                 Salt components serve as foundational building blocks as well as
                 representing design primitives. Users of Salt can design and

@@ -1,4 +1,8 @@
-import type { GetContextMenuItemsParams } from "ag-grid-community";
+import type {
+  DefaultMenuItem,
+  GetContextMenuItems,
+  MenuItemDef,
+} from "ag-grid-community";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
@@ -9,7 +13,8 @@ import windows from "../dependencies/windows.png";
 const ContextMenu = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
-  const getContextMenuItems = (params: GetContextMenuItemsParams) => {
+  // [VERSION DIVERGENCE]: AG Grid v36 narrows built-in menu item strings; the callback type preserves their literal types.
+  const getContextMenuItems: GetContextMenuItems = (params) => {
     const result = [
       {
         name: `Alert ${params.value}`,
@@ -133,7 +138,7 @@ const ContextMenu = (props: AgGridReactProps) => {
         icon: `<img src='${windows}' alt="" />`,
       },
       "copy",
-    ];
+    ] satisfies (DefaultMenuItem | MenuItemDef)[];
     return result;
   };
 

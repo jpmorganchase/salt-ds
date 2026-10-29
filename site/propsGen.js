@@ -5,7 +5,6 @@ const { writeFile } = require("node:fs");
 const componentPackages = [
   "lab",
   "core",
-  "data-grid",
   "date-components",
   "icons",
   "countries",

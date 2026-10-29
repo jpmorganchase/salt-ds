@@ -1,5 +1,237 @@
 # @salt-ds/theme
 
+## 1.48.0
+
+### Minor Changes
+
+- c319c14: Added an experimental interim mobile density, available at `@salt-ds/theme/css/experimental/mobile-interim.css`.
+
+  It gives the mobile density more compact spacing, text and size values. For example, `--salt-spacing-100` is 12px instead of 16px, `--salt-text-fontSize` is 14px instead of 16px, and `--salt-size-base` is 40px instead of 44px.
+
+  To try it, import the stylesheet after your theme stylesheets so its values take precedence, and pass `density="mobile"` to `SaltProvider`.
+
+  ```tsx
+  import "@salt-ds/theme/index.css";
+  import "@salt-ds/theme/css/experimental/mobile-interim.css";
+
+  <SaltProvider density="mobile">
+    <App />
+  </SaltProvider>;
+  ```
+
+  This density is experimental. Its tokens and values may change, or it may be removed, in any release without a major version bump. Its stylesheet will move out of the `experimental/` folder when it becomes stable. It isn't recommended for production use.
+
+- 825f63d: Renamed the `small` and `strong` font weight tokens to `lighter` and `bolder`, to match the new `fontWeight` prop on `Text`. The old tokens still work as aliases but are deprecated and will be removed in a future major version. Salt components now use the new tokens, so if you override an old token, override the new one instead.
+
+  ```diff
+  - font-weight: var(--salt-text-fontWeight-strong);
+  + font-weight: var(--salt-text-fontWeight-bolder);
+  ```
+
+  | Deprecated token                         | Use instead                               |
+  | ---------------------------------------- | ----------------------------------------- |
+  | `--salt-text-fontWeight-small`           | `--salt-text-fontWeight-lighter`          |
+  | `--salt-text-fontWeight-strong`          | `--salt-text-fontWeight-bolder`           |
+  | `--salt-text-action-fontWeight-small`    | `--salt-text-action-fontWeight-lighter`   |
+  | `--salt-text-action-fontWeight-strong`   | `--salt-text-action-fontWeight-bolder`    |
+  | `--salt-text-display-fontWeight-small`   | `--salt-text-display-fontWeight-lighter`  |
+  | `--salt-text-display-fontWeight-strong`  | `--salt-text-display-fontWeight-bolder`   |
+  | `--salt-text-heading-fontWeight-small`   | `--salt-text-heading-fontWeight-lighter`  |
+  | `--salt-text-heading-fontWeight-strong`  | `--salt-text-heading-fontWeight-bolder`   |
+  | `--salt-text-label-fontWeight-small`     | `--salt-text-label-fontWeight-lighter`    |
+  | `--salt-text-label-fontWeight-strong`    | `--salt-text-label-fontWeight-bolder`     |
+  | `--salt-text-notation-fontWeight-small`  | `--salt-text-notation-fontWeight-lighter` |
+  | `--salt-text-notation-fontWeight-strong` | `--salt-text-notation-fontWeight-bolder`  |
+
+  The deprecated `--salt-text-h{1-4}-fontWeight-small`, `--salt-text-h{1-4}-fontWeight-strong`, `--salt-text-display{1-4}-fontWeight-small` and `--salt-text-display{1-4}-fontWeight-strong` tokens now alias the new tokens.
+
+  The `small` and `strong` font weight tokens have been removed from the experimental Salt (Interim) theme without aliases. If you use the interim theme and reference them, switch to the matching `lighter` and `bolder` tokens in the table above.
+
+  See [font weight](https://www.saltdesignsystem.com/salt/foundations/typography#font-weight) for how each text style uses these weights.
+
+- 825f63d: Added `--salt-text-code-fontWeight` to all themes, to match the code text style in Figma. It's a regular weight in every theme.
+
+  `Code`, `Text` and `styleAs="code"` now use it. Code text has a single weight, so the `fontWeight` prop and nested `<b>` and `<strong>` elements no longer change its weight. Previously they used the body text weights, which made the browser draw a synthetic bold because PT Mono only has a regular weight.
+
+- 825f63d: Added tokens for the new editorial, eyebrow, Body 2 and Label 2 text styles to all themes. Compare their sizes in each theme and density with the [text styles preview](https://www.saltdesignsystem.com/salt/foundations/typography#hierarchy), or find every value in the [token index](https://www.saltdesignsystem.com/salt/themes/design-tokens/tokens).
+
+  - Editorial: `--salt-text-editorial1-fontSize` to `--salt-text-editorial6-fontSize`, `--salt-text-editorial1-lineHeight` to `--salt-text-editorial6-lineHeight`, `--salt-text-editorial-fontFamily`, `--salt-text-editorial-fontStyle`, `--salt-text-editorial-fontWeight`, `--salt-text-editorial-fontWeight-lighter`, `--salt-text-editorial-fontWeight-bolder`, `--salt-text-editorial-letterSpacing` and `--salt-text-editorial-textTransform`.
+  - Eyebrow: `--salt-text-eyebrow-fontSize`, `--salt-text-eyebrow-lineHeight`, `--salt-text-eyebrow-fontFamily`, `--salt-text-eyebrow-fontStyle`, `--salt-text-eyebrow-fontWeight`, `--salt-text-eyebrow-fontWeight-lighter`, `--salt-text-eyebrow-fontWeight-bolder`, `--salt-text-eyebrow-letterSpacing` and `--salt-text-eyebrow-textTransform`.
+  - Body 2: `--salt-text-body2-fontSize` and `--salt-text-body2-lineHeight`.
+  - Label 2: `--salt-text-label2-fontSize` and `--salt-text-label2-lineHeight`.
+
+### Patch Changes
+
+- 825f63d: Updated display text in the experimental Salt (Interim) theme to match the other themes. Display text is no longer italic or uppercase, has no letter spacing, can be made bolder with a regular weight, and has line heights of 1.3 times its font size. For the previous italic, uppercase style, use the new editorial styles.
+
+## 1.47.0
+
+### Minor Changes
+
+- d578674: Deprecated `--salt-text-label-fontFamily`. Use `--salt-text-fontFamily` instead. The deprecated token remains available as an alias of `--salt-text-fontFamily` for compatibility but may be removed in a future major version.
+- e990c46: Deprecated unused tokens in the legacy theme. These tokens are no longer used by any Salt component. They will continue to work for now, but should not be used and may be removed in a future major version.
+
+  Deprecated characteristic tokens:
+
+  - `--salt-content-bold-foreground-disabled`
+  - `--salt-selectable-background-disabled`
+  - `--salt-selectable-background-selectedDisabled`
+  - `--salt-selectable-borderColor-selectedDisabled`
+  - `--salt-selectable-foreground-selectedDisabled`
+  - `--salt-sentiment-accent-background-disabled`
+
+  Deprecated palette tokens:
+
+  - `--salt-palette-accent-disabled`
+  - `--salt-palette-interact-background-activeDisabled`
+  - `--salt-palette-interact-border-activeDisabled`
+  - `--salt-palette-interact-foreground-activeDisabled`
+  - `--salt-palette-interact-cta-foreground-disabled`
+  - `--salt-palette-interact-primary-foreground-disabled`
+  - `--salt-palette-interact-primary-foreground-hover`
+  - `--salt-palette-interact-secondary-background-active`
+  - `--salt-palette-interact-secondary-background-hover`
+  - `--salt-palette-interact-secondary-foreground`
+  - `--salt-palette-interact-secondary-foreground-active`
+  - `--salt-palette-interact-secondary-foreground-disabled`
+  - `--salt-palette-interact-secondary-foreground-hover`
+
+- 8e59c5d: Added brand tokens.
+
+  Added characteristic tokens (next and legacy themes):
+
+  - `--salt-content-brand-foreground`
+
+  Added palette tokens (next theme):
+
+  - `--salt-palette-brand-strong`
+
+  Added foundation tokens (next theme):
+
+  - `--salt-color-jpmBrown`
+  - `--salt-color-jpmBrown-rgb`
+
+  Deprecated `--salt-color-logo-brown` and `--salt-color-logo-brown-rgb` in the next theme. Use `--salt-color-jpmBrown` and `--salt-color-jpmBrown-rgb` instead, which have the same value. The deprecated tokens remain available as aliases for compatibility but may be removed in a future major version.
+
+- e990c46: Deprecated unused tokens in the next theme. These tokens are no longer used by any Salt component. They will continue to work for now, but should not be used and may be removed in a future major version.
+
+  Deprecated characteristic tokens:
+
+  - `--salt-content-bold-foreground-disabled`
+  - `--salt-selectable-background-disabled`
+  - `--salt-selectable-background-selectedDisabled`
+  - `--salt-selectable-borderColor-selectedDisabled`
+  - `--salt-selectable-foreground-selectedDisabled`
+  - `--salt-sentiment-accent-background-disabled`
+
+  Deprecated palette tokens:
+
+  - `--salt-palette-accent-disabled`
+  - `--salt-palette-accent-weaker-disabled`
+  - `--salt-palette-foreground-primary-alt-disabled`
+
+- d578674: Deprecated `--salt-text-notation-fontFamily`. Use `--salt-text-fontFamily` instead. The deprecated token remains available as an alias of `--salt-text-fontFamily` for compatibility but may be removed in a future major version.
+- 8e59c5d: Added `--salt-typography-fontStyle-normal` and `--salt-typography-fontStyle-italic` foundation tokens.
+
+  Deprecated `--salt-typography-textDecoration-italic`. Use `--salt-typography-fontStyle-italic` instead, since italic is a `font-style` value rather than a `text-decoration` value. The deprecated token remains available as an alias of `--salt-typography-fontStyle-italic` for compatibility but may be removed in a future major version.
+
+- 8e59c5d: Added an experimental Salt (Interim) theme, available at `@salt-ds/theme/css/experimental/salt-interim.css`.
+
+  To try it, import the stylesheets, load the fonts, and pass `theme="salt-interim"` to `SaltProvider`. The theme uses Roboto in weights 300, 400 and 600, each in normal and italic styles, and PT Mono for code.
+
+  ```tsx
+  import "@fontsource/roboto/300.css";
+  import "@fontsource/roboto/300-italic.css";
+  import "@fontsource/roboto/400.css";
+  import "@fontsource/roboto/400-italic.css";
+  import "@fontsource/roboto/600.css";
+  import "@fontsource/roboto/600-italic.css";
+  import "@fontsource/pt-mono";
+  import "@salt-ds/theme/css/global.css";
+  import "@salt-ds/theme/css/experimental/salt-interim.css";
+
+  <SaltProvider theme="salt-interim">
+    <App />
+  </SaltProvider>;
+  ```
+
+  This theme is experimental. Its tokens and values may change, or it may be removed, in any release without a major version bump. Its stylesheet will move out of the `experimental/` folder when it becomes stable. It isn't recommended for production use.
+
+- d578674: Added display typography letter spacing and text transform tokens.
+- 8e59c5d: Added `--salt-text-display-fontStyle` token to control the font style of display text.
+- 550c4c1: Simplified typography tokens so all heading levels share `--salt-text-heading-fontFamily` and `--salt-text-heading-fontWeight` tokens, while all display levels share `--salt-text-display-fontFamily` and `--salt-text-display-fontWeight` tokens. The `small` and `strong` variants follow the same shared naming.
+
+  The level-specific font family and weight tokens are deprecated. They remain available as aliases for compatibility but may be removed in a future major version.
+
+### Patch Changes
+
+- 8e59c5d: Changed `--salt-focused-outlineInset` and `--salt-focused-outlineOffset` from `0` to `0px` so they can be used in `calc()` expressions with other lengths.
+
+## 1.46.0
+
+### Minor Changes
+
+- 2e1da8e: Added `@salt-ds/theme/css/baseline.css`, a new opt-in CSS reset for apps using Salt. It removes browser-defined margins from the document body, headings and paragraphs so semantic elements can use Salt typography without also retaining browser spacing. Salt components remain self-contained and do not depend on the reset.
+
+  Import it once at the root of your app, before the theme CSS:
+
+  ```ts
+  import "@salt-ds/theme/css/baseline.css";
+  import "@salt-ds/theme/css/global.css";
+  import "@salt-ds/theme/css/theme-next.css";
+  ```
+
+  See the "Developing with Salt" getting-started guide for details.
+
+- be5eb93: Added:
+
+  - `--salt-sentiment-neutral-background`.
+  - `--salt-palette-neutral-background` to the legacy theme.
+
+  Updated `--salt-color-gray-100` token value in the legacy theme to increase contrast ratio.
+
+- 0f92b84: Added bold and subtle ghost container border color tokens. Updated the default ghost container border color to use the medium-low contrast palette color.
+
+### Patch Changes
+
+- be5eb93: Updated `--salt-curve-0` from `0` to `0px`, so all curve tokens resolve to a length. This fixes `calc()` expressions such as `calc(var(--salt-palette-corner-weak) + 1px)`, which were invalid in themes where the corner token resolved to the previously unitless `--salt-curve-0`, as `calc()` cannot add a number to a length.
+
+## 1.45.0
+
+### Minor Changes
+
+- e20c4a8: Added `--salt-curve-300` to the curve foundation.
+- ba3df7e: Added an `alpha-light-*` palette ramp, an always-white counterpart to the always-black `alpha-dark-*` ramp, and `--salt-focused-onSolid-outlineColor` for the focus outline of components placed on solid backgrounds.
+
+  Backfilled the `alpha-dark-*` ramp into the legacy theme.
+
+### Patch Changes
+
+- 0e83a66: Fixed `theme.css` and `theme-next.css` so each can be imported independently without relying on tokens from the other theme.
+
+## 1.44.0
+
+### Minor Changes
+
+- 7d81d18: Added `onSolid` subtle actionable tokens for styling low-emphasis actions on solid backgrounds.
+- 94c489e: Added container characteristic `borderColor` tokens:
+
+  - `--salt-container-bold-borderColor`
+  - `--salt-container-bold-borderColor-disabled`
+  - `--salt-container-borderColor`
+  - `--salt-container-subtle-borderColor`
+
+  Also deprecated the primary, secondary, and tertiary container `borderColor` tokens. Use the following replacement tokens where applicable:
+
+  | Deprecated token                                  | Replacement token                            |
+  | ------------------------------------------------- | -------------------------------------------- |
+  | `--salt-container-primary-borderColor`            | `--salt-container-bold-borderColor`          |
+  | `--salt-container-primary-borderColor-disabled`   | `--salt-container-bold-borderColor-disabled` |
+  | `--salt-container-secondary-borderColor`          | `--salt-container-bold-borderColor`          |
+  | `--salt-container-secondary-borderColor-disabled` | `--salt-container-bold-borderColor-disabled` |
+  | `--salt-container-tertiary-borderColor`           | `--salt-container-bold-borderColor`          |
+  | `--salt-container-tertiary-borderColor-disabled`  | `--salt-container-bold-borderColor-disabled` |
+
 ## 1.43.0
 
 ### Minor Changes

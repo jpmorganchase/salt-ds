@@ -2,6 +2,7 @@ import { CheckmarkIcon, CheckmarkSolidIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
+import type { ReactElement } from "react";
 import type { AdornmentValidationStatus } from "../status-adornment";
 import { makePrefixer } from "../utils";
 import checkboxIconCss from "./CheckboxIcon.css";
@@ -11,7 +12,7 @@ export interface CheckboxIconProps {
   className?: string;
   disabled?: boolean;
   /**
-   * @deprecated Use validationStatus instead
+   * @deprecated since 1.8.0-rc.2. Use `validationStatus` instead.
    */
   error?: boolean;
   indeterminate?: boolean;
@@ -29,7 +30,7 @@ export const CheckboxIcon = ({
   indeterminate,
   validationStatus,
   readOnly,
-}: CheckboxIconProps): JSX.Element => {
+}: CheckboxIconProps): ReactElement => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-checkbox-icon",

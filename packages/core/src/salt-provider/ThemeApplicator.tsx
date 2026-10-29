@@ -101,9 +101,11 @@ export function ThemeApplicator({
     }
 
     if (providerId !== targetDocument[providerSymbol]) {
-      console.warn(
-        "Multiple providers targeting the same window. There can be only one level root level SaltProvider per window.",
-      );
+      if (process.env.NODE_ENV !== "production") {
+        console.warn(
+          "Multiple providers targeting the same window. There can be only one level root level SaltProvider per window.",
+        );
+      }
       return;
     }
 
@@ -174,11 +176,13 @@ export function ThemeApplicator({
         ...themeNextProps,
       });
     }
-    console.warn(
-      `\nSaltProvider can only apply CSS classes for theming to a single nested child element of the SaltProvider.
+    if (process.env.NODE_ENV !== "production") {
+      console.warn(
+        `\nSaltProvider can only apply CSS classes for theming to a single nested child element of the SaltProvider.
         Either wrap elements with a single container or consider removing the applyClassesToChild prop, in which case a
         div element will wrap your child elements`,
-    );
+      );
+    }
     return children;
   }
 

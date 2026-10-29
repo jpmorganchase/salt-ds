@@ -12,7 +12,7 @@ export default {
   },
 } as Meta;
 
-const allIconNames = allIcons.map((iconComponent) => iconComponent.displayName);
+const allIconNames = Object.keys(allIcons);
 
 const sizes = [1, 2, 3] as const;
 export const IconSizes: StoryFn = () => {
@@ -39,8 +39,8 @@ export const AllIcons: StoryFn = () => {
             padding: "12px 0",
           }}
         >
-          {allIcons.map((IconComponent) => (
-            <IconComponent key={IconComponent.displayName} size={size} />
+          {Object.entries(allIcons).map(([iconName, IconComponent]) => (
+            <IconComponent key={iconName} size={size} />
           ))}
         </div>
       ))}

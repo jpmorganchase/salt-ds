@@ -104,7 +104,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       inputProps = {},
       inputRef: inputRefProp,
       label,
-      name,
+      name: nameProp,
       onBlur,
       onChange,
       onFocus,
@@ -122,6 +122,7 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
       window: targetWindow,
     });
     const checkboxGroup = useCheckboxGroup();
+    const name = nameProp ?? checkboxGroup?.name;
 
     const {
       "aria-describedby": inputDescribedBy,

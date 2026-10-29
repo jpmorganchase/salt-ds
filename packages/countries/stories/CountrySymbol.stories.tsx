@@ -1,4 +1,4 @@
-import { FlexLayout, StackLayout } from "@salt-ds/core";
+import { FlexLayout, StackLayout, Text } from "@salt-ds/core";
 import type { CountryCode } from "@salt-ds/countries";
 import {
   CountrySymbol,
@@ -103,12 +103,12 @@ export const AllCountrySymbolsWithSearch: StoryFn<typeof CountrySymbol> = (
                       {...args}
                     />
                   </StackLayout>
-                  <p style={{ margin: 0 }}>
+                  <Text as="p">
                     {countryCode} / {countryCode}_Sharp
-                  </p>
-                  <p style={{ margin: 0, textAlign: "center" }}>
+                  </Text>
+                  <Text as="p" style={{ textAlign: "center" }}>
                     {countryName}
-                  </p>
+                  </Text>
                 </StackLayout>
               );
             })}

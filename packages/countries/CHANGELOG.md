@@ -1,5 +1,73 @@
 # @salt-ds/countries
 
+## 1.5.4
+
+### Patch Changes
+
+- ed2072d: Renamed `CountrySymbol`'s private CSS variables from `--country-symbol-*` to `--countrySymbol-*`, to match Salt's naming for component CSS variables. Overrides of these private variables need to be updated; `--saltCountrySymbol-size-multiplier` is unchanged.
+- Updated dependencies [fd5ae98]
+- Updated dependencies [4f1b504]
+- Updated dependencies [75f2d7d]
+- Updated dependencies [61228a7]
+- Updated dependencies [f8925a2]
+- Updated dependencies [825f63d]
+- Updated dependencies [4aa4585]
+- Updated dependencies [55f27de]
+- Updated dependencies [602ddb5]
+- Updated dependencies [fd1bf44]
+- Updated dependencies [75f2d7d]
+- Updated dependencies [7182ee8]
+- Updated dependencies [7182ee8]
+- Updated dependencies [825f63d]
+- Updated dependencies [825f63d]
+- Updated dependencies [825f63d]
+- Updated dependencies [825f63d]
+- Updated dependencies [cb2e335]
+  - @salt-ds/core@1.73.0
+  - @salt-ds/styles@0.4.2
+
+## 1.5.3
+
+### Patch Changes
+
+- Updated dependencies [ff312fb]
+- Updated dependencies [d578674]
+- Updated dependencies [24b5b04]
+- Updated dependencies [83d7f9c]
+- Updated dependencies [f9f5198]
+- Updated dependencies [fbe1e48]
+- Updated dependencies [394af0d]
+- Updated dependencies [d578674]
+- Updated dependencies [d578674]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [cf3afb3]
+- Updated dependencies [0b65f84]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [b434b9e]
+- Updated dependencies [e75a32d]
+- Updated dependencies [59a14d2]
+- Updated dependencies [e990c46]
+- Updated dependencies [550c4c1]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [2a5cb0d]
+  - @salt-ds/core@1.72.0
+  - @salt-ds/styles@0.4.1
+  - @salt-ds/window@0.1.2
+
+## 1.5.2
+
+### Patch Changes
+
+- Updated dependencies [8aaa8d0]
+- Updated dependencies [fc112cb]
+- Updated dependencies [8aaa8d0]
+- Updated dependencies [7a828e4]
+- Updated dependencies [87a8a85]
+- Updated dependencies [8156149]
+  - @salt-ds/core@1.68.0
+  - @salt-ds/styles@0.4.0
+
 ## 1.5.1
 
 ### Patch Changes

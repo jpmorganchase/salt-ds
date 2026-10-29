@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/lab",
-  "version": "1.0.0-alpha.96",
+  "version": "1.0.0-alpha.107",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -8,15 +8,22 @@
     "directory": "packages/lab"
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "forbiddenDependencies": [
+    "@salt-ds/lab"
+  ],
   "main": "src/index.ts",
+  "typings": "dist-types/index.d.ts",
   "files": [
-    "css"
+    "css",
+    "dist-cjs",
+    "dist-es",
+    "dist-types"
   ],
   "sideEffects": [
     "*.css"
   ],
   "dependencies": {
-    "@floating-ui/react": "^0.26.28",
+    "@floating-ui/react": "^0.27.19",
     "@salt-ds/core": "workspace:^",
     "@salt-ds/icons": "workspace:^",
     "@salt-ds/styles": "workspace:*",
@@ -27,7 +34,7 @@
     "compute-scroll-into-view": "^3.0.0",
     "deepmerge": "^4.2.2",
     "react-color": "^2.19.3",
-    "react-window": "^1.8.6",
+    "react-window": "^1.8.11",
     "rifm": "^0.12.0",
     "tinycolor2": "^1.4.2"
   },
@@ -42,7 +49,8 @@
     }
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-lab",
+    "main": "dist-cjs/index.js",
+    "module": "dist-es/index.js",
     "provenance": true
   },
   "scripts": {

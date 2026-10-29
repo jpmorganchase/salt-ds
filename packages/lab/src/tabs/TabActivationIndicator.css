@@ -1,5 +1,5 @@
 .saltTabActivationIndicator {
-  background: var(--saltTabs-activationIndicator-background, var(--salt-container-primary-borderColor));
+  background: var(--saltTabs-activationIndicator-background, var(--salt-container-bold-borderColor));
   height: var(--saltTabs-activationIndicator-height, auto);
   inset: var(--tabs-activationIndicator-inset);
   position: absolute;

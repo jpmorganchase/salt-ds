@@ -1,4 +1,13 @@
-import { Card, H1, Panel, Text } from "@salt-ds/core";
+import {
+  Card,
+  CardContent,
+  CardFooter,
+  CardHeader,
+  H1,
+  Panel,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
 
@@ -13,43 +22,171 @@ export const AllExamplesUsingText: StoryFn<
   return (
     <QAContainer itemPadding={10} itemWidthAuto {...props}>
       <Card>
-        <H1>Primary card</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Primary card</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card variant="secondary">
-        <H1>Secondary card</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Secondary card</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card variant="tertiary">
-        <H1>Tertiary card</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Tertiary card</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card accent="top">
-        <H1>Accent top</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Accent top</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card accent="right">
-        <H1>Accent right</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Accent right</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card accent="bottom">
-        <H1>Accent bottom</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Accent bottom</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
       <Card accent="left">
-        <H1>Accent left</H1>
-        <Text>Content</Text>
+        <StackLayout gap={1}>
+          <H1>Accent left</H1>
+          <Text>Content</Text>
+        </StackLayout>
       </Card>
+      <Card>
+        <CardContent>
+          <StackLayout gap={1}>
+            <H1>With CardContent</H1>
+            <Text>Content</Text>
+          </StackLayout>
+        </CardContent>
+      </Card>
+      <Card accent="top">
+        <Panel variant="secondary" style={{ height: 20 }} />
+        <CardContent>
+          <StackLayout gap={1}>
+            <H1>Panel + CardContent</H1>
+            <Text>Content</Text>
+          </StackLayout>
+        </CardContent>
+      </Card>
+      <Card>
+        <CardHeader>
+          <H1>Card header</H1>
+        </CardHeader>
+        <CardContent>
+          <Text>Card content</Text>
+        </CardContent>
+        <CardFooter>
+          <Text color="secondary">Card footer</Text>
+        </CardFooter>
+      </Card>
+      <Card>
+        <CardHeader>
+          <H1>Header only</H1>
+        </CardHeader>
+      </Card>
+      <StackLayout align="stretch" direction="row" gap={2}>
+        <Card style={{ minHeight: 220, width: 180 }}>
+          <CardHeader>
+            <H1>With content</H1>
+          </CardHeader>
+          <CardContent>
+            <Text>Content fills the available height.</Text>
+          </CardContent>
+          <CardFooter>
+            <Text color="secondary">Footer</Text>
+          </CardFooter>
+        </Card>
+        <Card style={{ minHeight: 220, width: 180 }}>
+          <CardHeader>
+            <H1>Without content</H1>
+          </CardHeader>
+          <CardFooter>
+            <Text color="secondary">Footer</Text>
+          </CardFooter>
+        </Card>
+      </StackLayout>
       <Panel variant="tertiary">
         <Card variant="ghost">
-          <H1>Ghost card</H1>
-          <Text>Content</Text>
+          <StackLayout gap={1}>
+            <H1>Ghost card</H1>
+            <Text>Content</Text>
+          </StackLayout>
         </Card>
       </Panel>
     </QAContainer>
   );
 };
 AllExamplesUsingText.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+  },
+};
+
+export const VisualStyles: StoryFn<QAContainerProps> = (props) => (
+  <QAContainer cols={4} itemPadding={10} itemWidthAuto {...props}>
+    <Card borderColor="strong">
+      <H1>Strong border</H1>
+      <Text>Content</Text>
+    </Card>
+    <Card>
+      <H1>Default border</H1>
+      <Text>Content</Text>
+    </Card>
+    <Card borderColor="subtle">
+      <H1>Subtle border</H1>
+      <Text>Content</Text>
+    </Card>
+    <Card borderColor="none">
+      <H1>No border</H1>
+      <Text>Content</Text>
+    </Card>
+    <Card elevation="flat">
+      <H1>Flat elevation</H1>
+      <Text>Content</Text>
+    </Card>
+    <Card elevation="raised">
+      <H1>Raised elevation</H1>
+      <Text>Content</Text>
+    </Card>
+    <Panel variant="tertiary">
+      <Card borderColor="strong" variant="ghost">
+        <H1>Ghost card with strong border</H1>
+        <Text>Ghost border is preserved</Text>
+      </Card>
+    </Panel>
+    <Panel variant="tertiary">
+      <Card variant="ghost">
+        <H1>Ghost card with default border</H1>
+        <Text>Ghost border is preserved</Text>
+      </Card>
+    </Panel>
+    <Panel variant="tertiary">
+      <Card borderColor="subtle" variant="ghost">
+        <H1>Ghost card with subtle border</H1>
+        <Text>Ghost border is preserved</Text>
+      </Card>
+    </Panel>
+    <Panel variant="tertiary">
+      <Card borderColor="none" variant="ghost">
+        <H1>Ghost card without border</H1>
+        <Text>Content</Text>
+      </Card>
+    </Panel>
+  </QAContainer>
+);
+VisualStyles.parameters = {
   chromatic: {
     disableSnapshot: false,
   },

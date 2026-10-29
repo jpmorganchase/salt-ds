@@ -1,6 +1,6 @@
 /* Component class applied to the root element */
 .saltTabstrip {
-  --tabs-tabstrip-height: var(--saltTabs-tabstrip-height, var(--salt-size-stackable));
+  --tabs-tabstrip-height: var(--saltTabs-tabstrip-height, calc(var(--salt-size-base) + var(--salt-spacing-100)));
   --tabs-tabstrip-dragging-display: none;
   --tabs-tabstrip-display: inline-flex;
   --tabs-tabstrip-background: transparent;
@@ -57,7 +57,7 @@
 
 .saltTabstrip-addButton,
 .saltDropdownBase.saltTabstrip-overflowMenu {
-  margin-left: var(--salt-size-unit);
+  margin-left: var(--salt-spacing-100);
 }
 
 .saltTabstrip-overflowMenu.saltDropdownBase {
@@ -65,12 +65,12 @@
 }
 
 .saltTabstrip-overflowMenu-open {
-  --saltButton-background: var(--salt-actionable-secondary-background-active);
-  --saltButton-text-color: var(--salt-actionable-secondary-text-color-active);
+  --saltButton-background: var(--salt-actionable-subtle-background-active);
+  --saltButton-text-color: var(--salt-actionable-subtle-foreground-active);
 }
 
 .saltTabstrip-overflowMenu-open .saltButton {
-  --saltIcon-color: var(--salt-actionable-secondary-foreground-active);
+  --saltIcon-color: var(--salt-actionable-subtle-foreground-active);
 }
 
 .saltTabstrip-inner {
@@ -97,10 +97,10 @@
 /* Styling applied to Draggable wrapper when used to drag a Tab */
 .saltDraggable[class*="tabstrip"] {
   --tabs-tabstrip-display: flex;
-  --tabs-tabstrip-height: var(--saltTabs-tabstrip-height, var(--salt-size-stackable));
+  --tabs-tabstrip-height: var(--saltTabs-tabstrip-height, calc(var(--salt-size-base) + var(--salt-spacing-100)));
   --tabs-tabstrip-dragging-display: block;
 
-  --tabs-tab-background: var(--salt-navigable-background-hover);
+  --tabs-tab-background: var(--salt-overlayable-background-hover);
   --tabs-tab-before-content: "";
   --tabs-tab-before-background: var(--salt-navigable-indicator-hover);
   --tabs-tab-before-height: var(--tabs-activationIndicator-thumb-height);
@@ -113,7 +113,7 @@
 }
 
 .saltDraggable-tabstrip-horizontal {
-  --tabs-tabstrip-height: var(--saltTabs-tabstrip-height, var(--salt-size-stackable));
+  --tabs-tabstrip-height: var(--saltTabs-tabstrip-height, calc(var(--salt-size-base) + var(--salt-spacing-100)));
   --tabs-activationIndicator-thumb-height: 2px;
   --tabs-activationIndicator-inset: auto 0px 0px 0px;
 

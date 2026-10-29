@@ -1,0 +1,45 @@
+/* Foundations (base values) */
+@import url(foundations/index.css);
+
+@import url(next/foundations/alpha.css);
+@import url(next/foundations/color.css);
+
+/* Intermediate palette (refined colors) */
+@import url(next/palette/accent.css);
+@import url(next/palette/alpha.css);
+@import url(next/palette/background.css);
+@import url(next/palette/brand.css);
+@import url(next/palette/categorical.css);
+@import url(next/palette/corner.css);
+@import url(next/palette/foreground.css);
+@import url(next/palette/info.css);
+@import url(next/palette/negative.css);
+@import url(next/palette/neutral.css);
+@import url(next/palette/positive.css);
+@import url(next/palette/shadow.css);
+@import url(next/palette/warning.css);
+
+/* Each characteristic file references values from above foundations */
+@import url(next/characteristics/actionable.css);
+@import url(next/characteristics/category.css);
+@import url(next/characteristics/container.css);
+@import url(next/characteristics/content.css);
+@import url(next/characteristics/editable.css);
+@import url(next/characteristics/focused.css);
+@import url(next/characteristics/layout.css);
+@import url(next/characteristics/navigable.css);
+@import url(next/characteristics/overlayable.css);
+@import url(next/characteristics/selectable.css);
+@import url(next/characteristics/sentiment.css);
+@import url(next/characteristics/separable.css);
+@import url(next/characteristics/status.css);
+@import url(next/characteristics/target.css);
+@import url(next/characteristics/text.css);
+
+/* Deprecated */
+@import url(deprecated/foundations.css);
+@import url(deprecated/characteristics.css);
+
+@import url(next/deprecated/characteristics.css);
+@import url(next/deprecated/foundations.css);
+@import url(next/deprecated/palette.css);

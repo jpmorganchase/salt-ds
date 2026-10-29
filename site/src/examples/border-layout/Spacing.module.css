@@ -11,7 +11,7 @@
 }
 .item {
   position: relative;
-  border: solid 1px var(--salt-container-primary-borderColor);
+  border: solid 1px var(--salt-container-bold-borderColor);
   background: var(--salt-container-primary-background);
   align-items: center;
   justify-content: center;

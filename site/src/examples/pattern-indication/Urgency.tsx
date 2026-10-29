@@ -13,6 +13,7 @@ export const Urgency = () => {
     <FlowLayout>
       <FlexLayout gap={0.5} align="center">
         <UrgencyNoneIcon
+          aria-hidden
           size={2}
           style={{ color: "var(--salt-color-gray-500)" }}
         />
@@ -20,6 +21,7 @@ export const Urgency = () => {
       </FlexLayout>
       <FlexLayout gap={0.5} align="center">
         <UrgencyLowIcon
+          aria-hidden
           size={2}
           style={{
             color: themeNext
@@ -31,6 +33,7 @@ export const Urgency = () => {
       </FlexLayout>
       <FlexLayout gap={0.5} align="center">
         <UrgencyMediumIcon
+          aria-hidden
           size={2}
           style={{ color: "var(--salt-color-orange-500)" }}
         />
@@ -38,6 +41,7 @@ export const Urgency = () => {
       </FlexLayout>
       <FlexLayout gap={0.5} align="center">
         <UrgencyHighIcon
+          aria-hidden
           size={2}
           style={{ color: "var(--salt-color-red-500)" }}
         />

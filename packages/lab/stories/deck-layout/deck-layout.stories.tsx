@@ -1,4 +1,4 @@
-import { Card } from "@salt-ds/core";
+import { Card, H2, StackLayout, Text } from "@salt-ds/core";
 import { DeckItem, DeckLayout, Tab, Tabstrip } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useEffect, useState } from "react";
@@ -18,11 +18,13 @@ export default {
 const deckCards = (slides: number) =>
   Array.from({ length: slides }, (_, index) => (
     <Card key={index}>
-      <h2>{`Deck Item ${index + 1}`}</h2>
-      <p>
-        We can implement your cross-border liquidity model in just a few months,
-        depending on the options, scope and complexity.
-      </p>
+      <StackLayout gap={1}>
+        <H2>{`Deck Item ${index + 1}`}</H2>
+        <Text as="p">
+          We can implement your cross-border liquidity model in just a few
+          months, depending on the options, scope and complexity.
+        </Text>
+      </StackLayout>
     </Card>
   ));
 
@@ -86,14 +88,16 @@ const WithTabStrip: StoryFn<typeof DeckLayout> = (args) => {
         deckItemProps={{ role: "tabpanel" }}
         {...args}
       >
-        {tabs.map((tab, index) => {
+        {tabs.map((_tab, index) => {
           return (
             <Card key={index}>
-              <h2>{`Tab ${index + 1}`}</h2>
-              <p>
-                We can implement your cross-border liquidity model in just a few
-                months, depending on the options, scope and complexity.
-              </p>
+              <StackLayout gap={1}>
+                <H2>{`Tab ${index + 1}`}</H2>
+                <Text as="p">
+                  We can implement your cross-border liquidity model in just a
+                  few months, depending on the options, scope and complexity.
+                </Text>
+              </StackLayout>
             </Card>
           );
         })}

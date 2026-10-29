@@ -1,6 +1,6 @@
 import { Spinner } from "@salt-ds/core";
+import type { IDatasource } from "ag-grid-community";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
-import { useEffect } from "react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridInfiniteScrollExampleColumns from "../dependencies/dataGridInfiniteScrollExampleColumns";
 import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
@@ -21,25 +21,19 @@ const generateData = function generateData<T extends { name: string }>(
 
 const dataSourceRows = generateData(dataGridExampleData);
 
+const datasource: IDatasource = {
+  getRows: ({ startRow, endRow, successCallback }) => {
+    setTimeout(() => {
+      successCallback(
+        dataSourceRows.slice(startRow, endRow),
+        dataSourceRows.length,
+      );
+    }, 500);
+  },
+};
+
 const InfiniteScroll = (props: AgGridReactProps) => {
-  const { isGridReady, agGridProps, containerProps, api } = useAgGridHelpers();
-
-  useEffect(() => {
-    if (isGridReady) {
-      api?.sizeColumnsToFit();
-
-      api?.setGridOption("datasource", {
-        getRows: ({ startRow, endRow, successCallback }) => {
-          setTimeout(() => {
-            successCallback(
-              dataSourceRows.slice(startRow, endRow),
-              dataSourceRows.length,
-            );
-          }, 500);
-        },
-      });
-    }
-  }, [isGridReady, api]);
+  const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
     <div {...containerProps}>
@@ -48,6 +42,7 @@ const InfiniteScroll = (props: AgGridReactProps) => {
         {...props}
         columnDefs={dataGridInfiniteScrollExampleColumns}
         rowModelType="infinite"
+        datasource={datasource}
         infiniteInitialRowCount={100}
         components={infiniteScrollComponents}
       />

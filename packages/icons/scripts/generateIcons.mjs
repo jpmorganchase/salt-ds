@@ -136,21 +136,55 @@ const generateCssAsBg = ({ basePath, cssOutputPath, fileArg }) => {
 };
 
 const DEPRECATED_ICONS = [
-  ["Success", "Checkmark"],
-  ["SuccessSolid", "CheckmarkSolid"],
-  ["SuccessTick", "Checkmark"],
-  ["StepSuccess", "SuccessCircle"],
-  ["SuccessSmall", "Checkmark"],
-  ["SuccessSmallSolid", "CheckmarkSolid"],
-  ["IconFigma", "Figma"],
-  ["BarChart", "ChartBar"],
-  ["PieChart", "ChartPie"],
-  ["LineChart", "ChartLine"],
-  ["ErrorExecute", "NotAllowed"],
-  ["Help", "HelpCircle"],
-  ["HelpSolid", "HelpCircleSolid"],
+  { componentName: "Success", replacement: "Checkmark", since: "1.13.0" },
+  {
+    componentName: "SuccessSolid",
+    replacement: "CheckmarkSolid",
+    since: "1.13.0",
+  },
+  {
+    componentName: "SuccessTick",
+    replacement: "Checkmark",
+    since: "1.13.0",
+  },
+  {
+    componentName: "StepSuccess",
+    replacement: "SuccessCircle",
+    since: "1.13.0",
+  },
+  {
+    componentName: "SuccessSmall",
+    replacement: "Checkmark",
+    since: "1.13.0",
+  },
+  {
+    componentName: "SuccessSmallSolid",
+    replacement: "CheckmarkSolid",
+    since: "1.13.0",
+  },
+  { componentName: "IconFigma", replacement: "Figma", since: "1.16.0" },
+  { componentName: "BarChart", replacement: "ChartBar", since: "1.16.0" },
+  { componentName: "PieChart", replacement: "ChartPie", since: "1.16.0" },
+  { componentName: "LineChart", replacement: "ChartLine", since: "1.16.0" },
+  {
+    componentName: "ErrorExecute",
+    replacement: "NotAllowed",
+    since: "1.17.0",
+  },
+  {
+    componentName: "Help",
+    replacement: "HelpCircle",
+    since: "1.18.0",
+  },
+  {
+    componentName: "HelpSolid",
+    replacement: "HelpCircleSolid",
+    since: "1.18.0",
+  },
 ];
-const deprecatedIconMap = new Map(DEPRECATED_ICONS);
+const deprecatedIconMap = new Map(
+  DEPRECATED_ICONS.map((icon) => [icon.componentName, icon]),
+);
 
 function getIconMetadataFromFileName(fileName) {
   const filenameWithoutExtension = path.parse(fileName).name;
@@ -274,7 +308,7 @@ const generateIconComponents = async ({
         // note: triple mustache is used here for unescaped version
         JSDoc: deprecatedIconMap.has(componentName)
           ? `
-/** @deprecated - Use \`${deprecatedIconMap.get(componentName)}Icon\` instead. */`
+/** @deprecated since ${deprecatedIconMap.get(componentName).since}. Use \`${deprecatedIconMap.get(componentName).replacement}Icon\` instead. */`
           : "",
       });
 
@@ -316,7 +350,7 @@ const generateIndex = async ({ icons, componentsPath }) => {
 };
 
 /**
- * Generate a file to export all Icon components in an array.
+ * Generate a file to export all Icon components by name.
  */
 const generateIconAll = async ({ icons, allPath }) => {
   console.log(`Generating ${allPath}`);
@@ -327,7 +361,7 @@ const generateIconAll = async ({ icons, allPath }) => {
     .join("\n");
 
   const importsStatements = `import {\n${sortedIcons}\n} from "@salt-ds/icons";\n`;
-  const exportStatements = `export const allIcons = [${sortedIcons}\n];\n`;
+  const exportStatements = `export const allIcons = {${sortedIcons}\n};\n`;
 
   const joinedText = [
     GENERATED_WARNING_COMMENT,

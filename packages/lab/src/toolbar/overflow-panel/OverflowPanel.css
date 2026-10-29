@@ -8,17 +8,17 @@
   --saltButton-justifyContent: flex-start;
   align-items: stretch;
   color: var(--salt-content-primary-foreground);
-  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
   display: flex;
   flex-direction: column;
-  padding: calc(var(--salt-size-unit) * 1.5) 0;
+  padding: calc(var(--salt-spacing-100) * 1.5) 0;
   outline: none;
 }
 
 .saltOverflowPanel [aria-expanded="true"] {
-  --saltButton-background: var(--salt-actionable-secondary-background-active);
-  --saltButton-background-hover: var(--salt-actionable-secondary-background-active);
-  --saltIcon-color: var(--salt-actionable-secondary-foreground-active);
+  --saltButton-background: var(--salt-actionable-subtle-background-active);
+  --saltButton-background-hover: var(--salt-actionable-subtle-background-active);
+  --saltIcon-color: var(--salt-actionable-subtle-foreground-active);
 }
 
 .saltOverflowPanel.saltDropdownBase {

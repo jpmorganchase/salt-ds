@@ -2,7 +2,7 @@
   width: 100%;
   display: flex;
   justify-content: flex-end;
-  gap: var(--salt-size-unit);
+  gap: var(--salt-spacing-100);
 }
 
 .saltButtonBar-alignLeft {

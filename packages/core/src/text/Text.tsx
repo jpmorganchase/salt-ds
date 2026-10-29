@@ -23,11 +23,18 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
      */
     disabled?: boolean;
     /**
+     * Adjust the font weight using the theme's weights for the current text style.
+     * This is a visual change only and isn't conveyed to assistive technologies; use `<strong>` or `<em>` to convey importance or stress.
+     */
+    fontWeight?: "lighter" | "bolder";
+    /**
      * Apply text truncation by mentioning number of rows to be displayed
      */
     maxRows?: number;
     /**
-     * Match styling to another text component's style
+     * Match styling to another text component's style.
+     * Use `inherit` to inherit the font and color from the parent element.
+     * The `lighter` and `bolder` weights then come from the closest `Text`-based ancestor.
      */
     styleAs?:
       | "h1"
@@ -35,16 +42,26 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
       | "h3"
       | "h4"
       | "label"
+      | "label2"
+      | "body2"
+      | "eyebrow"
       | "display1"
       | "display2"
       | "display3"
       | "display4"
+      | "editorial1"
+      | "editorial2"
+      | "editorial3"
+      | "editorial4"
+      | "editorial5"
+      | "editorial6"
       | "notation"
       | "action"
-      | "code";
+      | "code"
+      | "inherit";
     /**
      * Change text color palette
-     * @deprecated Use `color` instead
+     * @deprecated since 1.27.1. Use `color` instead.
      */
     variant?: "primary" | "secondary";
     /*
@@ -68,6 +85,7 @@ export const Text: TextComponent = forwardRef(function Text<
     children,
     className,
     disabled = false,
+    fontWeight,
     maxRows,
     style,
     styleAs,
@@ -88,7 +106,8 @@ export const Text: TextComponent = forwardRef(function Text<
 
   const textStyles = { "--text-max-rows": maxRows, ...style };
 
-  const color = variant ?? colorProp ?? "primary";
+  const color =
+    variant ?? colorProp ?? (styleAs === "inherit" ? "inherit" : "primary");
 
   return (
     <Component
@@ -97,7 +116,10 @@ export const Text: TextComponent = forwardRef(function Text<
         {
           [withBaseName("disabled")]: disabled,
           [withBaseName("lineClamp")]: maxRows,
-          [withBaseName(styleAs as string)]: styleAs,
+          [withBaseName(
+            styleAs === "inherit" ? "inheritStyle" : (styleAs as string),
+          )]: styleAs,
+          [withBaseName(fontWeight as string)]: fontWeight,
           [withBaseName(color)]: color !== "inherit",
         },
         className,

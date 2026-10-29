@@ -15,7 +15,9 @@ concurrency:
 
 jobs:
   deploy:
-    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    # Production (main) is deployed by release.yml once packages are published,
+    # so it only changes when there's a release.
+    if: ${{ github.event.workflow_run.conclusion == 'success' && !(github.event.workflow_run.event == 'push' && github.event.workflow_run.head_branch == 'main') }}
     runs-on: ubuntu-latest
 
     permissions:
@@ -102,7 +104,7 @@ jobs:
             core.info(`Resolved ${workflowRun.event} workflow run for ${branchName} at ${workflowRun.head_sha}`);
 
       - name: "Download build artifact"
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: storybook-build
           path: ${{ runner.temp }}/storybook-static
@@ -115,7 +117,7 @@ jobs:
           STORYBOOK_STATIC_DIR: ${{ runner.temp }}/storybook-static
 
       - name: Publish
-        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4
+        uses: cloudflare/wrangler-action@25853364521e0d392ece9b0c1e97a4b37b638087 # v4
         id: publish
         with:
           apiToken: ${{ secrets.CLOUDFLARE_SALT_API_TOKEN }}

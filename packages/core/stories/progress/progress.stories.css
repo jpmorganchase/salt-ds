@@ -3,10 +3,11 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
+  gap: var(--salt-spacing-200);
 }
 
 .container {
-  margin-left: 30px;
+  margin-inline-start: var(--salt-spacing-400);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -14,5 +15,4 @@
 
 .controls {
   display: flex;
-  margin-bottom: 15px;
 }

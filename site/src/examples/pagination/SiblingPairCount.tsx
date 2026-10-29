@@ -1,22 +1,29 @@
-import { Pagination, Paginator, StackLayout } from "@salt-ds/core";
-import { type ChangeEvent, type ReactElement, useState } from "react";
+import {
+  FormField,
+  FormFieldLabel,
+  NumberInput,
+  Pagination,
+  Paginator,
+  StackLayout,
+} from "@salt-ds/core";
+import { type ReactElement, useState } from "react";
 
 export const SiblingPairCount = (): ReactElement => {
   const [siblingCount, setSiblingCount] = useState(2);
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = Number.parseInt(event.target.value, 10);
-    setSiblingCount(value);
-  };
-
   return (
     <StackLayout>
-      <input
-        type="number"
-        value={siblingCount?.toString()}
-        onChange={handleChange}
-        style={{ width: 50 }}
-      />
+      <FormField style={{ width: 180 }}>
+        <FormFieldLabel>Sibling count</FormFieldLabel>
+        <NumberInput
+          value={siblingCount.toString()}
+          min={0}
+          onChange={(_event, value) => {
+            const parsed = Number.parseInt(value, 10);
+            setSiblingCount(Number.isNaN(parsed) ? 0 : parsed);
+          }}
+        />
+      </FormField>
       <Pagination count={20} defaultPage={10}>
         <Paginator siblingCount={siblingCount} />
       </Pagination>

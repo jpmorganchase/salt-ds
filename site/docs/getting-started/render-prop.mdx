@@ -1,0 +1,49 @@
+---
+title: Render prop
+layout: DetailTechnical
+sidebar:
+  label: Render prop
+---
+
+Some Salt components support a `render` prop so you can replace the element that the component renders while preserving Salt styling, accessibility attributes, and behavior.
+
+Use `render` when you need a Salt component to render another component, such as a link component from a routing library.
+
+Salt passes styling, behavior, accessibility attributes, refs, and children to the final element. With a JSX element, Salt merges these props for you. With a callback function, pass the provided props to the element you return.
+
+## Render with a JSX element
+
+Use a JSX element when you only need to replace the rendered element and can define the target props directly.
+
+```tsx
+<Link render={<RouterLink to="/reports" />}>View reports</Link>
+```
+
+Salt merges its props with the props on the element. If you render a custom component, it must accept those props, forward the `ref`, and pass the received props to its underlying DOM element. This preserves Salt class names, styles, event handlers, ARIA attributes, children, and focus behavior.
+
+## Render with a callback function
+
+Use a callback function when you need to transform props before passing them to the rendered element. A common example is mapping Salt’s `href` prop to a router’s `to` prop.
+
+```tsx
+<Link
+  href="/reports"
+  render={({ href, ...props }) => <RouterLink {...props} to={href ?? "/"} />}
+>
+  View reports
+</Link>
+```
+
+The callback receives the props Salt would have passed to the default element. Return a valid React element.
+
+### Passing props and refs
+
+Pass the provided props to the element you return unless you intentionally need to transform them. This preserves Salt class names, styles, event handlers, ARIA attributes, children, and other component behavior.
+
+If the component you render supports refs, forward the provided `ref` to it. Salt components may use refs for focus management, measurement, or positioning.
+
+For routing links, map the Salt `href` prop to the router destination prop, such as React Router’s `to`, while passing the rest of the props through.
+
+## Check component support
+
+Not every Salt component supports `render`. Check a component’s props table to confirm whether `render` is available.

@@ -6,4 +6,5 @@
   flex-direction: column;
   justify-content: unset;
   text-align: center;
+  gap: var(--salt-spacing-100);
 }

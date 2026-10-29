@@ -14,6 +14,9 @@
   height: var(--salt-size-base);
   width: var(--salt-size-base);
 }
+.saltSpinner-medium .saltSpinner-arc {
+  r: calc((var(--salt-size-base) - var(--spinner-strokeWidth)) / 2);
+}
 
 /* Styles applied when `size="large"` */
 .saltSpinner-large {
@@ -21,12 +24,18 @@
   height: calc(var(--salt-size-base) * 2);
   width: calc(var(--salt-size-base) * 2);
 }
+.saltSpinner-large .saltSpinner-arc {
+  r: calc((var(--salt-size-base) * 2 - var(--spinner-strokeWidth)) / 2);
+}
 
 /* Styles applied when `size="small"` */
 .saltSpinner-small {
   --spinner-strokeWidth: var(--salt-size-fixed-200);
-  height: var(--salt-size-icon);
-  width: var(--salt-size-icon);
+  height: max(var(--salt-size-icon), 12px);
+  width: max(var(--salt-size-icon), 12px);
+}
+.saltSpinner-small .saltSpinner-arc {
+  r: calc((max(var(--salt-size-icon), 12px) - var(--spinner-strokeWidth)) / 2);
 }
 
 /* Styles applied to the SVG */

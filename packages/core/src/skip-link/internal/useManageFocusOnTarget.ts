@@ -15,7 +15,7 @@ interface ManageFocusOnTargetProps {
   onBlur?: FocusEventHandler;
   onClick?: MouseEventHandler;
   onKeyUp?: KeyboardEventHandler;
-  targetRef: RefObject<HTMLElement> | undefined;
+  targetRef: RefObject<HTMLElement | null> | undefined;
   targetClass: string;
 }
 
@@ -34,8 +34,8 @@ export const useManageFocusOnTarget = ({
 }: ManageFocusOnTargetProps): ManageFocusOnTargetResult => {
   const [target, setTarget] = useState<HTMLElement>();
 
-  const hasTabIndex = useRef<boolean | string>();
-  const shouldRemoveTabIndex = useRef<boolean>();
+  const hasTabIndex = useRef<boolean | string | undefined>(undefined);
+  const shouldRemoveTabIndex = useRef<boolean | undefined>(undefined);
 
   useEffect(() => {
     if (targetRef?.current) {

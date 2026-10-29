@@ -92,7 +92,7 @@ function defaultSingleValidation(
 export const DatePickerSingleInput = forwardRef<
   HTMLDivElement,
   DatePickerSingleInputProps
->((props: DatePickerSingleInputProps, ref: React.Ref<HTMLDivElement>) => {
+>(function DatePickerSingleInput(props, ref) {
   const { dateAdapter } = useLocalization();
 
   const {
@@ -123,7 +123,7 @@ export const DatePickerSingleInput = forwardRef<
     helpers: { setOpen },
   } = useDatePickerOverlay();
 
-  const previousValue = useRef<typeof valueProp>();
+  const previousValue = useRef<typeof valueProp>(undefined);
 
   const [value, setValue] = useControlled({
     controlled: valueProp,

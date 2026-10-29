@@ -9,6 +9,7 @@ import iconCss from "./Icons.css";
 const providedIcons = [
   "aggregation",
   "arrows",
+  "aasc",
   "asc",
   "cancel",
   "chart",
@@ -22,6 +23,7 @@ const providedIcons = [
   "cut",
   "cross",
   "csv",
+  "adesc",
   "desc",
   "down",
   "excel",

@@ -5,7 +5,7 @@
   color: var(--salt-content-primary-foreground);
   overflow: hidden;
 
-  border-color: var(--salt-container-primary-borderColor);
+  border-color: var(--salt-container-bold-borderColor);
   border-style: var(--salt-borderStyle-solid);
   border-width: var(--salt-size-fixed-100);
   border-radius: 0;

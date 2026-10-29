@@ -231,7 +231,7 @@
   flex: 1;
   font: inherit;
   height: 100%;
-  letter-spacing: var(--saltInput-letterSpacing, 0);
+  letter-spacing: var(--saltInput-letterSpacing, var(--salt-text-letterSpacing));
   margin: 0;
   min-width: 0;
   overflow: hidden;
@@ -248,7 +248,7 @@
 /* Style applied to placeholder text */
 .saltInput-input::placeholder {
   color: var(--salt-content-secondary-foreground);
-  font-weight: var(--salt-text-fontWeight-small);
+  font-weight: var(--salt-text-fontWeight-lighter);
 }
 
 /* Style applied to selected input if `disabled={true}` */

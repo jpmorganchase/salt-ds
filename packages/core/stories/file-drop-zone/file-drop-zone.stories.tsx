@@ -107,9 +107,9 @@ const FileDropzoneTemplate: StoryFn<
         onDrop={handleDrop}
       >
         <FileDropZoneIcon status={status} />
-        <strong>
+        <Text styleAs="inherit" fontWeight="bolder">
           {status !== undefined ? statusTitles[status] : "Drop files here or"}
-        </strong>
+        </Text>
         <FileDropZoneTrigger
           accept={accept}
           disabled={disabled}
@@ -154,13 +154,11 @@ export const WithMultipleValidations = FileDropzoneTemplate.bind({});
 WithMultipleValidations.args = {
   accept: "image/*",
   children: (
-    <Text>
-      Images only.
-      <br />
-      500KB total file size limit.
-      <br />
-      36 chars File name limit.
-    </Text>
+    <StackLayout gap={0.5}>
+      <Text>Images only.</Text>
+      <Text>500KB total file size limit.</Text>
+      <Text>36 chars File name limit.</Text>
+    </StackLayout>
   ),
   validate: [validateFileType, validateTotalSize, validateFileName],
 };
@@ -184,7 +182,7 @@ const Results = ({ result }: ResultCardProps) => {
   const renderFiles = useCallback(
     (files: readonly ResultCardFile[]) =>
       files.length === 0 ? (
-        <strong>No files selected.</strong>
+        <Text fontWeight="bolder">No files selected.</Text>
       ) : (
         files.map(({ name, size }) => {
           const label = `${name} - ${size} bytes`;
@@ -225,7 +223,7 @@ const Results = ({ result }: ResultCardProps) => {
       {!result?.files && (
         <Banner>
           <BannerContent>
-            <strong>No files have been added.</strong>
+            <Text fontWeight="bolder">No files have been added.</Text>
           </BannerContent>
         </Banner>
       )}

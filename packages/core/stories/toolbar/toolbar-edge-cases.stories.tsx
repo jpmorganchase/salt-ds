@@ -4,6 +4,7 @@ import {
   Dropdown,
   Input,
   Option,
+  StackLayout,
   Text,
   Toolbar,
   ToolbarContent,
@@ -57,7 +58,7 @@ const hiddenOverflowDemoControlsStyle = {
 
 const hiddenOverflowDemoFrameStyle = {
   border:
-    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
   padding: "var(--salt-spacing-100)",
 };
 
@@ -75,7 +76,7 @@ const clippingValidationShellStyle = {
 const clippingValidationCardStyle = {
   background: "var(--salt-container-primary-background)",
   border:
-    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
   borderRadius: "var(--salt-palette-corner, 0)",
   boxShadow: "var(--salt-overlayable-shadow-popout)",
   display: "flex" as const,
@@ -86,7 +87,7 @@ const clippingValidationCardStyle = {
 
 const clippingValidationHeaderStyle = {
   borderBottom:
-    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
   padding: "var(--salt-spacing-200)",
 };
 
@@ -104,7 +105,7 @@ const clippingValidationRowStyle = {
   alignItems: "center",
   background: "var(--salt-container-secondary-background)",
   border:
-    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
   display: "grid" as const,
   gap: "var(--salt-spacing-100)",
   gridTemplateColumns: "80px minmax(0, 1fr) minmax(0, 1.4fr)",
@@ -114,12 +115,8 @@ const clippingValidationRowStyle = {
 const clippingValidationToolbarDockStyle = {
   background: "var(--salt-container-secondary-background)",
   borderTop:
-    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
   padding: "var(--salt-spacing-100)",
-};
-
-const clippingValidationNoteStyle = {
-  marginTop: "var(--salt-spacing-200)",
 };
 
 const subpixelItemWidth = 20.2;
@@ -142,15 +139,12 @@ const subpixelSliderFitWidth = Math.floor(subpixelToolbarWidth);
 const subpixelSliderOverflowWidth = subpixelSliderFitWidth - 1;
 
 const subpixelRoundingShellStyle = {
-  display: "flex" as const,
-  flexDirection: "column" as const,
-  gap: "var(--salt-spacing-150)",
   maxWidth: 560,
 };
 
 const subpixelRoundingFrameStyle = {
   outline:
-    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
   width: "100%",
 };
 
@@ -162,7 +156,7 @@ const subpixelRoundingItemStyle = {
   alignItems: "center",
   background: "var(--salt-container-secondary-background)",
   border:
-    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+    "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
   boxSizing: "border-box" as const,
   display: "flex" as const,
   fontSize: 10,
@@ -289,17 +283,17 @@ DynamicElements.globals = {
  *   `241px` to verify narrower widths still intentionally collapse items.
  */
 export const SubpixelWidthRounding: StoryFn<typeof Toolbar> = () => (
-  <div style={subpixelRoundingShellStyle}>
+  <StackLayout gap={1.5} style={subpixelRoundingShellStyle}>
     <Text>
-      <strong>Expected:</strong> all {subpixelItemLabels.length} labelled items
-      fit when the integer Storybook width slider is set to{" "}
-      {subpixelSliderFitWidth}px. Each item is {subpixelItemWidth}px wide, so
-      the rendered total is fractional.
+      <b>Expected:</b> all {subpixelItemLabels.length} labelled items fit when
+      the integer Storybook width slider is set to {subpixelSliderFitWidth}px.
+      Each item is {subpixelItemWidth}px wide, so the rendered total is
+      fractional.
     </Text>
     <Text>
-      <strong>Bug indicator:</strong> if {subpixelSliderFitWidth}px shows only
-      the overflow trigger, fractional widths are still being rounded into a
-      false overflow. At {subpixelSliderOverflowWidth}px, items should overflow.
+      <b>Bug indicator:</b> if {subpixelSliderFitWidth}px shows only the
+      overflow trigger, fractional widths are still being rounded into a false
+      overflow. At {subpixelSliderOverflowWidth}px, items should overflow.
     </Text>
     <div style={subpixelRoundingFrameStyle}>
       <Toolbar
@@ -315,7 +309,7 @@ export const SubpixelWidthRounding: StoryFn<typeof Toolbar> = () => (
         </ToolbarContent>
       </Toolbar>
     </div>
-  </div>
+  </StackLayout>
 );
 SubpixelWidthRounding.globals = {
   responsive: "wrap",
@@ -335,16 +329,16 @@ SubpixelWidthRounding.globals = {
 export const SubpixelWidthRoundingWithGapsAndDividers: StoryFn<
   typeof Toolbar
 > = () => (
-  <div style={subpixelRoundingShellStyle}>
+  <StackLayout gap={1.5} style={subpixelRoundingShellStyle}>
     <Text>
-      <strong>Expected:</strong> this version keeps the default toolbar spacing
-      and includes vertical dividers. The debug log should show a non-zero
-      content gap and item widths that include adjacent divider decorations.
+      <b>Expected:</b> this version keeps the default toolbar spacing and
+      includes vertical dividers. The debug log should show a non-zero content
+      gap and item widths that include adjacent divider decorations.
     </Text>
     <Text>
-      <strong>Bug indicator:</strong> if the slider width is at or above the
-      logged initial width but items still overflow, the measurement is not
-      accounting for gaps or divider decorations correctly.
+      <b>Bug indicator:</b> if the slider width is at or above the logged
+      initial width but items still overflow, the measurement is not accounting
+      for gaps or divider decorations correctly.
     </Text>
     <div style={subpixelRoundingFrameStyle}>
       <Toolbar
@@ -369,7 +363,7 @@ export const SubpixelWidthRoundingWithGapsAndDividers: StoryFn<
         </ToolbarContent>
       </Toolbar>
     </div>
-  </div>
+  </StackLayout>
 );
 SubpixelWidthRoundingWithGapsAndDividers.globals = {
   responsive: "wrap",
@@ -462,14 +456,12 @@ HiddenOverflowRemeasurement.globals = {
  *   Floating UI rather than being rendered inside the clipped toolbar context.
  */
 export const OverflowMenuInClippingContainer: StoryFn<typeof Toolbar> = () => (
-  <div style={clippingValidationShellStyle}>
+  <StackLayout gap={2} style={clippingValidationShellStyle}>
     <div style={clippingValidationCardStyle}>
-      <div style={clippingValidationHeaderStyle}>
-        <Text>
-          <strong>Trade exception review</strong>
-        </Text>
+      <StackLayout gap={0.5} style={clippingValidationHeaderStyle}>
+        <Text fontWeight="bolder">Trade exception review</Text>
         <Text>Resolve exceptions before the desk closes the batch.</Text>
-      </div>
+      </StackLayout>
       <div style={clippingValidationBodyStyle}>
         {exceptionRows.map(([id, client, exception]) => (
           <div style={clippingValidationRowStyle} key={id}>
@@ -545,11 +537,11 @@ export const OverflowMenuInClippingContainer: StoryFn<typeof Toolbar> = () => (
         </Toolbar>
       </div>
     </div>
-    <Text style={clippingValidationNoteStyle}>
+    <Text>
       Open the Actions menu from the toolbar footer. The panel should render
       over this note instead of disappearing behind the clipped card edge.
     </Text>
-  </div>
+  </StackLayout>
 );
 OverflowMenuInClippingContainer.globals = {
   responsive: "wrap",

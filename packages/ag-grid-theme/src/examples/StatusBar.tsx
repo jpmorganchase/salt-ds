@@ -46,7 +46,7 @@ const StatusBar = (props: AgGridReactProps) => {
         style={{
           ...containerProps.style,
           // Not part of the theme, add a border to check text center alignment
-          borderBottom: "1px solid var(--salt-container-primary-borderColor)",
+          borderBottom: "1px solid var(--salt-container-bold-borderColor)",
         }}
       >
         <AgGridReact

@@ -1,6 +1,6 @@
 .saltSidePanel {
   --saltSidePanel-width: 300px;
-  --sidePanel-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--sidePanel-borderColor, var(--salt-container-primary-borderColor));
+  --sidePanel-border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--sidePanel-borderColor, var(--salt-container-bold-borderColor));
   --saltSidePanel-padding: var(--salt-spacing-300);
   /* Outer wrapper. Idle: a normal flex column whose width comes from
      --saltSidePanel-width (supports any CSS length, including %).
@@ -21,17 +21,17 @@
 
 .saltSidePanel-primary {
   --sidePanel-background: var(--salt-container-primary-background);
-  --sidePanel-borderColor: var(--salt-container-primary-borderColor);
+  --sidePanel-borderColor: var(--salt-container-bold-borderColor);
 }
 
 .saltSidePanel-secondary {
   --sidePanel-background: var(--salt-container-secondary-background);
-  --sidePanel-borderColor: var(--salt-container-secondary-borderColor);
+  --sidePanel-borderColor: var(--salt-container-bold-borderColor);
 }
 
 .saltSidePanel-tertiary {
   --sidePanel-background: var(--salt-container-tertiary-background);
-  --sidePanel-borderColor: var(--salt-container-tertiary-borderColor);
+  --sidePanel-borderColor: var(--salt-container-bold-borderColor);
 }
 
 .saltSidePanel-none {

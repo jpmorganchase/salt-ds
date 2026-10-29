@@ -13,7 +13,7 @@
   width: 100%;
 }
 .item {
-  border: solid 1px var(--salt-container-primary-borderColor);
+  border: solid 1px var(--salt-container-bold-borderColor);
   background: var(--salt-container-primary-background);
 }
 .spacingExamplePadding {

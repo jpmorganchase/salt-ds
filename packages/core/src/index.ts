@@ -5,6 +5,7 @@ export * from "./badge";
 export * from "./banner";
 export * from "./border-item";
 export * from "./border-layout";
+export * from "./breadcrumbs";
 export {
   type Breakpoints,
   DEFAULT_BREAKPOINTS,
@@ -31,13 +32,16 @@ export * from "./input";
 export * from "./interactable-card";
 export * from "./kbd";
 export * from "./link";
+export * from "./link-button";
 export * from "./link-card";
 export * from "./list-box";
 export * from "./list-control";
+export * from "./mega-menu";
 export * from "./menu";
 export * from "./multiline-input";
 export * from "./navigation-item";
 export * from "./number-input";
+export * from "./on-solid-button";
 export * from "./option";
 export * from "./overlay";
 export * from "./pagination";

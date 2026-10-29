@@ -289,3 +289,31 @@ export const navData: Item[] = [
     ],
   },
 ];
+
+export const flatNavData: Item[] = [
+  {
+    title: "Home",
+    href: "/",
+    icon: <HomeIcon aria-hidden />,
+  },
+  {
+    title: "Solutions",
+    href: "/solutions",
+    icon: <JigsawIcon aria-hidden />,
+  },
+  {
+    title: "Who we serve",
+    href: "/who-we-serve",
+    icon: <HandshakeIcon aria-hidden />,
+  },
+  {
+    title: "Insights",
+    href: "/insights",
+    icon: <LightbulbIcon aria-hidden />,
+  },
+  {
+    title: "About us",
+    href: "/about-us",
+    icon: <GlobeIcon aria-hidden />,
+  },
+];

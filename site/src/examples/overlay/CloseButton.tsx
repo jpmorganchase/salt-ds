@@ -1,36 +1,41 @@
 import {
   Button,
   Overlay,
+  OverlayHeader,
   OverlayPanel,
-  OverlayPanelCloseButton,
   OverlayPanelContent,
   OverlayTrigger,
-  useId,
+  Text,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { type ReactElement, useState } from "react";
-
-import styles from "./index.module.css";
 
 export const CloseButton = (): ReactElement => {
   const [open, setOpen] = useState(false);
-  const id = useId();
 
   const onOpenChange = (newOpen: boolean) => setOpen(newOpen);
 
   const handleClose = () => setOpen(false);
+
+  const closeButton = (
+    <Button
+      aria-label="Close overlay"
+      appearance="transparent"
+      onClick={handleClose}
+    >
+      <CloseIcon aria-hidden />
+    </Button>
+  );
 
   return (
     <Overlay placement="right" open={open} onOpenChange={onOpenChange}>
       <OverlayTrigger>
         <Button>Show Overlay</Button>
       </OverlayTrigger>
-      <OverlayPanel aria-labelledby={id}>
-        <OverlayPanelCloseButton onClick={handleClose} />
+      <OverlayPanel>
+        <OverlayHeader header="Title" actions={closeButton} />
         <OverlayPanelContent>
-          <h3 className={styles.contentHeading} id={id}>
-            Title
-          </h3>
-          <div>Content of Overlay</div>
+          <Text as="p">Content of Overlay</Text>
         </OverlayPanelContent>
       </OverlayPanel>
     </Overlay>

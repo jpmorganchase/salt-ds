@@ -8,6 +8,7 @@ dataviz
 Embla
 EMEA
 focusable
+focusability
 frontmatter
 Gerda
 Highcharts
@@ -54,3 +55,8 @@ UITK
 trackpad
 toggletip
 toggletips
+Zhang
+Priya
+Mateus
+Oliveira
+recalibrated

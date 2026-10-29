@@ -4,7 +4,7 @@
   --tooltip-zIndex: var(--saltTooltip-zIndex, var(--salt-zIndex-flyover));
   /* apply icon margin based on the text line height so it's aligned on all densities */
   --tooltip-icon-marginTop: calc((var(--salt-text-lineHeight) - max(var(--salt-size-icon), 12px)) / 2);
-  --tooltip-status-borderColor: var(--salt-container-primary-borderColor);
+  --tooltip-status-borderColor: var(--salt-container-bold-borderColor);
   /* Single line height should be size-base */
   --tooltip-borderWidth: var(--salt-size-fixed-100);
   --tooltip-padding: calc(var(--salt-spacing-75) - var(--tooltip-borderWidth)) var(--salt-spacing-100);
@@ -23,6 +23,7 @@
   font-size: var(--saltTooltip-fontSize, var(--salt-text-fontSize));
   font-weight: var(--saltTooltip-fontWeight, var(--salt-text-fontWeight));
   line-height: var(--saltTooltip-lineHeight, var(--salt-text-lineHeight));
+  letter-spacing: var(--salt-text-letterSpacing);
   max-width: var(--saltTooltip-maxWidth, 60ch);
   padding: var(--saltTooltip-padding, var(--tooltip-padding));
   position: relative;

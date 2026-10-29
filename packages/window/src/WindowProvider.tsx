@@ -2,7 +2,7 @@ import { createContext, type ReactNode, useContext } from "react";
 
 export type WindowContextType = Window | null;
 
-const WindowContext = createContext<WindowContextType | null>(
+const WindowContext = createContext<WindowContextType>(
   typeof window !== "undefined" ? window : null,
 );
 

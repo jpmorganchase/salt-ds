@@ -45,6 +45,10 @@ export interface MultilineInputProps
    */
   endAdornment?: ReactNode;
   /**
+   * The name applied to the textarea.
+   */
+  name?: string;
+  /**
    * If `true`, the component is read only.
    */
   readOnly?: boolean;
@@ -86,6 +90,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       disabled,
       endAdornment,
       id,
+      name,
       placeholder,
       readOnly,
       role,
@@ -248,6 +253,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
             className={clsx(withBaseName("textarea"), textAreaProps?.className)}
             disabled={isDisabled}
             id={id}
+            name={name}
             readOnly={isReadOnly}
             ref={handleRef}
             required={isRequired}

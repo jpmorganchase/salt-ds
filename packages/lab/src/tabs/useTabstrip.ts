@@ -41,7 +41,7 @@ interface tabstripHookProps {
   editing?: boolean;
   enableAddTab: boolean;
   idRoot: string;
-  innerContainerRef: RefObject<HTMLDivElement>;
+  innerContainerRef: RefObject<HTMLDivElement | null>;
   keyBoardActivation?: "manual" | "automatic";
   onActiveChange?: (tabIndex: number) => void;
   onCloseTab?: (indexPosition: number) => void;

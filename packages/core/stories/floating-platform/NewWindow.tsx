@@ -12,6 +12,7 @@ import font800Css from "@fontsource/open-sans/800.css";
 import font800iCss from "@fontsource/open-sans/800-italic.css";
 import { SaltProvider, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
+import baselineCss from "@salt-ds/theme/css/baseline.css";
 import themeCss from "@salt-ds/theme/index.css";
 import { useWindow, WindowProvider } from "@salt-ds/window";
 import {
@@ -41,6 +42,7 @@ type Props = ComponentPropsWithoutRef<"iframe"> & {
 const StyleInjection = () => {
   const targetWindow = useWindow();
 
+  useComponentCssInjection({ css: baselineCss, window: targetWindow });
   useComponentCssInjection({ css: themeCss, window: targetWindow });
   useComponentCssInjection({ css: font300Css, window: targetWindow });
   useComponentCssInjection({ css: font300iCss, window: targetWindow });

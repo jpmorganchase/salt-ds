@@ -3,7 +3,6 @@ node_modules
 /.yarn
 
 # testing
-/cypress/screenshots
 /coverage
 .nyc_output
 

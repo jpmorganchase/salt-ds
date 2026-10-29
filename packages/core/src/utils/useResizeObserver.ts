@@ -2,7 +2,7 @@ import { type RefObject, useEffect } from "react";
 import { ownerWindow } from "./ownerWindow";
 
 export interface UseResizeObserverProps {
-  ref: RefObject<HTMLElement>;
+  ref: RefObject<HTMLElement | null>;
   onResize: () => void;
 }
 

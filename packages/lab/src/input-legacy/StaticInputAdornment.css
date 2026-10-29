@@ -1,5 +1,5 @@
 .saltStaticInputAdornment {
-  --inputLegacy-staticAdornment-padding: var(--salt-size-unit);
+  --inputLegacy-staticAdornment-padding: var(--salt-spacing-100);
 }
 
 .saltStaticInputAdornment {

@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/theme",
-  "version": "1.43.0",
+  "version": "1.48.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -21,10 +21,9 @@
     "build:watch": "yarn node ./scripts/build.mjs --watch"
   },
   "devDependencies": {
-    "del": "^8.0.0"
+    "del": "^9.0.0"
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-theme",
     "provenance": true
   }
 }

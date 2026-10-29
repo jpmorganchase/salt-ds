@@ -19,3 +19,11 @@ Collapsible is a component that allows you to show or hide content with a click.
 You can control the open state of the collapsible component by using the `open` and `onOpenChange` props. This allows you to programmatically show or hide the content.
 
 <LivePreview componentName="collapsible" exampleName="Controlled" />
+
+## Custom root element
+
+Use the `render` prop on `CollapsiblePanel` to change its root element. The panel's props are merged onto the element you pass, and the element's own props take precedence. For example, an `id` on the `render` element becomes the panel's `id`, and the trigger's `aria-controls` points to it.
+
+`render` accepts an element only, not a function. Don't set `children`, `hidden` or `aria-hidden` on the `render` element, because they replace the panel's content and open state.
+
+<LivePreview componentName="collapsible" exampleName="CustomRoot" />

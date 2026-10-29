@@ -7,7 +7,7 @@ export const NestedInInput = (): ReactElement => (
     <Input
       bordered
       placeholder="Search"
-      startAdornment={<SearchIcon />}
+      startAdornment={<SearchIcon aria-hidden />}
       endAdornment={
         <FlexLayout gap={0.5} wrap align="center">
           <Kbd>Cmd</Kbd>

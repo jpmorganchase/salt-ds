@@ -67,7 +67,7 @@ export const StockCard = ({
     <StackLayout gap={1}>
       <FlexLayout justify="space-between">
         <FlexItem>
-          <Text as={tickerAs} styleAs="h3" style={{ margin: 0 }}>
+          <Text as={tickerAs} styleAs="h3">
             {stock.ticker}
           </Text>
           {stockNameDisplay === "fullNameTicker" && (

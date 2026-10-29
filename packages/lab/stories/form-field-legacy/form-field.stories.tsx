@@ -1,4 +1,4 @@
-import { H3, SaltProvider } from "@salt-ds/core";
+import { FlexLayout, H3, SaltProvider, StackLayout } from "@salt-ds/core";
 import { Dropdown, FormField, type FormFieldProps, Input } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useState } from "react";
@@ -11,11 +11,10 @@ export default {
 
 export const Primary: StoryFn<typeof FormField> = (props) => {
   return (
-    <>
+    <StackLayout gap={5} align="start">
       <FormField label="Default Form Field label" {...props}>
         <Input defaultValue="Value" />
       </FormField>
-      <div style={{ height: 40 }} />
       <FormField
         labelPlacement="left"
         label="Default Form Field label"
@@ -23,7 +22,7 @@ export const Primary: StoryFn<typeof FormField> = (props) => {
       >
         <Input defaultValue="Value" />
       </FormField>
-    </>
+    </StackLayout>
   );
 };
 
@@ -37,7 +36,7 @@ export const Secondary: StoryFn<typeof FormField> = () => (
       padding: "20px 20px",
     }}
   >
-    <div style={{ width: "200px" }}>
+    <StackLayout gap={1} style={{ width: "200px" }}>
       <H3>Secondary</H3>
       <FormField
         label="Secondary form field"
@@ -46,8 +45,8 @@ export const Secondary: StoryFn<typeof FormField> = () => (
       >
         <Input defaultValue="Value" />
       </FormField>
-    </div>
-    <div style={{ width: "200px" }}>
+    </StackLayout>
+    <StackLayout gap={1} style={{ width: "200px" }}>
       <H3>Secondary with disabled outer ring</H3>
       <FormField
         label="Secondary form field"
@@ -57,12 +56,12 @@ export const Secondary: StoryFn<typeof FormField> = () => (
       >
         <Input defaultValue="Value" />
       </FormField>
-    </div>
+    </StackLayout>
   </div>
 );
 
 export const Tertiary: StoryFn<typeof FormField> = () => (
-  <div style={{ width: "200px" }}>
+  <StackLayout gap={1} style={{ width: "200px" }}>
     <H3>Tertiary</H3>
     <FormField
       label="Tertiary form field"
@@ -71,7 +70,7 @@ export const Tertiary: StoryFn<typeof FormField> = () => (
     >
       <Input defaultValue="Value" />
     </FormField>
-  </div>
+  </StackLayout>
 );
 
 export const Disabled: StoryFn<typeof FormField> = () => (
@@ -270,7 +269,7 @@ const Required = () => {
   const [value, setValue] = useState("Value");
 
   return (
-    <div style={{ width: "300px", marginLeft: 16 }}>
+    <div style={{ width: "300px" }}>
       <FormField label="Required Form Field" labelPlacement="top" required>
         <Input
           onChange={(e) => {
@@ -284,10 +283,10 @@ const Required = () => {
 };
 
 export const Necessity: StoryFn<typeof FormField> = () => (
-  <div style={{ display: "flex", flexDirection: "row" }}>
+  <FlexLayout gap={2}>
     <Optional />
     <Required />
-  </div>
+  </FlexLayout>
 );
 
 const ErrorState = (props?: Partial<FormFieldProps>) => {
@@ -419,7 +418,7 @@ const MultipleMessagesStatusIndicator = (props?: Partial<FormFieldProps>) => {
 };
 
 export const StatusIndicator: StoryFn<typeof FormField> = () => (
-  <>
+  <StackLayout gap={3}>
     <div
       style={{
         display: "grid",
@@ -451,7 +450,6 @@ export const StatusIndicator: StoryFn<typeof FormField> = () => (
         flexDirection: "row",
         gap: 24,
         gridTemplateColumns: "300px 300px",
-        marginTop: 24,
         width: 800,
       }}
     >
@@ -469,32 +467,32 @@ export const StatusIndicator: StoryFn<typeof FormField> = () => (
         variant="secondary"
       />
     </div>
-  </>
+  </StackLayout>
 );
 
 export const Variants: StoryFn<typeof FormField> = () => (
   <>
-    <div style={{ display: "flex", flexDirection: "row", padding: 12 }}>
-      <div style={{ width: "250px" }}>
-        <h3>Default</h3>
+    <FlexLayout gap={2} style={{ padding: 12 }}>
+      <StackLayout gap={1} style={{ width: "250px" }}>
+        <H3>Default</H3>
         <FormField label="Default Form Field label">
           <Input defaultValue="Value" />
         </FormField>
-      </div>
-      <div style={{ width: "250px", marginLeft: 16 }}>
-        <h3>Secondary</h3>
+      </StackLayout>
+      <StackLayout gap={1} style={{ width: "250px" }}>
+        <H3>Secondary</H3>
         <FormField label="Default Form Field label" variant="secondary">
           <Input defaultValue="Value" />
         </FormField>
-      </div>
-      <div style={{ width: "250px", marginLeft: 16 }}>
-        <h3>Tertiary</h3>
+      </StackLayout>
+      <StackLayout gap={1} style={{ width: "250px" }}>
+        <H3>Tertiary</H3>
         <FormField label="Default Form Field label" variant="tertiary">
           <Input defaultValue="Value" />
         </FormField>
-      </div>
-    </div>
-    <div style={{ display: "flex", flexDirection: "row", padding: 12 }}>
+      </StackLayout>
+    </FlexLayout>
+    <FlexLayout gap={2} style={{ padding: 12 }}>
       <div style={{ width: "250px" }}>
         <FormField
           label="Form Field label with helper text"
@@ -503,7 +501,7 @@ export const Variants: StoryFn<typeof FormField> = () => (
           <Input defaultValue="Value" />
         </FormField>
       </div>
-      <div style={{ width: "250px", marginLeft: 16 }}>
+      <div style={{ width: "250px" }}>
         <FormField
           label="Form Field label with helper text"
           variant="secondary"
@@ -512,7 +510,7 @@ export const Variants: StoryFn<typeof FormField> = () => (
           <Input defaultValue="Value" />
         </FormField>
       </div>
-      <div style={{ width: "250px", marginLeft: 16 }}>
+      <div style={{ width: "250px" }}>
         <FormField
           label="Form Field label with helper text"
           variant="tertiary"
@@ -521,8 +519,8 @@ export const Variants: StoryFn<typeof FormField> = () => (
           <Input defaultValue="Value" />
         </FormField>
       </div>
-    </div>
-    <div style={{ display: "flex", flexDirection: "row", padding: 12 }}>
+    </FlexLayout>
+    <FlexLayout gap={2} style={{ padding: 12 }}>
       <div style={{ width: "250px" }}>
         <FormField
           disableFocusRing
@@ -532,7 +530,7 @@ export const Variants: StoryFn<typeof FormField> = () => (
           <Input defaultValue="Value" />
         </FormField>
       </div>
-      <div style={{ width: "250px", marginLeft: 16 }}>
+      <div style={{ width: "250px" }}>
         <FormField
           disableFocusRing
           variant="secondary"
@@ -542,7 +540,7 @@ export const Variants: StoryFn<typeof FormField> = () => (
           <Input defaultValue="Value" />
         </FormField>
       </div>
-      <div style={{ width: "250px", marginLeft: 16 }}>
+      <div style={{ width: "250px" }}>
         <FormField
           disableFocusRing
           variant="tertiary"
@@ -552,16 +550,16 @@ export const Variants: StoryFn<typeof FormField> = () => (
           <Input defaultValue="Value" />
         </FormField>
       </div>
-    </div>
-    <div style={{ display: "flex", flexDirection: "row", padding: 12 }}>
-      <div style={{ width: "250px" }}>
-        <h3>Default</h3>
+    </FlexLayout>
+    <FlexLayout gap={2} style={{ padding: 12 }}>
+      <StackLayout gap={1} style={{ width: "250px" }}>
+        <H3>Default</H3>
         <FormField label="Default Form Field label" labelPlacement="left">
           <Input defaultValue="Value" />
         </FormField>
-      </div>
-      <div style={{ width: "250px", marginLeft: 16 }}>
-        <h3>Secondary</h3>
+      </StackLayout>
+      <StackLayout gap={1} style={{ width: "250px" }}>
+        <H3>Secondary</H3>
         <FormField
           label="Default Form Field label"
           labelPlacement="left"
@@ -569,9 +567,9 @@ export const Variants: StoryFn<typeof FormField> = () => (
         >
           <Input defaultValue="Value" />
         </FormField>
-      </div>
-      <div style={{ width: "250px", marginLeft: 16 }}>
-        <h3>Tertiary</h3>
+      </StackLayout>
+      <StackLayout gap={1} style={{ width: "250px" }}>
+        <H3>Tertiary</H3>
         <FormField
           label="Default Form Field label"
           labelPlacement="left"
@@ -579,9 +577,9 @@ export const Variants: StoryFn<typeof FormField> = () => (
         >
           <Input defaultValue="Value" />
         </FormField>
-      </div>
-    </div>
-    <div style={{ display: "flex", flexDirection: "row", padding: 12 }}>
+      </StackLayout>
+    </FlexLayout>
+    <FlexLayout gap={2} style={{ padding: 12 }}>
       <div style={{ width: "250px" }}>
         <FormField
           helperText="some helper text"
@@ -591,7 +589,7 @@ export const Variants: StoryFn<typeof FormField> = () => (
           <Input defaultValue="Value" />
         </FormField>
       </div>
-      <div style={{ width: "250px", marginLeft: 16 }}>
+      <div style={{ width: "250px" }}>
         <FormField
           helperText="some helper text"
           label="Label with helper text"
@@ -601,7 +599,7 @@ export const Variants: StoryFn<typeof FormField> = () => (
           <Input defaultValue="Value" />
         </FormField>
       </div>
-      <div style={{ width: "250px", marginLeft: 16 }}>
+      <div style={{ width: "250px" }}>
         <FormField
           helperText="some helper text"
           label="Label with helper text"
@@ -611,8 +609,8 @@ export const Variants: StoryFn<typeof FormField> = () => (
           <Input defaultValue="Value" />
         </FormField>
       </div>
-    </div>
-    <div style={{ display: "flex", flexDirection: "row", padding: 12 }}>
+    </FlexLayout>
+    <FlexLayout gap={2} style={{ padding: 12 }}>
       <div style={{ width: "250px" }}>
         <FormField
           label="Disabled outer ring"
@@ -622,7 +620,7 @@ export const Variants: StoryFn<typeof FormField> = () => (
           <Input defaultValue="Value" />
         </FormField>
       </div>
-      <div style={{ width: "250px", marginLeft: 16 }}>
+      <div style={{ width: "250px" }}>
         <FormField
           label="Disabled outer ring"
           labelPlacement="left"
@@ -632,7 +630,7 @@ export const Variants: StoryFn<typeof FormField> = () => (
           <Input defaultValue="Value" />
         </FormField>
       </div>
-      <div style={{ width: "250px", marginLeft: 16 }}>
+      <div style={{ width: "250px" }}>
         <FormField
           label="Disabled outer ring"
           labelPlacement="left"
@@ -642,6 +640,6 @@ export const Variants: StoryFn<typeof FormField> = () => (
           <Input defaultValue="Value" />
         </FormField>
       </div>
-    </div>
+    </FlexLayout>
   </>
 );

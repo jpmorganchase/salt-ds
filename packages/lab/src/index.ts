@@ -1,5 +1,5 @@
 export * from "./app-header";
-export * from "./breadcrumbs";
+export * from "./avatar-group";
 export * from "./button-bar";
 export * from "./cascading-menu";
 export * from "./color-chooser";
@@ -42,7 +42,6 @@ export {
 } from "./list-deprecated";
 export * from "./list-next";
 export * from "./logo";
-export * from "./mega-menu";
 export * from "./menu-button";
 export * from "./metric";
 export * from "./portal";

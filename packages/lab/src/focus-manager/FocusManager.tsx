@@ -1,6 +1,7 @@
 import { ownerDocument, useIsomorphicLayoutEffect } from "@salt-ds/core";
 import {
   type FocusEvent,
+  type ReactElement,
   type ReactNode,
   type RefObject,
   useCallback,
@@ -27,13 +28,13 @@ input:not([tabindex="-1"])
 
 export interface FocusManagerProps {
   active?: boolean;
-  autoFocusRef?: RefObject<HTMLElement>;
+  autoFocusRef?: RefObject<HTMLElement | null>;
   children?: ReactNode;
   className?: string;
   disableAutoFocus?: boolean;
   disableFocusTrap?: boolean;
   disableReturnFocus?: boolean;
-  fallbackFocusRef?: RefObject<HTMLElement>;
+  fallbackFocusRef?: RefObject<HTMLElement | null>;
   tabEnabledSelectors?: string;
   returnFocusOptions?: UseReturnFocusProps["focusOptions"];
 }
@@ -59,7 +60,7 @@ function tryFocus(node?: HTMLElement) {
   node.focus();
 }
 
-export function FocusManager(props: FocusManagerProps): JSX.Element {
+export function FocusManager(props: FocusManagerProps): ReactElement {
   const {
     active,
     autoFocusRef,
@@ -183,9 +184,11 @@ export function FocusManager(props: FocusManagerProps): JSX.Element {
 
       if (!nodeToFocus) {
         // This will always be the case when we're applying the shim in a desktop window. Need to consider how to fix.
-        console.error(
-          "Your focus trap needs to contain at least once focused node.",
-        );
+        if (process.env.NODE_ENV !== "production") {
+          console.error(
+            "Your focus trap needs to contain at least once focused node.",
+          );
+        }
       } else if (nodeToFocus !== ownerDocument(nodeToFocus).activeElement) {
         tryFocus(nodeToFocus);
       }

@@ -1,5 +1,6 @@
-import { FlexLayout, Link, NavigationItem, StackLayout } from "@salt-ds/core";
 import {
+  FlexLayout,
+  Link,
   MegaMenu,
   MegaMenuActions,
   MegaMenuContent,
@@ -10,7 +11,10 @@ import {
   MegaMenuListItem,
   MegaMenuPanel,
   MegaMenuTrigger,
-} from "@salt-ds/lab";
+  NavigationItem,
+  StackLayout,
+} from "@salt-ds/core";
+
 import { type ReactElement, useState } from "react";
 import { Link as RouterLink } from "react-router";
 import styles from "./index.module.css";

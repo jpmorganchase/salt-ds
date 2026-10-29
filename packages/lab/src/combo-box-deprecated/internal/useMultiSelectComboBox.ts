@@ -36,7 +36,7 @@ const REQUIRE_PREV_HIGHLIGHT = ["ArrowUp", "ArrowDown", "PageUp", "PageDown"];
 export type UseMultiSelectComboBoxProps<Item> = Omit<
   MultiSelectComboBoxProps<Item>,
   "inputRef" | "listContext" | "inputHelpers" | "inputProps" | "listProps"
-> & { expandButtonRef: RefObject<HTMLElement> };
+> & { expandButtonRef: RefObject<HTMLElement | null> };
 
 export const useMultiSelectComboBox = <Item>(
   props: Omit<UseMultiSelectComboBoxProps<Item>, "rootRef" | "classes">,
@@ -397,7 +397,8 @@ export const useMultiSelectComboBox = <Item>(
     clearTimeout(
       inputBlurTimeout.current == null ? undefined : inputBlurTimeout.current,
     );
-    const inputEl = inputRef && (inputRef as RefObject<HTMLElement>).current;
+    const inputEl =
+      inputRef && (inputRef as RefObject<HTMLElement | null>).current;
     if (inputEl) {
       inputEl.focus();
     }

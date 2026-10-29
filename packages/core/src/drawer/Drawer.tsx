@@ -12,6 +12,7 @@ import {
   forwardRef,
   type PropsWithChildren,
   useEffect,
+  useMemo,
   useState,
 } from "react";
 import { Scrim } from "../scrim";
@@ -20,8 +21,16 @@ import {
   useFloatingComponent,
   useFloatingUI,
   useForkRef,
+  useId,
 } from "../utils";
 import drawerCss from "./Drawer.css";
+import { DrawerContext } from "./DrawerContext";
+import { hasDrawerSection } from "./hasDrawerSection";
+import {
+  DrawerResizeGuide,
+  DrawerResizeHandle,
+  useDrawerResize,
+} from "./internal";
 
 interface ConditionalScrimWrapperProps extends PropsWithChildren {
   condition: boolean;
@@ -52,13 +61,19 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    */
   variant?: "primary" | "secondary" | "tertiary";
   /**
-   * Prevent the dialog closing on click away
+   * Prevent the drawer closing on click away
    * */
   disableDismiss?: boolean;
   /**
    * Prevent Scrim from rendering
    * */
   disableScrim?: boolean;
+  /**
+   * Allow the user to resize the drawer. Set size limits with the `--saltDrawer-minResize`/`--saltDrawer-maxResize`
+   * variables, which apply to the width of `left` and `right` drawers and the height of `top` and `bottom` drawers.
+   * The drawer never shrinks below `--salt-size-base`, unless `min-width`/`min-height` is set directly.
+   * */
+  resizable?: boolean;
   /**
    * Which element to initially focus. Can be either a number (tabbable index as specified by the order) or a ref.
    * Default value is 0 (first tabbable element).
@@ -81,7 +96,12 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       variant = "primary",
       disableDismiss,
       disableScrim,
+      resizable = false,
       initialFocus,
+      id,
+      style,
+      "aria-labelledby": ariaLabelledBy,
+      "aria-describedby": ariaDescribedBy,
       ...rest
     } = props;
 
@@ -92,17 +112,44 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       window: targetWindow,
     });
 
+    const drawerId = useId(id);
+
+    const sectioned = hasDrawerSection(children);
+
     const [showComponent, setShowComponent] = useState(false);
+    const [headerId, setHeaderId] = useState<string | undefined>(undefined);
+    const [descriptionId, setDescriptionId] = useState<string | undefined>(
+      undefined,
+    );
     const { Component: FloatingComponent } = useFloatingComponent();
 
     const { context, floating, elements } = useFloatingUI({
       open: showComponent,
-      onOpenChange,
+      onOpenChange: (newOpen, event) => {
+        if (!newOpen && isCancelResizeEvent(event)) return;
+        onOpenChange?.(newOpen);
+      },
+    });
+
+    const {
+      sizeStyle,
+      isResizing,
+      isHovered,
+      isPlacing,
+      isCancelResizeEvent,
+      separatorProps,
+      guideProps,
+    } = useDrawerResize({
+      enabled: resizable,
+      position,
+      element: elements.floating,
     });
 
     const { getFloatingProps } = useInteractions([
       useClick(context),
-      useDismiss(context, { enabled: !disableDismiss }),
+      useDismiss(context, {
+        outsidePress: disableDismiss ? false : () => !isPlacing,
+      }),
     ]);
 
     const handleRef = useForkRef<HTMLDivElement>(floating, ref);
@@ -120,35 +167,79 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       }
     }, [open, showComponent]);
 
+    const contextValue = useMemo(
+      () => ({
+        drawerId,
+        position,
+        resizable,
+        headerId,
+        setHeaderId,
+        descriptionId,
+        setDescriptionId,
+      }),
+      [drawerId, position, resizable, headerId, descriptionId],
+    );
+
     return (
-      <ConditionalScrimWrapper condition={showComponent && !disableScrim}>
-        <FloatingComponent
-          open={showComponent}
-          ref={handleRef}
-          role={"dialog"}
-          width={elements.floating?.offsetWidth}
-          height={elements.floating?.offsetHeight}
-          aria-modal="true"
-          focusManagerProps={{
-            context: context,
-            initialFocus,
-          }}
-          className={clsx(
-            withBaseName(),
-            withBaseName(position),
-            {
-              [withBaseName("enterAnimation")]: open,
-              [withBaseName("exitAnimation")]: !open,
-              [withBaseName(variant)]: variant,
-            },
-            className,
-          )}
-          {...getFloatingProps()}
-          {...rest}
-        >
-          {children}
-        </FloatingComponent>
-      </ConditionalScrimWrapper>
+      <DrawerContext.Provider value={contextValue}>
+        <ConditionalScrimWrapper condition={showComponent && !disableScrim}>
+          <FloatingComponent
+            id={drawerId}
+            open={showComponent}
+            ref={handleRef}
+            role={"dialog"}
+            width={elements.floating?.offsetWidth}
+            height={elements.floating?.offsetHeight}
+            aria-modal="true"
+            aria-labelledby={clsx(ariaLabelledBy, headerId) || undefined}
+            aria-describedby={clsx(ariaDescribedBy, descriptionId) || undefined}
+            focusManagerProps={{
+              context: context,
+              initialFocus,
+              outsideElementsInert: true,
+            }}
+            className={clsx(
+              withBaseName(),
+              withBaseName(position),
+              {
+                [withBaseName("enterAnimation")]: open,
+                [withBaseName("exitAnimation")]: !open,
+                [withBaseName(variant)]: variant,
+                [withBaseName("sectioned")]: sectioned,
+                [withBaseName("resizable")]: resizable,
+                [withBaseName("resizing")]: isResizing,
+              },
+              className,
+            )}
+            {...getFloatingProps()}
+            {...rest}
+            style={{
+              ...style,
+              ...sizeStyle,
+            }}
+          >
+            {resizable ? (
+              // Keeps the content's scrollbar clear of the resize handle.
+              <div className={withBaseName("inner")}>{children}</div>
+            ) : (
+              children
+            )}
+            {resizable && (
+              <DrawerResizeHandle
+                position={position}
+                resizing={isResizing}
+                hovered={isHovered}
+                aria-label="Resize drawer"
+                aria-controls={drawerId}
+                {...separatorProps}
+              />
+            )}
+            {isPlacing && (
+              <DrawerResizeGuide position={position} {...guideProps} />
+            )}
+          </FloatingComponent>
+        </ConditionalScrimWrapper>
+      </DrawerContext.Provider>
     );
   },
 );

@@ -11,11 +11,11 @@ import type { StoryFn } from "@storybook/react-vite";
 import { enUS as dateFnsEnUs, es as dateFnsEs } from "date-fns/locale";
 import { QAContainer, type QAContainerProps } from "docs/components";
 import "dayjs/locale/es";
-import { withDateMock } from ".storybook/decorators/withDateMock";
 import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import type { Dayjs } from "dayjs";
 import type { DateTime } from "luxon";
 import type { Moment } from "moment/moment";
+import { withDateMock } from "~storybook-decorators/withDateMock";
 
 export default {
   title: "Date Components/Date Picker/QA",

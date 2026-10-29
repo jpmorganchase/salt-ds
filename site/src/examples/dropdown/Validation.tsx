@@ -4,17 +4,17 @@ import { shortColorData } from "./exampleData";
 
 export const Validation = (): ReactElement => (
   <StackLayout style={{ width: "266px" }}>
-    <Dropdown validationStatus="error">
+    <Dropdown aria-label="Color" validationStatus="error">
       {shortColorData.map((color) => (
         <Option value={color} key={color} />
       ))}
     </Dropdown>
-    <Dropdown validationStatus="warning">
+    <Dropdown aria-label="Color" validationStatus="warning">
       {shortColorData.map((color) => (
         <Option value={color} key={color} />
       ))}
     </Dropdown>
-    <Dropdown validationStatus="success">
+    <Dropdown aria-label="Color" validationStatus="success">
       {shortColorData.map((color) => (
         <Option value={color} key={color} />
       ))}

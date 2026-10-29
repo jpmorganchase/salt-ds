@@ -217,6 +217,7 @@ function ToolbarOverflowItemOwner({
 }) {
   const targetWindow = useWindow();
   const [mountNode, setMountNode] = useState<HTMLDivElement | null>(null);
+  const mountNodeRef = useRef<HTMLDivElement | null>(null);
   const mainToolbarTabIndexMemoryRef = useRef(
     new WeakMap<HTMLElement, string | null>(),
   );
@@ -232,13 +233,22 @@ function ToolbarOverflowItemOwner({
     : lastOverflowBoundaryKeyRef.current;
 
   useIsomorphicLayoutEffect(() => {
-    const nextMountNode = targetWindow?.document.createElement("div");
+    const ownerDocument = targetWindow?.document;
 
-    if (!nextMountNode) {
+    if (!ownerDocument) {
       return;
     }
 
+    // Reuse the node when the effect runs again for the same document, as in
+    // Strict Mode. A new node would leave the previous one behind in the host,
+    // because the effect that attaches it can run again with the previous node.
+    const nextMountNode =
+      mountNodeRef.current?.ownerDocument === ownerDocument
+        ? mountNodeRef.current
+        : ownerDocument.createElement("div");
+
     nextMountNode.className = withBaseName("contentHost");
+    mountNodeRef.current = nextMountNode;
     setMountNode(nextMountNode);
 
     return () => {

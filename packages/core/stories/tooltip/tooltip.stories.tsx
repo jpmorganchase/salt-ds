@@ -1,4 +1,10 @@
-import { Button, Text, Tooltip, type TooltipProps } from "@salt-ds/core";
+import {
+  Button,
+  StackLayout,
+  Text,
+  Tooltip,
+  type TooltipProps,
+} from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useCallback } from "react";
 
@@ -22,26 +28,20 @@ export const Open: StoryFn<TooltipProps> = Default.bind({});
 Open.args = { ...defaultArgs, open: true };
 
 export const Status: StoryFn<typeof Tooltip> = (props: TooltipProps) => (
-  <>
-    <div style={{ marginBottom: 10 }}>
-      <Tooltip {...props} content="I am a tooltip" status="info">
-        <Button>Info</Button>
-      </Tooltip>
-    </div>
-    <div style={{ marginBottom: 10 }}>
-      <Tooltip {...props} content="We found an issue" status="error">
-        <Button>Error</Button>
-      </Tooltip>
-    </div>
-    <div style={{ marginBottom: 10 }}>
-      <Tooltip {...props} content="Are you sure" status="warning">
-        <Button>Warning</Button>
-      </Tooltip>
-    </div>
+  <StackLayout gap={1} align="start">
+    <Tooltip {...props} content="I am a tooltip" status="info">
+      <Button>Info</Button>
+    </Tooltip>
+    <Tooltip {...props} content="We found an issue" status="error">
+      <Button>Error</Button>
+    </Tooltip>
+    <Tooltip {...props} content="Are you sure" status="warning">
+      <Button>Warning</Button>
+    </Tooltip>
     <Tooltip {...props} content="Well done" status="success">
       <Button>Success</Button>
     </Tooltip>
-  </>
+  </StackLayout>
 );
 Status.args = defaultArgs;
 
@@ -95,8 +95,10 @@ export const CustomContent: StoryFn<TooltipProps> = (props) => (
     {...props}
     content={
       <>
-        <Text styleAs="h3">Persona B</Text>
-        <Text styleAs="h4">personab@example.com</Text>
+        <StackLayout gap={0.5} align="start">
+          <Text styleAs="h3">Persona B</Text>
+          <Text styleAs="h4">personab@example.com</Text>
+        </StackLayout>
         <ul style={{ paddingLeft: 20, margin: 0 }}>
           <li>Role</li>
           <li>Position</li>
@@ -112,44 +114,38 @@ export const CustomContent: StoryFn<TooltipProps> = (props) => (
 CustomContent.args = { ...defaultArgs, hideIcon: true };
 
 export const Placement: StoryFn<TooltipProps> = (props) => (
-  <>
-    <div style={{ marginBottom: 10 }}>
+  <StackLayout gap={4} align="start">
+    <StackLayout gap={1} align="start">
       <Tooltip {...props} content="I am a tooltip" placement={"top"}>
         <Button>Top</Button>
       </Tooltip>
-    </div>
-    <div style={{ marginBottom: 40 }}>
       <Tooltip {...props} content="I am a tooltip" placement={"bottom"}>
         <Button>Bottom</Button>
       </Tooltip>
-    </div>
-    <div style={{ marginBottom: 10 }}>
+    </StackLayout>
+    <StackLayout gap={1} align="start">
       <Tooltip {...props} content="I am a tooltip" placement={"left"}>
         <Button>Left</Button>
       </Tooltip>
-    </div>
-    <Tooltip {...props} content="I am a tooltip" placement={"right"}>
-      <Button>Right</Button>
-    </Tooltip>
-  </>
+      <Tooltip {...props} content="I am a tooltip" placement={"right"}>
+        <Button>Right</Button>
+      </Tooltip>
+    </StackLayout>
+  </StackLayout>
 );
 Placement.args = defaultArgs;
 
 export const Delay: StoryFn<TooltipProps> = (props) => (
-  <>
-    <div style={{ marginBottom: 10 }}>
-      <Tooltip {...props} content="I am a tooltip" enterDelay={100}>
-        <Button>100ms</Button>
-      </Tooltip>
-    </div>
-    <div style={{ marginBottom: 10 }}>
-      <Tooltip {...props} content="I am a tooltip">
-        <Button>300ms</Button>
-      </Tooltip>
-    </div>
+  <StackLayout gap={1} align="start">
+    <Tooltip {...props} content="I am a tooltip" enterDelay={100}>
+      <Button>100ms</Button>
+    </Tooltip>
+    <Tooltip {...props} content="I am a tooltip">
+      <Button>300ms</Button>
+    </Tooltip>
     <Tooltip {...props} content="I am a tooltip" enterDelay={500}>
       <Button>500ms</Button>
     </Tooltip>
-  </>
+  </StackLayout>
 );
 Delay.args = defaultArgs;

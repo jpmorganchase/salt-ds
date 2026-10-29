@@ -1,9 +1,12 @@
 import {
+  FlexLayout,
   FlowLayout,
   StatusIndicator,
+  Text,
   VALIDATION_NAMED_STATUS,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
+import "./status-indicator.stories.css";
 
 export default {
   title: "Core/Status Indicator",
@@ -38,3 +41,27 @@ const Template: StoryFn<typeof StatusIndicator> = (args) => {
 
 export const Default = Template.bind({});
 Default.args = { status: VALIDATION_NAMED_STATUS[3] };
+
+export const WithText: StoryFn<typeof StatusIndicator> = (args) => {
+  const { status = "error" } = args;
+
+  return (
+    <FlexLayout gap={0.75}>
+      <StatusIndicator
+        {...args}
+        aria-hidden
+        className="status-indicator-with-text"
+        status={status}
+      />
+      <Text
+        className="status-indicator-with-text-label"
+        color={status}
+        styleAs="label"
+      >
+        Request could not be submitted. Please try again later.
+      </Text>
+    </FlexLayout>
+  );
+};
+WithText.args = { status: "error" };
+WithText.argTypes = { size: { control: false } };

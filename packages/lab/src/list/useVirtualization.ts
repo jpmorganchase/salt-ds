@@ -21,7 +21,7 @@ const byKey = ([k1]: Row<unknown>, [k2]: Row<unknown>) => k1 - k2;
 const renderBuffer = 5;
 
 interface VirtualizationHookProps<Item> {
-  viewportRef: RefObject<HTMLElement>;
+  viewportRef: RefObject<HTMLElement | null>;
   data: CollectionItem<Item>[];
   itemGapSize?: number;
 }

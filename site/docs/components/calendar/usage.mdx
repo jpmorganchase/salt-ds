@@ -71,7 +71,7 @@ import { CalendarGrid } from "@salt-ds/date-components";
 
 ### Setting the date
 
-Date controls, require your application to contain a [LocalizationProvider](../LocalizationProvider).
+Date controls, require your application to contain a [LocalizationProvider](../localization-provider).
 
 Pass a date object from your configured date framework via the `defaultDate` or `date` props.
 
@@ -102,7 +102,7 @@ import {
 
 The default locale for Salt's date adapters is "enUS".
 
-`Calendar` uses the locale of the configured date adapter provided by the nearest [LocalizationProvider](../LocalizationProvider).
+`Calendar` uses the locale of the configured date adapter provided by the nearest [LocalizationProvider](../localization-provider).
 Configuration of locales is date framework specific and may require you to import specific locales from the date library you are using.
 
 Refer to the documentation of the date library you are using for information on how to configure other locales.

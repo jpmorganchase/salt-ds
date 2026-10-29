@@ -12,7 +12,7 @@ import formFieldLabelCss from "./FormFieldLabel.css";
 const withBaseName = makePrefixer("saltFormFieldLabel");
 
 export interface FormFieldLabelProps
-  extends Omit<TextProps<"label">, "variant" | "styleAs"> {
+  extends Omit<TextProps<"label">, "variant" | "styleAs" | "fontWeight"> {
   /**
    * Intent for the label.
    *
@@ -61,7 +61,7 @@ export const FormFieldLabel = ({
       className={clsx(withBaseName(), withBaseName(intent), className)}
       id={id}
       disabled={disabled}
-      variant="secondary"
+      color={intent === "sentence" ? "primary" : "secondary"}
       onClick={handleClick}
       {...restProps}
     >

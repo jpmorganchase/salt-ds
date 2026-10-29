@@ -1,22 +1,20 @@
 import { type Ref, useMemo } from "react";
-import { setRef } from "./setRef";
+import { forkRef } from "./forkRef";
 
 export function useForkRef<Instance>(
   refA: Ref<Instance> | null | undefined,
   refB: Ref<Instance> | null | undefined,
 ): Ref<Instance> | null {
   /**
-   * This will create a new function if the ref props change and are defined.
-   * This means React will call the old forkRef with `null` and the new forkRef
-   * with the ref. Cleanup naturally emerges from this behavior
+   * This creates a new function when either ref changes, so React detaches the
+   * old forkRef, which runs the cleanups of the old refs, and attaches the new
+   * one.
    */
   return useMemo(() => {
     if (refA == null && refB == null) {
-      return () => null;
+      return null;
     }
-    return (refValue: Instance | null) => {
-      setRef(refA, refValue);
-      setRef(refB, refValue);
-    };
+
+    return forkRef(refA, refB);
   }, [refA, refB]);
 }

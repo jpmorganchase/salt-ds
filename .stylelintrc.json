@@ -4,7 +4,8 @@
     "./tooling/stylelint/no-deprecated-token-usage/index.mjs",
     "./tooling/stylelint/custom-property-attributes-kebab-case/index.mjs",
     "./tooling/stylelint/custom-property-starts-with-component-name/index.mjs",
-    "./tooling/stylelint/characteristic-token-in-all-themes/index.mjs"
+    "./tooling/stylelint/characteristic-token-in-all-themes/index.mjs",
+    "./tooling/stylelint/theme-self-containment/index.mjs"
   ],
   "rules": {
     "salt/correct-theme-token-usage": {
@@ -19,7 +20,14 @@
     "salt/custom-property-starts-with-component-name": {
       "logLevel": "default"
     },
-    "salt/characteristic-token-in-all-themes": null
+    "salt/characteristic-token-in-all-themes": null,
+    "salt/theme-self-containment": null,
+    "selector-class-pattern": [
+      "^salt",
+      {
+        "message": "Expected class selector \"%s\" to start with \"salt\""
+      }
+    ]
   },
   "overrides": [
     {
@@ -36,7 +44,13 @@
       }
     },
     {
-      "files": ["**/theme/css/**/*.css"],
+      "files": ["**/react-resizable-panels-theme/**/*.css"],
+      "rules": {
+        "salt/custom-property-starts-with-component-name": null
+      }
+    },
+    {
+      "files": ["**/theme/src/css/**/*.css"],
       "rules": {
         "salt/correct-theme-token-usage": null,
         "salt/custom-property-attributes-kebab-case": null,
@@ -44,13 +58,23 @@
       }
     },
     {
-      "files": ["**/theme/css/*/characteristics/*.css"],
+      "files": ["**/theme/src/css/*/characteristics/*.css"],
       "rules": {
         "salt/characteristic-token-in-all-themes": true
       }
     },
     {
-      "files": ["**/theme/css/deprecated/**/*.css"],
+      "files": [
+        "**/theme/src/css/experimental/salt-interim.css",
+        "**/theme/src/css/theme.css",
+        "**/theme/src/css/theme-next.css"
+      ],
+      "rules": {
+        "salt/theme-self-containment": true
+      }
+    },
+    {
+      "files": ["**/theme/src/css/**/deprecated/**/*.css"],
       "rules": {
         "salt/no-deprecated-token-usage": null
       }
@@ -64,6 +88,20 @@
             "severity": "warning"
           }
         ]
+      }
+    },
+    {
+      "files": [
+        "**/ag-grid-theme/**/*.css",
+        "**/highcharts-theme/**/*.css",
+        "**/react-resizable-panels-theme/**/*.css",
+        "**/lab/src/app-header/AppHeader.css",
+        "**/lab/src/color-chooser/ColorPicker.css",
+        "**/lab/src/toolbar/Toolbar.css",
+        "**/lab/src/toolbar/Tooltray.css"
+      ],
+      "rules": {
+        "selector-class-pattern": null
       }
     }
   ]

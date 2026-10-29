@@ -19,17 +19,13 @@ import {
   VerticalNavigationSubMenu,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react";
-import {
-  type ComponentPropsWithoutRef,
-  forwardRef,
-  type ReactNode,
-  version as reactVersion,
-  useState,
-} from "react";
+import { type ReactNode, version as reactVersion, useState } from "react";
 import { Link, MemoryRouter, useLocation } from "react-router";
 import "./vertical-navigation.stories.css";
 import {
-  HelpSolidIcon,
+  DoubleChevronLeftIcon,
+  DoubleChevronRightIcon,
+  HelpCircleSolidIcon,
   MessageSolidIcon,
   MicroMenuIcon,
   StorageSolidIcon,
@@ -107,20 +103,6 @@ const simpleWithLongLabels: NavItem[] = [
   },
 ];
 
-const MockedTrigger = forwardRef<
-  HTMLAnchorElement,
-  ComponentPropsWithoutRef<typeof Link>
->(function MockedTrigger(props, ref) {
-  const { to, ...rest } = props;
-
-  return (
-    <VerticalNavigationItemTrigger
-      render={<Link to={to} ref={ref} />}
-      {...rest}
-    />
-  );
-});
-
 export const Basic: StoryFn<typeof VerticalNavigation> = (args) => {
   const location = useLocation();
 
@@ -132,11 +114,11 @@ export const Basic: StoryFn<typeof VerticalNavigation> = (args) => {
           active={location.pathname === item.href}
         >
           <VerticalNavigationItemContent>
-            <MockedTrigger to={item.href}>
+            <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
               <VerticalNavigationItemLabel>
                 {item.title}
               </VerticalNavigationItemLabel>
-            </MockedTrigger>
+            </VerticalNavigationItemTrigger>
           </VerticalNavigationItemContent>
         </VerticalNavigationItem>
       ))}
@@ -168,7 +150,7 @@ const nested: NavItem[] = [
   {
     title: "Support",
     href: "/support",
-    icon: <HelpSolidIcon aria-hidden />,
+    icon: <HelpCircleSolidIcon aria-hidden />,
   },
   {
     title: "Contact",
@@ -254,12 +236,12 @@ function NestedItem(props: { item: NavItem; icon?: boolean }) {
   return (
     <VerticalNavigationItem active={location.pathname === item.href}>
       <VerticalNavigationItemContent>
-        <MockedTrigger to={item.href}>
+        <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
           {icon ? item.icon : undefined}
           <VerticalNavigationItemLabel>
             {item.title}
           </VerticalNavigationItemLabel>
-        </MockedTrigger>
+        </VerticalNavigationItemTrigger>
       </VerticalNavigationItemContent>
     </VerticalNavigationItem>
   );
@@ -300,11 +282,11 @@ export const SubmenuFlat: StoryFn<typeof VerticalNavigation> = (args) => {
           active={location.pathname === item.href}
         >
           <VerticalNavigationItemContent>
-            <MockedTrigger to={item.href}>
+            <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
               <VerticalNavigationItemLabel>
                 {item.title}
               </VerticalNavigationItemLabel>
-            </MockedTrigger>
+            </VerticalNavigationItemTrigger>
           </VerticalNavigationItemContent>
           {item.children && (
             <VerticalNavigationSubMenu>
@@ -314,11 +296,13 @@ export const SubmenuFlat: StoryFn<typeof VerticalNavigation> = (args) => {
                   active={location.pathname === child.href}
                 >
                   <VerticalNavigationItemContent>
-                    <MockedTrigger to={child.href}>
+                    <VerticalNavigationItemTrigger
+                      render={<Link to={child.href} />}
+                    >
                       <VerticalNavigationItemLabel>
                         {child.title}
                       </VerticalNavigationItemLabel>
-                    </MockedTrigger>
+                    </VerticalNavigationItemTrigger>
                   </VerticalNavigationItemContent>
                 </VerticalNavigationItem>
               ))}
@@ -344,11 +328,14 @@ function ExpandButtonItem(props: { item: NavItem }) {
       <VerticalNavigationItem active={location.pathname === item.href}>
         <Collapsible>
           <VerticalNavigationItemContent>
-            <MockedTrigger to={item.href} id={itemId}>
+            <VerticalNavigationItemTrigger
+              render={<Link to={item.href} />}
+              id={itemId}
+            >
               <VerticalNavigationItemLabel>
                 {item.title}
               </VerticalNavigationItemLabel>
-            </MockedTrigger>
+            </VerticalNavigationItemTrigger>
             <CollapsibleTrigger>
               <Button
                 id={actionId}
@@ -375,11 +362,11 @@ function ExpandButtonItem(props: { item: NavItem }) {
   return (
     <VerticalNavigationItem active={location.pathname === item.href}>
       <VerticalNavigationItemContent>
-        <MockedTrigger to={item.href}>
+        <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
           <VerticalNavigationItemLabel>
             {item.title}
           </VerticalNavigationItemLabel>
-        </MockedTrigger>
+        </VerticalNavigationItemTrigger>
       </VerticalNavigationItemContent>
     </VerticalNavigationItem>
   );
@@ -408,11 +395,14 @@ function MultiActionItem(props: { item: NavItem }) {
       <VerticalNavigationItem active={location.pathname === item.href}>
         <Collapsible>
           <VerticalNavigationItemContent>
-            <MockedTrigger to={item.href} id={itemId}>
+            <VerticalNavigationItemTrigger
+              render={<Link to={item.href} />}
+              id={itemId}
+            >
               <VerticalNavigationItemLabel>
                 {item.title}
               </VerticalNavigationItemLabel>
-            </MockedTrigger>
+            </VerticalNavigationItemTrigger>
             <Menu>
               <MenuTrigger>
                 <Button appearance="transparent" aria-labelledby={itemId}>
@@ -476,11 +466,11 @@ function MultiActionItem(props: { item: NavItem }) {
   return (
     <VerticalNavigationItem active={location.pathname === item.href}>
       <VerticalNavigationItemContent>
-        <MockedTrigger to={item.href}>
+        <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
           <VerticalNavigationItemLabel>
             {item.title}
           </VerticalNavigationItemLabel>
-        </MockedTrigger>
+        </VerticalNavigationItemTrigger>
       </VerticalNavigationItemContent>
     </VerticalNavigationItem>
   );
@@ -508,6 +498,142 @@ export const WithIcon: StoryFn<typeof VerticalNavigation> = (args) => {
   );
 };
 
+const simpleWithIcons: NavItem[] = [
+  {
+    title: "Products",
+    href: "/products",
+    icon: <StorageSolidIcon aria-hidden />,
+  },
+  {
+    title: "About Us",
+    href: "/about",
+    icon: <UserGroupSolidIcon aria-hidden />,
+  },
+  {
+    title: "Support",
+    href: "/support",
+    icon: <HelpCircleSolidIcon aria-hidden />,
+  },
+  {
+    title: "Contact",
+    href: "/contact",
+    icon: <MessageSolidIcon aria-hidden />,
+  },
+];
+
+export const CollapsibleNavigation: StoryFn<typeof VerticalNavigation> = (
+  args,
+) => {
+  const location = useLocation();
+  const [collapsed, setCollapsed] = useState(false);
+  const [animating, setAnimating] = useState(false);
+
+  const showLabels = !collapsed || animating;
+
+  // Keep the accessible name static so it isn't re-announced on toggle;
+  // aria-expanded conveys the state.
+  const toggleLabel = "Labels";
+
+  // With reduced motion there is no transition, so no animation to track.
+  const startWidthAnimation = () => {
+    const prefersReducedMotion = window.matchMedia?.(
+      "(prefers-reduced-motion: reduce)",
+    )?.matches;
+
+    setAnimating(!prefersReducedMotion);
+  };
+
+  const handleToggle = () => {
+    startWidthAnimation();
+    setCollapsed(!collapsed);
+  };
+
+  return (
+    <div
+      className={clsx("collapsibleNavigationExample", {
+        "collapsibleNavigationExample-collapsed": collapsed,
+        "collapsibleNavigationExample-animating": animating,
+      })}
+    >
+      {/* The sidebar is the navigation landmark, so the toggle is part of it. */}
+      <nav className="collapsibleNavigationExample-sidebar" aria-label="Main">
+        {/* aria-hidden so the tooltip isn't also announced as a description;
+            it duplicates the accessible name. */}
+        <Tooltip
+          content={<span aria-hidden>{toggleLabel}</span>}
+          placement="right"
+        >
+          <Button
+            appearance="transparent"
+            aria-label={toggleLabel}
+            aria-expanded={!collapsed}
+            onClick={handleToggle}
+          >
+            {collapsed ? (
+              <DoubleChevronRightIcon aria-hidden />
+            ) : (
+              <DoubleChevronLeftIcon aria-hidden />
+            )}
+          </Button>
+        </Tooltip>
+        {/* Demoted to avoid a nested landmark inside the sidebar nav. */}
+        <VerticalNavigation
+          role="presentation"
+          {...args}
+          onTransitionEnd={(event) => {
+            if (
+              event.target === event.currentTarget &&
+              event.propertyName === "width"
+            ) {
+              setAnimating(false);
+            }
+          }}
+        >
+          {simpleWithIcons.map((item) => (
+            <VerticalNavigationItem
+              key={item.title}
+              active={location.pathname === item.href}
+            >
+              <VerticalNavigationItemContent>
+                {/* aria-hidden so the tooltip isn't also announced as a
+                    description; it duplicates the accessible name. */}
+                <Tooltip
+                  content={<span aria-hidden>{item.title}</span>}
+                  disabled={!collapsed}
+                  placement="right"
+                >
+                  <VerticalNavigationItemTrigger
+                    render={<Link to={item.href} />}
+                  >
+                    {item.icon}
+                    {/* Hidden once collapsed, but kept in the DOM for the
+                        item's accessible name. */}
+                    <VerticalNavigationItemLabel
+                      className={showLabels ? undefined : "visuallyHidden"}
+                    >
+                      {item.title}
+                    </VerticalNavigationItemLabel>
+                  </VerticalNavigationItemTrigger>
+                </Tooltip>
+              </VerticalNavigationItemContent>
+            </VerticalNavigationItem>
+          ))}
+        </VerticalNavigation>
+      </nav>
+      {/* Placeholder page content */}
+      <div className="collapsibleNavigationExample-content">
+        <div className="collapsibleNavigationExample-heading" />
+        <div className="collapsibleNavigationExample-block" />
+        <div className="collapsibleNavigationExample-block" />
+      </div>
+    </div>
+  );
+};
+
+CollapsibleNavigation.parameters = {
+  layout: "padded",
+};
+
 export const WithWrapping: StoryFn<typeof VerticalNavigation> = (args) => {
   const location = useLocation();
 
@@ -519,11 +645,11 @@ export const WithWrapping: StoryFn<typeof VerticalNavigation> = (args) => {
           active={location.pathname === item.href}
         >
           <VerticalNavigationItemContent>
-            <MockedTrigger to={item.href}>
+            <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
               <VerticalNavigationItemLabel>
                 {item.title}
               </VerticalNavigationItemLabel>
-            </MockedTrigger>
+            </VerticalNavigationItemTrigger>
           </VerticalNavigationItemContent>
         </VerticalNavigationItem>
       ))}
@@ -541,7 +667,7 @@ function ItemWithTruncation(props: { item: NavItem }) {
     <VerticalNavigationItem active={location.pathname === item.href}>
       <VerticalNavigationItemContent>
         <Tooltip content={item.title} disabled={!truncated} placement="right">
-          <MockedTrigger to={item.href}>
+          <VerticalNavigationItemTrigger render={<Link to={item.href} />}>
             <VerticalNavigationItemLabel
               style={{
                 overflow: "hidden",
@@ -556,7 +682,7 @@ function ItemWithTruncation(props: { item: NavItem }) {
             >
               {item.title}
             </VerticalNavigationItemLabel>
-          </MockedTrigger>
+          </VerticalNavigationItemTrigger>
         </Tooltip>
       </VerticalNavigationItemContent>
     </VerticalNavigationItem>

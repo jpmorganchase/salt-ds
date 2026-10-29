@@ -181,11 +181,7 @@ function PreferencesContent({ currentSection }: { currentSection: string }) {
             <FormFieldLabel>Widget export width</FormFieldLabel>
             <NumberInput
               value="360"
-              endAdornment={
-                <Text>
-                  <strong>PX</strong>
-                </Text>
-              }
+              endAdornment={<Text fontWeight="bolder">PX</Text>}
             />
           </FormField>
           <FormField labelPlacement="left">
@@ -203,9 +199,7 @@ function PreferencesContent({ currentSection }: { currentSection: string }) {
 
   return (
     <StackLayout>
-      <H2 styleAs="h3" style={{ margin: 0 }}>
-        {currentSection}
-      </H2>
+      <H2 styleAs="h3">{currentSection}</H2>
       <div>{content}</div>
     </StackLayout>
   );

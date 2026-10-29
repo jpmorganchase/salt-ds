@@ -34,7 +34,7 @@ import {
   type ValueComponentProps,
 } from "@salt-ds/lab";
 import type { StoryFn } from "@storybook/react-vite";
-import { Fragment, forwardRef, type ReactNode } from "react";
+import { forwardRef, type ReactNode } from "react";
 
 import "./contact-details.stories.css";
 
@@ -96,13 +96,8 @@ const MultiLineAddressRenderer = forwardRef<HTMLElement, ValueComponentProps>(
     // `restProps` is critical as `Tooltip` relies on passing down event handlers to work
     const { value = "", ...restProps } = props;
     return (
-      <span {...restProps} ref={ref}>
-        {value.split("\n").map((v) => (
-          <Fragment key={v}>
-            {v}
-            <br />
-          </Fragment>
-        ))}
+      <span {...restProps} ref={ref} style={{ whiteSpace: "pre-line" }}>
+        {value}
       </span>
     );
   },

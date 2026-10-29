@@ -1,17 +1,19 @@
 import {
   Button,
   Overlay,
+  OverlayFooter,
   OverlayHeader,
   OverlayPanel,
-  OverlayPanelCloseButton,
   OverlayPanelContent,
+  type OverlayProps,
   OverlayTrigger,
+  StackLayout,
+  Text,
 } from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
-
-import "./overlay.stories.css";
-import { CloseIcon } from "@salt-ds/icons";
+import type { CSSProperties } from "react";
 
 export default {
   title: "Core/Overlay/Overlay QA",
@@ -33,9 +35,9 @@ export const Default: StoryFn<QAContainerProps> = (props) => {
           <Button>Show Overlay</Button>
         </OverlayTrigger>
         <OverlayPanel>
+          <OverlayHeader header="Title" />
           <OverlayPanelContent>
-            <h3 className="content-heading">Title</h3>
-            <div>Content of Overlay</div>
+            <Text as="p">Content of Overlay</Text>
           </OverlayPanelContent>
         </OverlayPanel>
       </Overlay>
@@ -81,7 +83,9 @@ export const CloseButton: StoryFn<QAContainerProps> = (props) => {
             header="Guidelines for optimal use of our application"
             actions={closeButton}
           />
-          <OverlayPanelContent>Content of Overlay</OverlayPanelContent>
+          <OverlayPanelContent>
+            <Text as="p">Content of Overlay</Text>
+          </OverlayPanelContent>
         </OverlayPanel>
       </Overlay>
     </QAContainer>
@@ -94,35 +98,98 @@ CloseButton.parameters = {
   },
 };
 
-export const DeprecatedCloseButton: StoryFn<QAContainerProps> = (props) => {
+const footerFrameStyle = {
+  alignItems: "flex-end",
+  blockSize: 360,
+  display: "flex",
+  inlineSize: 360,
+  justifyContent: "center",
+} satisfies CSSProperties;
+
+export const WithSections: StoryFn<QAContainerProps> = (props) => {
   return (
     <QAContainer
-      height={800}
-      cols={1}
-      itemPadding={80}
+      height="auto"
       itemWidthAuto
-      width={1200}
+      transposeDensity
+      vertical
       {...props}
     >
-      <Overlay open>
-        <OverlayTrigger>
-          <Button>Show Overlay</Button>
-        </OverlayTrigger>
-        <OverlayPanel
-          style={{
-            width: "30ch",
-          }}
-        >
-          <OverlayPanelCloseButton />
-          <OverlayHeader header="Guidelines for optimal use of our application" />
-          <OverlayPanelContent>Content of Overlay</OverlayPanelContent>
-        </OverlayPanel>
-      </Overlay>
+      <div style={footerFrameStyle}>
+        <Overlay open>
+          <OverlayTrigger>
+            <Button>Show Overlay</Button>
+          </OverlayTrigger>
+          <OverlayPanel style={{ width: 320, maxHeight: 200 }}>
+            <OverlayHeader header="Review changes" />
+            <OverlayPanelContent>
+              <StackLayout>
+                <Text as="p">
+                  Review the account updates before saving. The footer remains
+                  available while this content scrolls.
+                </Text>
+                <Text as="p">
+                  Contact details, notification preferences, and security
+                  settings will be updated when you save.
+                </Text>
+                <Text as="p">
+                  You can cancel to close the overlay without applying these
+                  changes.
+                </Text>
+              </StackLayout>
+            </OverlayPanelContent>
+            <OverlayFooter>
+              <Button sentiment="accented" appearance="bordered">
+                Cancel
+              </Button>
+              <Button sentiment="accented">Save changes</Button>
+            </OverlayFooter>
+          </OverlayPanel>
+        </Overlay>
+      </div>
     </QAContainer>
   );
 };
 
-DeprecatedCloseButton.parameters = {
+WithSections.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+  },
+};
+
+const HideArrowTemplate = (args: OverlayProps) => (
+  <Overlay hideArrow open {...args}>
+    <OverlayTrigger>
+      <Button>Show Overlay</Button>
+    </OverlayTrigger>
+    <OverlayPanel>
+      <OverlayHeader header="Title" />
+      <OverlayPanelContent>
+        <Text as="p">Content of Overlay</Text>
+      </OverlayPanelContent>
+    </OverlayPanel>
+  </Overlay>
+);
+
+export const HideArrow: StoryFn<QAContainerProps> = (props) => {
+  return (
+    <QAContainer
+      height={800}
+      itemPadding={100}
+      itemWidthAuto
+      vertical
+      width={1200}
+      {...props}
+    >
+      <HideArrowTemplate placement="top" />
+      <HideArrowTemplate placement="right" />
+      <HideArrowTemplate placement="bottom" />
+      <HideArrowTemplate placement="left" />
+    </QAContainer>
+  );
+};
+
+HideArrow.parameters = {
   chromatic: {
     disableSnapshot: false,
   },

@@ -1,4 +1,4 @@
-import { BorderItem, BorderLayout } from "@salt-ds/core";
+import { BorderItem, BorderLayout, Text } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import "../layout/layout.stories.css";
 export default {
@@ -16,23 +16,23 @@ const Template: StoryFn<typeof BorderItem> = (args) => {
   return (
     <BorderLayout columnGap={1} rowGap={1} className="layout-container">
       <BorderItem position="north" className="border-item">
-        <p>North</p>
+        <Text as="p">North</Text>
       </BorderItem>
       <BorderItem {...args} className="border-item layout-active-content">
-        <p>{args.position}</p>
+        <Text as="p">{args.position}</Text>
       </BorderItem>
       <BorderItem
         position="center"
         className="border-item layout-content"
         style={{ minWidth: 100 }}
       >
-        <p>Center</p>
+        <Text as="p">Center</Text>
       </BorderItem>
       <BorderItem position="east" className="border-item">
-        <p>East</p>
+        <Text as="p">East</Text>
       </BorderItem>
       <BorderItem position="south" className="border-item">
-        <p>South</p>
+        <Text as="p">South</Text>
       </BorderItem>
     </BorderLayout>
   );

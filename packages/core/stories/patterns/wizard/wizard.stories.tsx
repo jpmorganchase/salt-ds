@@ -208,27 +208,17 @@ export const Horizontal = () => {
   const header = (
     <FlexLayout justify="space-between" style={{ minHeight: "6rem" }}>
       <FlexItem style={{ flex: 1 }}>
-        <Text>
-          Create a new account
-          <Text
-            as="h2"
-            ref={stepHeadingRef}
-            tabIndex={-1}
-            style={{ margin: 0 }}
-          >
-            {wizardSteps[activeStepIndex].label}
-          </Text>
-          {wizardSteps[activeStepIndex].id === "additional-info" && (
-            <Text
-              color="secondary"
-              style={{
-                marginTop: "var(--salt-spacing-fixed-400)",
-              }}
-            >
-              All fields are optional
+        <StackLayout gap="var(--salt-spacing-fixed-400)">
+          <StackLayout gap={0}>
+            <Text>Create a new account</Text>
+            <Text as="h2" ref={stepHeadingRef} tabIndex={-1}>
+              {wizardSteps[activeStepIndex].label}
             </Text>
+          </StackLayout>
+          {wizardSteps[activeStepIndex].id === "additional-info" && (
+            <Text color="secondary">All fields are optional</Text>
           )}
-        </Text>
+        </StackLayout>
       </FlexItem>
       <FlexItem style={{ flex: 1 }}>
         <Stepper orientation="horizontal">
@@ -374,27 +364,17 @@ export const HorizontalWithCancelConfirmation = () => {
   const header = (
     <FlexLayout justify="space-between" style={{ minHeight: "6rem" }}>
       <FlexItem style={{ flex: 1 }}>
-        <Text>
-          Create a new account
-          <Text
-            as="h2"
-            ref={stepHeadingRef}
-            tabIndex={-1}
-            style={{ margin: 0 }}
-          >
-            {wizardSteps[activeStepIndex].label}
-          </Text>
-          {wizardSteps[activeStepIndex].id === "additional-info" && (
-            <Text
-              color="secondary"
-              style={{
-                marginTop: "var(--salt-spacing-fixed-400)",
-              }}
-            >
-              All fields are optional
+        <StackLayout gap="var(--salt-spacing-fixed-400)">
+          <StackLayout gap={0}>
+            <Text>Create a new account</Text>
+            <Text as="h2" ref={stepHeadingRef} tabIndex={-1}>
+              {wizardSteps[activeStepIndex].label}
             </Text>
+          </StackLayout>
+          {wizardSteps[activeStepIndex].id === "additional-info" && (
+            <Text color="secondary">All fields are optional</Text>
           )}
-        </Text>
+        </StackLayout>
       </FlexItem>
       <FlexItem style={{ flex: 1 }}>
         <Stepper orientation="horizontal">
@@ -551,20 +531,19 @@ export const VerticalWithCancelConfirmation = () => {
   };
 
   const header = (
-    <StackLayout gap={0} style={{ minHeight: "5rem" }} align="start">
-      <Text>Create a new account</Text>
-      <Text as="h2" ref={stepHeadingRef} tabIndex={-1} style={{ margin: 0 }}>
-        {wizardSteps[activeStepIndex].label}
-      </Text>
-      {wizardSteps[activeStepIndex].id === "additional-info" && (
-        <Text
-          color="secondary"
-          style={{
-            marginTop: "var(--salt-spacing-fixed-400)",
-          }}
-        >
-          All fields are optional
+    <StackLayout
+      gap="var(--salt-spacing-fixed-400)"
+      style={{ minHeight: "5rem" }}
+      align="start"
+    >
+      <StackLayout gap={0}>
+        <Text>Create a new account</Text>
+        <Text as="h2" ref={stepHeadingRef} tabIndex={-1}>
+          {wizardSteps[activeStepIndex].label}
         </Text>
+      </StackLayout>
+      {wizardSteps[activeStepIndex].id === "additional-info" && (
+        <Text color="secondary">All fields are optional</Text>
       )}
     </StackLayout>
   );

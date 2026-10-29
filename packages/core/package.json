@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/core",
-  "version": "1.64.1",
+  "version": "1.74.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -8,20 +8,26 @@
     "directory": "packages/core"
   },
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
+  "forbiddenDependencies": [
+    "@salt-ds/core",
+    "@salt-ds/lab"
+  ],
   "main": "src/index.ts",
+  "typings": "dist-types/index.d.ts",
   "sideEffects": [
     "*.css"
   ],
   "devDependencies": {
     "@types/react-window": "^1.8.2",
-    "react-window": "^1.8.6"
+    "react-window": "^1.8.11"
   },
   "dependencies": {
-    "@floating-ui/react": "^0.26.28",
+    "@floating-ui/react": "^0.27.19",
     "@salt-ds/icons": "workspace:^",
     "@salt-ds/styles": "workspace:*",
     "@salt-ds/window": "workspace:*",
     "clsx": "^2.0.0",
+    "compute-scroll-into-view": "^3.0.0",
     "dom-accessibility-api": "^0.7.1",
     "tabbable": "^6.0.0",
     "use-sync-external-store": "^1.5.0"
@@ -37,7 +43,8 @@
     }
   },
   "publishConfig": {
-    "directory": "../../dist/salt-ds-core",
+    "main": "dist-cjs/index.js",
+    "module": "dist-es/index.js",
     "provenance": true
   },
   "scripts": {
@@ -45,6 +52,9 @@
     "bundle:css": "yarn node ./scripts/bundleCSS.mjs"
   },
   "files": [
-    "css"
+    "css",
+    "dist-cjs",
+    "dist-es",
+    "dist-types"
   ]
 }

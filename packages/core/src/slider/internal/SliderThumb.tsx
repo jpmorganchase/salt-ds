@@ -4,7 +4,7 @@ import { clsx } from "clsx";
 import {
   type ChangeEvent,
   type ComponentPropsWithoutRef,
-  type RefObject,
+  type Ref,
   useCallback,
   useEffect,
   useState,
@@ -28,7 +28,7 @@ interface SliderThumbProps
   handleKeydownOnThumb: (event: React.KeyboardEvent) => void;
   handlePointerDown: (event: React.PointerEvent<HTMLDivElement>) => void;
   index?: number;
-  inputRef?: RefObject<HTMLInputElement>;
+  inputRef?: Ref<HTMLInputElement>;
   isFocusVisible: boolean;
   max: number;
   maxLabel?: string;

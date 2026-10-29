@@ -15,7 +15,7 @@ import { getClickedPosition, getKeyboardValue } from "./utils";
 type UseSliderThumbProps = Pick<SliderProps, "min" | "max" | "step"> & {
   decimalPlaces: number;
   handleInputChange: (event: ChangeEvent<HTMLInputElement>) => void;
-  inputRef: RefObject<HTMLInputElement>;
+  inputRef: RefObject<HTMLInputElement | null>;
   marks?: { label: string; value: number }[];
   onChange?: (event: Event, value: number) => void;
   onChangeEnd?: (event: Event, value: number) => void;

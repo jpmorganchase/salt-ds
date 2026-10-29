@@ -5,6 +5,7 @@ import type {
   RefCallback,
 } from "react";
 import { useEventCallback } from "../utils";
+import { forkRef } from "../utils/forkRef";
 import { useSidePanelContext } from "./internal";
 
 export interface SidePanelTriggerExtraProps {
@@ -79,7 +80,6 @@ export function useSidePanel(): SidePanelValue {
   const getTriggerProps = useEventCallback(
     (userProps?: SidePanelTriggerExtraProps): SidePanelTriggerPropsResult => {
       const userOnClick = userProps?.onClick;
-      const userRef = userProps?.ref;
 
       return {
         "aria-expanded": openState,
@@ -89,18 +89,9 @@ export function useSidePanel(): SidePanelValue {
           userOnClick?.(event);
           setOpen(!openState);
         },
-        ref: (node: HTMLElement | null) => {
-          setReference(node);
-          if (typeof userRef === "function") {
-            userRef(node);
-          } else if (
-            userRef &&
-            typeof userRef === "object" &&
-            "current" in userRef
-          ) {
-            userRef.current = node;
-          }
-        },
+        // Props getters can't call hooks, so this uses the `forkRef` that
+        // `useForkRef` is built on.
+        ref: forkRef<HTMLElement>(setReference, userProps?.ref),
       };
     },
   );

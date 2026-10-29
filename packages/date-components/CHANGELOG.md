@@ -1,5 +1,128 @@
 # @salt-ds/date-components
 
+## 1.1.3
+
+### Patch Changes
+
+- e009ed8: Fixed the `Calendar` day accessible name not matching the visible day text. The day's accessible name, selection announcements and `DatePickerActions` labels now use a two-digit day (e.g. "Monday 06 January 2025") to match the visible day.
+- Updated dependencies [20db4be]
+- Updated dependencies [0ac88c9]
+- Updated dependencies [20db4be]
+- Updated dependencies [3a74bce]
+- Updated dependencies [20db4be]
+- Updated dependencies [cdae245]
+- Updated dependencies [cdae245]
+- Updated dependencies [3a74bce]
+  - @salt-ds/core@1.74.0
+
+## 1.1.2
+
+### Patch Changes
+
+- e466542: `DateParserField` is now a const object with a matching union type instead of an enum. `DateParserField.START` and `DateParserField.END` work as before, as values and as types, and `"start"` or `"end"` can now be used wherever a `DateParserField` is expected.
+- 825f63d: Renamed the `small` and `strong` font weight tokens to `lighter` and `bolder`, to match the new `fontWeight` prop on `Text`. The old tokens still work as aliases but are deprecated and will be removed in a future major version. Salt components now use the new tokens, so if you override an old token, override the new one instead.
+
+  ```diff
+  - font-weight: var(--salt-text-fontWeight-strong);
+  + font-weight: var(--salt-text-fontWeight-bolder);
+  ```
+
+  | Deprecated token                         | Use instead                               |
+  | ---------------------------------------- | ----------------------------------------- |
+  | `--salt-text-fontWeight-small`           | `--salt-text-fontWeight-lighter`          |
+  | `--salt-text-fontWeight-strong`          | `--salt-text-fontWeight-bolder`           |
+  | `--salt-text-action-fontWeight-small`    | `--salt-text-action-fontWeight-lighter`   |
+  | `--salt-text-action-fontWeight-strong`   | `--salt-text-action-fontWeight-bolder`    |
+  | `--salt-text-display-fontWeight-small`   | `--salt-text-display-fontWeight-lighter`  |
+  | `--salt-text-display-fontWeight-strong`  | `--salt-text-display-fontWeight-bolder`   |
+  | `--salt-text-heading-fontWeight-small`   | `--salt-text-heading-fontWeight-lighter`  |
+  | `--salt-text-heading-fontWeight-strong`  | `--salt-text-heading-fontWeight-bolder`   |
+  | `--salt-text-label-fontWeight-small`     | `--salt-text-label-fontWeight-lighter`    |
+  | `--salt-text-label-fontWeight-strong`    | `--salt-text-label-fontWeight-bolder`     |
+  | `--salt-text-notation-fontWeight-small`  | `--salt-text-notation-fontWeight-lighter` |
+  | `--salt-text-notation-fontWeight-strong` | `--salt-text-notation-fontWeight-bolder`  |
+
+  The deprecated `--salt-text-h{1-4}-fontWeight-small`, `--salt-text-h{1-4}-fontWeight-strong`, `--salt-text-display{1-4}-fontWeight-small` and `--salt-text-display{1-4}-fontWeight-strong` tokens now alias the new tokens.
+
+  The `small` and `strong` font weight tokens have been removed from the experimental Salt (Interim) theme without aliases. If you use the interim theme and reference them, switch to the matching `lighter` and `bolder` tokens in the table above.
+
+  See [font weight](https://www.saltdesignsystem.com/salt/foundations/typography#font-weight) for how each text style uses these weights.
+
+- 55f27de: The calendar, date input and date picker components now show their names in React DevTools instead of being anonymous.
+- Updated dependencies [fd5ae98]
+- Updated dependencies [4f1b504]
+- Updated dependencies [75f2d7d]
+- Updated dependencies [61228a7]
+- Updated dependencies [f8925a2]
+- Updated dependencies [825f63d]
+- Updated dependencies [4aa4585]
+- Updated dependencies [55f27de]
+- Updated dependencies [602ddb5]
+- Updated dependencies [fd1bf44]
+- Updated dependencies [75f2d7d]
+- Updated dependencies [7182ee8]
+- Updated dependencies [7182ee8]
+- Updated dependencies [825f63d]
+- Updated dependencies [825f63d]
+- Updated dependencies [825f63d]
+- Updated dependencies [825f63d]
+- Updated dependencies [cb2e335]
+  - @salt-ds/core@1.73.0
+  - @salt-ds/styles@0.4.2
+  - @salt-ds/icons@1.18.4
+
+## 1.1.1
+
+### Patch Changes
+
+- d578674: Applied typography letter spacing tokens consistently to text-owning components and inherited typography roots, and applied the display text transform token to display text.
+- e990c46: Simplified the disabled appearance of `Calendar` days for a more consistent look across Salt components.
+- Updated dependencies [ff312fb]
+- Updated dependencies [d578674]
+- Updated dependencies [24b5b04]
+- Updated dependencies [83d7f9c]
+- Updated dependencies [f9f5198]
+- Updated dependencies [fbe1e48]
+- Updated dependencies [394af0d]
+- Updated dependencies [d578674]
+- Updated dependencies [d578674]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [cf3afb3]
+- Updated dependencies [0b65f84]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [b434b9e]
+- Updated dependencies [e75a32d]
+- Updated dependencies [59a14d2]
+- Updated dependencies [e990c46]
+- Updated dependencies [550c4c1]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [2a5cb0d]
+  - @salt-ds/core@1.72.0
+  - @salt-ds/styles@0.4.1
+  - @salt-ds/window@0.1.2
+  - @salt-ds/icons@1.18.3
+
+## 1.1.0
+
+### Minor Changes
+
+- 87a8a85: - Added a top-level `name` prop to `DateInputSingle`.
+  - Added `startName` and `endName` to `DateInputRange` which map to the underlying native inputs.
+
+### Patch Changes
+
+- 5663ad4: Updated the `@floating-ui/react` dependency to align the Date Components package with the Floating UI contract used by its overlays. This fixes Date Picker calendar positioning and outside-press dismissal behavior while keeping the root-level resolution available for Mosaic.
+- Updated dependencies [8aaa8d0]
+- Updated dependencies [fc112cb]
+- Updated dependencies [8aaa8d0]
+- Updated dependencies [7a828e4]
+- Updated dependencies [87a8a85]
+- Updated dependencies [8156149]
+  - @salt-ds/core@1.68.0
+  - @salt-ds/styles@0.4.0
+  - @salt-ds/icons@1.18.2
+
 ## 1.0.0
 
 ### Major Changes

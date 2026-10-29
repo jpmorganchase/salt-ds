@@ -3,6 +3,7 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
 
+import { hasCardSection } from "../card/hasCardSection";
 import { capitalize, makePrefixer } from "../utils";
 
 import linkCardCss from "./LinkCard.css";
@@ -15,6 +16,14 @@ export interface LinkCardProps extends ComponentPropsWithoutRef<"a"> {
    */
   accent?: "bottom" | "top" | "left" | "right";
   /**
+   * Visual elevation.
+   */
+  elevation?: "flat" | "raised";
+  /**
+   * Border color strength.
+   */
+  borderColor?: "strong" | "subtle" | "none";
+  /**
    * Styling variant; defaults to "primary".
    */
   variant?: "primary" | "secondary" | "tertiary";
@@ -24,8 +33,10 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
   function LinkCard(props, ref) {
     const {
       accent,
+      borderColor,
       children,
       className,
+      elevation = "raised",
       href,
       variant = "primary",
       ...rest
@@ -38,14 +49,19 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
       window: targetWindow,
     });
 
+    const sectioned = hasCardSection(children);
+
     return (
       <a
         className={clsx(
           withBaseName(),
           withBaseName(variant),
+          borderColor && withBaseName(`borderColor${capitalize(borderColor)}`),
           {
             [withBaseName("accent")]: accent,
             [withBaseName(`accent${capitalize(accent ?? "")}`)]: accent,
+            [withBaseName(elevation || "")]: elevation,
+            [withBaseName("sectioned")]: sectioned,
           },
           className,
         )}

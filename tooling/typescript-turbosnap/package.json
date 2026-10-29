@@ -8,6 +8,6 @@
     "ts-morph": "^27.0.0"
   },
   "peerDependencies": {
-    "vite": "^7.1.11"
+    "vite": "^8.0.0"
   }
 }

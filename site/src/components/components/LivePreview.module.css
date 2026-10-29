@@ -1,5 +1,5 @@
 .container {
-  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-secondary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
   margin-top: var(--salt-spacing-200);
   border-radius: var(--salt-palette-corner);
   overflow: hidden;
@@ -17,7 +17,7 @@
 }
 
 .codePreview {
-  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
 }
 
 .codePreview.codePreview {

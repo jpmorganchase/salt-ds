@@ -37,6 +37,7 @@ export const FillContainer = (): ReactElement => {
                       fill: "var(--salt-sentiment-positive-foreground-decorative)",
                     }}
                     size={1}
+                    aria-hidden
                   />
                 </Display3>
                 <Text
@@ -57,6 +58,7 @@ export const FillContainer = (): ReactElement => {
                       fill: "var(--salt-sentiment-negative-foreground-decorative)",
                     }}
                     size={1}
+                    aria-hidden
                   />
                 </Display3>
                 <Text
@@ -79,6 +81,7 @@ export const FillContainer = (): ReactElement => {
                       fill: "var(--salt-sentiment-positive-foreground-decorative)",
                     }}
                     size={1}
+                    aria-hidden
                   />
                 </Display3>
                 <Text
@@ -99,6 +102,7 @@ export const FillContainer = (): ReactElement => {
                       fill: "var(--salt-sentiment-positive-foreground-decorative)",
                     }}
                     size={1}
+                    aria-hidden
                   />
                 </Display3>
                 <Text

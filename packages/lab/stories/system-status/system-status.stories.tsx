@@ -1,13 +1,19 @@
 import {
   Banner,
-  BannerActions,
   BannerContent,
-  Button,
+  H1,
+  Link,
+  OnSolidButton,
   StackLayout,
   Text,
+  type ValidationStatus,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
+import {
+  SystemStatus,
+  SystemStatusActions,
+  SystemStatusContent,
+} from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
@@ -15,9 +21,48 @@ export default {
   component: SystemStatus,
 } as Meta<typeof SystemStatus>;
 
-export const Info: StoryFn<typeof SystemStatus> = (props) => (
-  <div style={{ width: 500 }}>
-    <SystemStatus {...props}>
+const messages: { status: ValidationStatus; message: string }[] = [
+  { status: "info", message: "New feature updates are available" },
+  { status: "success", message: "Your operation was completed successfully." },
+  {
+    status: "warning",
+    message:
+      "The system will be down for scheduled maintenance starting Friday, June 21 from 11:00PM EST – 1:00AM EST Saturday, June 22",
+  },
+  { status: "error", message: "System failure. Please try again." },
+];
+
+const titledMessages: {
+  status: ValidationStatus;
+  title: string;
+  description: string;
+}[] = [
+  {
+    status: "info",
+    title: "New features available",
+    description: "Refresh the page to start using them.",
+  },
+  {
+    status: "success",
+    title: "Maintenance complete",
+    description: "All services are running normally.",
+  },
+  {
+    status: "warning",
+    title: "Scheduled maintenance",
+    description:
+      "The system will be down from 11:00PM EST Friday, June 21 to 1:00AM EST Saturday, June 22.",
+  },
+  {
+    status: "error",
+    title: "Connection interrupted",
+    description: "Please refresh the page.",
+  },
+];
+
+export const Default: StoryFn<typeof SystemStatus> = (args) => (
+  <div style={{ width: 600 }}>
+    <SystemStatus {...args}>
       <SystemStatusContent>
         <Text color="inherit">New feature updates are available</Text>
       </SystemStatusContent>
@@ -25,87 +70,131 @@ export const Info: StoryFn<typeof SystemStatus> = (props) => (
   </div>
 );
 
-export const Success: StoryFn<typeof SystemStatus> = (props) => (
-  <div style={{ width: 500 }}>
-    <SystemStatus status="success" {...props}>
-      <SystemStatusContent>
-        <Text color="inherit">Your operation was completed successfully.</Text>
-      </SystemStatusContent>
-    </SystemStatus>
-  </div>
+export const Statuses: StoryFn<typeof SystemStatus> = () => (
+  <StackLayout gap={1} style={{ width: 600 }}>
+    {messages.map(({ status, message }) => (
+      <SystemStatus key={status} status={status}>
+        <SystemStatusContent>
+          <Text color="inherit">{message}</Text>
+        </SystemStatusContent>
+      </SystemStatus>
+    ))}
+  </StackLayout>
 );
 
-export const Error: StoryFn<typeof SystemStatus> = (props) => (
-  <div style={{ width: 500 }}>
-    <SystemStatus status="error" {...props}>
-      <SystemStatusContent>
-        <Text color="inherit">System failure. Please try again.</Text>
-      </SystemStatusContent>
-    </SystemStatus>
-  </div>
+export const WithTitle: StoryFn<typeof SystemStatus> = () => (
+  <StackLayout gap={1} style={{ width: 600 }}>
+    {titledMessages.map(({ status, title, description }) => (
+      <SystemStatus key={status} status={status}>
+        <SystemStatusContent>
+          <StackLayout gap={0.5}>
+            <Text color="inherit" fontWeight="bolder">
+              {title}
+            </Text>
+            <Text color="inherit">{description}</Text>
+          </StackLayout>
+        </SystemStatusContent>
+      </SystemStatus>
+    ))}
+  </StackLayout>
 );
 
-export const Warning: StoryFn<typeof SystemStatus> = (props) => (
-  <div style={{ width: 500 }}>
-    <SystemStatus status="warning" {...props}>
+export const CustomContent: StoryFn<typeof SystemStatus> = (args) => (
+  <div style={{ width: 600 }}>
+    <SystemStatus status="warning" {...args}>
       <SystemStatusContent>
         <Text color="inherit">
-          The system will be down for scheduled maintenance starting Friday,
-          June 21 from 11:00PM EST – 1:00AM EST Saturday, June 22
+          Some services are running slower than usual.{" "}
+          <Link href="#" color="inherit">
+            View service status
+          </Link>
         </Text>
       </SystemStatusContent>
     </SystemStatus>
   </div>
 );
 
-export const WithTitle: StoryFn<typeof SystemStatus> = (props) => (
-  <div style={{ width: 500 }}>
-    <SystemStatus status="error" {...props}>
+export const WithActions: StoryFn<typeof SystemStatus> = () => (
+  <StackLayout gap={1} style={{ width: 600 }}>
+    <SystemStatus>
+      <SystemStatusContent>
+        <Text color="inherit">New feature updates are available</Text>
+      </SystemStatusContent>
+      <SystemStatusActions>
+        <OnSolidButton aria-label="Dismiss">
+          <CloseIcon aria-hidden />
+        </OnSolidButton>
+      </SystemStatusActions>
+    </SystemStatus>
+    <SystemStatus status="error">
+      <SystemStatusContent>
+        <Text color="inherit">System failure. Please try again.</Text>
+      </SystemStatusContent>
+      <SystemStatusActions>
+        <OnSolidButton>Try again</OnSolidButton>
+        <OnSolidButton aria-label="Dismiss">
+          <CloseIcon aria-hidden />
+        </OnSolidButton>
+      </SystemStatusActions>
+    </SystemStatus>
+  </StackLayout>
+);
+
+export const LongContent: StoryFn<typeof SystemStatus> = (args) => (
+  <div style={{ width: 600 }}>
+    <SystemStatus status="warning" {...args}>
       <SystemStatusContent>
         <StackLayout gap={0.5}>
-          <Text color="inherit">
-            <strong>Connection interrupted</strong>
+          <Text color="inherit" fontWeight="bolder">
+            Scheduled maintenance
           </Text>
-          <Text color="inherit">Please refresh the page.</Text>
+          <Text color="inherit">
+            The system will be down for scheduled maintenance starting Friday,
+            June 21 from 11:00PM EST – 1:00AM EST Saturday, June 22. During this
+            time you won't be able to sign in, view your accounts or make
+            payments. Any payments scheduled during the maintenance window will
+            be processed once the system is back online.
+          </Text>
         </StackLayout>
       </SystemStatusContent>
+      <SystemStatusActions>
+        <OnSolidButton>View details</OnSolidButton>
+        <OnSolidButton aria-label="Dismiss">
+          <CloseIcon aria-hidden />
+        </OnSolidButton>
+      </SystemStatusActions>
     </SystemStatus>
   </div>
 );
 
-export const Placement: StoryFn<typeof SystemStatus> = (props) => {
-  return (
+export const Placement: StoryFn<typeof SystemStatus> = (args) => (
+  <StackLayout gap={0}>
+    <SystemStatus {...args}>
+      <SystemStatusContent>
+        <Text color="inherit">New feature updates are available.</Text>
+      </SystemStatusContent>
+      <SystemStatusActions>
+        <OnSolidButton aria-label="Dismiss">
+          <CloseIcon aria-hidden />
+        </OnSolidButton>
+      </SystemStatusActions>
+    </SystemStatus>
     <StackLayout
       style={{
-        width: "98vw",
-        background: "var( --salt-container-primary-background)",
+        padding: "var(--salt-spacing-300) var(--salt-layout-page-margin)",
       }}
     >
-      <SystemStatus {...props}>
-        <SystemStatusContent>
-          <Text color="inherit">New feature updates are available.</Text>
-        </SystemStatusContent>
-      </SystemStatus>
-      <StackLayout
-        gap={4.5}
-        style={{
-          padding:
-            "var(--salt-spacing-100) var(--salt-spacing-300) calc(var(--salt-spacing-100)*4.5) ",
-        }}
-      >
-        <Text styleAs="display2"> Payment Activity</Text>
-        <Banner status="warning" variant="secondary">
-          <BannerContent role="status">
-            You have outstanding checks more than 30 days old. Review to prevent
-            fraud.
-          </BannerContent>
-          <BannerActions>
-            <Button aria-label="refresh" variant="secondary">
-              <CloseIcon />
-            </Button>
-          </BannerActions>
-        </Banner>
-      </StackLayout>
+      <H1 styleAs="display2">Payment activity</H1>
+      <Banner status="warning" variant="secondary">
+        <BannerContent>
+          You have outstanding checks more than 30 days old. Review to prevent
+          fraud.
+        </BannerContent>
+      </Banner>
     </StackLayout>
-  );
+  </StackLayout>
+);
+
+Placement.parameters = {
+  layout: "fullscreen",
 };

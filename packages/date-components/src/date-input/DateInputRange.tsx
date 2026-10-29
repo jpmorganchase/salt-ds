@@ -59,11 +59,20 @@ export type DateInputRangeDetails = {
 };
 
 /**
- * Enum to identify the field being parsed
+ * Identifies the field being parsed
  */
-export enum DateParserField {
-  START = "start",
-  END = "end",
+export const DateParserField = {
+  START: "start",
+  END: "end",
+} as const;
+
+export type DateParserField =
+  (typeof DateParserField)[keyof typeof DateParserField];
+
+// Keeps `DateParserField.START` and `DateParserField.END` usable as types, as they were with the enum.
+export declare namespace DateParserField {
+  type START = typeof DateParserField.START;
+  type END = typeof DateParserField.END;
 }
 
 /**
@@ -71,7 +80,10 @@ export enum DateParserField {
  */
 export interface DateInputRangeProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue" | "onChange">,
-    Omit<InputProps, "defaultValue" | "inputRef" | "value" | "onChange"> {
+    Omit<
+      InputProps,
+      "defaultValue" | "inputRef" | "name" | "value" | "onChange"
+    > {
   /**
    * Styling variant with full border. Defaults to false.
    */
@@ -91,10 +103,18 @@ export interface DateInputRangeProps
    */
   startInputProps?: InputHTMLAttributes<HTMLInputElement>;
   /**
+   * The name applied to the start date input.
+   */
+  startName?: string;
+  /**
    * Attributes applied to the end `input` element.
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dateInput#Attributes
    */
   endInputProps?: InputHTMLAttributes<HTMLInputElement>;
+  /**
+   * The name applied to the end date input.
+   */
+  endName?: string;
   /**
    * If `true`, the component is read-only.
    */
@@ -184,7 +204,7 @@ export interface DateInputRangeProps
 }
 
 export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
-  (props: DateInputRangeProps, ref: React.Ref<HTMLDivElement>) => {
+  function DateInputRange(props, ref) {
     const { dateAdapter } = useLocalization();
     const {
       "aria-label": ariaLabel,
@@ -208,7 +228,9 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       emptyReadOnlyMarker = "—",
       endAdornment,
       startInputProps = {},
+      startName,
       endInputProps = {},
+      endName,
       startInputRef: startInputRefProp,
       endInputRef: endInputRefProp,
       parse: parseProp,
@@ -594,6 +616,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           id={startInputID}
           className={withBaseName("input")}
           disabled={isDisabled}
+          name={startName}
           readOnly={isReadOnly}
           ref={handleStartInputRef}
           tabIndex={isDisabled ? -1 : 0}
@@ -622,6 +645,7 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
           id={endInputID}
           className={withBaseName("input")}
           disabled={isDisabled}
+          name={endName}
           readOnly={isReadOnly}
           ref={handleEndInputRef}
           tabIndex={isDisabled ? -1 : 0}

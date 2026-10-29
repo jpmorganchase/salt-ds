@@ -10,6 +10,9 @@ import drawerCloseButtonCss from "./DrawerCloseButton.css";
 
 const withBaseName = makePrefixer("saltDrawerCloseButton");
 
+/**
+ * @deprecated since 1.71.0. Use `Button` in `DrawerHeader`'s `actions` instead.
+ */
 export const DrawerCloseButton = forwardRef<HTMLButtonElement, ButtonProps>(
   function DrawerCloseButton({ className, ...rest }, ref) {
     const targetWindow = useWindow();
@@ -24,7 +27,7 @@ export const DrawerCloseButton = forwardRef<HTMLButtonElement, ButtonProps>(
       <div className={withBaseName("container")}>
         <Button
           ref={ref}
-          aria-label="Close Drawer"
+          aria-label="Close drawer"
           appearance="transparent"
           className={clsx(withBaseName(), className)}
           {...rest}

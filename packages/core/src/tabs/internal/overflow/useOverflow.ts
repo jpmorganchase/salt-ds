@@ -23,10 +23,10 @@ import {
 } from "./widthMeasurement";
 
 interface UseOverflowProps {
-  container: RefObject<HTMLElement>;
+  container: RefObject<HTMLElement | null>;
   selected?: string;
   tabs: RenderedTab[];
-  overflowButton: RefObject<HTMLButtonElement>;
+  overflowButton: RefObject<HTMLButtonElement | null>;
   menuOpen: boolean;
 }
 

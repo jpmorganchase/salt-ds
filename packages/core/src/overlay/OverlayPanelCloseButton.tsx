@@ -12,7 +12,7 @@ const withBaseName = makePrefixer("saltOverlayPanelCloseButton");
 export const OverlayPanelCloseButton = forwardRef<
   HTMLButtonElement,
   ButtonProps
->(function OverlayPanelButton({ className, ...rest }, ref) {
+>(function OverlayPanelCloseButton({ className, ...rest }, ref) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-overlay-panel-close-button",

@@ -1,0 +1,10 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "include": ["src/**/*"],
+  "exclude": ["**/__tests__/*"],
+  "compilerOptions": {
+    "paths": {
+      "@salt-ds/highcharts-theme": ["./src/index.ts"]
+    }
+  }
+}

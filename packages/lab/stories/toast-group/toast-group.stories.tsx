@@ -1,4 +1,3 @@
-import { withDateMock } from ".storybook/decorators/withDateMock";
 import {
   Button,
   FlowLayout,
@@ -11,6 +10,7 @@ import { CloseIcon } from "@salt-ds/icons";
 import { ToastGroup } from "@salt-ds/lab";
 import type { Meta } from "@storybook/react-vite";
 import { Fragment, type ReactNode, useState } from "react";
+import { withDateMock } from "~storybook-decorators/withDateMock";
 
 export default {
   title: "Lab/Toast Group",
@@ -26,10 +26,8 @@ const InfoToast = () => {
   return open ? (
     <Toast>
       <ToastContent>
-        <Text>
-          <strong>File update</strong>
-        </Text>
-        <div>A new version of this file is available with 37 updates. </div>
+        <Text fontWeight="bolder">File update</Text>
+        <Text>A new version of this file is available with 37 updates. </Text>
       </ToastContent>
       <Button variant="secondary" onClick={closeToast}>
         <CloseIcon />
@@ -46,20 +44,16 @@ const ErrorToast = () => {
   return open ? (
     <Toast status="error">
       <ToastContent>
-        <div>
-          <Text>
-            <strong>System error</strong>
-          </Text>
-          <div>Connection timed out. Failed to retrieve data. </div>
-        </div>
-        <FlowLayout
-          gap={1}
-          justify="end"
-          style={{ marginTop: "var(--salt-spacing-100)" }}
-        >
-          <Button onClick={closeToast}>Dismiss</Button>
-          <Button variant="cta">Try again</Button>
-        </FlowLayout>
+        <StackLayout gap={1}>
+          <StackLayout gap={0}>
+            <Text fontWeight="bolder">System error</Text>
+            <Text>Connection timed out. Failed to retrieve data. </Text>
+          </StackLayout>
+          <FlowLayout gap={1} justify="end">
+            <Button onClick={closeToast}>Dismiss</Button>
+            <Button variant="cta">Try again</Button>
+          </FlowLayout>
+        </StackLayout>
       </ToastContent>
     </Toast>
   ) : null;
@@ -73,20 +67,20 @@ const WarningToast = () => {
   return open ? (
     <Toast status="warning">
       <ToastContent>
-        <div>
-          <Text>
-            <strong>File access</strong>
-          </Text>
-          <div>Viewers of this file can see comments and suggestions. </div>
-        </div>
-        <FlowLayout gap={1} style={{ marginTop: "var(--salt-spacing-100)" }}>
-          <Button variant="cta" style={{ width: "100%" }}>
-            Edit permissions
-          </Button>
-          <Button onClick={closeToast} style={{ width: "100%" }}>
-            Dismiss
-          </Button>
-        </FlowLayout>
+        <StackLayout gap={1}>
+          <StackLayout gap={0}>
+            <Text fontWeight="bolder">File access</Text>
+            <Text>Viewers of this file can see comments and suggestions. </Text>
+          </StackLayout>
+          <FlowLayout gap={1}>
+            <Button variant="cta" style={{ width: "100%" }}>
+              Edit permissions
+            </Button>
+            <Button onClick={closeToast} style={{ width: "100%" }}>
+              Dismiss
+            </Button>
+          </FlowLayout>
+        </StackLayout>
       </ToastContent>
     </Toast>
   ) : null;
@@ -100,10 +94,10 @@ const SuccessToast = () => {
   return open ? (
     <Toast status="success">
       <ToastContent>
+        <Text fontWeight="bolder">Project file upload</Text>
         <Text>
-          <strong>Project file upload</strong>
+          Project file has successfully uploaded to the shared drive.{" "}
         </Text>
-        <div>Project file has successfully uploaded to the shared drive. </div>
       </ToastContent>
       <Button variant="secondary" onClick={closeToast}>
         <CloseIcon />

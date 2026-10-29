@@ -5,8 +5,9 @@
   background: var(--salt-container-primary-background);
   height: var(--site-app-header-height);
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor);
-  position: sticky;
+  position: fixed;
   top: 0;
+  inset-inline: 0;
   z-index: var(--salt-zIndex-appHeader);
 }
 

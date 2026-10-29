@@ -1,0 +1,15 @@
+.salt-theme.salt-interim[data-mode="light"] {
+  --salt-palette-warning-lowest: var(--salt-color-orange-100);
+  --salt-palette-warning-lower: var(--salt-color-orange-200);
+  --salt-palette-warning-medium: var(--salt-color-orange-500);
+  --salt-palette-warning-mediumHigh: var(--salt-color-orange-600);
+  --salt-palette-warning-high: var(--salt-color-orange-700);
+}
+
+.salt-theme.salt-interim[data-mode="dark"] {
+  --salt-palette-warning-lowest: var(--salt-color-orange-900);
+  --salt-palette-warning-lower: var(--salt-color-orange-800);
+  --salt-palette-warning-medium: var(--salt-color-orange-500);
+  --salt-palette-warning-mediumHigh: var(--salt-color-orange-400);
+  --salt-palette-warning-high: var(--salt-color-orange-300);
+}

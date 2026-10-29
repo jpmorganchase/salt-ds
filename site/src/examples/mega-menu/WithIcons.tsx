@@ -1,4 +1,16 @@
-import { NavigationItem, StackLayout } from "@salt-ds/core";
+import {
+  MegaMenu,
+  MegaMenuContent,
+  MegaMenuGroup,
+  MegaMenuGroupHeading,
+  MegaMenuGroups,
+  MegaMenuList,
+  MegaMenuListItem,
+  MegaMenuPanel,
+  MegaMenuTrigger,
+  NavigationItem,
+  StackLayout,
+} from "@salt-ds/core";
 import {
   AnnouncementIcon,
   ApiIcon,
@@ -30,17 +42,7 @@ import {
   UserIcon,
   UserSearchIcon,
 } from "@salt-ds/icons";
-import {
-  MegaMenu,
-  MegaMenuContent,
-  MegaMenuGroup,
-  MegaMenuGroupHeading,
-  MegaMenuGroups,
-  MegaMenuList,
-  MegaMenuListItem,
-  MegaMenuPanel,
-  MegaMenuTrigger,
-} from "@salt-ds/lab";
+
 import { type ReactElement, useState } from "react";
 import { Link } from "react-router";
 import styles from "./index.module.css";

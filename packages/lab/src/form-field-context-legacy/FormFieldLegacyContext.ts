@@ -8,7 +8,7 @@ import type {
 import type { useA11yValueValue } from "../form-field-legacy";
 export interface FormFieldLegacyContextValue {
   inFormField: true;
-  ref: RefObject<HTMLDivElement>;
+  ref: RefObject<HTMLDivElement | null>;
   a11yProps: useA11yValueValue;
   focused: boolean;
   setFocused: Dispatch<SetStateAction<boolean>>;

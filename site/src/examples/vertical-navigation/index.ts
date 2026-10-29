@@ -1,4 +1,5 @@
 export * from "./Basic";
+export * from "./CollapsibleNavigation";
 export * from "./CollapsibleSubmenu";
 export * from "./MultiActionItem";
 export * from "./Submenu";

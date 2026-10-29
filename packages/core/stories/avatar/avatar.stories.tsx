@@ -1,13 +1,17 @@
 import {
   Avatar,
   FlowLayout,
-  Label,
+  H1,
+  H2,
+  H3,
+  H4,
   StackLayout,
+  Text,
   useAvatarImage,
 } from "@salt-ds/core";
 import { UserGroupSolidIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import type { ComponentProps, ReactNode } from "react";
+import type { ComponentProps, CSSProperties, ReactNode } from "react";
 import persona1 from "../assets/avatar.png";
 
 export default {
@@ -26,16 +30,64 @@ const CustomAvatarButton = (props: ComponentProps<"button">) => (
 
 export const Default = Template.bind({});
 
+export const Kind: StoryFn<typeof Avatar> = (args) => {
+  return (
+    <FlowLayout gap={3}>
+      <StackLayout align="center" gap={1}>
+        <Avatar {...args} kind="person" name="John Doe" />
+        <Text>Person</Text>
+      </StackLayout>
+      <StackLayout align="center" gap={1}>
+        <Avatar
+          {...args}
+          kind="entity"
+          name="J.P. Morgan"
+          nameToInitials={() => "JPM"}
+        />
+        <Text>Entity</Text>
+      </StackLayout>
+    </FlowLayout>
+  );
+};
+
 export const Sizes: StoryFn<typeof Avatar> = (args) => {
   return (
     <FlowLayout gap={7} align="end">
       {sizes.map((size) => (
         <StackLayout key={size} align="center">
           <Avatar {...args} key={size} size={size} />
-          <Label>size: {size}</Label>
+          <Text>size: {size}</Text>
         </StackLayout>
       ))}
     </FlowLayout>
+  );
+};
+
+const typographyAlignedRows = [
+  { Heading: H1, size: "var(--salt-text-h1-lineHeight)" },
+  { Heading: H2, size: "var(--salt-text-h2-lineHeight)" },
+  { Heading: H3, size: "var(--salt-text-h3-lineHeight)" },
+  { Heading: H4, size: "var(--salt-text-h4-lineHeight)" },
+] as const;
+
+export const TypographyAlignedSize: StoryFn<typeof Avatar> = (args) => {
+  return (
+    <StackLayout gap={2}>
+      {typographyAlignedRows.map(({ Heading, size }) => (
+        <FlowLayout key={size} align="center" gap={1}>
+          <Avatar
+            {...args}
+            name="Alex Brailescu"
+            style={
+              {
+                "--saltAvatar-size": size,
+              } as CSSProperties
+            }
+          />
+          <Heading>Alex Brailescu</Heading>
+        </FlowLayout>
+      ))}
+    </StackLayout>
   );
 };
 
@@ -72,14 +124,14 @@ WithCustomSvg.args = {
 export const RenderElement = Template.bind({});
 RenderElement.args = {
   name: "Alex Brailescu",
-  render: <CustomAvatarButton aria-label="Alex Brailescu profile" />,
+  render: <CustomAvatarButton aria-label="AB, Alex Brailescu profile" />,
 };
 
 export const RenderProp = Template.bind({});
 RenderProp.args = {
   name: "Alex Brailescu",
   render: (props) => (
-    <CustomAvatarButton {...props} aria-label="Alex Brailescu profile" />
+    <CustomAvatarButton {...props} aria-label="AB, Alex Brailescu profile" />
   ),
 };
 

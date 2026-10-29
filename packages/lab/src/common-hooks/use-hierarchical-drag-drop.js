@@ -250,8 +250,6 @@ export const useDragDrop = ({
             itemQuery,
           );
 
-          console.log({ dropTargets });
-
           const draggedItem = dropTargets.find(isDraggedElement);
           if (draggedItem) {
             measuredDropTargets.current = dropTargets;

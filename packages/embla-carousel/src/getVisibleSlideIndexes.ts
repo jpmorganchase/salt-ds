@@ -1,4 +1,4 @@
-import type { EmblaCarouselType } from "embla-carousel";
+import type { EmblaCarouselType } from "./emblaTypes";
 
 export const getSlideNumberRange = (
   startSlideNumber: number,

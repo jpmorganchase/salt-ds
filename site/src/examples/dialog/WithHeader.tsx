@@ -80,11 +80,18 @@ export const WithHeader = (): ReactElement => {
       <Dialog open={open} onOpenChange={onOpenChange} id={id}>
         <DialogHeader header="Terms and conditions" actions={closeButton} />
         <DialogContent style={{ maxHeight: 250 }}>
+          <div>
+            When you add a Chase Card to a Wallet, you agree to these Terms:
+          </div>
+          <H3
+            style={{
+              marginTop: "var(--salt-spacing-200)",
+              marginBottom: "var(--salt-spacing-100)",
+            }}
+          >
+            Adding Your Chase Card
+          </H3>
           <StackLayout>
-            <div>
-              When you add a Chase Card to a Wallet, you agree to these Terms:
-            </div>
-            <H3>Adding Your Chase Card</H3>
             <div>
               You can add an eligible Chase Card to a Wallet by either following
               our instructions as they appear on a Chase proprietary platform

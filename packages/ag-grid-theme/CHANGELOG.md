@@ -1,5 +1,102 @@
 # @salt-ds/ag-grid-theme
 
+## 2.10.2
+
+### Patch Changes
+
+- 825f63d: Renamed the `small` and `strong` font weight tokens to `lighter` and `bolder`, to match the new `fontWeight` prop on `Text`. The old tokens still work as aliases but are deprecated and will be removed in a future major version. Salt components now use the new tokens, so if you override an old token, override the new one instead.
+
+  ```diff
+  - font-weight: var(--salt-text-fontWeight-strong);
+  + font-weight: var(--salt-text-fontWeight-bolder);
+  ```
+
+  | Deprecated token                         | Use instead                               |
+  | ---------------------------------------- | ----------------------------------------- |
+  | `--salt-text-fontWeight-small`           | `--salt-text-fontWeight-lighter`          |
+  | `--salt-text-fontWeight-strong`          | `--salt-text-fontWeight-bolder`           |
+  | `--salt-text-action-fontWeight-small`    | `--salt-text-action-fontWeight-lighter`   |
+  | `--salt-text-action-fontWeight-strong`   | `--salt-text-action-fontWeight-bolder`    |
+  | `--salt-text-display-fontWeight-small`   | `--salt-text-display-fontWeight-lighter`  |
+  | `--salt-text-display-fontWeight-strong`  | `--salt-text-display-fontWeight-bolder`   |
+  | `--salt-text-heading-fontWeight-small`   | `--salt-text-heading-fontWeight-lighter`  |
+  | `--salt-text-heading-fontWeight-strong`  | `--salt-text-heading-fontWeight-bolder`   |
+  | `--salt-text-label-fontWeight-small`     | `--salt-text-label-fontWeight-lighter`    |
+  | `--salt-text-label-fontWeight-strong`    | `--salt-text-label-fontWeight-bolder`     |
+  | `--salt-text-notation-fontWeight-small`  | `--salt-text-notation-fontWeight-lighter` |
+  | `--salt-text-notation-fontWeight-strong` | `--salt-text-notation-fontWeight-bolder`  |
+
+  The deprecated `--salt-text-h{1-4}-fontWeight-small`, `--salt-text-h{1-4}-fontWeight-strong`, `--salt-text-display{1-4}-fontWeight-small` and `--salt-text-display{1-4}-fontWeight-strong` tokens now alias the new tokens.
+
+  The `small` and `strong` font weight tokens have been removed from the experimental Salt (Interim) theme without aliases. If you use the interim theme and reference them, switch to the matching `lighter` and `bolder` tokens in the table above.
+
+  See [font weight](https://www.saltdesignsystem.com/salt/foundations/typography#font-weight) for how each text style uses these weights.
+
+- Updated dependencies [c319c14]
+- Updated dependencies [825f63d]
+- Updated dependencies [825f63d]
+- Updated dependencies [825f63d]
+- Updated dependencies [825f63d]
+  - @salt-ds/theme@1.48.0
+
+## 2.10.1
+
+### Patch Changes
+
+- d578674: Applied typography letter spacing tokens consistently to text-owning components and inherited typography roots, and applied the display text transform token to display text.
+- Updated dependencies [d578674]
+- Updated dependencies [e990c46]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [e990c46]
+- Updated dependencies [d578674]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [d578674]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [550c4c1]
+  - @salt-ds/theme@1.47.0
+
+## 2.10.0
+
+### Minor Changes
+
+- 487e75d: Upgraded support to AG-Grid v36.
+
+  Added Salt `SortAscend` and `SortDescend` glyphs for AG Grid Absolute Sorting (`aasc` / `adesc` icon names).
+
+### Patch Changes
+
+- Updated dependencies [2e1da8e]
+- Updated dependencies [be5eb93]
+- Updated dependencies [0f92b84]
+- Updated dependencies [be5eb93]
+  - @salt-ds/theme@1.46.0
+
+## 2.9.0
+
+### Minor Changes
+
+- a5d12be: Added header background modifier classes on the grid wrapper to align AG Grid headers with the Salt `Table` `<THead variant />` API.
+
+  - `ag-theme-salt-header-primary` (default), `ag-theme-salt-header-secondary`, `ag-theme-salt-header-tertiary` — swap the header background between Salt's primary, secondary and tertiary container tokens.
+
+  Add them alongside the mode class on the grid wrapper:
+
+  ```jsx
+  <div className="ag-theme-salt-light ag-theme-salt-header-secondary">
+    <AgGridReact rowData={rowData} columnDefs={columnDefs} />
+  </div>
+  ```
+
+### Patch Changes
+
+- a5d12be: Fixed several AG Grid theme styling issues:
+
+  - Row Group Panel pill text and icon now use `--salt-actionable-bold-foreground` (with `-hover` and `-active` variants), and the chip background uses `--salt-actionable-bold-background`, matching the Salt `Pill` component. Previously the pill text inherited `--salt-content-primary-foreground` and the background used `--salt-actionable-primary-background`.
+  - Replaced remaining references to legacy actionable token aliases. The theme was still referencing `--salt-actionable-secondary-*` (renamed to `--salt-actionable-subtle-*`) and `--salt-actionable-cta-*` (renamed to `--salt-actionable-accented-bold-*`). Both old names exist only in the legacy theme's deprecated aliases file and are not defined in `themeNext`, so the theme would silently render with undefined values when used with `SaltProviderNext`. No visual change for users of the legacy theme—the aliases resolve to the same values.
+  - Scoped helper classes to the Salt theme wrapper. `.error-row`, `.warning-row`, `.success-row`, `.ag-column-drop-cell*` and `.ag-toggle-button-input-wrapper*` rules were previously declared as bare class selectors. They are now scoped to `[class*="ag-theme-salt"]` so they only match elements inside a Salt-themed grid and can no longer collide with consumer classes of the same name elsewhere on the page.
+
 ## 2.8.0
 
 ### Minor Changes

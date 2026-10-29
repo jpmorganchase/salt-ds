@@ -8,6 +8,7 @@ import {
   type ReactNode,
 } from "react";
 import { makePrefixer, useFloatingComponent, useForkRef } from "../utils";
+import { hasOverlaySection } from "./hasOverlaySection";
 import { useOverlayContext } from "./OverlayContext";
 import overlayPanelCss from "./OverlayPanel.css";
 
@@ -23,7 +24,9 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
   function OverlayPanel(props, ref) {
     const {
       className,
+      "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledby,
+      "aria-describedby": ariaDescribedby,
       children,
       ...rest
     } = props;
@@ -44,9 +47,14 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
       getFloatingProps,
       floating,
       arrowProps,
+      hideArrow,
+      headerId,
+      descriptionId,
     } = useOverlayContext();
 
     const handleRef = useForkRef<HTMLDivElement>(floating, ref);
+
+    const sectioned = hasOverlaySection(children);
 
     const { top, left, width, height, position } = floatingStyles;
 
@@ -64,18 +72,31 @@ export const OverlayPanel = forwardRef<HTMLDivElement, OverlayPanelProps>(
         position={position}
         focusManagerProps={{
           context: context,
+          outsideElementsInert: true,
         }}
-        aria-labelledby={ariaLabelledby}
+        aria-label={ariaLabel}
+        aria-labelledby={clsx(ariaLabelledby, headerId) || undefined}
+        aria-describedby={clsx(ariaDescribedby, descriptionId) || undefined}
       >
-        <div {...rest}> {children} </div>
-        <FloatingArrow
-          {...arrowProps}
-          strokeWidth={1}
-          fill="var(--overlay-background)"
-          stroke="var(--overlay-borderColor)"
-          height={6}
-          width={12}
-        />
+        <div
+          className={clsx(withBaseName("content"), {
+            [withBaseName("sectioned")]: sectioned,
+          })}
+          {...rest}
+        >
+          {children}
+        </div>
+        {!hideArrow && (
+          <FloatingArrow
+            {...arrowProps}
+            className={withBaseName("arrow")}
+            strokeWidth={1}
+            fill="var(--overlay-background)"
+            stroke="var(--overlay-borderColor)"
+            height={6}
+            width={12}
+          />
+        )}
       </FloatingComponent>
     );
   },

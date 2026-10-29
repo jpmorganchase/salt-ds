@@ -1,0 +1,11 @@
+language js
+
+// The testId passed to useComponentCssInjection names the injected style tag.
+// It's "salt-" followed by the component name in kebab case, e.g. "salt-button".
+`useComponentCssInjection($options)` where {
+  $options <: contains JsPropertyObjectMember(name=r"testId", value=$value) where {
+    $value <: JsStringLiteralExpression(),
+    $value <: not r"^[\"']salt-[a-z0-9]+(?:-[a-z0-9]+)*[\"']$"
+  },
+  register_diagnostic(span=$value, message="The testId must be 'salt-' followed by the component name in kebab case, e.g. 'salt-button'.")
+}

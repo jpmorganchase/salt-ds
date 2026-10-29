@@ -1,0 +1,599 @@
+/* ROW */
+
+.ag-theme-salt-light .ag-row,
+.ag-theme-salt-dark .ag-row,
+.ag-theme-salt-compact-light .ag-row,
+.ag-theme-salt-compact-dark .ag-row {
+  font-size: var(--salt-text-fontSize);
+}
+
+/*
+  [VERSION DIVERGENCE]: Known v36 limitation, intentionally NOT patched. Pre-v36 the vertical
+  scrollbar was contained between the pinned top and pinned bottom rows. From v36,
+  FakeVScrollComp sizes the scrollbar track from getHeaderRowsOffset(), which only accounts for
+  the column header, so the overlay thumb travels over pinned rows. The track height is set as
+  an inline style from JS and cannot be corrected from CSS; re-stacking pinned rows above the
+  scrollbar hides the thumb behind them (and would change pre-v36 stacking), so the v36
+  behaviour is left as is.
+*/
+
+.ag-theme-salt-light .ag-row-selected,
+.ag-theme-salt-dark .ag-row-selected,
+.ag-theme-salt-compact-light .ag-row-selected,
+.ag-theme-salt-compact-dark .ag-row-selected {
+  background-color: var(--ag-selected-row-background-color);
+  border-color: var(--ag-selected-row-border-color);
+}
+
+/*
+  [VERSION DIVERGENCE]: From v36, the row bottom border moved from the row element to its cell
+  containers (driven by --ag-row-border-color). Before v36, the same variable coloured the row
+  border, so this override preserves the selected border colour across versions.
+*/
+.ag-theme-salt-light .ag-row.ag-row-selected,
+.ag-theme-salt-dark .ag-row.ag-row-selected,
+.ag-theme-salt-compact-light .ag-row.ag-row-selected,
+.ag-theme-salt-compact-dark .ag-row.ag-row-selected {
+  --ag-row-border-color: var(--ag-selected-row-border-color);
+}
+
+/*
+  [VERSION DIVERGENCE]: Do not create or position this pseudo-element. Pre-v36, AG Grid creates it
+  for every selected row, so this rule only reshapes it. From v36, regular rows have no row-level
+  pseudo-element; the section shadows below paint the top border. Full-width selected rows still
+  create a row-level pseudo-element, reshaped here and stacked by the scoped rule that follows.
+*/
+.ag-theme-salt-light .ag-row-selected::before,
+.ag-theme-salt-dark .ag-row-selected::before,
+.ag-theme-salt-compact-light .ag-row-selected::before,
+.ag-theme-salt-compact-dark .ag-row-selected::before,
+.ag-theme-salt-light .ag-row-hover.ag-row-selected::before,
+.ag-theme-salt-dark .ag-row-hover.ag-row-selected::before,
+.ag-theme-salt-compact-light .ag-row-hover.ag-row-selected::before,
+.ag-theme-salt-compact-dark .ag-row-hover.ag-row-selected::before {
+  background-color: var(--ag-selected-row-border-color);
+  background-image: none;
+  height: var(--salt-size-fixed-100);
+  top: -1px;
+}
+
+/*
+  [VERSION DIVERGENCE]: In v36, lift full-width selected row borders above regular row cell
+  containers. .ag-grid-scrolling-container is v36-only, so this is inert in earlier versions.
+*/
+[class*="ag-theme-salt"] .ag-grid-scrolling-container .ag-row-selected.ag-full-width-row::before {
+  pointer-events: none;
+  z-index: 3;
+}
+
+/*
+  [VERSION DIVERGENCE]: From v36, paint the selected top border on the three cell containers so
+  it follows the column extent instead of crossing the flex-fill area. The upward shadow overlaps
+  the preceding row border without affecting layout. These container classes are v36-only.
+*/
+[class*="ag-theme-salt"] .ag-row.ag-row-selected > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-row.ag-row-selected > .ag-grid-scrolling-cells,
+[class*="ag-theme-salt"] .ag-row.ag-row-selected > .ag-grid-pinned-right-cells {
+  box-shadow: 0 calc(var(--salt-size-fixed-100) * -1) 0 0 var(--ag-selected-row-border-color);
+}
+
+/*
+  [VERSION DIVERGENCE]: From v36, raise selected cell containers above neighbouring virtualised
+  rows so the upward shadow reliably covers the preceding row border. Preserve AG Grid's pinned
+  cells-above-scrolling-cells stacking order. These container classes are v36-only.
+*/
+[class*="ag-theme-salt"] .ag-row.ag-row-selected > .ag-grid-scrolling-cells {
+  z-index: 1;
+}
+
+[class*="ag-theme-salt"] .ag-row.ag-row-selected > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-row.ag-row-selected > .ag-grid-pinned-right-cells {
+  z-index: 3;
+}
+
+/*
+  [VERSION DIVERGENCE]: From v36, selection is painted on the three cell containers rather than
+  the row. Keep the row's base background in the flex-fill area after the last unpinned column.
+  The cell container shadows above paint the top border over the preceding row's bottom border,
+  matching pre-v36. .ag-grid-scrolling-container is v36-only, so this rule is inert in earlier
+  supported versions.
+*/
+[class*="ag-theme-salt"] .ag-grid-scrolling-container .ag-row.ag-row-selected:not(.ag-full-width-row) {
+  background-color: var(--ag-data-background-color);
+}
+
+/* CELL */
+
+.ag-theme-salt-light .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
+.ag-theme-salt-dark .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
+.ag-theme-salt-compact-light .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
+.ag-theme-salt-compact-dark .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell) {
+  border-right-color: var(--salt-separable-secondary-borderColor);
+}
+
+.ag-theme-salt-light .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(.ag-cell-range-single-cell),
+.ag-theme-salt-dark .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(.ag-cell-range-single-cell),
+.ag-theme-salt-compact-light .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(.ag-cell-range-single-cell),
+.ag-theme-salt-compact-dark .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(.ag-cell-range-single-cell) {
+  border-left-color: var(--salt-separable-secondary-borderColor);
+}
+
+.ag-theme-salt-light .ag-ltr .ag-cell,
+.ag-theme-salt-dark .ag-ltr .ag-cell,
+.ag-theme-salt-compact-light .ag-ltr .ag-cell,
+.ag-theme-salt-compact-dark .ag-ltr .ag-cell {
+  border: none;
+  line-height: calc(var(--ag-line-height) - 1px);
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
+}
+
+/* This is not restricted to `.editable-cell`, so any custom editor would get the same background treatment */
+.ag-theme-salt-light .ag-cell-inline-editing:focus-within,
+.ag-theme-salt-dark .ag-cell-inline-editing:focus-within,
+.ag-theme-salt-compact-light .ag-cell-inline-editing:focus-within,
+.ag-theme-salt-compact-dark .ag-cell-inline-editing:focus-within {
+  background: var(--salt-container-primary-background);
+}
+
+/* This makes sure custom cell editor would start from no padding. Built-in ag grid editor's padding is added below. */
+.ag-theme-salt-light .ag-ltr .ag-cell-inline-editing,
+.ag-theme-salt-dark .ag-ltr .ag-cell-inline-editing,
+.ag-theme-salt-compact-light .ag-ltr .ag-cell-inline-editing,
+.ag-theme-salt-compact-dark .ag-ltr .ag-cell-inline-editing {
+  padding: 0;
+  /* When styling option corner='rounded', we don't want this to be flipped between rounded and not between editing and normal state */
+  border-radius: 0;
+}
+
+.ag-theme-salt-light .ag-cell-inline-editing.editable-cell input[class^="ag-"],
+.ag-theme-salt-dark .ag-cell-inline-editing.editable-cell input[class^="ag-"],
+.ag-theme-salt-compact-light .ag-cell-inline-editing.editable-cell input[class^="ag-"],
+.ag-theme-salt-compact-dark .ag-cell-inline-editing.editable-cell input[class^="ag-"] {
+  padding: 0 var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .editable-cell,
+.ag-theme-salt-light .editable-numeric-cell,
+.ag-theme-salt-dark .editable-cell,
+.ag-theme-salt-dark .editable-numeric-cell,
+.ag-theme-salt-compact-light .editable-cell,
+.ag-theme-salt-compact-light .editable-numeric-cell,
+.ag-theme-salt-compact-dark .editable-cell,
+.ag-theme-salt-compact-dark .editable-numeric-cell {
+  outline: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-editable-borderColor);
+  outline-offset: -1px;
+}
+
+.ag-theme-salt-light .editable-cell.error-cell,
+.ag-theme-salt-dark .editable-cell.error-cell,
+.ag-theme-salt-compact-light .editable-cell.error-cell,
+.ag-theme-salt-compact-dark .editable-cell.error-cell {
+  /* Editable border color */
+  --salt-editable-borderColor: var(--salt-status-error-borderColor);
+  /* Focus ring color */
+  --salt-focused-outlineColor: var(--salt-status-error-borderColor);
+  /* Corner adornment */
+  --salt-editable-borderColor-hover: var(--salt-status-error-borderColor);
+}
+
+.ag-theme-salt-light .editable-cell.error-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .editable-cell.error-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .editable-cell.error-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .editable-cell.error-cell:not(.numeric-cell):not(.ag-cell-inline-editing) {
+  background: var(--salt-status-error-background);
+  /* Give room for status adornment */
+  padding-right: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+}
+
+.ag-theme-salt-light .editable-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .editable-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .editable-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .editable-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing) {
+  background: var(--salt-status-error-background);
+  /* Give room for status adornment */
+  padding-left: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+}
+
+.ag-theme-salt-light .editable-cell.error-cell:not(.ag-cell-inline-editing)::after,
+.ag-theme-salt-dark .editable-cell.error-cell:not(.ag-cell-inline-editing)::after,
+.ag-theme-salt-compact-light .editable-cell.error-cell:not(.ag-cell-inline-editing)::after,
+.ag-theme-salt-compact-dark .editable-cell.error-cell:not(.ag-cell-inline-editing)::after {
+  position: absolute;
+
+  /* Center vertically */
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: var(--salt-size-adornment);
+  height: var(--salt-size-adornment);
+
+  background-color: var(--salt-status-error-foreground-decorative);
+  content: "";
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6' %3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3 6C4.65685 6 6 4.65685 6 3C6 1.34315 4.65685 0 3 0C1.34315 0 0 1.34315 0 3C0 4.65685 1.34315 6 3 6Z' /%3E%3C/svg%3E")
+    no-repeat 50% 50%;
+}
+
+.ag-theme-salt-light .editable-cell.error-cell:not(.numeric-cell)::after,
+.ag-theme-salt-dark .editable-cell.error-cell:not(.numeric-cell)::after,
+.ag-theme-salt-compact-light .editable-cell.error-cell:not(.numeric-cell)::after,
+.ag-theme-salt-compact-dark .editable-cell.error-cell:not(.numeric-cell)::after {
+  right: var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .editable-cell.error-cell.numeric-cell::after,
+.ag-theme-salt-dark .editable-cell.error-cell.numeric-cell::after,
+.ag-theme-salt-compact-light .editable-cell.error-cell.numeric-cell::after,
+.ag-theme-salt-compact-dark .editable-cell.error-cell.numeric-cell::after {
+  left: var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .editable-cell.warning-cell,
+.ag-theme-salt-dark .editable-cell.warning-cell,
+.ag-theme-salt-compact-light .editable-cell.warning-cell,
+.ag-theme-salt-compact-dark .editable-cell.warning-cell {
+  /* Editable border color */
+  --salt-editable-borderColor: var(--salt-status-warning-borderColor);
+  /* Focus ring color */
+  --salt-focused-outlineColor: var(--salt-status-warning-borderColor);
+  /* Corner adornment */
+  --salt-editable-borderColor-hover: var(--salt-status-warning-borderColor);
+}
+
+.ag-theme-salt-light .editable-cell.warning-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .editable-cell.warning-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .editable-cell.warning-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .editable-cell.warning-cell:not(.numeric-cell):not(.ag-cell-inline-editing) {
+  background: var(--salt-status-warning-background);
+  /* Give room for status adornment */
+  padding-right: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+}
+
+.ag-theme-salt-light .editable-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .editable-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .editable-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .editable-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing) {
+  background: var(--salt-status-warning-background);
+  /* Give room for status adornment */
+  padding-left: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+}
+
+.ag-theme-salt-light .editable-cell.warning-cell:not(.ag-cell-inline-editing)::after,
+.ag-theme-salt-dark .editable-cell.warning-cell:not(.ag-cell-inline-editing)::after,
+.ag-theme-salt-compact-light .editable-cell.warning-cell:not(.ag-cell-inline-editing)::after,
+.ag-theme-salt-compact-dark .editable-cell.warning-cell:not(.ag-cell-inline-editing)::after {
+  position: absolute;
+
+  /* Center vertically */
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: var(--salt-size-adornment);
+  height: var(--salt-size-adornment);
+
+  background-color: var(--salt-status-warning-foreground-decorative);
+  content: "";
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6' %3E%3Cpath d='M0 6L3 0L6 6H0Z' /%3E%3C/svg%3E") no-repeat 50% 50%;
+}
+
+.ag-theme-salt-light .editable-cell.warning-cell:not(.numeric-cell)::after,
+.ag-theme-salt-dark .editable-cell.warning-cell:not(.numeric-cell)::after,
+.ag-theme-salt-compact-light .editable-cell.warning-cell:not(.numeric-cell)::after,
+.ag-theme-salt-compact-dark .editable-cell.warning-cell:not(.numeric-cell)::after {
+  right: var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .editable-cell.warning-cell.numeric-cell::after,
+.ag-theme-salt-dark .editable-cell.warning-cell.numeric-cell::after,
+.ag-theme-salt-compact-light .editable-cell.warning-cell.numeric-cell::after,
+.ag-theme-salt-compact-dark .editable-cell.warning-cell.numeric-cell::after {
+  left: var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .editable-cell.success-cell,
+.ag-theme-salt-dark .editable-cell.success-cell,
+.ag-theme-salt-compact-light .editable-cell.success-cell,
+.ag-theme-salt-compact-dark .editable-cell.success-cell {
+  /* Editable border color */
+  --salt-editable-borderColor: var(--salt-status-success-borderColor);
+  /* Focus ring color */
+  --salt-focused-outlineColor: var(--salt-status-success-borderColor);
+  /* Corner adornment */
+  --salt-editable-borderColor-hover: var(--salt-status-success-borderColor);
+}
+
+.ag-theme-salt-light .editable-cell.success-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .editable-cell.success-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .editable-cell.success-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .editable-cell.success-cell:not(.numeric-cell):not(.ag-cell-inline-editing) {
+  background: var(--salt-status-success-background);
+  /* Give room for status adornment */
+  padding-right: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+}
+
+.ag-theme-salt-light .editable-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .editable-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .editable-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .editable-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing) {
+  background: var(--salt-status-success-background);
+  /* Give room for status adornment */
+  padding-left: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+}
+
+.ag-theme-salt-light .editable-cell.success-cell:not(.ag-cell-inline-editing)::after,
+.ag-theme-salt-dark .editable-cell.success-cell:not(.ag-cell-inline-editing)::after,
+.ag-theme-salt-compact-light .editable-cell.success-cell:not(.ag-cell-inline-editing)::after,
+.ag-theme-salt-compact-dark .editable-cell.success-cell:not(.ag-cell-inline-editing)::after {
+  position: absolute;
+
+  /* Center vertically */
+  top: 50%;
+  transform: translateY(-50%);
+
+  width: var(--salt-size-adornment);
+  height: var(--salt-size-adornment);
+
+  background-color: var(--salt-status-success-foreground-decorative);
+  content: "";
+  mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.51878 8.36782L10.7368 1.1499L11.9742 2.38735L3.51877 10.8427L0.0299988 7.35389L1.26744 6.11646L3.51878 8.36782Z' /%3E%3C/svg%3E%0A")
+    no-repeat 50% 50%;
+}
+
+.ag-theme-salt-light .editable-cell.success-cell:not(.numeric-cell)::after,
+.ag-theme-salt-dark .editable-cell.success-cell:not(.numeric-cell)::after,
+.ag-theme-salt-compact-light .editable-cell.success-cell:not(.numeric-cell)::after,
+.ag-theme-salt-compact-dark .editable-cell.success-cell:not(.numeric-cell)::after {
+  right: var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .editable-cell.success-cell.numeric-cell::after,
+.ag-theme-salt-dark .editable-cell.success-cell.numeric-cell::after,
+.ag-theme-salt-compact-light .editable-cell.success-cell.numeric-cell::after,
+.ag-theme-salt-compact-dark .editable-cell.success-cell.numeric-cell::after {
+  left: var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .ag-cell.numeric-cell,
+.ag-theme-salt-light .editable-numeric-cell,
+.ag-theme-salt-dark .ag-cell.numeric-cell,
+.ag-theme-salt-dark .editable-numeric-cell,
+.ag-theme-salt-compact-light .ag-cell.numeric-cell,
+.ag-theme-salt-compact-light .editable-numeric-cell,
+.ag-theme-salt-compact-dark .ag-cell.numeric-cell,
+.ag-theme-salt-compact-dark .editable-numeric-cell {
+  text-align: right;
+}
+
+/* Special case when user finish editing and click out side of the grid. */
+.ag-theme-salt-light .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus),
+.ag-theme-salt-dark .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus),
+.ag-theme-salt-compact-light .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus),
+.ag-theme-salt-compact-dark .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus) {
+  text-align: right;
+}
+
+.ag-theme-salt-light .ag-cell-wrapper.ag-row-group,
+.ag-theme-salt-dark .ag-cell-wrapper.ag-row-group,
+.ag-theme-salt-compact-light .ag-cell-wrapper.ag-row-group,
+.ag-theme-salt-compact-dark .ag-cell-wrapper.ag-row-group {
+  align-items: center;
+}
+
+.ag-theme-salt-light .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+.ag-theme-salt-dark .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+.ag-theme-salt-compact-light .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+.ag-theme-salt-compact-dark .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+.ag-theme-salt-light .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
+.ag-theme-salt-dark .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
+.ag-theme-salt-compact-light .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
+.ag-theme-salt-compact-dark .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
+.ag-theme-salt-light .ag-ltr .ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
+.ag-theme-salt-dark .ag-ltr .ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
+.ag-theme-salt-compact-light .ag-ltr .ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
+.ag-theme-salt-compact-dark .ag-ltr .ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
+.ag-theme-salt-light .ag-ltr .ag-cell-range-single-cell,
+.ag-theme-salt-dark .ag-ltr .ag-cell-range-single-cell,
+.ag-theme-salt-compact-light .ag-ltr .ag-cell-range-single-cell,
+.ag-theme-salt-compact-dark .ag-ltr .ag-cell-range-single-cell,
+.ag-theme-salt-light .ag-ltr .ag-cell-range-single-cell.ag-cell-range-handle,
+.ag-theme-salt-dark .ag-ltr .ag-cell-range-single-cell.ag-cell-range-handle,
+.ag-theme-salt-compact-light .ag-ltr .ag-cell-range-single-cell.ag-cell-range-handle,
+.ag-theme-salt-compact-dark .ag-ltr .ag-cell-range-single-cell.ag-cell-range-handle {
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+  outline-offset: -2px;
+  border-color: transparent;
+}
+
+.ag-theme-salt-light .ag-cell.editable-cell.ag-cell-focus:focus::before,
+.ag-theme-salt-light .ag-cell.editable-numeric-cell.ag-cell-focus:focus::before,
+.ag-theme-salt-light .ag-cell.editable-cell.ag-cell-focus:focus-within::before,
+.ag-theme-salt-light .editable-cell.ag-cell-inline-editing::before,
+.ag-theme-salt-dark .ag-cell.editable-cell.ag-cell-focus:focus::before,
+.ag-theme-salt-dark .ag-cell.editable-numeric-cell.ag-cell-focus:focus::before,
+.ag-theme-salt-dark .ag-cell.editable-cell.ag-cell-focus:focus-within::before,
+.ag-theme-salt-dark .editable-cell.ag-cell-inline-editing::before,
+.ag-theme-salt-compact-light .ag-cell.editable-cell.ag-cell-focus:focus::before,
+.ag-theme-salt-compact-light .ag-cell.editable-numeric-cell.ag-cell-focus:focus::before,
+.ag-theme-salt-compact-light .ag-cell.editable-cell.ag-cell-focus:focus-within::before,
+.ag-theme-salt-compact-light .editable-cell.ag-cell-inline-editing::before,
+.ag-theme-salt-compact-dark .ag-cell.editable-cell.ag-cell-focus:focus::before,
+.ag-theme-salt-compact-dark .ag-cell.editable-numeric-cell.ag-cell-focus:focus::before,
+.ag-theme-salt-compact-dark .ag-cell.editable-cell.ag-cell-focus:focus-within::before,
+.ag-theme-salt-compact-dark .editable-cell.ag-cell-inline-editing::before {
+  border-bottom: calc(var(--salt-size-adornment) + 4px) solid transparent;
+  border-left: calc(var(--salt-size-adornment) + 4px) solid var(--salt-editable-borderColor-hover);
+  border-top: 0 solid transparent;
+  content: "";
+  left: 0;
+  position: absolute;
+  top: 0;
+  z-index: 2;
+}
+
+.ag-theme-salt-light .editable-numeric-cell input,
+.ag-theme-salt-light input[class^="ag-"][type="number"],
+.ag-theme-salt-dark .editable-numeric-cell input,
+.ag-theme-salt-dark input[class^="ag-"][type="number"],
+.ag-theme-salt-compact-light .editable-numeric-cell input,
+.ag-theme-salt-compact-light input[class^="ag-"][type="number"],
+.ag-theme-salt-compact-dark .editable-numeric-cell input,
+.ag-theme-salt-compact-dark input[class^="ag-"][type="number"] {
+  padding: 0 var(--salt-spacing-100);
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+}
+
+.ag-theme-salt-light .editable-cell input,
+.ag-theme-salt-light .editable-numeric-cell input,
+.ag-theme-salt-dark .editable-cell input,
+.ag-theme-salt-dark .editable-numeric-cell input,
+.ag-theme-salt-compact-light .editable-cell input,
+.ag-theme-salt-compact-light .editable-numeric-cell input,
+.ag-theme-salt-compact-dark .editable-cell input,
+.ag-theme-salt-compact-dark .editable-numeric-cell input {
+  border: none;
+  background-color: transparent;
+}
+
+/* Ag Large Text Cell Editor  */
+.ag-theme-salt-light .ag-large-text-input,
+.ag-theme-salt-dark .ag-large-text-input,
+.ag-theme-salt-compact-light .ag-large-text-input,
+.ag-theme-salt-compact-dark .ag-large-text-input {
+  padding: 0;
+}
+
+/* Ag Select Cell Editor - all should be scoped with `.editable-cell` so it's not impacting users not using our class */
+
+.ag-theme-salt-light .editable-cell .ag-picker-field-wrapper,
+.ag-theme-salt-dark .editable-cell .ag-picker-field-wrapper,
+.ag-theme-salt-compact-light .editable-cell .ag-picker-field-wrapper,
+.ag-theme-salt-compact-dark .editable-cell .ag-picker-field-wrapper {
+  /* Allow cell focus ring to come through */
+  background-color: transparent;
+  border: none;
+}
+
+.ag-theme-salt-light .ag-select .ag-picker-field-wrapper,
+.ag-theme-salt-dark .ag-select .ag-picker-field-wrapper,
+.ag-theme-salt-compact-light .ag-select .ag-picker-field-wrapper,
+.ag-theme-salt-compact-dark .ag-select .ag-picker-field-wrapper {
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-editable-borderColor);
+  border-radius: 0;
+}
+
+.ag-theme-salt-light .ag-ltr .editable-cell .ag-select .ag-picker-field-wrapper,
+.ag-theme-salt-light .ag-ltr .editable-cell .ag-rich-select .ag-picker-field-wrapper,
+.ag-theme-salt-dark .ag-ltr .editable-cell .ag-select .ag-picker-field-wrapper,
+.ag-theme-salt-dark .ag-ltr .editable-cell .ag-rich-select .ag-picker-field-wrapper,
+.ag-theme-salt-compact-light .ag-ltr .editable-cell .ag-select .ag-picker-field-wrapper,
+.ag-theme-salt-compact-light .ag-ltr .editable-cell .ag-rich-select .ag-picker-field-wrapper,
+.ag-theme-salt-compact-dark .ag-ltr .editable-cell .ag-select .ag-picker-field-wrapper,
+.ag-theme-salt-compact-dark .ag-ltr .editable-cell .ag-rich-select .ag-picker-field-wrapper {
+  padding: 0 var(--salt-spacing-100);
+  border-radius: 0;
+}
+
+.ag-theme-salt-light .ag-ltr .editable-cell .ag-select .ag-icon-small-down::before,
+.ag-theme-salt-light .ag-ltr .editable-cell .ag-rich-select .ag-icon-small-down::before,
+.ag-theme-salt-dark .ag-ltr .editable-cell .ag-select .ag-icon-small-down::before,
+.ag-theme-salt-dark .ag-ltr .editable-cell .ag-rich-select .ag-icon-small-down::before,
+.ag-theme-salt-compact-light .ag-ltr .editable-cell .ag-select .ag-icon-small-down::before,
+.ag-theme-salt-compact-light .ag-ltr .editable-cell .ag-rich-select .ag-icon-small-down::before,
+.ag-theme-salt-compact-dark .ag-ltr .editable-cell .ag-select .ag-icon-small-down::before,
+.ag-theme-salt-compact-dark .ag-ltr .editable-cell .ag-rich-select .ag-icon-small-down::before {
+  /* Change the icon to be aligned with Salt chevron instead of triangle */
+  /* We are not using different icons between collapse / expand, given only collapsed icon is available in ag salt icon font (.ag-picker-collapsed vs .ag-picker-expanded) */
+  content: var(--ag-icon-font-code-contracted);
+}
+
+.ag-theme-salt-light .ag-ltr .ag-select-list-item,
+.ag-theme-salt-light .ag-ltr .ag-rich-select-row,
+.ag-theme-salt-dark .ag-ltr .ag-select-list-item,
+.ag-theme-salt-dark .ag-ltr .ag-rich-select-row,
+.ag-theme-salt-compact-light .ag-ltr .ag-select-list-item,
+.ag-theme-salt-compact-light .ag-ltr .ag-rich-select-row,
+.ag-theme-salt-compact-dark .ag-ltr .ag-select-list-item,
+.ag-theme-salt-compact-dark .ag-ltr .ag-rich-select-row {
+  /* This can't be scoped to editable-cell given it's sitting within .ag-popup */
+  padding: 0 var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .ag-select-list,
+.ag-theme-salt-light .ag-rich-select-list,
+.ag-theme-salt-dark .ag-select-list,
+.ag-theme-salt-dark .ag-rich-select-list,
+.ag-theme-salt-compact-light .ag-select-list,
+.ag-theme-salt-compact-light .ag-rich-select-list,
+.ag-theme-salt-compact-dark .ag-select-list,
+.ag-theme-salt-compact-dark .ag-rich-select-list {
+  /* Match border to OptionList */
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
+}
+
+.ag-theme-salt-light .ag-select-list-item[aria-selected="true"],
+.ag-theme-salt-light .ag-rich-select-row-selected,
+.ag-theme-salt-dark .ag-select-list-item[aria-selected="true"],
+.ag-theme-salt-dark .ag-rich-select-row-selected,
+.ag-theme-salt-compact-light .ag-select-list-item[aria-selected="true"],
+.ag-theme-salt-compact-light .ag-rich-select-row-selected,
+.ag-theme-salt-compact-dark .ag-select-list-item[aria-selected="true"],
+.ag-theme-salt-compact-dark .ag-rich-select-row-selected {
+  /* Match selected row border to Option */
+  box-shadow:
+    inset 0 var(--salt-size-fixed-100) 0 var(--salt-selectable-borderColor-selected),
+    inset 0 calc(var(--salt-size-fixed-100) * -1) 0 var(--salt-selectable-borderColor-selected);
+}
+
+/* Range selection cross cells "fake" outlines */
+
+.ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after,
+.ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after,
+.ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after,
+.ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-top::after {
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  border-top: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
+
+.ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::after,
+.ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::after,
+.ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::after,
+.ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-right::after {
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  border-right: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
+
+.ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::after,
+.ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::after,
+.ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::after,
+.ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-bottom::after {
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  border-bottom: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
+
+.ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after,
+.ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after,
+.ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after,
+.ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell).ag-cell-range-left::after {
+  content: "";
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+  border-left: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}

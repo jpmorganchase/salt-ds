@@ -20,6 +20,7 @@ export interface OverlayContextValue {
   openState: boolean;
   floatingStyles: FloatingStyleProps;
   arrowProps: FloatingArrowProps;
+  hideArrow: boolean;
   context: FloatingContext;
   reference?: (node: ReferenceType | null) => void;
   floating?: (node: HTMLElement | null) => void;
@@ -29,6 +30,10 @@ export interface OverlayContextValue {
   getReferenceProps: (
     userProps?: HTMLProps<Element> | undefined,
   ) => Record<string, unknown>;
+  headerId?: string;
+  setHeaderId?: (id: string | undefined) => void;
+  descriptionId?: string;
+  setDescriptionId?: (id: string | undefined) => void;
 }
 
 export const OverlayContext = createContext<OverlayContextValue>(
@@ -42,6 +47,7 @@ export const OverlayContext = createContext<OverlayContextValue>(
     },
     context: {} as FloatingContext,
     arrowProps: {} as FloatingArrowProps,
+    hideArrow: false,
     reference: {} as FloatingReturn["reference"],
     floating: {} as FloatingReturn["floating"],
     getFloatingProps() {
@@ -50,6 +56,10 @@ export const OverlayContext = createContext<OverlayContextValue>(
     getReferenceProps() {
       return {} as Record<string, unknown>;
     },
+    headerId: undefined,
+    setHeaderId: () => {},
+    descriptionId: undefined,
+    setDescriptionId: () => {},
   },
 );
 

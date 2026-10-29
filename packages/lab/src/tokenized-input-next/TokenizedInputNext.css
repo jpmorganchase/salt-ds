@@ -19,6 +19,7 @@
   font-size: var(--salt-text-fontSize);
   height: 100%;
   line-height: var(--salt-text-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
   min-height: var(--salt-size-base);
   padding: 0 var(--salt-spacing-100);
   position: relative;
@@ -49,19 +50,19 @@
 /* Class applied if `variant="primary"` */
 .saltTokenizedInputNext-primary {
   --tokenizedInput-background: var(--salt-editable-primary-background);
-  --tokenizedInput-background-active: var(--salt-editable-primary-background-active);
-  --tokenizedInput-background-hover: var(--salt-editable-primary-background-hover);
+  --tokenizedInput-background-active: var(--salt-editable-primary-background);
+  --tokenizedInput-background-hover: var(--salt-editable-primary-background);
   --tokenizedInput-background-disabled: var(--salt-editable-primary-background-disabled);
-  --tokenizedInput-background-readonly: var(--salt-editable-primary-background-readonly);
+  --tokenizedInput-background-readonly: var(--salt-editable-background-readonly);
 }
 
 /* Class applied if `variant="secondary"` */
 .saltTokenizedInputNext-secondary {
   --tokenizedInput-background: var(--salt-editable-secondary-background);
-  --tokenizedInput-background-active: var(--salt-editable-secondary-background-active);
-  --tokenizedInput-background-hover: var(--salt-editable-secondary-background-active);
+  --tokenizedInput-background-active: var(--salt-editable-secondary-background);
+  --tokenizedInput-background-hover: var(--salt-editable-secondary-background);
   --tokenizedInput-background-disabled: var(--salt-editable-secondary-background-disabled);
-  --tokenizedInput-background-readonly: var(--salt-editable-secondary-background-readonly);
+  --tokenizedInput-background-readonly: var(--salt-editable-background-readonly);
 }
 
 /* Style applied to input if `validationState="error"` */
@@ -105,7 +106,7 @@
   flex-basis: 0;
   height: var(--salt-text-lineHeight);
   font: inherit;
-  letter-spacing: 0;
+  letter-spacing: var(--salt-text-letterSpacing);
   overflow: hidden;
   resize: none;
   padding: 0;
@@ -118,7 +119,7 @@
 
 /* Style applied to placeholder */
 .saltTokenizedInputNext-textarea::placeholder {
-  font-weight: var(--salt-text-fontWeight-small);
+  font-weight: var(--salt-text-fontWeight-lighter);
 }
 
 /* Reset in the  class */

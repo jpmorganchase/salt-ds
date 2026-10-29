@@ -1,0 +1,26 @@
+.panel.panel {
+  max-width: min(50ch, 100vw);
+}
+
+.content > div {
+  overflow: auto;
+  display: flex;
+}
+
+.fields {
+  flex-grow: 1;
+}
+
+.toggleGroup.toggleGroup {
+  box-sizing: border-box;
+  width: 100%;
+}
+
+.toggleGroup.toggleGroup button {
+  width: unset;
+  flex: 1;
+}
+
+.footer.footer {
+  justify-content: flex-start;
+}

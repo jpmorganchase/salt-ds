@@ -1,4 +1,4 @@
-import { FlexLayout, StackLayout } from "@salt-ds/core";
+import { FlexLayout, StackLayout, Text } from "@salt-ds/core";
 import {
   AddDocumentIcon,
   AddDocumentSolidIcon,
@@ -15,10 +15,12 @@ const formatIconName = (icon: string) => {
   return fullName.substring(0, fullName.lastIndexOf(" "));
 };
 
-const allIconNames = allIcons.map((iconComponent) => ({
-  name: formatIconName(iconComponent.displayName || " "),
-  icon: iconComponent,
-}));
+const allIconNames = Object.entries(allIcons).map(
+  ([iconName, iconComponent]) => ({
+    name: formatIconName(iconName),
+    icon: iconComponent,
+  }),
+);
 
 export default {
   title: "Icons/Icon",
@@ -99,7 +101,7 @@ export const CustomIconFullSVG: StoryFn<typeof Icon> = () => {
 export const AllIcons: StoryFn<typeof Icon> = () => {
   return (
     <FlexLayout wrap gap={1} style={{ paddingBlock: "1rem" }}>
-      {allIcons.map((iconComponent, i) => {
+      {Object.values(allIcons).map((iconComponent, i) => {
         return createElement(iconComponent, { key: i, size: 1 });
       })}
     </FlexLayout>
@@ -119,7 +121,7 @@ export const AllIconsWithSearch: StoryFn<typeof Icon> = () => {
       </FormField>
       <FlexLayout wrap gap={3} style={{ paddingBlock: "1rem" }}>
         {allIconNames
-          .filter(({ name, icon }) => new RegExp(inputText, "i").test(name))
+          .filter(({ name }) => new RegExp(inputText, "i").test(name))
           .map(({ name, icon }, i) => {
             return (
               <StackLayout
@@ -132,7 +134,7 @@ export const AllIconsWithSearch: StoryFn<typeof Icon> = () => {
                   key: i,
                   size: 2,
                 })}
-                <p style={{ margin: 0 }}>{name}</p>
+                <Text as="p">{name}</Text>
               </StackLayout>
             );
           })}

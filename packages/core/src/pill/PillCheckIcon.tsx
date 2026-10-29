@@ -2,6 +2,7 @@ import { CheckmarkIcon, CheckmarkSolidIcon } from "@salt-ds/icons";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
+import type { ReactElement } from "react";
 import { makePrefixer } from "../utils";
 import pillCheckIcon from "./PillCheckIcon.css";
 
@@ -19,7 +20,7 @@ export const PillCheckIcon = ({
   checked = false,
   disabled = false,
   active = false,
-}: PillCheckIconProps): JSX.Element => {
+}: PillCheckIconProps): ReactElement => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-pill-check-icon",

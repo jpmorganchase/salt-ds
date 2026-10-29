@@ -8,17 +8,21 @@ import {
   CarouselTabList,
 } from "@salt-ds/embla-carousel";
 import type { Meta, StoryFn } from "@storybook/react-vite";
+import type { FC } from "react";
 import "./carousel.stories.css";
 import {
   Display1,
   FlexLayout,
   H2,
   H3,
+  Link,
   StackLayout,
+  Tag,
   Text,
   useId,
 } from "@salt-ds/core";
 import type { CarouselProps } from "@salt-ds/embla-carousel";
+import ClassNames from "embla-carousel-class-names";
 import Fade from "embla-carousel-fade";
 import { sliderData } from "./exampleData";
 import { renderSlides } from "./renderSlides";
@@ -37,11 +41,10 @@ const CarouselCardExample: StoryFn<CarouselProps & { ariaVariant: string }> = ({
     <Carousel
       aria-labelledby={`${carouselId}-title`}
       className="carousel"
+      emblaPlugins={[ClassNames({ snapped: "carouselSlideIsSnapped" })]}
       {...args}
     >
-      <H2 id={`${carouselId}-title`} className="carouselHeading">
-        Carousel card example
-      </H2>
+      <H2 id={`${carouselId}-title`}>Carousel card example</H2>
       <StackLayout gap={1} direction="column-reverse">
         <FlexLayout gap={1} wrap={true} align={"center"}>
           <CarouselPreviousButton tabIndex={-1} />
@@ -59,7 +62,9 @@ const CarouselCardExample: StoryFn<CarouselProps & { ariaVariant: string }> = ({
   );
 };
 
-const CarouselNumberExample: StoryFn<CarouselProps> = (args) => {
+const CarouselNumberExample: StoryFn<CarouselProps> & FC<CarouselProps> = (
+  args: CarouselProps,
+) => {
   const cards = Array.from(Array(4).keys());
   const carouselId = useId();
   return (
@@ -82,11 +87,7 @@ const CarouselNumberExample: StoryFn<CarouselProps> = (args) => {
               key={tabId}
             >
               <div className="carouselNumber">
-                <Display1
-                  id={`${tabId}-title`}
-                  className="carouselHeading"
-                  aria-label={"Placeholder tab"}
-                >
+                <Display1 id={`${tabId}-title`} aria-label={"Placeholder tab"}>
                   {index + 1}
                 </Display1>
               </div>
@@ -122,9 +123,7 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
       emblaOptions={{ align: "center", slidesToScroll: 2 }}
       {...args}
     >
-      <H2 id={`${carouselId}-title`} className="carouselHeading">
-        Multiple slides carousel example
-      </H2>
+      <H2 id={`${carouselId}-title`}>Multiple slides carousel example</H2>
       <StackLayout gap={1} direction="column-reverse">
         <FlexLayout gap={1} wrap={true} align={"center"}>
           <CarouselPreviousButton aria-label="Previous slide group" />
@@ -159,12 +158,85 @@ export const MultiSlide: StoryFn<typeof Carousel> = (args) => {
   );
 };
 
+const customSlides = [
+  { category: 1, linkHref: "#custom-slide-1" },
+  { category: 2, linkHref: "#custom-slide-2" },
+  { category: 3, linkHref: "#custom-slide-3" },
+  { category: 4, linkHref: "#custom-slide-4" },
+  { category: 5, linkHref: "#custom-slide-5" },
+  { category: 6, linkHref: "#custom-slide-6" },
+] as const;
+
+export const CustomSlide: StoryFn<typeof Carousel> = (args) => {
+  const carouselId = useId();
+  return (
+    <Carousel
+      aria-labelledby={`${carouselId}-title`}
+      className="customContentCarousel"
+      emblaOptions={{ align: "start", slidesToScroll: "auto" }}
+      emblaPlugins={[ClassNames({ snapped: "carouselSlideIsSnapped" })]}
+      {...args}
+    >
+      <H2 id={`${carouselId}-title`}>
+        Carousel example with custom content slides
+      </H2>
+      <StackLayout gap={1} direction="column-reverse">
+        <FlexLayout gap={1} wrap={true} align={"center"}>
+          <CarouselPreviousButton aria-label="Previous custom content group" />
+          <CarouselNextButton aria-label="Next custom content group" />
+          <CarouselProgressLabel />
+        </FlexLayout>
+        <CarouselSlides>
+          {customSlides.map((slide, index) => {
+            const slideId = `${carouselId}-slide${index}`;
+            const slideNumber = index + 1;
+            return (
+              <CarouselCard
+                className="customContentSlide"
+                key={slideId}
+                aria-labelledby={`${slideId}-title`}
+                appearance="bordered"
+                header={
+                  <H3 id={`${slideId}-title`}>
+                    Custom content slide {slideNumber}
+                  </H3>
+                }
+                actions={
+                  <FlexLayout
+                    className="customContentActions"
+                    justify="space-between"
+                    align="center"
+                    gap={1}
+                  >
+                    <Tag category={slide.category}>Example</Tag>
+                    <Link
+                      href={slide.linkHref}
+                      aria-label={`Learn more about custom content slide ${slideNumber}`}
+                    >
+                      Learn more
+                    </Link>
+                  </FlexLayout>
+                }
+              >
+                <Text>
+                  Use a composed layout in a slide (e.g. text, status, actions).
+                  Keep content concise and accessible.
+                </Text>
+              </CarouselCard>
+            );
+          })}
+        </CarouselSlides>
+      </StackLayout>
+    </Carousel>
+  );
+};
+
 export const FadePlugin = CarouselCardExample.bind({});
 FadePlugin.args = {
   emblaOptions: {
     duration: 30,
   },
-  emblaPlugins: [Fade()],
+  emblaPlugins: [ClassNames({ snapped: "carouselSlideIsSnapped" }), Fade()],
 };
 
 export const FixedWidthSlide: StoryFn<CarouselProps> = (args) => (

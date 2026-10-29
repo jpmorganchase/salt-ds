@@ -18,8 +18,13 @@ Accent sentiment tokens are used to highlight key elements within an interface b
   background="secondary"
 />
 
-`--salt-sentiment-accent-background` \
-`--salt-sentiment-accent-borderColor`
+<TokenTableWithControls
+  contextLabel="Accent"
+  tokens={[
+    "--salt-sentiment-accent-background",
+    "--salt-sentiment-accent-borderColor",
+  ]}
+/>
 
 ## Positive
 
@@ -32,8 +37,13 @@ Positive sentiment tokens indicate information representing a positive statement
   background="secondary"
 />
 
-`--salt-sentiment-positive-foreground-decorative` \
-`--salt-sentiment-positive-foreground-informative`
+<TokenTableWithControls
+  contextLabel="Positive"
+  tokens={[
+    "--salt-sentiment-positive-foreground-decorative",
+    "--salt-sentiment-positive-foreground-informative",
+  ]}
+/>
 
 ## Negative
 
@@ -46,8 +56,13 @@ Negative sentiment tokens indicate information that represents a negative statem
   background="secondary"
 />
 
-`--salt-sentiment-negative-foreground-decorative` \
-`--salt-sentiment-negative-foreground-informative`
+<TokenTableWithControls
+  contextLabel="Negative"
+  tokens={[
+    "--salt-sentiment-negative-foreground-decorative",
+    "--salt-sentiment-negative-foreground-informative",
+  ]}
+/>
 
 ## Neutral tracks
 
@@ -60,7 +75,10 @@ Tracks are considered neutral as they represent progress, range, or completeness
   background="secondary"
 />
 
-`--salt-sentiment-neutral-track`
+<TokenTableWithControls
+  contextLabel="Neutral tracks"
+  tokens={["--salt-sentiment-neutral-track"]}
+/>
 
 ## Data visualization
 
@@ -75,9 +93,14 @@ For more information, refer to the color usage section in the [data visualizatio
   background="secondary"
 />
 
-`--salt-sentiment-caution-dataviz` \
-`--salt-sentiment-negative-dataviz` \
-`--salt-sentiment-positive-dataviz`
+<TokenTableWithControls
+  contextLabel="Data visualization"
+  tokens={[
+    "--salt-sentiment-caution-dataviz",
+    "--salt-sentiment-negative-dataviz",
+    "--salt-sentiment-positive-dataviz",
+  ]}
+/>
 
 ## Neutral information
 
@@ -90,4 +113,7 @@ The neutral dataviz token is used to style data points that are informational or
   background="secondary"
 />
 
-`--salt-sentiment-neutral-dataviz`
+<TokenTableWithControls
+  contextLabel="Neutral information"
+  tokens={["--salt-sentiment-neutral-dataviz"]}
+/>

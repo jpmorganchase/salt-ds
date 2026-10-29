@@ -17,6 +17,7 @@ import "@salt-ds/countries/saltCountries.css";
 import {
   type ChangeEvent,
   type CSSProperties,
+  type FC,
   type SyntheticEvent,
   useEffect,
   useState,
@@ -49,7 +50,9 @@ function getTemplateDefaultValue({
   return defaultSelected?.[0] ?? "";
 }
 
-const Template: StoryFn<ComboBoxProps> = (args) => {
+const Template: StoryFn<ComboBoxProps> & FC<ComboBoxProps> = (
+  args: ComboBoxProps,
+) => {
   const [value, setValue] = useState(getTemplateDefaultValue(args));
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -920,11 +923,21 @@ export const Bordered = () => {
   );
 };
 
-const hugeArray = Array.from({ length: 10000 }).map(
-  (_, index) => `Option ${index}`,
-);
+const createPerformanceItems = (size: number) =>
+  Array.from({ length: size }, (_, index) => `Option ${index}`);
 
-export const PerformanceTest: StoryFn<ComboBoxProps> = (args) => {
+const performanceItems = {
+  1000: createPerformanceItems(1_000),
+  10000: createPerformanceItems(10_000),
+};
+
+const ComboBoxPerformanceFixture = ({
+  args,
+  size,
+}: {
+  args: ComboBoxProps;
+  size: 1_000 | 10_000;
+}) => {
   const [value, setValue] = useState(getTemplateDefaultValue(args));
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -956,7 +969,7 @@ export const PerformanceTest: StoryFn<ComboBoxProps> = (args) => {
     }
   };
 
-  const filteredItems = hugeArray.filter((item) =>
+  const filteredItems = performanceItems[size].filter((item) =>
     item.toLowerCase().includes(value.trim().toLowerCase()),
   );
 
@@ -974,6 +987,14 @@ export const PerformanceTest: StoryFn<ComboBoxProps> = (args) => {
     </ComboBox>
   );
 };
+
+export const PerformanceTest: StoryFn<ComboBoxProps> = (args) => (
+  <ComboBoxPerformanceFixture args={args} size={10_000} />
+);
+
+export const PerformanceTestOneThousand: StoryFn<ComboBoxProps> = (args) => (
+  <ComboBoxPerformanceFixture args={args} size={1_000} />
+);
 
 const virtualizedItems = ["a", "b", "c", "d", "e", "f", "g"];
 

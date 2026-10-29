@@ -1,0 +1,249 @@
+/* BUTTON */
+.ag-theme-salt-light .ag-standard-button,
+.ag-theme-salt-dark .ag-standard-button,
+.ag-theme-salt-compact-light .ag-standard-button,
+.ag-theme-salt-compact-dark .ag-standard-button {
+  background: var(--salt-actionable-subtle-background);
+  border: 0;
+  color: var(--salt-actionable-subtle-foreground);
+  font-size: var(--salt-text-fontSize);
+  font-weight: 600;
+  height: var(--salt-size-base);
+  padding: 0 var(--salt-spacing-100);
+  text-transform: uppercase;
+}
+
+.ag-theme-salt-light .ag-standard-button:hover,
+.ag-theme-salt-dark .ag-standard-button:hover,
+.ag-theme-salt-compact-light .ag-standard-button:hover,
+.ag-theme-salt-compact-dark .ag-standard-button:hover {
+  background-color: var(--salt-actionable-subtle-background-hover);
+  color: var(--salt-actionable-subtle-foreground-hover);
+}
+
+.ag-theme-salt-light .ag-ltr .ag-filter-apply-panel-button,
+.ag-theme-salt-dark .ag-ltr .ag-filter-apply-panel-button,
+.ag-theme-salt-compact-light .ag-ltr .ag-filter-apply-panel-button,
+.ag-theme-salt-compact-dark .ag-ltr .ag-filter-apply-panel-button {
+  margin-left: var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
+.ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
+.ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
+.ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
+.ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"],
+.ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"],
+.ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"],
+.ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"] {
+  background: var(--salt-actionable-accented-bold-background);
+  color: var(--salt-actionable-accented-bold-foreground);
+}
+
+.ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
+.ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
+.ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
+.ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
+.ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover,
+.ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover,
+.ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover,
+.ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover {
+  background: var(--salt-actionable-accented-bold-background-hover);
+  color: var(--salt-actionable-accented-bold-foreground-hover);
+}
+
+.ag-theme-salt-light .ag-keyboard-focus .ag-header-cell:focus::after,
+.ag-theme-salt-dark .ag-keyboard-focus .ag-header-cell:focus::after,
+.ag-theme-salt-compact-light .ag-keyboard-focus .ag-header-cell:focus::after,
+.ag-theme-salt-compact-dark .ag-keyboard-focus .ag-header-cell:focus::after {
+  border: 0;
+}
+
+.ag-theme-salt-light button[class^="ag-"]:focus,
+.ag-theme-salt-dark button[class^="ag-"]:focus,
+.ag-theme-salt-compact-light button[class^="ag-"]:focus,
+.ag-theme-salt-compact-dark button[class^="ag-"]:focus,
+.ag-theme-salt-light input[class^="ag-"][type="button"]:focus,
+.ag-theme-salt-dark input[class^="ag-"][type="button"]:focus,
+.ag-theme-salt-compact-light input[class^="ag-"][type="button"]:focus,
+.ag-theme-salt-compact-dark input[class^="ag-"][type="button"]:focus {
+  box-shadow: none;
+  outline-style: var(--salt-focused-outlineStyle);
+  outline-width: var(--salt-focused-outlineWidth);
+  outline-color: var(--salt-focused-outlineColor);
+  outline-offset: var(--salt-focused-outlineOffset);
+}
+
+.ag-theme-salt-light .ag-menu .ag-filter-body-wrapper,
+.ag-theme-salt-dark .ag-menu .ag-filter-body-wrapper,
+.ag-theme-salt-compact-light .ag-menu .ag-filter-body-wrapper,
+.ag-theme-salt-compact-dark .ag-menu .ag-filter-body-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  margin-top: var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .ag-menu .ag-menu-column-select-wrapper,
+.ag-theme-salt-dark .ag-menu .ag-menu-column-select-wrapper,
+.ag-theme-salt-compact-light .ag-menu .ag-menu-column-select-wrapper,
+.ag-theme-salt-compact-dark .ag-menu .ag-menu-column-select-wrapper {
+  margin-top: var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .ag-simple-filter-body-wrapper > *,
+.ag-theme-salt-dark .ag-simple-filter-body-wrapper > *,
+.ag-theme-salt-compact-light .ag-simple-filter-body-wrapper > *,
+.ag-theme-salt-compact-dark .ag-simple-filter-body-wrapper > * {
+  margin-bottom: var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .ag-mini-filter,
+.ag-theme-salt-dark .ag-mini-filter,
+.ag-theme-salt-compact-light .ag-mini-filter,
+.ag-theme-salt-compact-dark .ag-mini-filter {
+  margin: 0;
+  padding-left: var(--salt-spacing-50);
+  padding-right: var(--salt-spacing-50);
+}
+
+.ag-theme-salt-light .ag-set-filter-item,
+.ag-theme-salt-dark .ag-set-filter-item,
+.ag-theme-salt-compact-light .ag-set-filter-item,
+.ag-theme-salt-compact-dark .ag-set-filter-item {
+  margin: 0;
+  padding-left: var(--salt-spacing-100);
+  padding-right: var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .ag-status-bar,
+.ag-theme-salt-dark .ag-status-bar,
+.ag-theme-salt-compact-light .ag-status-bar,
+.ag-theme-salt-compact-dark .ag-status-bar {
+  border: none;
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
+  color: var(--salt-content-secondary-foreground);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-label-fontWeight);
+  /* Center align text vertically, matching height */
+  line-height: var(--salt-size-base);
+  height: var(--salt-size-base);
+  padding: 0 var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .ag-status-name-value,
+.ag-theme-salt-dark .ag-status-name-value,
+.ag-theme-salt-compact-light .ag-status-name-value,
+.ag-theme-salt-compact-dark .ag-status-name-value {
+  padding: 0;
+  margin: 0 var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .ag-status-name-value-value,
+.ag-theme-salt-dark .ag-status-name-value-value,
+.ag-theme-salt-compact-light .ag-status-name-value-value,
+.ag-theme-salt-compact-dark .ag-status-name-value-value {
+  font-weight: var(--salt-text-fontWeight-bolder);
+  color: var(--salt-content-primary-foreground);
+}
+
+.ag-theme-salt-light .ag-paging-panel,
+.ag-theme-salt-dark .ag-paging-panel,
+.ag-theme-salt-compact-light .ag-paging-panel,
+.ag-theme-salt-compact-dark .ag-paging-panel {
+  border-color: var(--salt-separable-secondary-borderColor);
+}
+
+/*
+  [VERSION DIVERGENCE]: v32-v35 include .ag-floating-top and .ag-floating-bottom,
+  while v33-v35 also introduce viewport border painters driven by --ag-pinned-row-border.
+  That variable is disabled in ag-root-var.css so these higher-specificity outer borders
+  remain the single separators and retain v32 geometry. Both outer elements are removed in v36.
+*/
+.ag-theme-salt-light .ag-floating-top:not(.ag-invisible),
+.ag-theme-salt-dark .ag-floating-top:not(.ag-invisible),
+.ag-theme-salt-compact-light .ag-floating-top:not(.ag-invisible),
+.ag-theme-salt-compact-dark .ag-floating-top:not(.ag-invisible) {
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
+}
+
+.ag-theme-salt-light .ag-floating-bottom:not(.ag-invisible),
+.ag-theme-salt-dark .ag-floating-bottom:not(.ag-invisible),
+.ag-theme-salt-compact-light .ag-floating-bottom:not(.ag-invisible),
+.ag-theme-salt-compact-dark .ag-floating-bottom:not(.ag-invisible) {
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
+}
+
+/*
+  [VERSION DIVERGENCE]: From v36, keep AG Grid's pinned-bottom ::before at top: 0 as the
+  fallback painter for widths the cell containers do not cover (columns narrower than the
+  grid, full-width pinned rows). Recolor it to the Salt bold separator. Inert pre-v36.
+*/
+.ag-theme-salt-light .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before,
+.ag-theme-salt-dark .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before,
+.ag-theme-salt-compact-light .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before,
+.ag-theme-salt-compact-dark .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before {
+  border-top-color: var(--salt-container-bold-borderColor);
+}
+
+/*
+  [VERSION DIVERGENCE]: From v36, reserve the first pinned-bottom row's top pixel with
+  a transparent border so cells shrink to match v32's clipped-row look with no dead
+  strip. The container ::before is the sole bold separator painter, avoiding two bold
+  borders at fractional zoom. --ag-pinned-row-border is none, so the container is exactly
+  the row-height sum. .ag-row-pinned avoids sticky group and header rows. Inert pre-v36.
+*/
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned > .ag-grid-scrolling-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned > .ag-grid-pinned-right-cells {
+  border-bottom: none;
+}
+
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned.ag-row-first > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned.ag-row-first > .ag-grid-scrolling-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned.ag-row-first > .ag-grid-pinned-right-cells {
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+}
+
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned:not(.ag-row-first) > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned:not(.ag-row-first) > .ag-grid-scrolling-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-bottom-rows-container > .ag-row-pinned:not(.ag-row-first) > .ag-grid-pinned-right-cells {
+  border-top: var(--ag-row-border-style) var(--ag-row-border-color) var(--ag-row-border-width);
+}
+
+/*
+  [VERSION DIVERGENCE]: From v36, AG Grid drops the last body row's border when bottom-pinned
+  rows exist. Restore it so the v32 stack (outline / light / bold / outline) is intact.
+  Inert pre-v36.
+*/
+[class*="ag-theme-salt"] .ag-body-vertical-content-no-gap .ag-has-bottom-pinned-rows .ag-grid-scrolling-container .ag-row-last > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-body-vertical-content-no-gap .ag-has-bottom-pinned-rows .ag-grid-scrolling-container .ag-row-last > .ag-grid-scrolling-cells,
+[class*="ag-theme-salt"] .ag-body-vertical-content-no-gap .ag-has-bottom-pinned-rows .ag-grid-scrolling-container .ag-row-last > .ag-grid-pinned-right-cells {
+  border-bottom: var(--ag-row-border-style) var(--ag-row-border-color) var(--ag-row-border-width);
+}
+
+/*
+  [VERSION DIVERGENCE]: From v36, --ag-pinned-row-border is none so JS does not add
+  a pixel to pinned-top height. v32 painted .ag-floating-top with --ag-border-color. Inert pre-v36.
+*/
+[class*="ag-theme-salt"] .ag-grid-pinned-top-rows-container > .ag-row-pinned.ag-row-last > .ag-grid-pinned-left-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-top-rows-container > .ag-row-pinned.ag-row-last > .ag-grid-scrolling-cells,
+[class*="ag-theme-salt"] .ag-grid-pinned-top-rows-container > .ag-row-pinned.ag-row-last > .ag-grid-pinned-right-cells {
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
+}
+
+.ag-theme-salt-light .ag-column-drop-horizontal,
+.ag-theme-salt-dark .ag-column-drop-horizontal,
+.ag-theme-salt-compact-light .ag-column-drop-horizontal,
+.ag-theme-salt-compact-dark .ag-column-drop-horizontal {
+  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+}
+
+.ag-theme-salt-light .ag-column-drop-cell,
+.ag-theme-salt-dark .ag-column-drop-cell,
+.ag-theme-salt-compact-light .ag-column-drop-cell,
+.ag-theme-salt-compact-dark .ag-column-drop-cell {
+  border-radius: 0;
+}

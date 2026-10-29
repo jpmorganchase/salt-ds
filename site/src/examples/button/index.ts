@@ -7,4 +7,5 @@ export * from "./IconAndText";
 export * from "./IconOnly";
 export * from "./Loading";
 export * from "./Neutral";
+export * from "./OnSolid";
 export * from "./Sentiment";

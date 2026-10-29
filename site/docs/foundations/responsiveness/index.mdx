@@ -36,7 +36,7 @@ Salt supports two grid types to suit different layout needs: fluid grids adapt t
 
 **Fixed grid**: Fixed grids expand with the application window until reaching a maximum width. Beyond this point, the grid stays centered, with margins on either side, and the content width remains constant. A maximum grid width of 1280px is recommended for text-heavy applications to improve readability.
 
-Learn how to adjust your Salt grid in [this video tutorial](https://go/saltds/resources/tutorials/20250109-saltds-figma-layout-grids) (Internal users only).
+Learn how to adjust your Salt grid in [this video tutorial](https://go/saltds/marketplace/tutorials/20250109-saltds-figma-layout-grids) (Internal users only).
 
 <Diagram
   src="/img/foundations/layout-grid-varied-widths.png"
@@ -65,10 +65,37 @@ Learn more about [switching density](/salt/foundations/density#switching-density
 - Use the `--salt-layout-page-margin` token to set left and right margins.
 - Use the `--salt-layout-gap` token to set spacing between elements, for both horizontal and vertical gaps.
 
-| Token                       | High Density (px) | Medium Density (px) | Low Density (px) | Touch Density (px) | Mobile Density (px) |
-| --------------------------- | ----------------- | ------------------- | ---------------- | ------------------ | ------------------- |
-| `--salt-layout-page-margin` | 12                | 24                  | 36               | 48                 | 16                  |
-| `--salt-layout-gap`         | 12                | 24                  | 36               | 48                 | 16                  |
+| Token                       | High Density (px) | Medium Density (px) | Low Density (px) | Mobile Density (px) |
+| --------------------------- | ----------------- | ------------------- | ---------------- | ------------------- |
+| `--salt-layout-page-margin` | 12                | 24                  | 36               | 16                  |
+| `--salt-layout-gap`         | 12                | 24                  | 36               | 16                  |
+
+<Disclosure
+  id="mobile-density-interim-size-values"
+  summary={<>View Mobile Density (Interim) values</>}
+>
+
+Mobile Density (Interim) is currently available as a pre-release.
+
+| Token                       | Value (px) |
+| --------------------------- | ---------- |
+| `--salt-layout-page-margin` | 12         |
+| `--salt-layout-gap`         | 12         |
+
+</Disclosure>
+<Disclosure
+  id="touch-density-size-values"
+  summary={<>View deprecated Touch Density values</>}
+>
+
+Touch density has been deprecated and replaced by Mobile density. Touch is retained to support existing implementations only.
+
+| Token                       | Value (px) |
+| --------------------------- | ---------- |
+| `--salt-layout-page-margin` | 48         |
+| `--salt-layout-gap`         | 48         |
+
+</Disclosure>
 
 Below is a visual comparison showing how the `--salt-layout-page-margin` token differs between desktop and mobile densities, ensuring each page uses space optimally for different devices and screen sizes.
 

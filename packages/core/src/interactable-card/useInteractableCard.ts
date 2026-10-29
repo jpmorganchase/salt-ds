@@ -18,8 +18,7 @@ export interface CardHookResult<T extends Element> {
   active: boolean;
   cardProps: {
     "aria-disabled"?: boolean;
-    disabled?: boolean;
-    tabIndex: number;
+    tabIndex?: number;
     onBlur: (event: FocusEvent<T>) => void;
     onClick?: (event: MouseEvent<T>) => void;
     onKeyDown: (event: KeyboardEvent<T>) => void;
@@ -71,7 +70,7 @@ export const useInteractableCard = <T extends Element>({
   };
 
   const handleKeyDown = (event: KeyboardEvent<T>) => {
-    if (event.key === enter || event.key === space) {
+    if (!disabled && (event.key === enter || event.key === space)) {
       setkeyIsDown(event.key);
       event.preventDefault();
       setActive(true);
@@ -82,8 +81,7 @@ export const useInteractableCard = <T extends Element>({
 
   const cardProps = {
     "aria-disabled": disabled ? true : undefined,
-    disabled: disabled,
-    tabIndex: disabled ? -1 : 0,
+    tabIndex: disabled ? undefined : 0,
     onBlur: handleBlur,
     onClick: !disabled ? handleClick : undefined,
     onKeyDown: handleKeyDown,

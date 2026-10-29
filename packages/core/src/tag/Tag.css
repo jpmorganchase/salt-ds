@@ -9,6 +9,7 @@
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
   overflow: hidden;
   border-radius: var(--saltTag-borderRadius, var(--salt-palette-corner-strongest, 9999px));
   width: fit-content;

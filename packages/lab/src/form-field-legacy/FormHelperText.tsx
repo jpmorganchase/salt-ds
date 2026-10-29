@@ -31,7 +31,9 @@ export const FormHelperText = ({
       );
     }
     if (helperTextPlacement === "tooltip") {
-      console.warn("helperTextPlacement tooltip has not yet implemented");
+      if (process.env.NODE_ENV !== "production") {
+        console.warn("helperTextPlacement tooltip has not yet implemented");
+      }
       return null;
     }
     return null;

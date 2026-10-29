@@ -7,7 +7,7 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: calc(var(--salt-size-unit) * 0.25);
+  gap: calc(var(--salt-spacing-100) * 0.25);
 }
 
 .saltMetric-orientation-horizontal.saltMetric-size-small .saltMetricHeader {

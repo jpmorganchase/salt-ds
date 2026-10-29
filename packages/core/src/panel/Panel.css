@@ -21,6 +21,11 @@
   overflow: auto;
   padding: var(--saltPanel-padding, var(--salt-spacing-300));
   width: var(--saltPanel-width, 100%);
-  border-radius: var(--saltPanel-borderRadius, var(--salt-palette-corner, 0));
   box-sizing: border-box;
+}
+
+/* Styles applied when elevation="raised" */
+.saltPanel-raised {
+  border-radius: var(--saltPanel-borderRadius, var(--salt-palette-corner, 0));
+  box-shadow: var(--saltPanel-boxShadow, var(--salt-overlayable-shadow));
 }

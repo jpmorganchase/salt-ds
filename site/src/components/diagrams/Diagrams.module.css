@@ -17,7 +17,7 @@
 
 .imageBorder {
   --image-borderWidth: var(--salt-size-fixed-100);
-  border: var(--image-borderWidth) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor);
+  border: var(--image-borderWidth) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
   padding: calc(var(--salt-spacing-200) - var(--image-borderWidth));
 }
 
@@ -104,7 +104,7 @@
 }
 
 .caption {
-  font-style: var(--salt-typography-textDecoration-italic);
+  font-style: var(--salt-typography-fontStyle-italic);
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
   color: var(--salt-content-primary-foreground);

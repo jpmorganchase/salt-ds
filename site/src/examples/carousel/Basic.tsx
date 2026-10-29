@@ -15,9 +15,7 @@ export const Basic = (): ReactElement => {
   const slides = Array.from(Array(4).keys());
   return (
     <Carousel aria-label="default carousel example" className={styles.carousel}>
-      <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
-        Carousel example with title
-      </H2>
+      <H2 id={`${carouselId}-title`}>Carousel example with title</H2>
       <FlexLayout gap={1} wrap={true} align={"center"}>
         <CarouselPreviousButton />
         <CarouselNextButton />

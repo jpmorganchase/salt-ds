@@ -4,6 +4,7 @@
   font-family: var(--salt-text-fontFamily);
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
+  letter-spacing: var(--salt-text-letterSpacing);
 }
 
 /* Vars applied to root NavigationItem component */
@@ -25,7 +26,7 @@
 
 /* Vars applied to NavigationItem component when root */
 .saltNavigationItem-rootItem {
-  font-weight: var(--salt-text-fontWeight-strong);
+  font-weight: var(--salt-text-fontWeight-bolder);
 }
 
 /* Styles applied to NavigationItem icon */

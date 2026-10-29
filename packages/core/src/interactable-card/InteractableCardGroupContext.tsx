@@ -9,6 +9,11 @@ export interface InteractableCardGroupContextValue {
     event: SyntheticEvent<HTMLDivElement>,
     value: InteractableCardValue,
   ) => void;
+  registerCard?: (
+    value: InteractableCardValue,
+    element: HTMLElement,
+  ) => () => void;
+  hasEnabledSelection?: boolean;
   isSelected: (id: InteractableCardValue) => boolean;
   isFirstChild: (value: InteractableCardValue) => boolean;
   multiSelect?: boolean;

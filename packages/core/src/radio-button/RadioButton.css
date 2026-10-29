@@ -10,6 +10,7 @@
   line-height: var(--salt-text-lineHeight);
   font-family: var(--salt-text-fontFamily);
   font-weight: var(--salt-text-fontWeight);
+  letter-spacing: var(--salt-text-letterSpacing);
 
   --radioButton-icon-margin: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2);
 }

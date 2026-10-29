@@ -1,5 +1,17 @@
 # @salt-ds/date-adapters
 
+## 1.0.2
+
+### Patch Changes
+
+- 5b67cd5: Fixed the Day.js adapter to consistently use an injected Day.js factory for timezone resolution, UTC/timezone date creation, `today`, and `now`.
+
+## 1.0.1
+
+### Patch Changes
+
+- 2c459c3: Updated deprecated JSDocs for legacy props, theme aliases, icons, and the Moment date adapter to include deprecation versions and clearer migration guidance.
+
 ## 1.0.0
 
 ### Major Changes

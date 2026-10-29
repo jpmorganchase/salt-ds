@@ -1,7 +1,7 @@
 export const ActionFontValues = ["Open Sans", "Amplitude"] as const;
-/** @deprecated use `ActionFontValues` */
+/** @deprecated since 1.32.0. Use `ActionFontValues`. */
 export const UNSTABLE_ActionFontValues = ActionFontValues;
 
 export type ActionFont = (typeof ActionFontValues)[number];
-/** @deprecated use `ActionFont` */
+/** @deprecated since 1.32.0. Use `ActionFont`. */
 export type UNSTABLE_ActionFont = ActionFont;

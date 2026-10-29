@@ -70,10 +70,10 @@ import "dayjs/locale/es";
 import "dayjs/locale/zh-cn";
 import { es as dateFnsEs, zhCN as dateFnsZhCn } from "date-fns/locale";
 import "./date-picker.stories.css";
-import { withDateMock } from ".storybook/decorators/withDateMock";
 import type { Dayjs } from "dayjs";
 import type { DateTime } from "luxon";
 import type { Moment } from "moment/moment";
+import { withDateMock } from "~storybook-decorators/withDateMock";
 
 export default {
   title: "Date Components/Date Picker",
@@ -420,6 +420,7 @@ export const RangeControlled: StoryFn<DatePickerRangeProps> = ({
         </FlexItem>
         <FlexItem>
           <Button
+            aria-label={"set end date to today"}
             onClick={() =>
               setSelectedDate({
                 ...selectedDate,
@@ -432,7 +433,7 @@ export const RangeControlled: StoryFn<DatePickerRangeProps> = ({
         </FlexItem>
         <FlexItem>
           <Button
-            aria-label={"set end date to today"}
+            aria-label={"set end date to tomorrow"}
             onClick={() =>
               setSelectedDate({
                 ...selectedDate,
@@ -454,7 +455,7 @@ export const RangeControlled: StoryFn<DatePickerRangeProps> = ({
       >
         <FlexItem>
           <Button
-            aria-label={"set end date to tomorrow"}
+            aria-label={"reset both"}
             onClick={() =>
               setSelectedDate({
                 startDate: null,
@@ -467,7 +468,7 @@ export const RangeControlled: StoryFn<DatePickerRangeProps> = ({
         </FlexItem>
         <FlexItem>
           <Button
-            aria-label={"reset both"}
+            aria-label={"set start date to today and end date to tomorrow"}
             onClick={() =>
               setSelectedDate({
                 startDate: dateAdapter.today(),
@@ -1613,7 +1614,7 @@ export const RangeWithConfirmation: StoryFn<DatePickerRangeProps> = ({
   const [validationStatus, setValidationStatus] = useState<
     "error" | undefined
   >();
-  const savedValidationState = useRef<typeof validationStatus>();
+  const savedValidationState = useRef<typeof validationStatus>(undefined);
   const [selectedDate, setSelectedDate] = useState<DateRangeSelection | null>(
     defaultSelectedDate ?? null,
   );
@@ -2468,7 +2469,7 @@ export const CustomDayRendering: StoryFn<DatePickerSingleProps> = ({
         className={clsx([{ buttonWithDot: !status.outOfRange }, className])}
       >
         <span className={clsx({ dot: !status.outOfRange })}>
-          {dateAdapter.format(date, "D")}
+          {dateAdapter.format(date, "DD")}
         </span>
         {status.today ? <span className={"today"} /> : null}
       </button>

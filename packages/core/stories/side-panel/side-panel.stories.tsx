@@ -39,8 +39,8 @@ import {
   NotificationIcon,
   SearchIcon,
 } from "@salt-ds/icons";
-import type { Meta, StoryFn } from "@storybook/react-vite";
 import "@salt-ds/react-resizable-panels-theme/index.css";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import type React from "react";
 import {
   type ChangeEvent,
@@ -95,7 +95,7 @@ const ContentExample = ({ children }: { children?: ReactNode }) => (
             backgroundColor: "var(--salt-container-secondary-background)",
             borderRadius: "var(--salt-palette-corner-weak)",
             border:
-              "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-secondary-borderColor)",
+              "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -115,7 +115,7 @@ export const Default: StoryFn = () => {
           width: "100%",
           height: 300,
           border:
-            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
           borderRadius: "var(--salt-palette-corner-weak)",
         }}
         gap={0}
@@ -148,7 +148,7 @@ export const Left: StoryFn = () => {
           width: "100%",
           height: 300,
           border:
-            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
           borderRadius: "var(--salt-palette-corner-weak)",
         }}
         gap={0}
@@ -236,7 +236,7 @@ export const ManualTrigger: StoryFn = () => (
       height: 300,
       display: "flex",
       border:
-        "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+        "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
       borderRadius: "var(--salt-palette-corner-weak)",
       overflow: "hidden",
     }}
@@ -271,7 +271,7 @@ const VariantsContent = () => {
         width: "100%",
         height: 320,
         border:
-          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
         borderRadius: "var(--salt-palette-corner-weak)",
       }}
       gap={0}
@@ -674,7 +674,7 @@ const ScrollableContent = () => (
             backgroundColor: "var(--salt-container-secondary-background)",
             borderRadius: "var(--salt-palette-corner-weak)",
             border:
-              "var(--salt-size-fixed-100) dashed var(--salt-container-primary-borderColor)",
+              "var(--salt-size-fixed-100) dashed var(--salt-container-bold-borderColor)",
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
@@ -716,7 +716,7 @@ export const Scrollable: StoryFn = () => {
           width: "100%",
           height: 300,
           border:
-            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
           borderRadius: "var(--salt-palette-corner-weak)",
         }}
         gap={0}
@@ -820,7 +820,7 @@ export const Resizable: StoryFn = () => {
           width: "100%",
           height: 300,
           border:
-            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
           borderRadius: "var(--salt-palette-corner-weak)",
           overflow: "hidden",
         }}
@@ -859,25 +859,24 @@ export const Resizable: StoryFn = () => {
 };
 
 const Nav = () => (
-  <nav
+  <StackLayout
+    as="nav"
+    gap={1}
+    padding={2}
     style={{
-      display: "flex",
-      flexDirection: "column",
-      gap: "var(--salt-spacing-100)",
-      padding: "var(--salt-spacing-200)",
       borderRight:
-        "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+        "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
       backgroundColor: "var(--salt-container-secondary-background)",
       whiteSpace: "nowrap",
     }}
   >
-    <Text styleAs="label" style={{ fontWeight: "bold" }}>
+    <Text styleAs="label" fontWeight="bolder">
       Nav
     </Text>
     <Text>Item 1</Text>
     <Text>Item 2</Text>
     <Text>Item 3</Text>
-  </nav>
+  </StackLayout>
 );
 
 export const WithNav: StoryFn = () => {
@@ -895,7 +894,7 @@ const WithNavContent = () => {
         width: "100%",
         height: 300,
         border:
-          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+          "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
         borderRadius: "var(--salt-palette-corner-weak)",
       }}
       gap={0}

@@ -3,11 +3,10 @@ import { type ComponentType, createElement, forwardRef } from "react";
 const warnedKeys = new Set<string>();
 
 const warnOnce = (key: string, message: string) => {
-  if (process.env.NODE_ENV === "production") return;
-  if (warnedKeys.has(key)) return;
-  warnedKeys.add(key);
-  // eslint-disable-next-line no-console
-  console.warn(message);
+  if (process.env.NODE_ENV !== "production" && !warnedKeys.has(key)) {
+    warnedKeys.add(key);
+    console.warn(message);
+  }
 };
 
 /**
@@ -20,7 +19,7 @@ export function deprecatedComponent<P extends object>(
   deprecationKey: string,
   message: string,
 ) {
-  const Wrapped = forwardRef<unknown, P>((props, ref) => {
+  const Wrapped = forwardRef<unknown, P>(function Wrapped(props, ref) {
     warnOnce(deprecationKey, message);
     return createElement(Component, { ...props, ref } as P);
   });

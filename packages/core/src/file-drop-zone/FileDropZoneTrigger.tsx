@@ -3,7 +3,7 @@ import {
   type ComponentPropsWithoutRef,
   type FocusEvent,
   forwardRef,
-  type SyntheticEvent,
+  type MouseEvent,
   useRef,
 } from "react";
 import { Button, type ButtonProps } from "../button";
@@ -26,6 +26,10 @@ export interface FileDropZoneTriggerProps
    */
   multiple?: boolean;
   /**
+   * The name applied to the hidden input.
+   */
+  name?: string;
+  /**
    * Callback for input change event
    */
   onChange?: (event: ChangeEvent<HTMLInputElement>, files: File[]) => void;
@@ -46,7 +50,16 @@ export const FileDropZoneTrigger = forwardRef<
   HTMLButtonElement,
   FileDropZoneTriggerProps
 >(function FileDropZoneTrigger(
-  { accept, children, disabled, multiple = false, onChange, ...rest },
+  {
+    accept,
+    children,
+    disabled,
+    multiple = false,
+    name,
+    onClick,
+    onChange,
+    ...rest
+  },
   ref,
 ) {
   const buttonRef = useRef<HTMLButtonElement>(null);
@@ -60,17 +73,19 @@ export const FileDropZoneTrigger = forwardRef<
     buttonRef.current?.focus();
   };
 
-  const handleClick = (event: SyntheticEvent<HTMLButtonElement>) => {
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    onClick?.(event);
     event.stopPropagation();
     fileInputRef.current?.click();
   };
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     const files = Array.from((event.target as HTMLInputElement).files ?? []);
-    // Allow selecting the same file multiple times - #3591
-    // User would still be able to put back the value in onChange, if necessary
-    event.target.value = "";
     onChange?.(event, files);
+
+    // Reset after onChange so consumers can read the selected files first.
+    // Clearing the value allows selecting the same file again - #3591.
+    event.target.value = "";
   };
   return (
     <>
@@ -87,6 +102,7 @@ export const FileDropZoneTrigger = forwardRef<
         style={{ display: "none" }}
         disabled={disabled}
         multiple={multiple}
+        name={name}
         onChange={handleChange}
         onFocus={handleFocus}
         ref={fileInputRef}

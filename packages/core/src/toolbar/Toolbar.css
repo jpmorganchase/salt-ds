@@ -58,17 +58,17 @@
 
 .saltToolbar-primary {
   --toolbar-background: var(--salt-container-primary-background);
-  --toolbar-borderColor: var(--salt-container-primary-borderColor);
+  --toolbar-borderColor: var(--salt-container-bold-borderColor);
 }
 
 .saltToolbar-secondary {
   --toolbar-background: var(--salt-container-secondary-background);
-  --toolbar-borderColor: var(--salt-container-secondary-borderColor);
+  --toolbar-borderColor: var(--salt-container-bold-borderColor);
 }
 
 .saltToolbar-tertiary {
   --toolbar-background: var(--salt-container-tertiary-background);
-  --toolbar-borderColor: var(--salt-container-tertiary-borderColor);
+  --toolbar-borderColor: var(--salt-container-bold-borderColor);
 }
 
 .saltToolbar-bordered {

@@ -33,10 +33,6 @@
   border-radius: var(--salt-palette-corner, 0);
 }
 
-.carouselHeading {
-  margin: 0;
-}
-
 .carouselSlideIsSnapped {
   visibility: visible;
 }
@@ -51,7 +47,7 @@
 }
 
 .carouselNumber {
-  border: var(--salt-size-fixed-100) var(--salt-container-borderStyle) var(--salt-container-primary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
   border-radius: var(--salt-palette-corner, 0);
   display: flex;
   align-items: center;

@@ -123,8 +123,14 @@ function mergeA11yProps(
   };
 }
 
+function isEmptyReadOnlyValue(
+  value: InputLegacyProps["value"] | InputLegacyProps["defaultValue"],
+) {
+  return value == null || value === "";
+}
+
 export const InputLegacy = forwardRef<HTMLInputElement, InputLegacyProps>(
-  function Input(
+  function InputLegacy(
     {
       "aria-activedescendant": ariaActiveDescendant,
       "aria-expanded": ariaExpanded,
@@ -199,13 +205,21 @@ export const InputLegacy = forwardRef<HTMLInputElement, InputLegacyProps>(
       inputPropsProp,
       misplacedAriaProps,
     );
-    const isEmptyReadOnly = isReadOnly && !defaultValueProp && !valueProp;
-    const defaultValue = isEmptyReadOnly
+    const isValueEmptyReadOnly = isReadOnly && isEmptyReadOnlyValue(valueProp);
+    const isDefaultValueEmptyReadOnly =
+      isReadOnly && isEmptyReadOnlyValue(defaultValueProp);
+    const controlledValue =
+      valueProp === undefined
+        ? undefined
+        : isValueEmptyReadOnly
+          ? emptyReadOnlyMarker
+          : valueProp;
+    const defaultValue = isDefaultValueEmptyReadOnly
       ? emptyReadOnlyMarker
       : defaultValueProp;
 
     const [value, setValue] = useControlled({
-      controlled: valueProp,
+      controlled: controlledValue,
       default: defaultValue,
       name: "Input",
       state: "value",

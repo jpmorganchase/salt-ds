@@ -2,7 +2,7 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import type { ChangeEvent } from "react";
+import type { ChangeEvent, ReactElement } from "react";
 import { AlphaInput } from "./AlphaInputField";
 import type { Color } from "./Color";
 import swatchesCss from "./Swatches.css";
@@ -32,7 +32,7 @@ export const Swatches = ({
   displayColorName,
   placeholder,
   onDialogClosed,
-}: SwatchesTabProps): JSX.Element => {
+}: SwatchesTabProps): ReactElement => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-swatches",

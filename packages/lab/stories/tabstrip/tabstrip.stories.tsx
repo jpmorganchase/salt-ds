@@ -105,8 +105,6 @@ export const Default = () => {
       >
         <Text>{tabs[activeTabIndex]}</Text>
       </div>
-      <br />
-      <br />
     </SaltProvider>
   );
 };
@@ -124,8 +122,6 @@ export const Overflow = () => {
         />
         <TabPanel tabs={tabsAsStringsLong} activeTabIndex={selectedTab} />
       </div>
-      <br />
-      <br />
     </SaltProvider>
   );
 };
@@ -509,7 +505,7 @@ export const TabstripControlledAddAndDelete = () => {
   const handleCloseTab = (tabIndex: number) => {
     newTabCount.current += 1;
     // colours.splice(tabIndex, 1);
-    setTabs((state) => state.filter((tab, i) => i !== tabIndex));
+    setTabs((state) => state.filter((_tab, i) => i !== tabIndex));
     if (activeTabIndex > tabIndex) {
       setSelectedTabIndex(activeTabIndex - 1);
     }
@@ -658,7 +654,7 @@ export const TabstripCloseConfigured = () => {
     console.log(`deleteTab ${tabIndex}`);
     // remove the color as well, else they will appear on different tabs
     // colours.splice(tabIndex, 1);
-    setTabs((state) => state.filter((tab, i) => i !== tabIndex));
+    setTabs((state) => state.filter((_tab, i) => i !== tabIndex));
   };
 
   return (
@@ -693,7 +689,7 @@ export const TabstripCloseDeclarative = () => {
     console.log("handle delete in story");
     // remove the color as well, else they will appear on different tabs
     // colours.splice(tabIndex, 1);
-    setTabs((state) => state.filter((tab, i) => i !== tabIndex));
+    setTabs((state) => state.filter((_tab, i) => i !== tabIndex));
   };
 
   return (
@@ -729,7 +725,7 @@ export const TabstripCloseWithConfirmationDialog = () => {
   const handleDeleteTab = (tabIndex: number) => {
     // remove the color as well, else they will appear on different tabs
     // colours.splice(tabIndex, 1);
-    setTabs((state) => state.filter((tab, i) => i !== tabIndex));
+    setTabs((state) => state.filter((_tab, i) => i !== tabIndex));
   };
 
   return (

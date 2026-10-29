@@ -10,23 +10,13 @@ data:
 
 ## Default
 
-By default, a link will only navigate the user within the same tab, replacing the page where the user followed the link.
+Use the default link for navigation within the current tab.
 
 <LivePreview componentName="link" exampleName="Default" />
 
 ## Open in a new tab
 
-Use `target=”_blank”` to open the target page in a new tab. A ‘tear-out’ icon that communicates this to the user will display next to the link.
-
-Use the `IconComponent` prop to customize the icon. You can either provide an alternative icon, or the icon can be disabled by using `IconComponent={null}`. We only recommend disabling the icon when wrapping another component in a link, never for text-based links. This is because the icon helps the user identify when a link will take them to a new tab.
-
-It is generally considered best practice to almost never open links in new tabs. Opening a link in a new tab is not expected default behavior for web browsers. It makes it harder to return to the previous page, especially for users of screen readers.
-
-There are a few cases where it’s recommended, like when the link is in the middle of a form or multi-step process. This allows users to complete the action without losing their place on the original page.
-
-### Security
-
-When linking to third party content, we recommended setting `rel=”noopener”` or `rel=”noreferrer”`. Although this is default behavior in newer browsers, explicitly specifying this helps protect users of legacy browsers. For more information, read “[Links to cross-origin destinations are unsafe](https://web.dev/external-anchors-use-rel-noopener/)”.
+Use `target="_blank"` with `rel="noopener"` or `rel="noreferrer"` to open a link in a new tab. See [usage](./usage) for when to choose this behavior and [accessibility](./accessibility) for how the new-tab cue is announced.
 
 <LivePreview componentName="link" exampleName="OpenInANewTab" />
 
@@ -34,7 +24,7 @@ When linking to third party content, we recommended setting `rel=”noopener”`
 
 To help create a visual hierarchy using a link, use the `color` prop. The default color is `primary`.
 
-When `color` is set to `"inherit"` Link's hover, active and focus colors will also be inherited.
+Set `color="inherit"` to inherit hover, active, and focus colors from the parent.
 
 <LivePreview componentName="link" exampleName="Color" />
 
@@ -46,31 +36,15 @@ Links change color after a user clicks on them. This tells the user which links 
 
 ## Underline
 
-By default, links are underlined apart from hover state. If you need a more subtle effect, set `underline="never"`.
+Use the `underline` prop to compare the default underline with `underline="never"`.
 
 <LivePreview componentName="link" exampleName="Underline" />
 
-## Render prop - element
+## Routing libraries
 
-Using the `render` prop, you can customize the element rendered by the Link. Props defined on the JSX element will be merged with props from the Link.
+Use the `render` prop to adapt `Link` to a routing library. This example renders a React Router link and maps `Link`’s `href` to React Router’s `to` prop.
 
-<LivePreview
-  componentName="link"
-  exampleName="RenderElement"
-  displayName="Render prop - element"
-/>
-
-## Render prop - callback
-
-The `render` prop can also accept a function. This approach allows more control over how props are merged, allowing for more precise customization of the component's behavior.
-
-When a function is passed to the `render` prop, it's your responsibility to merge props within the function itself.
-
-<LivePreview
-  componentName="link"
-  exampleName="RenderProp"
-  displayName="Render prop - callback"
-/>
+<LivePreview componentName="link" exampleName="RoutingLibraries" />
 
 ## Variant
 

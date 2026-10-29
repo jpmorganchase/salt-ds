@@ -4,11 +4,19 @@ import styles from "./index.module.css";
 
 export const Variant = (): ReactElement => (
   <StackLayout align="start">
-    <Link href="#" variant="primary" className={styles.linkExample}>
-      Primary Link variant
+    <Link
+      href="/salt/components/button"
+      variant="primary"
+      className={styles.linkExample}
+    >
+      View button documentation
     </Link>
-    <Link href="#" variant="secondary" className={styles.linkExample}>
-      Secondary Link variant
+    <Link
+      href="/salt/components/badge"
+      variant="secondary"
+      className={styles.linkExample}
+    >
+      View badge documentation
     </Link>
   </StackLayout>
 );

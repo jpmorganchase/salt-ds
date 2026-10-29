@@ -18,7 +18,10 @@ export interface DropdownEditorParams extends ICellEditorParams {
   dropdownProps?: Partial<DropdownProps<string>>;
 }
 
-export const DropdownEditor = forwardRef((props: DropdownEditorParams, ref) => {
+export const DropdownEditor = forwardRef(function DropdownEditor(
+  props: DropdownEditorParams,
+  ref,
+) {
   const { value: initialValue, source = [], dropdownProps } = props;
   const [value, setValue] = useState(initialValue);
 

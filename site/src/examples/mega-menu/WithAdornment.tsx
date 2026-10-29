@@ -1,5 +1,5 @@
-import { Badge, NavigationItem, StackLayout, Tag } from "@salt-ds/core";
 import {
+  Badge,
   MegaMenu,
   MegaMenuContent,
   MegaMenuGroup,
@@ -9,7 +9,11 @@ import {
   MegaMenuListItem,
   MegaMenuPanel,
   MegaMenuTrigger,
-} from "@salt-ds/lab";
+  NavigationItem,
+  StackLayout,
+  Tag,
+} from "@salt-ds/core";
+
 import { type ReactElement, useState } from "react";
 import { Link } from "react-router";
 import styles from "./index.module.css";

@@ -92,17 +92,6 @@ export const HelperText: StoryFn<typeof FormField> = (props) => {
   );
 };
 
-export const HelperTextAsTooltip: StoryFn<typeof FormField> = (props) => {
-  return (
-    <FormField {...props}>
-      <FormLabel>Form Field label</FormLabel>
-      <Tooltip content="Helper text">
-        <Input defaultValue="Value" />
-      </Tooltip>
-    </FormField>
-  );
-};
-
 export const Label: StoryFn<typeof FormField> = (props) => {
   return (
     <FlowLayout style={{ width: "366px" }}>

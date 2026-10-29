@@ -85,7 +85,7 @@ export const clampRange = (
 };
 
 export const getClickedPosition = (
-  sliderRef: RefObject<HTMLDivElement>,
+  sliderRef: RefObject<HTMLDivElement | null>,
   clientX: number,
   max: number,
   min: number,

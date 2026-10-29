@@ -37,7 +37,7 @@ export const isGroupNode = (item: unknown): boolean =>
   sourceItemHasProp(item, "childNodes");
 
 const childItemHasProp = (item: ReactElement, propertyName: string) => {
-  return item && Object.hasOwn(item.props, propertyName);
+  return item && Object.hasOwn(item.props as object, propertyName);
 };
 
 export const isDisabled = (item: unknown): boolean => {
@@ -139,6 +139,9 @@ const mapReactElementChildren = (
 };
 
 type ListItemElementProps = {
+  children?: ReactNode;
+  label?: string;
+  title?: string;
   "data-id"?: string;
   disabled?: boolean;
   id?: string;
@@ -186,20 +189,21 @@ export const childItems = (
 ): CollectionItem<ReactElement>[] | undefined => {
   if (children) {
     return mapReactElementChildren(children, (child) => {
+      const element = child as ReactElement<ListItemElementProps>;
       const {
         "data-id": dataId,
         disabled,
         id = dataId,
         "data-expanded": dataExpanded,
         expanded = dataExpanded,
-      } = (child as ReactElement<ListItemElementProps>).props;
+      } = element.props;
       return {
         childNodes: getChildNodes(child),
         disabled,
         expanded,
         header: childIsHeader(child),
         id,
-        label: getChildLabel(child),
+        label: getChildLabel(element),
         selectable: childIsSelectable(child),
         value: child,
       } as CollectionItem<ReactElement>;

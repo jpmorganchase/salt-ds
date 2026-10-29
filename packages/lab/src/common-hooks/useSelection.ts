@@ -247,10 +247,9 @@ export const useSelection = <
     (evt: MouseEvent) => {
       // Resolve the clicked item from the event target rather than relying on
       // `highlightedIdx`. The highlighted index is updated asynchronously from
-      // a `mousemove` handler on the list; in fast/synthetic interactions
-      // (notably Cypress `realClick`) the click can fire before React has
-      // re-rendered with the updated highlight, which previously caused the
-      // click to be silently ignored (root cause of flaky selection tests).
+      // a `mousemove` handler on the list; in fast or synthetic interactions
+      // the click can fire before React has re-rendered with the updated
+      // highlight, which previously caused the click to be silently ignored.
       const targetIdx = closestListItemIndex(evt.target as HTMLElement);
       const idx = targetIdx >= 0 ? targetIdx : highlightedIdx;
       const item = indexPositions[idx];

@@ -1,0 +1,19 @@
+/*
+ * Salt CSS baseline
+ *
+ * An optional, deliberately narrow reset for applications using Salt.
+ * Import it before the Salt theme and component styles. Salt components remain
+ * self-contained and do not depend on this file.
+ */
+
+/* Browsers put margins on these tags - reset for Salt typography and body */
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin: 0;
+}

@@ -1,9 +1,0 @@
-.saltGridDefaultCellValue {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  padding: var(--grid-cell-padding);
-}
-
-.saltGridDefaultCellValue-alignRight {
-  text-align: right;
-}

@@ -7,14 +7,18 @@ import {
   type ForwardedRef,
   forwardRef,
   type KeyboardEvent,
+  type ReactElement,
   type ReactNode,
   type Ref,
   useRef,
 } from "react";
 import {
-  ListControlContext,
-  type OptionValue,
-} from "../list-control/ListControlContext";
+  getListControlNavigationTarget,
+  isListControlNavigationKey,
+  isModifiedListControlNavigationKey,
+  type OptionAndElement,
+} from "../list-control/ListControlNavigationKeys";
+import { ListControlProvider } from "../list-control/ListControlProvider";
 import {
   defaultValueToString,
   type ListControlProps,
@@ -102,7 +106,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
   } = listControl;
 
   const typeaheadString = useRef("");
-  const typeaheadTimeout = useRef<number | undefined>();
+  const typeaheadTimeout = useRef<number | undefined>(undefined);
 
   const handleTypeahead = (event: KeyboardEvent<HTMLDivElement>) => {
     if (typeaheadTimeout.current) {
@@ -113,11 +117,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
       typeaheadString.current = "";
     }, 500);
 
-    let newOption = getOptionFromSearch(typeaheadString.current, activeState);
-
-    if (!newOption) {
-      newOption = getOptionFromSearch(typeaheadString.current);
-    }
+    const newOption = getOptionFromSearch(typeaheadString.current, activeState);
 
     if (newOption) {
       setActive(newOption);
@@ -127,6 +127,10 @@ export const ListBox = forwardRef(function ListBox<Item>(
 
   const handleKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     onKeyDown?.(event);
+
+    if (isModifiedListControlNavigationKey(event)) {
+      return;
+    }
 
     if (
       event.key.length === 1 &&
@@ -145,32 +149,27 @@ export const ListBox = forwardRef(function ListBox<Item>(
       return;
     }
 
-    let newActive:
-      | { data: OptionValue<Item>; element: HTMLElement }
-      | undefined;
+    const isNavigationKey = isListControlNavigationKey(event.key);
+    if (isNavigationKey) {
+      event.preventDefault();
+    }
+
+    const newActive: OptionAndElement<Item> | undefined = isNavigationKey
+      ? getListControlNavigationTarget(event.key, activeOption, {
+          getFirstOption,
+          getLastOption,
+          getOptionAfter,
+          getOptionBefore,
+          getOptionPageAbove,
+          getOptionPageBelow,
+        })
+      : undefined;
+
     switch (event.key) {
-      case "ArrowDown":
-        newActive = getOptionAfter(activeOption) ?? getLastOption();
-        break;
-      case "ArrowUp":
-        newActive = getOptionBefore(activeOption) ?? getFirstOption();
-        break;
-      case "Home":
-        newActive = getFirstOption();
-        break;
-      case "End":
-        newActive = getLastOption();
-        break;
-      case "PageUp":
-        newActive = getOptionPageAbove(activeOption);
-        break;
-      case "PageDown":
-        newActive = getOptionPageBelow(activeOption);
-        break;
       case "Enter":
       case " ":
         if (
-          Boolean(activeState?.disabled) ||
+          activeState?.disabled ||
           (typeaheadString.current.trim().length > 0 && event.key === " ")
         ) {
           event.preventDefault();
@@ -188,7 +187,6 @@ export const ListBox = forwardRef(function ListBox<Item>(
     }
 
     if (newActive && newActive.data.id !== activeState?.id) {
-      event.preventDefault();
       setActive(newActive.data);
       setFocusVisibleState(true);
     }
@@ -249,7 +247,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
   const handleRef = useForkRef(setListRef, ref);
 
   return (
-    <ListControlContext.Provider value={listControl}>
+    <ListControlProvider value={listControl}>
       <div
         className={clsx(
           withBaseName(),
@@ -271,8 +269,8 @@ export const ListBox = forwardRef(function ListBox<Item>(
       >
         {children}
       </div>
-    </ListControlContext.Provider>
+    </ListControlProvider>
   );
 }) as <Item = string>(
   props: ListBoxProps<Item> & { ref?: Ref<HTMLDivElement> },
-) => JSX.Element;
+) => ReactElement;

@@ -7,7 +7,10 @@
     "moduleResolution": "Bundler",
     "strict": true,
     "skipLibCheck": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "paths": {
+      "@salt-ds/date-adapters": ["./src/index.ts"]
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["**/__tests__/*"]

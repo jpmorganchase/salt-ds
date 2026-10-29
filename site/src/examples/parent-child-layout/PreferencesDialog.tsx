@@ -139,19 +139,19 @@ export const PreferencesDialog = () => {
   const items = [
     {
       label: "Display",
-      icon: <LaptopIcon />,
+      icon: <LaptopIcon aria-hidden />,
       title: "Display settings",
       view: displayView,
     },
     {
       label: "Account",
-      icon: <UserIcon />,
+      icon: <UserIcon aria-hidden />,
       title: "Account settings",
       view: accountView,
     },
     {
       label: "Export",
-      icon: <ExportIcon />,
+      icon: <ExportIcon aria-hidden />,
       title: "Export settings",
       view: exportView,
     },
@@ -195,7 +195,7 @@ export const PreferencesDialog = () => {
   );
 
   const child = (
-    <FlexLayout direction="column" className={styles.childView}>
+    <FlexLayout direction="column" gap={0} className={styles.childView}>
       <FlexLayout gap={1}>
         {visibleView === "child" && collapsed && (
           <Button
@@ -203,10 +203,12 @@ export const PreferencesDialog = () => {
             appearance="transparent"
             aria-label="Back"
           >
-            <ChevronLeftIcon />
+            <ChevronLeftIcon aria-hidden />
           </Button>
         )}
-        <H2>{active.label}</H2>
+        <H2 style={{ marginBottom: "var(--salt-spacing-200)" }}>
+          {active.label}
+        </H2>
       </FlexLayout>
       {active.view?.()}
     </FlexLayout>

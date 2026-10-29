@@ -39,6 +39,35 @@ const config: StorybookConfig = {
 
     const customConfig: UserConfig = {
       plugins: [cssInline()],
+      resolve: {
+        alias: {
+          "@salt-ds/ag-grid-theme/salt-ag-theme.css": join(
+            getAbsolutePath("@salt-ds/ag-grid-theme"),
+            "src/salt-ag-theme.css",
+          ),
+          "@salt-ds/react-resizable-panels-theme/index.css": join(
+            getAbsolutePath("@salt-ds/react-resizable-panels-theme"),
+            "src/index.css",
+          ),
+          "@salt-ds/theme/css/baseline.css": join(
+            getAbsolutePath("@salt-ds/theme"),
+            "src/css/baseline.css",
+          ),
+          "@salt-ds/theme/css/experimental/salt-interim.css": join(
+            getAbsolutePath("@salt-ds/theme"),
+            "src/css/experimental/salt-interim.css",
+          ),
+          "@salt-ds/theme/css/theme-next.css": join(
+            getAbsolutePath("@salt-ds/theme"),
+            "src/css/theme-next.css",
+          ),
+          "@salt-ds/theme/index.css": join(
+            getAbsolutePath("@salt-ds/theme"),
+            "src/index.css",
+          ),
+        },
+        tsconfigPaths: true,
+      },
       server: {
         watch: {
           ignored: ["**/coverage/**"],

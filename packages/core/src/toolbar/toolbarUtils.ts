@@ -112,7 +112,10 @@ export function flattenToolbarChildren(children: ReactNode): ToolbarChild[] {
       return;
     }
 
-    if (isValidElement(child) && child.type === Fragment) {
+    if (
+      isValidElement<{ children?: ReactNode }>(child) &&
+      child.type === Fragment
+    ) {
       flattened.push(...flattenToolbarChildren(child.props.children));
       return;
     }

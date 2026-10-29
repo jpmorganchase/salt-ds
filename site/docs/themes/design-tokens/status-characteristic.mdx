@@ -18,10 +18,15 @@ Error tokens are used to indicate a problem or failure that requires user attent
   background="secondary"
 />
 
-`--salt-status-error-background` \
-`--salt-status-error-borderColor` \
-`--salt-status-error-foreground-decorative` \
-`--salt-status-error-foreground-informative`
+<TokenTableWithControls
+  contextLabel="Error status"
+  tokens={[
+    "--salt-status-error-background",
+    "--salt-status-error-borderColor",
+    "--salt-status-error-foreground-decorative",
+    "--salt-status-error-foreground-informative",
+  ]}
+/>
 
 ## Info status
 
@@ -34,9 +39,14 @@ Info tokens are used to communicate helpful or contextual information to users. 
   background="secondary"
 />
 
-`--salt-status-info-background` \
-`--salt-status-info-borderColor` \
-`--salt-status-info-foreground-decorative`
+<TokenTableWithControls
+  contextLabel="Info status"
+  tokens={[
+    "--salt-status-info-background",
+    "--salt-status-info-borderColor",
+    "--salt-status-info-foreground-decorative",
+  ]}
+/>
 
 ## Success status
 
@@ -49,10 +59,15 @@ Success tokens are used to indicate that an action has been completed successful
   background="secondary"
 />
 
-`--salt-status-success-background` \
-`--salt-status-success-borderColor` \
-`--salt-status-success-foreground-decorative` \
-`--salt-status-success-foreground-informative`
+<TokenTableWithControls
+  contextLabel="Success status"
+  tokens={[
+    "--salt-status-success-background",
+    "--salt-status-success-borderColor",
+    "--salt-status-success-foreground-decorative",
+    "--salt-status-success-foreground-informative",
+  ]}
+/>
 
 ## Warning status
 
@@ -65,10 +80,15 @@ Warning tokens are used to highlight situations that may require caution or coul
   background="secondary"
 />
 
-`--salt-status-warning-background` \
-`--salt-status-warning-borderColor` \
-`--salt-status-warning-foreground-decorative` \
-`--salt-status-warning-foreground-informative`
+<TokenTableWithControls
+  contextLabel="Warning status"
+  tokens={[
+    "--salt-status-warning-background",
+    "--salt-status-warning-borderColor",
+    "--salt-status-warning-foreground-decorative",
+    "--salt-status-warning-foreground-informative",
+  ]}
+/>
 
 ## Status emphasis
 
@@ -81,5 +101,10 @@ To make a status stand out, you can apply greater emphasis by using bold tokens.
   background="secondary"
 />
 
-`--salt-content-bold-foreground` \
-`--salt-status-error-bold-background`
+<TokenTableWithControls
+  contextLabel="Status emphasis"
+  tokens={[
+    "--salt-content-bold-foreground",
+    "--salt-status-error-bold-background",
+  ]}
+/>

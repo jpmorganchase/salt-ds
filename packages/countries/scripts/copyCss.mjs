@@ -4,8 +4,7 @@ import { fileURLToPath } from "node:url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const srcFolder = path.join(__dirname, "../src");
-const buildFolder = path.join(__dirname, "../../../dist/salt-ds-countries");
-const cssFolder = path.join(buildFolder, "/css");
+const cssFolder = path.join(__dirname, "../css");
 const storybookFolder = path.join(__dirname, "../../../docs/css");
 
 try {

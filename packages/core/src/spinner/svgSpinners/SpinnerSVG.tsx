@@ -1,59 +1,32 @@
-import type { SVGAttributes } from "react";
-import type { Density } from "../../theme";
+import type { ComponentPropsWithoutRef } from "react";
 import { makePrefixer } from "../../utils";
-import type { SpinnerSVGSize } from "../Spinner";
 
 const withBaseName = makePrefixer("saltSpinner");
 
-interface SpinnerProps {
-  id?: string;
-  rest?: Omit<SVGAttributes<SVGSVGElement>, "id">;
-  size: SpinnerSVGSize;
-  density: Density;
-}
+type SpinnerSVGProps = ComponentPropsWithoutRef<"svg">;
 
-const sizeAndStrokeWidthMapping = {
-  small: {
-    high: { width: 12, strokeWidth: 2 },
-    medium: { width: 12, strokeWidth: 2 },
-    low: { width: 14, strokeWidth: 2 },
-    touch: { width: 16, strokeWidth: 2 },
-    mobile: { width: 16, strokeWidth: 2 },
-  },
-  medium: {
-    high: { width: 20, strokeWidth: 2 },
-    medium: { width: 28, strokeWidth: 4 },
-    low: { width: 36, strokeWidth: 6 },
-    touch: { width: 44, strokeWidth: 8 },
-    mobile: { width: 44, strokeWidth: 8 },
-  },
-  large: {
-    high: { width: 40, strokeWidth: 2 },
-    medium: { width: 56, strokeWidth: 4 },
-    low: { width: 72, strokeWidth: 6 },
-    touch: { width: 88, strokeWidth: 8 },
-    mobile: { width: 88, strokeWidth: 8 },
-  },
-};
-
+/**
+ * Draws the spinner as two overlapping circles. Each circle is half-stroked
+ * (`stroke-dasharray="50 50"` against a normalised `pathLength` of 100) and
+ * rotated via `stroke-dashoffset`: the first draws the top half, the second
+ * draws the left half with a fading gradient. Radius and stroke width come
+ * from CSS custom properties set by the parent `.saltSpinner-*` size class.
+ */
 export const SpinnerSVG = ({
   id = "svg-spinner",
-  rest,
-  size,
-  density,
-}: SpinnerProps) => {
-  const { width, strokeWidth } = sizeAndStrokeWidthMapping[size][density];
-  const radius = (width - strokeWidth) / 2;
+  ...rest
+}: SpinnerSVGProps) => {
+  const gradientId = `${id}-1`;
 
   return (
     <svg
       className={withBaseName("spinner")}
-      viewBox={`0 0 ${width} ${width}`}
+      preserveAspectRatio="xMidYMid meet"
       id={id}
       {...rest}
     >
       <defs>
-        <linearGradient id={`${id}-1`} x1="0" y1="0" x2="100%" y2="0">
+        <linearGradient id={gradientId} x1="0" y1="0" x2="50%" y2="0">
           <stop
             className={withBaseName("gradientStop")}
             offset="15%"
@@ -66,33 +39,28 @@ export const SpinnerSVG = ({
           />
         </linearGradient>
       </defs>
-      <g fill="none">
-        {/*
-          This first path draws the top half of the circle without a gradient.
-          It starts from the right end, moves in a circular arc, and ends at the left end.
-        */}
-        <path
-          d={`M${width - strokeWidth / 2},${
-            width / 2
-          } a${radius},${radius} 0 1,0 -${width - strokeWidth},0`}
-          stroke="var(--saltSpinner-gradient-color, var(--salt-sentiment-accent-background)"
-          strokeWidth="var(--spinner-strokeWidth)"
-          fill="none"
-        />
-        {/*
-          This second path draws the left half of the circle with a gradient that transitions
-          from opaque on the left to transparent on the right.
-          It starts from the top-center, moves in a circular arc, and ends at the bottom-center.
-        */}
-        <path
-          d={`M${width / 2},${strokeWidth / 2} a${radius},${radius} 0 1,0 0,${
-            width - strokeWidth
-          }`}
-          stroke={`url(#${id}-1)`}
-          strokeWidth="var(--spinner-strokeWidth)"
-          fill="none"
-        />
-      </g>
+      <circle
+        className={withBaseName("arc")}
+        cx="50%"
+        cy="50%"
+        fill="none"
+        stroke="var(--saltSpinner-gradient-color, var(--salt-sentiment-accent-background))"
+        strokeWidth="var(--spinner-strokeWidth)"
+        pathLength="100"
+        strokeDasharray="50 50"
+        strokeDashoffset="50"
+      />
+      <circle
+        className={withBaseName("arc")}
+        cx="50%"
+        cy="50%"
+        fill="none"
+        stroke={`url(#${gradientId})`}
+        strokeWidth="var(--spinner-strokeWidth)"
+        pathLength="100"
+        strokeDasharray="50 50"
+        strokeDashoffset="75"
+      />
     </svg>
   );
 };

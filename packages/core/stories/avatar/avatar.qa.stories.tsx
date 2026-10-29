@@ -2,6 +2,7 @@ import { Avatar } from "@salt-ds/core";
 import { SaltShakerIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { QAContainer, type QAContainerProps } from "docs/components";
+import type { CSSProperties } from "react";
 import persona1 from "../assets/avatar.png";
 
 export default {
@@ -9,12 +10,16 @@ export default {
   component: Avatar,
 } as Meta<typeof Avatar>;
 
+const directSizeStyle = {
+  "--saltAvatar-size": "var(--salt-text-h3-lineHeight)",
+} as CSSProperties;
+
 export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
   <QAContainer height={500} width={1000} {...props}>
-    <Avatar size={1} name="Alex Brailescu" src={persona1 as string} />
+    <Avatar size={1} name="Alex Brailescu" src={persona1} />
     <Avatar size={2} src="bad_url" name="Peter Piper" />
     <Avatar size={3} src="bad_url" />
-    <Avatar size={3} fallbackIcon={<SaltShakerIcon />} />
+    <Avatar size={3} fallbackIcon={<SaltShakerIcon aria-hidden />} />
     <Avatar name="Peter Piper" color="category-1" />
     <Avatar name="Peter Piper" color="category-2" />
     <Avatar name="Peter Piper" color="category-3" />
@@ -35,10 +40,36 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
     <Avatar name="Peter Piper" color="category-18" />
     <Avatar name="Peter Piper" color="category-19" />
     <Avatar name="Peter Piper" color="category-20" />
+    <Avatar src={persona1} style={directSizeStyle} />
+    <Avatar name="Alex Brailescu" style={directSizeStyle} />
+    <Avatar style={directSizeStyle} />
   </QAContainer>
 );
 
 AllVariantsGrid.parameters = {
+  chromatic: {
+    disableSnapshot: false,
+  },
+};
+
+export const EntityGrid: StoryFn<QAContainerProps> = (props) => (
+  <QAContainer height={200} width={1000} {...props}>
+    <Avatar kind="entity" size={1} name="Alex Brailescu" src={persona1} />
+    <Avatar kind="entity" size={2} src="bad_url" name="Peter Piper" />
+    <Avatar kind="entity" size={3} src="bad_url" />
+    <Avatar kind="entity" size={3} />
+    <Avatar
+      kind="entity"
+      size={3}
+      fallbackIcon={<SaltShakerIcon aria-hidden />}
+    />
+    <Avatar kind="entity" name="Peter Piper" color="category-1" />
+    <Avatar kind="entity" name="Peter Piper" color="category-2" />
+    <Avatar kind="entity" name="Peter Piper" color="category-3" />
+  </QAContainer>
+);
+
+EntityGrid.parameters = {
   chromatic: {
     disableSnapshot: false,
   },

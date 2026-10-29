@@ -1,6 +1,7 @@
 import {
   FormField,
   FormFieldLabel,
+  type FormFieldLabelPlacement,
   RadioButton,
   RadioButtonGroup,
   type RadioButtonGroupProps,
@@ -65,11 +66,16 @@ const RadioButtonCheckedReadonlyGroupExample = () => {
   );
 };
 
-const RadioButtonInFormFieldExample = () => {
+const RadioButtonFormField = ({
+  direction,
+  labelPlacement,
+}: Pick<RadioButtonGroupProps, "direction"> & {
+  labelPlacement: FormFieldLabelPlacement;
+}) => {
   return (
-    <FormField labelPlacement="left">
+    <FormField labelPlacement={labelPlacement}>
       <FormFieldLabel>Assignment</FormFieldLabel>
-      <RadioButtonGroup>
+      <RadioButtonGroup direction={direction}>
         <RadioButton label="Private placement of equity or debt securities" />
         <RadioButton label="Syndicated credit facility or loan" />
         <RadioButton label="Interest rate, foreign exchange or commodity hedging or equity derivative" />
@@ -86,7 +92,8 @@ export const AllExamplesGrid: StoryFn<QAContainerProps> = (props) => {
       <RadioButtonGroupExample direction="vertical" />
       <RadioButtonGroupExample direction="horizontal" />
       <RadioButtonCheckedReadonlyGroupExample />
-      <RadioButtonInFormFieldExample />
+      <RadioButtonFormField direction="horizontal" labelPlacement="top" />
+      <RadioButtonFormField direction="vertical" labelPlacement="left" />
     </QAContainer>
   );
 };

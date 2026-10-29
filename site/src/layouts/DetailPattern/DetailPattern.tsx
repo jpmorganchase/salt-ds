@@ -1,13 +1,5 @@
 import type { LayoutProps } from "@jpmorganchase/mosaic-layouts";
 import { type SiteState, useStore } from "@jpmorganchase/mosaic-store";
-import {
-  Button,
-  Overlay,
-  OverlayPanel,
-  OverlayPanelContent,
-  OverlayTrigger,
-} from "@salt-ds/core";
-import { SettingsSolidIcon } from "@salt-ds/icons";
 import type { FC } from "react";
 import { LivePreviewProvider } from "../../components";
 import { ThemeControls } from "../../components/components/ThemeControls";
@@ -56,33 +48,21 @@ function PatternPageHeading({
       <div className={styles.headingActions}>
         {exampleLink && (
           <CTALink
-            appearance="bordered"
             sentiment="neutral"
             href={exampleLink.href}
             aria-label="View Example"
           >
-            <Image src="/img/storybook_logo.svg" alt={""} aria-hidden /> View
-            Example
+            <Image
+              className={styles.SBLogo}
+              noMargin
+              src="/img/storybook_logo.svg"
+              alt={""}
+              aria-hidden
+            />{" "}
+            View Example
           </CTALink>
         )}
-        {showThemeControl && (
-          <Overlay>
-            <OverlayTrigger>
-              <Button
-                sentiment="neutral"
-                appearance="bordered"
-                aria-label="Theme Controls"
-              >
-                <SettingsSolidIcon aria-hidden />
-              </Button>
-            </OverlayTrigger>
-            <OverlayPanel className={styles.overlay}>
-              <OverlayPanelContent>
-                <ThemeControls />
-              </OverlayPanelContent>
-            </OverlayPanel>
-          </Overlay>
-        )}
+        {showThemeControl && <ThemeControls scope="pattern" />}
       </div>
     </PageHeading>
   );

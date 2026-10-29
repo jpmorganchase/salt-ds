@@ -1,0 +1,8 @@
+language js
+
+// Component CSS has to be injected with `useComponentCssInjection`, so it must
+// be imported into a variable rather than as a side effect.
+`import $source` where {
+  $source <: r"^[\"'].*\.css[\"']$",
+  register_diagnostic(span=$source, message="CSS imports must be assigned to a variable and then injected with useComponentCssInjection.")
+}

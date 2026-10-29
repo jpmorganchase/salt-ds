@@ -1,5 +1,7 @@
-import { Button, FlexLayout, Link, StackLayout, Text } from "@salt-ds/core";
 import {
+  Button,
+  FlexLayout,
+  Link,
   MegaMenu,
   MegaMenuActions,
   MegaMenuAside,
@@ -11,7 +13,10 @@ import {
   MegaMenuListItem,
   MegaMenuPanel,
   MegaMenuTrigger,
-} from "@salt-ds/lab";
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
+
 import Image from "next/image";
 import { type ReactElement, useState } from "react";
 import { Link as RouterLink } from "react-router";
@@ -31,7 +36,14 @@ const featuredResource = (
     />
     <StackLayout gap={1}>
       <StackLayout gap={0}>
-        <Text styleAs="h2" as="h2">
+        <Text
+          styleAs="h2"
+          as="h2"
+          style={{
+            marginTop: "var(--salt-spacing-200)",
+            marginBottom: "var(--salt-spacing-200)",
+          }}
+        >
           Featured Resource
         </Text>
         <Text className={styles.customRegionRightDescription}>

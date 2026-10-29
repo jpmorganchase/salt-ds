@@ -70,6 +70,10 @@ export interface SliderProps
    */
   minLabel?: string;
   /**
+   * The name applied to the input.
+   */
+  name?: string;
+  /**
    * Callback called when slider value is changed.
    * It provides a generic event and the current value of the slider.
    */
@@ -124,6 +128,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     minLabel,
     max = 100,
     maxLabel,
+    name,
     onChange,
     onChangeEnd,
     restrictToMarks = false,
@@ -233,6 +238,7 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         minLabel={minLabel}
         max={max}
         maxLabel={maxLabel}
+        name={name}
         offsetPercentage={`${progressPercentage}%`}
         restrictToMarks={restrictToMarks}
         sliderValue={value}

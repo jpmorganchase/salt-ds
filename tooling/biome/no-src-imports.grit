@@ -1,0 +1,15 @@
+language js
+
+// Packages must be imported through their entry points, never from another
+// package's `src` folder. `JsModuleSource` covers every import and re-export
+// form, including type-only ones; the rest cover `import()`, `require()` and
+// TypeScript `import("...")` types.
+or {
+  JsModuleSource() as $source,
+  `import($source)`,
+  `require($source)`,
+  TsImportType(arguments=TsImportTypeArguments(argument=$source))
+} where {
+  $source <: r"^[\"'`]@salt-ds/.+/src[\"'`/].*$",
+  register_diagnostic(span=$source, message="Import from the package entry point instead of its src folder.")
+}

@@ -3,11 +3,19 @@ import {
   Display1,
   Display2,
   Display3,
+  Editorial1,
+  Editorial2,
+  Editorial3,
+  Editorial4,
+  Editorial5,
+  Editorial6,
+  Eyebrow as EyebrowText,
   H1,
   H2,
   H3,
   H4,
   Label as LabelText,
+  StackLayout,
   Text,
   TextAction,
   TextNotation,
@@ -67,16 +75,44 @@ export const Disabled: StoryFn<typeof Text> = () => {
 export const Strong: StoryFn<typeof Text> = () => {
   return (
     <Text>
-      This is a <strong>strong</strong> text example
+      This is an <strong>important</strong> text example
     </Text>
   );
 };
 
-export const Small: StoryFn<typeof Text> = () => {
+export const FontWeight: StoryFn<typeof Text> = () => {
   return (
-    <Text>
-      This is a <small>small</small> text example
-    </Text>
+    <StackLayout>
+      <Text fontWeight="lighter">This is a lighter text example</Text>
+      <Text>This is a default text example</Text>
+      <Text fontWeight="bolder">This is a bolder text example</Text>
+      <Text>
+        This is a <b>bold</b> text example
+      </Text>
+      <H1 fontWeight="lighter">This is a lighter heading example</H1>
+      <H1 fontWeight="bolder">This is a bolder heading example</H1>
+    </StackLayout>
+  );
+};
+
+export const InheritedFontWeight: StoryFn<typeof Text> = () => {
+  return (
+    <StackLayout>
+      <Text>
+        This is a{" "}
+        <Text as="span" styleAs="inherit" fontWeight="lighter">
+          lighter
+        </Text>{" "}
+        text example
+      </Text>
+      <H2 color="secondary">
+        This is a{" "}
+        <Text as="span" styleAs="inherit" fontWeight="lighter">
+          lighter
+        </Text>{" "}
+        heading example
+      </H2>
+    </StackLayout>
   );
 };
 
@@ -100,50 +136,91 @@ export const Truncation: StoryFn<typeof Text> = () => {
 
 const FigureTextComponent: StoryFn<typeof Text> = () => {
   return (
-    <>
+    <StackLayout>
       <Display1>Display 1</Display1>
-      <br />
       <Display2>Display 2</Display2>
-      <br />
       <Display3>Display 3</Display3>
-    </>
+    </StackLayout>
   );
 };
 
 export const Display = FigureTextComponent.bind({});
 
+//********** Editorial 1, 2, 3 and 4 ***********/
+
+export const Editorial: StoryFn<typeof Text> = () => {
+  return (
+    <StackLayout>
+      <Editorial1>Editorial 1</Editorial1>
+      <Editorial2>Editorial 2</Editorial2>
+      <Editorial3>Editorial 3</Editorial3>
+      <Editorial4>Editorial 4</Editorial4>
+      <Editorial5>Editorial 5</Editorial5>
+      <Editorial6>Editorial 6</Editorial6>
+    </StackLayout>
+  );
+};
+
+//********** Eyebrow ***********/
+
+export const Eyebrow: StoryFn<typeof Text> = () => {
+  return (
+    <StackLayout gap={1}>
+      <EyebrowText>Eyebrow text</EyebrowText>
+      <H1>Heading with an eyebrow</H1>
+    </StackLayout>
+  );
+};
+
 //********** Headings H1, H2, H3 and H4 ***********/
 
 const HeadingsComponent: StoryFn<typeof Text> = () => (
-  <>
-    <H1>
-      This is header 1 <strong>emphasis high</strong>
-    </H1>
-    <H1>
-      This is header 1 <small>emphasis low</small>
-    </H1>
-    <br />
-    <H2>
-      This is header 2 <strong>emphasis high</strong>
-    </H2>
-    <H2>
-      This is header 2 <small>emphasis low</small>
-    </H2>
-    <br />
-    <H3>
-      This is header 3 <strong>emphasis high</strong>
-    </H3>
-    <H3>
-      This is header 3 <small>emphasis low</small>
-    </H3>
-    <br />
-    <H4>
-      This is header 4 <strong>emphasis high</strong>
-    </H4>
-    <H4>
-      This is header 4 <small>emphasis low</small>
-    </H4>
-  </>
+  <StackLayout gap={6}>
+    <StackLayout gap={3}>
+      <H1>
+        This is header 1 <b>emphasis high</b>
+      </H1>
+      <H1>
+        This is header 1{" "}
+        <Text as="span" styleAs="inherit" fontWeight="lighter">
+          emphasis low
+        </Text>
+      </H1>
+    </StackLayout>
+    <StackLayout gap={2}>
+      <H2>
+        This is header 2 <b>emphasis high</b>
+      </H2>
+      <H2>
+        This is header 2{" "}
+        <Text as="span" styleAs="inherit" fontWeight="lighter">
+          emphasis low
+        </Text>
+      </H2>
+    </StackLayout>
+    <StackLayout gap={1}>
+      <H3>
+        This is header 3 <b>emphasis high</b>
+      </H3>
+      <H3>
+        This is header 3{" "}
+        <Text as="span" styleAs="inherit" fontWeight="lighter">
+          emphasis low
+        </Text>
+      </H3>
+    </StackLayout>
+    <StackLayout gap={1}>
+      <H4>
+        This is header 4 <b>emphasis high</b>
+      </H4>
+      <H4>
+        This is header 4{" "}
+        <Text as="span" styleAs="inherit" fontWeight="lighter">
+          emphasis low
+        </Text>
+      </H4>
+    </StackLayout>
+  </StackLayout>
 );
 export const Headings = HeadingsComponent.bind({});
 
@@ -151,46 +228,86 @@ export const Headings = HeadingsComponent.bind({});
 
 const LabelCaptionTextComponent: StoryFn<typeof Text> = () => {
   return (
-    <>
+    <StackLayout>
       <LabelText>
         Label text - label - His seasons Shall without form fourth seed so.
       </LabelText>
-      <br />
       <LabelText>
-        Label text
-        <strong> emphasis high</strong>
+        Label text <b>emphasis high</b>
       </LabelText>
-      <br />
       <LabelText>
-        Label text
-        <small> emphasis low</small>
+        Label text{" "}
+        <Text as="span" styleAs="inherit" fontWeight="lighter">
+          emphasis low
+        </Text>
       </LabelText>
-    </>
+    </StackLayout>
   );
 };
 
 export const Label = LabelCaptionTextComponent.bind({});
 
+//********** Label 2 ***********/
+
+export const Label2: StoryFn<typeof Text> = () => {
+  return (
+    <StackLayout>
+      <LabelText styleAs="label2">
+        Label 2 text - label2 - His seasons Shall without form fourth seed so.
+      </LabelText>
+      <LabelText styleAs="label2">
+        Label 2 text <b>emphasis high</b>
+      </LabelText>
+      <LabelText styleAs="label2">
+        Label 2 text{" "}
+        <Text as="span" styleAs="inherit" fontWeight="lighter">
+          emphasis low
+        </Text>
+      </LabelText>
+    </StackLayout>
+  );
+};
+
+//********** Body 2 ***********/
+
+export const Body2: StoryFn<typeof Text> = () => {
+  return (
+    <StackLayout>
+      <Text styleAs="body2">
+        Body 2 text - body2 - His seasons Shall without form fourth seed so.
+      </Text>
+      <Text styleAs="body2">
+        Body 2 text <b>emphasis high</b>
+      </Text>
+      <Text styleAs="body2">
+        Body 2 text{" "}
+        <Text as="span" styleAs="inherit" fontWeight="lighter">
+          emphasis low
+        </Text>
+      </Text>
+    </StackLayout>
+  );
+};
+
 //********** Notation ***********/
 
 const TextNotationComponent: StoryFn<typeof Text> = () => {
   return (
-    <>
+    <StackLayout>
       <TextNotation>
         Notation text - notation - His seasons Shall without form fourth seed
         so.
       </TextNotation>
-      <br />
       <TextNotation>
-        Notation text
-        <strong> emphasis high</strong>
+        Notation text <b>emphasis high</b>
       </TextNotation>
-      <br />
       <TextNotation>
-        Notation text
-        <small> emphasis low</small>
+        Notation text{" "}
+        <Text as="span" styleAs="inherit" fontWeight="lighter">
+          emphasis low
+        </Text>
       </TextNotation>
-    </>
+    </StackLayout>
   );
 };
 
@@ -200,21 +317,20 @@ export const Notation = TextNotationComponent.bind({});
 
 const TextActionComponent: StoryFn<typeof Text> = () => {
   return (
-    <>
+    <StackLayout>
       <TextAction>
         Action text - action - His seasons Shall without form fourth seed so.
       </TextAction>
-      <br />
       <TextAction>
-        Action text
-        <strong> emphasis high</strong>
+        Action text <b>emphasis high</b>
       </TextAction>
-      <br />
       <TextAction>
-        Action text
-        <small> emphasis low</small>
+        Action text{" "}
+        <Text as="span" styleAs="inherit" fontWeight="lighter">
+          emphasis low
+        </Text>
       </TextAction>
-    </>
+    </StackLayout>
   );
 };
 
@@ -224,21 +340,20 @@ export const Action = TextActionComponent.bind({});
 
 const CodeComponent: StoryFn<typeof Text> = () => {
   return (
-    <>
+    <StackLayout>
       <CodeText>
         Code text - code - His seasons Shall without form fourth seed so.
       </CodeText>
-      <br />
       <CodeText>
-        Code text
-        <strong> emphasis high</strong>
+        Code text <b>emphasis high</b>
       </CodeText>
-      <br />
       <CodeText>
-        Code text
-        <small> emphasis low</small>
+        Code text{" "}
+        <Text as="span" styleAs="inherit" fontWeight="lighter">
+          emphasis low
+        </Text>
       </CodeText>
-    </>
+    </StackLayout>
   );
 };
 

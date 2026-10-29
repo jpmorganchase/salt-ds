@@ -4,63 +4,171 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: "Existing @salt-ds/<library>@<version> tag to publish"
+        required: true
+        type: string
   issue_comment:
     types:
       - created
 
 permissions: {}
 
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name == 'issue_comment' && github.event.issue.number || github.ref }}
+  cancel-in-progress: false
+
 jobs:
-  release:
-    name: Release
+  select-release-mode:
+    name: Select Release Mode
     if: github.event_name == 'push' && github.repository == 'jpmorganchase/salt-ds'
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    outputs:
+      mode: ${{ steps.select-mode.outputs.mode }}
     permissions:
-      contents: write # Needed for changesets to create the Version Packages PR, push tags, and create GitHub releases.
-      pull-requests: write # Needed for changesets to open/update the Version Packages PR.
-      id-token: write # Needed for npm trusted publishing provenance.
-    concurrency:
-      group: ${{ github.workflow }}-release-${{ github.ref }}
-      cancel-in-progress: false
+      contents: read # Needed to check out the repository before selecting Changesets mode.
     steps:
       - name: Checkout
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
       - name: Use Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: "24"
+          node-version: "26"
+          package-manager-cache: false
+      - name: Install dependencies
+        run: yarn install
+      - name: Select Changesets mode
+        id: select-mode
+        uses: changesets/action/select-mode@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
+
+  version:
+    name: Version Packages
+    if: needs.select-release-mode.outputs.mode == 'version'
+    needs: select-release-mode
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write # Needed for changesets to commit version changes.
+      pull-requests: write # Needed for changesets to open/update the Version Packages PR.
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Use Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: "26"
+          package-manager-cache: false
+      - name: Install dependencies
+        run: yarn install
+      - name: Version packages
+        uses: changesets/action/version@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
+        with:
+          script: yarn changeset version
+
+  publish:
+    name: Publish Packages
+    if: needs.select-release-mode.outputs.mode == 'publish'
+    needs: select-release-mode
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: write # Needed for changesets to push tags and create GitHub releases.
+      id-token: write # Needed for npm trusted publishing provenance.
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Use Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: "26"
           package-manager-cache: false
           registry-url: "https://registry.npmjs.org"
       - name: Install dependencies
         run: yarn install
-      - name: Create Release Pull Request or publish to npm
-        uses: changesets/action@63a615b9cd06ba9a3e6d13796c7fbcb080a60a0b # v1
+      - name: Publish packages
+        uses: changesets/action/publish@ae32849d5ba541f9ae29e40e22a623bc13562f51 # v2.1.2
         with:
-          version: yarn changeset version
-          publish: yarn release
+          script: yarn release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           NPM_CONFIG_PROVENANCE: "true"
 
-  build-release-storybook:
-    name: Build Release Storybook
-    if: github.event_name == 'push' && github.repository == 'jpmorganchase/salt-ds'
-    needs: release
+  release:
+    name: Release
+    if: always() && github.event_name == 'push' && github.repository == 'jpmorganchase/salt-ds'
+    needs:
+      - select-release-mode
+      - version
+      - publish
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 5
     permissions: {}
     steps:
+      - name: Check release result
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        env:
+          MODE: ${{ needs.select-release-mode.outputs.mode }}
+          SELECT_RESULT: ${{ needs.select-release-mode.result }}
+          VERSION_RESULT: ${{ needs.version.result }}
+          PUBLISH_RESULT: ${{ needs.publish.result }}
+        with:
+          script: |
+            const mode = process.env.MODE || '';
+            const selectResult = process.env.SELECT_RESULT;
+            const versionResult = process.env.VERSION_RESULT;
+            const publishResult = process.env.PUBLISH_RESULT;
+
+            core.info(`Selected mode: ${mode || '<empty>'}`);
+            core.info(`select-release-mode: ${selectResult}`);
+            core.info(`version: ${versionResult}`);
+            core.info(`publish: ${publishResult}`);
+
+            if (selectResult !== 'success') {
+              core.setFailed('Release mode selection failed.');
+              return;
+            }
+
+            if (mode === 'version' && versionResult !== 'success') {
+              core.setFailed('Version package PR creation failed.');
+              return;
+            }
+
+            if (mode === 'publish' && publishResult !== 'success') {
+              core.setFailed('Package publish failed.');
+              return;
+            }
+
+            if (!['none', 'publish', 'version'].includes(mode)) {
+              core.setFailed(`Unexpected Changesets mode: ${mode || '<empty>'}`);
+            }
+
+  # Production Storybook only updates when packages are published. These jobs
+  # need `publish` directly: depending on `release` would skip them, because
+  # the skipped `version` job propagates through its `always()` condition.
+  build-release-storybook:
+    name: Build Release Storybook
+    needs: publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read # Needed to check out the repository before building Storybook.
+    steps:
       - name: Checkout
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           persist-credentials: false
       - name: Use Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: "24"
+          node-version: "26"
           package-manager-cache: false
       - name: Install dependencies
         run: yarn install
@@ -69,7 +177,7 @@ jobs:
         env:
           NODE_OPTIONS: "--max_old_space_size=6144"
       - name: Upload Storybook Static
-        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         with:
           name: storybook-build
           path: ./storybook-static
@@ -77,27 +185,161 @@ jobs:
 
   publish-storybook:
     name: Publish Storybook
-    if: github.event_name == 'push' && github.repository == 'jpmorganchase/salt-ds'
     needs: build-release-storybook
     runs-on: ubuntu-latest
     timeout-minutes: 15
-    permissions:
-      actions: read # Needed to download the Storybook build artifact from the release job.
-    concurrency:
-      group: ${{ github.workflow }}-storybook-${{ github.ref }}
-      cancel-in-progress: false
+    # Downloading an artifact from the same run needs no token permissions.
+    permissions: {}
     steps:
       - name: Download Storybook build
-        uses: actions/download-artifact@3e5f45b2cfb9172054b4087a40e8e0b5a5461e7c # v8
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
         with:
           name: storybook-build
           path: ./storybook-static
+      - name: Remove non-static files
+        run: rm -rf ./storybook-static/preview-stats.json ./storybook-static/_worker.js ./storybook-static/_routes.json ./storybook-static/functions
       - name: Publish Storybook
-        uses: cloudflare/wrangler-action@ebbaa1584979971c8614a24965b4405ff95890e0 # v4
+        uses: cloudflare/wrangler-action@25853364521e0d392ece9b0c1e97a4b37b638087 # v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_SALT_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_SALT_ACCOUNT_ID }}
-          command: pages deploy ./storybook-static --project-name saltdesignsystem-storybook --branch ${{ github.head_ref || github.ref_name }}
+          command: pages deploy ./storybook-static --project-name=saltdesignsystem-storybook --branch=main
+
+  prepare-version-publish:
+    name: Prepare Version Publish
+    if: |
+      github.event_name == 'workflow_dispatch' &&
+      github.repository == 'jpmorganchase/salt-ds' &&
+      github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    permissions:
+      contents: read
+    outputs:
+      commit: ${{ steps.release.outputs.commit }}
+    steps:
+      - name: Checkout recovery tooling
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 0
+          path: recovery-tooling
+          persist-credentials: false
+      - name: Validate release tag
+        id: release
+        working-directory: recovery-tooling
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          if [[ ! "$RELEASE_TAG" =~ ^@salt-ds/[a-z0-9-]+@[0-9][0-9A-Za-z.+-]*$ ]]; then
+            echo "::error::Release tag must match @salt-ds/<library>@<version>."
+            exit 1
+          fi
+
+          if ! git show-ref --verify --quiet "refs/tags/$RELEASE_TAG"; then
+            echo "::error::Release tag '$RELEASE_TAG' does not exist."
+            exit 1
+          fi
+
+          commit=$(git rev-list -n 1 "refs/tags/$RELEASE_TAG")
+          if ! git merge-base --is-ancestor "$commit" origin/main; then
+            echo "::error::Release tag '$RELEASE_TAG' is not part of main."
+            exit 1
+          fi
+
+          node_version=$(
+            git show "$commit:.github/workflows/release.yml" |
+              sed -nE 's/^[[:space:]]*node-version:[[:space:]]*"?([0-9]+)"?.*/\1/p' |
+              head -1
+          )
+          if [[ ! "$node_version" =~ ^[0-9]+$ ]]; then
+            echo "::error::Could not determine the Node.js version used by '$RELEASE_TAG'."
+            exit 1
+          fi
+
+          echo "commit=$commit" >> "$GITHUB_OUTPUT"
+          echo "node_version=$node_version" >> "$GITHUB_OUTPUT"
+          echo "Preparing $RELEASE_TAG from $commit with Node.js $node_version."
+      - name: Checkout historical release
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: ${{ steps.release.outputs.commit }}
+          path: release-source
+          persist-credentials: false
+      - name: Use Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: ${{ steps.release.outputs.node_version }}
+          package-manager-cache: false
+      - name: Enable Corepack
+        run: corepack enable
+      - name: Install historical dependencies
+        working-directory: release-source
+        run: yarn install --immutable
+      - name: Build historical release
+        working-directory: release-source
+        run: yarn build
+        env:
+          NODE_OPTIONS: "--max_old_space_size=6144"
+      - name: Pack tagged version
+        env:
+          RELEASE_COMMIT: ${{ steps.release.outputs.commit }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          node recovery-tooling/scripts/prepareVersionPublish.mjs \
+            --source release-source \
+            --output publish-artifact \
+            --release-tag "$RELEASE_TAG" \
+            --commit "$RELEASE_COMMIT"
+      - name: Upload version
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: version-publish-${{ github.run_id }}
+          path: publish-artifact
+          if-no-files-found: error
+          retention-days: 1
+          compression-level: 0
+
+  publish-version:
+    name: Publish Version
+    if: |
+      github.event_name == 'workflow_dispatch' &&
+      github.repository == 'jpmorganchase/salt-ds' &&
+      github.ref == 'refs/heads/main'
+    needs: prepare-version-publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+      id-token: write # Needed for npm trusted publishing provenance.
+    steps:
+      - name: Checkout recovery tooling
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Use Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: "26"
+          package-manager-cache: false
+          registry-url: "https://registry.npmjs.org"
+      - name: Install npm with trusted publishing support
+        run: npm install --global npm@11.11.0 --ignore-scripts
+      - name: Download version
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: version-publish-${{ github.run_id }}
+          path: publish-artifact
+      - name: Publish tagged library
+        env:
+          NPM_CONFIG_PROVENANCE: "true"
+          RELEASE_COMMIT: ${{ needs.prepare-version-publish.outputs.commit }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        run: |
+          node scripts/publishVersion.mjs \
+            --artifact publish-artifact \
+            --release-tag "$RELEASE_TAG" \
+            --commit "$RELEASE_COMMIT" \
+            --npm-tag latest
 
   snapshot:
     name: Snapshot Release
@@ -105,7 +347,18 @@ jobs:
       github.event_name == 'issue_comment' &&
       github.repository == 'jpmorganchase/salt-ds' &&
       github.event.issue.pull_request &&
-      (github.event.comment.body == '/release-pr' || github.event.comment.body == '/snapshot-release')
+      (
+        github.event.comment.body == '/release-pr' ||
+        startsWith(github.event.comment.body, '/release-pr ') ||
+        startsWith(github.event.comment.body, format('/release-pr{0}', fromJSON('"\n"'))) ||
+        startsWith(github.event.comment.body, format('/release-pr{0}', fromJSON('"\r"'))) ||
+        startsWith(github.event.comment.body, format('/release-pr{0}', fromJSON('"\t"'))) ||
+        github.event.comment.body == '/snapshot-release' ||
+        startsWith(github.event.comment.body, '/snapshot-release ') ||
+        startsWith(github.event.comment.body, format('/snapshot-release{0}', fromJSON('"\n"'))) ||
+        startsWith(github.event.comment.body, format('/snapshot-release{0}', fromJSON('"\r"'))) ||
+        startsWith(github.event.comment.body, format('/snapshot-release{0}', fromJSON('"\t"')))
+      )
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -209,16 +462,16 @@ jobs:
             core.setOutput("commentId", response.data.id);
 
       - name: Checkout pull request
-        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
           repository: ${{ steps.pr_data.outputs.headRepository }}
           ref: ${{ steps.pr_data.outputs.headSha }}
           persist-credentials: false
 
       - name: Use Node.js
-        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: "24"
+          node-version: "26"
           package-manager-cache: false
           registry-url: "https://registry.npmjs.org"
 
@@ -226,7 +479,32 @@ jobs:
         run: yarn install
 
       - name: Create snapshot versions
-        run: yarn changeset version --snapshot snapshot
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        with:
+          script: |
+            let output = '';
+            const exitCode = await exec.exec(
+              'yarn',
+              ['changeset', 'version', '--snapshot', 'snapshot'],
+              {
+                ignoreReturnCode: true,
+                listeners: {
+                  stdout: (data) => { output += data.toString(); },
+                  stderr: (data) => { output += data.toString(); },
+                },
+              },
+            );
+
+            if (exitCode === 0) {
+              return;
+            }
+
+            if (exitCode === 1 && output.includes('No unreleased changesets found.')) {
+              core.info('No unreleased changesets found; continuing without snapshot version changes.');
+              return;
+            }
+
+            core.setFailed(`Snapshot version creation failed with exit code ${exitCode}.`);
 
       - name: Build snapshot packages
         run: yarn build
@@ -238,34 +516,72 @@ jobs:
           NPM_CONFIG_PROVENANCE: "true"
         with:
           script: |
-            let output = '';
-            await exec.exec(
-              'yarn',
-              ['changeset', 'publish', '--tag', 'snapshot', '--no-git-tag'],
-              {
-                listeners: {
-                  stdout: (data) => { output += data.toString(); },
-                  stderr: (data) => { output += data.toString(); },
+            // Yarn's npm OIDC "trusted publishing" auth exchange is done
+            // per-package, and `changeset publish` fires up to 10 of these
+            // in parallel. Under that concurrency the exchange occasionally
+            // fails (rate limiting/transient network errors), which Yarn
+            // surfaces as a generic `YN0033: No authentication configured
+            // for request` rather than a retryable error. `changeset
+            // publish` is safe to re-run: packages already published to the
+            // registry are detected and skipped, so a retry only needs to
+            // succeed for the packages that failed the first time.
+            const maxAttempts = 3;
+            const combinedOutput = [];
+
+            for (let attempt = 1; attempt <= maxAttempts; attempt++) {
+              let output = '';
+              const exitCode = await exec.exec(
+                'yarn',
+                ['changeset', 'publish', '--tag', 'snapshot', '--no-git-tag'],
+                {
+                  ignoreReturnCode: true,
+                  listeners: {
+                    stdout: (data) => { output += data.toString(); },
+                    stderr: (data) => { output += data.toString(); },
+                  },
                 },
-              },
-            );
+              );
+
+              combinedOutput.push(output);
+
+              if (exitCode === 0) {
+                break;
+              }
+
+              if (attempt === maxAttempts) {
+                throw new Error(
+                  `yarn changeset publish failed after ${maxAttempts} attempts (exit code ${exitCode}).`,
+                );
+              }
+
+              core.warning(
+                `yarn changeset publish failed (attempt ${attempt}/${maxAttempts}), retrying...`,
+              );
+              await new Promise((resolve) => setTimeout(resolve, attempt * 10000));
+            }
 
             // `changeset publish` prints a banner followed by an indented
             // list of `name@version` tags for each successfully published
             // package, e.g.
             //
             //   🦋  packages published successfully:
-            //   🦋    @salt-ds/core@1.63.1-snapshot-abcdef0
-            //   🦋    @salt-ds/lab@1.0.0-alpha.80-snapshot-abcdef0
+            //   🦋    @salt-ds/core@0.0.0-snapshot-20260814000000
+            //   🦋    @salt-ds/lab@0.0.0-snapshot-20260814000000
             //
             // Anchoring on the banner string avoids picking up unrelated
-            // `name@version` mentions in warnings or errors.
-            const [, after = ''] = output.split('packages published successfully:\n');
-            const newTags = after
-              .split('\n')
-              .flatMap((line) => Array.from(line.matchAll(/\s+(\S+@\S+)/g), (m) => m[1]));
+            // `name@version` mentions in warnings or errors. Tags are
+            // collected across all attempts since a retry's banner only
+            // lists packages published during that specific attempt.
+            const newTags = new Set();
+            for (const output of combinedOutput) {
+              const [, after = ''] = output.split('packages published successfully:\n');
+              after
+                .split('\n')
+                .flatMap((line) => Array.from(line.matchAll(/\s+(\S+@\S+)/g), (m) => m[1]))
+                .forEach((tag) => newTags.add(tag));
+            }
 
-            core.setOutput('publishedTags', newTags.join('\n'));
+            core.setOutput('publishedTags', Array.from(newTags).join('\n'));
 
       - name: Update snapshot status comment
         if: success() && steps.snapshot_status.outputs.commentId != ''
@@ -326,7 +642,7 @@ jobs:
             }
 
       - name: Update snapshot status on failure
-        if: ${{ always() && steps.snapshot_status.outputs.commentId != '' && (failure() || cancelled()) }}
+        if: ${{ steps.snapshot_status.outputs.commentId != '' && (failure() || cancelled()) }}
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         env:
           STATUS_COMMENT_ID: ${{ steps.snapshot_status.outputs.commentId }}

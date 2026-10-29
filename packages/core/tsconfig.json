@@ -1,6 +1,5 @@
 {
-  "extends": "../../tsconfig.json",
+  "extends": "../../tsconfig.base.json",
   "include": ["src/**/*"],
-  "exclude": ["**/__tests__/*"],
-  "compilerOptions": { "moduleResolution": "bundler" }
+  "exclude": ["**/__tests__/*"]
 }

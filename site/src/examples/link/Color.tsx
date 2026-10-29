@@ -4,18 +4,34 @@ import styles from "./index.module.css";
 
 export const Color = (): ReactElement => (
   <StackLayout align="start">
-    <Link href="#" color="accent" className={styles.linkExample}>
-      Accent Link color
+    <Link
+      href="/salt/foundations/data-visualization/color-and-pattern"
+      color="accent"
+      className={styles.linkExample}
+    >
+      Read color guidance
     </Link>
-    <Link href="#" color="primary" className={styles.linkExample}>
-      Primary Link color
+    <Link
+      href="/salt/components/button"
+      color="primary"
+      className={styles.linkExample}
+    >
+      View button documentation
     </Link>
-    <Link href="#" color="secondary" className={styles.linkExample}>
-      Secondary Link color
+    <Link
+      href="/salt/about/supported-platforms"
+      color="secondary"
+      className={styles.linkExample}
+    >
+      View supported platforms
     </Link>
     <Text color="error">
-      <Link href="#" color="inherit" className={styles.linkExample}>
-        Inherit Link color
+      <Link
+        href="/salt/components/form-field/accessibility"
+        color="inherit"
+        className={styles.linkExample}
+      >
+        Review validation guidance
       </Link>
     </Text>
   </StackLayout>

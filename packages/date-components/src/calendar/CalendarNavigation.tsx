@@ -253,7 +253,7 @@ function OptionWithTooltip({
 export const CalendarNavigation = forwardRef<
   HTMLDivElement,
   CalendarNavigationProps
->((props: CalendarNavigationProps, ref: React.Ref<HTMLDivElement>) => {
+>(function CalendarNavigation(props, ref) {
   const {
     className,
     formatMonth: formatMonthProp,

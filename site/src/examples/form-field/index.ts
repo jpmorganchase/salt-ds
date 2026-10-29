@@ -7,7 +7,6 @@ export * from "./GroupedWithLabelTop";
 export * from "./GroupedWithMultipleColumns";
 export * from "./GroupedWithVariant";
 export * from "./HelperText";
-export * from "./HelperTextAsTooltip";
 export * from "./Label";
 export * from "./LabelLeft";
 export * from "./LabelQuestion";

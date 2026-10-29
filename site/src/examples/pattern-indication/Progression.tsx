@@ -16,6 +16,7 @@ export const Progression = () => {
     <FlowLayout>
       <FlexLayout gap={0.5} align="center">
         <ProgressTodoIcon
+          aria-hidden
           size={2}
           style={{ color: "var(--salt-color-gray-500)" }}
         />
@@ -24,6 +25,7 @@ export const Progression = () => {
 
       <FlexLayout gap={0.5} align="center">
         <ProgressDraftIcon
+          aria-hidden
           size={2}
           style={{ color: "var(--salt-color-gray-500)" }}
         />
@@ -31,6 +33,7 @@ export const Progression = () => {
       </FlexLayout>
       <FlexLayout gap={0.5} align="center">
         <ProgressOnholdIcon
+          aria-hidden
           size={2}
           style={{ color: "var(--salt-palette-accent)" }}
         />
@@ -38,6 +41,7 @@ export const Progression = () => {
       </FlexLayout>
       <FlexLayout gap={0.5} align="center">
         <ProgressInprogressIcon
+          aria-hidden
           size={2}
           style={{ color: "var(--salt-palette-accent)" }}
         />
@@ -45,6 +49,7 @@ export const Progression = () => {
       </FlexLayout>
       <FlexLayout gap={0.5} align="center">
         <ProgressPendingIcon
+          aria-hidden
           size={2}
           style={{ color: "var(--salt-color-orange-500)" }}
         />
@@ -52,6 +57,7 @@ export const Progression = () => {
       </FlexLayout>
       <FlexLayout gap={0.5} align="center">
         <ProgressCancelledIcon
+          aria-hidden
           size={2}
           style={{ color: "var(--salt-color-red-500)" }}
         />
@@ -59,6 +65,7 @@ export const Progression = () => {
       </FlexLayout>
       <FlexLayout gap={0.5} align="center">
         <ProgressRejectedIcon
+          aria-hidden
           size={2}
           style={{ color: "var(--salt-color-red-500)" }}
         />
@@ -66,6 +73,7 @@ export const Progression = () => {
       </FlexLayout>
       <FlexLayout gap={0.5} align="center">
         <ProgressCompleteIcon
+          aria-hidden
           size={2}
           style={{ color: "var(--salt-color-green-500)" }}
         />
@@ -73,6 +81,7 @@ export const Progression = () => {
       </FlexLayout>
       <FlexLayout gap={0.5} align="center">
         <ProgressClosedIcon
+          aria-hidden
           size={2}
           style={{ color: "var(--salt-color-green-500)" }}
         />

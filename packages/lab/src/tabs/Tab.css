@@ -6,7 +6,7 @@
 
   --tabs-tab-background: transparent;
   --tabs-tab-cursor: pointer;
-  --tabs-tab-spacing: var(--salt-size-unit);
+  --tabs-tab-spacing: var(--salt-spacing-100);
   --tabs-tab-position: relative;
 }
 
@@ -20,7 +20,7 @@
   cursor: var(--saltTabs-tab-cursor, var(--tabs-tab-cursor));
   display: var(--tabs-tabstrip-display);
   height: var(--saltTabs-tab-height, var(--tabs-tabstrip-height));
-  letter-spacing: var(--saltTabs-tab-letterSpacing, var(--tabs-tab-letterSpacing, 0));
+  letter-spacing: var(--saltTabs-tab-letterSpacing, var(--tabs-tab-letterSpacing, var(--salt-text-letterSpacing)));
   min-width: var(--saltTabs-tab-minWidth, 40px);
   outline: none;
   position: var(--saltTabs-tab-position, var(--tabs-tab-position));
@@ -43,7 +43,7 @@
 
 .saltTab[aria-selected="true"] {
   color: var(--salt-content-primary-foreground);
-  font-weight: var(--salt-text-fontWeight-strong);
+  font-weight: var(--salt-text-fontWeight-bolder);
 }
 
 .saltTab-dragAway {
@@ -59,14 +59,14 @@
   font-family: inherit;
   font-size: inherit;
   font-weight: inherit;
-  height: var(--saltTabs-tabstrip-height, var(--salt-size-stackable));
+  height: var(--saltTabs-tabstrip-height, calc(var(--salt-size-base) + var(--salt-spacing-100)));
   outline: none;
   padding: 0 var(--tabs-tab-spacing);
   position: relative;
 }
 
 .saltTab-closeable .saltTab-main {
-  border-right: solid transparent var(--salt-size-unit);
+  border-right: solid transparent var(--salt-spacing-100);
 }
 
 .saltTab .saltTab-closeButton {
@@ -101,7 +101,7 @@
   content: attr(data-text);
   display: block;
   visibility: hidden;
-  font-weight: var(--salt-text-fontWeight-strong);
+  font-weight: var(--salt-text-fontWeight-bolder);
 }
 
 /* FIXME: these are all focusVisible styles, but with a bespoke inset */
@@ -131,7 +131,7 @@
 }
 
 .saltTab.saltFocusVisible {
-  background: var(--saltTabs-tab-hover-background, var(--salt-navigable-background-hover));
+  background: var(--saltTabs-tab-hover-background, var(--salt-overlayable-background-hover));
 }
 
 .saltTab:before {
@@ -146,7 +146,7 @@
 
 .saltTabstrip-draggingTab .saltTab[aria-selected="true"]:before {
   --tabs-tab-before-content: "";
-  --tabs-tab-before-background: var(--salt-navigable-indicator-color-active);
+  --tabs-tab-before-background: var(--salt-navigable-accent-indicator-active);
   --tabs-tab-before-height: var(--tabs-activationIndicator-thumb-height);
   --tabs-tab-before-inset: var(--tabs-activationIndicator-inset);
   --tabs-tab-before-width: var(--tabs-activationIndicator-thumb-width);
@@ -163,5 +163,5 @@
 }
 
 .saltTab:hover:not(.saltTab-closeHover) {
-  background: var(--saltTabs-tab-hover-background, var(--salt-navigable-background-hover));
+  background: var(--saltTabs-tab-hover-background, var(--salt-overlayable-background-hover));
 }

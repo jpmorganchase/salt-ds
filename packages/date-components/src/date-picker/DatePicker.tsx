@@ -99,7 +99,7 @@ export interface DatePickerRangeProps
 export type DatePickerProps = DatePickerSingleProps | DatePickerRangeProps;
 
 export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps>(
-  (props: DatePickerProps, ref: React.Ref<HTMLDivElement>) => {
+  function DatePickerMain(props, ref) {
     const {
       createAnnouncement,
       children,

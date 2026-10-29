@@ -1,4 +1,5 @@
 export * from "./Overlay";
+export * from "./OverlayFooter";
 export * from "./OverlayHeader";
 export * from "./OverlayPanel";
 export * from "./OverlayPanelCloseButton";

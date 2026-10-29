@@ -1,29 +1,29 @@
 /* Styles applied to root component (TokenizedInput) */
 .salt-density-medium {
-  --tokenizedInput-gutter-size: var(--salt-size-basis-unit);
-  --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2);
-  --tokenizedInput-last-pill-margin: var(--salt-size-unit);
+  --tokenizedInput-gutter-size: 4px;
+  --tokenizedInput-pill-group-y-padding: calc(var(--salt-spacing-100) / 2);
+  --tokenizedInput-last-pill-margin: var(--salt-spacing-100);
 }
 .salt-density-touch {
-  --tokenizedInput-gutter-size: var(--salt-size-basis-unit);
-  --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2 + 2px);
-  --tokenizedInput-last-pill-margin: calc(var(--salt-size-unit) / 2);
+  --tokenizedInput-gutter-size: 4px;
+  --tokenizedInput-pill-group-y-padding: calc(var(--salt-spacing-100) / 2 + 2px);
+  --tokenizedInput-last-pill-margin: calc(var(--salt-spacing-100) / 2);
 }
 
 .salt-density-low {
-  --tokenizedInput-gutter-size: var(--salt-size-basis-unit);
-  --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2 + 1px);
-  --tokenizedInput-last-pill-margin: calc(var(--salt-size-unit) / 2);
+  --tokenizedInput-gutter-size: 4px;
+  --tokenizedInput-pill-group-y-padding: calc(var(--salt-spacing-100) / 2 + 1px);
+  --tokenizedInput-last-pill-margin: calc(var(--salt-spacing-100) / 2);
 }
 
 .salt-density-high {
-  --tokenizedInput-gutter-size: calc(var(--salt-size-basis-unit) - 1px);
-  --tokenizedInput-pill-group-y-padding: calc(var(--salt-size-unit) / 2 + 1px);
-  --tokenizedInput-last-pill-margin: var(--salt-size-unit);
+  --tokenizedInput-gutter-size: calc(4px - 1px);
+  --tokenizedInput-pill-group-y-padding: calc(var(--salt-spacing-100) / 2 + 1px);
+  --tokenizedInput-last-pill-margin: var(--salt-spacing-100);
 }
 
 .saltTokenizedInput {
-  --tokenizedInput-spacing: var(--salt-size-unit);
+  --tokenizedInput-spacing: var(--salt-spacing-100);
   --tokenizedInput-height: var(--salt-size-base);
 }
 
@@ -58,7 +58,7 @@
 /* Styles applied to root component if `disabled={true}` */
 .saltTokenizedInput-disabled {
   cursor: var(--salt-cursor-disabled);
-  opacity: var(--saltTokenizedInput-disabled-opacity, var(--salt-palette-opacity-disabled));
+  opacity: var(--saltTokenizedInput-disabled-opacity, 0.4);
 }
 
 /* Styles applied to root component if `focused={true}` */
@@ -71,7 +71,7 @@
   height: auto;
 
   /* Pill CSS API */
-  --saltPill-maxWidth: calc(100px - var(--salt-size-unit));
+  --saltPill-maxWidth: calc(100px - var(--salt-spacing-100));
 }
 
 /* Styles applied to Input and Clear Button if `expanded={false}` */
@@ -153,11 +153,11 @@
 
 /* Styles applied to a Pills delete icon */
 .saltTokenizedInput .saltInputPill-pillActive .saltPill-deleteIcon {
-  color: var(--saltTokenizedInput-pill-delete-icon-color, var(--salt-actionable-cta-foreground-hover));
+  color: var(--saltTokenizedInput-pill-delete-icon-color, var(--salt-actionable-accented-bold-foreground-hover));
 }
 
 /* Styles applied to a Pills delete button */
 .saltTokenizedInput .saltInputPill-pillActive .saltPill-deleteButton {
-  color: var(--saltTokenizedInput-pill-delete-button-color-active, var(--salt-actionable-cta-foreground-hover));
-  background: var(--saltTokenizedInput-pill-delete-button-background-active, var(--salt-actionable-cta-background-hover));
+  color: var(--saltTokenizedInput-pill-delete-button-color-active, var(--salt-actionable-accented-bold-foreground-hover));
+  background: var(--saltTokenizedInput-pill-delete-button-background-active, var(--salt-actionable-accented-bold-background-hover));
 }

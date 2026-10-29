@@ -1,0 +1,41 @@
+.saltCardFooter {
+  padding: var(--saltCardFooter-padding, var(--salt-spacing-200));
+  display: flex;
+  align-items: center;
+  gap: var(--salt-spacing-100);
+  box-sizing: border-box;
+}
+
+.saltCard-sectioned > .saltCardHeader + .saltCardFooter,
+.saltCard-sectioned > .saltCardContent + .saltCardFooter,
+.saltLinkCard-sectioned > .saltCardHeader + .saltCardFooter,
+.saltLinkCard-sectioned > .saltCardContent + .saltCardFooter,
+.saltInteractableCard-sectioned > .saltCardHeader + .saltCardFooter,
+.saltInteractableCard-sectioned > .saltCardContent + .saltCardFooter {
+  padding-top: 0;
+}
+
+.saltCard-sectioned > .saltCardFooter,
+.saltLinkCard-sectioned > .saltCardFooter,
+.saltInteractableCard-sectioned > .saltCardFooter {
+  flex-shrink: 0;
+  margin-top: auto;
+}
+
+@supports selector(:has(*)) {
+  .saltCard > .saltCardHeader + .saltCardFooter,
+  .saltCard > .saltCardContent + .saltCardFooter,
+  .saltLinkCard > .saltCardHeader + .saltCardFooter,
+  .saltLinkCard > .saltCardContent + .saltCardFooter,
+  .saltInteractableCard > .saltCardHeader + .saltCardFooter,
+  .saltInteractableCard > .saltCardContent + .saltCardFooter {
+    padding-top: 0;
+  }
+
+  .saltCard > .saltCardFooter,
+  .saltLinkCard > .saltCardFooter,
+  .saltInteractableCard > .saltCardFooter {
+    flex-shrink: 0;
+    margin-top: auto;
+  }
+}

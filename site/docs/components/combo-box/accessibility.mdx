@@ -47,13 +47,13 @@ data:
 <KeyboardControl keyOrCombos="Up arrow">
 
 - If the list is open, moves visual focus to the previous option in the list. Focus does not wrap.
-- If the list is closed, opens the list and moves visual focus to the last option in the list.
+- If the list is closed, opens the list and moves visual focus to the selected option, or to the last option if nothing is selected.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Down arrow">
 
 - If the list is open, moves visual focus to the next option in the list. Focus does not wrap.
-- If the list is closed, opens the list and moves visual focus to the first option in the list.
+- If the list is closed, opens the list and moves visual focus to the selected option, or to the first option if nothing is selected.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Left arrow / Right arrow">
@@ -63,22 +63,24 @@ data:
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Home">
 
-- When focus is within the combo box, this action moves focus to the first option.
+- If the list is open, this action moves focus to the first option.
+- If the list is closed, this action moves the text cursor to the start of the input.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="End">
 
-- When focus is within the combo box, this action moves focus to the last option.
+- If the list is open, this action moves focus to the last option.
+- If the list is closed, this action moves the text cursor to the end of the input.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Page up">
 
-- When focus is within the dropdown, this action moves focus to the item before the first visible option.
+- If the list is open, this action moves focus to the item before the first visible option.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Page down">
 
-- When focus is within the dropdown, this action moves focus to the item after the last visible option.
+- If the list is open, this action moves focus to the item after the last visible option.
 
 </KeyboardControl>
 </KeyboardControls>

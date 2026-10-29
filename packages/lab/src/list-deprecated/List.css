@@ -3,7 +3,7 @@
   /* Color */
   --list-background: var(--salt-container-primary-background);
   /* Border */
-  --list-borderColor: var(--salt-container-primary-borderColor);
+  --list-borderColor: var(--salt-container-bold-borderColor);
   --list-borderStyle: var(--salt-borderStyle-solid);
   --list-borderWidth: var(--salt-size-fixed-100);
   --list-borderRadius: 0;

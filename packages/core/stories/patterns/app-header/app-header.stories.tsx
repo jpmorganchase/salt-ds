@@ -3,299 +3,304 @@ import {
   BorderLayout,
   Button,
   Drawer,
-  FlexItem,
-  FlexLayout,
   NavigationItem,
+  SkipLink,
   StackLayout,
   Text,
-  useResponsiveProp,
+  useCurrentBreakpoint,
+  VerticalNavigation,
+  VerticalNavigationItem,
+  VerticalNavigationItemContent,
+  VerticalNavigationItemLabel,
+  VerticalNavigationItemTrigger,
 } from "@salt-ds/core";
 import {
   CloseIcon,
-  GithubIcon,
   MenuIcon,
+  SearchIcon,
+  SettingsIcon,
   StackoverflowIcon,
-  SymphonyIcon,
 } from "@salt-ds/icons";
-import type { Meta } from "@storybook/react-vite";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type FC, type ReactNode, useEffect, useState } from "react";
+import { Link, MemoryRouter, useLocation } from "react-router";
 import logo from "../../assets/logo.svg";
+import "./app-header.stories.css";
 
 export default {
   title: "Patterns/App Header",
+  parameters: {
+    layout: "fullscreen",
+  },
+  decorators: [
+    // A router lets the navigation items behave like real links: navigation is
+    // client-side and the active item is derived from the current location.
+    (Story) => (
+      <MemoryRouter>
+        <Story />
+      </MemoryRouter>
+    ),
+  ],
 } as Meta;
 
-const DesktopAppHeader: FC<{
-  items?: string[];
-  utilities?: { icon: ReactNode; key: string }[];
-}> = ({ items, utilities }) => {
-  const [active, setActive] = useState(items?.[0]);
-  const [offset, setOffset] = useState(0);
+const mainContentId = "app-header-main-content";
+
+type NavItem = { href: string; label: string };
+
+const navigationItems: NavItem[] = Array.from({ length: 5 }, (_, index) => ({
+  href: index === 0 ? "/" : `/item-${index + 1}`,
+  label: `Item ${index + 1}`,
+}));
+
+type Utility = { icon: ReactNode; key: string; label: string };
+
+const utilities: Utility[] = [
+  {
+    icon: <SearchIcon aria-hidden />,
+    key: "Utility action 1",
+    label: "Utility action 1",
+  },
+  {
+    icon: <StackoverflowIcon aria-hidden />,
+    key: "Utility action 2",
+    label: "Utility action 2",
+  },
+  {
+    icon: <SettingsIcon aria-hidden />,
+    key: "Utility action 3",
+    label: "Utility action 3",
+  },
+];
+
+const useScrolled = () => {
+  const [scrolled, setScrolled] = useState(false);
+
   useEffect(() => {
-    const setScroll = () => {
-      setOffset(window.scrollY);
+    const updateScrolled = () => {
+      setScrolled(window.scrollY > 0);
     };
 
-    window.addEventListener("scroll", setScroll);
+    updateScrolled();
+    window.addEventListener("scroll", updateScrolled, { passive: true });
     return () => {
-      window.removeEventListener("scroll", setScroll);
+      window.removeEventListener("scroll", updateScrolled);
     };
   }, []);
 
-  return (
-    <header>
-      <FlexLayout
-        style={{
-          paddingLeft: "var(--salt-spacing-300)",
-          paddingRight: "var(--salt-spacing-300)",
-          backgroundColor: "var(--salt-container-primary-background)",
-          position: "fixed",
-          width: "100%",
-          boxShadow:
-            offset > 0 ? "var(--salt-overlayable-shadow-scroll)" : "none",
-          borderBottom:
-            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
-        }}
-        justify="space-between"
-        gap={3}
-      >
-        <FlexItem align="center">
-          <img
-            alt="logo"
-            src={logo}
-            style={{
-              display: "block",
-              height: "calc(var(--salt-size-base) - var(--salt-spacing-150))",
-            }}
-          />
-        </FlexItem>
-        <nav>
-          <ul
-            style={{
-              display: "flex",
-              listStyle: "none",
-              padding: "0",
-              margin: "0",
-            }}
-          >
-            {items?.map((item) => (
-              <li key={item}>
-                <NavigationItem
-                  active={active === item}
-                  href="#"
-                  onClick={() => setActive(item)}
-                >
-                  {item}
-                </NavigationItem>
-              </li>
-            ))}
-          </ul>
-        </nav>
-        <FlexItem align="center">
-          <StackLayout direction="row" gap={1}>
-            {utilities?.map((utility) => (
-              <Button key={utility.key} appearance="transparent">
-                {utility.icon}
-              </Button>
-            ))}
-          </StackLayout>
-        </FlexItem>
-      </FlexLayout>
-    </header>
-  );
+  return scrolled;
 };
 
-const MobileAppHeader: FC<{
-  items?: string[];
-  utilities?: { icon: ReactNode; key: string }[];
-}> = ({ items, utilities }) => {
+const LogoLink = ({ onNavigate }: { onNavigate?: () => void }) => (
+  <Link aria-label="Product home" to="/" onClick={onNavigate}>
+    <img alt="" className="appHeaderPattern-logo" src={logo} />
+  </Link>
+);
+
+const NavigationList: FC<{
+  activePath: string;
+  items: NavItem[];
+}> = ({ activePath, items }) => (
+  <nav aria-label="Main navigation">
+    <ul className="appHeaderPattern-navList">
+      {items.map((item) => (
+        <li key={item.href}>
+          <NavigationItem
+            active={activePath === item.href}
+            href={item.href}
+            render={<Link to={item.href} />}
+          >
+            {item.label}
+          </NavigationItem>
+        </li>
+      ))}
+    </ul>
+  </nav>
+);
+
+const UtilityButtons: FC<{ utilities: Utility[] }> = ({ utilities }) => (
+  <StackLayout direction="row" gap={1}>
+    {utilities.map((utility) => (
+      <Button
+        key={utility.key}
+        aria-label={utility.label}
+        appearance="transparent"
+      >
+        {utility.icon}
+      </Button>
+    ))}
+  </StackLayout>
+);
+
+const DrawerNavigation: FC<{
+  activePath: string;
+  items: NavItem[];
+  onNavigate: () => void;
+  utilities: Utility[];
+}> = ({ activePath, items, onNavigate, utilities }) => (
+  <VerticalNavigation aria-label="Main navigation">
+    {items.map((item) => (
+      <VerticalNavigationItem key={item.href} active={activePath === item.href}>
+        <VerticalNavigationItemContent>
+          <VerticalNavigationItemTrigger
+            render={<Link to={item.href} />}
+            onClick={onNavigate}
+          >
+            <VerticalNavigationItemLabel>
+              {item.label}
+            </VerticalNavigationItemLabel>
+          </VerticalNavigationItemTrigger>
+        </VerticalNavigationItemContent>
+      </VerticalNavigationItem>
+    ))}
+    {utilities.map((utility, index) => (
+      <VerticalNavigationItem
+        key={utility.key}
+        className={
+          index === 0 ? "appHeaderPattern-firstUtilityItem" : undefined
+        }
+      >
+        <VerticalNavigationItemContent>
+          <VerticalNavigationItemTrigger onClick={onNavigate}>
+            {utility.icon}
+            <VerticalNavigationItemLabel>
+              {utility.key}
+            </VerticalNavigationItemLabel>
+          </VerticalNavigationItemTrigger>
+        </VerticalNavigationItemContent>
+      </VerticalNavigationItem>
+    ))}
+  </VerticalNavigation>
+);
+
+// Hosts the app header within a page (BorderLayout + main + footer) so it can be
+// shown in context. The app header itself is the `<header>` region below (plus
+// its drawer on small viewports); the main/footer/placeholder content is only
+// scaffolding to demonstrate the fixed header and scroll shadow.
+const AppHeaderPage: FC = () => {
+  // The header collapses into a drawer on small viewports (xs and sm), matching
+  // the Salt breakpoints. This is driven by viewport width, not density —
+  // density (e.g. "mobile") is a device/input concern and is set separately.
+  const breakpoint = useCurrentBreakpoint();
+  const isSmallViewport = breakpoint === "xs" || breakpoint === "sm";
+  const scrolled = useScrolled();
+  const { pathname } = useLocation();
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const [active, setActive] = useState(items?.[0]);
 
-  const [offset, setOffset] = useState(0);
   useEffect(() => {
-    const setScroll = () => {
-      setOffset(window.scrollY);
-    };
+    if (!isSmallViewport) {
+      setDrawerOpen(false);
+    }
+  }, [isSmallViewport]);
 
-    window.addEventListener("scroll", setScroll);
-    return () => {
-      window.removeEventListener("scroll", setScroll);
-    };
-  }, []);
-
-  const handleClick = (item: string) => {
-    setActive(item);
+  const closeDrawer = () => {
     setDrawerOpen(false);
   };
 
   return (
-    <header>
-      <StackLayout
-        direction="row"
-        gap={3}
-        style={{
-          width: "100%",
-          height: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
-          backgroundColor: "var(--salt-container-primary-background)",
-          zIndex: "calc(var(--salt-zIndex-drawer) + 1)",
-          position: "fixed",
-          borderBottom:
-            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-primary-borderColor)",
-          boxShadow: offset > 0 ? "var(--salt-shadow-1)" : "none",
-        }}
-      >
-        <FlexItem
-          style={{
-            justifyContent: "center",
-            display: "flex",
-            paddingLeft: "var(--salt-spacing-100)",
-          }}
+    <>
+      {/* The skip link is the first focusable element and sits outside the
+          header so it isn't part of the banner landmark. */}
+      <SkipLink targetId={mainContentId}>Skip to main content</SkipLink>
+      <BorderLayout>
+        {/* --- App header --- */}
+        <BorderItem
+          as="header"
+          position="north"
+          className="appHeaderPattern-header"
+          data-scrolled={scrolled}
+          data-small-viewport={isSmallViewport}
         >
-          {!drawerOpen && (
-            <Button
-              aria-label="Open navigation"
-              onClick={() => setDrawerOpen(true)}
-              style={{ alignSelf: "center" }}
-              appearance="transparent"
-            >
-              <MenuIcon aria-hidden />
-            </Button>
+          {isSmallViewport ? (
+            <>
+              <Button
+                aria-label={drawerOpen ? "Close navigation" : "Open navigation"}
+                appearance="transparent"
+                onClick={() => setDrawerOpen((open) => !open)}
+              >
+                {drawerOpen ? (
+                  <CloseIcon aria-hidden />
+                ) : (
+                  <MenuIcon aria-hidden />
+                )}
+              </Button>
+              <LogoLink />
+            </>
+          ) : (
+            <>
+              <LogoLink />
+              <NavigationList activePath={pathname} items={navigationItems} />
+              <UtilityButtons utilities={utilities} />
+            </>
           )}
-          {drawerOpen && (
-            <Button
-              aria-label="Close navigation"
-              onClick={() => setDrawerOpen(false)}
-              style={{ alignSelf: "center" }}
-              appearance="transparent"
-            >
-              <CloseIcon aria-hidden />
-            </Button>
-          )}
-        </FlexItem>
-        <FlexItem align="center">
-          <img
-            alt="logo"
-            src={logo}
-            style={{
-              display: "block",
-              height: "calc(var(--salt-size-base) - var(--salt-spacing-150))",
-            }}
+        </BorderItem>
+        <BorderItem
+          as="main"
+          id={mainContentId}
+          position="center"
+          className="appHeaderPattern-main"
+        >
+          {Array.from({ length: 12 }, (_, index) => (
+            <div
+              // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
+              key={index}
+              className="appHeaderPattern-block"
+            />
+          ))}
+        </BorderItem>
+        <BorderItem position="south">
+          <div className="appHeaderPattern-footer">
+            <Text>Footer</Text>
+          </div>
+        </BorderItem>
+      </BorderLayout>
+      {/* The drawer content is offset below the fixed app header to preserve the
+          original small-viewport example layout. */}
+      {isSmallViewport && (
+        <Drawer
+          aria-label="Main navigation"
+          className="appHeaderPattern-drawer"
+          open={drawerOpen}
+          onOpenChange={setDrawerOpen}
+        >
+          <DrawerNavigation
+            activePath={pathname}
+            items={navigationItems}
+            onNavigate={closeDrawer}
+            utilities={utilities}
           />
-        </FlexItem>
-      </StackLayout>
-      <Drawer
-        aria-label="Main navigation"
-        style={{
-          paddingTop: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
-          paddingLeft: "0",
-        }}
-        open={drawerOpen}
-        onOpenChange={() => {
-          if (drawerOpen) {
-            setDrawerOpen(false);
-          }
-        }}
-      >
-        <nav>
-          <ul style={{ listStyle: "none", padding: "0" }}>
-            {items?.map((item) => (
-              <li key={item}>
-                <NavigationItem
-                  orientation="vertical"
-                  active={active === item}
-                  href="#"
-                  onClick={() => {
-                    handleClick(item);
-                  }}
-                >
-                  {item}
-                </NavigationItem>
-              </li>
-            ))}
-            {utilities?.map((utility) => (
-              <li key={utility.key}>
-                <NavigationItem
-                  orientation="vertical"
-                  href="#"
-                  onClick={() => {
-                    setDrawerOpen(false);
-                  }}
-                >
-                  {utility.icon}
-                  {utility.key}
-                </NavigationItem>
-              </li>
-            ))}
-          </ul>
-        </nav>
-      </Drawer>
-    </header>
+        </Drawer>
+      )}
+    </>
   );
 };
 
-export const AppHeader = () => {
-  const isMobile = useResponsiveProp({ xs: true, sm: false }, false);
+/**
+ * The app header is responsive to the width of the viewport. At medium
+ * breakpoints and above it shows the full horizontal navigation and utilities;
+ * resize the preview (or use the Storybook viewport toolbar) below the small
+ * breakpoint to see it collapse into a drawer.
+ */
+export const AppHeader: StoryFn = () => <AppHeaderPage />;
 
-  const items = ["Home", "About", "Services", "Contact", "Blog"];
+/**
+ * The small-viewport experience, previewed at the extra small viewport. The
+ * collapse into a drawer is driven by the viewport breakpoint, so it applies to
+ * any small viewport (e.g. a narrow desktop window), independent of density. On
+ * an actual mobile device you would additionally set the density to "mobile".
+ */
+export const SmallViewport: StoryFn = AppHeader.bind({});
 
-  const utilities = [
-    {
-      icon: <SymphonyIcon />,
-      key: "Symphony",
-    },
-    {
-      icon: <StackoverflowIcon />,
-      key: "Stack Overflow",
-    },
-    {
-      icon: <GithubIcon />,
-      key: "GitHub",
-    },
-  ];
-
-  return (
-    <BorderLayout>
-      <BorderItem position="north">
-        {isMobile ? (
-          <MobileAppHeader items={items} utilities={utilities} />
-        ) : (
-          <DesktopAppHeader items={items} utilities={utilities} />
-        )}
-      </BorderItem>
-      <BorderItem
-        style={{
-          marginTop: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
-        }}
-        position="center"
-      >
-        {Array.from({ length: 12 }, (_, index) => (
-          <div
-            // biome-ignore lint/suspicious/noArrayIndexKey: In this case, using index as key is acceptable
-            key={index}
-            style={{
-              padding: "var(--salt-spacing-400)",
-              margin: "var(--salt-spacing-400)",
-              backgroundColor: "var(--salt-container-secondary-background)",
-            }}
-          />
-        ))}
-      </BorderItem>
-      <BorderItem position="south">
-        <div
-          style={{
-            padding: "var(--salt-spacing-200)",
-            margin: "var(--salt-spacing-200)",
-            backgroundColor: "var(--salt-container-secondary-background)",
-          }}
-        >
-          <Text>Footer</Text>
-        </div>
-      </BorderItem>
-    </BorderLayout>
-  );
+SmallViewport.globals = {
+  viewport: { value: "xs" },
 };
 
-AppHeader.parameters = {
-  layout: "fullscreen",
+/**
+ * Emulates a mobile device by combining the extra small viewport with mobile
+ * density.
+ */
+export const Mobile: StoryFn = AppHeader.bind({});
+
+Mobile.globals = {
+  density: "mobile",
+  viewport: { value: "xs" },
 };

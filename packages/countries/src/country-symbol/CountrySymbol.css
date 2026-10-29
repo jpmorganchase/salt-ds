@@ -1,8 +1,8 @@
 /* Style applied to the root element */
 .saltCountrySymbol {
-  --country-symbol-size-multiplier: var(--saltCountrySymbol-size-multiplier, 1);
-  --country-symbol-base-size: var(--salt-size-base, 20px);
-  --country-symbol-size: calc(var(--country-symbol-base-size) * var(--country-symbol-size-multiplier));
+  --countrySymbol-size-multiplier: var(--saltCountrySymbol-size-multiplier, 1);
+  --countrySymbol-base-size: var(--salt-size-base, 20px);
+  --countrySymbol-size: calc(var(--countrySymbol-base-size) * var(--countrySymbol-size-multiplier));
 }
 
 .saltCountrySymbol {
@@ -13,14 +13,14 @@
   user-select: none;
 }
 .saltCountrySymbol-sharp {
-  height: var(--country-symbol-size);
-  min-height: var(--country-symbol-size);
+  height: var(--countrySymbol-size);
+  min-height: var(--countrySymbol-size);
 }
 
 .saltCountrySymbol-round {
-  width: var(--country-symbol-size);
-  height: var(--country-symbol-size);
-  min-width: var(--country-symbol-size);
-  min-height: var(--country-symbol-size);
+  width: var(--countrySymbol-size);
+  height: var(--countrySymbol-size);
+  min-width: var(--countrySymbol-size);
+  min-height: var(--countrySymbol-size);
   border-radius: 50%;
 }

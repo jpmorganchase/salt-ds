@@ -2,6 +2,7 @@ import {
   Avatar,
   Toggletip,
   ToggletipPanel,
+  type ToggletipProps,
   ToggletipTrigger,
 } from "@salt-ds/core";
 import { HelpCircleIcon } from "@salt-ds/icons";
@@ -13,7 +14,7 @@ export default {
   component: Avatar,
 } as Meta<typeof Avatar>;
 
-const Template: StoryFn<typeof Toggletip> = (args) => (
+const Template = (args: ToggletipProps) => (
   <Toggletip {...args}>
     <ToggletipTrigger aria-label="Help info">
       <HelpCircleIcon aria-hidden />

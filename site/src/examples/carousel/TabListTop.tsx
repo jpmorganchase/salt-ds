@@ -48,9 +48,7 @@ export const TabListTop = (): ReactElement => {
           );
         })}
       </CarouselSlides>
-      <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
-        Tablist top aligned example
-      </H2>
+      <H2 id={`${carouselId}-title`}>Tablist top aligned example</H2>
     </Carousel>
   );
 };

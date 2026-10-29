@@ -24,7 +24,3 @@ export const OverflowSeparator = (
   });
   return <div className={clsx(withBaseName(), className)} {...rest} />;
 };
-
-OverflowSeparator.defaultProps = {
-  focusable: false,
-};

@@ -9,3 +9,7 @@
   flex-direction: row;
   gap: var(--salt-spacing-100);
 }
+
+.SBLogo {
+  display: flex;
+}

@@ -30,7 +30,7 @@ export const Stepper = forwardRef<HTMLOListElement, StepperProps>(
     const orientation = orientationProp || orientationContext;
 
     useComponentCssInjection({
-      testId: "salt-Stepper",
+      testId: "salt-stepper",
       css: StepperCSS,
       window: targetWindow,
     });

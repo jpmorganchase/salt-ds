@@ -1,8 +1,7 @@
 import { Text } from "@salt-ds/core";
+import "@salt-ds/react-resizable-panels-theme/index.css";
 import { QAContainer } from "docs/components";
 import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
-
-import "../index.css";
 
 export default {
   title: "React Resizable Panels/Theme/React Resizable Panels Theme QA",

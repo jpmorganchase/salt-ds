@@ -4,7 +4,7 @@ import { shortColorData } from "./exampleData";
 
 export const Multiselect = (): ReactElement => {
   return (
-    <Dropdown multiselect style={{ width: "266px" }}>
+    <Dropdown aria-label="Color" multiselect style={{ width: "266px" }}>
       {shortColorData.map((color) => (
         <Option value={color} key={color} />
       ))}

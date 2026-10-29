@@ -2,6 +2,7 @@ import {
   Banner,
   BannerActions,
   BannerContent,
+  type BannerProps,
   Button,
   FlowLayout,
   Link,
@@ -11,7 +12,7 @@ import {
 } from "@salt-ds/core";
 import { CloseIcon, RefreshIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { useState } from "react";
+import { type FC, useState } from "react";
 
 export default {
   title: "Core/Banner",
@@ -56,8 +57,8 @@ export const Interactive: StoryFn<typeof Banner> = (props) => (
 
 export const Inline: StoryFn<typeof Banner> = (props) => (
   <StackLayout gap={3} style={{ width: 800 }}>
-    <Text styleAs="h3">
-      <strong>Terms and conditions</strong>
+    <Text styleAs="h3" fontWeight="bolder">
+      Terms and conditions
     </Text>
     <Banner {...props}>
       <BannerContent>
@@ -90,9 +91,7 @@ export const Issue: StoryFn<typeof Banner> = () => {
     <StackLayout gap={3} style={{ width: 800 }}>
       <Banner status="error" role="alert">
         <BannerContent>
-          <Text>
-            <strong>Failed to connect to the server</strong>
-          </Text>
+          <Text fontWeight="bolder">Failed to connect to the server</Text>
           Error connecting to the server. Please refresh
         </BannerContent>
         <BannerActions>
@@ -168,7 +167,9 @@ const statuses: { status: ValidationStatus; content: string }[] = [
   },
 ];
 
-export const StatusesPrimary: StoryFn<typeof Banner> = (props) => {
+export const StatusesPrimary: StoryFn<typeof Banner> & FC<BannerProps> = (
+  props: BannerProps,
+) => {
   return (
     <StackLayout style={{ width: 500 }}>
       {statuses.map((example) => (
@@ -221,9 +222,7 @@ export const MultipleLines: StoryFn = () => {
       <Banner status="error">
         <BannerContent>
           <StackLayout gap={1}>
-            <Text>
-              <strong>Unable to process transaction</strong>
-            </Text>
+            <Text fontWeight="bolder">Unable to process transaction</Text>
             <Text>
               There was an error processing your transaction. Please check that
               your payment details are correct and try again.
@@ -236,8 +235,8 @@ export const MultipleLines: StoryFn = () => {
         <BannerContent>
           <StackLayout gap={1}>
             <Text>
-              An invite has been sent to <strong>Person 1</strong>. Once they
-              accept, you will receive a notification.
+              An invite has been sent to <b>Person 1</b>. Once they accept, you
+              will receive a notification.
             </Text>
             <FlowLayout gap={1}>
               <Button appearance="transparent">Cancel invite</Button>

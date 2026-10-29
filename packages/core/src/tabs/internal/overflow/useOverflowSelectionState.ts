@@ -82,6 +82,10 @@ export function useOverflowSelectionState({
   }, [commitSelection, menuOpen]);
 
   useEffect(() => {
+    if (menuOpen) {
+      return;
+    }
+
     const selectedFromOverflow = selectionFromOverflowValueRef.current;
     if (selectedFromOverflow == null || pendingOverflowSelectionRef.current) {
       return;
@@ -91,8 +95,14 @@ export function useOverflowSelectionState({
       return;
     }
 
-    selectionFromOverflowValueRef.current = null;
-  }, [previousSelected, selected]);
+    const clearStaleSelection = setTimeout(() => {
+      if (selectionFromOverflowValueRef.current === selectedFromOverflow) {
+        selectionFromOverflowValueRef.current = null;
+      }
+    });
+
+    return () => clearTimeout(clearStaleSelection);
+  }, [menuOpen, previousSelected, selected]);
 
   return {
     selectionFromOverflowValueRef,

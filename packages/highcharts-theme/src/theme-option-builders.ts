@@ -153,16 +153,16 @@ export const buildTextOptions = (
     margin: tokens["--salt-spacing-200"],
     style: {
       color: tokens["--salt-content-primary-foreground"],
-      fontFamily: tokens["--salt-text-h4-fontFamily"],
+      fontFamily: tokens["--salt-text-heading-fontFamily"],
       fontSize: tokens["--salt-text-h4-fontSize"],
-      fontWeight: tokens["--salt-text-h4-fontWeight"],
+      fontWeight: tokens["--salt-text-heading-fontWeight"],
       lineHeight: tokens["--salt-text-h4-lineHeight"],
     },
   },
   subtitle: {
     style: {
       color: tokens["--salt-content-secondary-foreground"],
-      fontFamily: tokens["--salt-text-label-fontFamily"],
+      fontFamily: tokens["--salt-text-fontFamily"],
       fontSize: tokens["--salt-text-label-fontSize"],
       lineHeight: tokens["--salt-text-label-lineHeight"],
     },
@@ -183,7 +183,7 @@ export const buildAxisOptions = (
       labels: {
         style: {
           color: tokens["--salt-content-secondary-foreground"],
-          fontFamily: tokens["--salt-text-label-fontFamily"],
+          fontFamily: tokens["--salt-text-fontFamily"],
           fontSize: tokens["--salt-text-label-fontSize"],
           lineHeight: tokens["--salt-text-label-lineHeight"],
         },
@@ -195,7 +195,7 @@ export const buildAxisOptions = (
         margin: tokens["--salt-spacing-200"],
         style: {
           color: tokens["--salt-content-secondary-foreground"],
-          fontFamily: tokens["--salt-text-label-fontFamily"],
+          fontFamily: tokens["--salt-text-fontFamily"],
           fontSize: tokens["--salt-text-label-fontSize"],
           lineHeight: tokens["--salt-text-label-lineHeight"],
         },
@@ -207,7 +207,7 @@ export const buildAxisOptions = (
       labels: {
         style: {
           color: tokens["--salt-content-secondary-foreground"],
-          fontFamily: tokens["--salt-text-label-fontFamily"],
+          fontFamily: tokens["--salt-text-fontFamily"],
           fontSize: tokens["--salt-text-label-fontSize"],
           lineHeight: tokens["--salt-text-label-lineHeight"],
         },
@@ -218,11 +218,20 @@ export const buildAxisOptions = (
         : showAxesGridLines
           ? tokens["--salt-size-fixed-100"]
           : 0,
+      stackLabels: {
+        style: {
+          color: tokens["--salt-content-primary-foreground"],
+          fontFamily: tokens["--salt-text-fontFamily"],
+          fontSize: tokens["--salt-text-label-fontSize"],
+          fontWeight: tokens["--salt-text-label-fontWeight-bolder"],
+          lineHeight: tokens["--salt-text-label-lineHeight"],
+        },
+      },
       title: {
         margin: tokens["--salt-spacing-200"],
         style: {
           color: tokens["--salt-content-secondary-foreground"],
-          fontFamily: tokens["--salt-text-label-fontFamily"],
+          fontFamily: tokens["--salt-text-fontFamily"],
           fontSize: tokens["--salt-text-label-fontSize"],
           lineHeight: tokens["--salt-text-label-lineHeight"],
         },
@@ -241,7 +250,7 @@ export const buildLegendOptions = (
   itemMarginBottom: tokens["--salt-spacing-150"],
   itemStyle: {
     color: tokens["--salt-content-secondary-foreground"],
-    fontFamily: tokens["--salt-text-label-fontFamily"],
+    fontFamily: tokens["--salt-text-fontFamily"],
     fontSize: tokens["--salt-text-label-fontSize"],
     fontWeight: tokens["--salt-text-label-fontWeight"],
     lineHeight: tokens["--salt-text-label-lineHeight"],
@@ -253,7 +262,7 @@ export const buildLegendOptions = (
     inactiveColor: tokens["--salt-content-secondary-foreground-disabled"],
     style: {
       color: tokens["--salt-content-secondary-foreground"],
-      fontFamily: tokens["--salt-text-label-fontFamily"],
+      fontFamily: tokens["--salt-text-fontFamily"],
       fontSize: tokens["--salt-text-label-fontSize"],
       fontWeight: tokens["--salt-text-label-fontWeight"],
       lineHeight: tokens["--salt-text-label-lineHeight"],
@@ -262,6 +271,15 @@ export const buildLegendOptions = (
   symbolHeight: tokens["--salt-size-icon"],
   symbolRadius: tokens["--salt-palette-corner-weaker"],
   symbolWidth: tokens["--salt-size-icon"],
+  title: {
+    style: {
+      color: tokens["--salt-content-secondary-foreground"],
+      fontFamily: tokens["--salt-text-fontFamily"],
+      fontSize: tokens["--salt-text-label-fontSize"],
+      fontWeight: tokens["--salt-text-label-fontWeight"],
+      lineHeight: tokens["--salt-text-label-lineHeight"],
+    },
+  },
   verticalAlign: "top",
   y: tokens["--salt-spacing-200"] + tokens["--salt-size-icon"],
 });
@@ -293,7 +311,7 @@ export const buildPlotOptions = (
       dataLabels: {
         style: {
           color: tokens["--salt-content-secondary-foreground"],
-          fontFamily: tokens["--salt-text-label-fontFamily"],
+          fontFamily: tokens["--salt-text-fontFamily"],
           fontSize: tokens["--salt-text-label-fontSize"],
           fontWeight: tokens["--salt-text-label-fontWeight"],
           lineHeight: tokens["--salt-text-label-lineHeight"],
@@ -324,9 +342,9 @@ export const buildPlotOptions = (
       dataLabels: {
         style: {
           color: tokens["--salt-content-bold-foreground"],
-          fontFamily: tokens["--salt-text-label-fontFamily"],
+          fontFamily: tokens["--salt-text-fontFamily"],
           fontSize: tokens["--salt-text-label-fontSize"],
-          fontWeight: tokens["--salt-text-label-fontWeight-strong"],
+          fontWeight: tokens["--salt-text-label-fontWeight-bolder"],
           lineHeight: tokens["--salt-text-label-lineHeight"],
           textOutline,
         },
@@ -380,9 +398,9 @@ export const buildPlotOptions = (
       dataLabels: {
         style: {
           color: tokens["--salt-content-bold-foreground"],
-          fontFamily: tokens["--salt-text-label-fontFamily"],
+          fontFamily: tokens["--salt-text-fontFamily"],
           fontSize: tokens["--salt-text-label-fontSize"],
-          fontWeight: tokens["--salt-text-label-fontWeight-strong"],
+          fontWeight: tokens["--salt-text-label-fontWeight-bolder"],
           lineHeight: tokens["--salt-text-label-lineHeight"],
           textOutline: strongTextOutline,
         },
@@ -422,7 +440,7 @@ export const buildPlotOptions = (
           '{point.name} <span class="value">{point.percentage:.1f}%</span>',
         style: {
           color: tokens["--salt-content-secondary-foreground"],
-          fontFamily: tokens["--salt-text-label-fontFamily"],
+          fontFamily: tokens["--salt-text-fontFamily"],
           fontSize: tokens["--salt-text-label-fontSize"],
           fontWeight: tokens["--salt-text-label-fontWeight"],
           lineHeight: tokens["--salt-text-label-lineHeight"],
@@ -462,7 +480,7 @@ export const buildPlotOptions = (
       dataLabels: {
         style: {
           color: tokens["--salt-content-secondary-foreground"],
-          fontFamily: tokens["--salt-text-label-fontFamily"],
+          fontFamily: tokens["--salt-text-fontFamily"],
           fontSize: tokens["--salt-text-label-fontSize"],
           fontWeight: tokens["--salt-text-label-fontWeight"],
           lineHeight: tokens["--salt-text-label-lineHeight"],
@@ -476,9 +494,9 @@ export const buildPlotOptions = (
       dataLabels: {
         style: {
           color: tokens["--salt-content-bold-foreground"],
-          fontFamily: tokens["--salt-text-label-fontFamily"],
+          fontFamily: tokens["--salt-text-fontFamily"],
           fontSize: tokens["--salt-text-label-fontSize"],
-          fontWeight: tokens["--salt-text-label-fontWeight-strong"],
+          fontWeight: tokens["--salt-text-label-fontWeight-bolder"],
           lineHeight: tokens["--salt-text-label-lineHeight"],
           textOutline,
         },

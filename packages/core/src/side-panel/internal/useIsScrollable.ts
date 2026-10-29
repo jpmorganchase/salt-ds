@@ -2,7 +2,7 @@ import { type RefObject, useEffect, useState } from "react";
 
 const observedAttributes = ["class", "hidden", "style"];
 
-export function useIsScrollable(ref: RefObject<HTMLElement>) {
+export function useIsScrollable(ref: RefObject<HTMLElement | null>) {
   const [isScrollable, setIsScrollable] = useState(false);
 
   useEffect(() => {

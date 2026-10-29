@@ -21,7 +21,7 @@ const Nav = () => (
       gap: "var(--salt-spacing-100)",
       padding: "var(--salt-spacing-200)",
       borderRight:
-        "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+        "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
       backgroundColor: "var(--salt-container-primary-background)",
       whiteSpace: "nowrap",
     }}
@@ -34,7 +34,7 @@ const Nav = () => (
           height: "var(--salt-size-base)",
           aspectRatio: 1,
           border:
-            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-primary-borderColor)",
+            "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
           borderRadius: "var(--salt-palette-corner-weak)",
         }}
       />
