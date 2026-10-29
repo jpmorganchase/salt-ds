@@ -421,7 +421,7 @@ function checkTokens({ uses, text, file, data, problems, page }) {
         ...at,
         severity: "error",
         rule: "deprecated-token",
-        message: `${name} is deprecated${info.replacements.length > 0 ? `; use ${info.replacements.join(" or ")} instead` : " and has no replacement"}`,
+        message: `${name} is deprecated${info.replacements.length > 0 ? `; use ${info.replacements.join(" or ")} instead` : " and no replacement is recorded for it"}`,
         page: page(info.page),
       });
     } else if (info.state === "palette") {

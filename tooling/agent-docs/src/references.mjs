@@ -30,7 +30,7 @@ const TOKEN_TIERS = [
     key: "deprecated",
     title: "Deprecated tokens",
     guidance:
-      "Do not use these tokens in new code. A replacement is shown when the theme CSS names one, and an alias when every declaration directly references the same characteristic or foundation token. Check the theme changelog for other replacements.",
+      "Do not use these tokens in new code. A replacement is shown when the theme CSS or changelog names one, and an alias when every declaration directly references the same characteristic or foundation token. Check the theme changelog for other replacements.",
   },
 ];
 
@@ -103,15 +103,49 @@ function namedReplacement(declaration) {
   )?.[1];
 }
 
+const TOKEN_LIST = /^`?--salt-[\w-]+`?(?:\s+or\s+`?--salt-[\w-]+`?)*$/;
+
 /**
- * Replacements in the theme changelog's tables whose second column is a
- * replacement, as `token -> [options]`. The newest release comes first and
- * wins. A cell other than tokens joined by "or", such as a calculation or
- * "None", names no replacement.
+ * Replacements a ```diff block's hunk records: a run of removed tokens then a
+ * run of added ones, which pair up in order when there are as many of each,
+ * or all go to the one added token. Other hunks are ambiguous, and a hunk
+ * with a removed or added line that isn't a token, such as a CSS
+ * declaration using one, isn't a list of tokens. A token paired with itself
+ * had its value changed. A removed token's own comment, as in
+ * `- --salt-a /* Use --salt-b *\/`, names its replacement when it names only
+ * a token, and otherwise records that it has none.
+ */
+function diffHunkReplacements({ removed, added }) {
+  const entries = [];
+  const paired = removed.filter(({ comment }) => comment === undefined);
+  for (const { token, comment, line } of removed) {
+    if (comment === undefined) continue;
+    const named = /^use\s+(--salt-[\w-]+)$/i.exec(comment)?.[1];
+    entries.push({ line, token, names: named ? [named] : undefined });
+  }
+  if (
+    paired.length > 0 &&
+    (added.length === paired.length || added.length === 1)
+  ) {
+    paired.forEach(({ token, line }, index) => {
+      const to = added[added.length === 1 ? 0 : index].token;
+      if (to !== token) entries.push({ line, token, names: [to] });
+    });
+  }
+  return entries;
+}
+
+/**
+ * Replacements the theme changelog records, in two forms. Tables whose first
+ * column is a token and a later column is headed "Replacement" or "Use
+ * instead", where a cell other than tokens joined by "or", such as a
+ * calculation or "None", names no replacement. And ```diff blocks listing
+ * removed tokens before the tokens that replace them; see
+ * `diffHunkReplacements`. A token mentioned as undeprecated has none. The
+ * newest release comes first and wins.
  */
 export function changelogReplacements(markdown) {
-  const replacements = new Map();
-  const seen = new Set();
+  const entries = [];
   const cells = (line) =>
     line
       .trim()
@@ -119,28 +153,85 @@ export function changelogReplacements(markdown) {
       .slice(1, -1)
       .map((cell) => cell.trim());
   const lines = markdown.split("\n");
-  let replacing = false;
+  // The table column holding replacements, if the current table has one.
+  let column = -1;
+  let fence;
+  let hunk;
+  const endHunk = () => {
+    if (hunk && !hunk.invalid) entries.push(...diffHunkReplacements(hunk));
+    hunk = undefined;
+  };
   lines.forEach((line, index) => {
+    const fenceMatch = /^\s*(`{3,}|~{3,})\s*(\w*)/.exec(line);
+    if (fence) {
+      if (fenceMatch && fenceMatch[1][0] === fence.marker[0]) {
+        endHunk();
+        fence = undefined;
+        return;
+      }
+      if (!fence.diff) return;
+      const change = /^\s*([-+])\s*(.*)$/.exec(line);
+      if (!change || change[2] === "") {
+        endHunk();
+        return;
+      }
+      const [, sign, text] = change;
+      const token = /^--salt-[\w-]+/.exec(text)?.[0];
+      if (sign === "-" && hunk?.added.length > 0) endHunk();
+      hunk ??= { removed: [], added: [] };
+      if (!token) {
+        hunk.invalid = true;
+      } else if (sign === "+") {
+        hunk.added.push({ token });
+      } else {
+        const comment = /\/\*\s*(.*?)\s*\*\//.exec(text)?.[1];
+        hunk.removed.push({ token, comment, line: index });
+      }
+      return;
+    }
+    if (fenceMatch) {
+      fence = { marker: fenceMatch[1], diff: fenceMatch[2] === "diff" };
+      column = -1;
+      return;
+    }
+    // A token that was undeprecated lost the replacement it had.
+    if (/\bundeprecated\b/i.test(line)) {
+      for (const [token] of line.matchAll(/--salt-[\w-]+/g)) {
+        entries.push({ line: index, token, names: undefined });
+      }
+    }
     if (/^\s*\|[\s:|-]+\|\s*$/.test(line)) {
-      replacing = /^replacement/i.test(cells(lines[index - 1] ?? "")[1] ?? "");
+      column = cells(lines[index - 1] ?? "").findIndex(
+        (header, at) => at > 0 && /^(?:replacement|use instead)/i.test(header),
+      );
       return;
     }
     if (!line.trim().startsWith("|")) {
-      replacing = false;
+      column = -1;
       return;
     }
-    if (!replacing) return;
-    const [from, to = ""] = cells(line);
-    const token = /^`?(--salt-[\w-]+)`?$/.exec(from)?.[1];
-    if (!token || seen.has(token)) return;
-    seen.add(token);
-    if (/^`?--salt-[\w-]+`?(?:\s+or\s+`?--salt-[\w-]+`?)*$/.test(to)) {
-      replacements.set(
-        token,
-        [...to.matchAll(/--salt-[\w-]+/g)].map(([name]) => name),
-      );
-    }
+    if (column < 0) return;
+    const row = cells(line);
+    const token = /^`?(--salt-[\w-]+)`?$/.exec(row[0])?.[1];
+    if (!token) return;
+    const to = row[column] ?? "";
+    entries.push({
+      line: index,
+      token,
+      names: TOKEN_LIST.test(to)
+        ? [...to.matchAll(/--salt-[\w-]+/g)].map(([name]) => name)
+        : undefined,
+    });
   });
+  const replacements = new Map();
+  const seen = new Set();
+  for (const { token, names } of entries.sort(
+    (left, right) => left.line - right.line,
+  )) {
+    if (seen.has(token)) continue;
+    seen.add(token);
+    if (names) replacements.set(token, names);
+  }
   return replacements;
 }
 

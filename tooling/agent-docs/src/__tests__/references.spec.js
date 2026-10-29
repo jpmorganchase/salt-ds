@@ -364,6 +364,96 @@ describe("changelogReplacements", () => {
       ]),
     );
   });
+
+  it("reads tables with a Use instead column, as well as Replacement", () => {
+    const changelog = `## 1.0.0
+
+  | Deprecated token | Value | Use instead |
+  | - | - | - |
+  | --salt-a | 0.15 | --salt-b |
+  | \`--salt-c\` | 0.25 | \`--salt-d\` |
+`;
+    expect(changelogReplacements(changelog)).toEqual(
+      new Map([
+        ["--salt-a", ["--salt-b"]],
+        ["--salt-c", ["--salt-d"]],
+      ]),
+    );
+  });
+
+  it("reads diff blocks listing removed tokens before their replacements", () => {
+    const fence = "```";
+    const changelog = `## 2.0.0
+
+- Undeprecated \`--salt-undeprecated\`.
+
+${fence}diff
+- --salt-value-change: 1px;
++ --salt-value-change: 2px;
+- font-weight: var(--salt-in-css);
++ font-weight: var(--salt-in-css-new);
+${fence}
+
+## 1.0.0
+
+  ${fence}diff
+  - --salt-text-primary-foreground
+  - --salt-text-secondary-foreground
+  + --salt-content-primary-foreground
+  + --salt-content-secondary-foreground
+
+  - --salt-actionable-primary-fontWeight
+  - --salt-actionable-cta-fontWeight
+  + --salt-text-action-fontWeight
+
+  - --salt-accent-fontSize
+  + --salt-text-notation-fontSize: 10px; /* Value previously 11px */
+  - --salt-undeprecated
+  + --salt-container-bold-borderColor
+
+  - --salt-ambiguous-a
+  - --salt-ambiguous-b
+  + --salt-ambiguous-c
+  + --salt-ambiguous-d
+  + --salt-ambiguous-e
+
+  - --salt-named /* Use --salt-content-primary-foreground */
+  - --salt-value /* Use \`transparent\` */
+  - --salt-mixed /* Use --salt-x or rgb(0, 0, 0) */
+  ${fence}
+
+  ${fence}css
+  - --salt-not-a-diff
+  + --salt-not-a-replacement
+  ${fence}
+
+  | Deprecated token | Replacement token |
+  | - | - |
+  | --salt-value | --salt-table |
+  | --salt-value-change | --salt-table |
+`;
+    expect(changelogReplacements(changelog)).toEqual(
+      new Map([
+        [
+          "--salt-text-primary-foreground",
+          ["--salt-content-primary-foreground"],
+        ],
+        [
+          "--salt-text-secondary-foreground",
+          ["--salt-content-secondary-foreground"],
+        ],
+        [
+          "--salt-actionable-primary-fontWeight",
+          ["--salt-text-action-fontWeight"],
+        ],
+        ["--salt-actionable-cta-fontWeight", ["--salt-text-action-fontWeight"]],
+        ["--salt-accent-fontSize", ["--salt-text-notation-fontSize"]],
+        ["--salt-named", ["--salt-content-primary-foreground"]],
+        // A value change records no replacement, so an older one is used.
+        ["--salt-value-change", ["--salt-table"]],
+      ]),
+    );
+  });
 });
 
 describe("deprecated token aliases", () => {

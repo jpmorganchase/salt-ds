@@ -130,6 +130,24 @@ describe("salt-check", () => {
     ]);
   });
 
+  it("doesn't claim a deprecated token with no recorded replacement has none", () => {
+    const root = project(
+      { "src/app.css": ".a { color: var(--salt-old-color); }\n" },
+      {
+        theme: {
+          ...THEME,
+          tokens: { ...THEME.tokens, "--salt-old-color": ["deprecated", 1] },
+        },
+      },
+    );
+    const { code, log } = check(root);
+    expect(code).toBe(1);
+    expect(log).toEqual([
+      "src/app.css:1:17: error deprecated-token: --salt-old-color is deprecated and no replacement is recorded for it. See node_modules/@salt-ds/theme/docs/tokens/deprecated.md.",
+      "salt-check: checked 1 file: 1 error, 0 warnings.",
+    ]);
+  });
+
   it("prints paths relative to a current folder reached through a symlink", () => {
     const root = project({
       "src/app.css": ".a { color: var(--salt-size-border); }\n",
