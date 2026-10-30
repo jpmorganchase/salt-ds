@@ -78,6 +78,19 @@ export function useOverflowLayoutState({
     previousHiddenValuesRef.current = hiddenValues;
   }, [hiddenValues]);
 
+  // The fallback above relies on the previous render's hidden values, so it
+  // only holds for one render. Adopt it as the requested value so later
+  // renders keep the position rather than falling back to the first tab.
+  useIsomorphicLayoutEffect(() => {
+    if (
+      requestedOverflowActiveValue &&
+      resolvedOverflowActiveValue &&
+      requestedOverflowActiveValue !== resolvedOverflowActiveValue
+    ) {
+      setRequestedOverflowActiveValue(resolvedOverflowActiveValue);
+    }
+  }, [requestedOverflowActiveValue, resolvedOverflowActiveValue]);
+
   const hiddenValueSet = useMemo(() => new Set(hiddenValues), [hiddenValues]);
   const visibleValueSet = useMemo(
     () => new Set(visibleValues),
