@@ -1,5 +1,15 @@
 # @salt-ds/core
 
+## 1.74.1
+
+### Patch Changes
+
+- aa3ce52: Updated `Dialog` border color to use `--salt-container-borderColor` instead of `--salt-separable-tertiary-borderColor`, to align with design.
+
+  The visible change is limited to the Legacy theme. In JPM Brand (Salt Next) and Salt (Interim) both tokens resolve to the same value, so there is no visual difference. In the Legacy theme, the `Dialog` border now uses the solid container border color used by `Card`, instead of the translucent separable border color.
+
+- 40fb09b: Fixed a disabled tertiary `ComboBox` having a transparent background. It now uses `--salt-editable-tertiary-background-disabled`, like `Input` and `Dropdown`.
+
 ## 1.74.0
 
 ### Minor Changes
