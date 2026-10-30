@@ -828,7 +828,8 @@ describe("GIVEN a resizable Drawer", () => {
     });
 
     it("cancels when the window is resized", async () => {
-      await renderResizable();
+      // Otherwise the click below dismisses the drawer once placing is cancelled.
+      await renderResizable({ disableDismiss: true });
 
       await clickHandle();
       await expect.poll(guide).not.toBeNull();
