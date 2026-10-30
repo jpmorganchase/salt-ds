@@ -491,7 +491,6 @@
     "synonym": ["alert", "stop", "failure", "crash", "mistake", "exclamation"],
     "category": "indicators"
   },
-  { "iconName": "not-allowed", "synonym": [], "category": "indicators" },
   {
     "iconName": "expand",
     "synonym": [
@@ -537,8 +536,7 @@
       "save",
       "favourite",
       "rate",
-      "rating",
-      "star outline"
+      "rating"
     ],
     "category": "actions"
   },
@@ -551,8 +549,7 @@
       "save",
       "favourite",
       "rate",
-      "rating",
-      "star outline"
+      "rating"
     ],
     "category": "actions"
   },
@@ -661,7 +658,7 @@
       "support",
       "information",
       "assist",
-      "question mark circle"
+      "question mark"
     ],
     "category": "indicators"
   },
@@ -962,6 +959,21 @@
     "iconName": "music-disabled",
     "synonym": ["audio", "sound", "off", "disabled", "muted"],
     "category": "media"
+  },
+  {
+    "iconName": "not-allowed",
+    "synonym": [
+      "alert",
+      "stop",
+      "failure",
+      "crash",
+      "mistake",
+      "forbidden",
+      "prohibited",
+      "block",
+      "exclude"
+    ],
+    "category": "indicators"
   },
   {
     "iconName": "note",
@@ -2294,5 +2306,18 @@
       "performance"
     ],
     "category": "data"
+  },
+  {
+    "iconName": "rotate-left",
+    "synonym": [
+      "turn",
+      "arrow",
+      "organize",
+      "rotate",
+      "spin",
+      "counterclockwise",
+      "left"
+    ],
+    "category": "organize"
   }
 ]
