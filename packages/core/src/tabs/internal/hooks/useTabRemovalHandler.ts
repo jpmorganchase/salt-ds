@@ -81,9 +81,12 @@ export function useTabRemovalHandler({
     pendingRemovalRecoveryRetriesRef.current = 0;
   }, [pendingRemovalRecoveryRef, pendingRemovalRecoveryRetriesRef]);
 
-  // Collection retries share the same removal record, but restoring and
-  // removing a tab creates a new one, even when its explicit id is reused.
-  const replacedSelectionsRef = useRef(new WeakSet<RemovedItem>());
+  // Removal records are only cleared when focus is recovered, so records from
+  // earlier removals can still be in the collection. Each record is only
+  // considered by the first removal run that sees it. Retries share the same
+  // record, but restoring and removing a tab creates a new one, even when its
+  // explicit id is reused.
+  const seenRemovalsRef = useRef(new WeakSet<RemovedItem>());
 
   const getReplacementTab = (baseIndex: number) => {
     let nextTab =
@@ -116,18 +119,13 @@ export function useTabRemovalHandler({
 
   const replaceRemovedSelection = useEventCallback(
     (removedSelected: RemovedItem) => {
-      if (
-        selected !== removedSelected.value ||
-        getRenderedTab(selected) ||
-        replacedSelectionsRef.current.has(removedSelected)
-      ) {
+      if (selected !== removedSelected.value || getRenderedTab(selected)) {
         return;
       }
 
       const nextTab = getReplacementTab(removedSelected.staleIndex ?? -1);
       if (!nextTab) return;
 
-      replacedSelectionsRef.current.add(removedSelected);
       setSelected(null, nextTab.value, "removal");
     },
   );
@@ -139,18 +137,21 @@ export function useTabRemovalHandler({
     // Selection follows a removed selected tab wherever focus is, e.g. when
     // the tab is removed by a control outside the tabs or while the overflow
     // menu is open.
-    if (selected !== undefined && !getRenderedTab(selected)) {
-      let removedSelected: RemovedItem | undefined;
-      for (const removed of peekRemovedItems().values()) {
-        if (removed.value === selected) {
-          removedSelected = removed;
-        }
-      }
+    const selectedIsRemoved =
+      selected !== undefined && !getRenderedTab(selected);
+    let removedSelected: RemovedItem | undefined;
+    for (const removed of peekRemovedItems().values()) {
+      if (seenRemovalsRef.current.has(removed)) continue;
 
-      if (removedSelected) {
-        const target = removedSelected;
-        afterLayout(() => replaceRemovedSelection(target));
+      seenRemovalsRef.current.add(removed);
+      if (selectedIsRemoved && removed.value === selected) {
+        removedSelected = removed;
       }
+    }
+
+    if (removedSelected) {
+      const target = removedSelected;
+      afterLayout(() => replaceRemovedSelection(target));
     }
 
     const activeTabWasSelected = activeTab.current?.value === selected;
@@ -256,6 +257,8 @@ export function useTabRemovalHandler({
       const nextTab = getReplacementTab(baseIndex);
       if (!nextTab) return;
 
+      // activeTab isn't updated here; focusing the tab updates it through
+      // the tab's focus handlers.
       focusElementWithRetry(() => {
         if (removedWasSelected) {
           return getSelectedTabElement() ?? nextTab.element;

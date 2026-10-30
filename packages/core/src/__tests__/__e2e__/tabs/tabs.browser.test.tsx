@@ -530,6 +530,47 @@ function RestorableTabs({
   );
 }
 
+function LateSelectionTabs({
+  onChange,
+}: {
+  onChange: (event: SyntheticEvent | null, value: string) => void;
+}) {
+  const [tabs, setTabs] = useState(["Home", "Tx", "Loans", "Checks"]);
+  const [value, setValue] = useState("Home");
+  const remove = (label: string) =>
+    setTabs((old) => old.filter((tab) => tab !== label));
+  return (
+    <>
+      <Tabs
+        value={value}
+        onChange={(event, newValue) => {
+          onChange(event, newValue);
+          setValue(newValue);
+        }}
+      >
+        <TabBar inset divider>
+          <TabList>
+            {tabs.map((label) => (
+              <Tab key={label} value={label}>
+                <TabTrigger>{label}</TabTrigger>
+              </Tab>
+            ))}
+          </TabList>
+        </TabBar>
+      </Tabs>
+      <button type="button" onClick={() => remove("Loans")}>
+        Remove Loans
+      </button>
+      <button type="button" onClick={() => setValue("Loans")}>
+        Select Loans
+      </button>
+      <button type="button" onClick={() => remove("Checks")}>
+        Remove Checks
+      </button>
+    </>
+  );
+}
+
 async function mountTabs(
   element: ReactElement,
   options?: { width?: number | string },
@@ -1261,6 +1302,20 @@ describe("Given Tabs with removable tabs", () => {
     expect(onChange.mock.lastCall).toEqual([null, "Checks"]);
     await waitForFrames(30);
     expect(onChange).toHaveBeenCalledTimes(2);
+  });
+
+  it("does not replace the selection from a tab that was removed before it was selected", async () => {
+    const onChange = vi.fn();
+    await mountTabs(<LateSelectionTabs onChange={onChange} />);
+    await page.getByRole("button", { name: "Remove Loans" }).click();
+    await expect.element(tab("Loans")).not.toBeInTheDocument();
+    await waitForFrames();
+
+    await page.getByRole("button", { name: "Select Loans" }).click();
+    await page.getByRole("button", { name: "Remove Checks" }).click();
+    await expect.element(tab("Checks")).not.toBeInTheDocument();
+    await waitForFrames(30);
+    expect(onChange).not.toHaveBeenCalled();
   });
 
   it("selects a neighbour and keeps the overflow menu open when the selected tab is removed while the menu is open", async () => {
