@@ -162,6 +162,62 @@ function registerAdapterTests(adapter: SaltDateAdapter<any>) {
       await expect.element(input).not.toHaveAttribute("aria-labelledby");
     });
 
+    it("SHOULD keep the FormField label when aria-label is set", async () => {
+      const consoleSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
+      await render(
+        <FormField>
+          <FormFieldLabel>Trade date</FormFieldLabel>
+          <DateInputSingle aria-label="Custom label" />
+        </FormField>,
+      );
+      await expect
+        .element(page.getByRole("textbox"))
+        .toHaveAccessibleName("Trade date");
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Salt: aria-label "Custom label" is ignored because FormFieldLabel "Trade date" provides the accessible name. Use aria-labelledby to add to the name, or aria-describedby to add a description.',
+        expect.any(HTMLElement),
+      );
+      consoleSpy.mockRestore();
+    });
+
+    it("SHOULD not warn about the default aria-label in a FormField", async () => {
+      const consoleSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
+      await render(
+        <FormField>
+          <FormFieldLabel>Trade date</FormFieldLabel>
+          <DateInputSingle />
+        </FormField>,
+      );
+      await expect
+        .element(page.getByRole("textbox"))
+        .toHaveAccessibleName("Trade date");
+      expect(
+        consoleSpy.mock.calls.filter(([message]) =>
+          String(message).includes("is ignored because FormFieldLabel"),
+        ),
+      ).toHaveLength(0);
+      consoleSpy.mockRestore();
+    });
+
+    it("SHOULD keep aria-labelledby when aria-label is set", async () => {
+      await render(
+        <>
+          <span id="external-label">Settlement date</span>
+          <DateInputSingle
+            aria-label="Custom label"
+            aria-labelledby="external-label"
+          />
+        </>,
+      );
+      await expect
+        .element(page.getByRole("textbox"))
+        .toHaveAccessibleName("Settlement date");
+    });
+
     it("SHOULD call onDateChange only if value changes", async () => {
       const onDateChange = vi.fn();
       const onDateValueChange = vi.fn();
@@ -294,9 +350,9 @@ function registerAdapterTests(adapter: SaltDateAdapter<any>) {
       for (const { timezone, expectedResult } of timezones) {
         it(`SHOULD render date in the ${timezone} timezone`, async () => {
           await render(<SingleWithTimezone />);
-          const timezoneDropdown = document.querySelector<HTMLButtonElement>(
-            'button[aria-label="timezone dropdown"]',
-          );
+          const timezoneDropdown = page
+            .getByRole("combobox", { name: /(select|enter) a timezone/i })
+            .query();
           if (!timezoneDropdown) {
             throw new Error("Timezone dropdown was not rendered");
           }
@@ -447,10 +503,8 @@ function registerAdapterTests(adapter: SaltDateAdapter<any>) {
           </FormField>,
         );
         const input = page.getByRole("textbox");
-        const labelledBy = input.element().getAttribute("aria-labelledby");
-        const label = input.element().getAttribute("aria-label");
-        expect(labelledBy).toBeTruthy();
-        expect(label).toBeTruthy();
+        expect(input.element().getAttribute("aria-labelledby")).toBeTruthy();
+        await expect.element(input).toHaveAccessibleName("Date");
       });
     });
   });

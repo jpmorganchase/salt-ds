@@ -37,9 +37,9 @@ async function expectFocused(name: string) {
 }
 
 async function chooseTimezone(timezone: string) {
-  const dropdown = document.querySelector<HTMLButtonElement>(
-    'button[aria-label="timezone dropdown"]',
-  );
+  const dropdown = page
+    .getByRole("combobox", { name: /(select|enter) a timezone/i })
+    .query();
   if (!dropdown) throw new Error("Timezone dropdown was not rendered");
   const locator = page.elementLocator(dropdown);
   await locator.click();

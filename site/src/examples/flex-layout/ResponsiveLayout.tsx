@@ -49,7 +49,6 @@ export const ResponsiveLayout = (): ReactElement => {
           <FormFieldLabel>Viewport size</FormFieldLabel>
           <RadioButtonGroup
             direction={"horizontal"}
-            aria-label="Viewport Controls"
             name="viewport"
             onChange={handleChange}
             value={viewport}

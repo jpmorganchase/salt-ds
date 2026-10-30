@@ -276,17 +276,16 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       ...restDateInputProps
     } = inputProps;
 
-    const hasExplicitAriaLabel =
-      dateInputAriaLabel !== undefined || ariaLabel !== undefined;
-
-    const inputAriaLabelledBy = hasExplicitAriaLabel
-      ? undefined
-      : clsx(formFieldLabelledBy, dateInputLabelledBy, restAriaLabelledBy) ||
-        undefined;
+    const inputAriaLabelledBy =
+      clsx(formFieldLabelledBy, dateInputLabelledBy, restAriaLabelledBy) ||
+      undefined;
     const inputAriaDescribedBy =
       clsx(formFieldDescribedBy, dateInputDescribedBy, restAriaDescribedBy) ||
       undefined;
-    const inputAriaLabel = dateInputAriaLabel ?? ariaLabel ?? "date input";
+    const inputAriaLabel =
+      dateInputAriaLabel ??
+      ariaLabel ??
+      (inputAriaLabelledBy ? undefined : "date input");
 
     const isRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)

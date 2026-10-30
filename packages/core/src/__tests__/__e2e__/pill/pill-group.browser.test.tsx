@@ -203,7 +203,7 @@ describe("GIVEN a PillGroup", () => {
       await renderWithSalt(
         <FormField>
           <FormFieldLabel>Label</FormFieldLabel>
-          <Default />
+          <Default aria-label={undefined} />
           <FormFieldHelperText>Description</FormFieldHelperText>
         </FormField>,
       );

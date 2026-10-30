@@ -1,7 +1,7 @@
 import { FloatingArrow, type FloatingArrowProps } from "@floating-ui/react";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { useFormFieldProps } from "../form-field-context";
+import { useFormFieldHelperTextId } from "../form-field/internal/FormFieldInternalContext";
 import { StatusIndicator, type ValidationStatus } from "../status-indicator";
 import { makePrefixer } from "../utils";
 import type { TooltipProps } from "./Tooltip";
@@ -25,7 +25,8 @@ export const TooltipBase = (props: TooltipBaseProps) => {
     window: targetWindow,
   });
 
-  const { a11yProps } = useFormFieldProps();
+  // In a FormField, the tooltip can be used as helper text that describes the control.
+  const helperTextId = useFormFieldHelperTextId();
 
   const { arrowProps, content, hideArrow, hideIcon, status } = props;
 
@@ -39,10 +40,7 @@ export const TooltipBase = (props: TooltipBaseProps) => {
             className={withBaseName("icon")}
           />
         )}
-        <span
-          id={a11yProps?.["aria-describedby"]}
-          className={withBaseName("content")}
-        >
+        <span id={helperTextId} className={withBaseName("content")}>
           {content}
         </span>
       </div>

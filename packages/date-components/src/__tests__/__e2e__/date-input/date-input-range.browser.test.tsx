@@ -251,6 +251,148 @@ function registerAdapterTests(
       }
     });
 
+    it("SHOULD combine the FormField label with per-input aria-labels", async () => {
+      const consoleSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
+      await render(
+        <FormField>
+          <FormFieldLabel>Trade period</FormFieldLabel>
+          <DateInputRange
+            startInputProps={{ "aria-label": "Trade date" }}
+            endInputProps={{ "aria-label": "Settlement date" }}
+          />
+        </FormField>,
+      );
+      const inputs = page.getByRole("textbox");
+      await expect
+        .element(inputs.nth(0))
+        .toHaveAccessibleName("Trade period Trade date");
+      await expect
+        .element(inputs.nth(1))
+        .toHaveAccessibleName("Trade period Settlement date");
+      expect(
+        consoleSpy.mock.calls.filter(([message]) =>
+          String(message).includes("is ignored because FormFieldLabel"),
+        ),
+      ).toHaveLength(0);
+      consoleSpy.mockRestore();
+    });
+
+    it("SHOULD replace the top-level aria-label with the FormField label", async () => {
+      const consoleSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
+      await render(
+        <FormField>
+          <FormFieldLabel>Trade period</FormFieldLabel>
+          <DateInputRange aria-label="trade dates" />
+        </FormField>,
+      );
+      const inputs = page.getByRole("textbox");
+      await expect
+        .element(inputs.nth(0))
+        .toHaveAccessibleName("Trade period Start date");
+      await expect
+        .element(inputs.nth(1))
+        .toHaveAccessibleName("Trade period End date");
+      expect(consoleSpy).toHaveBeenCalledWith(
+        'Salt: aria-label "trade dates" is ignored because FormFieldLabel "Trade period" provides the accessible name. Use aria-labelledby to add to the name, or aria-describedby to add a description.',
+        expect.any(HTMLElement),
+        expect.any(HTMLElement),
+      );
+      consoleSpy.mockRestore();
+    });
+
+    it("SHOULD keep the top-level aria-label when an input has its own aria-labelledby", async () => {
+      await render(
+        <>
+          <span id="external-start-label">External</span>
+          <DateInputRange
+            aria-label="Period"
+            startInputProps={{ "aria-labelledby": "external-start-label" }}
+          />
+        </>,
+      );
+      const inputs = page.getByRole("textbox");
+      await expect
+        .element(inputs.nth(0))
+        .toHaveAccessibleName("Start date Period External");
+      await expect
+        .element(inputs.nth(1))
+        .toHaveAccessibleName("End date Period");
+    });
+
+    it("SHOULD keep the top-level aria-label in a FormField without a FormFieldLabel", async () => {
+      await render(
+        <>
+          <span id="external-start-label">External</span>
+          <FormField>
+            <DateInputRange
+              aria-label="Period"
+              startInputProps={{ "aria-labelledby": "external-start-label" }}
+            />
+          </FormField>
+        </>,
+      );
+      const inputs = page.getByRole("textbox");
+      await expect
+        .element(inputs.nth(0))
+        .toHaveAccessibleName("Start date Period External");
+      await expect
+        .element(inputs.nth(1))
+        .toHaveAccessibleName("End date Period");
+    });
+
+    it("SHOULD replace the top-level aria-label when a FormFieldLabel is added later", async () => {
+      const consoleSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
+      const { rerender } = await render(
+        <FormField>
+          <DateInputRange aria-label="Period" />
+        </FormField>,
+      );
+      const inputs = page.getByRole("textbox");
+      await expect
+        .element(inputs.nth(0))
+        .toHaveAccessibleName("Start date Period");
+      await rerender(
+        <FormField>
+          <FormFieldLabel>Trade period</FormFieldLabel>
+          <DateInputRange aria-label="Period" />
+        </FormField>,
+      );
+      await expect
+        .element(inputs.nth(0))
+        .toHaveAccessibleName("Trade period Start date");
+      await expect
+        .element(inputs.nth(1))
+        .toHaveAccessibleName("Trade period End date");
+      consoleSpy.mockRestore();
+    });
+
+    it("SHOULD add an input's own aria-labelledby to the FormField label", async () => {
+      await render(
+        <>
+          <span id="external-end-label">External</span>
+          <FormField>
+            <FormFieldLabel>Trade period</FormFieldLabel>
+            <DateInputRange
+              endInputProps={{ "aria-labelledby": "external-end-label" }}
+            />
+          </FormField>
+        </>,
+      );
+      const inputs = page.getByRole("textbox");
+      await expect
+        .element(inputs.nth(0))
+        .toHaveAccessibleName("Trade period Start date");
+      await expect
+        .element(inputs.nth(1))
+        .toHaveAccessibleName("Trade period End date External");
+    });
+
     it("SHOULD render value, even when not a valid date", async () => {
       await render(
         <DateInputRange
@@ -508,9 +650,9 @@ function registerAdapterTests(
       for (const { timezone, startDate, endDate } of cases) {
         it(`SHOULD render date in the ${timezone} timezone`, async () => {
           await render(<RangeWithTimezone />);
-          const dropdown = document.querySelector<HTMLButtonElement>(
-            'button[aria-label="timezone dropdown"]',
-          );
+          const dropdown = page
+            .getByRole("combobox", { name: /(select|enter) a timezone/i })
+            .query();
           if (!dropdown) throw new Error("Timezone dropdown was not rendered");
           await page.elementLocator(dropdown).click();
           const option = page.getByRole("option", { name: timezone });

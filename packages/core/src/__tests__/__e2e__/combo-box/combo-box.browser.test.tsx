@@ -140,6 +140,47 @@ describe("Given a ComboBox", () => {
     }
   });
 
+  it("applies aria-label to the input element", async () => {
+    await renderWithSalt(
+      <ComboBox aria-label="State">
+        <Option value="Alabama" />
+      </ComboBox>,
+    );
+    await expect.element(input()).toHaveAccessibleName("State");
+    expect(
+      document.querySelector(".saltComboBox")?.hasAttribute("aria-label"),
+    ).toBe(false);
+  });
+
+  it("prefers aria-label from inputProps over aria-label", async () => {
+    await renderWithSalt(
+      <ComboBox aria-label="Outer" inputProps={{ "aria-label": "Inner" }}>
+        <Option value="Alabama" />
+      </ComboBox>,
+    );
+    await expect.element(input()).toHaveAccessibleName("Inner");
+  });
+
+  it("applies aria-labelledby and aria-describedby to the input element", async () => {
+    await renderWithSalt(
+      <>
+        <span id="external-label">State</span>
+        <span id="external-description">Where you live</span>
+        <ComboBox
+          aria-labelledby="external-label"
+          aria-describedby="external-description"
+        >
+          <Option value="Alabama" />
+        </ComboBox>
+      </>,
+    );
+    await expect.element(input()).toHaveAccessibleName("State");
+    await expect.element(input()).toHaveAccessibleDescription("Where you live");
+    const root = document.querySelector(".saltComboBox");
+    expect(root?.hasAttribute("aria-labelledby")).toBe(false);
+    expect(root?.hasAttribute("aria-describedby")).toBe(false);
+  });
+
   it("toggles the list from its button", async () => {
     await renderWithSalt(<Default />);
     const trigger = page.getByRole("button");
@@ -402,6 +443,9 @@ describe("Given a ComboBox", () => {
     await expect
       .element(input())
       .toHaveAccessibleDescription("Pick a US state");
+    await expect
+      .element(page.getByRole("button"))
+      .toHaveAccessibleName("Show options State");
     await page.getByText("State", { exact: true }).click();
     await expect.element(input()).toHaveFocus();
     await expect.element(listbox()).toBeInTheDocument();

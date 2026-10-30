@@ -115,6 +115,7 @@ export interface SliderProps
 
 export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
   {
+    "aria-describedby": ariaDescribedBy,
     "aria-label": ariaLabel,
     "aria-labelledby": ariaLabelledBy,
     "aria-valuetext": ariaValueText,
@@ -148,7 +149,10 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
     state: "value",
   });
   const {
-    a11yProps: { "aria-labelledby": formFieldLabelledBy } = {},
+    a11yProps: {
+      "aria-describedby": formFieldDescribedBy,
+      "aria-labelledby": formFieldLabelledBy,
+    } = {},
     disabled: formFieldDisabled,
   } = useFormFieldProps();
 
@@ -218,6 +222,9 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
       {...rest}
     >
       <SliderThumb
+        aria-describedby={
+          clsx(formFieldDescribedBy, ariaDescribedBy) || undefined
+        }
         aria-label={ariaLabel}
         aria-labelledby={clsx(formFieldLabelledBy, ariaLabelledBy) || undefined}
         aria-valuemax={max}
