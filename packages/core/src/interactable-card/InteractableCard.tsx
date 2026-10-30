@@ -80,6 +80,7 @@ export const InteractableCard = forwardRef<
     onClick,
     onKeyUp,
     onKeyDown,
+    tabIndex: tabIndexProp,
     ...rest
   } = props;
 
@@ -152,7 +153,7 @@ export const InteractableCard = forwardRef<
       }
     }
   } else {
-    tabIndex = 0;
+    tabIndex = tabIndexProp ?? 0;
   }
 
   const cardRef = useRef<HTMLDivElement>(null);
