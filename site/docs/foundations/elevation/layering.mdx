@@ -1,0 +1,59 @@
+---
+title: Layering
+description: "Use background contrast and elevation to keep content and data in focus."
+layout: DetailTechnical
+sidebar:
+  priority: 3
+---
+
+Layering helps establish visual hierarchy so users can focus on the content and
+data relevant to their task. Background contrast can make content regions more
+prominent while keeping the surrounding application interface visually quieter.
+
+## Backgrounds
+
+A common arrangement places primary content containers, such as cards and
+panels, on a secondary application background. The difference in fill separates
+the content regions from their surroundings.
+
+| Region in this arrangement | Background | Token                                   |
+| -------------------------- | ---------- | --------------------------------------- |
+| Application background     | Secondary  | `--salt-container-secondary-background` |
+| Content containers         | Primary    | `--salt-container-primary-background`   |
+
+Choose backgrounds to suit the layout and content. An interface can also use
+primary throughout. If a region needs a visible boundary against a matching
+background, use a border or elevation to distinguish it.
+
+Tertiary is used less often, to highlight key content areas. See the
+[container characteristic](/salt/themes/design-tokens/container-characteristic)
+for each background's uses.
+
+Background variant and elevation are independent choices. Containers can be
+flat or raised, depending on the prominence their content needs.
+
+## Flat containers
+
+Flat containers suit data-dense interfaces, where users scan and compare
+information with minimal visual noise. In this example, primary cards stand
+apart from the secondary background without a shadow.
+
+`Panel` is flat by default. Set `elevation="flat"` on `Card` to remove its
+shadow.
+
+<LivePreview componentName="layering" exampleName="Layering" />
+
+## Raised containers
+
+Raised containers use a shadow to give content more prominence and separation
+from its surroundings. `Card` is raised by default; set `elevation="raised"`
+on `Panel`. See [Card elevation](/salt/components/card/examples#elevation).
+
+For a container of your own, use the region shadow,
+`--salt-overlayable-shadow-region`; see
+[shadow](/salt/foundations/elevation/index) for the shadow ramp.
+
+<LivePreview componentName="layering" exampleName="Elevation" />
+
+For implementation guidance, see
+[Application backgrounds](/salt/getting-started/application-backgrounds).

@@ -2,6 +2,7 @@ import { Table, TBody, TD, TH, THead, TR } from "@salt-ds/core";
 import dynamic from "next/dynamic";
 import { type FC, useEffect, useState } from "react";
 import { Code } from "../mdx/code";
+import { formatPropType } from "./formatPropType.mjs";
 import styles from "./PropsTable.module.css";
 
 const Markdown = dynamic(() => import("../markdown/Markdown"));
@@ -17,12 +18,18 @@ type PropsTableType = {
   componentName: string;
 };
 
+type PropType = {
+  name: string;
+  raw?: string;
+  value?: unknown;
+};
+
 type JSONData = {
   props: Record<
     string,
     {
       name: string;
-      type: { name: string };
+      type: PropType;
       description: string;
       defaultValue?: { value: string };
     }
@@ -81,7 +88,7 @@ export const PropsTable: FC<PropsTableType> = ({
               <TR key={name}>
                 <TD className={styles.overflowWrap}>{name}</TD>
                 <TD>
-                  <Code>{type.name}</Code>
+                  <Code>{formatPropType(type)}</Code>
                 </TD>
                 <TD>
                   <Markdown>{description}</Markdown>

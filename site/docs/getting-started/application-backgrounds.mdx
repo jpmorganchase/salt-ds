@@ -1,0 +1,75 @@
+---
+title: Application backgrounds
+description: "Set a page or embedded application's background with Salt's container tokens."
+layout: DetailTechnical
+sidebar:
+  label: Application backgrounds
+---
+
+Salt's providers make theme tokens available, but do not paint an application
+background. After [setting up your theme](./developing#3-choose-your-theme-and-integrate-salt),
+apply a container background to the page or the element that contains your
+application.
+
+## Set the page background
+
+With the default root `SaltProviderNext` setup, the theme classes are applied to
+`<html>`. Container tokens are therefore available on `body` and follow the
+selected theme and mode. The same applies to a root `SaltProvider` in a Legacy
+theme application.
+
+Set the background in your application's CSS:
+
+```css
+body {
+  background: var(--salt-container-secondary-background);
+}
+```
+
+Secondary is a common page background behind primary content containers, such
+as cards and panels. Choose a different container background when it better
+suits your design. See the
+[container characteristic](/salt/themes/design-tokens/container-characteristic)
+for the available backgrounds and their uses.
+
+## Set an embedded application's background
+
+When your provider uses `applyClassesTo="scope"` or `"child"`, its tokens apply
+within that region. Set the background on an element inside that scope.
+
+### Scoped provider
+
+With `applyClassesTo="scope"`, Salt applies the theme classes to a generated
+wrapper. That wrapper uses `display: contents`, so it has no box to paint a
+background on. Apply the background to a real container inside it:
+
+```tsx
+import { SaltProviderNext } from "@salt-ds/core";
+
+<SaltProviderNext applyClassesTo="scope">
+  <div className="application">
+    <App />
+  </div>
+</SaltProviderNext>;
+```
+
+```css
+.application {
+  background: var(--salt-container-secondary-background);
+}
+```
+
+Use your application's layout to size that container to the area it should
+cover. A Salt container such as `Panel` can also provide the background through
+its `variant` prop.
+
+### Classes applied to a child
+
+With `applyClassesTo="child"`, the provider applies the theme classes to its
+single child. Set the background on that child if it renders a box. If the
+child is a custom React component, it must forward the supplied `className`
+and `data-*` attributes to its DOM element so the theme can apply.
+
+Use `SaltProviderNext` for the J.P. Morgan theme and `SaltProvider` for the
+Legacy theme, matching the rest of the application's setup. For a region that
+needs another mode, see [Mixing modes](/salt/foundations/modes#mixing-modes).

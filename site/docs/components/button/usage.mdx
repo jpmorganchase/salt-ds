@@ -10,7 +10,15 @@ data:
 
 ## Using the component
 
+If you are wrapping `Button`, make sure the wrapper adds behavior or semantics
+beyond prop forwarding.
+
 - Keep the text description short, ideally one to three words and no more than five. If you’re including an icon with the text, use no more than three words.
+
+`Button` defaults to `type="button"`, unlike the native `<button>`, so it doesn't
+submit a form unless you set `type="submit"`. While `loading` is set, a submit
+button doesn't submit. See
+[Form integration](/salt/getting-started/form-integration#submission-and-reset).
 
 ### When to use
 

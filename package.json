@@ -13,7 +13,9 @@
   ],
   "scripts": {
     "start": "yarn storybook",
-    "build": "yarn workspaces foreach --exclude @salt-ds/site -Apt run build && yarn bundle:css",
+    "build": "yarn workspaces foreach --exclude @salt-ds/site -Apt run build && yarn bundle:css && yarn build:agent-docs",
+    "build:agent-docs": "node ./tooling/agent-docs/src/cli.mjs",
+    "check:examples": "node ./packages/cli/bin/salt-ds.mjs check --project site site/src/examples",
     "release": "yarn build && node scripts/publishWithRetry.mjs",
     "build:ag-grid-theme": "yarn workspace @salt-ds/ag-grid-theme build",
     "build:highcharts-theme": "yarn workspaces foreach -Rpt --from @salt-ds/highcharts-theme run build",
@@ -38,6 +40,7 @@
     "typecheck": "yarn node ./scripts/typecheck.mjs",
     "typecheck:consumer": "yarn node ./scripts/checkConsumerTypes.mjs",
     "typecheck:react19": "yarn node ./scripts/typecheckReactTypes.mjs 19",
+    "typecheck:site": "yarn workspace @salt-ds/site gen:css && yarn node ./scripts/typecheck.mjs --incremental false -p site/tsconfig.json",
     "chromatic": "chromatic"
   },
   "dependencies": {

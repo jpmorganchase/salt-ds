@@ -2,6 +2,7 @@ import { useColorMode } from "@jpmorganchase/mosaic-store";
 import { SaltProvider, SaltProviderNext, Switch, useId } from "@salt-ds/core";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { LocalizationProvider } from "@salt-ds/date-components";
+import { clsx } from "clsx";
 import {
   type ChangeEvent,
   type ElementType,
@@ -71,7 +72,12 @@ export const LivePreview: FC<LivePreviewProps> = ({
               actionFont="Amplitude"
               applyClassesTo="scope"
             >
-              <div className={styles.example}>
+              <div
+                className={clsx(styles.example, {
+                  [styles.patternExample]:
+                    componentName.startsWith("patterns/"),
+                })}
+              >
                 {/* An explicit theme is needed here to prevent the site theme being inherited */}
                 <ChosenSaltProvider
                   applyClassesTo="scope"

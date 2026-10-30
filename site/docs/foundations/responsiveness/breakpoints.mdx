@@ -59,4 +59,63 @@ Salt’s breakpoints and column counts are optimized for the layout of Salt comp
 | Large       | 1280 - 1919 | 6       |
 | Extra Large | >1920       | 8       |
 
+## Breakpoints in code
+
+Salt names the breakpoints `xs`, `sm`, `md`, `lg` and `xl`, starting at 0, 600,
+960, 1280 and 1920 pixels. Change them with `SaltProvider`'s
+[`breakpoints` prop](/salt/components/salt-provider/examples#breakpoints).
+Breakpoints follow the width of the browser window, not the space a component
+has, so a layout in a narrow panel still uses the window's breakpoint.
+
+### Responsive props
+
+Give a responsive prop one value for every screen size, or an object of values
+by breakpoint. A value applies from its breakpoint up, until a larger breakpoint
+in the object replaces it:
+
+```tsx
+<GridLayout columns={{ xs: 1, md: 3 }}>
+```
+
+This grid has one column below 960 pixels and three from 960 pixels up.
+
+Start the object at `xs`. Below the smallest breakpoint you list, the prop has no
+value, rather than its default: `GridLayout` with `columns={{ md: 3 }}` shows a
+single column below `md`, not its default of 12, and `StackLayout` with
+`direction={{ md: "row" }}` lays out as a row there, not a column.
+
+| Component      | Responsive props                                                     |
+| -------------- | -------------------------------------------------------------------- |
+| `FlexLayout`   | `direction`, `gap`, `wrap`, `margin`, `padding`                      |
+| `StackLayout`  | `direction`, `gap`, `margin`, `padding`                              |
+| `SplitLayout`  | `direction`, `gap`, `margin`, `padding`                              |
+| `FlowLayout`   | `gap`, `margin`, `padding`                                           |
+| `FlexItem`     | `basis`, `grow`, `shrink`, `margin`, `padding`                       |
+| `GridLayout`   | `columns`, `rows`, `gap`, `columnGap`, `rowGap`, `margin`, `padding` |
+| `GridItem`     | `colSpan`, `rowSpan`, `margin`, `padding`                            |
+| `BorderLayout` | `gap`, `columnGap`, `rowGap`, `margin`, `padding`                    |
+| `BorderItem`   | `margin`, `padding`                                                  |
+
+### Responsive values in your own code
+
+For other props or values of your own, `useResponsiveProp(value, defaultValue)`
+resolves an object of values by breakpoint the same way. Unlike a layout prop, it
+returns `defaultValue` below the smallest breakpoint you list:
+
+```tsx
+const dayLabel = useResponsiveProp({ xs: "Mon", lg: "Monday" }, "Monday");
+```
+
+To branch on the breakpoint itself, use `useBreakpoint`. Its `breakpoint` is the
+current breakpoint, and `matchedBreakpoints` lists the current breakpoint and
+every smaller one, largest first:
+
+```tsx
+const { matchedBreakpoints } = useBreakpoint();
+const showSidebar = matchedBreakpoints.includes("md");
+```
+
+`breakpoint` is `null` during server rendering, before the breakpoints are
+measured.
+
 :fragment{src="../fragments/feedback.mdx"}

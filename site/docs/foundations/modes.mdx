@@ -67,4 +67,29 @@ Mixing modes is recommended to be done at a region level rather than at a compon
   alt="Example of mixing modes in the same UI"
 />
 
+### Set a region's background
+
+When your design calls for a region in another mode, nest the same provider
+used by the application. The provider makes that mode's tokens available, but
+does not paint a background. Put the region's content in a container such as
+`Panel`, which uses the primary container background by default.
+
+Within an application using `SaltProviderNext`, a dark region can be defined
+as follows:
+
+```tsx
+import { Panel, SaltProviderNext } from "@salt-ds/core";
+
+<SaltProviderNext mode="dark">
+  <Panel>{/* Content of the dark region */}</Panel>
+</SaltProviderNext>;
+```
+
+For a Legacy theme application using `SaltProvider`, use a nested
+`SaltProvider` instead. Keep the provider type consistent so the region uses
+the application's theme with its selected mode.
+
+For page and embedded application backgrounds, see
+[Application backgrounds](/salt/getting-started/application-backgrounds).
+
 :fragment{src="./fragments/feedback.mdx"}

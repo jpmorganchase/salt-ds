@@ -19,6 +19,10 @@ import { usePillGroup } from "./PillGroupContext";
 const withBaseName = makePrefixer("saltPill");
 
 export interface PillProps extends ComponentPropsWithoutRef<"button"> {
+  /**
+   * Identifies the pill in a selectable `PillGroup`. Clicking the pill adds this
+   * value to the group's selection, or removes it if it's already selected.
+   */
   value?: string;
 }
 

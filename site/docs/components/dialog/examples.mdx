@@ -32,7 +32,7 @@ Dialog sizes are typically used for different scenarios:
 
 ## Accent
 
-For default dialogs, you can pass the `accent` prop to `DialogHeader` which accepts a boolean to render an accent bar in the header of the dialog. You cannot render the accent bar when a status is also being rendered.
+For default dialogs, `DialogHeader` renders an accent bar in the header of the dialog. Pass the `disableAccent` prop to hide it. The accent bar isn't rendered when a status is also being rendered.
 
 <LivePreview componentName="dialog" exampleName="WithoutAccent" />
 
@@ -90,11 +90,19 @@ A success icon displays alongside a header and supporting message.
 
 ## Mandatory action
 
-Use the `disableDismiss` prop to prevent a click away dismissing the dialog.
+Use `disableDismiss` to prevent accidental dismissal by clicking outside the dialog. Escape still closes the dialog and returns focus to its trigger; this prop does not require the user to confirm the action.
 
-This forces a user to action something within the dialog.
+In this destructive example, `initialFocus` points to Cancel so the [documented focus order](./accessibility#focus-sequence) is preserved when the actions stack.
 
 <LivePreview componentName="dialog" exampleName="MandatoryAction" />
+
+## Deletion with focus
+
+When confirming deletion removes the button that opened a dialog, choose a surviving control that lets the user continue. This example focuses the next record's Delete button, the previous record when the deleted record was last, or Add record when the list is empty. Cancel receives initial focus; Cancel and Escape leave the collection unchanged and return focus to the originating button.
+
+This example removes local data synchronously and uses the default web floating component. It keeps the record mounted until the closing dialog element is removed, then commits deletion and moves focus after the list updates. Keeping these steps separate preserves the exit animation and avoids focusing a destination while the background is inert. A persistent status message announces the outcome separately from moving focus. Follow the [destructive action guidance](./usage#destructive-actions) for remote requests, progress and recovery.
+
+<LivePreview componentName="dialog" exampleName="DeletionWithFocus" />
 
 ## Disable scrim
 

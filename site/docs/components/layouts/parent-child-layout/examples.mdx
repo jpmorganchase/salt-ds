@@ -16,8 +16,7 @@ A parent-child layout displays the parent component to the left and child compon
 
 ## Collapsed
 
-The parent-child layout component changes to a collapsed view once it approaches a specified breakpoint. Only one of the regions remains visible and fills the width of the parent.
-The breakpoint and visible view can customized using the `collapsedAtBreakpoint` and `visibleView` props.
+The layout collapses at `collapseAtBreakpoint` and every smaller breakpoint: only one region is visible, filling the width of the parent, and `visibleView` chooses which. With the default breakpoints, the default `"sm"` collapses the layout below 960 pixels and shows the regions side by side from `md` up.
 
 <LivePreview componentName="parent-child-layout" exampleName="Collapsed" />
 

@@ -148,7 +148,7 @@ Apply themes using the provider components (`<SaltProvider>` or `<SaltProviderNe
 
 #### Using the J.P. Morgan theme (recommended)
 
-Set up the **Amplitude** web font first (see [step 2](#2-add-required-web-fonts)). In a typical React project, add the provider to `src/index.tsx` as follows:
+Set up the **Amplitude** web font first (see [step 2](#2-add-required-web-fonts)). In a typical React project, add the provider to `src/index.tsx` with the J.P. Morgan brand settings, as follows:
 
 ```tsx
 import { SaltProviderNext } from "@salt-ds/core";
@@ -217,6 +217,20 @@ Add these props to the provider, alongside any theme props from earlier:
 Refer to the [SaltProvider](../components/salt-provider) docs for the full API.
 
 Salt injects component styles at runtime by default, so you don’t need to import component CSS for the setup above. If you need static component CSS or your application uses a Content Security Policy that requires a nonce for injected styles, see [Style injection](./style-injection).
+
+#### Set the page background
+
+Salt doesn't paint the application's background. With the default root provider,
+set it on `body` using a container token. For a secondary page background:
+
+```css
+body {
+  background: var(--salt-container-secondary-background);
+}
+```
+
+The token follows the active theme and mode. See [Application backgrounds](./application-backgrounds)
+for background choices and applications that scope their provider to part of a page.
 
 #### (Optional) Apply the CSS baseline reset
 

@@ -18,13 +18,9 @@ Use a horizontal group of navigation items when you have fewer than eight items,
 
 <LivePreview componentName="navigation-item" exampleName="HorizontalGroup" />
 
-<Callout variant="secondary" status="warning">
-
-A new component ([VerticalNavigation](/salt/components/vertical-navigation)) has been introduced to replace the existing NavigationItem component for vertical navigation. The new component provides a more structured and flexible way to create vertical navigation. For now you can continue to use the NavigationItem component, but we recommend migrating to the new [VerticalNavigation](/salt/components/vertical-navigation) component as the NavigationItem component will be deprecated in a future release and removed in the future major release.
-
-</Callout>
-
 ## Vertical group
+
+The vertical examples on this page support existing `NavigationItem` implementations. For new vertical navigation, use the [`VerticalNavigation` examples](../vertical-navigation/examples).
 
 A vertical navigation group provides a simple, single-level list of links that users can select within an application or website.
 
@@ -32,7 +28,7 @@ A vertical navigation group provides a simple, single-level list of links that u
 
 ## Vertical group nested
 
-Use vertical navigation when handling a hierarchical structure of nested pages. This configuration allows users to reveal nested items when selecting a parent item, making it easy to explore the content hierarchy.
+For an existing vertical `NavigationItem` implementation, nest items to represent a hierarchy of pages. Selecting a parent reveals its nested items.
 
 When the user collapses a vertical nested group, and there is an active nested item within it, the parent item should be configured with `blurActive={true}`. The indicator will stay on the parent item in the blur-active state. This tells the user that the active item is within this nested structure.
 
