@@ -2386,6 +2386,28 @@ describe("Toolbar overflow focus restoration", () => {
     await expect.element(overflowTrigger(/Filters overflow\./i)).toHaveFocus();
   });
 
+  it("moves focus to the overflow trigger when the focused control overflows while the window is inactive", async () => {
+    await renderWithSalt(<NamedOverflowFocusMemoryTestCase />);
+    await expectButton("Columns", true);
+    page.getByTestId("toolbar-before").element().focus();
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowRight}{ArrowRight}{ArrowRight}");
+    const columns = page.getByRole("button", { name: "Columns" });
+    await expect.element(columns).toHaveFocus();
+    // When the window loses focus, the focused element gets blur events but
+    // stays the active element.
+    const element = columns.element();
+    element.dispatchEvent(new FocusEvent("blur", { relatedTarget: null }));
+    element.dispatchEvent(
+      new FocusEvent("focusout", { bubbles: true, relatedTarget: null }),
+    );
+    expect(document.activeElement).toBe(element);
+
+    setFixtureWidth(640);
+    await expectButton("Columns", false);
+    await expect.element(overflowTrigger(/Filters overflow\./i)).toHaveFocus();
+  });
+
   it("doesn't move focus into the toolbar when overflow changes after focus has left", async () => {
     await renderWithSalt(<NamedOverflowFocusMemoryTestCase />);
     await expectButton("Columns", true);

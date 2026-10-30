@@ -112,7 +112,10 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
     // this can stay true after focus has fallen back to the document body.
     const focusWithinRef = useRef(false);
     // Whether focus was in the toolbar just before the latest overflow update,
-    // i.e. before that update could move the focused control.
+    // i.e. before that update could move the focused control. focusWithinRef
+    // can't be read after the update instead, because ToolbarOverflow
+    // dispatches blur events for reparented controls in its layout effects,
+    // which run before Toolbar's.
     const focusWithinBeforeOverflowUpdateRef = useRef(false);
     const restoreFocusFrameRef = useRef<number | null>(null);
 
@@ -262,19 +265,21 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
         previousOverflowedIdsKeyRef.current !== overflowedIdsKey;
       previousOverflowedIdsKeyRef.current = overflowedIdsKey;
 
-      if (
-        !overflowChanged ||
-        !targetWindow ||
-        !focusWithinBeforeOverflowUpdateRef.current
-      ) {
+      if (!overflowChanged || !targetWindow) {
+        return;
+      }
+
+      // A restore scheduled for an earlier overflow change is out of date.
+      if (restoreFocusFrameRef.current != null) {
+        targetWindow.cancelAnimationFrame(restoreFocusFrameRef.current);
+        restoreFocusFrameRef.current = null;
+      }
+
+      if (!focusWithinBeforeOverflowUpdateRef.current) {
         return;
       }
 
       const doc = targetWindow.document;
-
-      if (restoreFocusFrameRef.current != null) {
-        targetWindow.cancelAnimationFrame(restoreFocusFrameRef.current);
-      }
 
       // Items move to their new hosts in the commits after an overflow change,
       // so resolve the target once they've settled. By then, focus may also
@@ -332,7 +337,13 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
         {...{ [TOOLBAR_SCOPE_ROOT_ATTR]: "main" }}
         ref={handleRef}
         onBlurCapture={(event) => {
-          focusWithinRef.current = false;
+          // When the window loses focus, the blurred element stays the active
+          // element and gets focus back when the window does.
+          if (
+            event.target !== event.currentTarget.ownerDocument.activeElement
+          ) {
+            focusWithinRef.current = false;
+          }
           keyboardNavigation.handleBlurCapture(event);
           onBlurCapture?.(event);
         }}
