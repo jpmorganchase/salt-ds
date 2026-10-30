@@ -1,4 +1,5 @@
-import { useBreakpoint } from "@salt-ds/core";
+import { SaltProvider, useBreakpoint } from "@salt-ds/core";
+import { memo, useState } from "react";
 import { afterEach, describe, expect, it } from "vitest";
 import { page } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
@@ -26,5 +27,33 @@ describe("Given a BreakpointProvider", () => {
     await page.viewport(width, 1024);
     await renderWithSalt(<TestComponent />);
     await expect.element(page.getByText(expected)).toBeInTheDocument();
+  });
+
+  it("doesn't re-render consumers when a provider re-renders", async () => {
+    let renders = 0;
+    // Memoised with no props, so it only re-renders when a context it reads changes.
+    const Consumer = memo(function Consumer() {
+      useBreakpoint();
+      renders += 1;
+      return null;
+    });
+    function Host() {
+      const [count, setCount] = useState(0);
+      return (
+        <SaltProvider>
+          <button type="button" onClick={() => setCount(count + 1)}>
+            Re-render {count}
+          </button>
+          <Consumer />
+        </SaltProvider>
+      );
+    }
+
+    await renderWithSalt(<Host />);
+    const rendersAfterMount = renders;
+    await page.getByRole("button").click();
+    await page.getByRole("button").click();
+    await expect.element(page.getByText("Re-render 2")).toBeInTheDocument();
+    expect(renders).toBe(rendersAfterMount);
   });
 });

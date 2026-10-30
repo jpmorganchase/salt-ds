@@ -1,5 +1,6 @@
 import { composeStories } from "@storybook/react-vite";
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it } from "vitest";
+import { page } from "vitest/browser";
 import { checkAccessibility } from "~browser-test-utils/accessibility";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as stackStories from "~stories/stack-layout/stack-layout.stories";
@@ -37,6 +38,22 @@ describe("GIVEN a Stack", () => {
   it("supports row direction", async () => {
     await renderWithSalt(<Default direction="row" />);
     expect(getComputedStyle(stackLayout()).flexDirection).toBe("row");
+  });
+
+  describe("WHEN no breakpoint in a responsive prop matches", () => {
+    afterEach(() => page.viewport(1280, 1024));
+
+    it("renders as a column", async () => {
+      await page.viewport(599, 1024);
+      await renderWithSalt(<Default direction={{ md: "row" }} />);
+      expect(getComputedStyle(stackLayout()).flexDirection).toBe("column");
+    });
+
+    it("renders with the default gap", async () => {
+      await page.viewport(599, 1024);
+      await renderWithSalt(<Default gap={{ md: 1 }} />);
+      expect(getComputedStyle(stackLayout()).rowGap).toBe("24px");
+    });
   });
 
   it("renders separators", async () => {

@@ -100,7 +100,8 @@ export const GridLayout: GridLayoutComponent = forwardRef(function GridLayout<
 
   const gridRows = resolveResponsiveValue(rows, matchedBreakpoints);
 
-  const gridGap = resolveResponsiveValue(gap, matchedBreakpoints);
+  // An object without a value for the current breakpoint uses the default.
+  const gridGap = resolveResponsiveValue(gap, matchedBreakpoints) ?? 3;
 
   const gridColumnGap = resolveResponsiveValue(columnGap, matchedBreakpoints);
 
