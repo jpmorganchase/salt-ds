@@ -1,5 +1,14 @@
 # @salt-ds/date-components
 
+## 1.1.4
+
+### Patch Changes
+
+- 40fb09b: Fixed a disabled tertiary `DateInputSingle` or `DateInputRange` having a transparent background. It now uses `--salt-editable-tertiary-background-disabled`, like `Input`.
+- Updated dependencies [aa3ce52]
+- Updated dependencies [40fb09b]
+  - @salt-ds/core@1.74.1
+
 ## 1.1.3
 
 ### Patch Changes
