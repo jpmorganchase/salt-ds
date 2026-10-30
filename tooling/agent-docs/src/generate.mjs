@@ -38,6 +38,7 @@ import {
   collectCountrySymbols,
   collectIcons,
   collectTokens,
+  ICON_REFERENCE_PATH,
   renderCountrySymbolReference,
   renderIconReference,
   renderTokenReference,
@@ -142,6 +143,7 @@ async function addReferences({
   routeIndex,
   outputs,
   tokens,
+  iconSynonymsFile,
 }) {
   const theme = packages.get("@salt-ds/theme");
   if (theme) {
@@ -180,24 +182,27 @@ async function addReferences({
 
   const icons = packages.get("@salt-ds/icons");
   if (icons) {
-    const from = { packageName: "@salt-ds/icons", docPath: "icons.md" };
+    const from = {
+      packageName: "@salt-ds/icons",
+      docPath: ICON_REFERENCE_PATH,
+    };
     const iconList = await collectIcons(
       path.join(packagesDir, icons.directory),
+      { synonymsFile: iconSynonymsFile },
     );
     const target = outputs.get(from.packageName);
-    target.files.set(
-      from.docPath,
-      renderIconReference({
-        icons: iconList,
-        packageVersion: icons.version,
-        links: { icon: linkToRoute(routeIndex, from, "/salt/components/icon") },
-      }),
-    );
+    for (const { docPath, markdown } of renderIconReference({
+      icons: iconList,
+      packageVersion: icons.version,
+      links: { icon: linkToRoute(routeIndex, from, "/salt/components/icon") },
+    })) {
+      target.files.set(docPath, markdown);
+    }
     target.entries.push({
       section: "reference",
       title: "Icon list",
       docPath: from.docPath,
-      summary: `Names of all ${iconList.length} icon components, with deprecations.`,
+      summary: `All ${iconList.length} icon components, with the other words people use for each and deprecations.`,
     });
   }
 
@@ -672,7 +677,17 @@ export async function generateAgentDocs({
       `site/src/examples/${example}.tsx: no pattern page shows this example. Add a LivePreview for it to the section of the page that discusses it.`,
     );
   }
-  await addReferences({ packages, packagesDir, routeIndex, outputs, tokens });
+  await addReferences({
+    packages,
+    packagesDir,
+    routeIndex,
+    outputs,
+    tokens,
+    iconSynonymsFile: path.join(
+      repoRoot,
+      "site/src/components/icon-preview/salt-icon-synonym.json",
+    ),
+  });
   await addCheckData({
     packages,
     outputs: outputs.outputs,

@@ -1,7 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import postcss from "postcss";
-import { MAX_PAGE_BYTES } from "./config.mjs";
+import { MAX_PAGE_BYTES, MAX_PAGE_LINES } from "./config.mjs";
 import { compareText, listFiles } from "./files.mjs";
 import { relativeDocLink } from "./links.mjs";
 
@@ -631,8 +631,42 @@ export function renderTokenReference({
   ];
 }
 
-/** Icon component names exported by @salt-ds/icons, with deprecations. */
-export async function collectIcons(iconsDir) {
+export const ICON_REFERENCE_PATH = "icons.md";
+
+/** An icon's name without `Icon` and without `Solid`: `AddDocumentSolidIcon` → `AddDocument`. */
+const iconBase = (name) => name.replace(/Icon$/, "").replace(/Solid$/, "");
+
+/**
+ * Other words for each icon, from the synonyms the site's icon search uses,
+ * keyed by `iconBase` name. Words already in the icon's name are left out.
+ */
+async function readIconSynonyms(synonymsFile) {
+  const entries = JSON.parse(await readFile(synonymsFile, "utf8"));
+  const synonyms = new Map();
+  for (const { iconName, synonym = [] } of entries) {
+    const base = iconName
+      .split("-")
+      .map((part) => part.charAt(0).toUpperCase() + part.slice(1))
+      .join("");
+    const nameWords = new Set(iconName.toLowerCase().split("-"));
+    const words = [];
+    for (const word of synonym) {
+      const text = word.trim().toLowerCase();
+      if (!text || words.includes(text)) continue;
+      if (text.split(/\s+/).every((part) => nameWords.has(part))) continue;
+      words.push(text);
+    }
+    synonyms.set(base, words);
+  }
+  return synonyms;
+}
+
+/**
+ * Icon component names exported by @salt-ds/icons, with deprecations and the
+ * other words people use for each, from `synonymsFile` (the site's icon search
+ * data) when it's given.
+ */
+export async function collectIcons(iconsDir, { synonymsFile } = {}) {
   const componentsDir = path.join(iconsDir, "src", "components");
   const index = await readFile(path.join(componentsDir, "index.ts"), "utf8");
   const icons = [];
@@ -648,24 +682,138 @@ export async function collectIcons(iconsDir) {
       icons.push({ name, deprecated: deprecated?.[1].trim() });
     }
   }
-  return icons.sort((left, right) => compareText(left.name, right.name));
+  const synonyms = synonymsFile
+    ? await readIconSynonyms(synonymsFile)
+    : new Map();
+  return icons
+    .sort((left, right) => compareText(left.name, right.name))
+    .map((icon) => ({
+      ...icon,
+      synonyms: icon.deprecated
+        ? []
+        : (synonyms.get(iconBase(icon.name)) ?? []),
+    }));
 }
 
-export function renderIconReference({ icons, packageVersion, links }) {
-  const lines = [
-    "# Icons",
-    "",
-    `Icon components exported by \`@salt-ds/icons@${packageVersion}\`. Import them by name, for example \`import { AddIcon } from "@salt-ds/icons";\`. See [Icon](${links.icon}) for usage and accessibility guidance.`,
-    "",
-  ];
+/**
+ * One line per icon, with its solid variant on the same line when both have
+ * the same deprecation, and the icon's other words or its deprecation.
+ */
+function iconLines(icons) {
+  const byName = new Map(icons.map((icon) => [icon.name, icon]));
+  const outlineOf = (icon) =>
+    icon.name.endsWith("SolidIcon")
+      ? byName.get(icon.name.replace(/SolidIcon$/, "Icon"))
+      : undefined;
+  const lines = [];
   for (const icon of icons) {
-    lines.push(
-      icon.deprecated
-        ? `- \`${icon.name}\`: deprecated ${icon.deprecated}`
-        : `- \`${icon.name}\``,
-    );
+    const outline = outlineOf(icon);
+    if (outline && outline.deprecated === icon.deprecated) continue;
+    const solid = byName.get(icon.name.replace(/Icon$/, "SolidIcon"));
+    const names =
+      solid && solid !== icon && solid.deprecated === icon.deprecated
+        ? `\`${icon.name}\`, \`${solid.name}\``
+        : `\`${icon.name}\``;
+    const detail = icon.deprecated
+      ? `deprecated ${icon.deprecated}`
+      : (icon.synonyms ?? []).join(", ");
+    lines.push(detail ? `- ${names}: ${detail}` : `- ${names}`);
   }
-  return `${lines.join("\n")}\n`;
+  return lines;
+}
+
+/** Splits lines into runs under `limit` bytes and `maxLines` lines. */
+function chunkLines(lines, limit, maxLines) {
+  const chunks = [];
+  let current = [];
+  let bytes = 0;
+  for (const line of lines) {
+    const lineBytes = Buffer.byteLength(line) + 1;
+    if (
+      current.length > 0 &&
+      (bytes + lineBytes > limit || current.length >= maxLines)
+    ) {
+      chunks.push(current);
+      current = [];
+      bytes = 0;
+    }
+    current.push(line);
+    bytes += lineBytes;
+  }
+  if (current.length > 0) chunks.push(current);
+  return chunks;
+}
+
+const iconNamesIn = (lines) =>
+  lines.flatMap(
+    (line) => line.split(":")[0].match(/`[A-Za-z0-9]+Icon`/g) ?? [],
+  );
+
+/**
+ * The icon list: one page, or an overview of parts when the list is longer
+ * than a page.
+ */
+export function renderIconReference({
+  icons,
+  packageVersion,
+  links,
+  budget = MAX_PAGE_BYTES,
+  lineBudget = MAX_PAGE_LINES,
+}) {
+  const lines = iconLines(icons);
+  const intro = `Icon components exported by \`@salt-ds/icons@${packageVersion}\`. Import them by name, for example \`import { AddIcon } from "@salt-ds/icons";\`. See [Icon](${links.icon}) for usage and accessibility guidance.`;
+  const synonymCount = icons.filter((icon) => icon.synonyms?.length).length;
+  const about = synonymCount
+    ? 'Each line lists an icon, its solid variant if it has one, and other words people use for it, from the icon search on the Salt site. Search for the word you\'d use, such as "bin" or "star".'
+    : "Each line lists an icon and its solid variant, if it has one.";
+  const single = finish(["# Icons", "", intro, "", about, "", ...lines]);
+  if (Buffer.byteLength(single) <= budget && lines.length <= lineBudget) {
+    return [{ docPath: ICON_REFERENCE_PATH, markdown: single }];
+  }
+
+  // Leaves room for a part's heading and introduction.
+  const chunks = chunkLines(
+    lines,
+    Math.max(1, budget - 1024),
+    Math.max(1, lineBudget - 10),
+  );
+  const parts = chunks.map((chunk, index) => {
+    const names = iconNamesIn(chunk);
+    return {
+      docPath: `icons/part-${index + 1}.md`,
+      chunk,
+      first: names[0],
+      last: names.at(-1),
+      count: names.length,
+    };
+  });
+  return [
+    {
+      docPath: ICON_REFERENCE_PATH,
+      markdown: finish([
+        "# Icons",
+        "",
+        intro,
+        "",
+        `${about} The list is in ${parts.length} parts:`,
+        "",
+        ...parts.map(
+          (part) =>
+            `- [${part.first} to ${part.last}](${part.docPath}): ${part.count} icons.`,
+        ),
+      ]),
+    },
+    ...parts.map((part, index) => ({
+      docPath: part.docPath,
+      markdown: finish([
+        `# Icons: ${part.first} to ${part.last}`,
+        "",
+        `Part ${index + 1} of ${parts.length} of the [icon list](${relativeDocLink(part.docPath, ICON_REFERENCE_PATH)}) for \`@salt-ds/icons@${packageVersion}\`. ${about}`,
+        "",
+        ...part.chunk,
+      ]),
+    })),
+  ];
 }
 
 /** Country symbol components exported by @salt-ds/countries. */

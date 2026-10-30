@@ -59,11 +59,22 @@ describe("icon and country references", () => {
     await mkdir(icons, { recursive: true });
     await writeFile(
       path.join(icons, "index.ts"),
-      'export * from "./Add";\nexport * from "./Success";\n',
+      'export * from "./Add";\nexport * from "./AddSolid";\nexport * from "./Success";\n',
     );
     await writeFile(
       path.join(icons, "Add.tsx"),
       "export const AddIcon = forwardRef(() => null);\n",
+    );
+    await writeFile(
+      path.join(icons, "AddSolid.tsx"),
+      "export const AddSolidIcon = forwardRef(() => null);\n",
+    );
+    await writeFile(
+      path.join(root, "synonyms.json"),
+      JSON.stringify([
+        { iconName: "add", synonym: ["create", " Plus", "plus", "add"] },
+        { iconName: "success", synonym: ["tick"] },
+      ]),
     );
     await writeFile(
       path.join(icons, "Success.tsx"),
@@ -81,23 +92,61 @@ describe("icon and country references", () => {
     await rm(root, { recursive: true, force: true });
   });
 
-  it("lists icons with their deprecations", async () => {
-    const icons = await collectIcons(path.join(root, "icons"));
+  it("lists icons with their other words and deprecations", async () => {
+    const icons = await collectIcons(path.join(root, "icons"), {
+      synonymsFile: path.join(root, "synonyms.json"),
+    });
     expect(icons).toEqual([
-      { name: "AddIcon", deprecated: undefined },
+      { name: "AddIcon", deprecated: undefined, synonyms: ["create", "plus"] },
+      {
+        name: "AddSolidIcon",
+        deprecated: undefined,
+        synonyms: ["create", "plus"],
+      },
       {
         name: "SuccessIcon",
         deprecated: "since 1.13.0. Use `CheckmarkIcon` instead.",
+        synonyms: [],
       },
     ]);
-    const markdown = renderIconReference({
+    const [page, ...parts] = renderIconReference({
       icons,
       packageVersion: "1.0.0",
       links: { icon: "components/icon.md" },
     });
-    expect(markdown).toContain(
+    expect(parts).toEqual([]);
+    expect(page.docPath).toBe("icons.md");
+    expect(page.markdown).toContain(
+      "- `AddIcon`, `AddSolidIcon`: create, plus\n",
+    );
+    expect(page.markdown).not.toContain("- `AddSolidIcon`");
+    expect(page.markdown).toContain(
       "- `SuccessIcon`: deprecated since 1.13.0. Use `CheckmarkIcon` instead.",
     );
+  });
+
+  it("splits a long icon list into linked parts", async () => {
+    const icons = await collectIcons(path.join(root, "icons"), {
+      synonymsFile: path.join(root, "synonyms.json"),
+    });
+    const files = renderIconReference({
+      icons,
+      packageVersion: "1.0.0",
+      links: { icon: "components/icon.md" },
+      lineBudget: 1,
+    });
+    expect(files.map((file) => file.docPath)).toEqual([
+      "icons.md",
+      "icons/part-1.md",
+      "icons/part-2.md",
+    ]);
+    expect(files[0].markdown).toContain(
+      "- [`AddIcon` to `AddSolidIcon`](icons/part-1.md): 2 icons.",
+    );
+    expect(files[2].markdown).toContain(
+      "Part 2 of 2 of the [icon list](../icons.md)",
+    );
+    expect(files[2].markdown).toContain("- `SuccessIcon`: deprecated");
   });
 
   it("lists country codes and notes sharp variants", async () => {
