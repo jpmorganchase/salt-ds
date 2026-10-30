@@ -31,7 +31,9 @@ export const SliderTooltip = ({ value, open }: SliderTooltipProps) => {
       <svg
         className={withBaseName("arrow")}
         aria-hidden="true"
-        viewBox="0 1 14 14"
+        height={6}
+        viewBox="0 1 14 7"
+        width={12}
       >
         <path
           d="M0,0 H14 L7,7 Q7,7 7,7 Z"
