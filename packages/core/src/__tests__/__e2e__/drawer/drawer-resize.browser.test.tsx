@@ -5,7 +5,7 @@ import { type CSSProperties, useLayoutEffect } from "react";
 import { afterEach, describe, expect, it } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { runAxeScan } from "~browser-test-utils/accessibility";
-import { mouse, touch } from "~browser-test-utils/pointer";
+import { mouse, supportsTouch, touch } from "~browser-test-utils/pointer";
 import { act, renderWithSalt } from "~browser-test-utils/render";
 import * as drawerStories from "~stories/drawer/drawer.stories";
 
@@ -115,7 +115,12 @@ const moveAlong = (
 
 async function dragHandleBy(position: Position, delta: number) {
   const start = handleCenter();
-  await mouse.drag(start, moveAlong(position, start, delta));
+  const { x, y } = moveAlong(position, start, delta);
+  // Firefox drops mouse input outside the viewport, so stop at its edge.
+  await mouse.drag(start, {
+    x: Math.min(Math.max(x, 0), window.innerWidth - 1),
+    y: Math.min(Math.max(y, 0), window.innerHeight - 1),
+  });
 }
 
 async function pressOnHandle(key: string) {
@@ -258,23 +263,26 @@ describe("GIVEN a resizable Drawer", () => {
       await expect.poll(() => drawerSize("left")).toBeCloseTo(100, 0);
     });
 
-    it("stops resizing when the drag is cancelled", async () => {
-      await renderResizable();
+    it.runIf(supportsTouch)(
+      "stops resizing when the drag is cancelled",
+      async () => {
+        await renderResizable();
 
-      const start = handleCenter();
-      await touch.start(start);
-      await touch.move({ x: start.x + 50, y: start.y });
-      expect(getComputedStyle(document.body).cursor).toBe("ew-resize");
+        const start = handleCenter();
+        await touch.start(start);
+        await touch.move({ x: start.x + 50, y: start.y });
+        expect(getComputedStyle(document.body).cursor).toBe("ew-resize");
 
-      await touch.cancel();
+        await touch.cancel();
 
-      await expect
-        .poll(() => getComputedStyle(document.body).cursor)
-        .toBe("auto");
-      expect(drawerSize("left")).toBeCloseTo(350, 0);
-    });
+        await expect
+          .poll(() => getComputedStyle(document.body).cursor)
+          .toBe("auto");
+        expect(drawerSize("left")).toBeCloseTo(350, 0);
+      },
+    );
 
-    it("ignores a non-primary pointer", async () => {
+    it.runIf(supportsTouch)("ignores a non-primary pointer", async () => {
       await renderResizable();
 
       const start = handleCenter();
@@ -637,14 +645,17 @@ describe("GIVEN a resizable Drawer", () => {
       expect(drawerSize("left")).toBeCloseTo(320, 0);
     });
 
-    it("places the edge with a second tap on touch", async () => {
-      await renderResizable();
+    it.runIf(supportsTouch)(
+      "places the edge with a second tap on touch",
+      async () => {
+        await renderResizable();
 
-      await touch.tap(handleCenter());
-      await touch.tap(pointForSize("left", 450));
+        await touch.tap(handleCenter());
+        await touch.tap(pointForSize("left", 450));
 
-      await expect.poll(() => drawerSize("left")).toBeCloseTo(450, 0);
-    });
+        await expect.poll(() => drawerSize("left")).toBeCloseTo(450, 0);
+      },
+    );
 
     it("cancels with Escape without closing the drawer", async () => {
       await renderResizable();
@@ -817,7 +828,8 @@ describe("GIVEN a resizable Drawer", () => {
     });
 
     it("cancels when the window is resized", async () => {
-      await renderResizable();
+      // Otherwise the click below dismisses the drawer once placing is cancelled.
+      await renderResizable({ disableDismiss: true });
 
       await clickHandle();
       await expect.poll(guide).not.toBeNull();
