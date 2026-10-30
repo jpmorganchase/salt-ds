@@ -380,6 +380,7 @@ export * from "./Replay10";
 export * from "./Replay15";
 export * from "./Replay30";
 export * from "./Restore";
+export * from "./RotateLeft";
 export * from "./RunReport";
 export * from "./RunReportSolid";
 export * from "./SaltShaker";
