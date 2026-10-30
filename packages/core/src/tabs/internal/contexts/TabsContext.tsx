@@ -54,7 +54,7 @@ export interface TabsContextValue
   setSelected: (
     event: SyntheticEvent | null,
     value: string,
-    source?: "main" | "overflow",
+    source?: "main" | "overflow" | "removal",
   ) => void;
   activeTab: MutableRefObject<Pick<Item, "id" | "value"> | undefined>;
   selectionFromOverflowValueRef: MutableRefObject<string | null>;
@@ -93,6 +93,7 @@ export const TabsContext = createContext<TabsContextValue>("TabsContext", {
   setMenuOpen: () => undefined,
   removalVersion: 0,
   getRemovedItems: () => new Map(),
+  peekRemovedItems: () => new Map(),
 });
 
 export function useTabs() {
