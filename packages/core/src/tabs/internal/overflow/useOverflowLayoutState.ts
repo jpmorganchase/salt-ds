@@ -1,9 +1,12 @@
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useIsomorphicLayoutEffect } from "../../../utils";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import type {
   TabListLayoutContextValue,
   TabSlotLocation,
 } from "../contexts/TabListLayoutContext";
+
+function haveSameValues(a: string[], b: string[]) {
+  return a.length === b.length && a.every((value, index) => value === b[index]);
+}
 
 function getOverflowStartIndex(
   hiddenValues: string[],
@@ -46,7 +49,29 @@ export function useOverflowLayoutState({
     }
   }, [overflowMenuOpen]);
 
-  const previousHiddenValuesRef = useRef(hiddenValues);
+  // Hidden values are a new array on every render, so compare their contents.
+  const [previousHiddenValues, setPreviousHiddenValues] =
+    useState(hiddenValues);
+  if (!haveSameValues(previousHiddenValues, hiddenValues)) {
+    setPreviousHiddenValues(hiddenValues);
+
+    // When the active overflow tab leaves the menu (e.g. it is removed), keep
+    // the active position rather than jumping back to the first tab.
+    if (
+      requestedOverflowActiveValue &&
+      !hiddenValues.includes(requestedOverflowActiveValue)
+    ) {
+      const previousIndex = previousHiddenValues.indexOf(
+        requestedOverflowActiveValue,
+      );
+      setRequestedOverflowActiveValue(
+        previousIndex >= 0
+          ? (hiddenValues[Math.min(previousIndex, hiddenValues.length - 1)] ??
+              null)
+          : null,
+      );
+    }
+  }
 
   const resolvedOverflowActiveValue = useMemo(() => {
     if (!overflowMenuOpen) {
@@ -60,36 +85,8 @@ export function useOverflowLayoutState({
       return requestedOverflowActiveValue;
     }
 
-    // When the active overflow tab leaves the menu (e.g. it is removed), keep
-    // the active position rather than jumping back to the first tab.
-    const previousIndex = requestedOverflowActiveValue
-      ? previousHiddenValuesRef.current.indexOf(requestedOverflowActiveValue)
-      : -1;
-    if (previousIndex >= 0) {
-      return (
-        hiddenValues[Math.min(previousIndex, hiddenValues.length - 1)] ?? null
-      );
-    }
-
     return hiddenValues[0] ?? null;
   }, [hiddenValues, overflowMenuOpen, requestedOverflowActiveValue]);
-
-  useIsomorphicLayoutEffect(() => {
-    previousHiddenValuesRef.current = hiddenValues;
-  }, [hiddenValues]);
-
-  // The fallback above relies on the previous render's hidden values, so it
-  // only holds for one render. Adopt it as the requested value so later
-  // renders keep the position rather than falling back to the first tab.
-  useIsomorphicLayoutEffect(() => {
-    if (
-      requestedOverflowActiveValue &&
-      resolvedOverflowActiveValue &&
-      requestedOverflowActiveValue !== resolvedOverflowActiveValue
-    ) {
-      setRequestedOverflowActiveValue(resolvedOverflowActiveValue);
-    }
-  }, [requestedOverflowActiveValue, resolvedOverflowActiveValue]);
 
   const hiddenValueSet = useMemo(() => new Set(hiddenValues), [hiddenValues]);
   const visibleValueSet = useMemo(
