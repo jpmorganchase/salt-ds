@@ -76,16 +76,24 @@ export function useTabRemovalHandler({
   tabstripRef,
   targetWindow,
 }: UseTabRemovalHandlerArgs) {
+  // Ends a recovery cycle. Each run considers new removal records for
+  // selection replacement before it can get here, and focus recovery doesn't
+  // look at records once the cycle ends, so drop any that are left rather
+  // than holding on to removed elements.
   const clearPendingRemovalRecovery = useCallback(() => {
     pendingRemovalRecoveryRef.current = false;
     pendingRemovalRecoveryRetriesRef.current = 0;
-  }, [pendingRemovalRecoveryRef, pendingRemovalRecoveryRetriesRef]);
+    getRemovedItems();
+  }, [
+    getRemovedItems,
+    pendingRemovalRecoveryRef,
+    pendingRemovalRecoveryRetriesRef,
+  ]);
 
-  // Removal records are only cleared when focus is recovered, so records from
-  // earlier removals can still be in the collection. Each record is only
-  // considered by the first removal run that sees it. Retries share the same
-  // record, but restoring and removing a tab creates a new one, even when its
-  // explicit id is reused.
+  // A removal record can be seen by several runs (retries and focus-out
+  // recovery). Each record is only considered by the first run that sees it.
+  // Restoring and removing a tab creates a new record, even when its explicit
+  // id is reused.
   const seenRemovalsRef = useRef(new WeakSet<RemovedItem>());
 
   const getReplacementTab = (baseIndex: number) => {
