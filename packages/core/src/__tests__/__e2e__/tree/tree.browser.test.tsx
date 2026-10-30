@@ -923,7 +923,7 @@ describe("Given a Tree", () => {
       );
       const after = page.getByRole("button", { name: "After" });
       const expectReentryFocus = async (label: string) => {
-        await after.click();
+        after.element().focus();
         await userEvent.keyboard("{Shift>}{Tab}{/Shift}");
         await expect.element(treeItem(label)).toHaveFocus();
       };
