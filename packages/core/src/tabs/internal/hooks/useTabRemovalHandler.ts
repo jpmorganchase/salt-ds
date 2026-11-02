@@ -17,6 +17,7 @@ interface RemovedItem {
 
 interface UseTabRemovalHandlerArgs {
   activeTab: MutableRefObject<Pick<Item, "id" | "value"> | undefined>;
+  canRecoverRemovalFocus: () => boolean;
   focusElementWithRetry: (
     getElement: () => HTMLElement | null | undefined,
   ) => void;
@@ -54,6 +55,7 @@ function hasLostDocumentFocus(doc: Document) {
 
 export function useTabRemovalHandler({
   activeTab,
+  canRecoverRemovalFocus,
   focusElementWithRetry,
   getFirst,
   getIndex,
@@ -160,6 +162,11 @@ export function useTabRemovalHandler({
     if (removedSelected) {
       const target = removedSelected;
       afterLayout(() => replaceRemovedSelection(target));
+    }
+
+    if (!canRecoverRemovalFocus()) {
+      clearPendingRemovalRecovery();
+      return;
     }
 
     const activeTabWasSelected = activeTab.current?.value === selected;

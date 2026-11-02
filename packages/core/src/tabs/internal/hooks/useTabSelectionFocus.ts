@@ -24,6 +24,7 @@ function getTabAccessibleName(element: HTMLElement) {
 
 interface UseTabSelectionFocusArgs {
   announce: (message: string, timeout?: number) => void;
+  canRecoverRemovalFocus: () => boolean;
   focusElementWithRetry: (
     getElement: () => HTMLElement | null | undefined,
   ) => void;
@@ -38,6 +39,7 @@ interface UseTabSelectionFocusArgs {
 
 export function useTabSelectionFocus({
   announce,
+  canRecoverRemovalFocus,
   focusElementWithRetry,
   getRenderedTab,
   getSelectedTabElement,
@@ -90,8 +92,25 @@ export function useTabSelectionFocus({
       return;
     }
 
+    // Replacing a removed selection doesn't imply that the tabs lost focus.
+    // Preserve ordinary selection focus behavior while leaving externally
+    // removed tabs alone when focus was already on the body.
+    if (
+      !getRenderedTrigger(previousSelected)?.isConnected &&
+      !canRecoverRemovalFocus()
+    ) {
+      return;
+    }
+
     focusSelectedTab();
-  }, [focusSelectedTab, previousSelected, selected, targetWindow]);
+  }, [
+    canRecoverRemovalFocus,
+    focusSelectedTab,
+    getRenderedTrigger,
+    previousSelected,
+    selected,
+    targetWindow,
+  ]);
 
   useIsomorphicLayoutEffect(() => {
     const selectedFromOverflow = selectionFromOverflowValueRef.current;

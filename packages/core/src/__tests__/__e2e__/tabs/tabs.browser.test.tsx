@@ -394,12 +394,14 @@ function RemovableTabs({
   preventFocusOnDismiss = false,
   fillTabList = false,
   onChange,
+  value,
 }: {
   labels?: string[];
   width?: number;
   preventFocusOnDismiss?: boolean;
   fillTabList?: boolean;
   onChange?: (event: SyntheticEvent | null, value: string) => void;
+  value?: string;
 }) {
   const [tabs, setTabs] = useState(labels);
   const remove = (value: string) =>
@@ -416,7 +418,7 @@ function RemovableTabs({
   return (
     <>
       <div style={{ width }}>
-        <Tabs defaultValue={labels[0]} onChange={onChange}>
+        <Tabs defaultValue={labels[0]} onChange={onChange} value={value}>
           <TabBar inset divider>
             <TabList style={fillTabList ? { flex: "1 1 auto" } : undefined}>
               {tabs.map((label) => (
@@ -1260,6 +1262,118 @@ describe("Given Tabs with removable tabs", () => {
     await expect.element(removeLoans).toHaveFocus();
     expect(onChange).toHaveBeenCalledTimes(2);
   });
+
+  it.each(["before interaction", "after blur"] as const)(
+    "keeps focus on the body when the selected tab is removed externally %s",
+    async (focusState) => {
+      const onChange = vi.fn();
+      await mountTabs(<RemovableTabs onChange={onChange} />);
+      await expectSelected("Home");
+      if (focusState === "after blur") {
+        tab("Home").element().focus();
+        await expect.element(tab("Home")).toHaveFocus();
+        tab("Home").element().blur();
+      }
+      expect(document.activeElement).toBe(document.body);
+
+      // An application update removes the tab without a click moving focus.
+      (window as OverflowTestWindow).__removeTab?.("Home");
+      await expect.element(tab("Home")).not.toBeInTheDocument();
+      await expectSelected("Tx");
+      await waitForFrames();
+      expect(document.activeElement).toBe(document.body);
+      expect(onChange.mock.calls).toEqual([[null, "Tx"]]);
+    },
+  );
+
+  it.each([false, true])(
+    "follows a controlled parent's alternate replacement while preserving focus ownership (focused: %s)",
+    async (focused) => {
+      const onChange = vi.fn();
+      function ControlledExternalRemovalTabs() {
+        const [value, setValue] = useState("Home");
+        return (
+          <RemovableTabs
+            value={value}
+            onChange={(event, newValue) => {
+              onChange(event, newValue);
+              setValue("Loans");
+            }}
+          />
+        );
+      }
+      await mountTabs(<ControlledExternalRemovalTabs />);
+      await expectSelected("Home");
+      if (focused) {
+        tab("Home").element().focus();
+        await expect.element(tab("Home")).toHaveFocus();
+      } else {
+        expect(document.activeElement).toBe(document.body);
+      }
+
+      (window as OverflowTestWindow).__removeTab?.("Home");
+      await expect.element(tab("Home")).not.toBeInTheDocument();
+      await expectSelected("Loans");
+      await waitForFrames();
+      if (focused) {
+        await expect.element(tab("Loans")).toHaveFocus();
+      } else {
+        expect(document.activeElement).toBe(document.body);
+      }
+      expect(onChange.mock.calls).toEqual([[null, "Tx"]]);
+    },
+  );
+
+  it.each(["before interaction", "after blur"] as const)(
+    "keeps focus on the body when a controlled parent removes and selects in the same update %s",
+    async (focusState) => {
+      const onChange = vi.fn();
+      function ParentControlledRemovalTabs() {
+        const [{ tabs, value }, setState] = useState({
+          tabs: ["Home", "Tx", "Loans", "Checks"],
+          value: "Home",
+        });
+        useEffect(() => {
+          (window as OverflowTestWindow).__removeTab = (removedValue) =>
+            setState((old) => ({
+              tabs: old.tabs.filter((label) => label !== removedValue),
+              value: "Loans",
+            }));
+          return () => {
+            delete (window as OverflowTestWindow).__removeTab;
+          };
+        }, []);
+        return (
+          <Tabs value={value} onChange={onChange}>
+            <TabBar inset divider>
+              <TabList>
+                {tabs.map((label) => (
+                  <Tab key={label} value={label}>
+                    <TabTrigger>{label}</TabTrigger>
+                  </Tab>
+                ))}
+              </TabList>
+            </TabBar>
+          </Tabs>
+        );
+      }
+      await mountTabs(<ParentControlledRemovalTabs />);
+      await expectSelected("Home");
+      if (focusState === "after blur") {
+        tab("Home").element().focus();
+        await expect.element(tab("Home")).toHaveFocus();
+        tab("Home").element().blur();
+      }
+      expect(document.activeElement).toBe(document.body);
+
+      (window as OverflowTestWindow).__removeTab?.("Home");
+      await expect.element(tab("Home")).not.toBeInTheDocument();
+      await expectSelected("Loans");
+      await waitForFrames();
+      expect(document.activeElement).toBe(document.body);
+      expect(onChange).not.toHaveBeenCalled();
+    },
+  );
 
   it("selects the next tab each time a tab with the same explicit id is dismissed", async () => {
     const onChange = vi.fn();
