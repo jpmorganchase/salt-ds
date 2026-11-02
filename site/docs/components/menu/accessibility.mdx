@@ -18,6 +18,10 @@ data:
 - Avoid selectable menu items when the list is really a value picker for a form control, such as choosing a year or country. Instead, use [`Dropdown`](/salt/components/dropdown) to pick from a short list, or [`ComboBox`](/salt/components/combo-box) to type and filter a long list.
 - When a selectable `MenuGroup` has no `label`, pass an `aria-label` that describes the set of options, so screen reader users know what they're choosing between.
 
+### Announcing the outcome
+
+- When a menu action changes content away from the user's focus, such as duplicating or deleting a row, [announce](/salt/components/aria-announcer/usage#announcing-from-an-event) the outcome. If the action removes the menu's trigger, move focus as [Returning focus after an action](/salt/components/dialog/accessibility#returning-focus-after-an-action) describes.
+
 ### Disabled menu items
 
 - Disabled menu items remain focusable, so keyboard and screen reader users can still discover them. For further information, see the W3C guidance on [focusability of disabled controls](https://www.w3.org/WAI/ARIA/apg/practices/keyboard-interface/#focusabilityofdisabledcontrols).

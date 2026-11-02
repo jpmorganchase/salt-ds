@@ -49,6 +49,7 @@ export function instructions({
           `For an accessibility repair or a failing accessibility check, also read \`${guidance.accessibility}\` and the affected components' accessibility guidance.`,
         ]
       : []),
+    "When an action changes content away from the user's focus, such as filtering a list, adding or deleting a row, or showing a result, announce the change with `useAriaAnnouncer`. When it removes the focused element, move focus to a control that remains.",
     "Prefer component props, such as `Text`'s `color`, to custom CSS with `--salt-*` tokens.",
     check
       ? `Before you finish, run \`${check}\` from ${rootBase === "this file" ? "this file's folder" : rootBase} and fix what it reports: it checks the Salt tokens, deprecated props and component parts in the files you changed against the installed docs.`
