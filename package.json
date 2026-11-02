@@ -123,7 +123,7 @@
     "@date-fns/tz": "^1.4.1",
     "@rollup/plugin-commonjs": "^28.0.1",
     "@rollup/plugin-json": "^6.1.0",
-    "@rollup/plugin-node-resolve": "^15.3.0",
+    "@rollup/plugin-node-resolve": "^16.0.0",
     "@vitest/browser-playwright": "^5.0.5",
     "browserslist-to-esbuild": "^2.1.1",
     "execa": "^10.0.0",
