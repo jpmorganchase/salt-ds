@@ -1,0 +1,7 @@
+.noAnimation.saltDrawer.saltDrawer-enterAnimation {
+  animation: none;
+}
+
+.hitArea .saltDrawerResizeHandle {
+  background: var(--salt-status-error-background);
+}

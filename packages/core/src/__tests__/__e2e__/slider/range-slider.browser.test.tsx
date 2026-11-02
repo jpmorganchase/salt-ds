@@ -1,6 +1,7 @@
 import { composeStories } from "@storybook/react-vite";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
+import { pasteValue } from "~browser-test-utils/interactions";
 import { act, renderWithSalt } from "~browser-test-utils/render";
 import * as rangeSliderStories from "~stories/range-slider/range-slider.stories";
 
@@ -51,11 +52,69 @@ async function dispatchPointer(
   });
 }
 
+async function clickTrackAt(fraction: number) {
+  const track = rail();
+  const rect = track.getBoundingClientRect();
+  await userEvent.click(track, {
+    position: { x: Math.round(rect.width * fraction), y: rect.height / 2 },
+  });
+}
+
 describe("Given a Range Slider", () => {
   it("renders with default props", async () => {
     await renderWithSalt(<Default />);
     await expect.element(sliders()).toHaveLength(2);
     await expectValues("0", "50");
+  });
+
+  it("moves the start thumb when the track is clicked nearer to it", async () => {
+    const onChange = vi.fn();
+    await renderWithSalt(
+      <Default min={0} max={10} defaultValue={[2, 8]} onChange={onChange} />,
+    );
+    await clickTrackAt(0.3);
+    await expectValues("3", "8");
+    await expect.element(sliders().nth(0)).toHaveFocus();
+    expect(onChange.mock.lastCall?.[1]).toEqual([3, 8]);
+  });
+
+  it.each([
+    ["before both thumbs", [5, 5], 0.2, ["2", "5"], 0],
+    ["after both thumbs", [5, 5], 0.8, ["5", "8"], 1],
+    ["midway between the thumbs", [2, 8], 0.5, ["5", "8"], 0],
+  ] as const)(
+    "moves the expected thumb when the track is clicked equally near both, %s",
+    async (_, defaultValue, fraction, [start, end], focusedIndex) => {
+      await renderWithSalt(
+        <Default min={0} max={10} defaultValue={[...defaultValue]} />,
+      );
+      await clickTrackAt(fraction);
+      await expectValues(start, end);
+      await expect.element(sliders().nth(focusedIndex)).toHaveFocus();
+    },
+  );
+
+  it("updates and reports values changed directly on an input, as assistive technology does", async () => {
+    const onChange = vi.fn();
+    const onChangeEnd = vi.fn();
+    await renderWithSalt(
+      <Default
+        min={0}
+        max={10}
+        defaultValue={[2, 6]}
+        onChange={onChange}
+        onChangeEnd={onChangeEnd}
+      />,
+    );
+
+    await act(() => pasteValue(sliders().nth(0), "4"));
+    await expectValues("4", "6");
+    expect(onChange.mock.lastCall?.[1]).toEqual([4, 6]);
+    expect(onChangeEnd.mock.lastCall?.[1]).toEqual([4, 6]);
+
+    await act(() => pasteValue(sliders().nth(1), "3"));
+    await expectValues("4", "4");
+    expect(onChange.mock.lastCall?.[1]).toEqual([4, 4]);
   });
 
   it("reports pointer changes and the final track range", async () => {

@@ -7,20 +7,21 @@ import { renderWithSalt } from "~browser-test-utils/render";
 import * as systemStatusStories from "~stories/system-status/system-status.stories";
 
 const composedStories = composeStories(systemStatusStories);
-// biome-ignore lint/suspicious/noShadowRestrictedNames: Error is the story name.
-const { Info, Success, Error, Warning } = composedStories;
+const { Statuses } = composedStories;
 
 describe("GIVEN a System status", () => {
   checkAccessibility(composedStories);
 
   it.each([
-    [Info, "InfoSolidIcon"],
-    [Success, "SuccessCircleSolidIcon"],
-    [Warning, "WarningSolidIcon"],
-    [Error, "ErrorSolidIcon"],
-  ] as const)("renders the story status", async (Story, testId) => {
-    await renderWithSalt(<Story />);
-    await expect.element(page.getByTestId(testId)).toBeInTheDocument();
+    "InfoSolidIcon",
+    "SuccessCircleSolidIcon",
+    "WarningSolidIcon",
+    "ErrorSolidIcon",
+  ])("hides the %s status icon from screen readers", async (testId) => {
+    await renderWithSalt(<Statuses />);
+    await expect
+      .element(page.getByTestId(testId))
+      .toHaveAttribute("aria-hidden", "true");
   });
 
   it("has a default status role", async () => {

@@ -8,6 +8,7 @@
   border-style: var(--saltLinkButton-borderStyle, solid);
   border-width: var(--saltLinkButton-borderWidth, var(--linkButton-borderWidth));
   border-radius: var(--saltLinkButton-borderRadius, var(--salt-palette-corner-weak, 0));
+  box-sizing: border-box;
   color: var(--saltLinkButton-text-color, var(--linkButton-text-color));
   display: inline-flex;
   gap: var(--salt-spacing-50);

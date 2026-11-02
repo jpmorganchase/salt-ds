@@ -1,4 +1,3 @@
-export * from "./BottomDrawer";
 export * from "./Default";
 export * from "./DeprecatedCloseButton";
 export * from "./DisableAccent";
@@ -6,6 +5,6 @@ export * from "./DisableScrim";
 export * from "./Footer";
 export * from "./Header";
 export * from "./MandatoryAction";
-export * from "./Preheader";
-export * from "./RightDrawer";
-export * from "./TopDrawer";
+export * from "./Placement";
+export * from "./Resizable";
+export * from "./Variants";

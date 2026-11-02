@@ -2,4 +2,6 @@
   margin-bottom: auto;
   display: flex;
   gap: var(--salt-spacing-100);
+  align-items: center;
+  min-height: var(--salt-size-base);
 }

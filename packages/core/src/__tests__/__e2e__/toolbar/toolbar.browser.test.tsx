@@ -1,6 +1,7 @@
 import {
   Button,
   ComboBox,
+  Divider,
   Dropdown,
   Input,
   Option,
@@ -18,10 +19,10 @@ import {
   DatePickerTrigger,
 } from "@salt-ds/date-components";
 import { composeStories } from "@storybook/react-vite";
-import { type FocusEventHandler, StrictMode, useState } from "react";
+import { type FocusEventHandler, StrictMode, useEffect, useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { type Locator, page, userEvent } from "vitest/browser";
-import { renderWithSalt } from "~browser-test-utils/render";
+import { act, renderWithSalt } from "~browser-test-utils/render";
 import * as toolbarStories from "~stories/toolbar/toolbar.test.stories";
 
 const {
@@ -1920,4 +1921,519 @@ describe("Toolbar keyboard, focus and portals", () => {
       .element(page.getByRole("button", { name: "Status" }))
       .toHaveFocus();
   });
+});
+
+const focusMemoryFilters = [
+  ["Filter A", 3],
+  ["Status", 4],
+  ["Columns", 5],
+] as const;
+
+function NamedOverflowFocusMemoryTestCase() {
+  return (
+    <div
+      className="Flexbox"
+      style={{ height: 240, width: 760, flexDirection: "column" }}
+    >
+      <button type="button" data-testid="toolbar-before">
+        Before toolbar
+      </button>
+      <Toolbar aria-label="Named overflow focus memory toolbar">
+        <ToolbarContent position="start">
+          <Tooltray overflowMode="none">
+            <Button appearance="transparent" style={{ width: 140 }}>
+              Search
+            </Button>
+          </Tooltray>
+          {focusMemoryFilters.map(([label, priority]) => (
+            <Tooltray
+              key={label}
+              overflowGroup="Filters"
+              overflowLabel="Filters"
+              overflowMode="independent"
+              overflowPriority={priority}
+            >
+              <Button appearance="transparent" style={{ width: 110 }}>
+                {label}
+              </Button>
+            </Tooltray>
+          ))}
+        </ToolbarContent>
+        <ToolbarContent position="end">
+          <Tooltray overflowMode="none">
+            <Button appearance="transparent" style={{ width: 100 }}>
+              Refresh
+            </Button>
+            <Button appearance="solid" style={{ width: 100 }}>
+              Run
+            </Button>
+          </Tooltray>
+        </ToolbarContent>
+      </Toolbar>
+      <button type="button" data-testid="toolbar-after">
+        After toolbar
+      </button>
+    </div>
+  );
+}
+
+const lateOverflowActionReleasers = new Set<() => void>();
+
+function LateOverflowActions() {
+  const [loaded, setLoaded] = useState(false);
+
+  useEffect(() => {
+    const release = () => setLoaded(true);
+    lateOverflowActionReleasers.add(release);
+    return () => {
+      lateOverflowActionReleasers.delete(release);
+    };
+  }, []);
+
+  // A fixed width keeps overflow measurement stable when the controls load.
+  return (
+    <span style={{ display: "inline-flex", width: 180 }}>
+      {loaded ? (
+        <>
+          <Button appearance="transparent">Export</Button>
+          <Button appearance="solid">Run</Button>
+        </>
+      ) : (
+        "Loading actions"
+      )}
+    </span>
+  );
+}
+
+function LateOverflowActionsTestCase() {
+  return (
+    <div
+      className="Flexbox"
+      style={{ height: 240, width: 260, flexDirection: "column" }}
+    >
+      <Toolbar aria-label="Late overflow actions toolbar">
+        <ToolbarContent position="start">
+          <Tooltray overflowMode="none">
+            <Button appearance="transparent" style={{ width: 140 }}>
+              Search
+            </Button>
+          </Tooltray>
+        </ToolbarContent>
+        <ToolbarContent position="end">
+          <Tooltray
+            overflowGroup="Actions"
+            overflowLabel="Actions"
+            overflowMode="grouped"
+            overflowPriority={5}
+          >
+            <LateOverflowActions />
+          </Tooltray>
+        </ToolbarContent>
+      </Toolbar>
+    </div>
+  );
+}
+
+function DisabledControlsKeyboardTestCase() {
+  return (
+    <div
+      className="Flexbox"
+      style={{ height: 160, width: 760, flexDirection: "column" }}
+    >
+      <button type="button" data-testid="toolbar-before">
+        Before toolbar
+      </button>
+      <Toolbar aria-label="Disabled controls toolbar">
+        <Tooltray overflowMode="none">
+          <Button appearance="transparent">Cut</Button>
+          <Button appearance="transparent" disabled>
+            Copy
+          </Button>
+          <Button appearance="transparent" disabled focusableWhenDisabled>
+            Paste
+          </Button>
+        </Tooltray>
+        <Tooltray overflowMode="none">
+          <Button appearance="transparent" disabled>
+            Delete
+          </Button>
+          <Button appearance="solid">Run</Button>
+        </Tooltray>
+      </Toolbar>
+    </div>
+  );
+}
+
+function PriorityChangeTestCase({ swapped = false }: { swapped?: boolean }) {
+  return (
+    <div
+      className="Flexbox"
+      style={{ height: 160, width: 400, flexDirection: "column" }}
+    >
+      <Toolbar aria-label="Priority change toolbar">
+        <Tooltray overflowMode="none">
+          <Button appearance="transparent" style={{ width: 140 }}>
+            Search
+          </Button>
+        </Tooltray>
+        <Tooltray overflowPriority={swapped ? 1 : 2}>
+          <Button appearance="transparent" style={{ width: 140 }}>
+            Columns
+          </Button>
+        </Tooltray>
+        <Tooltray overflowPriority={swapped ? 2 : 1}>
+          <Button appearance="transparent" style={{ width: 140 }}>
+            Export
+          </Button>
+        </Tooltray>
+      </Toolbar>
+    </div>
+  );
+}
+
+function OverflowLabelChangeTestCase({ label }: { label: string }) {
+  return (
+    <div
+      className="Flexbox"
+      style={{ height: 160, width: 260, flexDirection: "column" }}
+    >
+      <Toolbar aria-label="Overflow label toolbar">
+        <Tooltray overflowMode="none">
+          <Button appearance="transparent" style={{ width: 140 }}>
+            Search
+          </Button>
+        </Tooltray>
+        <Tooltray
+          overflowGroup="Actions"
+          overflowLabel={label}
+          overflowMode="grouped"
+          overflowPriority={5}
+        >
+          <Button appearance="transparent">Export</Button>
+          <Button appearance="solid">Run</Button>
+        </Tooltray>
+      </Toolbar>
+    </div>
+  );
+}
+
+function FragmentTooltraysTestCase() {
+  const leadingTrays = (
+    <>
+      <Tooltray overflowMode="none">
+        <Button appearance="transparent" style={{ width: 140 }}>
+          Search
+        </Button>
+      </Tooltray>
+      <Tooltray overflowPriority={2}>
+        <Button appearance="transparent" style={{ width: 140 }}>
+          Columns
+        </Button>
+      </Tooltray>
+    </>
+  );
+
+  return (
+    <div
+      className="Flexbox"
+      style={{ height: 160, width: 400, flexDirection: "column" }}
+    >
+      <Toolbar aria-label="Fragment tooltrays toolbar">
+        <ToolbarContent position="start">
+          {leadingTrays}
+          <Tooltray overflowPriority={1}>
+            <Button appearance="transparent" style={{ width: 140 }}>
+              Export
+            </Button>
+          </Tooltray>
+        </ToolbarContent>
+      </Toolbar>
+    </div>
+  );
+}
+
+function TrailingDividerTestCase() {
+  return (
+    <div
+      className="Flexbox"
+      style={{ height: 160, width: 760, flexDirection: "column" }}
+    >
+      <Toolbar aria-label="Trailing divider toolbar">
+        <ToolbarContent position="start">
+          <Tooltray>
+            <Button appearance="transparent">Cut</Button>
+          </Tooltray>
+          <Tooltray>
+            <Button appearance="transparent">Copy</Button>
+          </Tooltray>
+          <Divider aria-hidden orientation="vertical" variant="secondary" />
+        </ToolbarContent>
+        <ToolbarContent position="end">
+          <Tooltray overflowMode="none">
+            <Button appearance="solid">Run</Button>
+          </Tooltray>
+        </ToolbarContent>
+      </Toolbar>
+    </div>
+  );
+}
+
+function MixedCompositionTestCase({ valid = false }: { valid?: boolean }) {
+  return (
+    <Toolbar aria-label="Mixed composition toolbar">
+      <ToolbarContent position="start">
+        <Tooltray>
+          <Button appearance="transparent">Cut</Button>
+        </Tooltray>
+      </ToolbarContent>
+      {valid ? null : (
+        <Tooltray>
+          <Button appearance="transparent">Copy</Button>
+        </Tooltray>
+      )}
+    </Toolbar>
+  );
+}
+
+function BareContentCompositionTestCase({
+  valid = false,
+}: {
+  valid?: boolean;
+}) {
+  return (
+    <Toolbar aria-label="Mixed composition toolbar">
+      <ToolbarContent position="start">
+        <Tooltray>
+          <Button appearance="transparent">Cut</Button>
+        </Tooltray>
+        {valid ? null : <Button appearance="transparent">Copy</Button>}
+      </ToolbarContent>
+    </Toolbar>
+  );
+}
+
+const invalidCompositionWarning =
+  "Toolbar children must be authored in one composition model";
+
+describe("Toolbar overflow focus restoration", () => {
+  it("moves re-entry focus to the group's first control when its overflow trigger has gone", async () => {
+    await renderWithSalt(<NamedOverflowFocusMemoryTestCase />);
+    setFixtureWidth(640);
+    await expectButton("Status", false);
+    await expectButton("Columns", false);
+    const trigger = overflowTrigger(/Filters overflow\./i);
+    await expectButton(/Filters overflow\./i, true);
+    trigger.element().focus();
+    await expect.element(trigger).toHaveFocus();
+    await userEvent.tab();
+    await expect.element(page.getByTestId("toolbar-after")).toHaveFocus();
+
+    setFixtureWidth(760);
+    await expectButton(/Filters overflow\./i, false);
+    await expectButton("Columns", true);
+    await userEvent.keyboard("{Shift>}{Tab}{/Shift}");
+    await expect
+      .element(page.getByRole("button", { name: "Filter A" }))
+      .toHaveFocus();
+  });
+
+  it("moves re-entry focus to the overflow trigger when the remembered control has overflowed", async () => {
+    await renderWithSalt(<NamedOverflowFocusMemoryTestCase />);
+    await expectButton("Columns", true);
+    page.getByTestId("toolbar-before").element().focus();
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "Search" }))
+      .toHaveFocus();
+    await userEvent.keyboard("{ArrowRight}{ArrowRight}{ArrowRight}");
+    await expect
+      .element(page.getByRole("button", { name: "Columns" }))
+      .toHaveFocus();
+    await userEvent.tab();
+    await expect.element(page.getByTestId("toolbar-after")).toHaveFocus();
+
+    setFixtureWidth(640);
+    await expectButton("Status", false);
+    await expectButton("Columns", false);
+    await userEvent.keyboard("{Shift>}{Tab}{/Shift}");
+    await expect.element(overflowTrigger(/Filters overflow\./i)).toHaveFocus();
+  });
+
+  // Skipped: Toolbar's focus-restore layout effect schedules the refocus in a
+  // requestAnimationFrame, but the effect re-runs on the next render because
+  // getEntryFocusable changes identity every render. The cleanup cancels the
+  // frame and the re-run sees no overflow change, so focus is left on <body>.
+  // Making the effect fire conflicts with the "...overflow returns" tests
+  // above, which expect focus not to be restored, so the intended behaviour
+  // needs deciding first.
+  it.skip("moves focus to the group's first control when the focused overflow trigger disappears", async () => {
+    await renderWithSalt(<NamedOverflowFocusMemoryTestCase />);
+    setFixtureWidth(640);
+    await expectButton(/Filters overflow\./i, true);
+    page.getByTestId("toolbar-before").element().focus();
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowRight}{ArrowRight}");
+    await expect.element(overflowTrigger(/Filters overflow\./i)).toHaveFocus();
+
+    setFixtureWidth(760);
+    await expectButton(/Filters overflow\./i, false);
+    await expect
+      .element(page.getByRole("button", { name: "Filter A" }))
+      .toHaveFocus();
+  });
+
+  // Skipped for the same focus-restore bug as the test above.
+  it.skip("moves focus to the overflow trigger when the focused control overflows", async () => {
+    await renderWithSalt(<NamedOverflowFocusMemoryTestCase />);
+    await expectButton("Columns", true);
+    page.getByTestId("toolbar-before").element().focus();
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowRight}{ArrowRight}{ArrowRight}");
+    await expect
+      .element(page.getByRole("button", { name: "Columns" }))
+      .toHaveFocus();
+
+    setFixtureWidth(640);
+    await expectButton("Columns", false);
+    await expect.element(overflowTrigger(/Filters overflow\./i)).toHaveFocus();
+  });
+});
+
+describe("Toolbar overflow menu focus", () => {
+  it("closes a pointer-opened overflow panel when Escape is pressed on its trigger", async () => {
+    await renderWithSalt(<KeyboardOverflowFixture width={260} />);
+    const trigger = overflowTrigger(/Actions overflow\./i);
+    await trigger.click();
+    await expect
+      .element(page.getByRole("toolbar", { name: "Actions overflow" }))
+      .toBeVisible();
+    await expect.element(trigger).toHaveFocus();
+
+    await userEvent.keyboard("{Escape}");
+    await expect
+      .element(page.getByRole("toolbar", { name: "Actions overflow" }))
+      .not.toBeInTheDocument();
+    await expect.element(trigger).toHaveAttribute("aria-expanded", "false");
+    await expect.element(trigger).toHaveFocus();
+  });
+
+  it("focuses overflow panel controls that render after the panel is opened with the keyboard", async () => {
+    await renderWithSalt(<LateOverflowActionsTestCase />);
+    await openOverflowWithKeyboard(/Actions overflow\./i);
+    await expect
+      .element(page.getByRole("toolbar", { name: "Actions overflow" }))
+      .toHaveTextContent("Loading actions");
+    await expect.element(overflowTrigger(/Actions overflow\./i)).toHaveFocus();
+
+    await act(() => {
+      for (const release of lateOverflowActionReleasers) {
+        release();
+      }
+    });
+    await expect
+      .element(page.getByRole("button", { name: "Export" }))
+      .toHaveFocus();
+  });
+
+  it("skips disabled controls but keeps focusable disabled controls in arrow navigation", async () => {
+    await renderWithSalt(<DisabledControlsKeyboardTestCase />);
+    page.getByTestId("toolbar-before").element().focus();
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "Cut" }))
+      .toHaveFocus();
+    for (const name of ["Paste", "Run", "Cut"]) {
+      await userEvent.keyboard("{ArrowRight}");
+      await expect.element(page.getByRole("button", { name })).toHaveFocus();
+    }
+    for (const name of ["Run", "Paste", "Cut"]) {
+      await userEvent.keyboard("{ArrowLeft}");
+      await expect.element(page.getByRole("button", { name })).toHaveFocus();
+    }
+  });
+});
+
+describe("Toolbar composition and dynamic overflow", () => {
+  it("re-evaluates which tray overflows when overflow priorities change", async () => {
+    const { rerender } = await renderWithSalt(<PriorityChangeTestCase />);
+    await expectButton(/Overflow\./i, true);
+    await expectButton("Columns", false);
+    await expectButton("Export", true);
+
+    await rerender(<PriorityChangeTestCase swapped />);
+    await expectButton("Export", false);
+    await expectButton("Columns", true);
+    await expectButton(/Overflow\./i, true);
+  });
+
+  it("updates the overflow trigger and panel labels when overflowLabel changes", async () => {
+    const { rerender } = await renderWithSalt(
+      <OverflowLabelChangeTestCase label="Actions" />,
+    );
+    await expectButton(/Actions overflow\./i, true);
+
+    await rerender(<OverflowLabelChangeTestCase label="Commands" />);
+    await expectButton(/Commands overflow\./i, true);
+    await expectButton(/Actions overflow\./i, false);
+    await openOverflowWithKeyboard(/Commands overflow\./i);
+    await expect
+      .element(page.getByRole("toolbar", { name: "Commands overflow" }))
+      .toBeVisible();
+  });
+
+  it("overflows trays that are wrapped in a fragment", async () => {
+    await renderWithSalt(<FragmentTooltraysTestCase />);
+    await expectButton(/Overflow\./i, true);
+    await expectButton("Columns", false);
+    await expectButton("Search", true);
+    await expectButton("Export", true);
+    await expectToolbarFits("Fragment tooltrays toolbar");
+  });
+
+  it("renders a divider that trails the last tray", async () => {
+    await renderWithSalt(<TrailingDividerTestCase />);
+    await expectButton("Copy", true);
+    await expectVisibleSeparators(1);
+  });
+
+  it.each([
+    ["mixing ToolbarContent and Tooltray children", MixedCompositionTestCase],
+    [
+      "placing a control directly in ToolbarContent",
+      BareContentCompositionTestCase,
+    ],
+  ])(
+    "warns once and renders children as authored when %s",
+    async (_name, TestCase) => {
+      const consoleSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
+      const warningCount = () =>
+        consoleSpy.mock.calls.filter(([message]) =>
+          String(message).startsWith(invalidCompositionWarning),
+        ).length;
+
+      try {
+        const { rerender } = await renderWithSalt(<TestCase />);
+        await expect
+          .element(page.getByRole("button", { name: "Cut" }))
+          .toBeVisible();
+        await expect
+          .element(page.getByRole("button", { name: "Copy" }))
+          .toBeVisible();
+        await expectButton(/Overflow\./i, false);
+        await expect.poll(warningCount).toBe(1);
+
+        await rerender(<TestCase />);
+        await expect.poll(warningCount).toBe(1);
+
+        await rerender(<TestCase valid />);
+        await expectButton("Copy", false);
+        await rerender(<TestCase />);
+        await expect.poll(warningCount).toBe(2);
+      } finally {
+        consoleSpy.mockRestore();
+      }
+    },
+  );
 });

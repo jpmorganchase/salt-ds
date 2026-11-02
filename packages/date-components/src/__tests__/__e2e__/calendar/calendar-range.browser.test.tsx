@@ -58,7 +58,7 @@ function registerRangeTests(
     const render = (children: ReactNode) =>
       renderWithSalt(children, { dateAdapter: adapter });
     const formatted = (date: DateFrameworkType) =>
-      adapter.format(date, "dddd D MMMM YYYY");
+      adapter.format(date, "dddd DD MMMM YYYY");
 
     it("SHOULD move to start date selected if it is within visible month", async () => {
       const today = adapter.today();
@@ -326,10 +326,10 @@ function registerRangeTests(
         );
         await chooseTimezone(timezone);
         await page
-          .getByRole("button", { name: "Sunday 5 January 2025" })
+          .getByRole("button", { name: "Sunday 05 January 2025" })
           .click();
         await page
-          .getByRole("button", { name: "Monday 6 January 2025" })
+          .getByRole("button", { name: "Monday 06 January 2025" })
           .click();
         await expect
           .element(page.getByTestId("iso-start-date-label"))
@@ -353,7 +353,7 @@ function registerMultiselectTests(
     const render = (children: ReactNode) =>
       renderWithSalt(children, { dateAdapter: adapter });
     const formatted = (date: DateFrameworkType) =>
-      adapter.format(date, "dddd D MMMM YYYY");
+      adapter.format(date, "dddd DD MMMM YYYY");
     const testRange = {
       startDate: adapter.parse("03/02/2024", "DD/MM/YYYY").date,
       endDate: adapter.parse("05/02/2024", "DD/MM/YYYY").date,

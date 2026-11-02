@@ -229,7 +229,7 @@ function registerAdapterTests(
       await textInput().click();
       await userEvent.keyboard("{ArrowDown}");
       const selectedDay = page.getByRole("button", {
-        name: `${adapter.format(initialDate, "dddd D MMMM YYYY")}, selected`,
+        name: `${adapter.format(initialDate, "dddd DD MMMM YYYY")}, selected`,
       });
       await expect.element(selectedDay).toHaveFocus();
       for (const label of [
@@ -446,7 +446,7 @@ function registerAdapterTests(
     it("SHOULD default to today's month when opening with no date set", async () => {
       await render(<Single />);
       await openCalendar();
-      const today = page.getByRole("button", { name: "Monday 6 May 2024" });
+      const today = page.getByRole("button", { name: "Monday 06 May 2024" });
       await expect.element(today).toBeInTheDocument();
       await expect.element(today).toHaveFocus();
     });
@@ -522,7 +522,7 @@ function registerAdapterTests(
           await openCalendar();
           await page
             .getByRole("button", {
-              name: adapter.format(updatedDate, "dddd D MMMM YYYY"),
+              name: adapter.format(updatedDate, "dddd DD MMMM YYYY"),
             })
             .click();
           await expect
@@ -534,7 +534,7 @@ function registerAdapterTests(
           );
           await page
             .getByRole("button", {
-              name: `${action} Monday 6 January 2025`,
+              name: `${action} Monday 06 January 2025`,
             })
             .click();
           await expectCalendarClosed();
@@ -610,7 +610,7 @@ function registerAdapterTests(
         await expect.element(textInput()).toHaveValue(initialDateValue);
         await openCalendar();
         const selected = page.getByRole("button", {
-          name: `${adapter.format(initialDate, "dddd D MMMM YYYY")}, selected`,
+          name: `${adapter.format(initialDate, "dddd DD MMMM YYYY")}, selected`,
         });
         await expect.element(selected).toBeInTheDocument();
         await expect.element(selected).toHaveFocus();
@@ -622,7 +622,7 @@ function registerAdapterTests(
         await openCalendar();
         await page
           .getByRole("button", {
-            name: adapter.format(updatedDate, "dddd D MMMM YYYY"),
+            name: adapter.format(updatedDate, "dddd DD MMMM YYYY"),
           })
           .click();
         await expectCalendarClosed();
@@ -650,8 +650,8 @@ function registerAdapterTests(
       const endDate = adapter.parse("31 Jan 2025", "DD MMM YYYY").date;
       while (adapter.compare(currentDate, endDate) <= 0) {
         const name = adapter.isSame(initialDate, currentDate, "day")
-          ? `${adapter.format(currentDate, "dddd D MMMM YYYY")}, selected`
-          : adapter.format(currentDate, "dddd D MMMM YYYY");
+          ? `${adapter.format(currentDate, "dddd DD MMMM YYYY")}, selected`
+          : adapter.format(currentDate, "dddd DD MMMM YYYY");
         let dayOfWeek: number;
         if (adapter.lib === "luxon")
           dayOfWeek = (currentDate as DateTime).weekday;

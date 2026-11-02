@@ -50,7 +50,7 @@ function dismissViaScrim() {
 }
 
 describe("GIVEN a Drawer", () => {
-  it("closes from the close action and scrim", async () => {
+  it("closes from the close action", async () => {
     const consoleSpy = vi.spyOn(console, "log").mockImplementation(() => {});
     await renderWithSalt(<Default />);
 
@@ -65,6 +65,10 @@ describe("GIVEN a Drawer", () => {
     await page.getByRole("button", { name: "Close drawer" }).click();
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
     expect(consoleSpy).toHaveBeenCalledTimes(callCount + 1);
+  });
+
+  it("closes from the scrim", async () => {
+    await renderWithSalt(<Default />);
 
     await page.getByRole("button", { name: "Open Secondary Drawer" }).click();
     await expect.element(page.getByRole("dialog")).toBeVisible();
@@ -119,15 +123,19 @@ describe("GIVEN a Drawer", () => {
       .toBe(true);
   });
 
-  it("closes a drawer without a close button from the scrim and Escape", async () => {
+  it("closes a drawer without a close button from the scrim", async () => {
     await renderWithSalt(<OptionalCloseAction />);
-    const openButton = page.getByRole("button", { name: "Open Drawer" });
 
-    await openButton.click();
+    await page.getByRole("button", { name: "Open Drawer" }).click();
     await expect.element(page.getByRole("dialog")).toBeVisible();
     dismissViaScrim();
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
-    await openButton.click();
+  });
+
+  it("closes a drawer without a close button with Escape", async () => {
+    await renderWithSalt(<OptionalCloseAction />);
+
+    await page.getByRole("button", { name: "Open Drawer" }).click();
     await expect.element(page.getByRole("dialog")).toBeVisible();
     await userEvent.keyboard("{Escape}");
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();

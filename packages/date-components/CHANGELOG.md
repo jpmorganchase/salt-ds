@@ -1,5 +1,20 @@
 # @salt-ds/date-components
 
+## 1.1.3
+
+### Patch Changes
+
+- e009ed8: Fixed the `Calendar` day accessible name not matching the visible day text. The day's accessible name, selection announcements and `DatePickerActions` labels now use a two-digit day (e.g. "Monday 06 January 2025") to match the visible day.
+- Updated dependencies [20db4be]
+- Updated dependencies [0ac88c9]
+- Updated dependencies [20db4be]
+- Updated dependencies [3a74bce]
+- Updated dependencies [20db4be]
+- Updated dependencies [cdae245]
+- Updated dependencies [cdae245]
+- Updated dependencies [3a74bce]
+  - @salt-ds/core@1.74.0
+
 ## 1.1.2
 
 ### Patch Changes

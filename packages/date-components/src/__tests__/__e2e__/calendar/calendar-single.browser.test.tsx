@@ -61,7 +61,7 @@ function registerSingleTests(
       renderWithSalt(children, { dateAdapter: adapter });
     const testDate = adapter.parse("03/02/2024", "DD/MM/YYYY").date;
     const formatted = (date: DateFrameworkType) =>
-      adapter.format(date, "dddd D MMMM YYYY");
+      adapter.format(date, "dddd DD MMMM YYYY");
 
     it("SHOULD move to selected date if it is within the visible month", async () => {
       await render(
@@ -285,7 +285,7 @@ function registerSingleTests(
         );
         await chooseTimezone(timezone);
         await page
-          .getByRole("button", { name: "Sunday 5 January 2025" })
+          .getByRole("button", { name: "Sunday 05 January 2025" })
           .click();
         await expect
           .element(page.getByTestId("iso-date-label"))
@@ -307,7 +307,7 @@ function registerMultiselectTests(
       renderWithSalt(children, { dateAdapter: adapter });
     const testDate = adapter.parse("03/02/2024", "DD/MM/YYYY").date;
     const formatted = (date: DateFrameworkType) =>
-      adapter.format(date, "dddd D MMMM YYYY");
+      adapter.format(date, "dddd DD MMMM YYYY");
 
     it("SHOULD move to first selected date of the visible month", async () => {
       await render(

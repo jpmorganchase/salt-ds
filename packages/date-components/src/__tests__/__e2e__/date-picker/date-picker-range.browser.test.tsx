@@ -234,7 +234,7 @@ function registerAdapterTests(
       await startInput().click();
       await userEvent.keyboard("{ArrowDown}");
       const selectedStart = page.getByRole("button", {
-        name: `Start date: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}, selected`,
+        name: `Start date: ${adapter.format(initialRangeDate.startDate, "dddd DD MMMM YYYY")}, selected`,
       });
       await expect.element(selectedStart).toHaveFocus();
       const endNavigation = [
@@ -261,7 +261,7 @@ function registerAdapterTests(
       await expect
         .element(
           page.getByRole("button", {
-            name: `Start new range: ${adapter.format(startOfEndCalendar, "dddd D MMMM YYYY")}`,
+            name: `Start new range: ${adapter.format(startOfEndCalendar, "dddd DD MMMM YYYY")}`,
           }),
         )
         .toHaveFocus();
@@ -423,7 +423,7 @@ function registerAdapterTests(
     it("SHOULD default to today's month when opening with no date set", async () => {
       await render(<Range />);
       await openCalendar();
-      const today = page.getByRole("button", { name: "Monday 6 May 2024" });
+      const today = page.getByRole("button", { name: "Monday 06 May 2024" });
       await expect.element(today).toBeInTheDocument();
       await expect.element(today).toHaveFocus();
     });
@@ -462,11 +462,11 @@ function registerAdapterTests(
         </DatePicker>,
       );
       await openCalendar();
-      await page.getByRole("button", { name: "Monday 6 May 2024" }).click();
+      await page.getByRole("button", { name: "Monday 06 May 2024" }).click();
       await expect
         .element(
           page.getByRole("button", {
-            name: /Apply Monday 6 May 2024 to no end date/,
+            name: /Apply Monday 06 May 2024 to no end date/,
           }),
         )
         .toBeInTheDocument();
@@ -799,13 +799,13 @@ function registerAdapterTests(
       await expect.element(endInput()).toHaveValue("06 Jan 2025");
       await openCalendar();
       const selectedStart = page.getByRole("button", {
-        name: `Start date: ${adapter.format(initialRangeDate.startDate, "dddd D MMMM YYYY")}, selected`,
+        name: `Start date: ${adapter.format(initialRangeDate.startDate, "dddd DD MMMM YYYY")}, selected`,
       });
       await expect.element(selectedStart).toHaveFocus();
       await expect
         .element(
           page.getByRole("button", {
-            name: "End range: Monday 6 January 2025, selected",
+            name: "End range: Monday 06 January 2025, selected",
           }),
         )
         .toBeInTheDocument();
@@ -819,7 +819,7 @@ function registerAdapterTests(
       let currentDate = adapter.parse("01 Jan 2025", "DD MMM YYYY").date;
       const endDate = adapter.parse("31 Jan 2025", "DD MMM YYYY").date;
       while (adapter.compare(currentDate, endDate) <= 0) {
-        let name = adapter.format(currentDate, "dddd D MMMM YYYY");
+        let name = adapter.format(currentDate, "dddd DD MMMM YYYY");
         if (adapter.isSame(currentDate, initialRangeDate.startDate, "day")) {
           name = `Start date: ${name}, selected`;
         } else if (
@@ -871,16 +871,16 @@ function registerAdapterTests(
       );
       await openCalendar();
       await page
-        .getByRole("button", { name: "Wednesday 1 January 2025" })
+        .getByRole("button", { name: "Wednesday 01 January 2025" })
         .click();
       await page
-        .getByRole("button", { name: "Thursday 2 January 2025" })
+        .getByRole("button", { name: "Thursday 02 January 2025" })
         .click();
       await page.getByLabelText("set start date to today").click();
       await expect
         .element(startInput())
         .toHaveValue(adapter.format(adapter.today(), "DD MMM YYYY"));
-      await page.getByLabelText("set end date to today").click();
+      await page.getByLabelText("set end date to tomorrow").click();
       await expect
         .element(endInput())
         .toHaveValue(

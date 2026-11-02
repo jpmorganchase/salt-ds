@@ -288,6 +288,26 @@ export const StackedBarChart = {
   },
 };
 
+const stackLabelsBarOptions: Options = {
+  ...stackedBarOptions,
+  yAxis: {
+    ...stackedBarOptions.yAxis,
+    stackLabels: {
+      enabled: true,
+    },
+  },
+};
+
+export const StackLabelsBarChart = {
+  render: (args: ChartStoryArgs) => (
+    <StackedBarChartComponent {...getChromaticStableArgs(args)} />
+  ),
+  args: {
+    fillPatterns: false,
+    options: stackLabelsBarOptions,
+  },
+};
+
 export const BoxPlotChart = {
   render: (args: ChartStoryArgs) => (
     <BoxPlotChartComponent {...getChromaticStableArgs(args)} />

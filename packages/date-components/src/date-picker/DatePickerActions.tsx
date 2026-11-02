@@ -156,7 +156,7 @@ export const DatePickerActions = forwardRef(function DatePickerActions(
           ? "no dates selected"
           : `${date.length} single dates`;
     } else {
-      selectedLabel = `${dateAdapter.format(date, "dddd D MMMM YYYY")}`;
+      selectedLabel = `${dateAdapter.format(date, "dddd DD MMMM YYYY")}`;
     }
   } else if (selectionVariant === "range") {
     const dateRange = selectedDate as DateRangeSelection;
@@ -167,10 +167,10 @@ export const DatePickerActions = forwardRef(function DatePickerActions(
           : `${dateRange.length} range dates`;
     } else {
       const startLabel = dateRange?.startDate
-        ? dateAdapter.format(dateRange.startDate, "dddd D MMMM YYYY")
+        ? dateAdapter.format(dateRange.startDate, "dddd DD MMMM YYYY")
         : "no start date";
       const endLabel = dateRange?.endDate
-        ? dateAdapter.format(dateRange.endDate, "dddd D MMMM YYYY")
+        ? dateAdapter.format(dateRange.endDate, "dddd DD MMMM YYYY")
         : "no end date";
       selectedLabel = `${startLabel} to ${endLabel}`;
     }
