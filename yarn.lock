@@ -806,7 +806,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/runtime@npm:^7.0.0, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.20.13, @babel/runtime@npm:^7.28.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.7":
+"@babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.15.4, @babel/runtime@npm:^7.20.13, @babel/runtime@npm:^7.28.4, @babel/runtime@npm:^7.5.5, @babel/runtime@npm:^7.8.7":
   version: 7.28.4
   resolution: "@babel/runtime@npm:7.28.4"
   checksum: 10/6c9a70452322ea80b3c9b2a412bcf60771819213a67576c8cec41e88a95bb7bf01fc983754cda35dc19603eef52df22203ccbf7777b9d6316932f9fb77c25163
@@ -4223,11 +4223,11 @@ __metadata:
     "@salt-ds/icons": "workspace:^"
     "@salt-ds/styles": "workspace:*"
     "@salt-ds/window": "workspace:*"
-    "@types/react-window": "npm:^1.8.2"
+    "@types/react-window": "npm:^2.0.0"
     clsx: "npm:^2.0.0"
     compute-scroll-into-view: "npm:^3.0.0"
     dom-accessibility-api: "npm:^0.7.1"
-    react-window: "npm:^1.8.11"
+    react-window: "npm:^2.0.0"
     tabbable: "npm:^6.0.0"
     use-sync-external-store: "npm:^1.5.0"
   peerDependencies:
@@ -4386,13 +4386,13 @@ __metadata:
     "@salt-ds/icons": "workspace:^"
     "@salt-ds/styles": "workspace:*"
     "@salt-ds/window": "workspace:*"
-    "@types/react-window": "npm:^1.8.2"
+    "@types/react-window": "npm:^2.0.0"
     clipboard-copy: "npm:^4.0.1"
     clsx: "npm:^2.0.0"
     compute-scroll-into-view: "npm:^3.0.0"
     deepmerge: "npm:^4.2.2"
     react-color: "npm:^2.19.3"
-    react-window: "npm:^1.8.11"
+    react-window: "npm:^2.0.0"
     rifm: "npm:^0.12.0"
     tinycolor2: "npm:^1.4.2"
   peerDependencies:
@@ -6522,12 +6522,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/react-window@npm:^1.8.2":
-  version: 1.8.5
-  resolution: "@types/react-window@npm:1.8.5"
+"@types/react-window@npm:^2.0.0":
+  version: 2.0.0
+  resolution: "@types/react-window@npm:2.0.0"
   dependencies:
-    "@types/react": "npm:*"
-  checksum: 10/bb13aa0a27766efaee8a26cf293924a9b14428f786d6a4aab488baad11753169b709642906ab57aeb459feccd14d4e8edfdbbe1c6e3eaf6350f0aa0264972b83
+    react-window: "npm:*"
+  checksum: 10/4c11d4e1e6b95ab482b79a6aaff87a8cd2978a08925c6b0fff7e856716608ccb50162e5cbf9ad02bff892681c7795cc9f3e376ede994ebfbcc55161fe8ab0517
   languageName: node
   linkType: hard
 
@@ -11451,13 +11451,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"memoize-one@npm:>=3.1.1 <6":
-  version: 5.2.1
-  resolution: "memoize-one@npm:5.2.1"
-  checksum: 10/b7141dc148b5c6fdd51e77ecf0421fd2581681eb8756e0b3dfbd4fe765b5e2b5a6bc90214bb6f19a96b6aed44de17eda3407142a7be9e24ccd0774bbd9874d1b
-  languageName: node
-  linkType: hard
-
 "meow@npm:^13.0.0":
   version: 13.0.0
   resolution: "meow@npm:13.0.0"
@@ -13922,16 +13915,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-window@npm:^1.8.11":
-  version: 1.8.11
-  resolution: "react-window@npm:1.8.11"
-  dependencies:
-    "@babel/runtime": "npm:^7.0.0"
-    memoize-one: "npm:>=3.1.1 <6"
+"react-window@npm:*, react-window@npm:^2.0.0":
+  version: 2.5.2
+  resolution: "react-window@npm:2.5.2"
   peerDependencies:
-    react: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-    react-dom: ^15.0.0 || ^16.0.0 || ^17.0.0 || ^18.0.0 || ^19.0.0
-  checksum: 10/bdbac2b664c5a799443b97a32b2f60a00cc13cc14ca8a8b1e81e2dc7dd00d8d54f05743113972fe1a641b57ada5d874b59c3cbe7e8a07a88c6713a0fb65d60f6
+    "@types/react": ^18.2.6 || ^19.0.0
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 10/42129c81890827e864adc4070cf93a2e0d51ac8f75eb63f12d4f2c4e8bc79f6e440d9c65b38b716cedd70fbfa62b43b3abbadd4d1de7ea244e451ecc8b6b8a8d
   languageName: node
   linkType: hard
 

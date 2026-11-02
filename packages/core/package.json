@@ -18,8 +18,8 @@
     "*.css"
   ],
   "devDependencies": {
-    "@types/react-window": "^1.8.2",
-    "react-window": "^1.8.11"
+    "@types/react-window": "^2.0.0",
+    "react-window": "^2.0.0"
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.19",
