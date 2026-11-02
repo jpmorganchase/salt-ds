@@ -5,11 +5,12 @@ import {
   StackLayout,
   useBreakpoint,
 } from "@salt-ds/core";
+import type { ReactElement } from "react";
 import { renderToString } from "react-dom/server";
 import { describe, expect, it, vi } from "vitest";
 
 // A server render measures no media queries, so only `xs` matches.
-const render = (element: JSX.Element) =>
+const render = (element: ReactElement) =>
   renderToString(<SaltProvider>{element}</SaltProvider>);
 
 function MatchedBreakpoints() {
