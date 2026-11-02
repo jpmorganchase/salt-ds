@@ -283,7 +283,15 @@ export function useTabRemovalHandler({
       });
     };
 
-    afterLayout(restoreFocus);
+    afterLayout(() => {
+      if (removedSelected) {
+        // The replacement callback can update a controlled parent. Let that
+        // commit before focus falls back to the adjacent tab.
+        afterLayout(restoreFocus);
+      } else {
+        restoreFocus();
+      }
+    });
   });
 
   useEffect(() => {
