@@ -89,7 +89,7 @@
     "yup": "^1.7.1"
   },
   "resolutions": {
-    "@apidevtools/json-schema-ref-parser": "^15.0.0",
+    "@apidevtools/json-schema-ref-parser": "^16.0.0",
     "@changesets/assemble-release-plan@npm:^7.0.0": "patch:@changesets/assemble-release-plan@npm%3A7.0.0#~/.yarn/patches/@changesets-assemble-release-plan-npm-7.0.0-3a8fdadcb3.patch",
     "@floating-ui/react": "^0.27.19",
     "cookie": "^1.0.0",
