@@ -18,7 +18,13 @@ import {
   FormFieldContext,
   type FormFieldValidationStatus,
 } from "../form-field-context";
-import { capitalize, makePrefixer, useForkRef, useId } from "../utils";
+import {
+  capitalize,
+  makePrefixer,
+  useForkRef,
+  useId,
+  useIsomorphicLayoutEffect,
+} from "../utils";
 
 import formFieldCss from "./FormField.css";
 import { FormFieldHelperText } from "./FormFieldHelperText";
@@ -148,11 +154,20 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     const [isHelperTextRegistered, registerHelperText] = useRegisteredElements(
       formFieldChildren.hasHelperText,
     );
-    // Children are included before they register, so markup rendered before
-    // effects run, such as on the server, refers to them.
-    const hasLabel = isLabelRegistered || formFieldChildren.hasLabel;
+    const [hasMounted, setHasMounted] = useState(false);
+    useIsomorphicLayoutEffect(() => {
+      setHasMounted(true);
+    }, []);
+
+    // A child component's output cannot be inspected before it renders. Keep
+    // deterministic IDs on the server and the first hydration render so nested
+    // labels and helper text are associated too. After mount, registration
+    // removes references to absent elements; unresolved IDs do not override an
+    // aria-label while the presence of those elements is still unknown.
+    const hasLabel =
+      !hasMounted || isLabelRegistered || formFieldChildren.hasLabel;
     const hasHelperText =
-      isHelperTextRegistered || formFieldChildren.hasHelperText;
+      !hasMounted || isHelperTextRegistered || formFieldChildren.hasHelperText;
 
     const labelId = formId ? `label-${formId}` : undefined;
     const helperTextId = formId ? `helperText-${formId}` : undefined;

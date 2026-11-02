@@ -27,18 +27,21 @@ describe("GIVEN a FormField rendered on the server", () => {
     expect(getInput(markup)).toContain('aria-describedby="helperText-test-id"');
   });
 
-  it("THEN the control doesn't refer to a label or helper text that isn't rendered", () => {
+  it("THEN the control keeps its aria-label when no label or helper text is rendered", () => {
     const markup = renderToString(
       <FormField id="test-id">
         <Input aria-label="Input label" />
       </FormField>,
     );
 
-    expect(getInput(markup)).not.toContain("aria-labelledby");
-    expect(getInput(markup)).not.toContain("aria-describedby");
+    // Unresolved ID references are ignored by the accessible name computation.
+    // Registration removes them after mount, when the children are known.
+    expect(getInput(markup)).toContain('aria-label="Input label"');
+    expect(markup).not.toContain('id="label-test-id"');
+    expect(markup).not.toContain('id="helperText-test-id"');
   });
 
-  it("THEN a label and helper text inside other components have their ids", () => {
+  it("THEN a label and helper text inside other components are associated with the control", () => {
     function Content() {
       return (
         <>
@@ -57,5 +60,24 @@ describe("GIVEN a FormField rendered on the server", () => {
 
     expect(markup).toMatch(/<label[^>]*id="label-test-id"/);
     expect(markup).toMatch(/id="helperText-test-id"[^>]*>Helper text</);
+    expect(getInput(markup)).toContain('aria-labelledby="label-test-id"');
+    expect(getInput(markup)).toContain('aria-describedby="helperText-test-id"');
+  });
+
+  it("THEN a label and helper text inside a layout wrapper are associated with the control", () => {
+    const markup = renderToString(
+      <FormField id="test-id">
+        <div>
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Input />
+          <FormFieldHelperText>Helper text</FormFieldHelperText>
+        </div>
+      </FormField>,
+    );
+
+    expect(markup).toMatch(/<label[^>]*id="label-test-id"/);
+    expect(markup).toMatch(/id="helperText-test-id"[^>]*>Helper text</);
+    expect(getInput(markup)).toContain('aria-labelledby="label-test-id"');
+    expect(getInput(markup)).toContain('aria-describedby="helperText-test-id"');
   });
 });
