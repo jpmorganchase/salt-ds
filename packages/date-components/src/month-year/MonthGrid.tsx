@@ -530,6 +530,7 @@ export const MonthGrid = forwardRef<HTMLDivElement, MonthGridProps>(
                       // Calendar day pattern. The onClick handler is
                       // already gated by `isInteractive`.
                       aria-disabled={disabled || isUnselectable || undefined}
+                      aria-current={currentMonth ? "date" : undefined}
                       aria-label={monthLabel}
                       tabIndex={isFocusable ? 0 : -1}
                       onClick={(event) => {
