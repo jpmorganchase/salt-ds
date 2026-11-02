@@ -2,4 +2,4 @@
 "@salt-ds/core": patch
 ---
 
-Fixed `FormField` adding `aria-labelledby` and `aria-describedby` to its control when no `FormFieldLabel` or `FormFieldHelperText` is rendered, so the control referred to IDs that didn't exist. They're now only added while a `FormFieldLabel` or `FormFieldHelperText` is rendered, including in `useFormFieldProps().a11yProps`. A `Tooltip` used as a `FormField`'s helper text describes the control while it's shown.
+Fixed `FormField` retaining `aria-labelledby` and `aria-describedby` references when no `FormFieldLabel` or `FormFieldHelperText` is rendered. After mount, they're only present while the corresponding element is rendered, including in `useFormFieldProps().a11yProps`. Server rendering and the first hydration render retain the IDs so labels and helper text nested inside other components remain associated with the control. A `Tooltip` used as a `FormField`'s helper text describes the control while it's shown.
