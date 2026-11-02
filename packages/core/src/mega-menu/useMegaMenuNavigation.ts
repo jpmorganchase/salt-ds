@@ -252,33 +252,24 @@ function handleArrow(
   return false;
 }
 
-/** Focus the first document-focusable after the panel, once it has unmounted. */
-function focusNextAfterPanel(context: FloatingRootContext, panel: HTMLElement) {
+/** The first document-focusable after the trigger, outside the panel. */
+function findNextAfterPanel(
+  context: FloatingRootContext,
+  panel: HTMLElement,
+): HTMLElement | undefined {
   const reference = context.elements.reference as HTMLElement | null;
   const refFocusable = firstFocusable(reference) ?? reference;
 
   const nextLi = refFocusable?.closest("li")?.nextElementSibling;
   const nextSibling =
     nextLi instanceof HTMLElement ? firstFocusable(nextLi) : null;
+  if (nextSibling) return nextSibling;
 
-  const nextOutside =
-    nextSibling ||
-    (() => {
-      const allFocusable = queryFocusables(
-        panel.ownerDocument.documentElement,
-      ).filter((el) => !panel.contains(el));
-      const idx = refFocusable ? allFocusable.indexOf(refFocusable) : -1;
-      return idx >= 0 ? allFocusable[idx + 1] : undefined;
-    })();
-
-  if (nextOutside) {
-    const view = panel.ownerDocument.defaultView;
-    view?.requestAnimationFrame(() => {
-      view?.requestAnimationFrame(() => {
-        nextOutside.focus();
-      });
-    });
-  }
+  const allFocusable = queryFocusables(
+    panel.ownerDocument.documentElement,
+  ).filter((el) => !panel.contains(el));
+  const idx = refFocusable ? allFocusable.indexOf(refFocusable) : -1;
+  return idx >= 0 ? allFocusable[idx + 1] : undefined;
 }
 
 export interface UseMegaMenuNavigationProps {
@@ -343,8 +334,10 @@ export function useMegaMenuNavigation(
                 allCells[linearIndex - 1]?.focus();
               }
             } else if (linearIndex === allCells.length - 1) {
+              // Focus before closing: floating-ui skips returnFocus when focus
+              // has already left the panel, so the trigger never flashes focus.
+              findNextAfterPanel(context, panel)?.focus();
               onOpenChange(false);
-              focusNextAfterPanel(context, panel);
             } else {
               allCells[linearIndex + 1]?.focus();
             }
