@@ -15,7 +15,7 @@ div[class*="ag-theme-salt"] {
   --ag-pinned-row-border: none;
   --ag-card-radius: var(--salt-palette-corner);
   --ag-cell-horizontal-padding: var(--salt-spacing-100);
-  --ag-checkbox-border-radius: 0;
+  --ag-checkbox-border-radius: var(--salt-palette-corner-weaker, 0);
   --ag-checkbox-checked-color: var(--salt-selectable-foreground-selected);
   --ag-checkbox-indeterminate-color: var(--salt-selectable-foreground);
   --ag-checkbox-unchecked-color: var(--salt-selectable-borderColor);
