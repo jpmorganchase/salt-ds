@@ -31,6 +31,11 @@ Read the relevant [contributor guidance](../CONTRIBUTING.md). For icons, follow 
 [complete icon procedure](../CONTRIBUTING.md#how-to-add-a-new-icon), including
 generated outputs and synonym changes. Use existing scripts to regenerate files.
 
+For documentation and examples, use the
+[authoring best practices](../content-style-guide.md#authoring-best-practices)
+and the relevant [page template](../CONTRIBUTING.md#writing-documentation-and-examples).
+Identify the reader's task and the sources that support changed technical claims.
+
 ## 2. State the contract and choose the relevant cases
 
 Describe the intended observable result and a plausible wrong result the change
@@ -95,8 +100,12 @@ with the selected files or test paths.
 | Visual regression            | Follow the [Chromatic procedure](../CONTRIBUTING.md#chromatic) and use relevant existing stories                                     |
 
 `yarn prettier` rewrites the repository; use the explicit check command above when
-verifying formatting. Documentation-only changes normally need formatting, link
-and factual checks, rather than a component test run.
+verifying formatting. For documentation and examples, select checks using the
+[authoring verification guidance](../content-style-guide.md#verify-the-change-proportionally).
+Use commands available in the current checkout. A wording change normally needs
+style, factual and link checks; a changed interaction example also needs evidence
+for its behavior. If the checkout generates other documentation formats, inspect
+the affected output for preserved meaning as well as successful generation.
 
 Local browser tests use source aliases; CI tests public Salt imports against built
 package output. Record which path, React version and browser were exercised.

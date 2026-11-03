@@ -10,6 +10,9 @@ Copy the [`component-name/`](./component-name/) folder into the [`site/docs/comp
 
 Read the [Salt content style guide](../../content-style-guide.md) to ensure your writing maintains consistency with other documentation.
 
+Use its [authoring best practices](../../content-style-guide.md#authoring-best-practices)
+to establish the page's purpose, verify technical claims and choose relevant checks.
+
 ## 2. Index.mdx
 
 Fill in the `index.mdx` file's frontmatter.
@@ -29,6 +32,8 @@ Provide the name of the NPM package that contains this component, e.g. "@salt-ds
 ### alsoKnownAs
 
 List synonymous names that someone might use when searching for this component. Use sentence case. List them in alphabetical order.
+
+Use names for the same concept; do not list a different Salt component as a synonym.
 
 ### relatedComponents
 
@@ -58,7 +63,7 @@ Keep the guidance here short, no more than five sentences. Leave the section bla
 
 These are H3 headers that sit underneath the "using the component" header and text (if present).
 
-Use this section to outline situations where a user may want to use a given component. Be as thorough as possible, and try to cover all scenarios. Try to ensure each "when to use" has an accompanying "when not to use" and vice versa.
+Use this section to explain the common decisions and important limitations that determine whether the component is suitable. Cover meaningful alternatives without forcing a matching point into each section.
 
 Use bullet points, unless there is one point in **both** sections. Use a new bullet point for each new point for clarity.
 
@@ -83,6 +88,9 @@ Format import commands with "\```js".
 
 Props tables are automatically generated using the `PropsTable` component.
 
+Use `PropsTable` for components. Describe hook and function arguments and return
+values in text instead.
+
 ```js
 <PropsTable packageName="core" componentName="ComponentName" />
 ```
@@ -100,6 +108,10 @@ Include any third-party links that may be relevant here, such as W3C guidance. U
 ## 4. Examples.mdx
 
 Follow the structure as outlined in the template for examples. Each example needs a corresponding live preview.
+
+Follow [Make examples honest and usable](../../content-style-guide.md#make-examples-honest-and-usable).
+Use the maintained example source for the preview and displayed code, and include
+the supporting files a reader needs. State any deliberate omissions or limitations.
 
 Write header titles in sentence case as always.
 

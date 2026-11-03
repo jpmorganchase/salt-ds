@@ -14,6 +14,10 @@ Copy the `pattern-name.mdx/` file into the [`site/docs/patterns/` directory](../
 
 Read the [Salt content style guide](../../content-style-guide.md) to ensure your writing maintains consistency with other documentation.
 
+Use its [authoring best practices](../../content-style-guide.md#authoring-best-practices)
+to establish the reader's task, explain application responsibilities and verify
+examples. Keep important diagram information in the text as well as the image.
+
 ## 2. Filling in
 
 ### Style notes
@@ -99,6 +103,14 @@ This section has the same name as the component documentation, but the style is 
 
 Use bullet points if you are describing more than one use case. Ensure bullet points don’t run longer than three sentences, ideally shorter.
 
+### When not to use
+
+H2 header: When not to use
+
+Explain the important limits of the pattern and link to an appropriate alternative
+for each unsuitable scenario. Keep qualifications beside the recommendation they
+constrain.
+
 ### How to build
 
 H2 header: How to build
@@ -144,6 +156,15 @@ H2 header: name of the behavior
 Use this to describe a behavior relevant to the pattern’s functionality. Examples include error handling or responsive design.
 
 Use images where possible and keep paragraphs short.
+
+### Examples
+
+Place each live example in the section that explains it. Follow
+[Make examples honest and usable](../../content-style-guide.md#make-examples-honest-and-usable)
+for public imports, supporting files and the distinction between focused snippets
+and complete recipes. Keep the implementation in one maintained source and reuse
+it across previews and stories where practical. Guidance-only patterns do not need
+an example.
 
 ### Feedback
 

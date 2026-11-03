@@ -25,6 +25,16 @@ The repo contains below packages under `/packages`
 
 ## How to's
 
+### Writing documentation and examples
+
+Use the [content style guide](content-style-guide.md#authoring-best-practices) for
+page purpose, technical claims, examples and proportional verification. The same
+guidance applies to content written by people or with AI assistance.
+
+Start new pages from the [component](templates/component-pages/README.md) or
+[pattern](templates/pattern-pages/README.md) templates. Keep usage guidance with
+its maintained documentation and example code with its executable source.
+
 ### How to add a new icon
 
 1. Export the icon from the Salt DS Assets Figma file as SVG and add it to the `packages/icons/src/SVG` folder.

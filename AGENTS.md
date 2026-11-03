@@ -8,6 +8,9 @@ bug fixes and reviews. Keep the work proportional to the change.
 [CONTRIBUTING.md](CONTRIBUTING.md) is the source of truth for setup and contribution
 procedures. Read the sections relevant to the task:
 
+- [Documentation and examples](CONTRIBUTING.md#writing-documentation-and-examples):
+  use the [content style guide](content-style-guide.md#authoring-best-practices)
+  and the relevant page template.
 - [Icons](CONTRIBUTING.md#how-to-add-a-new-icon): source assets, generation, synonyms,
   tests and changesets.
 - [React compatibility](CONTRIBUTING.md#supporting-react-16-to-19) and
