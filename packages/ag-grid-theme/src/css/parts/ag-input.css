@@ -23,10 +23,11 @@
 .ag-theme-salt-dark .ag-column-select input[class^="ag-"][type="date"],
 .ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="date"],
 .ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="date"] {
-  border: none;
-  background: transparent;
-  border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-editable-borderColor);
-  height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  /* Matching the Figma filter inputs: a bordered Salt Input at --salt-size-base */
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-editable-borderColor);
+  border-radius: var(--salt-palette-corner-weak, 0);
+  background: var(--salt-editable-primary-background);
+  height: var(--salt-size-base);
   padding: 0 var(--salt-spacing-100);
 }
 
@@ -121,4 +122,52 @@
 .ag-theme-salt-compact-light .ag-autocomplete-list-popup,
 .ag-theme-salt-compact-dark .ag-autocomplete-list-popup {
   border: none;
+}
+
+/* Dropdowns in filters and the paging panel match the filter inputs, with the Salt chevron instead of a triangle */
+.ag-theme-salt-light .ag-filter .ag-picker-field-wrapper,
+.ag-theme-salt-dark .ag-filter .ag-picker-field-wrapper,
+.ag-theme-salt-compact-light .ag-filter .ag-picker-field-wrapper,
+.ag-theme-salt-compact-dark .ag-filter .ag-picker-field-wrapper,
+.ag-theme-salt-light .ag-paging-page-size .ag-picker-field-wrapper,
+.ag-theme-salt-dark .ag-paging-page-size .ag-picker-field-wrapper,
+.ag-theme-salt-compact-light .ag-paging-page-size .ag-picker-field-wrapper,
+.ag-theme-salt-compact-dark .ag-paging-page-size .ag-picker-field-wrapper {
+  min-height: var(--salt-size-base);
+  height: var(--salt-size-base);
+  padding: 0 var(--salt-spacing-50) 0 var(--salt-spacing-100);
+  background: var(--salt-editable-primary-background);
+}
+
+.ag-theme-salt-light .ag-filter .ag-select .ag-icon-small-down::before,
+.ag-theme-salt-dark .ag-filter .ag-select .ag-icon-small-down::before,
+.ag-theme-salt-compact-light .ag-filter .ag-select .ag-icon-small-down::before,
+.ag-theme-salt-compact-dark .ag-filter .ag-select .ag-icon-small-down::before,
+.ag-theme-salt-light .ag-paging-page-size .ag-select .ag-icon-small-down::before,
+.ag-theme-salt-dark .ag-paging-page-size .ag-select .ag-icon-small-down::before,
+.ag-theme-salt-compact-light .ag-paging-page-size .ag-select .ag-icon-small-down::before,
+.ag-theme-salt-compact-dark .ag-paging-page-size .ag-select .ag-icon-small-down::before {
+  content: var(--ag-icon-font-code-contracted);
+}
+
+/* The page number input in the pagination panel matches the filter inputs */
+.ag-theme-salt-light .ag-paging-number input[class^="ag-"][type="number"],
+.ag-theme-salt-dark .ag-paging-number input[class^="ag-"][type="number"],
+.ag-theme-salt-compact-light .ag-paging-number input[class^="ag-"][type="number"],
+.ag-theme-salt-compact-dark .ag-paging-number input[class^="ag-"][type="number"] {
+  box-sizing: border-box;
+  height: var(--salt-size-base);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-editable-borderColor);
+  border-radius: var(--salt-palette-corner-weak, 0);
+  background: var(--salt-editable-primary-background);
+  color: var(--salt-content-primary-foreground);
+}
+
+/* Leave room for the page size value next to the chevron */
+.ag-theme-salt-light .ag-paging-panel .ag-paging-page-size .ag-picker-field-wrapper,
+.ag-theme-salt-dark .ag-paging-panel .ag-paging-page-size .ag-picker-field-wrapper,
+.ag-theme-salt-compact-light .ag-paging-panel .ag-paging-page-size .ag-picker-field-wrapper,
+.ag-theme-salt-compact-dark .ag-paging-panel .ag-paging-page-size .ag-picker-field-wrapper {
+  min-width: calc(2 * var(--salt-size-base) + var(--salt-spacing-100));
+  gap: var(--salt-spacing-50);
 }

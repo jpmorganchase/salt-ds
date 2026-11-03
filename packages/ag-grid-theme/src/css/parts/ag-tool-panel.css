@@ -32,7 +32,12 @@
 .ag-theme-salt-dark .ag-column-drop-vertical-empty-message,
 .ag-theme-salt-compact-light .ag-column-drop-vertical-empty-message,
 .ag-theme-salt-compact-dark .ag-column-drop-vertical-empty-message {
-  padding: var(--salt-spacing-100);
+  /* Shown in the drop zone box below, rather than over it */
+  position: static;
+  margin: 0;
+  padding: 0;
+  color: var(--salt-content-primary-foreground);
+  font-weight: var(--salt-text-fontWeight-bolder);
 }
 
 .ag-theme-salt-light .ag-side-button-icon-wrapper,
@@ -40,4 +45,171 @@
 .ag-theme-salt-compact-light .ag-side-button-icon-wrapper,
 .ag-theme-salt-compact-dark .ag-side-button-icon-wrapper {
   margin-bottom: var(--salt-spacing-100);
+}
+
+/*
+  Side bar tabs, matching the Figma "AG Vertical Tabs": a --salt-spacing-100 gap between tabs, no separators, and a
+  single divider between the tabs and the tool panel
+*/
+.ag-theme-salt-light .ag-side-buttons,
+.ag-theme-salt-dark .ag-side-buttons,
+.ag-theme-salt-compact-light .ag-side-buttons,
+.ag-theme-salt-compact-dark .ag-side-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-100);
+  padding-top: 0;
+}
+
+.ag-theme-salt-light button.ag-side-button-button,
+.ag-theme-salt-dark button.ag-side-button-button,
+.ag-theme-salt-compact-light button.ag-side-button-button,
+.ag-theme-salt-compact-dark button.ag-side-button-button {
+  border-top: none;
+  border-bottom: none;
+}
+
+.ag-theme-salt-light .ag-ltr .ag-side-bar-right .ag-tool-panel-wrapper,
+.ag-theme-salt-dark .ag-ltr .ag-side-bar-right .ag-tool-panel-wrapper,
+.ag-theme-salt-compact-light .ag-ltr .ag-side-bar-right .ag-tool-panel-wrapper,
+.ag-theme-salt-compact-dark .ag-ltr .ag-side-bar-right .ag-tool-panel-wrapper,
+.ag-theme-salt-light .ag-rtl .ag-side-bar-left .ag-tool-panel-wrapper,
+.ag-theme-salt-dark .ag-rtl .ag-side-bar-left .ag-tool-panel-wrapper,
+.ag-theme-salt-compact-light .ag-rtl .ag-side-bar-left .ag-tool-panel-wrapper,
+.ag-theme-salt-compact-dark .ag-rtl .ag-side-bar-left .ag-tool-panel-wrapper {
+  border-right: none;
+}
+
+.ag-theme-salt-light .ag-ltr .ag-side-bar-left .ag-tool-panel-wrapper,
+.ag-theme-salt-dark .ag-ltr .ag-side-bar-left .ag-tool-panel-wrapper,
+.ag-theme-salt-compact-light .ag-ltr .ag-side-bar-left .ag-tool-panel-wrapper,
+.ag-theme-salt-compact-dark .ag-ltr .ag-side-bar-left .ag-tool-panel-wrapper,
+.ag-theme-salt-light .ag-rtl .ag-side-bar-right .ag-tool-panel-wrapper,
+.ag-theme-salt-dark .ag-rtl .ag-side-bar-right .ag-tool-panel-wrapper,
+.ag-theme-salt-compact-light .ag-rtl .ag-side-bar-right .ag-tool-panel-wrapper,
+.ag-theme-salt-compact-dark .ag-rtl .ag-side-bar-right .ag-tool-panel-wrapper {
+  border-left: none;
+}
+
+.ag-theme-salt-light .ag-side-bar-right .ag-side-buttons,
+.ag-theme-salt-dark .ag-side-bar-right .ag-side-buttons,
+.ag-theme-salt-compact-light .ag-side-bar-right .ag-side-buttons,
+.ag-theme-salt-compact-dark .ag-side-bar-right .ag-side-buttons {
+  border-inline-start: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
+}
+
+.ag-theme-salt-light .ag-side-bar-left .ag-side-buttons,
+.ag-theme-salt-dark .ag-side-bar-left .ag-side-buttons,
+.ag-theme-salt-compact-light .ag-side-bar-left .ag-side-buttons,
+.ag-theme-salt-compact-dark .ag-side-bar-left .ag-side-buttons {
+  border-inline-end: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
+}
+
+/* Keyboard focus uses the Salt focus ring instead of the AG Grid focus box */
+.ag-theme-salt-light .ag-side-button-button:focus-visible::after,
+.ag-theme-salt-dark .ag-side-button-button:focus-visible::after,
+.ag-theme-salt-compact-light .ag-side-button-button:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-side-button-button:focus-visible::after,
+.ag-theme-salt-light .ag-column-select-header:focus-visible::after,
+.ag-theme-salt-dark .ag-column-select-header:focus-visible::after,
+.ag-theme-salt-compact-light .ag-column-select-header:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-column-select-header:focus-visible::after {
+  content: none;
+}
+
+.ag-theme-salt-light .ag-column-select-header:focus-visible,
+.ag-theme-salt-dark .ag-column-select-header:focus-visible,
+.ag-theme-salt-compact-light .ag-column-select-header:focus-visible,
+.ag-theme-salt-compact-dark .ag-column-select-header:focus-visible {
+  outline: var(--salt-focused-outline);
+  outline-offset: calc(var(--salt-size-fixed-100) * -2);
+}
+
+/* The tab list scrolls, so keep the focus ring inside the tab where it isn't clipped */
+.ag-theme-salt-light button.ag-side-button-button:focus,
+.ag-theme-salt-dark button.ag-side-button-button:focus,
+.ag-theme-salt-compact-light button.ag-side-button-button:focus,
+.ag-theme-salt-compact-dark button.ag-side-button-button:focus {
+  outline-offset: calc(var(--salt-size-fixed-100) * -2);
+}
+
+/* Columns tool panel, matching the Figma "Columns Tool Panel": --salt-spacing-300 padding and gaps instead of dividers */
+.ag-theme-salt-light .ag-column-panel,
+.ag-theme-salt-dark .ag-column-panel,
+.ag-theme-salt-compact-light .ag-column-panel,
+.ag-theme-salt-compact-dark .ag-column-panel {
+  padding: var(--salt-spacing-300);
+  gap: var(--salt-spacing-300);
+}
+
+.ag-theme-salt-light .ag-column-panel .ag-pivot-mode-panel,
+.ag-theme-salt-dark .ag-column-panel .ag-pivot-mode-panel,
+.ag-theme-salt-compact-light .ag-column-panel .ag-pivot-mode-panel,
+.ag-theme-salt-compact-dark .ag-column-panel .ag-pivot-mode-panel {
+  height: auto;
+  min-height: 0;
+}
+
+.ag-theme-salt-light .ag-ltr .ag-column-panel .ag-pivot-mode-select,
+.ag-theme-salt-dark .ag-ltr .ag-column-panel .ag-pivot-mode-select,
+.ag-theme-salt-compact-light .ag-ltr .ag-column-panel .ag-pivot-mode-select,
+.ag-theme-salt-compact-dark .ag-ltr .ag-column-panel .ag-pivot-mode-select,
+.ag-theme-salt-light .ag-rtl .ag-column-panel .ag-pivot-mode-select,
+.ag-theme-salt-dark .ag-rtl .ag-column-panel .ag-pivot-mode-select,
+.ag-theme-salt-compact-light .ag-rtl .ag-column-panel .ag-pivot-mode-select,
+.ag-theme-salt-compact-dark .ag-rtl .ag-column-panel .ag-pivot-mode-select {
+  margin: 0;
+}
+
+.ag-theme-salt-light .ag-column-panel .ag-column-panel-column-select,
+.ag-theme-salt-dark .ag-column-panel .ag-column-panel-column-select,
+.ag-theme-salt-compact-light .ag-column-panel .ag-column-panel-column-select,
+.ag-theme-salt-compact-dark .ag-column-panel .ag-column-panel-column-select {
+  border-top: none;
+  border-bottom: none;
+}
+
+.ag-theme-salt-light .ag-column-panel .ag-column-select-header,
+.ag-theme-salt-dark .ag-column-panel .ag-column-select-header,
+.ag-theme-salt-compact-light .ag-column-panel .ag-column-select-header,
+.ag-theme-salt-compact-dark .ag-column-panel .ag-column-select-header {
+  padding: 0;
+}
+
+/* Drop zones (Figma "Column drop"): a title, then a dashed box sized to its content */
+.ag-theme-salt-light .ag-column-panel .ag-column-drop-vertical,
+.ag-theme-salt-dark .ag-column-panel .ag-column-drop-vertical,
+.ag-theme-salt-compact-light .ag-column-panel .ag-column-drop-vertical,
+.ag-theme-salt-compact-dark .ag-column-panel .ag-column-drop-vertical {
+  flex: none;
+  min-height: 0;
+  gap: var(--salt-spacing-100);
+  border-bottom: none;
+}
+
+.ag-theme-salt-light .ag-column-drop-vertical-icon,
+.ag-theme-salt-dark .ag-column-drop-vertical-icon,
+.ag-theme-salt-compact-light .ag-column-drop-vertical-icon,
+.ag-theme-salt-compact-dark .ag-column-drop-vertical-icon {
+  margin: 0;
+  margin-inline-end: var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .ag-column-drop-vertical-list,
+.ag-theme-salt-dark .ag-column-drop-vertical-list,
+.ag-theme-salt-compact-light .ag-column-drop-vertical-list,
+.ag-theme-salt-compact-dark .ag-column-drop-vertical-list {
+  display: flex;
+  flex-grow: 0;
+  gap: var(--salt-spacing-200);
+  padding: var(--salt-spacing-200);
+  border: var(--salt-size-fixed-200) dashed var(--salt-container-bold-borderColor);
+  border-radius: var(--salt-palette-corner, 0);
+}
+
+.ag-theme-salt-light .ag-column-drop-vertical-cell,
+.ag-theme-salt-dark .ag-column-drop-vertical-cell,
+.ag-theme-salt-compact-light .ag-column-drop-vertical-cell,
+.ag-theme-salt-compact-dark .ag-column-drop-vertical-cell {
+  margin: 0;
 }
