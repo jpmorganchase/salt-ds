@@ -11,6 +11,8 @@
   height: var(--salt-size-base);
   padding: 0 var(--salt-spacing-100);
   text-transform: uppercase;
+  /* Matching Salt Button */
+  border-radius: var(--salt-palette-corner-weak, 0);
 }
 
 .ag-theme-salt-light .ag-standard-button:hover,
@@ -148,11 +150,78 @@
   color: var(--salt-content-primary-foreground);
 }
 
+/* Pagination panel, matching the Figma "AG Pagination": no border, secondary text, and --salt-spacing-300 between groups */
 .ag-theme-salt-light .ag-paging-panel,
 .ag-theme-salt-dark .ag-paging-panel,
 .ag-theme-salt-compact-light .ag-paging-panel,
 .ag-theme-salt-compact-dark .ag-paging-panel {
-  border-color: var(--salt-separable-secondary-borderColor);
+  border-top: none;
+  color: var(--salt-content-secondary-foreground);
+  padding: 0 var(--salt-spacing-50);
+}
+
+.ag-theme-salt-light .ag-paging-page-size,
+.ag-theme-salt-dark .ag-paging-page-size,
+.ag-theme-salt-compact-light .ag-paging-page-size,
+.ag-theme-salt-compact-dark .ag-paging-page-size,
+.ag-theme-salt-light .ag-paging-row-summary-panel,
+.ag-theme-salt-dark .ag-paging-row-summary-panel,
+.ag-theme-salt-compact-light .ag-paging-row-summary-panel,
+.ag-theme-salt-compact-dark .ag-paging-row-summary-panel,
+.ag-theme-salt-light .ag-paging-page-summary-panel,
+.ag-theme-salt-dark .ag-paging-page-summary-panel,
+.ag-theme-salt-compact-light .ag-paging-page-summary-panel,
+.ag-theme-salt-compact-dark .ag-paging-page-summary-panel {
+  margin: 0;
+  margin-inline-start: var(--salt-spacing-300);
+}
+
+.ag-theme-salt-light .ag-paging-row-summary-panel-number,
+.ag-theme-salt-dark .ag-paging-row-summary-panel-number,
+.ag-theme-salt-compact-light .ag-paging-row-summary-panel-number,
+.ag-theme-salt-compact-dark .ag-paging-row-summary-panel-number,
+.ag-theme-salt-light span.ag-paging-number,
+.ag-theme-salt-dark span.ag-paging-number,
+.ag-theme-salt-compact-light span.ag-paging-number,
+.ag-theme-salt-compact-dark span.ag-paging-number {
+  font-weight: var(--salt-text-fontWeight-bolder);
+}
+
+/* Paging buttons are transparent buttons around the icon, like the Figma pagination controls */
+.ag-theme-salt-light .ag-paging-button,
+.ag-theme-salt-dark .ag-paging-button,
+.ag-theme-salt-compact-light .ag-paging-button,
+.ag-theme-salt-compact-dark .ag-paging-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  height: var(--salt-size-base);
+  padding: 0 var(--salt-spacing-100);
+  margin: 0 var(--salt-spacing-50);
+  border-radius: var(--salt-palette-corner-weak, 0);
+}
+
+.ag-theme-salt-light .ag-paging-button:not(.ag-disabled):hover,
+.ag-theme-salt-dark .ag-paging-button:not(.ag-disabled):hover,
+.ag-theme-salt-compact-light .ag-paging-button:not(.ag-disabled):hover,
+.ag-theme-salt-compact-dark .ag-paging-button:not(.ag-disabled):hover {
+  background-color: var(--salt-actionable-subtle-background-hover);
+  --ag-icon-font-color: var(--salt-actionable-subtle-foreground-hover);
+}
+
+.ag-theme-salt-light .ag-paging-button:focus-visible,
+.ag-theme-salt-dark .ag-paging-button:focus-visible,
+.ag-theme-salt-compact-light .ag-paging-button:focus-visible,
+.ag-theme-salt-compact-dark .ag-paging-button:focus-visible {
+  outline: var(--salt-focused-outline);
+}
+
+.ag-theme-salt-light .ag-paging-button:focus-visible::after,
+.ag-theme-salt-dark .ag-paging-button:focus-visible::after,
+.ag-theme-salt-compact-light .ag-paging-button:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-paging-button:focus-visible::after {
+  content: none;
 }
 
 /*
@@ -239,11 +308,4 @@
 .ag-theme-salt-compact-dark .ag-column-drop-horizontal {
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
-}
-
-.ag-theme-salt-light .ag-column-drop-cell,
-.ag-theme-salt-dark .ag-column-drop-cell,
-.ag-theme-salt-compact-light .ag-column-drop-cell,
-.ag-theme-salt-compact-dark .ag-column-drop-cell {
-  border-radius: 0;
 }

@@ -562,7 +562,7 @@
 .ag-theme-salt-compact-light .ag-select .ag-picker-field-wrapper,
 .ag-theme-salt-compact-dark .ag-select .ag-picker-field-wrapper {
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-editable-borderColor);
-  border-radius: 0;
+  border-radius: var(--salt-palette-corner-weak, 0);
 }
 
 .ag-theme-salt-light .ag-ltr .editable-cell .ag-select .ag-picker-field-wrapper,
