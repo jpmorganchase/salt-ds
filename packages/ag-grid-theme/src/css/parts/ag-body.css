@@ -219,8 +219,8 @@
 .ag-theme-salt-compact-light .ag-cell.error-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
 .ag-theme-salt-compact-dark .ag-cell.error-cell:not(.numeric-cell):not(.ag-cell-inline-editing) {
   background: var(--salt-status-error-background);
-  /* Give room for status adornment */
-  padding-right: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+  /* Give room for status adornment, with a gap between it and the text */
+  padding-right: calc(2 * var(--salt-spacing-100) + var(--salt-size-adornment));
 }
 
 .ag-theme-salt-light .ag-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing),
@@ -228,8 +228,8 @@
 .ag-theme-salt-compact-light .ag-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing),
 .ag-theme-salt-compact-dark .ag-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing) {
   background: var(--salt-status-error-background);
-  /* Give room for status adornment */
-  padding-left: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+  /* Give room for status adornment, with a gap between it and the text */
+  padding-left: calc(2 * var(--salt-spacing-100) + var(--salt-size-adornment));
 }
 
 .ag-theme-salt-light .ag-cell.error-cell:not(.ag-cell-inline-editing)::after,
@@ -282,8 +282,8 @@
 .ag-theme-salt-compact-light .ag-cell.warning-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
 .ag-theme-salt-compact-dark .ag-cell.warning-cell:not(.numeric-cell):not(.ag-cell-inline-editing) {
   background: var(--salt-status-warning-background);
-  /* Give room for status adornment */
-  padding-right: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+  /* Give room for status adornment, with a gap between it and the text */
+  padding-right: calc(2 * var(--salt-spacing-100) + var(--salt-size-adornment));
 }
 
 .ag-theme-salt-light .ag-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing),
@@ -291,8 +291,8 @@
 .ag-theme-salt-compact-light .ag-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing),
 .ag-theme-salt-compact-dark .ag-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing) {
   background: var(--salt-status-warning-background);
-  /* Give room for status adornment */
-  padding-left: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+  /* Give room for status adornment, with a gap between it and the text */
+  padding-left: calc(2 * var(--salt-spacing-100) + var(--salt-size-adornment));
 }
 
 .ag-theme-salt-light .ag-cell.warning-cell:not(.ag-cell-inline-editing)::after,
@@ -344,8 +344,8 @@
 .ag-theme-salt-compact-light .ag-cell.success-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
 .ag-theme-salt-compact-dark .ag-cell.success-cell:not(.numeric-cell):not(.ag-cell-inline-editing) {
   background: var(--salt-status-success-background);
-  /* Give room for status adornment */
-  padding-right: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+  /* Give room for status adornment, with a gap between it and the text */
+  padding-right: calc(2 * var(--salt-spacing-100) + var(--salt-size-adornment));
 }
 
 .ag-theme-salt-light .ag-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing),
@@ -353,8 +353,8 @@
 .ag-theme-salt-compact-light .ag-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing),
 .ag-theme-salt-compact-dark .ag-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing) {
   background: var(--salt-status-success-background);
-  /* Give room for status adornment */
-  padding-left: calc(var(--salt-spacing-100) + var(--salt-size-adornment));
+  /* Give room for status adornment, with a gap between it and the text */
+  padding-left: calc(2 * var(--salt-spacing-100) + var(--salt-size-adornment));
 }
 
 .ag-theme-salt-light .ag-cell.success-cell:not(.ag-cell-inline-editing)::after,
@@ -414,6 +414,42 @@
 .ag-theme-salt-compact-light .ag-cell-wrapper.ag-row-group,
 .ag-theme-salt-compact-dark .ag-cell-wrapper.ag-row-group {
   align-items: center;
+}
+
+/*
+  The row group expand icon sits in a transparent button (Figma "Expand button"), the icon size plus
+  --salt-spacing-100 on each side, followed by a --salt-spacing-100 gap before the group value.
+*/
+.ag-theme-salt-light .ag-ltr .ag-cell-wrapper .ag-group-expanded,
+.ag-theme-salt-dark .ag-ltr .ag-cell-wrapper .ag-group-expanded,
+.ag-theme-salt-compact-light .ag-ltr .ag-cell-wrapper .ag-group-expanded,
+.ag-theme-salt-compact-dark .ag-ltr .ag-cell-wrapper .ag-group-expanded,
+.ag-theme-salt-light .ag-ltr .ag-cell-wrapper .ag-group-contracted,
+.ag-theme-salt-dark .ag-ltr .ag-cell-wrapper .ag-group-contracted,
+.ag-theme-salt-compact-light .ag-ltr .ag-cell-wrapper .ag-group-contracted,
+.ag-theme-salt-compact-dark .ag-ltr .ag-cell-wrapper .ag-group-contracted {
+  margin-left: var(--salt-spacing-100);
+  margin-right: calc(2 * var(--salt-spacing-100));
+}
+
+/* The hover fills the whole expand button */
+.ag-theme-salt-light .ag-cell-wrapper .ag-group-expanded .ag-icon:hover,
+.ag-theme-salt-dark .ag-cell-wrapper .ag-group-expanded .ag-icon:hover,
+.ag-theme-salt-compact-light .ag-cell-wrapper .ag-group-expanded .ag-icon:hover,
+.ag-theme-salt-compact-dark .ag-cell-wrapper .ag-group-expanded .ag-icon:hover,
+.ag-theme-salt-light .ag-cell-wrapper .ag-group-contracted .ag-icon:hover,
+.ag-theme-salt-dark .ag-cell-wrapper .ag-group-contracted .ag-icon:hover,
+.ag-theme-salt-compact-light .ag-cell-wrapper .ag-group-contracted .ag-icon:hover,
+.ag-theme-salt-compact-dark .ag-cell-wrapper .ag-group-contracted .ag-icon:hover {
+  box-shadow: 0 0 0 var(--salt-spacing-100) var(--salt-actionable-background-hover);
+}
+
+/* Leaf rows line up with the group value of their parent, after the expand button and gap */
+.ag-theme-salt-light .ag-ltr .ag-row-group-leaf-indent,
+.ag-theme-salt-dark .ag-ltr .ag-row-group-leaf-indent,
+.ag-theme-salt-compact-light .ag-ltr .ag-row-group-leaf-indent,
+.ag-theme-salt-compact-dark .ag-ltr .ag-row-group-leaf-indent {
+  margin-left: calc(var(--ag-row-group-indent-size) + var(--salt-spacing-100));
 }
 
 .ag-theme-salt-light .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
@@ -695,4 +731,45 @@
 .ag-theme-salt-compact-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell)::before,
 .ag-theme-salt-compact-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell)::before {
   border-radius: inherit;
+}
+
+/*
+  Validation cells keep their status background inside a range selection, with the range color painted on top, matching
+  the Figma "Cell selection overlay". AG Grid replaces the cell background with the range color when the grid isn't
+  focused, so this needs a higher specificity. The cell the range started from isn't tinted.
+*/
+.ag-theme-salt-light .ag-root .ag-row .ag-cell.error-cell.ag-cell-range-selected:not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .ag-root .ag-row .ag-cell.error-cell.ag-cell-range-selected:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .ag-root .ag-row .ag-cell.error-cell.ag-cell-range-selected:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .ag-root .ag-row .ag-cell.error-cell.ag-cell-range-selected:not(.ag-cell-inline-editing) {
+  background-color: var(--salt-status-error-background);
+}
+
+.ag-theme-salt-light .ag-root .ag-row .ag-cell.warning-cell.ag-cell-range-selected:not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .ag-root .ag-row .ag-cell.warning-cell.ag-cell-range-selected:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .ag-root .ag-row .ag-cell.warning-cell.ag-cell-range-selected:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .ag-root .ag-row .ag-cell.warning-cell.ag-cell-range-selected:not(.ag-cell-inline-editing) {
+  background-color: var(--salt-status-warning-background);
+}
+
+.ag-theme-salt-light .ag-root .ag-row .ag-cell.success-cell.ag-cell-range-selected:not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .ag-root .ag-row .ag-cell.success-cell.ag-cell-range-selected:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .ag-root .ag-row .ag-cell.success-cell.ag-cell-range-selected:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .ag-root .ag-row .ag-cell.success-cell.ag-cell-range-selected:not(.ag-cell-inline-editing) {
+  background-color: var(--salt-status-success-background);
+}
+
+.ag-theme-salt-light .ag-root .ag-row .ag-cell.error-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .ag-root .ag-row .ag-cell.error-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .ag-root .ag-row .ag-cell.error-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .ag-root .ag-row .ag-cell.error-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing),
+.ag-theme-salt-light .ag-root .ag-row .ag-cell.warning-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .ag-root .ag-row .ag-cell.warning-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .ag-root .ag-row .ag-cell.warning-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .ag-root .ag-row .ag-cell.warning-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing),
+.ag-theme-salt-light .ag-root .ag-row .ag-cell.success-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .ag-root .ag-row .ag-cell.success-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .ag-root .ag-row .ag-cell.success-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .ag-root .ag-row .ag-cell.success-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing) {
+  background-image: linear-gradient(var(--ag-range-selection-background-color), var(--ag-range-selection-background-color));
 }
