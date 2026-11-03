@@ -79,6 +79,8 @@ const CORE = {
     },
     Toast: { page: "components/toast.md", parts: ["ToastContent"] },
     ToastContent: { page: "components/toast.md" },
+    Input: { page: "components/input.md" },
+    NumberInput: { page: "components/number-input.md" },
   },
 };
 
@@ -191,6 +193,43 @@ document.body.style.setProperty("--salt-size-border", "2px");
       "src/App.tsx:8:5: warning missing-part: Toast has no ToastContent, which every Salt example of it includes. See node_modules/@salt-ds/core/docs/components/toast.md.",
       "src/App.tsx:12:5: warning missing-part: Toast has no ToastContent, which every Salt example of it includes. See node_modules/@salt-ds/core/docs/components/toast.md.",
       "salt-check: checked 1 file: 3 errors, 2 warnings.",
+    ]);
+  });
+
+  it("suggests NumberInput for an Input set up for numbers, when the installed core has it", () => {
+    const source = `import { Input } from "@salt-ds/core";
+export const App = ({ props, mode }) => (
+  <>
+    <Input inputProps={{ inputMode: "numeric" }} />
+    <Input inputProps={{ "inputMode": "decimal", min: 1 }} />
+    <Input inputProps={{ type: "number" }} />
+    <Input inputMode="numeric" />
+    <Input inputProps={{ inputMode: "email" }} />
+    <Input inputProps={{ inputMode: mode }} />
+    <Input inputProps={props} />
+    <input inputMode="numeric" />
+  </>
+);
+`;
+    const { code, log } = check(project({ "src/App.tsx": source }));
+    expect(code).toBe(0);
+    const warning = (line) =>
+      `src/App.tsx:${line}:5: warning number-input: Input is set up for numbers: for an exact number within a set range, such as a quantity, use NumberInput, which adds increment and decrement controls and min and max. Keep Input for numbers with no set range or for numeric codes, such as postcodes. See node_modules/@salt-ds/core/docs/components/number-input.md.`;
+    expect(log).toEqual([
+      warning(4),
+      warning(5),
+      warning(6),
+      warning(7),
+      "salt-check: checked 1 file: 0 errors, 4 warnings.",
+    ]);
+
+    // A core without NumberInput gets no suggestion.
+    const { NumberInput, ...older } = CORE.components;
+    const { log: olderLog } = check(
+      project({ "src/App.tsx": source }, { core: { components: older } }),
+    );
+    expect(olderLog).toEqual([
+      "salt-check: checked 1 file: 0 errors, 0 warnings.",
     ]);
   });
 

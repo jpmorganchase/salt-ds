@@ -534,6 +534,45 @@ function parseScript(ts, file, text) {
   );
 }
 
+/**
+ * Whether an element's attributes, or the object literal in its `inputProps`,
+ * set `type="number"` or a numeric or decimal `inputMode`.
+ */
+function numericInput(ts, sourceFile, attributes) {
+  const numeric = (name, value) =>
+    (name === "type" && value === "number") ||
+    (name === "inputMode" && (value === "numeric" || value === "decimal"));
+  const literal = (node) => {
+    const expression =
+      node && ts.isJsxExpression(node) ? node.expression : node;
+    return expression && ts.isStringLiteralLike(expression)
+      ? expression.text
+      : undefined;
+  };
+  return attributes.some((attribute) => {
+    if (!ts.isJsxAttribute(attribute)) return false;
+    const name = attribute.name.getText(sourceFile);
+    if (numeric(name, literal(attribute.initializer))) return true;
+    const object =
+      name === "inputProps" &&
+      attribute.initializer &&
+      ts.isJsxExpression(attribute.initializer) &&
+      attribute.initializer.expression;
+    return (
+      !!object &&
+      ts.isObjectLiteralExpression(object) &&
+      object.properties.some(
+        (property) =>
+          ts.isPropertyAssignment(property) &&
+          numeric(
+            property.name.text ?? property.name.getText(sourceFile),
+            literal(property.initializer),
+          ),
+      )
+    );
+  });
+}
+
 function checkScript({
   ts,
   checker,
@@ -643,6 +682,21 @@ function checkScript({
               page: page(entry.page, salt.packageName),
             });
           }
+        }
+        // An Input set up for numbers is usually a quantity, which FormField's
+        // guidance gives to NumberInput: suggest it when the installed core has it.
+        const numberInput =
+          salt.name === "Input" &&
+          data.components.get(salt.packageName)?.get("NumberInput");
+        if (numberInput && numericInput(ts, sourceFile, attributes)) {
+          problems.push({
+            ...at(opening),
+            severity: "warning",
+            rule: "number-input",
+            message:
+              "Input is set up for numbers: for an exact number within a set range, such as a quantity, use NumberInput, which adds increment and decrement controls and min and max. Keep Input for numbers with no set range or for numeric codes, such as postcodes",
+            page: page(numberInput.page, salt.packageName),
+          });
         }
         const passesChildren = attributes.some(
           (attribute) =>
