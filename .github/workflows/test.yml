@@ -94,6 +94,8 @@ jobs:
           cache: "yarn"
       - name: Install dependencies
         run: yarn
+      - name: Test maintainer context
+        run: yarn run test:maintainer
       - run: yarn run test
   browser-tests:
     name: Browser Tests (React ${{ matrix.react }})

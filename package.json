@@ -25,6 +25,8 @@
     "copy:icon:css": "yarn workspace @salt-ds/icons copy:css",
     "copy:countries:css": "yarn workspace @salt-ds/countries copy:css",
     "test": "vitest",
+    "test:maintainer": "node --test scripts/__tests__/maintainerContext.node.mjs",
+    "maintainer:context": "node scripts/maintainerContext.mjs",
     "test:components": "vitest run --config vitest.browser.config.mts --browser.headless",
     "test:components:local": "vitest --config vitest.browser.config.mts",
     "prettier": "prettier --write .",

@@ -2,6 +2,8 @@
 
 Follow below instructions to contribute to Salt.
 
+For agent-assisted implementation and review, use the [maintainer workflow](.github/maintainer-workflow.md) alongside the relevant procedures below.
+
 1. Run `yarn` to install dependencies. If this step is stuck, check your proxy setting.
 2. Run `yarn build` to build all packages across the repo. This is required to run Storybook or the site.
 3. Run `yarn storybook` to run a local instance of [storybook](https://storybook.js.org/docs/get-started/install#start-storybook) for development
@@ -25,15 +27,28 @@ The repo contains below packages under `/packages`
 
 ### How to add a new icon
 
-1. Add the icon to the `packages/icons/src/SVG` folder. The icon should be named using kebab casing e.g. `icon-name.svg`.
-2. Navigate to `packages/icons` e.g. `cd packages/icons`.
-3. Run `yarn build:icons` to build the icons.
-4. Write a changeset using `yarn changeset`, this should have the format:
+1. Export the icon from the Salt DS Assets Figma file as SVG and add it to the `packages/icons/src/SVG` folder.
+   - Name it using kebab casing e.g. `icon-name.svg`. Solid variants use the `_solid` suffix e.g. `icon-name_solid.svg`.
+   - Remove everything except the icon paths (Figma frames, background rects, wrapping groups) and remove `fill` attributes so the icon inherits its color.
+   - Keep the `width="12" height="12" viewBox="0 0 12 12"` attributes. See existing SVGs in the folder for reference.
+2. If the icon replaces an existing one, add an entry to `DEPRECATED_ICONS` in `packages/icons/scripts/generateIcons.mjs`, e.g. `{ componentName: "OldName", replacement: "NewName", since: "1.19.0" }`.
+3. Navigate to `packages/icons` e.g. `cd packages/icons`.
+4. Run `yarn build:icons` to build the icons. This generates the component in `src/components`, and updates `src/components/index.ts`, `saltIcons.css`, `stories/icon.all.ts` and `site/src/components/icon-preview/allIconsList.ts`.
+5. Update the icon synonyms used by the site's icon search:
+   1. Add a row for the icon to the Icons Synonym List spreadsheet.
+   2. Copy the spreadsheet to `scripts/Icons Synonym List.xlsx`.
+   3. From the repository root, run `node scripts/makeSynonym.mjs`. This regenerates `site/src/components/icon-preview/salt-icon-synonym.json` from the spreadsheet.
+   4. Review the diff. The script regenerates the whole file, so if the spreadsheet is out of date it can revert changes made directly to the JSON. Keep only the intended changes and update the spreadsheet to match.
+   5. Delete `scripts/Icons Synonym List.xlsx`. Do not commit it.
+6. Run `yarn test:components packages/icons` to verify the icons.
+7. Write a changeset using `yarn changeset`, this should have the format:
 
 ```md
-Added:
+---
+"@salt-ds/icons": minor
+---
 
-- IconName
+Added `IconNameIcon`.
 ```
 
 ### Prop deprecation
