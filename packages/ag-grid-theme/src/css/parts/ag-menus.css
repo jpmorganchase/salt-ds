@@ -17,6 +17,13 @@
 .ag-theme-salt-compact-dark .ag-popup-child:not(.ag-tooltip-custom) {
   box-shadow: var(--salt-overlayable-shadow-popout);
 }
+/* Popup editors wrap the editor that draws the border, so round the wrapper for its shadow to follow */
+.ag-theme-salt-light .ag-popup-editor,
+.ag-theme-salt-dark .ag-popup-editor,
+.ag-theme-salt-compact-light .ag-popup-editor,
+.ag-theme-salt-compact-dark .ag-popup-editor {
+  border-radius: var(--salt-palette-corner, 0);
+}
 .ag-theme-salt-light .ag-menu-header,
 .ag-theme-salt-dark .ag-menu-header,
 .ag-theme-salt-compact-light .ag-menu-header,

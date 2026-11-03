@@ -574,8 +574,16 @@
 .ag-theme-salt-compact-light .ag-rich-select-list,
 .ag-theme-salt-compact-dark .ag-select-list,
 .ag-theme-salt-compact-dark .ag-rich-select-list {
-  /* Match border to OptionList */
-  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
+  /*
+    Match border and corner radius to OptionList. The list scrolls itself, so its scrollbar would be clipped by the
+    rounded corners. Make the top and bottom borders as thick as the corner radius to keep the scrollbar clear of the
+    corners, and draw the visible 1px border as an outline instead.
+  */
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
+  border-block-width: max(var(--salt-size-fixed-100), var(--salt-palette-corner, 0px));
+  border-radius: var(--salt-palette-corner, 0);
+  outline: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
+  outline-offset: calc(-1 * var(--salt-size-fixed-100));
 }
 
 .ag-theme-salt-light .ag-select-list-item[aria-selected="true"],

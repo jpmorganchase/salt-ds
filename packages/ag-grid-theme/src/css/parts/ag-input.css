@@ -78,38 +78,47 @@
   outline-offset: -2px;
 }
 
-/* Large text editor, matching multiline input */
-.ag-theme-salt-light .ag-popup-editor .ag-large-text textarea[class^="ag-"],
-.ag-theme-salt-dark .ag-popup-editor .ag-large-text textarea[class^="ag-"],
-.ag-theme-salt-compact-light .ag-popup-editor .ag-large-text textarea[class^="ag-"],
-.ag-theme-salt-compact-dark .ag-popup-editor .ag-large-text textarea[class^="ag-"] {
-  border-radius: var(--salt-palette-corner-weak, 0);
-  padding: var(--salt-spacing-100) var(--salt-spacing-100);
-}
-
+/*
+  Large text editor, matching multiline input, with the popup border and corner radius used by OptionList.
+  The textarea scrolls itself, so the border, corners and focus ring are drawn by the popup around it. The textarea is
+  inset from the top and bottom by the corner radius, so its scrollbar isn't clipped by the rounded corners.
+*/
 .ag-theme-salt-light .ag-popup-editor .ag-large-text,
 .ag-theme-salt-dark .ag-popup-editor .ag-large-text,
 .ag-theme-salt-compact-light .ag-popup-editor .ag-large-text,
-.ag-theme-salt-compact-dark .ag-popup-editor .ag-large-text,
-.ag-theme-salt-light .ag-autocomplete-list-popup,
-.ag-theme-salt-dark .ag-autocomplete-list-popup,
-.ag-theme-salt-compact-light .ag-autocomplete-list-popup,
-.ag-theme-salt-compact-dark .ag-autocomplete-list-popup {
-  /* Don't apply a border, but rather textarea border below is used, otherwise focus ring position could be a problem. */
-  border: none;
+.ag-theme-salt-compact-dark .ag-popup-editor .ag-large-text {
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
+  border-radius: var(--salt-palette-corner, 0);
+  padding-block: max(0px, var(--salt-palette-corner, 0px) - var(--salt-size-fixed-100));
+}
+
+.ag-theme-salt-light .ag-popup-editor .ag-large-text:focus-within,
+.ag-theme-salt-dark .ag-popup-editor .ag-large-text:focus-within,
+.ag-theme-salt-compact-light .ag-popup-editor .ag-large-text:focus-within,
+.ag-theme-salt-compact-dark .ag-popup-editor .ag-large-text:focus-within {
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
 .ag-theme-salt-light .ag-popup-editor .ag-large-text textarea[class^="ag-"],
 .ag-theme-salt-dark .ag-popup-editor .ag-large-text textarea[class^="ag-"],
 .ag-theme-salt-compact-light .ag-popup-editor .ag-large-text textarea[class^="ag-"],
 .ag-theme-salt-compact-dark .ag-popup-editor .ag-large-text textarea[class^="ag-"] {
-  /* When textarea is not in focus, simulating a popup list (OptionList) border color */
-  border-color: var(--salt-selectable-borderColor-selected);
+  border: none;
+  border-radius: 0;
+  /* Keep the text where it would be without the inset above */
+  padding: calc(var(--salt-spacing-100) - max(0px, var(--salt-palette-corner, 0px) - var(--salt-size-fixed-100))) var(--salt-spacing-100);
 }
 
 .ag-theme-salt-light .ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus,
 .ag-theme-salt-dark .ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus,
 .ag-theme-salt-compact-light .ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus,
 .ag-theme-salt-compact-dark .ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus {
-  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+  outline: none;
+}
+
+.ag-theme-salt-light .ag-autocomplete-list-popup,
+.ag-theme-salt-dark .ag-autocomplete-list-popup,
+.ag-theme-salt-compact-light .ag-autocomplete-list-popup,
+.ag-theme-salt-compact-dark .ag-autocomplete-list-popup {
+  border: none;
 }

@@ -14,5 +14,6 @@ Fixed AG Grid theme styling to align with the Salt Data Grid Figma designs.
 - Row group indentation now uses `--salt-spacing-100` on each side of the icon.
 - Menu separators now use `--salt-separable-tertiary-borderColor`.
 - Cells now use `--salt-palette-corner-weak` for their corner radius, so focus rings, editable outlines, validation backgrounds and the edit flag are rounded when `corner="rounded"`. Multi-cell range selections only round their outer corners.
+- Editor popups (select, rich select and large text) now use `--salt-palette-corner` for their corner radius, matching `OptionList`, and their shadow follows the rounded corners. Their scroll area is inset from the top and bottom by the corner radius, so scrollbars don't overlap the rounded corners.
 - Floating filters, including read-only ones such as the set filter, are drawn as a rounded box with a 1px gap between columns. The focus ring and `--salt-editable-primary-background` now cover the whole box, including the filter button. Columns without a floating filter show no box, and filter values use `--salt-content-secondary-foreground`.
 - Validation status adornments no longer replace the range selection border on cells at the edge of a multi-cell range selection.
