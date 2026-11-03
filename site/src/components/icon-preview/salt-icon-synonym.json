@@ -2309,13 +2309,7 @@
   },
   {
     "iconName": "rotate-left",
-    "synonym": [
-      "turn",
-      "arrow",
-      "organize",
-      "spin",
-      "counterclockwise"
-    ],
+    "synonym": ["turn", "arrow", "organize", "spin", "counterclockwise"],
     "category": "organize"
   }
 ]
