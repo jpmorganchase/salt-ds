@@ -54,21 +54,19 @@ async function typeFilter(value: string) {
   await userEvent.keyboard(value);
 }
 
+async function isActive(nameOrIndex: string | number) {
+  const activeId = input().element().getAttribute("aria-activedescendant");
+  const options = await (typeof nameOrIndex === "number"
+    ? page.getByRole("option")
+    : page.getByRole("option", { name: nameOrIndex })
+  ).elements();
+  const option =
+    typeof nameOrIndex === "number" ? options.at(nameOrIndex) : options.at(0);
+  return option?.id === activeId;
+}
+
 async function expectActive(nameOrIndex: string | number) {
-  await expect
-    .poll(async () => {
-      const activeId = input().element().getAttribute("aria-activedescendant");
-      const options = await (typeof nameOrIndex === "number"
-        ? page.getByRole("option")
-        : page.getByRole("option", { name: nameOrIndex })
-      ).elements();
-      const option =
-        typeof nameOrIndex === "number"
-          ? options.at(nameOrIndex)
-          : options.at(0);
-      return option?.id === activeId;
-    })
-    .toBe(true);
+  await expect.poll(() => isActive(nameOrIndex)).toBe(true);
 }
 
 describe("Given a ComboBox", () => {
@@ -78,13 +76,19 @@ describe("Given a ComboBox", () => {
       const onSelectionChange = vi.fn();
       await renderWithSalt(<Default onSelectionChange={onSelectionChange} />);
       await typeFilter("Ala");
+      await expectActive("Alabama");
       if (interaction === "mouse") {
         const alaska = page.getByRole("option", { name: "Alaska" });
-        await alaska.hover();
-        await expectActive("Alaska");
+        // In Firefox CI the pointer has ended up over Alabama after hovering
+        // Alaska, so hover again until Alaska is active.
+        await expect
+          .poll(async () => {
+            await alaska.hover();
+            return isActive("Alaska");
+          })
+          .toBe(true);
         await alaska.click();
       } else {
-        await expectActive("Alabama");
         await userEvent.keyboard("{ArrowDown}{Enter}");
       }
       await expect.element(input()).toHaveValue("Alaska");
