@@ -3,6 +3,8 @@
 import type { StoryObj } from "@storybook/react-vite";
 import { AgGridReact } from "ag-grid-react";
 import { expect, userEvent, within } from "storybook/test";
+import dataGridExampleColumns from "../src/dependencies/dataGridExampleColumns";
+import dataGridExampleData from "../src/dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../src/dependencies/useAgGridHelpers";
 import { validationCellExampleColumns } from "../src/dependencies/validationExampleColumns";
 import { validationExampleData } from "../src/dependencies/validationExampleData";
@@ -586,4 +588,43 @@ CellValidationInRangeSelection.play = async ({ canvasElement }) => {
       grid.querySelector('[row-index="6"] [col-id="color"]'),
     ).toHaveClass("error-cell", "ag-cell-range-top", "ag-cell-range-right");
   }
+};
+
+// AG Grid's own pagination panel. The Pagination example uses Salt components instead, so this covers the theme's paging panel styles.
+export const NativePagination: StoryObj<typeof AgGridReact> = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={dataGridExampleData}
+        columnDefs={dataGridExampleColumns}
+        pagination
+        paginationPageSize={20}
+        paginationPageSizeSelector={[20, 50, 100]}
+      />
+    </div>
+  );
+};
+
+// Grouped columns show as chips in both the row group panel and the Row Groups drop zone of the columns tool panel.
+export const ColumnDropChips: StoryObj<typeof AgGridReact> = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={dataGridExampleData}
+        columnDefs={dataGridExampleColumns.map((column) => ({
+          ...column,
+          enableRowGroup: true,
+          rowGroup: column.field === "code" || column.field === "capital",
+        }))}
+        rowGroupPanelShow="always"
+        sideBar={{ toolPanels: ["columns"], defaultToolPanel: "columns" }}
+      />
+    </div>
+  );
 };
