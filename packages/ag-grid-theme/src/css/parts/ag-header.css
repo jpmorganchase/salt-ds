@@ -139,6 +139,18 @@
   border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
+/*
+  Column group open / close buttons point the way the group will move, matching Figma: an open group shows a left
+  chevron (close) and a closed group shows a right chevron (open). Row groups keep their own icons.
+*/
+.ag-theme-salt-light .ag-header-group-cell,
+.ag-theme-salt-dark .ag-header-group-cell,
+.ag-theme-salt-compact-light .ag-header-group-cell,
+.ag-theme-salt-compact-dark .ag-header-group-cell {
+  --ag-icon-font-code-expanded: var(--ag-icon-font-code-previous);
+  --ag-icon-font-code-contracted: var(--ag-icon-font-code-next);
+}
+
 /** Move sort arrow towards menu icon */
 .ag-theme-salt-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
 .ag-theme-salt-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon.ag-hidden + .ag-sort-indicator-container,
@@ -181,6 +193,14 @@
 .ag-theme-salt-compact-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-sort-indicator-icon,
 .ag-theme-salt-compact-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-sort-indicator-icon {
   padding-right: var(--salt-spacing-100);
+}
+
+/* Keep truncated header text apart from the menu and filter icons, matching the Figma "Text container" padding */
+.ag-theme-salt-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-label,
+.ag-theme-salt-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-label,
+.ag-theme-salt-compact-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-label,
+.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-label {
+  padding-left: var(--salt-spacing-100);
 }
 
 .ag-theme-salt-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon,
@@ -253,7 +273,11 @@
 .ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-button {
   position: absolute;
   inset-block: 0;
-  inset-inline-end: calc(var(--salt-spacing-100) + var(--salt-size-fixed-100));
+  /*
+    The button is the size of the icon, with its hover drawn around it. Center the icon where the Figma button
+    (--salt-size-base less --salt-spacing-100) would be, inset by --salt-spacing-100 from the filter box.
+  */
+  inset-inline-end: calc(var(--salt-spacing-100) + var(--salt-size-fixed-100) + (var(--salt-size-base) - var(--salt-spacing-100) - var(--ag-icon-size)) / 2);
   align-items: center;
   margin: 0;
 }
@@ -280,13 +304,13 @@
 
 /*
   Filter box (Figma "Filter cell"), drawn from the visible input field so it is not shown for columns without a
-  floating filter. Read-only filters (e.g. set filter or multiple conditions) still show the box, as they can be
-  changed from the floating filter button.
+  floating filter. Read-only filters (e.g. set filter or multiple conditions) have a disabled input and no box,
+  matching the Figma "Read-only" floating filter. They can still be changed from the floating filter button.
 */
-.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden)::before,
-.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden)::before,
-.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden)::before,
-.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden)::before {
+.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden):not(.ag-disabled)::before,
+.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden):not(.ag-disabled)::before,
+.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden):not(.ag-disabled)::before,
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden):not(.ag-disabled)::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -431,6 +455,9 @@
   /* Together with margin, matching Salt Input padding */
   padding: 0 var(--salt-spacing-50);
   color: var(--salt-content-secondary-foreground);
+  /* Filter values use body text (Figma "Body 1"), rather than the header label text inherited from the header row */
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
 }
 
 .ag-theme-salt-light .ag-floating-filter-input input[class^="ag-"][type="text"],

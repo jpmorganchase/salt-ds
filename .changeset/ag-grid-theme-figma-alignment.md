@@ -16,5 +16,11 @@ Fixed AG Grid theme styling to align with the Salt Data Grid Figma designs.
 - Cells now use `--salt-palette-corner-weak` for their corner radius, so focus rings, editable outlines, validation backgrounds and the edit flag are rounded when `corner="rounded"`. Multi-cell range selections only round their outer corners.
 - Editor popups (select, rich select and large text) now use `--salt-palette-corner` for their corner radius, matching `OptionList`, and their shadow follows the rounded corners. Their scroll area is inset from the top and bottom by the corner radius, so scrollbars don't overlap the rounded corners.
 - Checkboxes are now drawn like Salt's `Checkbox`, with `--salt-palette-corner-weaker` for their corner radius and the indeterminate bar from `CheckboxIcon`.
-- Floating filters, including read-only ones such as the set filter, are drawn as a rounded box with a 1px gap between columns. The focus ring and `--salt-editable-primary-background` now cover the whole box, including the filter button. Columns without a floating filter show no box, and filter values use `--salt-content-secondary-foreground`.
+- Floating filters are drawn as a rounded box with a 1px gap between columns, and the filter button is centered where the Figma button sits inside the box. The focus ring and `--salt-editable-primary-background` now cover the whole box, including the filter button. Read-only floating filters, such as the set filter, and columns without a floating filter show no box, and filter values use `--salt-content-secondary-foreground`.
 - Validation status adornments no longer replace the range selection border on cells at the edge of a multi-cell range selection.
+- Floating filter values now use `--salt-text-fontSize` and `--salt-text-fontWeight`, instead of the header label text.
+- Row group expand icons now have `--salt-spacing-100` on each side, plus a `--salt-spacing-100` gap before the group value, and leaf rows line up with their parent's group value. The hover covers the whole expand button.
+- Validation cells now leave a `--salt-spacing-100` gap between the cell text and the status adornment.
+- Right-aligned header text now has a `--salt-spacing-100` gap from the menu and filter icons when truncated.
+- Column group headers now show a right chevron when closed and a left chevron when open.
+- Validation cells inside a range selection keep their status background, with the range selection color painted on top.
