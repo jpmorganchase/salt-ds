@@ -2313,10 +2313,8 @@
       "turn",
       "arrow",
       "organize",
-      "rotate",
       "spin",
-      "counterclockwise",
-      "left"
+      "counterclockwise"
     ],
     "category": "organize"
   }
