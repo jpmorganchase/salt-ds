@@ -6,8 +6,8 @@ import { pasteValue } from "~browser-test-utils/interactions";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as comboBoxStories from "~stories/combobox/combobox-deprecated.stories";
 
-// Known bug: in Firefox the deprecated combo box drops the first keystroke
-// after it gains focus.
+// Known bug: when pills overflow, Tab focuses the expand button. In Firefox,
+// the first key typed there expands the input but isn't entered into it.
 const skipInFirefox = it.skipIf(server.browser === "firefox");
 
 const {

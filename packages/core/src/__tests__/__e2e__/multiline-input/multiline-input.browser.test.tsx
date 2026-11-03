@@ -173,6 +173,9 @@ describe("GIVEN an MultilineInput", () => {
     await expect
       .poll(async () => (await input.element()).getBoundingClientRect().height)
       .toBeLessThanOrEqual(defaultHeight);
+    expect(
+      (await input.element()).getBoundingClientRect().height,
+    ).toBeGreaterThanOrEqual(defaultHeight - 1);
   });
 
   it("should not have empty aria-describedby or aria-labelledby attributes if used outside a formfield", async () => {

@@ -138,9 +138,9 @@ describe("GIVEN a Rating component", () => {
       await exerciseKeyboard(Default);
     });
 
-    // Safari's native radio groups stop at the ends instead of wrapping, so
-    // Rating does not wrap there, contrary to its accessibility docs.
-    it.skipIf(server.browser === "webkit")(
+    // Rating relies on native radio arrow keys. Linux WebKit stops at the ends
+    // instead of wrapping; macOS WebKit wraps.
+    it.skipIf(server.browser === "webkit" && server.platform === "linux")(
       "THEN should wrap around values with arrow keys",
       async () => {
         const spy = vi.fn();
