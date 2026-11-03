@@ -10,8 +10,17 @@ data:
 
 ## Best practices
 
-- When a button has both an icon and text, use `aria-hidden` on the icon so that screen readers don't announce its text.
-- When a button has an icon only and no text, pass an `aria-label` to the button that describes its purpose.
+### Accessible name
+
+Keep visible button labels short and action-led. For repeated actions, show
+**Inspect** on the button and the record name in its row. Use `aria-label` or
+`aria-labelledby` to include the visible label text and record context in each
+accessible name; for example, “Inspect Risk calculator”.
+
+Use an icon-only button only when space is limited and users recognize the icon;
+otherwise, keep visible text. Give icon-only buttons an `aria-label` describing
+the action. Add a Tooltip to explain the icon; it does not replace the accessible
+name. Hide decorative icons with `aria-hidden`.
 
 ### Focusable disabled button
 

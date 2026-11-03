@@ -21,6 +21,28 @@ The repo contains below packages under `/packages`
 - theme: Implementation of Salt theme and design tokens, using CSS variables
 - window: [Desktop support](https://storybook.saltdesignsystem.com/?path=/docs/documentation-desktop-support--docs) implementation to support platforms like [OpenFin](https://www.openfin.co/)
 
+## Documentation examples
+
+Follow the [content style guide](content-style-guide.md) when writing documentation
+and the [component](templates/component-pages/README.md) or
+[pattern](templates/pattern-pages/README.md) template when adding a page.
+
+Keep live examples in `site/src/examples`, with one file per example and exports
+from the folder's `index.ts`. Pattern examples use
+`site/src/examples/patterns/<pattern-name>/`. Show each example with a `LivePreview`
+in the section that explains it; guidance-only patterns do not need an example.
+Use public Salt imports and include the local files a reader needs to reuse it.
+
+Pattern Storybook stories re-export the website examples when they demonstrate
+the same behavior. Keep an intentional difference explicit. Put shared example
+code in the first example on the page that needs it so that example's displayed
+source is complete. Reference images in `site/public`, such as
+`/img/examples/avatar.png`, so both the website and Storybook can serve them.
+
+When moving an example, update its imports, page references, assets and stories
+together. Check the relevant site and Storybook output, and exercise any changed
+interaction with a focused browser test.
+
 ## How to's
 
 ### How to add a new icon
