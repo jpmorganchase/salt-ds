@@ -20,6 +20,12 @@ export interface StatusAdornmentProps extends IconProps {
 
 const withBaseName = makePrefixer("saltStatusAdornment");
 
+/**
+ * The status icon at the end of Salt's input controls. Input, MultilineInput,
+ * NumberInput, Dropdown, ComboBox and the date inputs render it from
+ * `validationStatus`, so don't add one to them; use it only to give a custom
+ * control the same icon.
+ */
 export const StatusAdornment = forwardRef<SVGSVGElement, StatusAdornmentProps>(
   function StatusAdornment({ className, status, ...restProps }, ref) {
     const icons = useIcon();

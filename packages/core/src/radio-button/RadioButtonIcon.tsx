@@ -9,13 +9,25 @@ import radioButtonIconCss from "./RadioButtonIcon.css";
 const withBaseName = makePrefixer("saltRadioButtonIcon");
 
 export interface RadioButtonIconProps extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * If `true`, the icon shows the selected state.
+   */
   checked?: boolean;
+  /**
+   * If `true`, the icon uses the disabled styling.
+   */
   disabled?: boolean;
   /**
    * @deprecated since 1.8.0-rc.2. Use `validationStatus` instead.
    */
   error?: boolean;
+  /**
+   * If `true`, the icon uses the read-only styling.
+   */
   readOnly?: boolean;
+  /**
+   * The validation status to style the icon with: "error", "warning" or "success".
+   */
   validationStatus?: AdornmentValidationStatus;
 }
 
