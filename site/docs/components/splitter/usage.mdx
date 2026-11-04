@@ -14,6 +14,16 @@ data:
 
 Make sure to install the React Resizable Panels package, `react-resizable-panels`.
 
+<Callout title="Note">
+
+The Salt React Resizable Panels theme supports `react-resizable-panels` v3 and v4. The examples on this site use the v4 API (`Group`, `Panel` and `Separator`).
+
+`react-resizable-panels` v4 requires React 18 or later. If your application uses React 16 or 17, stay on `react-resizable-panels` v3 and use its equivalent API (`PanelGroup`, `Panel` and `PanelResizeHandle`, with `direction` instead of `orientation`). The theme continues to style v3 components.
+
+Size props such as `defaultSize`, `minSize` and `maxSize` also differ between versions. The v4 examples pass strings such as `"25%"`. In v4, a plain number is a size in pixels, but in v3 it is a percentage and strings are not supported. When you copy an example onto v3, replace each string with its percentage as a number, for example `defaultSize={25}`.
+
+</Callout>
+
 To install the `@salt-ds/react-resizable-panels-theme` package, run the command appropriate to your environment: `yarn add @salt-ds/react-resizable-panels-theme` or `npm install @salt-ds/react-resizable-panels-theme`
 
 ### Import Salt React Resizable Panels theme
@@ -24,23 +34,23 @@ To import the Salt React Resizable Panels theme, use:
 import "@salt-ds/react-resizable-panels-theme/index.css";
 ```
 
-Then wrap your React Resizable Panel Group with the `react-resizable-panels-theme-salt` class name:
+Then wrap your React Resizable Panels `Group` with the `react-resizable-panels-theme-salt` class name:
 
 ```js
 <div className="react-resizable-panels-theme-salt">
-  <PanelGroup direction="horizontal">
+  <Group orientation="horizontal">
     <Panel id="left">
       <Text>Left</Text>
     </Panel>
-    <PanelResizeHandle />
+    <Separator />
     <Panel id="middle">
       <Text>Center</Text>
     </Panel>
-    <PanelResizeHandle />
+    <Separator />
     <Panel id="right">
       <Text>Right</Text>
     </Panel>
-  </PanelGroup>
+  </Group>
 </div>
 ```
 
@@ -48,14 +58,41 @@ Then wrap your React Resizable Panel Group with the `react-resizable-panels-them
 
 To customize the appearance of panel resize handles and panels, follow these guidelines:
 
-### Panel Resize Handles
+### Separators
 
-- **Border Customization**: To add borders to the resize handles, apply the class `resize-handle-salt-border-<border>` to the `PanelResizeHandle` component. Replace `<border>` with the specific border side you want to style (e.g., `top`, `bottom`, `left`, `right`).
+- **Border Customization**: To add borders to the resize handles, apply the class `resize-handle-salt-border-<border>` to the `Separator` component. Replace `<border>` with the specific border side you want to style (e.g., `top`, `bottom`, `left`, `right`).
 
-- **Background Color Customization**: To set the background color of the resize handles, use the class `resize-handle-salt-variant-<variant>`. Replace `<variant>` with the desired variant (`primary`, `secondary`, `tertiary`) to match the corresponding Salt DS container background color. This ensures that the resize handles visually integrate with the theme's design.
+- **Background Color Customization**: To set the background color of separators, use the class `resize-handle-salt-variant-<variant>`. Replace `<variant>` with the desired variant (`primary`, `secondary`, `tertiary`) to match the corresponding Salt DS container background color. This ensures that separators visually integrate with the theme's design.
 
 ### Panels
 
 - **Background Color Customization**: For the panels themselves, apply the class `resizable-panel-salt-variant-<variant>` to the `Panel` component. Replace `<variant>` with the appropriate variant (`primary`, `secondary`, `tertiary`) to set the panel's background color to the associated Salt DS container background color. This helps maintain a consistent and cohesive look across your application.
 
-By using these class names, you can ensure that both the resize handles and panels are styled correctly, providing a seamless and visually appealing user interface.
+By using these class names, you can ensure that both separators and panels are styled correctly, providing a seamless and visually appealing user interface.
+
+### Panels that resize to zero
+
+With `react-resizable-panels` v4, set `data-panel-collapsed="true"` on a `Panel` whenever its size is zero. Track the size with `onResize` so the theme can overlap the borders of adjacent separators, or a separator and the container. Set the attribute to `false` when the panel expands again. This applies to both horizontal and vertical groups, including panels that can be dragged to zero without `collapsible`.
+
+```tsx
+import { useState } from "react";
+import { Panel } from "react-resizable-panels";
+
+function CollapsiblePanel() {
+  const [collapsed, setCollapsed] = useState(false);
+
+  return (
+    <Panel
+      collapsible
+      collapsedSize="0%"
+      minSize="10%"
+      data-panel-collapsed={collapsed}
+      onResize={(size) => setCollapsed(size.asPercentage === 0)}
+    >
+      Panel content
+    </Panel>
+  );
+}
+```
+
+Version 3 exposes the panel size in the DOM, so its border overlap styles work without this attribute.
