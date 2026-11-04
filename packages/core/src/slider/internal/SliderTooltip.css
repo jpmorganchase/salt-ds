@@ -5,11 +5,12 @@
   border-width: var(--saltTooltip-borderWidth, var(--salt-size-fixed-100));
   border-radius: var(--saltTooltip-borderRadius, var(--salt-palette-corner-weak, 0));
   box-shadow: var(--saltTooltip-shadow, var(--salt-overlayable-shadow-popout));
-  bottom: 50%;
+  /* Matches the offset and padding of Tooltip */
+  bottom: calc(100% + var(--salt-spacing-fixed-800));
   left: 50%;
-  padding: var(--salt-spacing-50) var(--salt-spacing-100);
+  padding: var(--saltTooltip-padding, calc(var(--salt-spacing-75) - var(--salt-size-fixed-100)) var(--salt-spacing-100));
   position: absolute;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   text-align: var(--saltTooltip-textAlign, left);
   user-select: none;
   visibility: hidden;
@@ -23,7 +24,6 @@
 
 .saltSliderTooltip-arrow {
   fill: var(--salt-container-primary-background);
-  height: var(--salt-size-icon);
   left: 50%;
   position: absolute;
   pointer-events: none;
@@ -31,7 +31,6 @@
   transform: translateX(-50%);
   stroke: var(--salt-container-bold-borderColor);
   stroke-width: var(--salt-size-fixed-100);
-  width: var(--salt-size-icon);
 }
 
 .saltSliderTooltip-text {

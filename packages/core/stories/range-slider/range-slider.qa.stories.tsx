@@ -37,6 +37,16 @@ export const ExamplesGrid: StoryFn<QAContainerProps> = (props) => {
         <RangeSlider marks={marks} showTicks min={0} max={10} />
       </FormField>
       <FormField labelPlacement="left">
+        <FormFieldLabel>With centered label position and ticks</FormFieldLabel>
+        <RangeSlider
+          marks={marks}
+          constrainLabelPosition={false}
+          showTicks
+          min={0}
+          max={10}
+        />
+      </FormField>
+      <FormField labelPlacement="left">
         <FormFieldLabel>With inline labels, marks and ticks</FormFieldLabel>
         <RangeSlider
           defaultValue={[3, 6]}
