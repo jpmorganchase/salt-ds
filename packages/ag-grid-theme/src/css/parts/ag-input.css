@@ -76,7 +76,7 @@
 .ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="date"]:focus,
 .ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="date"]:focus {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
-  outline-offset: -2px;
+  outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
 }
 
 /*
@@ -170,4 +170,34 @@
 .ag-theme-salt-compact-dark .ag-paging-panel .ag-paging-page-size .ag-picker-field-wrapper {
   min-width: calc(2 * var(--salt-size-base) + var(--salt-spacing-100));
   gap: var(--salt-spacing-50);
+}
+
+/* The Filters tool panel search input matches the filter inputs */
+.ag-theme-salt-light .ag-filter-toolpanel-search input[class^="ag-"][type="text"],
+.ag-theme-salt-dark .ag-filter-toolpanel-search input[class^="ag-"][type="text"],
+.ag-theme-salt-compact-light .ag-filter-toolpanel-search input[class^="ag-"][type="text"],
+.ag-theme-salt-compact-dark .ag-filter-toolpanel-search input[class^="ag-"][type="text"] {
+  box-sizing: border-box;
+  height: var(--salt-size-base);
+  padding: 0 var(--salt-spacing-100);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-editable-borderColor);
+  border-radius: var(--salt-palette-corner-weak, 0);
+  background: var(--salt-editable-primary-background);
+  color: var(--salt-content-primary-foreground);
+}
+
+.ag-theme-salt-light .ag-filter-toolpanel-search input[class^="ag-"][type="text"]:focus,
+.ag-theme-salt-dark .ag-filter-toolpanel-search input[class^="ag-"][type="text"]:focus,
+.ag-theme-salt-compact-light .ag-filter-toolpanel-search input[class^="ag-"][type="text"]:focus,
+.ag-theme-salt-compact-dark .ag-filter-toolpanel-search input[class^="ag-"][type="text"]:focus {
+  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+  outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
+}
+
+.ag-theme-salt-light .ag-filter-toolpanel-search input[class^="ag-"][type="text"]::placeholder,
+.ag-theme-salt-dark .ag-filter-toolpanel-search input[class^="ag-"][type="text"]::placeholder,
+.ag-theme-salt-compact-light .ag-filter-toolpanel-search input[class^="ag-"][type="text"]::placeholder,
+.ag-theme-salt-compact-dark .ag-filter-toolpanel-search input[class^="ag-"][type="text"]::placeholder {
+  color: var(--salt-content-secondary-foreground);
+  opacity: 1;
 }

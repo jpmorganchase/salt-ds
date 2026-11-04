@@ -33,3 +33,7 @@ Fixed AG Grid theme styling to align with the Salt Data Grid Figma designs.
 - Dialogs, such as Choose Columns, now match Salt's `Dialog`, with `--salt-palette-corner` and `--salt-container-borderColor`.
 - Filter menu content now lines up with the menu padding, with `--salt-spacing-100` between rows and above the buttons.
 - Buttons now use the same tokens as Salt's `Button` (`--salt-text-action-*`, and the actionable subtle and accented bold colors including borders and active states), instead of hard-coded font weight and text transform.
+- Keyboard focus on list items (set filter, column select, rich select), tabs, tool panel and multi filter group headers, and column group headers now shows the Salt focus ring instead of the AG Grid focus box.
+- The filters tool panel now matches the Figma "Filters panel": a bordered search input, `--salt-size-base` group headers with a bolder title and a chevron indicator, and filters indented to the group title.
+- Dialog titles now use `--salt-content-primary-foreground` and `--salt-text-fontWeight-bolder`.
+- The editable cell corner flag is now `--salt-size-adornment` plus 2px, matching Figma, and focus ring offsets use Salt tokens instead of fixed pixel values.

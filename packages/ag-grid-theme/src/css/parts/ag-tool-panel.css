@@ -213,3 +213,79 @@
 .ag-theme-salt-compact-dark .ag-column-drop-vertical-cell {
   margin: 0;
 }
+
+/* Filters tool panel, matching the Figma "Filters panel": the search and each filter line up with the group titles */
+.ag-theme-salt-light .ag-filter-toolpanel-search,
+.ag-theme-salt-dark .ag-filter-toolpanel-search,
+.ag-theme-salt-compact-light .ag-filter-toolpanel-search,
+.ag-theme-salt-compact-dark .ag-filter-toolpanel-search {
+  height: auto;
+  padding: var(--salt-spacing-300) var(--salt-spacing-300) var(--salt-spacing-300) calc(2 * var(--salt-spacing-100) + var(--ag-icon-size));
+}
+
+.ag-theme-salt-light .ag-filter-toolpanel-search-input,
+.ag-theme-salt-dark .ag-filter-toolpanel-search-input,
+.ag-theme-salt-compact-light .ag-filter-toolpanel-search-input,
+.ag-theme-salt-compact-dark .ag-filter-toolpanel-search-input {
+  flex: 1 1 auto;
+  height: auto;
+  margin: 0;
+}
+
+/* Group headers (Figma "Accordion" header) */
+.ag-theme-salt-light .ag-filter-toolpanel-group-title-bar,
+.ag-theme-salt-dark .ag-filter-toolpanel-group-title-bar,
+.ag-theme-salt-compact-light .ag-filter-toolpanel-group-title-bar,
+.ag-theme-salt-compact-dark .ag-filter-toolpanel-group-title-bar {
+  box-sizing: border-box;
+  height: auto;
+  min-height: calc(var(--salt-size-base) + 2 * var(--salt-spacing-50));
+  gap: var(--salt-spacing-100);
+  padding: var(--salt-spacing-50) var(--salt-spacing-100);
+  font-weight: var(--salt-text-fontWeight-bolder);
+}
+
+.ag-theme-salt-light .ag-filter-toolpanel-group-title-bar-icon,
+.ag-theme-salt-dark .ag-filter-toolpanel-group-title-bar-icon,
+.ag-theme-salt-compact-light .ag-filter-toolpanel-group-title-bar-icon,
+.ag-theme-salt-compact-dark .ag-filter-toolpanel-group-title-bar-icon,
+.ag-theme-salt-light .ag-filter-toolpanel-group-title,
+.ag-theme-salt-dark .ag-filter-toolpanel-group-title,
+.ag-theme-salt-compact-light .ag-filter-toolpanel-group-title,
+.ag-theme-salt-compact-dark .ag-filter-toolpanel-group-title {
+  margin: 0;
+  padding: 0;
+}
+
+/* Accordion indicator: a chevron pointing down when closed and up when open */
+.ag-theme-salt-light .ag-filter-toolpanel-group-title-bar,
+.ag-theme-salt-dark .ag-filter-toolpanel-group-title-bar,
+.ag-theme-salt-compact-light .ag-filter-toolpanel-group-title-bar,
+.ag-theme-salt-compact-dark .ag-filter-toolpanel-group-title-bar {
+  --ag-icon-font-code-tree-closed: var(--ag-icon-font-code-tree-open);
+}
+
+.ag-theme-salt-light .ag-filter-toolpanel-group-title-bar .ag-icon-tree-open,
+.ag-theme-salt-dark .ag-filter-toolpanel-group-title-bar .ag-icon-tree-open,
+.ag-theme-salt-compact-light .ag-filter-toolpanel-group-title-bar .ag-icon-tree-open,
+.ag-theme-salt-compact-dark .ag-filter-toolpanel-group-title-bar .ag-icon-tree-open {
+  transform: rotate(180deg);
+}
+
+/* Group content (Figma "Accordion" content), indented to the group title */
+.ag-theme-salt-light .ag-filter-toolpanel-instance-filter,
+.ag-theme-salt-dark .ag-filter-toolpanel-instance-filter,
+.ag-theme-salt-compact-light .ag-filter-toolpanel-instance-filter,
+.ag-theme-salt-compact-dark .ag-filter-toolpanel-instance-filter {
+  border-top: none;
+  /* The next group header draws the divider */
+  border-bottom: none;
+  padding: var(--salt-spacing-100) var(--salt-spacing-300) var(--salt-spacing-150) calc(2 * var(--salt-spacing-100) + var(--ag-icon-size));
+}
+
+.ag-theme-salt-light .ag-filter-toolpanel .ag-filter-apply-panel,
+.ag-theme-salt-dark .ag-filter-toolpanel .ag-filter-apply-panel,
+.ag-theme-salt-compact-light .ag-filter-toolpanel .ag-filter-apply-panel,
+.ag-theme-salt-compact-dark .ag-filter-toolpanel .ag-filter-apply-panel {
+  padding: var(--salt-spacing-100) 0 0;
+}
