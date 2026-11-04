@@ -44,6 +44,11 @@ interface OverflowState {
 
 interface UseToolbarOverflowProps {
   content: ToolbarContentModel[];
+  /**
+   * Called before a measurement is applied, while the DOM still reflects the
+   * previous overflow state.
+   */
+  onBeforeOverflowUpdate?: () => void;
 }
 
 type ObservedWidthTarget =
@@ -472,7 +477,10 @@ function computeToolbarOverflowState({
   };
 }
 
-export function useToolbarOverflow({ content }: UseToolbarOverflowProps) {
+export function useToolbarOverflow({
+  content,
+  onBeforeOverflowUpdate,
+}: UseToolbarOverflowProps) {
   const targetWindow = useWindow();
   const items = useMemo(
     () => content.flatMap((contentArea) => contentArea.items),
@@ -715,6 +723,7 @@ export function useToolbarOverflow({ content }: UseToolbarOverflowProps) {
       try {
         const nextState = computeOverflow();
 
+        onBeforeOverflowUpdate?.();
         setOverflowState((previous) => {
           return areOverflowStatesEqual(previous, nextState)
             ? previous
@@ -734,7 +743,7 @@ export function useToolbarOverflow({ content }: UseToolbarOverflowProps) {
         );
       }
     });
-  }, [computeOverflow, targetWindow]);
+  }, [computeOverflow, onBeforeOverflowUpdate, targetWindow]);
 
   useIsomorphicLayoutEffect(() => {
     scheduleMeasureRef.current = scheduleMeasure;
