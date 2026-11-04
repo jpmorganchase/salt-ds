@@ -183,6 +183,31 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       [labelId, helperTextId, registerLabel, registerHelperText],
     );
 
+    const ariaLabelledBy = hasLabel ? labelId : undefined;
+    const ariaDescribedBy = hasHelperText ? helperTextId : undefined;
+    // Memoized so the re-render after mount doesn't re-render every consumer.
+    const contextValue = useMemo(
+      () => ({
+        a11yProps: {
+          "aria-labelledby": ariaLabelledBy,
+          "aria-describedby": ariaDescribedBy,
+        },
+        disabled,
+        necessity,
+        readOnly,
+        validationStatus,
+        formFieldRef,
+      }),
+      [
+        ariaLabelledBy,
+        ariaDescribedBy,
+        disabled,
+        necessity,
+        readOnly,
+        validationStatus,
+      ],
+    );
+
     return (
       <div
         ref={handleRef}
@@ -198,19 +223,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
         )}
         {...restProps}
       >
-        <FormFieldContext.Provider
-          value={{
-            a11yProps: {
-              "aria-labelledby": hasLabel ? labelId : undefined,
-              "aria-describedby": hasHelperText ? helperTextId : undefined,
-            },
-            disabled,
-            necessity,
-            readOnly,
-            validationStatus,
-            formFieldRef,
-          }}
-        >
+        <FormFieldContext.Provider value={contextValue}>
           <FormFieldInternalContext.Provider value={internalContextValue}>
             {children}
           </FormFieldInternalContext.Provider>

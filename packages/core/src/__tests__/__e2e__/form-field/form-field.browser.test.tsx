@@ -20,6 +20,7 @@ import {
   Slider,
   Switch,
   Tooltip,
+  useFormFieldProps,
 } from "@salt-ds/core";
 import { Fragment, type ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
@@ -323,6 +324,34 @@ describe("GIVEN a FormField", () => {
     });
   });
 
+  describe("WHEN it mounts", () => {
+    it("THEN components using its context aren't re-rendered after mount", async () => {
+      let consumerRenders = 0;
+      let siblingRenders = 0;
+      function Consumer() {
+        useFormFieldProps();
+        consumerRenders += 1;
+        return null;
+      }
+      function Sibling() {
+        siblingRenders += 1;
+        return null;
+      }
+
+      await renderWithSalt(
+        <FormField id="test-id">
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Consumer />
+          <Sibling />
+          <FormFieldHelperText>Helper text</FormFieldHelperText>
+        </FormField>,
+      );
+      await expect.element(page.getByText("Label")).toBeInTheDocument();
+      expect(siblingRenders).toBeGreaterThan(0);
+      expect(consumerRenders).toBe(siblingRenders);
+    });
+  });
+
   describe("WHEN a form control has an aria-label", () => {
     const ariaLabel = "Work email address";
     const controls: [string, ReactNode][] = [
@@ -450,6 +479,35 @@ describe("GIVEN a FormField", () => {
         .toHaveLength(1);
       consoleSpy.mockRestore();
     });
+
+    it.each([
+      // "e" followed by a combining acute accent, so the aria-label is inside "Café".
+      ["Cafe\u0301 menu", "Cafe"],
+      ["हिंदी", "दी"],
+    ])(
+      "THEN it treats combining marks as part of a word, so it warns for a FormFieldLabel of %s",
+      async (label, ariaLabel) => {
+        const consoleSpy = vi
+          .spyOn(console, "warn")
+          .mockImplementation(() => undefined);
+        await renderWithSalt(
+          <FormField>
+            <FormFieldLabel>{label}</FormFieldLabel>
+            <Input aria-label={ariaLabel} />
+          </FormField>,
+        );
+        await expect
+          .poll(() =>
+            consoleSpy.mock.calls.filter(
+              ([message]) =>
+                message ===
+                `Salt: aria-label "${ariaLabel}" is ignored because FormFieldLabel "${label}" provides the accessible name. Use aria-labelledby to add to the name, or aria-describedby to add a description.`,
+            ),
+          )
+          .toHaveLength(1);
+        consoleSpy.mockRestore();
+      },
+    );
 
     it("THEN it checks the name without regex lookbehind, which older Safari versions don't support", async () => {
       const consoleSpy = vi

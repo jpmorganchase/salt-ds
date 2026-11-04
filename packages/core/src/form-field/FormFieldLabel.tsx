@@ -59,8 +59,9 @@ function containsWords(text: string, phrase: string) {
   const escapedPhrase = trimmedPhrase
     .replace(/[.*+?^${}()|[\]\\]/g, "\\$&")
     .replace(/\s+/g, "\\s+");
-  // A character that isn't a letter or number, or is in an unspaced script.
-  const boundary = `[^\\p{L}\\p{N}]|[${unspacedScript}]`;
+  // A character that isn't part of a word (a letter, combining mark or
+  // number), or is in an unspaced script.
+  const boundary = `[^\\p{L}\\p{M}\\p{N}]|[${unspacedScript}]`;
   // Use a prefix rather than lookbehind, which Safari < 16.4 doesn't support.
   const before = new RegExp(`^[${unspacedScript}]`, "u").test(trimmedPhrase)
     ? ""
