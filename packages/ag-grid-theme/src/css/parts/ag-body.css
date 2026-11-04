@@ -54,7 +54,7 @@
   background-color: var(--ag-selected-row-border-color);
   background-image: none;
   height: var(--salt-size-fixed-100);
-  top: -1px;
+  top: calc(-1 * var(--salt-size-fixed-100));
 }
 
 /*
@@ -136,7 +136,7 @@
     and left cell text top aligned. Fall back to the cell content height (row height minus row border) so text is
     vertically centered.
   */
-  line-height: calc(var(--ag-line-height, calc(var(--ag-row-height) - var(--ag-row-border-width, 1px) + 1px)) - 1px);
+  line-height: calc(var(--ag-line-height, calc(var(--ag-row-height) - var(--ag-row-border-width, var(--salt-size-fixed-100)) + var(--salt-size-fixed-100))) - var(--salt-size-fixed-100));
   padding-left: var(--salt-spacing-100);
   padding-right: var(--salt-spacing-100);
 }
@@ -199,7 +199,7 @@
 .ag-theme-salt-compact-dark .editable-cell,
 .ag-theme-salt-compact-dark .editable-numeric-cell {
   outline: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-editable-borderColor);
-  outline-offset: -1px;
+  outline-offset: calc(-1 * var(--salt-size-fixed-100));
 }
 
 .ag-theme-salt-light .ag-cell.error-cell,
@@ -473,7 +473,7 @@
 .ag-theme-salt-compact-light .ag-ltr .ag-cell-range-single-cell.ag-cell-range-handle,
 .ag-theme-salt-compact-dark .ag-ltr .ag-cell-range-single-cell.ag-cell-range-handle {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
-  outline-offset: -2px;
+  outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
   border-color: transparent;
 }
 
@@ -501,7 +501,8 @@
   background-origin: border-box;
   background-position: left top;
   background-repeat: no-repeat;
-  background-size: calc(var(--salt-size-adornment) + 4px) calc(var(--salt-size-adornment) + 4px);
+  /* Figma "Edit flag": --salt-size-adornment plus 2px */
+  background-size: calc(var(--salt-size-adornment) + var(--salt-size-fixed-200)) calc(var(--salt-size-adornment) + var(--salt-size-fixed-200));
   /* Follow the cell's corners */
   border-radius: inherit;
   content: "";

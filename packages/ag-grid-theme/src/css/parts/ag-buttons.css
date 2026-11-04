@@ -90,6 +90,89 @@
   border: 0;
 }
 
+/*
+  AG Grid draws keyboard focus as a 1px box in ::after for these elements. Draw it as the Salt focus ring instead,
+  around the whole element.
+*/
+.ag-theme-salt-light .ag-advanced-filter-builder-item-button:focus-visible::after,
+.ag-theme-salt-dark .ag-advanced-filter-builder-item-button:focus-visible::after,
+.ag-theme-salt-compact-light .ag-advanced-filter-builder-item-button:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-advanced-filter-builder-item-button:focus-visible::after,
+.ag-theme-salt-light .ag-advanced-filter-builder-pill:focus-visible::after,
+.ag-theme-salt-dark .ag-advanced-filter-builder-pill:focus-visible::after,
+.ag-theme-salt-compact-light .ag-advanced-filter-builder-pill:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-advanced-filter-builder-pill:focus-visible::after,
+.ag-theme-salt-light .ag-advanced-filter-header-cell:focus-visible::after,
+.ag-theme-salt-dark .ag-advanced-filter-header-cell:focus-visible::after,
+.ag-theme-salt-compact-light .ag-advanced-filter-header-cell:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-advanced-filter-header-cell:focus-visible::after,
+.ag-theme-salt-light .ag-autocomplete-virtual-list-item:focus-visible::after,
+.ag-theme-salt-dark .ag-autocomplete-virtual-list-item:focus-visible::after,
+.ag-theme-salt-compact-light .ag-autocomplete-virtual-list-item:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-autocomplete-virtual-list-item:focus-visible::after,
+.ag-theme-salt-light .ag-charts-data-group-title-bar:focus-visible::after,
+.ag-theme-salt-dark .ag-charts-data-group-title-bar:focus-visible::after,
+.ag-theme-salt-compact-light .ag-charts-data-group-title-bar:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-charts-data-group-title-bar:focus-visible::after,
+.ag-theme-salt-light .ag-charts-format-top-level-group-title-bar:focus-visible::after,
+.ag-theme-salt-dark .ag-charts-format-top-level-group-title-bar:focus-visible::after,
+.ag-theme-salt-compact-light .ag-charts-format-top-level-group-title-bar:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-charts-format-top-level-group-title-bar:focus-visible::after,
+.ag-theme-salt-light .ag-column-select-header-icon:focus-visible::after,
+.ag-theme-salt-dark .ag-column-select-header-icon:focus-visible::after,
+.ag-theme-salt-compact-light .ag-column-select-header-icon:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-column-select-header-icon:focus-visible::after,
+.ag-theme-salt-light .ag-column-select-virtual-list-item:focus-visible::after,
+.ag-theme-salt-dark .ag-column-select-virtual-list-item:focus-visible::after,
+.ag-theme-salt-compact-light .ag-column-select-virtual-list-item:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-column-select-virtual-list-item:focus-visible::after,
+.ag-theme-salt-light .ag-filter-toolpanel-header:focus-visible::after,
+.ag-theme-salt-dark .ag-filter-toolpanel-header:focus-visible::after,
+.ag-theme-salt-compact-light .ag-filter-toolpanel-header:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-filter-toolpanel-header:focus-visible::after,
+.ag-theme-salt-light .ag-filter-virtual-list-item:focus-visible::after,
+.ag-theme-salt-dark .ag-filter-virtual-list-item:focus-visible::after,
+.ag-theme-salt-compact-light .ag-filter-virtual-list-item:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-filter-virtual-list-item:focus-visible::after,
+.ag-theme-salt-light .ag-multi-filter-group-title-bar:focus-visible::after,
+.ag-theme-salt-dark .ag-multi-filter-group-title-bar:focus-visible::after,
+.ag-theme-salt-compact-light .ag-multi-filter-group-title-bar:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-multi-filter-group-title-bar:focus-visible::after,
+.ag-theme-salt-light .ag-rich-select-virtual-list-item:focus-visible::after,
+.ag-theme-salt-dark .ag-rich-select-virtual-list-item:focus-visible::after,
+.ag-theme-salt-compact-light .ag-rich-select-virtual-list-item:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-rich-select-virtual-list-item:focus-visible::after,
+.ag-theme-salt-light .ag-select-agg-func-virtual-list-item:focus-visible::after,
+.ag-theme-salt-dark .ag-select-agg-func-virtual-list-item:focus-visible::after,
+.ag-theme-salt-compact-light .ag-select-agg-func-virtual-list-item:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-select-agg-func-virtual-list-item:focus-visible::after,
+.ag-theme-salt-light .ag-tab:focus-visible::after,
+.ag-theme-salt-dark .ag-tab:focus-visible::after,
+.ag-theme-salt-compact-light .ag-tab:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-tab:focus-visible::after,
+.ag-theme-salt-light .ag-virtual-list-item:focus-visible::after,
+.ag-theme-salt-dark .ag-virtual-list-item:focus-visible::after,
+.ag-theme-salt-compact-light .ag-virtual-list-item:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-virtual-list-item:focus-visible::after,
+.ag-theme-salt-light .ag-filter-toolpanel-group-title-bar:focus-visible::after,
+.ag-theme-salt-dark .ag-filter-toolpanel-group-title-bar:focus-visible::after,
+.ag-theme-salt-compact-light .ag-filter-toolpanel-group-title-bar:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-filter-toolpanel-group-title-bar:focus-visible::after {
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
+
+/* Column group header cells use the Salt focus ring, like column header cells */
+.ag-theme-salt-light .ag-header-group-cell:focus-visible::after,
+.ag-theme-salt-dark .ag-header-group-cell:focus-visible::after,
+.ag-theme-salt-compact-light .ag-header-group-cell:focus-visible::after,
+.ag-theme-salt-compact-dark .ag-header-group-cell:focus-visible::after {
+  content: none;
+}
+
 .ag-theme-salt-light button[class^="ag-"]:focus,
 .ag-theme-salt-dark button[class^="ag-"]:focus,
 .ag-theme-salt-compact-light button[class^="ag-"]:focus,

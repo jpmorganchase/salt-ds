@@ -39,9 +39,13 @@
 .ag-theme-salt-light .ag-header-cell:focus-visible,
 .ag-theme-salt-dark .ag-header-cell:focus-visible,
 .ag-theme-salt-compact-light .ag-header-cell:focus-visible,
-.ag-theme-salt-compact-dark .ag-header-cell:focus-visible {
+.ag-theme-salt-compact-dark .ag-header-cell:focus-visible,
+.ag-theme-salt-light .ag-header-group-cell:focus-visible,
+.ag-theme-salt-dark .ag-header-group-cell:focus-visible,
+.ag-theme-salt-compact-light .ag-header-group-cell:focus-visible,
+.ag-theme-salt-compact-dark .ag-header-group-cell:focus-visible {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
-  outline-offset: -2px;
+  outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
   border-width: 0;
 }
 
@@ -433,7 +437,7 @@
 .ag-theme-salt-compact-dark .ag-ltr .ag-floating-filter-button .ag-button:focus {
   border: none;
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
-  outline-offset: 2px;
+  outline-offset: var(--salt-focused-outlineOffset);
 }
 
 .ag-theme-salt-light .ag-floating-filter input[class^="ag-"][type="number"],
@@ -449,7 +453,7 @@
 .ag-theme-salt-compact-light .ag-floating-filter input[class^="ag-"][type="date"],
 .ag-theme-salt-compact-dark .ag-floating-filter input[class^="ag-"][type="date"] {
   /* Avoid floating filter's input clips focus ring */
-  height: calc(var(--salt-size-base) + var(--salt-spacing-100) - 6px);
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100) - 2 * (var(--salt-focused-outlineWidth) + var(--salt-size-fixed-100)));
   /* Give internal <input> space for the outline */
   margin-inline: var(--salt-spacing-50);
   /* Together with margin, matching Salt Input padding */

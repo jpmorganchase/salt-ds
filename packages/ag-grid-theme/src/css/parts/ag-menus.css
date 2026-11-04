@@ -32,6 +32,13 @@
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-borderColor);
   border-radius: var(--salt-palette-corner, 0);
 }
+.ag-theme-salt-light .ag-dialog .ag-panel-title-bar,
+.ag-theme-salt-dark .ag-dialog .ag-panel-title-bar,
+.ag-theme-salt-compact-light .ag-dialog .ag-panel-title-bar,
+.ag-theme-salt-compact-dark .ag-dialog .ag-panel-title-bar {
+  color: var(--salt-content-primary-foreground);
+  font-weight: var(--salt-text-fontWeight-bolder);
+}
 .ag-theme-salt-light .ag-menu-header,
 .ag-theme-salt-dark .ag-menu-header,
 .ag-theme-salt-compact-light .ag-menu-header,
