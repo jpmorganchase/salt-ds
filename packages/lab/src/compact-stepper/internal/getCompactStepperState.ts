@@ -21,7 +21,8 @@ export interface CompactStepperStep {
 export interface CompactStepperState {
   steps: CompactStepperStep[];
   /**
-   * -1 when there are no steps.
+   * The first active or locked step, or the last step when every step is completed.
+   * -1 otherwise.
    */
   currentIndex: number;
   current?: CompactStepperStep;
@@ -29,28 +30,29 @@ export interface CompactStepperState {
    * From 0 to 100.
    */
   progress: number;
-  activeCount: number;
+  /**
+   * Number of steps that are active or locked.
+   */
+  currentCount: number;
   hasNonStepChild: boolean;
 }
 
+function isCurrentStep(step: CompactStepperStep) {
+  return step.stage === "active" || step.stage === "locked";
+}
+
+function isFinishedProcess(steps: CompactStepperStep[]) {
+  return steps.length > 0 && steps.every((step) => step.stage === "completed");
+}
+
 function getCurrentIndex(steps: CompactStepperStep[]) {
-  if (steps.length === 0) {
-    return -1;
+  const currentIndex = steps.findIndex(isCurrentStep);
+  if (currentIndex !== -1) {
+    return currentIndex;
   }
 
-  const activeIndex = steps.findIndex((step) => step.stage === "active");
-  if (activeIndex !== -1) {
-    return activeIndex;
-  }
-
-  const notCompletedIndex = steps.findIndex(
-    (step) => step.stage !== "completed",
-  );
-  if (notCompletedIndex !== -1) {
-    return notCompletedIndex;
-  }
-
-  return steps.length - 1;
+  // A finished process shows its last step.
+  return isFinishedProcess(steps) ? steps.length - 1 : -1;
 }
 
 function isFragmentElement(
@@ -95,14 +97,19 @@ export function getCompactStepperState(
   });
 
   const currentIndex = getCurrentIndex(steps);
+  const isFinished = isFinishedProcess(steps);
 
   return {
     steps,
     currentIndex,
     current: currentIndex === -1 ? undefined : steps[currentIndex],
-    progress:
-      currentIndex === -1 ? 0 : ((currentIndex + 1) / steps.length) * 100,
-    activeCount: steps.filter((step) => step.stage === "active").length,
+    // Only completed steps fill the bar; the current step isn't completed yet.
+    progress: isFinished
+      ? 100
+      : currentIndex === -1
+        ? 0
+        : (currentIndex / steps.length) * 100,
+    currentCount: steps.filter(isCurrentStep).length,
     hasNonStepChild: flattened.length > elements.length,
   };
 }
