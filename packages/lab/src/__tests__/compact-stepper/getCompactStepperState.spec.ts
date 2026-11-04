@@ -16,10 +16,10 @@ describe("getCompactStepperState", () => {
         step({ label: "Four" }),
       ],
       "One",
-      25,
+      0,
     ],
     [
-      "the first step that isn't completed WHEN no step is active",
+      "the locked step",
       [
         step({ label: "One", stage: "completed" }),
         step({ label: "Two", stage: "locked" }),
@@ -27,7 +27,18 @@ describe("getCompactStepperState", () => {
         step({ label: "Four" }),
       ],
       "Two",
-      50,
+      25,
+    ],
+    [
+      "the last active step",
+      [
+        step({ label: "One", stage: "completed" }),
+        step({ label: "Two", stage: "completed" }),
+        step({ label: "Three", stage: "completed" }),
+        step({ label: "Four", stage: "active" }),
+      ],
+      "Four",
+      75,
     ],
     [
       "the last step WHEN every step is completed",
@@ -45,14 +56,39 @@ describe("getCompactStepperState", () => {
     expect(state.progress).toBe(progress);
   });
 
-  test("should use the first active step and count the active steps WHEN several are active", () => {
+  test.each<[string, ReactNode[]]>([
+    [
+      "only pending",
+      [
+        step({ label: "One" }),
+        step({ label: "Two" }),
+        step({ label: "Three" }),
+      ],
+    ],
+    [
+      "completed and pending",
+      [
+        step({ label: "One", stage: "completed" }),
+        step({ label: "Two" }),
+        step({ label: "Three" }),
+      ],
+    ],
+  ])("should have no current step WHEN steps are %s", (_, children) => {
+    const state = getCompactStepperState(children);
+
+    expect(state.currentIndex).toBe(-1);
+    expect(state.current).toBeUndefined();
+    expect(state.progress).toBe(0);
+  });
+
+  test("should use the first active or locked step and count them WHEN there are several", () => {
     const state = getCompactStepperState([
-      step({ label: "One", stage: "active" }),
+      step({ label: "One", stage: "locked" }),
       step({ label: "Two", stage: "active" }),
     ]);
 
     expect(state.current?.label).toBe("One");
-    expect(state.activeCount).toBe(2);
+    expect(state.currentCount).toBe(2);
   });
 
   test.each<[string, ReactNode]>([

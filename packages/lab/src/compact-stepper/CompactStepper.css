@@ -38,6 +38,26 @@
   overflow-wrap: anywhere;
 }
 
+/* Visually hidden but read by screen readers. */
+.saltCompactStepper-screenReaderOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Excluded when copying the visible text. */
+.saltCompactStepper-state {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
 .saltCompactStepper-icon {
   --saltIcon-margin: calc((var(--salt-text-lineHeight) - max(var(--salt-size-icon), 12px)) / 2) var(--salt-spacing-50) 0;
   vertical-align: top;

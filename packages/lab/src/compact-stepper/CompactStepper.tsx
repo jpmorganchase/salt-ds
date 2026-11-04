@@ -1,4 +1,10 @@
-import { makePrefixer, Text, useIcon } from "@salt-ds/core";
+import {
+  makePrefixer,
+  type StepStage,
+  type StepStatus,
+  Text,
+  useIcon,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -11,10 +17,7 @@ import {
 } from "react";
 
 import compactStepperCss from "./CompactStepper.css";
-import {
-  type CompactStepperStep,
-  getCompactStepperState,
-} from "./internal/getCompactStepperState";
+import { getCompactStepperState } from "./internal/getCompactStepperState";
 
 export interface CompactStepperProps extends ComponentPropsWithoutRef<"div"> {
   /**
@@ -25,20 +28,18 @@ export interface CompactStepperProps extends ComponentPropsWithoutRef<"div"> {
 
 const withBaseName = makePrefixer("saltCompactStepper");
 
-function useCompactStepperIcon(step?: CompactStepperStep) {
+type StepState = StepStatus | StepStage;
+
+function useCompactStepperIcon(state?: StepState) {
   const { ErrorIcon, WarningIcon, LockedIcon } = useIcon();
 
-  if (!step) {
-    return undefined;
-  }
-
-  const stateToIcon: Partial<Record<string, ElementType>> = {
+  const stateToIcon: Partial<Record<StepState, ElementType>> = {
     error: ErrorIcon,
     warning: WarningIcon,
     locked: LockedIcon,
   };
 
-  return stateToIcon[step.status || step.stage];
+  return state && stateToIcon[state];
 }
 
 export const CompactStepper = forwardRef<HTMLDivElement, CompactStepperProps>(
@@ -55,12 +56,14 @@ export const CompactStepper = forwardRef<HTMLDivElement, CompactStepperProps>(
       currentIndex,
       current,
       progress,
-      activeCount,
+      currentCount,
       hasNonStepChild,
     } = getCompactStepperState(children);
     const totalSteps = steps.length;
 
-    const Icon = useCompactStepperIcon(current);
+    // Status takes precedence over stage, as in Stepper.
+    const state = current?.status ?? current?.stage;
+    const Icon = useCompactStepperIcon(state);
 
     useEffect(() => {
       if (process.env.NODE_ENV !== "production") {
@@ -69,9 +72,9 @@ export const CompactStepper = forwardRef<HTMLDivElement, CompactStepperProps>(
             "<CompactStepper /> should contain at least one <Step />.",
           );
         }
-        if (activeCount > 1) {
+        if (currentCount > 1) {
           console.warn(
-            '<CompactStepper /> should contain only one <Step stage="active" />. Using the first one.',
+            '<CompactStepper /> should contain only one <Step stage="active" /> or <Step stage="locked" />. Using the first one.',
           );
         }
         if (hasNonStepChild) {
@@ -80,10 +83,11 @@ export const CompactStepper = forwardRef<HTMLDivElement, CompactStepperProps>(
           );
         }
       }
-    }, [totalSteps, activeCount, hasNonStepChild]);
+    }, [totalSteps, currentCount, hasNonStepChild]);
 
     return (
       <div
+        role="group"
         className={clsx(
           withBaseName(),
           current && withBaseName(`stage-${current.stage}`),
@@ -106,7 +110,13 @@ export const CompactStepper = forwardRef<HTMLDivElement, CompactStepperProps>(
           <Text className={withBaseName("text")}>
             {`Step ${currentIndex + 1} of ${totalSteps}:`}
             {Icon ? (
-              <Icon className={withBaseName("icon")} size={1} aria-hidden />
+              <>
+                {/* The icon margin sets the visible gap; this keeps a word break for assistive technology. */}
+                <span className={withBaseName("screenReaderOnly")}>
+                  {"\u00A0"}
+                </span>
+                <Icon className={withBaseName("icon")} size={1} aria-hidden />
+              </>
             ) : (
               " "
             )}
@@ -118,13 +128,13 @@ export const CompactStepper = forwardRef<HTMLDivElement, CompactStepperProps>(
             >
               {current.label}
             </Text>
-            {Icon && (
-              <>
-                {" "}
-                <span className="salt-visuallyHidden">
-                  {current.status || current.stage}
-                </span>
-              </>
+            {state && (
+              <span
+                className={clsx(
+                  withBaseName("screenReaderOnly"),
+                  withBaseName("state"),
+                )}
+              >{`, ${state}`}</span>
             )}
           </Text>
         )}
