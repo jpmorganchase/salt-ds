@@ -118,11 +118,23 @@ function isBreakpointProp<T>(
   return typeof value === "object" && !Array.isArray(value);
 }
 
+let warnedMissingXs = false;
+
 export function resolveResponsiveValue<Value>(
   value: ResponsiveProp<Value>,
   matchedBreakpoints: (keyof Breakpoints)[],
 ) {
   if (value && isBreakpointProp(value)) {
+    if (
+      process.env.NODE_ENV !== "production" &&
+      !warnedMissingXs &&
+      value.xs == null
+    ) {
+      console.warn(
+        `A responsive prop value has no \`xs\` value: ${JSON.stringify(value)}. Below its smallest breakpoint, the prop uses the component's default or has no value. Add an \`xs\` value to set it for every screen size.`,
+      );
+      warnedMissingXs = true;
+    }
     for (const breakpoint of matchedBreakpoints) {
       if (value[breakpoint] != null) {
         return value[breakpoint];

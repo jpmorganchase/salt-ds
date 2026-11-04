@@ -20,12 +20,10 @@ interface BreakpointProviderProps {
 
 export function BreakpointProvider(props: BreakpointProviderProps) {
   const { children, matchedBreakpoints } = props;
+  // A stable value, so consumers only re-render when a breakpoint changes.
+  const value = useMemo(() => ({ matchedBreakpoints }), [matchedBreakpoints]);
 
-  return (
-    <Context.Provider value={{ matchedBreakpoints }}>
-      {children}
-    </Context.Provider>
-  );
+  return <Context.Provider value={value}>{children}</Context.Provider>;
 }
 
 export function useMatchedBreakpoints(breakpoints: Breakpoints): Breakpoint[] {
@@ -37,9 +35,15 @@ export function useMatchedBreakpoints(breakpoints: Breakpoints): Breakpoint[] {
   const supportsMatchMedia =
     typeof window !== "undefined" && typeof window.matchMedia === "function";
 
+  // `min-width: 0px` always matches, so the smallest breakpoint is matched from
+  // the first render, including on the server.
   const [matchedBreakpoints, setMatchedBreakpoints] = useState<
     Partial<Record<Breakpoint, boolean>>
-  >(Object.fromEntries(entries.map(([bp]) => [bp as Breakpoint, false])));
+  >(() =>
+    Object.fromEntries(
+      entries.map(([bp, width]) => [bp as Breakpoint, width <= 0]),
+    ),
+  );
 
   useIsomorphicLayoutEffect(() => {
     if (!supportsMatchMedia) {
@@ -55,12 +59,9 @@ export function useMatchedBreakpoints(breakpoints: Breakpoints): Breakpoint[] {
       return {
         mq,
         handler: () => {
-          setMatchedBreakpoints((prev) => {
-            return {
-              ...prev,
-              [bp]: mq.matches,
-            };
-          });
+          setMatchedBreakpoints((prev) =>
+            prev[bp] === mq.matches ? prev : { ...prev, [bp]: mq.matches },
+          );
         },
       };
     });
@@ -77,9 +78,13 @@ export function useMatchedBreakpoints(breakpoints: Breakpoints): Breakpoint[] {
     };
   }, [supportsMatchMedia, entries]);
 
-  return Object.keys(matchedBreakpoints).filter(
-    (bp) => matchedBreakpoints[bp as Breakpoint],
-  ) as Breakpoint[];
+  return useMemo(
+    () =>
+      Object.keys(matchedBreakpoints).filter(
+        (bp) => matchedBreakpoints[bp as Breakpoint],
+      ) as Breakpoint[],
+    [matchedBreakpoints],
+  );
 }
 
 export function useBreakpoint(): BreakpointContext & {
