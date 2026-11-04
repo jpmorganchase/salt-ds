@@ -1,7 +1,11 @@
 import { computeAccessibleName } from "dom-accessibility-api";
 import type { MutableRefObject } from "react";
 import { useCallback } from "react";
-import { useIsomorphicLayoutEffect, usePrevious } from "../../../utils";
+import {
+  useEventCallback,
+  useIsomorphicLayoutEffect,
+  usePrevious,
+} from "../../../utils";
 import type { TabsContextValue } from "../contexts/TabsContext";
 
 function hasLostDocumentFocus(doc: Document) {
@@ -20,6 +24,7 @@ function getTabAccessibleName(element: HTMLElement) {
 
 interface UseTabSelectionFocusArgs {
   announce: (message: string, timeout?: number) => void;
+  canRecoverRemovalFocus: () => boolean;
   focusElementWithRetry: (
     getElement: () => HTMLElement | null | undefined,
   ) => void;
@@ -34,6 +39,7 @@ interface UseTabSelectionFocusArgs {
 
 export function useTabSelectionFocus({
   announce,
+  canRecoverRemovalFocus,
   focusElementWithRetry,
   getRenderedTab,
   getSelectedTabElement,
@@ -49,17 +55,24 @@ export function useTabSelectionFocus({
     focusElementWithRetry(getSelectedTabElement);
   }, [focusElementWithRetry, getSelectedTabElement]);
 
+  // Read through a stable callback so registry updates (e.g. a tab being
+  // removed) don't re-run the effect below and pull focus back to the active
+  // overflow tab, which would override removal focus recovery.
+  const getRenderedTrigger = useEventCallback(
+    (value: string) => getRenderedTab(value)?.trigger,
+  );
+
   useIsomorphicLayoutEffect(() => {
     if (!menuOpen || !resolvedOverflowActiveValue) {
       return;
     }
 
-    focusElementWithRetry(
-      () => getRenderedTab(resolvedOverflowActiveValue)?.trigger,
+    focusElementWithRetry(() =>
+      getRenderedTrigger(resolvedOverflowActiveValue),
     );
   }, [
     focusElementWithRetry,
-    getRenderedTab,
+    getRenderedTrigger,
     menuOpen,
     resolvedOverflowActiveValue,
   ]);
@@ -79,8 +92,25 @@ export function useTabSelectionFocus({
       return;
     }
 
+    // Replacing a removed selection doesn't imply that the tabs lost focus.
+    // Preserve ordinary selection focus behavior while leaving externally
+    // removed tabs alone when focus was already on the body.
+    if (
+      !getRenderedTrigger(previousSelected)?.isConnected &&
+      !canRecoverRemovalFocus()
+    ) {
+      return;
+    }
+
     focusSelectedTab();
-  }, [focusSelectedTab, previousSelected, selected, targetWindow]);
+  }, [
+    canRecoverRemovalFocus,
+    focusSelectedTab,
+    getRenderedTrigger,
+    previousSelected,
+    selected,
+    targetWindow,
+  ]);
 
   useIsomorphicLayoutEffect(() => {
     const selectedFromOverflow = selectionFromOverflowValueRef.current;

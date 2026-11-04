@@ -14,7 +14,6 @@ import {
   type ComponentPropsWithoutRef,
   type Dispatch,
   forwardRef,
-  type KeyboardEvent,
   type Ref,
   type SetStateAction,
   useEffect,
@@ -122,29 +121,6 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
     const handleFocus = () => {
       if (overflowId) {
         activeTab.current = { value: overflowId, id: overflowId };
-      }
-    };
-
-    const handleFloatingKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-      if (event.key !== "Tab") {
-        return;
-      }
-
-      if (event.shiftKey) {
-        event.preventDefault();
-        setOpen(false);
-        const scheduleFocus = targetWindow?.requestAnimationFrame;
-        if (scheduleFocus) {
-          scheduleFocus(() =>
-            overflowRef.current?.focus({ preventScroll: true }),
-          );
-          return;
-        }
-
-        queueMicrotask(() =>
-          overflowRef.current?.focus({ preventScroll: true }),
-        );
-        return;
       }
     };
 
@@ -260,7 +236,6 @@ export const TabOverflowList = forwardRef<HTMLDivElement, TabOverflowListProps>(
           ref={handleListRef}
           {...getFloatingProps({
             id: overlayId,
-            onKeyDown: handleFloatingKeyDown,
           })}
           focusManagerProps={
             context
