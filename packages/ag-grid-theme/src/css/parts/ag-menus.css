@@ -24,6 +24,14 @@
 .ag-theme-salt-compact-dark .ag-popup-editor {
   border-radius: var(--salt-palette-corner, 0);
 }
+/* Dialogs (e.g. Choose Columns) match Salt's Dialog */
+.ag-theme-salt-light .ag-dialog,
+.ag-theme-salt-dark .ag-dialog,
+.ag-theme-salt-compact-light .ag-dialog,
+.ag-theme-salt-compact-dark .ag-dialog {
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-borderColor);
+  border-radius: var(--salt-palette-corner, 0);
+}
 .ag-theme-salt-light .ag-menu-header,
 .ag-theme-salt-dark .ag-menu-header,
 .ag-theme-salt-compact-light .ag-menu-header,

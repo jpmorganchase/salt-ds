@@ -1,26 +1,39 @@
 /* BUTTON */
+/* Matching Salt's Button: neutral, appearance="transparent" */
 .ag-theme-salt-light .ag-standard-button,
 .ag-theme-salt-dark .ag-standard-button,
 .ag-theme-salt-compact-light .ag-standard-button,
 .ag-theme-salt-compact-dark .ag-standard-button {
   background: var(--salt-actionable-subtle-background);
-  border: 0;
-  color: var(--salt-actionable-subtle-foreground);
-  font-size: var(--salt-text-fontSize);
-  font-weight: 600;
-  height: var(--salt-size-base);
-  padding: 0 var(--salt-spacing-100);
-  text-transform: uppercase;
-  /* Matching Salt Button */
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-actionable-subtle-borderColor);
   border-radius: var(--salt-palette-corner-weak, 0);
+  color: var(--salt-actionable-subtle-foreground);
+  font-family: var(--salt-text-action-fontFamily);
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-action-fontWeight);
+  letter-spacing: var(--salt-text-action-letterSpacing);
+  line-height: var(--salt-text-lineHeight);
+  text-transform: var(--salt-text-action-textTransform);
+  height: var(--salt-size-base);
+  padding: 0 calc(var(--salt-spacing-100) - var(--salt-size-fixed-100));
 }
 
 .ag-theme-salt-light .ag-standard-button:hover,
 .ag-theme-salt-dark .ag-standard-button:hover,
 .ag-theme-salt-compact-light .ag-standard-button:hover,
 .ag-theme-salt-compact-dark .ag-standard-button:hover {
-  background-color: var(--salt-actionable-subtle-background-hover);
+  background: var(--salt-actionable-subtle-background-hover);
+  border-color: var(--salt-actionable-subtle-borderColor-hover);
   color: var(--salt-actionable-subtle-foreground-hover);
+}
+
+.ag-theme-salt-light .ag-standard-button:active,
+.ag-theme-salt-dark .ag-standard-button:active,
+.ag-theme-salt-compact-light .ag-standard-button:active,
+.ag-theme-salt-compact-dark .ag-standard-button:active {
+  background: var(--salt-actionable-subtle-background-active);
+  border-color: var(--salt-actionable-subtle-borderColor-active);
+  color: var(--salt-actionable-subtle-foreground-active);
 }
 
 .ag-theme-salt-light .ag-ltr .ag-filter-apply-panel-button,
@@ -30,6 +43,7 @@
   margin-left: var(--salt-spacing-100);
 }
 
+/* The apply button matches Salt's Button: accented, appearance="solid" */
 .ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
 .ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
 .ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
@@ -39,6 +53,7 @@
 .ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"],
 .ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"] {
   background: var(--salt-actionable-accented-bold-background);
+  border-color: var(--salt-actionable-accented-bold-borderColor);
   color: var(--salt-actionable-accented-bold-foreground);
 }
 
@@ -51,7 +66,21 @@
 .ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover,
 .ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover {
   background: var(--salt-actionable-accented-bold-background-hover);
+  border-color: var(--salt-actionable-accented-bold-borderColor-hover);
   color: var(--salt-actionable-accented-bold-foreground-hover);
+}
+
+.ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:active,
+.ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:active,
+.ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:active,
+.ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:active,
+.ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:active,
+.ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:active,
+.ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:active,
+.ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:active {
+  background: var(--salt-actionable-accented-bold-background-active);
+  border-color: var(--salt-actionable-accented-bold-borderColor-active);
+  color: var(--salt-actionable-accented-bold-foreground-active);
 }
 
 .ag-theme-salt-light .ag-keyboard-focus .ag-header-cell:focus::after,
@@ -94,6 +123,28 @@
   margin-top: var(--salt-spacing-100);
 }
 
+/* Filter menu content lines up with the menu padding, with --salt-spacing-100 between rows and above the buttons */
+.ag-theme-salt-light .ag-filter-menu .ag-filter-body-wrapper,
+.ag-theme-salt-dark .ag-filter-menu .ag-filter-body-wrapper,
+.ag-theme-salt-compact-light .ag-filter-menu .ag-filter-body-wrapper,
+.ag-theme-salt-compact-dark .ag-filter-menu .ag-filter-body-wrapper {
+  margin-top: 0;
+}
+
+.ag-theme-salt-light .ag-filter-menu .ag-filter-apply-panel,
+.ag-theme-salt-dark .ag-filter-menu .ag-filter-apply-panel,
+.ag-theme-salt-compact-light .ag-filter-menu .ag-filter-apply-panel,
+.ag-theme-salt-compact-dark .ag-filter-menu .ag-filter-apply-panel {
+  padding: var(--salt-spacing-100) 0 0;
+}
+
+.ag-theme-salt-light .ag-filter .ag-select:not(.ag-cell-editor),
+.ag-theme-salt-dark .ag-filter .ag-select:not(.ag-cell-editor),
+.ag-theme-salt-compact-light .ag-filter .ag-select:not(.ag-cell-editor),
+.ag-theme-salt-compact-dark .ag-filter .ag-select:not(.ag-cell-editor) {
+  min-height: var(--salt-size-base);
+}
+
 .ag-theme-salt-light .ag-simple-filter-body-wrapper > *,
 .ag-theme-salt-dark .ag-simple-filter-body-wrapper > *,
 .ag-theme-salt-compact-light .ag-simple-filter-body-wrapper > *,
@@ -101,13 +152,20 @@
   margin-bottom: var(--salt-spacing-100);
 }
 
+.ag-theme-salt-light .ag-simple-filter-body-wrapper > :last-child,
+.ag-theme-salt-dark .ag-simple-filter-body-wrapper > :last-child,
+.ag-theme-salt-compact-light .ag-simple-filter-body-wrapper > :last-child,
+.ag-theme-salt-compact-dark .ag-simple-filter-body-wrapper > :last-child {
+  margin-bottom: 0;
+}
+
 .ag-theme-salt-light .ag-mini-filter,
 .ag-theme-salt-dark .ag-mini-filter,
 .ag-theme-salt-compact-light .ag-mini-filter,
 .ag-theme-salt-compact-dark .ag-mini-filter {
-  margin: 0;
-  padding-left: var(--salt-spacing-50);
-  padding-right: var(--salt-spacing-50);
+  /* Line the search input up with the filter list and buttons, with a gap before the list as in Figma */
+  margin: 0 0 var(--salt-spacing-100);
+  padding: 0;
 }
 
 .ag-theme-salt-light .ag-set-filter-item,
