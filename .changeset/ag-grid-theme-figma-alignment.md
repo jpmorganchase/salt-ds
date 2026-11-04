@@ -30,3 +30,6 @@ Fixed AG Grid theme styling to align with the Salt Data Grid Figma designs.
 - The pagination panel no longer has a top border, uses `--salt-content-secondary-foreground` with bolder numbers, `--salt-spacing-300` between groups, and transparent buttons around the paging icons.
 - Column drop chips now use `--salt-container-secondary-background` with a border, shadow and transparent remove button, instead of the bold actionable style.
 - Side bar tabs, paging buttons, column drop chips and the column select header now show the Salt focus ring instead of the AG Grid focus box.
+- Dialogs, such as Choose Columns, now match Salt's `Dialog`, with `--salt-palette-corner` and `--salt-container-borderColor`.
+- Filter menu content now lines up with the menu padding, with `--salt-spacing-100` between rows and above the buttons.
+- Buttons now use the same tokens as Salt's `Button` (`--salt-text-action-*`, and the actionable subtle and accented bold colors including borders and active states), instead of hard-coded font weight and text transform.
