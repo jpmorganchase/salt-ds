@@ -591,7 +591,7 @@ CellValidationInRangeSelection.play = async ({ canvasElement }) => {
 };
 
 // AG Grid's own pagination panel. The Pagination example uses Salt components instead, so this covers the theme's paging panel styles.
-export const NativePagination: StoryObj<typeof AgGridReact> = () => {
+export const NativePagination = () => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
@@ -609,7 +609,7 @@ export const NativePagination: StoryObj<typeof AgGridReact> = () => {
 };
 
 // Grouped columns show as chips in both the row group panel and the Row Groups drop zone of the columns tool panel.
-export const ColumnDropChips: StoryObj<typeof AgGridReact> = () => {
+export const ColumnDropChips = () => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
