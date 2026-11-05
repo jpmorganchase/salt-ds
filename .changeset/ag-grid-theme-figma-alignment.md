@@ -37,4 +37,4 @@ Fixed AG Grid theme styling to align with the Salt Data Grid Figma designs.
 - The filters tool panel now matches the Figma "Filters panel": a bordered search input, `--salt-size-base` group headers with a bolder title and a chevron indicator, and filters indented to the group title.
 - Dialog titles now use `--salt-content-primary-foreground` and `--salt-text-fontWeight-bolder`.
 - The editable cell corner flag is now `--salt-size-adornment`, and focus ring offsets use Salt tokens instead of fixed pixel values.
-- Side-by-side editable cells now have a 1px gap between them, matching the row border between stacked editable cells. The editable border, focus ring and background stay inside the gap, and the pinned column separator takes its place on the last left-pinned column.
+- Side-by-side editable cells now have a 1px gap between them, matching the row border between stacked editable cells. The editable border, focus ring and background stay inside the gap, and the pinned column separator takes its place on the last left-pinned column. Range selection backgrounds cover the gap, so a range still reads as one area.

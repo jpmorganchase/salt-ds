@@ -542,6 +542,18 @@
   border-right-color: var(--salt-separable-secondary-borderColor);
 }
 
+/* Range selection backgrounds cover the gap, so the range reads as one area, like the Figma "Cell selection overlay" */
+.ag-theme-salt-light .ag-ltr .ag-row .ag-cell.editable-cell.ag-cell-range-selected:not(.ag-cell-focus),
+.ag-theme-salt-light .ag-ltr .ag-row .ag-cell.editable-numeric-cell.ag-cell-range-selected:not(.ag-cell-focus),
+.ag-theme-salt-dark .ag-ltr .ag-row .ag-cell.editable-cell.ag-cell-range-selected:not(.ag-cell-focus),
+.ag-theme-salt-dark .ag-ltr .ag-row .ag-cell.editable-numeric-cell.ag-cell-range-selected:not(.ag-cell-focus),
+.ag-theme-salt-compact-light .ag-ltr .ag-row .ag-cell.editable-cell.ag-cell-range-selected:not(.ag-cell-focus),
+.ag-theme-salt-compact-light .ag-ltr .ag-row .ag-cell.editable-numeric-cell.ag-cell-range-selected:not(.ag-cell-focus),
+.ag-theme-salt-compact-dark .ag-ltr .ag-row .ag-cell.editable-cell.ag-cell-range-selected:not(.ag-cell-focus),
+.ag-theme-salt-compact-dark .ag-ltr .ag-row .ag-cell.editable-numeric-cell.ag-cell-range-selected:not(.ag-cell-focus) {
+  background-clip: border-box;
+}
+
 /* The focus ring of editable cells is drawn on ::before instead, so it stays inside the gap */
 .ag-theme-salt-light .ag-ltr .ag-cell-focus.editable-cell:not(.ag-cell-range-selected):focus-within,
 .ag-theme-salt-light .ag-ltr .ag-cell-focus.editable-numeric-cell:not(.ag-cell-range-selected):focus-within,
