@@ -1,6 +1,7 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Non-Null assertion make tests easier. */
 /** biome-ignore-all lint/suspicious/noNonNullAssertedOptionalChain: Non-Null assertion make tests easier. */
 import type { StoryObj } from "@storybook/react-vite";
+import type { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { expect, userEvent, within } from "storybook/test";
 import dataGridExampleColumns from "../src/dependencies/dataGridExampleColumns";
@@ -587,6 +588,100 @@ CellValidationInRangeSelection.play = async ({ canvasElement }) => {
     await expect(
       grid.querySelector('[row-index="6"] [col-id="color"]'),
     ).toHaveClass("error-cell", "ag-cell-range-top", "ag-cell-range-right");
+  }
+};
+
+// Pinned, editable, validation and custom colored cells side by side, so every kind of cell shows its gap.
+const cellGapColumns: ColDef[] = [
+  { headerName: "Currency", field: "currency", pinned: "left", width: 120 },
+  ...validationCellExampleColumns
+    .slice(0, 3)
+    .map((column) => ({ ...column, width: 120 })),
+  {
+    headerName: "Min",
+    field: "min",
+    type: "numericColumn",
+    cellClass: "numeric-cell",
+    cellStyle: { backgroundColor: "var(--salt-category-1-subtle-background)" },
+    width: 120,
+  },
+  {
+    headerName: "Max",
+    field: "max",
+    type: "numericColumn",
+    cellClass: "numeric-cell",
+    cellStyle: { backgroundColor: "var(--salt-category-2-subtle-background)" },
+    width: 120,
+  },
+];
+
+// Every cell leaves a 1px gap after it, matching the Figma column separator slot, and the pinned column separator fills the gap.
+export const CellGaps: StoryObj<typeof AgGridReact> = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={validationExampleData}
+        columnDefs={cellGapColumns}
+      />
+    </div>
+  );
+};
+CellGaps.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Do findAll here so this will also work in `side-by-side` mode
+  const grids = await canvas.findAllByRole("grid");
+
+  for (const grid of grids) {
+    // The focus ring of a read-only cell stays inside its gap
+    const readOnlyCell = grid.querySelector<HTMLElement>(
+      '[row-index="0"] [col-id="color"]',
+    )!;
+
+    await userEvent.click(readOnlyCell);
+
+    await expect(readOnlyCell).toHaveClass("ag-cell-focus", "warning-cell");
+  }
+};
+
+// The range selection background covers the gaps, so the range reads as one area.
+export const CellGapsInRangeSelection: StoryObj<typeof AgGridReact> = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={validationExampleData}
+        columnDefs={cellGapColumns}
+        cellSelection
+      />
+    </div>
+  );
+};
+CellGapsInRangeSelection.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Do findAll here so this will also work in `side-by-side` mode
+  const grids = await canvas.findAllByRole("grid");
+
+  for (const grid of grids) {
+    const anchorCell = grid.querySelector<HTMLElement>(
+      '[row-index="1"] [col-id="currency"]',
+    )!;
+
+    // Extend the range from the pinned column across every kind of cell
+    await userEvent.click(anchorCell);
+    await userEvent.keyboard(
+      "{Shift>}{ArrowDown}{ArrowDown}{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}{/Shift}",
+    );
+
+    await expect(
+      grid.querySelector('[row-index="3"] [col-id="max"]'),
+    ).toHaveClass("ag-cell-range-bottom", "ag-cell-range-right");
   }
 };
 
