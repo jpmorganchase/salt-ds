@@ -198,7 +198,7 @@
 .ag-theme-salt-compact-light .editable-numeric-cell,
 .ag-theme-salt-compact-dark .editable-cell,
 .ag-theme-salt-compact-dark .editable-numeric-cell {
-  /* Drawn inside the padding box, so it stays clear of the gap after editable cells */
+  /* Drawn inside the padding box, so it stays clear of the gap after the cell */
   box-shadow: inset 0 0 0 var(--salt-size-fixed-100) var(--salt-editable-borderColor);
 }
 
@@ -452,26 +452,10 @@
   margin-left: calc(var(--ag-row-group-indent-size) + var(--salt-spacing-100));
 }
 
-.ag-theme-salt-light .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
-.ag-theme-salt-dark .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
-.ag-theme-salt-compact-light .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
-.ag-theme-salt-compact-dark .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
-.ag-theme-salt-light .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
-.ag-theme-salt-dark .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
-.ag-theme-salt-compact-light .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
-.ag-theme-salt-compact-dark .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
 .ag-theme-salt-light .ag-ltr .ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
 .ag-theme-salt-dark .ag-ltr .ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
 .ag-theme-salt-compact-light .ag-ltr .ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
-.ag-theme-salt-compact-dark .ag-ltr .ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group,
-.ag-theme-salt-light .ag-ltr .ag-cell-range-single-cell,
-.ag-theme-salt-dark .ag-ltr .ag-cell-range-single-cell,
-.ag-theme-salt-compact-light .ag-ltr .ag-cell-range-single-cell,
-.ag-theme-salt-compact-dark .ag-ltr .ag-cell-range-single-cell,
-.ag-theme-salt-light .ag-ltr .ag-cell-range-single-cell.ag-cell-range-handle,
-.ag-theme-salt-dark .ag-ltr .ag-cell-range-single-cell.ag-cell-range-handle,
-.ag-theme-salt-compact-light .ag-ltr .ag-cell-range-single-cell.ag-cell-range-handle,
-.ag-theme-salt-compact-dark .ag-ltr .ag-cell-range-single-cell.ag-cell-range-handle {
+.ag-theme-salt-compact-dark .ag-ltr .ag-full-width-row.ag-row-focus:focus .ag-cell-wrapper.ag-row-group {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
   border-color: transparent;
@@ -515,99 +499,83 @@
 }
 
 /*
-  Leave a 1px gap after editable cells, matching the row border between stacked editable cells. The editable border,
-  focus ring and backgrounds stay inside the padding box, so this transparent border becomes the gap.
+  Leave a 1px gap after every cell, matching the row border between stacked cells and the Figma column separator slot.
+  Cell borders, focus rings and backgrounds stay inside the padding box, so this transparent border becomes the gap.
+  AG Grid sets the right border style of the last cell in a range, so those cells need a higher specificity.
 */
-.ag-theme-salt-light .ag-ltr .ag-row .ag-cell.editable-cell,
-.ag-theme-salt-light .ag-ltr .ag-row .ag-cell.editable-numeric-cell,
-.ag-theme-salt-dark .ag-ltr .ag-row .ag-cell.editable-cell,
-.ag-theme-salt-dark .ag-ltr .ag-row .ag-cell.editable-numeric-cell,
-.ag-theme-salt-compact-light .ag-ltr .ag-row .ag-cell.editable-cell,
-.ag-theme-salt-compact-light .ag-ltr .ag-row .ag-cell.editable-numeric-cell,
-.ag-theme-salt-compact-dark .ag-ltr .ag-row .ag-cell.editable-cell,
-.ag-theme-salt-compact-dark .ag-ltr .ag-row .ag-cell.editable-numeric-cell {
+.ag-theme-salt-light .ag-ltr .ag-root .ag-row .ag-cell,
+.ag-theme-salt-light .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-range-selected.ag-cell-range-right,
+.ag-theme-salt-dark .ag-ltr .ag-root .ag-row .ag-cell,
+.ag-theme-salt-dark .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-range-selected.ag-cell-range-right,
+.ag-theme-salt-compact-light .ag-ltr .ag-root .ag-row .ag-cell,
+.ag-theme-salt-compact-light .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-range-selected.ag-cell-range-right,
+.ag-theme-salt-compact-dark .ag-ltr .ag-root .ag-row .ag-cell,
+.ag-theme-salt-compact-dark .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-range-selected.ag-cell-range-right {
   border-right: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) transparent;
   background-clip: padding-box;
 }
 
+/* AG Grid colors the border of the cell being edited with !important, which would paint the gap */
+.ag-theme-salt-light .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-inline-editing,
+.ag-theme-salt-dark .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-inline-editing,
+.ag-theme-salt-compact-light .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-inline-editing,
+.ag-theme-salt-compact-dark .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-inline-editing {
+  border-right-color: transparent !important;
+}
+
 /* The pinned column separator takes the place of the gap */
-.ag-theme-salt-light .ag-ltr .ag-row .ag-cell.editable-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
-.ag-theme-salt-light .ag-ltr .ag-row .ag-cell.editable-numeric-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
-.ag-theme-salt-dark .ag-ltr .ag-row .ag-cell.editable-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
-.ag-theme-salt-dark .ag-ltr .ag-row .ag-cell.editable-numeric-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
-.ag-theme-salt-compact-light .ag-ltr .ag-row .ag-cell.editable-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
-.ag-theme-salt-compact-light .ag-ltr .ag-row .ag-cell.editable-numeric-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
-.ag-theme-salt-compact-dark .ag-ltr .ag-row .ag-cell.editable-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
-.ag-theme-salt-compact-dark .ag-ltr .ag-row .ag-cell.editable-numeric-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell) {
+.ag-theme-salt-light .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
+.ag-theme-salt-dark .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
+.ag-theme-salt-compact-light .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
+.ag-theme-salt-compact-dark .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell) {
   border-right-color: var(--salt-separable-secondary-borderColor);
 }
 
+.ag-theme-salt-light .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-inline-editing.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
+.ag-theme-salt-dark .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-inline-editing.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
+.ag-theme-salt-compact-light .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-inline-editing.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
+.ag-theme-salt-compact-dark .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-inline-editing.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell) {
+  border-right-color: var(--salt-separable-secondary-borderColor) !important;
+}
+
 /* Range selection backgrounds cover the gap, so the range reads as one area, like the Figma "Cell selection overlay" */
-.ag-theme-salt-light .ag-ltr .ag-row .ag-cell.editable-cell.ag-cell-range-selected:not(.ag-cell-focus),
-.ag-theme-salt-light .ag-ltr .ag-row .ag-cell.editable-numeric-cell.ag-cell-range-selected:not(.ag-cell-focus),
-.ag-theme-salt-dark .ag-ltr .ag-row .ag-cell.editable-cell.ag-cell-range-selected:not(.ag-cell-focus),
-.ag-theme-salt-dark .ag-ltr .ag-row .ag-cell.editable-numeric-cell.ag-cell-range-selected:not(.ag-cell-focus),
-.ag-theme-salt-compact-light .ag-ltr .ag-row .ag-cell.editable-cell.ag-cell-range-selected:not(.ag-cell-focus),
-.ag-theme-salt-compact-light .ag-ltr .ag-row .ag-cell.editable-numeric-cell.ag-cell-range-selected:not(.ag-cell-focus),
-.ag-theme-salt-compact-dark .ag-ltr .ag-row .ag-cell.editable-cell.ag-cell-range-selected:not(.ag-cell-focus),
-.ag-theme-salt-compact-dark .ag-ltr .ag-row .ag-cell.editable-numeric-cell.ag-cell-range-selected:not(.ag-cell-focus) {
+.ag-theme-salt-light .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-focus),
+.ag-theme-salt-dark .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-focus),
+.ag-theme-salt-compact-light .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-focus),
+.ag-theme-salt-compact-dark .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-focus) {
   background-clip: border-box;
 }
 
-/* The focus ring of editable cells is drawn on ::before instead, so it stays inside the gap */
-.ag-theme-salt-light .ag-ltr .ag-cell-focus.editable-cell:not(.ag-cell-range-selected):focus-within,
-.ag-theme-salt-light .ag-ltr .ag-cell-focus.editable-numeric-cell:not(.ag-cell-range-selected):focus-within,
-.ag-theme-salt-light .ag-ltr .ag-context-menu-open .ag-cell-focus.editable-cell:not(.ag-cell-range-selected),
-.ag-theme-salt-light .ag-ltr .ag-context-menu-open .ag-cell-focus.editable-numeric-cell:not(.ag-cell-range-selected),
-.ag-theme-salt-light .ag-ltr .ag-cell-range-single-cell.editable-cell,
-.ag-theme-salt-light .ag-ltr .ag-cell-range-single-cell.editable-numeric-cell,
-.ag-theme-salt-dark .ag-ltr .ag-cell-focus.editable-cell:not(.ag-cell-range-selected):focus-within,
-.ag-theme-salt-dark .ag-ltr .ag-cell-focus.editable-numeric-cell:not(.ag-cell-range-selected):focus-within,
-.ag-theme-salt-dark .ag-ltr .ag-context-menu-open .ag-cell-focus.editable-cell:not(.ag-cell-range-selected),
-.ag-theme-salt-dark .ag-ltr .ag-context-menu-open .ag-cell-focus.editable-numeric-cell:not(.ag-cell-range-selected),
-.ag-theme-salt-dark .ag-ltr .ag-cell-range-single-cell.editable-cell,
-.ag-theme-salt-dark .ag-ltr .ag-cell-range-single-cell.editable-numeric-cell,
-.ag-theme-salt-compact-light .ag-ltr .ag-cell-focus.editable-cell:not(.ag-cell-range-selected):focus-within,
-.ag-theme-salt-compact-light .ag-ltr .ag-cell-focus.editable-numeric-cell:not(.ag-cell-range-selected):focus-within,
-.ag-theme-salt-compact-light .ag-ltr .ag-context-menu-open .ag-cell-focus.editable-cell:not(.ag-cell-range-selected),
-.ag-theme-salt-compact-light .ag-ltr .ag-context-menu-open .ag-cell-focus.editable-numeric-cell:not(.ag-cell-range-selected),
-.ag-theme-salt-compact-light .ag-ltr .ag-cell-range-single-cell.editable-cell,
-.ag-theme-salt-compact-light .ag-ltr .ag-cell-range-single-cell.editable-numeric-cell,
-.ag-theme-salt-compact-dark .ag-ltr .ag-cell-focus.editable-cell:not(.ag-cell-range-selected):focus-within,
-.ag-theme-salt-compact-dark .ag-ltr .ag-cell-focus.editable-numeric-cell:not(.ag-cell-range-selected):focus-within,
-.ag-theme-salt-compact-dark .ag-ltr .ag-context-menu-open .ag-cell-focus.editable-cell:not(.ag-cell-range-selected),
-.ag-theme-salt-compact-dark .ag-ltr .ag-context-menu-open .ag-cell-focus.editable-numeric-cell:not(.ag-cell-range-selected),
-.ag-theme-salt-compact-dark .ag-ltr .ag-cell-range-single-cell.editable-cell,
-.ag-theme-salt-compact-dark .ag-ltr .ag-cell-range-single-cell.editable-numeric-cell {
-  /* The focus ring replaces the editable border, as it did when both were outlines */
+/* Cell focus rings are drawn on ::before, inside the padding box, so they stay clear of the gap */
+.ag-theme-salt-light .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+.ag-theme-salt-light .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
+.ag-theme-salt-light .ag-ltr .ag-cell-range-single-cell,
+.ag-theme-salt-dark .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+.ag-theme-salt-dark .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
+.ag-theme-salt-dark .ag-ltr .ag-cell-range-single-cell,
+.ag-theme-salt-compact-light .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+.ag-theme-salt-compact-light .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
+.ag-theme-salt-compact-light .ag-ltr .ag-cell-range-single-cell,
+.ag-theme-salt-compact-dark .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within,
+.ag-theme-salt-compact-dark .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected),
+.ag-theme-salt-compact-dark .ag-ltr .ag-cell-range-single-cell {
+  /* The focus ring replaces the editable border */
   box-shadow: none;
   outline: none;
 }
 
-.ag-theme-salt-light .ag-ltr .ag-cell-focus.editable-cell:not(.ag-cell-range-selected):focus-within::before,
-.ag-theme-salt-light .ag-ltr .ag-cell-focus.editable-numeric-cell:not(.ag-cell-range-selected):focus-within::before,
-.ag-theme-salt-light .ag-ltr .ag-context-menu-open .ag-cell-focus.editable-cell:not(.ag-cell-range-selected)::before,
-.ag-theme-salt-light .ag-ltr .ag-context-menu-open .ag-cell-focus.editable-numeric-cell:not(.ag-cell-range-selected)::before,
-.ag-theme-salt-light .ag-ltr .ag-cell-range-single-cell.editable-cell::before,
-.ag-theme-salt-light .ag-ltr .ag-cell-range-single-cell.editable-numeric-cell::before,
-.ag-theme-salt-dark .ag-ltr .ag-cell-focus.editable-cell:not(.ag-cell-range-selected):focus-within::before,
-.ag-theme-salt-dark .ag-ltr .ag-cell-focus.editable-numeric-cell:not(.ag-cell-range-selected):focus-within::before,
-.ag-theme-salt-dark .ag-ltr .ag-context-menu-open .ag-cell-focus.editable-cell:not(.ag-cell-range-selected)::before,
-.ag-theme-salt-dark .ag-ltr .ag-context-menu-open .ag-cell-focus.editable-numeric-cell:not(.ag-cell-range-selected)::before,
-.ag-theme-salt-dark .ag-ltr .ag-cell-range-single-cell.editable-cell::before,
-.ag-theme-salt-dark .ag-ltr .ag-cell-range-single-cell.editable-numeric-cell::before,
-.ag-theme-salt-compact-light .ag-ltr .ag-cell-focus.editable-cell:not(.ag-cell-range-selected):focus-within::before,
-.ag-theme-salt-compact-light .ag-ltr .ag-cell-focus.editable-numeric-cell:not(.ag-cell-range-selected):focus-within::before,
-.ag-theme-salt-compact-light .ag-ltr .ag-context-menu-open .ag-cell-focus.editable-cell:not(.ag-cell-range-selected)::before,
-.ag-theme-salt-compact-light .ag-ltr .ag-context-menu-open .ag-cell-focus.editable-numeric-cell:not(.ag-cell-range-selected)::before,
-.ag-theme-salt-compact-light .ag-ltr .ag-cell-range-single-cell.editable-cell::before,
-.ag-theme-salt-compact-light .ag-ltr .ag-cell-range-single-cell.editable-numeric-cell::before,
-.ag-theme-salt-compact-dark .ag-ltr .ag-cell-focus.editable-cell:not(.ag-cell-range-selected):focus-within::before,
-.ag-theme-salt-compact-dark .ag-ltr .ag-cell-focus.editable-numeric-cell:not(.ag-cell-range-selected):focus-within::before,
-.ag-theme-salt-compact-dark .ag-ltr .ag-context-menu-open .ag-cell-focus.editable-cell:not(.ag-cell-range-selected)::before,
-.ag-theme-salt-compact-dark .ag-ltr .ag-context-menu-open .ag-cell-focus.editable-numeric-cell:not(.ag-cell-range-selected)::before,
-.ag-theme-salt-compact-dark .ag-ltr .ag-cell-range-single-cell.editable-cell::before,
-.ag-theme-salt-compact-dark .ag-ltr .ag-cell-range-single-cell.editable-numeric-cell::before {
+.ag-theme-salt-light .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within::before,
+.ag-theme-salt-light .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected)::before,
+.ag-theme-salt-light .ag-ltr .ag-cell-range-single-cell::before,
+.ag-theme-salt-dark .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within::before,
+.ag-theme-salt-dark .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected)::before,
+.ag-theme-salt-dark .ag-ltr .ag-cell-range-single-cell::before,
+.ag-theme-salt-compact-light .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within::before,
+.ag-theme-salt-compact-light .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected)::before,
+.ag-theme-salt-compact-light .ag-ltr .ag-cell-range-single-cell::before,
+.ag-theme-salt-compact-dark .ag-ltr .ag-cell-focus:not(.ag-cell-range-selected):focus-within::before,
+.ag-theme-salt-compact-dark .ag-ltr .ag-context-menu-open .ag-cell-focus:not(.ag-cell-range-selected)::before,
+.ag-theme-salt-compact-dark .ag-ltr .ag-cell-range-single-cell::before {
   border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   /* Follow the cell's corners */
   border-radius: inherit;
