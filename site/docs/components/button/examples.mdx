@@ -80,6 +80,7 @@ Use an `OnSolidButton` button to deliver a consistent, accessible action style o
 
 - **Solid surfaces only**: `OnSolidButton` renders light text on a transparent background, so it's only legible against a solid semantic fill. It will not provide enough contrast to be reliably visible against container backgrounds (primary/secondary/tertiary).
 - **Low emphasis**: Reserve it for supporting actions such as dismiss or close. For a primary action against a solid surface, use a more prominent button style.
+- **Accessible name**: Give an icon-only `OnSolidButton` a descriptive `aria-label`, such as "Dismiss system status".
 
 <LivePreview componentName="button" exampleName="OnSolid" />
 

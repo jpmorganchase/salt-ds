@@ -121,7 +121,7 @@ export const WithActions: StoryFn<typeof SystemStatus> = () => (
         <Text color="inherit">New feature updates are available</Text>
       </SystemStatusContent>
       <SystemStatusActions>
-        <OnSolidButton aria-label="Dismiss">
+        <OnSolidButton aria-label="Dismiss system status">
           <CloseIcon aria-hidden />
         </OnSolidButton>
       </SystemStatusActions>
@@ -132,7 +132,7 @@ export const WithActions: StoryFn<typeof SystemStatus> = () => (
       </SystemStatusContent>
       <SystemStatusActions>
         <OnSolidButton>Try again</OnSolidButton>
-        <OnSolidButton aria-label="Dismiss">
+        <OnSolidButton aria-label="Dismiss system status">
           <CloseIcon aria-hidden />
         </OnSolidButton>
       </SystemStatusActions>
@@ -159,7 +159,7 @@ export const LongContent: StoryFn<typeof SystemStatus> = (args) => (
       </SystemStatusContent>
       <SystemStatusActions>
         <OnSolidButton>View details</OnSolidButton>
-        <OnSolidButton aria-label="Dismiss">
+        <OnSolidButton aria-label="Dismiss system status">
           <CloseIcon aria-hidden />
         </OnSolidButton>
       </SystemStatusActions>
@@ -174,7 +174,7 @@ export const Placement: StoryFn<typeof SystemStatus> = (args) => (
         <Text color="inherit">New feature updates are available.</Text>
       </SystemStatusContent>
       <SystemStatusActions>
-        <OnSolidButton aria-label="Dismiss">
+        <OnSolidButton aria-label="Dismiss system status">
           <CloseIcon aria-hidden />
         </OnSolidButton>
       </SystemStatusActions>

@@ -16,6 +16,10 @@ When using a system status to alert the user, apply `role="alert"`. When using a
 
 - **Note:** There are known screen reader announcement issues when dynamically inserting content with `role="status"`, which a system status has by default. During your testing, check that a system status added to the page is properly announced using a screen reader.
 
+### Accessible names for actions
+
+Give every action in a system status an accessible name that describes what it does. An icon-only close button needs an `aria-label`, such as "Dismiss system status".
+
 ## Keyboard interactions
 
 <KeyboardControls>
