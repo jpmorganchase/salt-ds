@@ -1,5 +1,20 @@
 # @salt-ds/highcharts-theme
 
+## 1.0.7
+
+### Patch Changes
+
+- c15db95: Updated stack labels to use Salt typography and the primary foreground color, so stack totals are readable in dark mode.
+- Updated dependencies [20db4be]
+- Updated dependencies [0ac88c9]
+- Updated dependencies [20db4be]
+- Updated dependencies [3a74bce]
+- Updated dependencies [20db4be]
+- Updated dependencies [cdae245]
+- Updated dependencies [cdae245]
+- Updated dependencies [3a74bce]
+  - @salt-ds/core@1.74.0
+
 ## 1.0.6
 
 ### Patch Changes

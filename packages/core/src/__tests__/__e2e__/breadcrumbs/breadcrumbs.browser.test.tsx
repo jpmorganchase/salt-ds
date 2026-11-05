@@ -42,6 +42,30 @@ function CollapsedBreadcrumbs({ levelTwoHref = "#level-2" }) {
 const disclosure = () =>
   page.getByRole("button", { name: "Additional breadcrumbs" });
 
+function DeeplyCollapsedBreadcrumbs() {
+  return (
+    <Breadcrumbs maxItems={3}>
+      <Breadcrumb href="#root">Root</Breadcrumb>
+      <Breadcrumb href="#level-2">Level 2</Breadcrumb>
+      <Breadcrumb href="#level-3">Level 3</Breadcrumb>
+      <Breadcrumb href="#level-4">Level 4</Breadcrumb>
+      <Breadcrumb>Current</Breadcrumb>
+    </Breadcrumbs>
+  );
+}
+
+const hiddenLink = (name: string) =>
+  page
+    .getByRole("list", { name: "Hidden breadcrumb levels" })
+    .getByRole("link", { name });
+
+async function openDeeplyCollapsedDisclosure() {
+  await renderWithSalt(<DeeplyCollapsedBreadcrumbs />);
+  disclosure().element().focus();
+  await userEvent.keyboard("{Enter}");
+  await expect.element(disclosure()).toHaveAttribute("aria-expanded", "true");
+}
+
 afterEach(() => vi.restoreAllMocks());
 
 describe("GIVEN Breadcrumbs", () => {
@@ -496,5 +520,85 @@ describe("GIVEN Breadcrumbs", () => {
     await expect
       .element(page.getByRole("link", { name: "Level 3" }))
       .toHaveFocus();
+  });
+
+  describe("WHEN the overflow disclosure is open", () => {
+    it.each([
+      ["{ArrowDown}", "Level 2"],
+      ["{ArrowRight}", "Level 2"],
+      ["{ArrowUp}", "Level 4"],
+      ["{ArrowLeft}", "Level 4"],
+    ])("%s on the trigger focuses %s", async (key, expectedLink) => {
+      await openDeeplyCollapsedDisclosure();
+      await userEvent.keyboard(key);
+      await expect.element(hiddenLink(expectedLink)).toHaveFocus();
+    });
+
+    it("arrow keys move between hidden links and stop at either end", async () => {
+      await openDeeplyCollapsedDisclosure();
+      await userEvent.keyboard("{ArrowDown}");
+      for (const [key, expectedLink] of [
+        ["{ArrowDown}", "Level 3"],
+        ["{ArrowRight}", "Level 4"],
+        ["{ArrowDown}", "Level 4"],
+        ["{ArrowUp}", "Level 3"],
+        ["{ArrowLeft}", "Level 2"],
+        ["{ArrowUp}", "Level 2"],
+      ] as const) {
+        await userEvent.keyboard(key);
+        await expect.element(hiddenLink(expectedLink)).toHaveFocus();
+      }
+    });
+
+    it("Home and End focus the first and last hidden links", async () => {
+      await openDeeplyCollapsedDisclosure();
+      await userEvent.keyboard("{ArrowDown}");
+      await userEvent.keyboard("{End}");
+      await expect.element(hiddenLink("Level 4")).toHaveFocus();
+      await userEvent.keyboard("{Home}");
+      await expect.element(hiddenLink("Level 2")).toHaveFocus();
+    });
+
+    it("Escape on a hidden link closes the disclosure and focuses the trigger", async () => {
+      await openDeeplyCollapsedDisclosure();
+      await userEvent.keyboard("{ArrowDown}");
+      await expect.element(hiddenLink("Level 2")).toHaveFocus();
+      await userEvent.keyboard("{Escape}");
+      await expect
+        .element(disclosure())
+        .toHaveAttribute("aria-expanded", "false");
+      await expect.element(disclosure()).toHaveFocus();
+    });
+
+    it("closes when focus moves from the trigger to elsewhere on the page", async () => {
+      await openDeeplyCollapsedDisclosure();
+      await userEvent.tab({ shift: true });
+      await expect
+        .element(page.getByRole("link", { name: "Root" }))
+        .toHaveFocus();
+      await expect
+        .element(disclosure())
+        .toHaveAttribute("aria-expanded", "false");
+    });
+
+    it("closes when focus moves from a hidden link to elsewhere on the page", async () => {
+      await openDeeplyCollapsedDisclosure();
+      await userEvent.keyboard("{ArrowDown}");
+      await expect.element(hiddenLink("Level 2")).toHaveFocus();
+      page.getByRole("link", { name: "Root" }).element().focus();
+      await expect
+        .element(disclosure())
+        .toHaveAttribute("aria-expanded", "false");
+    });
+  });
+
+  it("ignores arrow keys on the trigger while the disclosure is closed", async () => {
+    await renderWithSalt(<DeeplyCollapsedBreadcrumbs />);
+    disclosure().element().focus();
+    await userEvent.keyboard("{ArrowDown}");
+    await expect.element(disclosure()).toHaveFocus();
+    await expect
+      .element(disclosure())
+      .toHaveAttribute("aria-expanded", "false");
   });
 });
