@@ -13,7 +13,8 @@ data:
 - Give every progress indicator an accessible name. Use `label`, which is shown and names the progress bar, or `aria-label` when there's no visible label, such as in a button.
 - `Progress` has `role="progressbar"`. When it has a value, it sets `aria-valuenow`, `aria-valuemin` and `aria-valuemax`, and the value text as `aria-valuetext`. Screen readers read the value from the progress bar, so changes of value aren't announced.
 - Indeterminate progress announces its label when it appears, and repeats it every 5 seconds for up to 20 seconds, like [`Spinner`](../spinner).
-- Progress announces when a task completes or fails. Change the completion message with `completionAnnouncement`, or set it to `null` to turn it off. Removing progress isn't announced, as it could mean the task was cancelled.
+- Progress announces when its `status` becomes `"success"` or `"error"`. Change the success message with `completionAnnouncement`, or set it to `null` to turn it off. Removing progress isn't announced, as it could mean the task was cancelled.
+- When a parent owns the task's announcements, such as a download button, set `disableAnnouncer` to turn off all of the progress announcements. The progress bar keeps its name and value.
 - States use an icon and text as well as color. The state is also part of the value text, such as "60%, paused".
 - The bar and the track's outline both contrast with the background, and the bar ends where solid turns into outline, so how far the task has progressed doesn't rely on color.
 - When users have turned on reduced motion, loops slow down rather than stop, so indeterminate progress still reads as working, and other state changes happen at once.

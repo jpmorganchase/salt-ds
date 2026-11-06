@@ -20,7 +20,7 @@ export const IndeterminateToDeterminate = (): ReactElement => {
         <Progress
           label="Downloading report.pdf"
           value={value}
-          status={value === 100 ? "success" : undefined}
+          status={running ? "active" : "success"}
         />
       )}
     </StackLayout>
