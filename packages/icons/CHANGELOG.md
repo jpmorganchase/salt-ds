@@ -1,5 +1,11 @@
 # @salt-ds/icons
 
+## 1.19.0
+
+### Minor Changes
+
+- 2c3cf5d: Added `RotateLeftIcon`.
+
 ## 1.18.4
 
 ### Patch Changes
