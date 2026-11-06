@@ -78,3 +78,21 @@
   background: color-mix(in srgb, var(--saltProgress-barColor, var(--progress-barColor)) 20%, transparent);
   box-shadow: inset 0 0 0 var(--salt-size-fixed-100) var(--salt-sentiment-neutral-track);
 }
+
+/* Light outline: a light track inside a darker outline that meets 3:1 */
+.progressTrackLightOutline.saltProgress-linear .saltProgress-indicator {
+  height: max(var(--salt-size-bar-strong), 6px);
+}
+
+.progressTrackLightOutline.saltProgress-linear .saltProgress-track {
+  top: 0;
+  height: 100%;
+  background: var(--salt-separable-tertiary-borderColor);
+  box-shadow: inset 0 0 0 var(--salt-size-fixed-100) var(--salt-sentiment-neutral-track);
+}
+
+.progressTrackLightOutline.saltProgress-linear .saltProgress-buffer {
+  background: var(--saltProgress-barColor, var(--progress-barColor));
+  box-shadow: none;
+  opacity: 0.5;
+}

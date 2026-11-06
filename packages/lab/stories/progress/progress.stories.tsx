@@ -264,6 +264,7 @@ const trackStyles = [
   { name: "Light track", className: "progressTrackLight" },
   { name: "Tinted track", className: "progressTrackTint" },
   { name: "Tinted outline", className: "progressTrackTintOutline" },
+  { name: "Light outline", className: "progressTrackLightOutline" },
 ];
 
 const trackStyleExamples: ProgressProps[] = [
