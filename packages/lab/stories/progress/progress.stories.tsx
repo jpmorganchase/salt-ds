@@ -10,7 +10,6 @@ import {
 import { DownloadIcon } from "@salt-ds/icons";
 import { Progress, type ProgressProps } from "@salt-ds/lab";
 import type { ArgTypes, Meta, StoryFn } from "@storybook/react-vite";
-import { clsx } from "clsx";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import "./progress.stories.css";
@@ -23,11 +22,17 @@ export default {
 // The stories only pass `delay`, so circular and linear examples can share the same args.
 type StoryArgs = Pick<ProgressProps, "delay">;
 
-// Prototype: the buffer is stripes in the bar color, or try a tint or dots. See progress.stories.css.
+// Prototype: the buffer is a solid neutral, or try the accent at 30% alpha in light mode and 50% in dark mode, or stripes, a tint or dots in the bar color. See progress.stories.css.
 const bufferFills = {
-  stripes: undefined,
+  solid: undefined,
+  accent: "progressBufferAccent",
+  stripes: "progressBufferStripes",
   tint: "progressBufferTint",
   dots: "progressBufferDots",
+  dot: "progressBufferDot",
+  fade: "progressBufferFade",
+  barDot: "progressBufferDot progressBufferBarColor",
+  barFade: "progressBufferFade progressBufferBarColor",
 };
 
 type BufferFillArgs = StoryArgs & { bufferFill: keyof typeof bufferFills };
@@ -36,7 +41,8 @@ const bufferFillArgTypes: Partial<ArgTypes<BufferFillArgs>> = {
   bufferFill: {
     control: "inline-radio",
     options: Object.keys(bufferFills),
-    description: "Prototype: fills the buffer with stripes, a tint or dots.",
+    description:
+      "Prototype: fills the buffer with a solid neutral, the accent at 30% alpha in light mode and 50% in dark mode, stripes, a tint, dots, a dot where it ends, or a fade from the bar. The bar dot and bar fade follow the bar color.",
   },
 };
 
@@ -105,7 +111,7 @@ export const Indeterminate: StoryFn<StoryArgs> = (args) => (
 
 /**
  * The buffer shows how much is ready ahead of the progress, such as the part of a video that has loaded. Use the
- * `bufferFill` control to compare the stripes with a tint or dots.
+ * `bufferFill` control to compare the solid neutral with stripes, a tint or dots.
  */
 export const Buffer: StoryFn<BufferFillArgs> = ({ bufferFill, ...args }) => (
   <div style={{ width: 400 }}>
@@ -118,7 +124,7 @@ export const Buffer: StoryFn<BufferFillArgs> = ({ bufferFill, ...args }) => (
     />
   </div>
 );
-Buffer.args = { bufferFill: "stripes" };
+Buffer.args = { bufferFill: "solid" };
 Buffer.argTypes = bufferFillArgTypes;
 
 export const Circular: StoryFn<StoryArgs> = (args) => (
@@ -385,11 +391,6 @@ export const InButton: StoryFn<StoryArgs> = (args) => (
 );
 InButton.args = { delay: 1000 };
 
-const trackStyles = [
-  { name: "Neutral outline (default)", className: undefined },
-  { name: "Bar color outline", className: "progressTrackBarOutline" },
-];
-
 const linearTrackStyleExamples: ProgressProps[] = [
   { label: "Not started", value: 0 },
   { label: "Uploading", value: 38 },
@@ -401,63 +402,76 @@ const linearTrackStyleExamples: ProgressProps[] = [
   { label: "Uploading", status: "success" },
 ];
 
-const circularTrackStyleExamples: ProgressProps[] = [
-  { shape: "circular", size: "small", "aria-label": "Uploading", value: 38 },
-  { shape: "circular", size: "medium", "aria-label": "Uploading", value: 38 },
-  { shape: "circular", size: "large", "aria-label": "Uploading", value: 38 },
-  {
-    shape: "circular",
-    size: "medium",
-    "aria-label": "Uploading",
-    value: 60,
-    status: "error",
-  },
-];
-
 /**
- * Prototype: compares the default neutral outline with a bar color outline, which makes the whole indicator one color.
- * Use the `bufferFill` control to compare the buffers too.
+ * Prototype: shows the light track in every state of linear progress. Use the `bufferFill` control to compare the
+ * buffers.
  */
 export const TrackStyles: StoryFn<BufferFillArgs> = ({
   bufferFill,
   ...args
 }) => (
-  <div
-    style={{
-      display: "grid",
-      gridTemplateColumns: "repeat(2, 300px)",
-      gap: "var(--salt-spacing-400)",
-    }}
-  >
-    {trackStyles.map(({ name, className }) => (
-      <StackLayout gap={2} key={name}>
-        <Text styleAs="h3">{name}</Text>
-        {linearTrackStyleExamples.map((example, index) => (
-          <Progress
-            // biome-ignore lint/suspicious/noArrayIndexKey: The examples are static.
-            key={index}
-            className={clsx(className, bufferFills[bufferFill])}
-            {...example}
-            {...args}
-          />
-        ))}
-        <FlowLayout gap={3} align="center">
-          {circularTrackStyleExamples.map((example, index) => (
+  <StackLayout gap={2} style={{ width: 260 }}>
+    {linearTrackStyleExamples.map((example, index) => (
+      <Progress
+        // biome-ignore lint/suspicious/noArrayIndexKey: The examples are static.
+        key={index}
+        className={bufferFills[bufferFill]}
+        {...example}
+        {...args}
+      />
+    ))}
+  </StackLayout>
+);
+TrackStyles.args = { bufferFill: "solid" };
+TrackStyles.argTypes = bufferFillArgTypes;
+
+const containerBuffers = [
+  { name: "Solid neutral (default)", className: undefined },
+  { name: "Accent 30% light, 50% dark", className: "progressBufferAccent" },
+  {
+    name: "Accent 3:1, 78% light, 95% dark",
+    className: "progressBufferAccentContrast",
+  },
+];
+
+/**
+ * Prototype: compares buffers on each container background. Switch between light and dark mode in the toolbar. The
+ * accent 3:1 buffer meets 3:1 against every container, so it's close to the bar's color.
+ */
+export const BufferOnContainers: StoryFn<StoryArgs> = (args) => (
+  <StackLayout gap={2}>
+    {(["primary", "secondary", "tertiary"] as const).map((container) => (
+      <StackLayout
+        key={container}
+        gap={2}
+        style={{
+          padding: "var(--salt-spacing-300)",
+          background: `var(--salt-container-${container}-background)`,
+        }}
+      >
+        <Text styleAs="h3">Container {container}</Text>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 260px)",
+            gap: "var(--salt-spacing-400)",
+          }}
+        >
+          {containerBuffers.map(({ name, className }) => (
             <Progress
-              // biome-ignore lint/suspicious/noArrayIndexKey: The examples are static.
-              key={index}
+              key={name}
               className={className}
-              {...example}
+              label={name}
+              value={38}
+              bufferValue={60}
               {...args}
             />
           ))}
-        </FlowLayout>
+        </div>
       </StackLayout>
     ))}
-  </div>
+  </StackLayout>
 );
-TrackStyles.args = { bufferFill: "stripes" };
-TrackStyles.argTypes = bufferFillArgTypes;
 
 /** A page loader is a composition, not a component. */
 export const PageLoader: StoryFn<StoryArgs> = (args) => (

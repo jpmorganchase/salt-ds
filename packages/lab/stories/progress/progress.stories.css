@@ -1,11 +1,11 @@
 /*
-  Prototype track and buffer styles for the TrackStyles and Buffer stories, so design can compare them with the
-  defaults. They aren't part of Progress.
+  Prototype buffer styles for the TrackStyles, Buffer and BufferOnContainers stories, so design can compare them with
+  the default. They aren't part of Progress.
 */
 
-/* Bar color outline: the track is an outline in the bar color, so the whole indicator is one color */
-.progressTrackBarOutline.saltProgress {
-  --progress-trackColor: var(--progress-barColor);
+/* Striped buffer: diagonal stripes in the bar color */
+.progressBufferStripes.saltProgress-linear .saltProgress-buffer {
+  background: repeating-linear-gradient(-45deg, var(--progress-barColor) 0 1.5px, transparent 1.5px 4px);
 }
 
 /* Tinted buffer: a tint of the bar color */
@@ -17,6 +17,75 @@
 /* Dotted buffer: a row of dots in the bar color */
 .progressBufferDots.saltProgress-linear .saltProgress-buffer {
   background: radial-gradient(circle, var(--progress-barColor) 1px, transparent 1.5px) 0 50% / 4px 100% repeat-x;
+}
+
+/*
+  Dot buffer: the track runs on after the bar, and a dot marks where the buffer ends. The track is cut around the bar's
+  end and around the dot, so both have a gap.
+*/
+.progressBufferDot.saltProgress-linear .saltProgress-track {
+  --progress-cutAt: var(--saltProgress-fraction);
+  --progress-dotCut: calc(var(--progress-radius) + var(--progress-gap));
+  --progress-dotHole: radial-gradient(
+    circle var(--progress-dotCut) at calc(var(--saltProgress-bufferFraction) * 100% - var(--progress-radius)) 50%,
+    transparent calc(var(--progress-dotCut) - 0.25px),
+    black calc(var(--progress-dotCut) + 0.25px)
+  );
+  -webkit-mask: var(--progress-cut), var(--progress-dotHole);
+  -webkit-mask-composite: source-in;
+  mask: var(--progress-cut), var(--progress-dotHole);
+  mask-composite: intersect;
+}
+
+.progressBufferDot.saltProgress-linear .saltProgress-buffer {
+  background: none;
+}
+
+.progressBufferDot.saltProgress-linear .saltProgress-buffer::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: calc(var(--saltProgress-bufferFraction) * 100% - var(--progress-height));
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--progressPrototype-bufferColor, var(--salt-sentiment-neutral-track));
+}
+
+/* Faded buffer: the buffer fades from the track's color at the bar to the solid neutral where it ends */
+.progressBufferFade.saltProgress-linear .saltProgress-buffer {
+  background: linear-gradient(
+    to right,
+    var(--progress-trackColor) calc(var(--saltProgress-fraction) * 100%),
+    var(--progressPrototype-bufferColor, var(--salt-sentiment-neutral-track)) calc(var(--saltProgress-bufferFraction) * 100%)
+  );
+}
+
+/* The dot and the fade can follow the bar color, so they're accent while active and the status color on success or error */
+.progressBufferBarColor.saltProgress {
+  --progressPrototype-bufferColor: var(--progress-barColor);
+}
+
+/* Accent buffer: the accent at 30% alpha in light mode and 50% in dark mode, in every state */
+.progressBufferAccent.saltProgress-linear .saltProgress-buffer {
+  background: var(--salt-sentiment-accent-background);
+  opacity: 0.3;
+}
+
+.salt-theme[data-mode="dark"] .progressBufferAccent.saltProgress-linear .saltProgress-buffer {
+  opacity: 0.5;
+}
+
+/*
+  Accent 3:1 buffer: the accent at the lowest alpha that meets 3:1 against every container background, 78% in light
+  mode and 95% in dark mode
+*/
+.progressBufferAccentContrast.saltProgress-linear .saltProgress-buffer {
+  background: var(--salt-sentiment-accent-background);
+  opacity: 0.78;
+}
+
+.salt-theme[data-mode="dark"] .progressBufferAccentContrast.saltProgress-linear .saltProgress-buffer {
+  opacity: 0.95;
 }
 
 /* Keep the icon's dimensions even while Progress is waiting to appear. */

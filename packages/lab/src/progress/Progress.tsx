@@ -51,12 +51,9 @@ interface ProgressBaseProps
    */
   description?: ReactNode;
   /**
-   * Hides the value text. Screen readers still announce it. Defaults to `true` for small circular progress, which is
-   * used in compact spaces such as buttons, and `false` otherwise.
-   */
-  hideValue?: boolean;
-  /**
-   * Returns the value that's shown and announced, such as "3 of 5 files". Defaults to a percentage, such as "38%".
+   * Returns the value that's shown and announced, such as "3 of 5 files". Defaults to a percentage, such as "38%". The
+   * value is always shown, except on small circular progress, which fits in compact spaces such as buttons. Screen
+   * readers read it from the progress bar either way.
    */
   getValueText?: (value: number, max: number, min: number) => string;
   /**
@@ -192,7 +189,6 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       bufferValue,
       label,
       description,
-      hideValue: hideValueProp,
       getValueText = defaultGetValueText,
       status = "active",
       size = "medium",
@@ -318,11 +314,12 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
 
     const statusText = status === "active" ? undefined : status;
     const ariaValueText = [valueText, statusText].filter(Boolean).join(", ");
-    const hideValue =
-      hideValueProp ?? (shape === "circular" && size === "small");
-    // The success icon says the task is complete, so the value would repeat it
+    // Small circular progress fits in compact spaces, so it never shows its value. The success icon says the task is
+    // complete, so the value would repeat it.
     const showValue =
-      !hideValue && valueText !== undefined && status !== "success";
+      !(shape === "circular" && size === "small") &&
+      valueText !== undefined &&
+      status !== "success";
     const valueInside = shape === "circular" && size === "large";
     const showHeader = Boolean(
       label || outcome || paused || (showValue && !valueInside),
@@ -332,8 +329,11 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       withBaseName("indicator"),
       looping && withBaseName("indeterminate"),
     );
-    const fractionStyle = {
+    // The bar, buffer and track are positioned from these, so they're set on the indicator. Without a buffer, the track
+    // starts where the bar ends.
+    const indicatorStyle = {
       "--saltProgress-fraction": shownFraction,
+      "--saltProgress-bufferFraction": bufferFraction ?? shownFraction,
     } as CSSProperties;
     // The bar turns the success color once it has filled, so it doesn't change color while it loops
     const barStatus = outcome === "success" && looping ? undefined : outcome;
@@ -369,29 +369,25 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
           aria-valuetext={ariaValueText || undefined}
         >
           {shape === "circular" ? (
-            <svg className={indicatorClassName} aria-hidden="true">
+            <svg
+              className={indicatorClassName}
+              style={indicatorStyle}
+              aria-hidden="true"
+            >
               <circle className={withBaseName("track")} />
-              <circle className={withBaseName("trackInner")} />
-              <circle
-                className={withBaseName("bar")}
-                pathLength={100}
-                style={fractionStyle}
-              />
+              <circle className={withBaseName("bar")} pathLength={100} />
             </svg>
           ) : (
-            <div className={indicatorClassName} aria-hidden="true">
+            <div
+              className={indicatorClassName}
+              style={indicatorStyle}
+              aria-hidden="true"
+            >
               <div className={withBaseName("track")} />
               {bufferFraction !== undefined && (
-                <div
-                  className={withBaseName("buffer")}
-                  style={
-                    {
-                      "--saltProgress-bufferFraction": bufferFraction,
-                    } as CSSProperties
-                  }
-                />
+                <div className={withBaseName("buffer")} />
               )}
-              <div className={withBaseName("bar")} style={fractionStyle} />
+              <div className={withBaseName("bar")} />
               {looping && <div className={withBaseName("loop")} />}
             </div>
           )}

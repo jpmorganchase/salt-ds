@@ -1,12 +1,26 @@
+/* Registered, so the fractions animate and everything positioned from them moves together */
+@property --saltProgress-fraction {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --saltProgress-bufferFraction {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
 /*
-  Styles applied to the root element. The track is a neutral outline, and the bar fills it, so the bar ends where solid
-  turns into outline. The bar and the outline both contrast with the background. Override the colors with
-  --saltProgress-barColor and --saltProgress-trackColor.
+  Styles applied to the root element. The track is a light neutral fill that stays the same in every state, and the bar
+  fills it. The bar contrasts with the background, and the value is always shown as text, except on small circular
+  progress, so the track doesn't need to. Override the colors with --saltProgress-barColor and --saltProgress-trackColor.
 */
 .saltProgress {
   --progress-barColor: var(--saltProgress-barColor, var(--salt-sentiment-accent-background));
-  --progress-trackColor: var(--saltProgress-trackColor, var(--salt-sentiment-neutral-track));
-  --progress-outlineWidth: var(--salt-size-fixed-100);
+  /* Black at 10% in light mode, and white at 10% in dark mode, in every theme */
+  --progress-trackColor: var(--saltProgress-trackColor, var(--salt-container-ghost-subtle-borderColor));
+  --progress-trackOpacity: 1;
   color: var(--salt-content-primary-foreground);
   box-sizing: border-box;
 }
@@ -23,6 +37,7 @@
 .saltButton .saltProgress {
   --progress-barColor: var(--saltProgress-barColor, currentColor);
   --progress-trackColor: var(--saltProgress-trackColor, currentColor);
+  --progress-trackOpacity: 0.3;
   color: inherit;
 }
 
@@ -83,26 +98,56 @@
   grid-area: description;
 }
 
-/* Bars have rounded ends, like the compact stepper */
+/*
+  The bar, the buffer and the rest of the track are three parts, with a gap between them that follows the curve of the
+  part before. The fractions animate, rather than each part's size, so the gaps move with the bar.
+*/
 .saltProgress-linear .saltProgress-indicator {
+  --progress-height: max(var(--salt-size-bar-strong), 6px);
+  --progress-radius: calc(var(--progress-height) / 2);
+  --progress-gap: var(--salt-size-fixed-100);
   position: relative;
-  /* Tall enough to see inside the outline at every density */
-  height: max(var(--salt-size-bar-strong), 6px);
+  /* Tall enough to see the three parts at every density */
+  height: var(--progress-height);
   border-radius: var(--salt-palette-corner-strongest);
   overflow: hidden;
+  transition:
+    --saltProgress-fraction var(--salt-duration-perceptible) linear,
+    --saltProgress-bufferFraction var(--salt-duration-perceptible) linear;
 }
 
-/* A border, rather than a box shadow, so the outline stays in Windows high contrast mode */
-.saltProgress-linear .saltProgress-track {
+/*
+  The buffer and the track are cut where the part before them ends: everything before its rounded end, and a circle
+  around that end that's wider by the gap. There's no gap after a part with no width.
+*/
+.saltProgress-linear .saltProgress-track,
+.saltProgress-linear .saltProgress-buffer {
+  --progress-cutX: calc(var(--progress-cutAt) * 100% - var(--progress-radius));
+  --progress-cutRadius: calc(var(--progress-radius) + min(var(--progress-gap), var(--progress-cutAt) * 1000px));
+  --progress-cut:
+    linear-gradient(to right, transparent var(--progress-cutX), black var(--progress-cutX)),
+    radial-gradient(circle var(--progress-cutRadius) at var(--progress-cutX) 50%, transparent calc(var(--progress-cutRadius) - 0.25px), black calc(var(--progress-cutRadius) + 0.25px));
   position: absolute;
   inset: 0;
-  box-sizing: border-box;
-  border: var(--progress-outlineWidth) var(--salt-borderStyle-solid) var(--progress-trackColor);
-  border-radius: var(--salt-palette-corner-strongest);
-  transition: border-color var(--salt-duration-perceptible) ease-in-out;
+  -webkit-mask: var(--progress-cut);
+  -webkit-mask-composite: source-in;
+  mask: var(--progress-cut);
+  mask-composite: intersect;
 }
 
-/* The bar is as tall as the track, so it covers the outline. Value changes ease to the new value, from wherever it is */
+.saltProgress-linear .saltProgress-track {
+  --progress-cutAt: var(--saltProgress-bufferFraction);
+  background: var(--progress-trackColor);
+  opacity: var(--progress-trackOpacity);
+}
+
+/* The buffer is a solid neutral between the bar and the rest of the track */
+.saltProgress-linear .saltProgress-buffer {
+  --progress-cutAt: var(--saltProgress-fraction);
+  background: var(--salt-sentiment-neutral-track);
+  clip-path: inset(0 calc((1 - var(--saltProgress-bufferFraction)) * 100%) 0 0 round var(--progress-radius));
+}
+
 .saltProgress-linear .saltProgress-bar {
   position: absolute;
   inset-block: 0;
@@ -110,27 +155,11 @@
   width: calc(var(--saltProgress-fraction) * 100%);
   border-radius: var(--salt-palette-corner-strongest);
   background: var(--progress-barColor);
-  transition:
-    width var(--salt-duration-perceptible) linear,
-    background-color var(--salt-duration-perceptible) ease-in-out;
-}
-
-/*
-  The buffer is diagonal stripes in the bar color. The pattern tells it apart from the empty track, and its marks meet
-  3:1 like the bar.
-*/
-.saltProgress-linear .saltProgress-buffer {
-  position: absolute;
-  inset-block: 0;
-  inset-inline-start: 0;
-  width: calc(var(--saltProgress-bufferFraction) * 100%);
-  border-radius: var(--salt-palette-corner-strongest);
-  background: repeating-linear-gradient(-45deg, var(--progress-barColor) 0 1.5px, transparent 1.5px 4px);
-  transition: width var(--salt-duration-perceptible) linear;
+  transition: background-color var(--salt-duration-perceptible) ease-in-out;
 }
 
 /* A new loop starts from an empty track */
-.saltProgress-linear .saltProgress-indeterminate .saltProgress-bar {
+.saltProgress-linear .saltProgress-indeterminate {
   transition: none;
 }
 
@@ -176,7 +205,6 @@
   --saltProgress-ringWidth: var(--salt-size-fixed-200);
 }
 
-/* Rings are wide enough to see inside the outline at every density */
 .saltProgress-medium {
   --saltProgress-size: var(--salt-size-base);
   --saltProgress-ringWidth: max(var(--salt-size-bar), 4px);
@@ -225,35 +253,14 @@
   fill: none;
 }
 
-/* The track is the outer and inner edges of the ring */
-.saltProgress-circular .saltProgress-track,
-.saltProgress-circular .saltProgress-trackInner {
-  stroke: var(--progress-trackColor);
-  stroke-width: var(--progress-outlineWidth);
-  transition: stroke var(--salt-duration-perceptible) ease-in-out;
-}
-
+/* The track and the bar are as wide as the ring */
 .saltProgress-circular .saltProgress-track {
-  r: calc((var(--saltProgress-size) - var(--progress-outlineWidth)) / 2);
-}
-
-.saltProgress-circular .saltProgress-trackInner {
-  r: calc((var(--saltProgress-size) + var(--progress-outlineWidth)) / 2 - var(--saltProgress-ringWidth));
-}
-
-/* Small rings are too thin to outline, so the track is a tint of the bar color */
-.saltProgress-small .saltProgress-track {
   r: calc((var(--saltProgress-size) - var(--saltProgress-ringWidth)) / 2);
-  stroke: var(--saltProgress-trackColor, var(--progress-barColor));
+  stroke: var(--progress-trackColor);
   stroke-width: var(--saltProgress-ringWidth);
-  stroke-opacity: 0.3;
+  stroke-opacity: var(--progress-trackOpacity);
 }
 
-.saltProgress-small .saltProgress-trackInner {
-  display: none;
-}
-
-/* The bar is as wide as the ring, so it covers the outline */
 .saltProgress-circular .saltProgress-bar {
   r: calc((var(--saltProgress-size) - var(--saltProgress-ringWidth)) / 2);
   stroke: var(--progress-barColor);
@@ -323,18 +330,15 @@
   transition-delay: 0s, var(--salt-duration-perceptible), 0s;
 }
 
-.saltProgress-success .saltProgress-track,
-.saltProgress-success .saltProgress-trackInner {
+.saltProgress-success.saltProgress-linear .saltProgress-bar {
   transition-delay: var(--salt-duration-perceptible);
 }
 
 /* Loops slow down rather than stop, so indeterminate progress still reads as working. Everything else changes at once */
 @media (prefers-reduced-motion: reduce) {
+  .saltProgress-linear .saltProgress-indicator,
   .saltProgress-linear .saltProgress-bar,
-  .saltProgress-linear .saltProgress-buffer,
   .saltProgress-linear .saltProgress-loop,
-  .saltProgress .saltProgress-track,
-  .saltProgress .saltProgress-trackInner,
   .saltProgress-circular .saltProgress-bar {
     transition: none;
   }

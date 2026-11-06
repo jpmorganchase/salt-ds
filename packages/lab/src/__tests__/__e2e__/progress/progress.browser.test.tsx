@@ -121,19 +121,28 @@ describe("GIVEN a Progress", () => {
         .toHaveAccessibleDescription("About 2 minutes left");
     });
 
-    it("THEN it hides the value text WHEN hideValue is set", async () => {
+    it("THEN it shows the value text on linear, medium and large progress", async () => {
       await renderWithSalt(
-        <Progress delay={0} label="Uploading" value={38} hideValue />,
+        <>
+          <Progress delay={0} label="Uploading" value={38} />
+          <Progress delay={0} shape="circular" label="Saving" value={42} />
+          <Progress
+            delay={0}
+            shape="circular"
+            size="large"
+            aria-label="Loading"
+            value={46}
+          />
+        </>,
       );
 
-      await expect.element(page.getByText("38%")).not.toBeInTheDocument();
-      await expect
-        .element(page.getByRole("progressbar"))
-        .toHaveAttribute("aria-valuetext", "38%");
+      await expect.element(page.getByText("38%")).toBeVisible();
+      await expect.element(page.getByText("42%")).toBeVisible();
+      await expect.element(page.getByText("46%")).toBeVisible();
     });
 
-    it("THEN it hides the value text by default WHEN it's small and circular", async () => {
-      const rendered = await renderWithSalt(
+    it("THEN it never shows the value text WHEN it's small and circular", async () => {
+      await renderWithSalt(
         <Progress
           delay={0}
           shape="circular"
@@ -148,17 +157,9 @@ describe("GIVEN a Progress", () => {
         .element(page.getByRole("progressbar", { name: "Downloading" }))
         .toHaveAttribute("aria-valuetext", "38%");
 
-      await rendered.rerender(
-        <Progress
-          delay={0}
-          shape="circular"
-          size="small"
-          aria-label="Downloading"
-          value={38}
-          hideValue={false}
-        />,
-      );
-      await expect.element(page.getByText("38%")).toBeInTheDocument();
+      // @ts-expect-error: the value can't be hidden or shown
+      const withHideValue = <Progress hideValue={false} />;
+      expect(withHideValue).toBeDefined();
     });
 
     it("THEN a linear bar stays visible while its value shrinks to zero", async () => {
@@ -168,8 +169,11 @@ describe("GIVEN a Progress", () => {
         </div>,
       );
       const bar = document.querySelector<HTMLElement>(".saltProgress-bar");
-      if (!bar) throw new Error("Progress bar is missing");
-      bar.style.transitionDuration = "10s";
+      const indicator = document.querySelector<HTMLElement>(
+        ".saltProgress-indicator",
+      );
+      if (!bar || !indicator) throw new Error("Progress bar is missing");
+      indicator.style.transitionDuration = "10s";
       const initialWidth = bar.getBoundingClientRect().width;
 
       await rendered.rerender(
@@ -177,13 +181,17 @@ describe("GIVEN a Progress", () => {
           <Progress delay={0} label="Uploading" value={0} />
         </div>,
       );
-      const transition = bar
+      // The fraction animates, and the bar's width follows it
+      const transition = indicator
         .getAnimations()
         .find(
           (animation) =>
-            (animation as CSSTransition).transitionProperty === "width",
+            (animation as CSSTransition).transitionProperty ===
+            "--saltProgress-fraction",
         );
-      if (!transition?.effect) throw new Error("Width transition is missing");
+      if (!transition?.effect) {
+        throw new Error("Fraction transition is missing");
+      }
       transition.pause();
       transition.currentTime =
         Number(transition.effect.getComputedTiming().duration) / 2;
@@ -195,44 +203,46 @@ describe("GIVEN a Progress", () => {
   });
 
   describe("WHEN it has a buffer value", () => {
-    function bufferWidth() {
-      const buffer = document.querySelector<HTMLElement>(
-        ".saltProgress-buffer",
-      );
-      const track = document.querySelector<HTMLElement>(
-        ".saltProgress-indicator",
-      );
-      return buffer && track ? buffer.clientWidth / track.clientWidth : null;
+    // The buffer is cut where the bar ends, and the track where the buffer ends
+    function cutAt(part: "buffer" | "track") {
+      const element = document.querySelector(`.saltProgress-${part}`);
+      return element
+        ? Number(getComputedStyle(element).getPropertyValue("--progress-cutAt"))
+        : null;
     }
 
-    it("THEN it shows the buffer ahead of the bar", async () => {
+    it("THEN it shows the buffer between the bar and the rest of the track", async () => {
       await renderWithSalt(
-        <div style={{ width: 200 }}>
-          <Progress
-            delay={0}
-            label="Playing video"
-            value={20}
-            bufferValue={60}
-          />
-        </div>,
+        <Progress
+          delay={0}
+          label="Playing video"
+          value={20}
+          bufferValue={60}
+        />,
       );
 
-      await expect.poll(bufferWidth).toBeCloseTo(0.6, 2);
+      await expect.poll(() => cutAt("buffer")).toBeCloseTo(0.2, 2);
+      await expect.poll(() => cutAt("track")).toBeCloseTo(0.6, 2);
     });
 
     it("THEN the buffer never sits behind the bar", async () => {
       await renderWithSalt(
-        <div style={{ width: 200 }}>
-          <Progress
-            delay={0}
-            label="Playing video"
-            value={60}
-            bufferValue={20}
-          />
-        </div>,
+        <Progress
+          delay={0}
+          label="Playing video"
+          value={60}
+          bufferValue={20}
+        />,
       );
 
-      await expect.poll(bufferWidth).toBeCloseTo(0.6, 2);
+      await expect.poll(() => cutAt("track")).toBeCloseTo(0.6, 2);
+    });
+
+    it("THEN the track starts where the bar ends WHEN there's no buffer", async () => {
+      await renderWithSalt(<Progress delay={0} label="Uploading" value={38} />);
+
+      expect(document.querySelector(".saltProgress-buffer")).toBeNull();
+      await expect.poll(() => cutAt("track")).toBeCloseTo(0.38, 2);
     });
 
     it("THEN it shows no buffer WHEN it has no value", async () => {
@@ -414,9 +424,7 @@ describe("GIVEN a Progress", () => {
               indicator.classList.contains("saltProgress-indeterminate"),
             ).toBe(false);
             expect(
-              indicator
-                .querySelector<HTMLElement | SVGElement>(".saltProgress-bar")
-                ?.style.getPropertyValue("--saltProgress-fraction"),
+              indicator.style.getPropertyValue("--saltProgress-fraction"),
             ).toBe("0.5");
 
             await rendered.unmount();
