@@ -358,14 +358,6 @@
 .ag-theme-salt-dark .ag-set-filter-group-icons:hover,
 .ag-theme-salt-compact-light .ag-set-filter-group-icons:hover,
 .ag-theme-salt-compact-dark .ag-set-filter-group-icons:hover,
-.ag-theme-salt-light .ag-group-expanded .ag-icon:hover,
-.ag-theme-salt-dark .ag-group-expanded .ag-icon:hover,
-.ag-theme-salt-compact-light .ag-group-expanded .ag-icon:hover,
-.ag-theme-salt-compact-dark .ag-group-expanded .ag-icon:hover,
-.ag-theme-salt-light .ag-group-contracted .ag-icon:hover,
-.ag-theme-salt-dark .ag-group-contracted .ag-icon:hover,
-.ag-theme-salt-compact-light .ag-group-contracted .ag-icon:hover,
-.ag-theme-salt-compact-dark .ag-group-contracted .ag-icon:hover,
 .ag-theme-salt-light .ag-chart-settings-prev:hover,
 .ag-theme-salt-dark .ag-chart-settings-prev:hover,
 .ag-theme-salt-compact-light .ag-chart-settings-prev:hover,
@@ -397,13 +389,63 @@
 .ag-theme-salt-light .ag-chart-menu-icon:hover,
 .ag-theme-salt-dark .ag-chart-menu-icon:hover,
 .ag-theme-salt-compact-light .ag-chart-menu-icon:hover,
-.ag-theme-salt-compact-dark .ag-chart-menu-icon:hover {
-  /* Button is the same size of icon, we're copying what ag quartz theme is doing */
-  box-shadow: 0 0 0 var(--salt-spacing-50) var(--salt-actionable-background-hover);
-  background-color: var(--salt-actionable-background-hover);
+.ag-theme-salt-compact-dark .ag-chart-menu-icon:hover,
+.ag-theme-salt-light .ag-chart-menu-toolbar-button:hover,
+.ag-theme-salt-dark .ag-chart-menu-toolbar-button:hover,
+.ag-theme-salt-compact-light .ag-chart-menu-toolbar-button:hover,
+.ag-theme-salt-compact-dark .ag-chart-menu-toolbar-button:hover {
   --ag-icon-font-color: var(--salt-actionable-subtle-foreground-hover);
   --ag-icon-font-color-filter: var(--salt-actionable-subtle-foreground-hover);
   --ag-icon-font-color-menu-alt: var(--salt-actionable-subtle-foreground-hover);
+}
+
+/*
+  Icon buttons are drawn like Salt's Button in an Input adornment: --salt-size-base less --salt-spacing-100, with
+  --salt-palette-corner-weaker, matching the Figma "Floating filter button". The button is drawn behind the icon,
+  centered on it, so the layout and click area don't change.
+  Icons inside a button (.ag-panel-title-bar-button-icon, .ag-chart-menu-icon) use the button's hover.
+*/
+[class*="ag-theme-salt"] .ag-header-cell-menu-button,
+[class*="ag-theme-salt"] .ag-header-cell-filter-button,
+[class*="ag-theme-salt"] .ag-panel-title-bar-button,
+[class*="ag-theme-salt"] .ag-header-expand-icon,
+[class*="ag-theme-salt"] .ag-column-group-icons,
+[class*="ag-theme-salt"] .ag-set-filter-group-icons,
+[class*="ag-theme-salt"] .ag-chart-settings-prev,
+[class*="ag-theme-salt"] .ag-chart-settings-next,
+[class*="ag-theme-salt"] .ag-chart-menu-toolbar-button,
+[class*="ag-theme-salt"] .ag-group-title-bar-icon,
+[class*="ag-theme-salt"] .ag-column-select-header-icon,
+[class*="ag-theme-salt"] .ag-floating-filter-button-button,
+[class*="ag-theme-salt"] .ag-filter-toolpanel-expand {
+  position: relative;
+  isolation: isolate;
+}
+
+[class*="ag-theme-salt"] .ag-header-cell-menu-button:hover::before,
+[class*="ag-theme-salt"] .ag-header-cell-filter-button:hover::before,
+[class*="ag-theme-salt"] .ag-panel-title-bar-button:hover::before,
+[class*="ag-theme-salt"] .ag-header-expand-icon:hover::before,
+[class*="ag-theme-salt"] .ag-column-group-icons:hover::before,
+[class*="ag-theme-salt"] .ag-set-filter-group-icons:hover::before,
+[class*="ag-theme-salt"] .ag-chart-settings-prev:hover::before,
+[class*="ag-theme-salt"] .ag-chart-settings-next:hover::before,
+[class*="ag-theme-salt"] .ag-chart-menu-toolbar-button:hover::before,
+[class*="ag-theme-salt"] .ag-group-title-bar-icon:hover::before,
+[class*="ag-theme-salt"] .ag-column-select-header-icon:hover::before,
+[class*="ag-theme-salt"] .ag-floating-filter-button-button:hover::before,
+[class*="ag-theme-salt"] .ag-filter-toolpanel-expand:hover::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  width: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  transform: translate(-50%, -50%);
+  border-radius: var(--salt-palette-corner-weaker, 0);
+  background-color: var(--salt-actionable-background-hover);
+  pointer-events: none;
 }
 
 /* Make filter and menu icon apart, to accomodate hover effects above */

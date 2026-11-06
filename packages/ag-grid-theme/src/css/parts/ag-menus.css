@@ -132,3 +132,21 @@
 .ag-theme-salt-compact-dark .ag-menu-option:focus-visible::after {
   content: none;
 }
+/*
+  Pressed menu items match MenuItem's active state. Options are table rows, so the top and bottom borders are drawn
+  by the cells, in the gaps between items.
+*/
+.ag-theme-salt-light .ag-menu-option:not(.ag-menu-option-disabled):active,
+.ag-theme-salt-dark .ag-menu-option:not(.ag-menu-option-disabled):active,
+.ag-theme-salt-compact-light .ag-menu-option:not(.ag-menu-option-disabled):active,
+.ag-theme-salt-compact-dark .ag-menu-option:not(.ag-menu-option-disabled):active {
+  background-color: var(--salt-selectable-background-selected);
+}
+.ag-theme-salt-light .ag-menu-option:not(.ag-menu-option-disabled):active > .ag-menu-option-part,
+.ag-theme-salt-dark .ag-menu-option:not(.ag-menu-option-disabled):active > .ag-menu-option-part,
+.ag-theme-salt-compact-light .ag-menu-option:not(.ag-menu-option-disabled):active > .ag-menu-option-part,
+.ag-theme-salt-compact-dark .ag-menu-option:not(.ag-menu-option-disabled):active > .ag-menu-option-part {
+  box-shadow:
+    0 calc(var(--salt-size-fixed-100) * -1) 0 0 var(--salt-selectable-borderColor-selected),
+    0 var(--salt-size-fixed-100) 0 0 var(--salt-selectable-borderColor-selected);
+}

@@ -418,8 +418,18 @@
 
 /*
   The row group expand icon sits in a transparent button (Figma "Expand button"), the icon size plus
-  --salt-spacing-100 on each side, followed by a --salt-spacing-100 gap before the group value.
+  --salt-spacing-100 on each side, followed by a --salt-spacing-100 gap before the group value. The button matches
+  Salt's Button: neutral, appearance="transparent", and the hover fills the whole button.
 */
+[class*="ag-theme-salt"] .ag-cell-wrapper .ag-group-expanded,
+[class*="ag-theme-salt"] .ag-cell-wrapper .ag-group-contracted {
+  box-sizing: border-box;
+  justify-content: center;
+  width: calc(var(--ag-icon-size) + 2 * var(--salt-spacing-100));
+  height: calc(var(--ag-icon-size) + 2 * var(--salt-spacing-100));
+  border-radius: var(--salt-palette-corner-weak, 0);
+}
+
 .ag-theme-salt-light .ag-ltr .ag-cell-wrapper .ag-group-expanded,
 .ag-theme-salt-dark .ag-ltr .ag-cell-wrapper .ag-group-expanded,
 .ag-theme-salt-compact-light .ag-ltr .ag-cell-wrapper .ag-group-expanded,
@@ -428,20 +438,20 @@
 .ag-theme-salt-dark .ag-ltr .ag-cell-wrapper .ag-group-contracted,
 .ag-theme-salt-compact-light .ag-ltr .ag-cell-wrapper .ag-group-contracted,
 .ag-theme-salt-compact-dark .ag-ltr .ag-cell-wrapper .ag-group-contracted {
-  margin-left: var(--salt-spacing-100);
-  margin-right: calc(2 * var(--salt-spacing-100));
+  margin-left: 0;
+  margin-right: var(--salt-spacing-100);
 }
 
-/* The hover fills the whole expand button */
-.ag-theme-salt-light .ag-cell-wrapper .ag-group-expanded .ag-icon:hover,
-.ag-theme-salt-dark .ag-cell-wrapper .ag-group-expanded .ag-icon:hover,
-.ag-theme-salt-compact-light .ag-cell-wrapper .ag-group-expanded .ag-icon:hover,
-.ag-theme-salt-compact-dark .ag-cell-wrapper .ag-group-expanded .ag-icon:hover,
-.ag-theme-salt-light .ag-cell-wrapper .ag-group-contracted .ag-icon:hover,
-.ag-theme-salt-dark .ag-cell-wrapper .ag-group-contracted .ag-icon:hover,
-.ag-theme-salt-compact-light .ag-cell-wrapper .ag-group-contracted .ag-icon:hover,
-.ag-theme-salt-compact-dark .ag-cell-wrapper .ag-group-contracted .ag-icon:hover {
-  box-shadow: 0 0 0 var(--salt-spacing-100) var(--salt-actionable-background-hover);
+[class*="ag-theme-salt"] .ag-cell-wrapper .ag-group-expanded:hover,
+[class*="ag-theme-salt"] .ag-cell-wrapper .ag-group-contracted:hover {
+  background-color: var(--salt-actionable-subtle-background-hover);
+  --ag-icon-font-color: var(--salt-actionable-subtle-foreground-hover);
+}
+
+[class*="ag-theme-salt"] .ag-cell-wrapper .ag-group-expanded:active,
+[class*="ag-theme-salt"] .ag-cell-wrapper .ag-group-contracted:active {
+  background-color: var(--salt-actionable-subtle-background-active);
+  --ag-icon-font-color: var(--salt-actionable-subtle-foreground-active);
 }
 
 /* Leaf rows line up with the group value of their parent, after the expand button and gap */
