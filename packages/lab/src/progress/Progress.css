@@ -1,0 +1,353 @@
+/* Registered, so the fractions animate and everything positioned from them moves together */
+@property --saltProgress-fraction {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+@property --saltProgress-bufferFraction {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+/*
+  Styles applied to the root element. The track is a light neutral fill that stays the same in every state, and the bar
+  fills it. The bar contrasts with the background, and the value is always shown as text, except on small circular
+  progress, so the track doesn't need to. Override the colors with --saltProgress-barColor and --saltProgress-trackColor.
+*/
+.saltProgress {
+  --progress-barColor: var(--saltProgress-barColor, var(--salt-sentiment-accent-background));
+  /* Black at 10% in light mode, and white at 10% in dark mode, in every theme */
+  --progress-trackColor: var(--saltProgress-trackColor, var(--salt-container-ghost-subtle-borderColor));
+  --progress-trackOpacity: 1;
+  color: var(--salt-content-primary-foreground);
+  box-sizing: border-box;
+}
+
+.saltProgress-success {
+  --progress-barColor: var(--saltProgress-barColor, var(--salt-status-success-foreground-decorative));
+}
+
+.saltProgress-error {
+  --progress-barColor: var(--saltProgress-barColor, var(--salt-status-error-foreground-decorative));
+}
+
+/* Inside a button, progress takes the button's text color, like an icon, so it contrasts with any button style */
+.saltButton .saltProgress {
+  --progress-barColor: var(--saltProgress-barColor, currentColor);
+  --progress-trackColor: var(--saltProgress-trackColor, currentColor);
+  --progress-trackOpacity: 0.3;
+  color: inherit;
+}
+
+.saltProgress-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+/* Text aligns to the first line, so the value and icon stay beside the start of a label that wraps */
+.saltProgress-header {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--salt-spacing-100);
+}
+
+.saltProgress-label {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.saltProgress-value {
+  white-space: nowrap;
+}
+
+.saltProgress-statusIcon {
+  --saltIcon-margin: calc((var(--salt-text-lineHeight) - max(var(--salt-size-icon), 12px)) / 2) 0 0;
+  flex-shrink: 0;
+}
+
+/* Linear: label and value above the bar, helper text below it */
+.saltProgress-linear {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "header"
+    "progressbar"
+    "description";
+  /* The same gap as between a FormField label and its control */
+  row-gap: var(--salt-spacing-75);
+}
+
+.saltProgress-linear .saltProgress-text {
+  display: contents;
+}
+
+.saltProgress-linear .saltProgress-header {
+  grid-area: header;
+  /* The label grows, so the status icon and value sit at the end, even without a label */
+  justify-content: flex-end;
+}
+
+.saltProgress-linear .saltProgress-progressbar {
+  grid-area: progressbar;
+}
+
+.saltProgress-linear .saltProgress-description {
+  grid-area: description;
+}
+
+/*
+  The bar, the buffer and the rest of the track are three parts, with a gap between them that follows the curve of the
+  part before. The fractions animate, rather than each part's size, so the gaps move with the bar.
+*/
+.saltProgress-linear .saltProgress-indicator {
+  --progress-height: max(var(--salt-size-bar-strong), 6px);
+  --progress-radius: calc(var(--progress-height) / 2);
+  --progress-gap: var(--salt-size-fixed-100);
+  position: relative;
+  /* Tall enough to see the three parts at every density */
+  height: var(--progress-height);
+  border-radius: var(--salt-palette-corner-strongest);
+  overflow: hidden;
+  transition:
+    --saltProgress-fraction var(--salt-duration-perceptible) linear,
+    --saltProgress-bufferFraction var(--salt-duration-perceptible) linear;
+}
+
+/*
+  The buffer and the track are cut where the part before them ends: everything before its rounded end, and a circle
+  around that end that's wider by the gap. There's no gap after a part with no width.
+*/
+.saltProgress-linear .saltProgress-track,
+.saltProgress-linear .saltProgress-buffer {
+  --progress-cutX: calc(var(--progress-cutAt) * 100% - var(--progress-radius));
+  --progress-cutRadius: calc(var(--progress-radius) + min(var(--progress-gap), var(--progress-cutAt) * 1000px));
+  --progress-cut:
+    linear-gradient(to right, transparent var(--progress-cutX), black var(--progress-cutX)),
+    radial-gradient(circle var(--progress-cutRadius) at var(--progress-cutX) 50%, transparent calc(var(--progress-cutRadius) - 0.25px), black calc(var(--progress-cutRadius) + 0.25px));
+  position: absolute;
+  inset: 0;
+  -webkit-mask: var(--progress-cut);
+  -webkit-mask-composite: source-in;
+  mask: var(--progress-cut);
+  mask-composite: intersect;
+}
+
+.saltProgress-linear .saltProgress-track {
+  --progress-cutAt: var(--saltProgress-bufferFraction);
+  background: var(--progress-trackColor);
+  opacity: var(--progress-trackOpacity);
+}
+
+/* The buffer is a solid neutral between the bar and the rest of the track */
+.saltProgress-linear .saltProgress-buffer {
+  --progress-cutAt: var(--saltProgress-fraction);
+  background: var(--salt-sentiment-neutral-track);
+  clip-path: inset(0 calc((1 - var(--saltProgress-bufferFraction)) * 100%) 0 0 round var(--progress-radius));
+}
+
+.saltProgress-linear .saltProgress-bar {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: calc(var(--saltProgress-fraction) * 100%);
+  border-radius: var(--salt-palette-corner-strongest);
+  background: var(--progress-barColor);
+  transition: background-color var(--salt-duration-perceptible) ease-in-out;
+}
+
+/* A new loop starts from an empty track */
+.saltProgress-linear .saltProgress-indeterminate {
+  transition: none;
+}
+
+/*
+  Indeterminate progress loops: a segment slides across the track, so it never looks like a fill. When the value becomes
+  known, the segment finishes its pass and the bar fills from the start.
+*/
+.saltProgress-linear .saltProgress-loop {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 66%;
+  border-radius: var(--salt-palette-corner-strongest);
+  background: var(--progress-barColor);
+  transition:
+    background-color var(--salt-duration-perceptible) ease-in-out,
+    opacity var(--salt-duration-perceptible) ease-in-out;
+  animation: saltProgress-linear-loop 1.8s ease-in-out infinite;
+}
+
+/* The segment leaves the track at 60%, where the loop can stop */
+@keyframes saltProgress-linear-loop {
+  0% {
+    transform: translateX(-100%);
+  }
+  60% {
+    transform: translateX(155%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+/* Circular: the indicator, with the label, value and helper text beside it */
+.saltProgress-circular {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--salt-spacing-100);
+}
+
+.saltProgress-small {
+  --saltProgress-size: max(var(--salt-size-icon), 12px);
+  --saltProgress-ringWidth: var(--salt-size-fixed-200);
+}
+
+.saltProgress-medium {
+  --saltProgress-size: var(--salt-size-base);
+  --saltProgress-ringWidth: max(var(--salt-size-bar), 4px);
+}
+
+.saltProgress-large {
+  --saltProgress-size: calc(var(--salt-size-base) * 3);
+  --saltProgress-ringWidth: max(var(--salt-size-bar-strong), 4px);
+}
+
+.saltProgress-circular .saltProgress-progressbar {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+/* Large rings are used centered, such as in a page loader, so their text sits below them */
+.saltProgress-circular.saltProgress-large {
+  flex-direction: column;
+  text-align: center;
+}
+
+.saltProgress-large .saltProgress-text {
+  align-items: center;
+}
+
+.saltProgress-large .saltProgress-header {
+  justify-content: center;
+}
+
+.saltProgress-large .saltProgress-label {
+  flex-grow: 0;
+}
+
+.saltProgress-circular .saltProgress-indicator {
+  display: block;
+  width: var(--saltProgress-size);
+  height: var(--saltProgress-size);
+  /* Start at the top */
+  transform: rotate(-90deg);
+}
+
+.saltProgress-circular circle {
+  cx: calc(var(--saltProgress-size) / 2);
+  cy: calc(var(--saltProgress-size) / 2);
+  fill: none;
+}
+
+/* The track and the bar are as wide as the ring */
+.saltProgress-circular .saltProgress-track {
+  r: calc((var(--saltProgress-size) - var(--saltProgress-ringWidth)) / 2);
+  stroke: var(--progress-trackColor);
+  stroke-width: var(--saltProgress-ringWidth);
+  stroke-opacity: var(--progress-trackOpacity);
+}
+
+.saltProgress-circular .saltProgress-bar {
+  r: calc((var(--saltProgress-size) - var(--saltProgress-ringWidth)) / 2);
+  stroke: var(--progress-barColor);
+  stroke-width: var(--saltProgress-ringWidth);
+  stroke-linecap: round;
+  /* The circles have a path length of 100 */
+  stroke-dasharray: calc(var(--saltProgress-fraction) * 100) 100;
+  /* Visibility changes at the end, so an emptying arc stays visible until it's gone */
+  transition:
+    stroke-dasharray var(--salt-duration-perceptible) linear,
+    stroke var(--salt-duration-perceptible) ease-in-out,
+    visibility var(--salt-duration-perceptible);
+}
+
+/* A rounded cap would still draw a dot when there's no progress */
+.saltProgress-circular.saltProgress-empty .saltProgress-bar {
+  visibility: hidden;
+}
+
+/*
+  Indeterminate progress loops: an arc turns around the track. When the value becomes known, the arc finishes its turn
+  and settles from the top into the value.
+*/
+.saltProgress-circular .saltProgress-indeterminate {
+  animation: saltProgress-circular-loop 0.9s linear infinite;
+}
+
+.saltProgress-circular .saltProgress-indeterminate .saltProgress-bar {
+  stroke-dasharray: 25 100;
+  transition:
+    stroke var(--salt-duration-perceptible) ease-in-out,
+    opacity var(--salt-duration-perceptible) ease-in-out;
+}
+
+@keyframes saltProgress-circular-loop {
+  from {
+    transform: rotate(-90deg);
+  }
+  to {
+    transform: rotate(270deg);
+  }
+}
+
+.saltProgress-valueInside {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* A paused loop stops where it is. A failed loop stops too, and fades out so it no longer shows progress */
+.saltProgress-paused .saltProgress-indeterminate,
+.saltProgress-paused .saltProgress-loop,
+.saltProgress-error .saltProgress-indeterminate,
+.saltProgress-error .saltProgress-loop {
+  animation-play-state: paused;
+}
+
+.saltProgress-error .saltProgress-loop,
+.saltProgress-error .saltProgress-indeterminate .saltProgress-bar {
+  opacity: 0;
+}
+
+/* Success changes color once the bar has filled */
+.saltProgress-success .saltProgress-bar {
+  transition-delay: 0s, var(--salt-duration-perceptible), 0s;
+}
+
+.saltProgress-success.saltProgress-linear .saltProgress-bar {
+  transition-delay: var(--salt-duration-perceptible);
+}
+
+/* Loops slow down rather than stop, so indeterminate progress still reads as working. Everything else changes at once */
+@media (prefers-reduced-motion: reduce) {
+  .saltProgress-linear .saltProgress-indicator,
+  .saltProgress-linear .saltProgress-bar,
+  .saltProgress-linear .saltProgress-loop,
+  .saltProgress-circular .saltProgress-bar {
+    transition: none;
+  }
+
+  .saltProgress-linear .saltProgress-loop {
+    animation-duration: 5.4s;
+  }
+
+  .saltProgress-circular .saltProgress-indeterminate {
+    animation-duration: 2.7s;
+  }
+}
