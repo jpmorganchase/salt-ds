@@ -21,7 +21,7 @@
 .saltStepper-horizontal .saltStep-stage-completed > .saltStepConnector,
 .saltStepper-horizontal .saltStep-stage-inprogress > .saltStepConnector {
   border-top-style: var(--salt-borderStyle-solid);
-  border-top-color: var(--salt-sentiment-accent-borderColor);
+  border-top-color: var(--salt-sentiment-accent-background);
 }
 
 .saltStepper-vertical .saltStepConnector {
@@ -37,7 +37,7 @@
 .saltStepper-vertical .saltStep-stage-completed > .saltStepConnector,
 .saltStepper-vertical .saltStep-stage-inprogress > .saltStepConnector {
   border-left-style: var(--salt-borderStyle-solid);
-  border-left-color: var(--salt-sentiment-accent-borderColor);
+  border-left-color: var(--salt-sentiment-accent-background);
 }
 
 .saltStep-depth-0.saltStep:not(.saltStep-expanded):last-child > .saltStepConnector {

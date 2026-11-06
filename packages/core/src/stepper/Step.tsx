@@ -11,6 +11,7 @@ import {
 } from "react";
 import type { ButtonProps } from "../button";
 import { makePrefixer, useControlled, useId } from "../utils";
+import { hasActiveStep } from "./internal/hasActiveStep";
 import { StepConnector } from "./internal/StepConnector";
 import { StepExpandTrigger } from "./internal/StepExpandTrigger";
 import { StepIcon } from "./internal/StepIcon";
@@ -163,6 +164,9 @@ export const Step = forwardRef<HTMLLIElement, StepProps>(function Step(
         withBaseName(`depth-${depth}`),
         status && withBaseName(`status-${status}`),
         !hasNestedSteps && withBaseName("terminal"),
+        hasNestedSteps &&
+          hasActiveStep(children) &&
+          withBaseName("hasActiveStep"),
         hasNestedSteps && expanded && withBaseName("expanded"),
         hasNestedSteps && !expanded && withBaseName("collapsed"),
         className,
