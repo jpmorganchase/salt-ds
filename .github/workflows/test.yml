@@ -36,6 +36,8 @@ jobs:
         run: yarn run lint:style
       - name: Spellcheck
         run: yarn workspace @salt-ds/site spellcheck
+      - name: Check agent docs
+        run: yarn build:agent-docs --check
 
   dependency-check:
     name: Dependency Check
@@ -58,6 +60,10 @@ jobs:
         run: yarn build
       - name: Check packages
         run: node ./scripts/checkPackages.mjs
+      # Agents and people copy the site examples, so they're checked against
+      # the docs just built: deprecated tokens and props, and missing parts.
+      - name: Check site examples
+        run: yarn run check:examples
       - name: Check consumer types (React 16-19)
         run: yarn run typecheck:consumer
   type-checks:
@@ -79,6 +85,8 @@ jobs:
         run: yarn run typecheck
       - name: Run typecheck (React 19 types)
         run: yarn run typecheck:react19
+      - name: Typecheck site and examples
+        run: yarn run typecheck:site
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest

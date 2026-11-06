@@ -1,0 +1,929 @@
+import { cp, mkdir, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
+import { tmpdir } from "node:os";
+import path from "node:path";
+import { afterEach, describe, expect, it } from "vitest";
+import { run as initAgentDocs } from "../../../../packages/cli/lib/agents-md.mjs";
+import { GENERATED_MARKER } from "../config.mjs";
+import { pathExists } from "../files.mjs";
+import {
+  AgentDocsError,
+  findBrokenLinks,
+  generateAgentDocs,
+} from "../generate.mjs";
+
+const FORMS_PREVIEWS = `<LivePreview componentName="patterns/forms" exampleName="Standard" />
+
+<LivePreview componentName="patterns/forms" exampleName="Compact" />
+`;
+
+const fixtureFiles = {
+  "packages/core/package.json": {
+    name: "@salt-ds/core",
+    version: "1.2.3",
+    files: ["dist-es", "docs"],
+  },
+  "packages/theme/package.json": {
+    name: "@salt-ds/theme",
+    version: "4.5.6",
+    files: ["/css", "/docs"],
+  },
+  "packages/theme/src/css/theme.css":
+    '@import "./foundations/spacing.css"; @import "./deprecated/characteristics.css";',
+  "packages/theme/src/css/theme-next.css":
+    '@import "./theme.css"; @import "./next/palette/accent.css"; @import "./next/characteristics/actionable.css";',
+  "packages/theme/src/css/experimental/salt-interim.css":
+    '@import "../foundations/spacing.css";',
+  "packages/theme/src/css/foundations/spacing.css":
+    ".salt-theme { --salt-spacing-100: 8px; }",
+  "packages/theme/src/css/next/palette/accent.css":
+    ".salt-theme { --salt-palette-accent: blue; }",
+  "packages/theme/src/css/next/characteristics/actionable.css":
+    ".salt-theme { --salt-actionable-bold-background: var(--salt-palette-accent); }",
+  "packages/theme/src/css/deprecated/characteristics.css":
+    ".salt-theme { --salt-old-background: var(--salt-actionable-bold-background); --salt-old-accent: var(--salt-palette-accent); }",
+  "site/src/examples/patterns/forms/index.ts":
+    'export * from "./Compact";\nexport * from "./Standard";\n',
+  "site/src/examples/patterns/forms/Standard.tsx":
+    "export const Standard = () => null;\n",
+  "site/src/examples/patterns/forms/Compact.tsx":
+    "export const Compact = () => null;\n",
+  "site/src/examples/button/Primary.tsx":
+    'import "./styles.css";\n\nexport const Primary = () => null;\n',
+  "site/src/examples/button/styles.css": ".primary {}\n",
+  "site/docs/components/button/index.mdx": `---
+title: Button
+data:
+  description: "\`Button\` triggers an action. See [dialogs](../dialog)."
+  package:
+    name: "@salt-ds/core"
+  alsoKnownAs: ["Action"]
+  relatedComponents: [{ name: "Dialog", relationship: "similarTo" }]
+  relatedPatterns: ["Forms"]
+layout: DetailComponent
+---
+`,
+  "site/docs/components/button/usage.mdx": `---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+---
+
+## Using the component
+
+Use buttons in [forms](/salt/patterns/forms) with [spacing](/salt/foundations/spacing).
+
+<PropsTable componentName="Button" />
+`,
+  "site/docs/components/button/examples.mdx": `---
+layout: DetailComponent
+---
+
+## Primary
+
+<LivePreview componentName="button" exampleName="Primary" />
+`,
+  "site/docs/components/button/accessibility.mdx": `---
+layout: DetailComponent
+---
+
+## Keyboard interactions
+
+<KeyboardControls>
+<KeyboardControl keyOrCombos="Enter">
+Activates the button.
+</KeyboardControl>
+</KeyboardControls>
+`,
+  "site/docs/components/dialog/index.mdx": `---
+title: Dialog
+data:
+  description: "\`Dialog\` opens over content."
+  package:
+    name: "@salt-ds/core"
+layout: DetailComponent
+---
+`,
+  "site/docs/components/dialog/alert-dialog/index.mdx": `---
+title: Alert dialog
+data:
+  description: "\`AlertDialog\` interrupts the user."
+layout: DetailComponent
+---
+`,
+  "site/docs/patterns/forms.mdx": `---
+title: Forms
+description: "Forms capture data."
+layout: DetailPattern
+---
+
+## Layout
+
+Stack fields vertically.
+
+<LivePreview componentName="patterns/forms" exampleName="Standard" />
+
+<LivePreview componentName="patterns/forms" exampleName="Compact" />
+`,
+  "site/docs/foundations/spacing.mdx": `---
+title: Spacing
+layout: DetailTechnical
+---
+
+Spacing positions elements.
+
+<TokenTableWithControls tokens={["--salt-spacing-100"]} />
+`,
+  "site/docs/themes/design-tokens/index.mdx": `---
+title: Design tokens
+layout: DetailTechnical
+---
+
+Tokens capture design choices.
+`,
+  "site/docs/about/roadmap.mdx": `---
+title: Roadmap
+---
+
+Skipped.
+`,
+};
+
+const propsProvider = {
+  get: (packageDirectory, componentName) =>
+    packageDirectory === "core" && componentName === "Button"
+      ? {
+          props: {
+            appearance: {
+              name: "appearance",
+              type: { name: "enum", value: [{ value: '"solid"' }] },
+              description: "The appearance.",
+            },
+          },
+        }
+      : undefined,
+};
+
+const roots = [];
+
+async function createFixture(overrides = {}) {
+  const root = await mkdtemp(path.join(tmpdir(), "salt-agent-docs-"));
+  roots.push(root);
+  for (const [file, content] of Object.entries({
+    ...fixtureFiles,
+    ...overrides,
+  })) {
+    const target = path.join(root, file);
+    await mkdir(path.dirname(target), { recursive: true });
+    await writeFile(
+      target,
+      typeof content === "string" ? content : JSON.stringify(content),
+    );
+  }
+  return root;
+}
+
+afterEach(async () => {
+  await Promise.all(
+    roots.splice(0).map((root) => rm(root, { recursive: true, force: true })),
+  );
+});
+
+describe("findBrokenLinks", () => {
+  it("checks relative and cross-package links but not code or URLs", () => {
+    const outputs = new Map([
+      [
+        "@salt-ds/core",
+        {
+          files: new Map([
+            [
+              "components/button.md",
+              "# Button\n\n[ok](./dialog.md#focus) [theme](@salt-ds/theme/docs/tokens.md) [web](https://example.com) [missing](../patterns/nope.md) [site](/salt/x)\n\n```md\n[ignored](./nope.md)\n```\n\n> ```ts\n> handlers[key](event);\n> ```\n",
+            ],
+            ["components/dialog.md", ""],
+          ]),
+        },
+      ],
+      ["@salt-ds/theme", { files: new Map([["tokens.md", ""]]) }],
+    ]);
+    expect(findBrokenLinks(outputs)).toEqual([
+      "@salt-ds/core/docs/components/button.md: link ./dialog.md#focus points to a heading that doesn't exist.",
+      "@salt-ds/core/docs/components/button.md: broken link ../patterns/nope.md.",
+      "@salt-ds/core/docs/components/button.md: broken link /salt/x.",
+    ]);
+  });
+
+  it("checks that anchors match a heading or HTML id in the target", () => {
+    const outputs = new Map([
+      [
+        "@salt-ds/core",
+        {
+          files: new Map([
+            [
+              "components/button.md",
+              "# Button\n\n## Focus\n\n## Focus\n\n## Focus-1\n\n[a](#focus) [b](#focus-1) [f](#focus-1-1) [c](./dialog.md#keep-it) [d](./dialog.md#closing-a-dialog) [e](#nope)\n",
+            ],
+            [
+              "components/dialog.md",
+              '## Closing a dialog\n\n<a id="keep-it"></a>\n',
+            ],
+          ]),
+        },
+      ],
+    ]);
+    expect(findBrokenLinks(outputs)).toEqual([
+      "@salt-ds/core/docs/components/button.md: link #nope points to a heading that doesn't exist.",
+    ]);
+  });
+
+  it("reports a malformed percent-encoded anchor as a broken link instead of throwing", () => {
+    const outputs = new Map([
+      [
+        "@salt-ds/core",
+        {
+          files: new Map([
+            [
+              "components/button.md",
+              "# Button\n\n## 50% width\n\n[a](#50%-width) [b](#50-width)\n",
+            ],
+          ]),
+        },
+      ],
+    ]);
+    expect(findBrokenLinks(outputs)).toEqual([
+      "@salt-ds/core/docs/components/button.md: link #50%-width points to a heading that doesn't exist.",
+    ]);
+  });
+});
+
+describe("generateAgentDocs", () => {
+  it("adds the parts examples use to their component's table", async () => {
+    const button = {
+      displayName: "Button",
+      props: propsProvider.get("core", "Button").props,
+    };
+    const parts = {
+      ButtonIcon: {
+        displayName: "ButtonIcon",
+        props: {},
+        inherited: { HTMLAttributes: ["id"] },
+      },
+      ButtonInternal: { displayName: "ButtonInternal", props: {} },
+    };
+    const components = new Map([["Button", button], ...Object.entries(parts)]);
+    const repoRoot = await createFixture({
+      "site/src/examples/button/Primary.tsx":
+        'import { Button, ButtonIcon } from "@salt-ds/core";\nexport const Primary = () => <Button><ButtonIcon /></Button>;\n',
+    });
+    const result = await generateAgentDocs({
+      repoRoot,
+      write: false,
+      propsProvider: {
+        get: (packageDirectory, name) =>
+          packageDirectory === "core" ? components.get(name) : undefined,
+        all: (packageDirectory) =>
+          packageDirectory === "core" ? components : new Map(),
+      },
+    });
+    const files = result.outputs.get("@salt-ds/core").files;
+    const page = files.get("components/button.md");
+    // Examples use ButtonIcon but not ButtonInternal.
+    expect(page).toContain(
+      "**`ButtonIcon`**, exported with `Button`:\n\n`ButtonIcon` has no props of its own. It accepts HTML attributes.",
+    );
+    expect(page).not.toContain("ButtonInternal");
+  });
+
+  it("writes version-matched docs into each owning package", async () => {
+    const repoRoot = await createFixture();
+    const result = await generateAgentDocs({ repoRoot, propsProvider });
+
+    expect([...result.packages.keys()]).toEqual([
+      "@salt-ds/core",
+      "@salt-ds/theme",
+    ]);
+    expect(
+      [...result.outputs.get("@salt-ds/core").files.keys()].sort(),
+    ).toEqual([
+      "components/button.md",
+      "components/dialog.md",
+      "components/dialog/alert-dialog.md",
+      "index.md",
+      "manifest.json",
+      "patterns/forms.md",
+      "salt-check.json",
+    ]);
+
+    const button = await readFile(
+      path.join(repoRoot, "packages/core/docs/components/button.md"),
+      "utf8",
+    );
+    expect(button).toContain(
+      "# Button\n\n`Button` triggers an action. See [dialogs](./dialog.md).",
+    );
+    expect(button).toContain("- Package: `@salt-ds/core@1.2.3`");
+    expect(button).not.toContain("External dependency:");
+    expect(button).not.toContain("Compatible versions:");
+    expect(button).not.toContain("License required:");
+    expect(button).toContain("- Also known as: Action");
+    expect(button).toContain("[Dialog](./dialog.md) (similar to)");
+    expect(button).toContain("[Forms](../patterns/forms.md)");
+    expect(button).toContain("## Usage\n\n### Using the component");
+    expect(button).toContain(
+      "[spacing](@salt-ds/theme/docs/foundations/spacing.md)",
+    );
+    expect(button).toContain(
+      '| `appearance` | `"solid"` | - | The appearance. |',
+    );
+    expect(button).toContain("## Examples\n\n### Primary");
+    expect(button).toContain("Supporting file `./styles.css`:");
+    expect(button).toContain("## Accessibility");
+    expect(button).toContain("- **Enter**");
+    // Accessibility comes before the examples, which are the longest part.
+    expect(button.indexOf("## Usage")).toBeLessThan(
+      button.indexOf("## Accessibility"),
+    );
+    expect(button.indexOf("## Accessibility")).toBeLessThan(
+      button.indexOf("## Examples"),
+    );
+
+    const alertDialog = result.outputs
+      .get("@salt-ds/core")
+      .files.get("components/dialog/alert-dialog.md");
+    expect(alertDialog).toContain("- Package: `@salt-ds/core@1.2.3`");
+
+    const forms = result.outputs
+      .get("@salt-ds/core")
+      .files.get("patterns/forms.md");
+    expect(forms).toContain(
+      "_Example:_ `Standard`\n\n```tsx\nexport const Standard = () => null;\n```",
+    );
+    expect(forms).toContain(
+      "_Example:_ `Compact`\n\n```tsx\nexport const Compact = () => null;\n```",
+    );
+
+    const index = await readFile(
+      path.join(repoRoot, "packages/core/docs/index.md"),
+      "utf8",
+    );
+    expect(index.split("\n", 1)[0]).toBe(GENERATED_MARKER);
+    expect(index).toContain(
+      "- [Button](components/button.md): Button triggers an action. See dialogs. Also known as: Action.",
+    );
+    expect(index).toContain("- `@salt-ds/theme/docs/index.md`");
+
+    const manifest = JSON.parse(
+      await readFile(
+        path.join(repoRoot, "packages/core/docs/manifest.json"),
+        "utf8",
+      ),
+    );
+    expect(manifest).toMatchObject({
+      schemaVersion: 1,
+      name: "@salt-ds/core",
+      version: "1.2.3",
+    });
+    expect(manifest.pages).toContainEqual({
+      path: "components/button.md",
+      title: "Button",
+      section: "components",
+      aliases: ["Action"],
+    });
+    expect(manifest.pages.map((page) => page.path)).toEqual([
+      "components/button.md",
+      "components/dialog.md",
+      "components/dialog/alert-dialog.md",
+      "patterns/forms.md",
+    ]);
+    expect(result.agentsBlockBytes).toBeGreaterThan(0);
+
+    const spacing = result.outputs
+      .get("@salt-ds/theme")
+      .files.get("foundations/spacing.md");
+    expect(spacing).toContain(
+      "Token: `--salt-spacing-100` ([token reference](../tokens.md)).",
+    );
+
+    const tokens = result.outputs.get("@salt-ds/theme").files.get("tokens.md");
+    expect(tokens).toContain(
+      "### actionable\n\n- `--salt-actionable-bold-background`",
+    );
+    expect(tokens).toContain(
+      "- `--salt-old-background`: alias of `--salt-actionable-bold-background`",
+    );
+    expect(tokens).toContain(
+      "- `--salt-old-accent` (SaltProviderNext and legacy themes only)\n",
+    );
+    expect(tokens).not.toContain("alias of `--salt-palette-accent`");
+  });
+
+  it("preserves external dependency details and links from component frontmatter", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/components/button/index.mdx": fixtureFiles[
+        "site/docs/components/button/index.mdx"
+      ].replace(
+        "  package:\n",
+        `  externalDependency:
+    name: "example-library"
+    description: "Uses \`example-library\` with [dialogs](../dialog)."
+    url: "https://example.com/library"
+    compatibleVersions: ">=8 <10"
+    licenseRequired: true
+  package:
+`,
+      ),
+    });
+    const result = await generateAgentDocs({
+      repoRoot,
+      write: false,
+      propsProvider,
+    });
+    const button = result.outputs
+      .get("@salt-ds/core")
+      .files.get("components/button.md");
+    expect(button).toContain(
+      "- External dependency: [`example-library`](https://example.com/library)",
+    );
+    expect(button).toContain("- Compatible versions: `>=8 <10`");
+    expect(button).toContain("- License required: Yes");
+    expect(button).toContain(
+      "Uses `example-library` with [dialogs](./dialog.md).",
+    );
+  });
+
+  it("keeps an external dependency name without inventing optional details", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/components/button/index.mdx": fixtureFiles[
+        "site/docs/components/button/index.mdx"
+      ].replace(
+        "  package:\n",
+        `  externalDependency:
+    name: "example-library"
+    licenseRequired: false
+  package:
+`,
+      ),
+    });
+    const result = await generateAgentDocs({
+      repoRoot,
+      write: false,
+      propsProvider,
+    });
+    const button = result.outputs
+      .get("@salt-ds/core")
+      .files.get("components/button.md");
+    expect(button).toContain("- External dependency: `example-library`\n");
+    expect(button).not.toContain("Compatible versions:");
+    expect(button).not.toContain("License required:");
+  });
+
+  it("measures the same guidance block that init writes from generated packages", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/getting-started/fixing-accessibility.mdx": `---
+title: Fixing accessibility
+---
+
+Reproduce the problem before changing the component.
+`,
+    });
+    const result = await generateAgentDocs({ repoRoot, propsProvider });
+    await Promise.all(
+      ["core", "theme"].map((name) =>
+        cp(
+          path.join(repoRoot, "packages", name),
+          path.join(repoRoot, "node_modules/@salt-ds", name),
+          { recursive: true },
+        ),
+      ),
+    );
+    expect(
+      initAgentDocs(["--project", repoRoot, "--no-claude"], {
+        log: () => {},
+      }),
+    ).toBe(0);
+    const instructions = await readFile(
+      path.join(repoRoot, "AGENTS.md"),
+      "utf8",
+    );
+    expect(instructions).toContain(
+      "node_modules/@salt-ds/core/docs/getting-started/fixing-accessibility.md",
+    );
+    expect(result.agentsBlockBytes).toBe(
+      Buffer.byteLength(instructions.trimEnd()),
+    );
+  });
+
+  it("replaces previously generated docs", async () => {
+    const repoRoot = await createFixture();
+    await generateAgentDocs({ repoRoot, propsProvider });
+    const stale = path.join(repoRoot, "packages/core/docs/components/stale.md");
+    await writeFile(stale, "old");
+    await generateAgentDocs({ repoRoot, propsProvider });
+    expect(await pathExists(stale)).toBe(false);
+  });
+
+  it("refuses to replace a docs folder it did not generate", async () => {
+    const repoRoot = await createFixture({
+      "packages/core/docs/notes.md": "Hand-written notes.",
+    });
+    const error = await generateAgentDocs({ repoRoot, propsProvider }).catch(
+      (caught) => caught,
+    );
+    expect(error).toBeInstanceOf(AgentDocsError);
+    expect(error.message).toContain(
+      "Refusing to replace packages/core/docs: it was not generated by tooling/agent-docs",
+    );
+    expect(
+      await pathExists(path.join(repoRoot, "packages/core/docs/notes.md")),
+    ).toBe(true);
+    expect(await pathExists(path.join(repoRoot, "packages/theme/docs"))).toBe(
+      false,
+    );
+  });
+
+  it("replaces a docs folder that an interrupted run left without files", async () => {
+    const repoRoot = await createFixture();
+    await mkdir(path.join(repoRoot, "packages/core/docs/components/dialog"), {
+      recursive: true,
+    });
+    await generateAgentDocs({ repoRoot, propsProvider });
+    expect(
+      await pathExists(path.join(repoRoot, "packages/core/docs/index.md")),
+    ).toBe(true);
+  });
+
+  it("files component pages under the package they declare, whatever their layout", async () => {
+    const repoRoot = await createFixture({
+      "packages/lab/package.json": {
+        name: "@salt-ds/lab",
+        version: "1.0.0-alpha.1",
+        files: ["dist-es", "docs"],
+      },
+      "site/docs/components/layouts/deck-layout/index.mdx": `---
+title: Deck layout
+data:
+  description: "\`DeckLayout\` shows one page at a time."
+  package:
+    name: "@salt-ds/lab"
+  alsoKnownAs: ["Slide deck"]
+layout: DetailTechnical
+---
+
+Use \`DeckLayout\` for slides.
+`,
+    });
+    const result = await generateAgentDocs({
+      repoRoot,
+      propsProvider,
+      write: false,
+    });
+    const deck = result.outputs
+      .get("@salt-ds/lab")
+      .files.get("components/layouts/deck-layout.md");
+    expect(deck).toContain("- Package: `@salt-ds/lab@1.0.0-alpha.1`");
+    expect(deck).toContain("- Also known as: Slide deck");
+    expect(deck).toContain("Use `DeckLayout` for slides.");
+    expect(
+      result.outputs
+        .get("@salt-ds/core")
+        .files.has("components/layouts/deck-layout.md"),
+    ).toBe(false);
+  });
+
+  it("warns when a page stays too long to read in one go", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/patterns/forms.mdx": `---
+title: Forms
+layout: DetailPattern
+---
+
+${"Stack fields vertically.\n\n".repeat(1000)}
+${FORMS_PREVIEWS}`,
+    });
+    const result = await generateAgentDocs({
+      repoRoot,
+      propsProvider,
+      write: false,
+    });
+    expect(result.warnings).toContainEqual(
+      expect.stringMatching(
+        /^@salt-ds\/core\/docs\/patterns\/forms\.md is \d+ KB .*site\/docs\/patterns\/forms\.mdx\.$/,
+      ),
+    );
+    expect(result.notes).not.toContainEqual(
+      expect.stringContaining("patterns/forms.md is"),
+    );
+  });
+
+  it("moves props tables too large for the page to a props file, and warns when that is too large", async () => {
+    const props = Object.fromEntries(
+      Array.from({ length: 200 }, (_, index) => [
+        `prop${index}`,
+        {
+          name: `prop${index}`,
+          type: { name: "string" },
+          description: `Prop ${index}. ${"Describes the prop at length. ".repeat(4)}`,
+        },
+      ]),
+    );
+    const repoRoot = await createFixture();
+    const result = await generateAgentDocs({
+      repoRoot,
+      write: false,
+      propsProvider: {
+        get: (packageDirectory, name) =>
+          packageDirectory === "core" && name === "Button"
+            ? { props }
+            : undefined,
+      },
+    });
+    const files = result.outputs.get("@salt-ds/core").files;
+    expect(files.get("components/button.md")).toContain(
+      "_Props:_ `Button` ([table](./button/props.md#button)).",
+    );
+    expect(files.get("components/button/props.md")).toContain(
+      "# Button props\n\nProps tables for the [Button](../button.md) page.\n\n## `Button`\n\n| Prop |",
+    );
+    // The page now fits; its props file doesn't.
+    expect(result.warnings).toEqual([
+      expect.stringMatching(
+        /^@salt-ds\/core\/docs\/components\/button\/props\.md, which holds the props tables moved off components\/button\.md, is \d+ KB, .*site\/docs\/components\/button\/\.$/,
+      ),
+    ]);
+  });
+
+  it("suggests shortening a page longer than agents usually read", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/patterns/forms.mdx": `---
+title: Forms
+layout: DetailPattern
+---
+
+${"Stack fields vertically.\n\n".repeat(150)}
+${FORMS_PREVIEWS}`,
+    });
+    const result = await generateAgentDocs({
+      repoRoot,
+      propsProvider,
+      write: false,
+    });
+    expect(result.warnings).toEqual([]);
+    expect(result.notes).toContainEqual(
+      expect.stringMatching(
+        /^@salt-ds\/core\/docs\/patterns\/forms\.md is \d+ lines, .*site\/docs\/patterns\/forms\.mdx\.$/,
+      ),
+    );
+  });
+
+  it("fails when a package would not publish its docs", async () => {
+    const repoRoot = await createFixture({
+      "packages/theme/package.json": {
+        name: "@salt-ds/theme",
+        version: "4.5.6",
+        files: ["/css"],
+      },
+    });
+    const error = await generateAgentDocs({ repoRoot, propsProvider }).catch(
+      (caught) => caught,
+    );
+    expect(error).toBeInstanceOf(AgentDocsError);
+    expect(error.errors).toEqual([
+      '@salt-ds/theme: add "docs" to "files" in packages/theme/package.json so its generated docs are published.',
+    ]);
+    expect(await pathExists(path.join(repoRoot, "packages/core/docs"))).toBe(
+      false,
+    );
+  });
+
+  it("leaves out aliases that are another page's title, or repeat a name", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/components/button/index.mdx": fixtureFiles[
+        "site/docs/components/button/index.mdx"
+      ].replace(
+        'alsoKnownAs: ["Action"]',
+        'alsoKnownAs: ["Action", "Forms", "action"]',
+      ),
+    });
+    const result = await generateAgentDocs({
+      repoRoot,
+      propsProvider,
+      write: false,
+    });
+    const core = result.outputs.get("@salt-ds/core").files;
+    const button = JSON.parse(core.get("manifest.json")).pages.find(
+      (page) => page.path === "components/button.md",
+    );
+    expect(button.aliases).toEqual(["Action"]);
+    expect(core.get("components/button.md")).toContain(
+      "- Also known as: Action\n",
+    );
+    expect(result.notes).toContain(
+      'site/docs/components/button/index.mdx: alsoKnownAs "Forms" is the title of @salt-ds/core/docs/patterns/forms.md, so the docs for agents leave it out.',
+    );
+    expect(result.notes).not.toContain(
+      "site/docs/components/button/index.mdx: no alsoKnownAs names, so the docs index lists only its title.",
+    );
+  });
+
+  it("suggests aliases for a component whose aliases are all left out", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/components/button/index.mdx": fixtureFiles[
+        "site/docs/components/button/index.mdx"
+      ].replace('alsoKnownAs: ["Action"]', 'alsoKnownAs: ["Forms"]'),
+    });
+    const result = await generateAgentDocs({
+      repoRoot,
+      propsProvider,
+      write: false,
+    });
+    expect(result.notes).toContain(
+      "site/docs/components/button/index.mdx: no alsoKnownAs names, so the docs index lists only its title.",
+    );
+  });
+
+  it("points links to a tab's headings at the same heading in the merged page", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/components/button/usage.mdx": `---
+layout: DetailComponent
+---
+
+## Focus
+
+See the [example](./examples#focus).
+`,
+      "site/docs/components/button/examples.mdx": `---
+layout: DetailComponent
+---
+
+## Focus
+
+Back to [usage](./usage#focus), or [this example](#focus).
+
+<LivePreview componentName="button" exampleName="Primary" />
+`,
+    });
+    const result = await generateAgentDocs({
+      repoRoot,
+      propsProvider,
+      write: false,
+    });
+    const button = result.outputs
+      .get("@salt-ds/core")
+      .files.get("components/button.md");
+    expect(button).toContain("See the [example](./button.md#focus-1).");
+    expect(button).toContain(
+      "Back to [usage](./button.md#focus), or [this example](#focus-1).",
+    );
+  });
+
+  it("titles a section overview by its group and lists the pages below it", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/components/layouts/index.mdx": `---
+title: Overview
+layout: DetailTechnical
+sidebar:
+  groupLabel: Layouts
+data:
+  items:
+    $ref: ./*/index
+---
+
+Layouts arrange content:
+
+{meta.data.items?.map(({ title }) => title)}
+`,
+      "site/docs/components/layouts/stack-layout/index.mdx": `---
+title: Stack layout
+data:
+  description: "\`StackLayout\` stacks items. It can also wrap."
+  package:
+    name: "@salt-ds/core"
+layout: DetailComponent
+---
+`,
+    });
+    const result = await generateAgentDocs({
+      repoRoot,
+      propsProvider,
+      write: false,
+    });
+    const core = result.outputs.get("@salt-ds/core").files;
+    const overview = core.get("components/layouts.md");
+    expect(overview).toContain("# Layouts overview\n");
+    expect(overview).toContain(
+      "- [Stack layout](./layouts/stack-layout.md): StackLayout stacks items.\n",
+    );
+    expect(core.get("index.md")).toContain(
+      "- [Layouts overview](components/layouts.md)",
+    );
+    expect(result.warnings).toEqual([]);
+  });
+
+  it("fails when no page shows a pattern example", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/patterns/forms.mdx": `---
+title: Forms
+layout: DetailPattern
+---
+
+<LivePreview componentName="patterns/forms" exampleName="Standard" />
+`,
+    });
+    const error = await generateAgentDocs({ repoRoot, propsProvider }).catch(
+      (caught) => caught,
+    );
+    expect(error).toBeInstanceOf(AgentDocsError);
+    expect(error.errors).toEqual([
+      "site/src/examples/patterns/forms/Compact.tsx: no pattern page shows this example. Add a LivePreview for it to the section of the page that discusses it.",
+    ]);
+    expect(await pathExists(path.join(repoRoot, "packages/core/docs"))).toBe(
+      false,
+    );
+  });
+
+  it("writes check data for salt-check in each documented package", async () => {
+    const repoRoot = await createFixture();
+    const button = propsProvider.get("core", "Button");
+    const withDeprecated = {
+      ...button,
+      props: {
+        ...button.props,
+        variant: {
+          name: "variant",
+          type: { name: "string" },
+          description: "@deprecated since 1.36.0. Use `appearance` instead.",
+        },
+      },
+    };
+    const result = await generateAgentDocs({
+      repoRoot,
+      write: false,
+      propsProvider: {
+        get: (directory, name) =>
+          directory === "core" && name === "Button"
+            ? withDeprecated
+            : undefined,
+        all: (directory) =>
+          new Map(directory === "core" ? [["Button", withDeprecated]] : []),
+      },
+    });
+    const core = JSON.parse(
+      result.outputs.get("@salt-ds/core").files.get("salt-check.json"),
+    );
+    expect(core).toEqual({
+      schemaVersion: 1,
+      name: "@salt-ds/core",
+      version: "1.2.3",
+      components: {
+        Button: {
+          page: "components/button.md",
+          deprecatedProps: {
+            variant: "since 1.36.0. Use `appearance` instead.",
+          },
+        },
+      },
+    });
+    const theme = JSON.parse(
+      result.outputs.get("@salt-ds/theme").files.get("salt-check.json"),
+    );
+    expect(theme.tokens["--salt-spacing-100"]).toEqual([
+      "current",
+      theme.pages.indexOf("tokens.md"),
+    ]);
+    expect(theme.tokens["--salt-old-background"]).toEqual([
+      "deprecated",
+      theme.pages.indexOf("tokens.md"),
+      ["--salt-actionable-bold-background"],
+    ]);
+    expect(theme.tokens["--salt-palette-accent"][0]).toBe("palette");
+  });
+
+  it("writes nothing in check mode", async () => {
+    const repoRoot = await createFixture();
+    const result = await generateAgentDocs({
+      repoRoot,
+      propsProvider,
+      write: false,
+    });
+    expect(result.packages.get("@salt-ds/core").files).toBe(7);
+    expect(await pathExists(path.join(repoRoot, "packages/core/docs"))).toBe(
+      false,
+    );
+  });
+
+  it("reports unsupported MDX with its location", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/patterns/forms.mdx": `---
+title: Forms
+layout: DetailPattern
+---
+
+<Unknown />
+`,
+    });
+    await expect(
+      generateAgentDocs({ repoRoot, propsProvider }),
+    ).rejects.toThrow(
+      "site/docs/patterns/forms.mdx:6: Unsupported MDX component <Unknown>.",
+    );
+  });
+});

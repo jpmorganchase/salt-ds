@@ -13,7 +13,7 @@ data:
 By default, the switch thumb sits to the left side of the track and is in an unchecked state.
 
 - You can set the switch state using the optional `defaultChecked` prop.
-- You can use the `onChange` event to read the value using the second parameter.
+- You can use the `onChange` event to read the checked state from `event.target.checked`.
 
 ### Best practices
 
@@ -52,7 +52,7 @@ Use a disabled checked state for switches that have permissions, dependencies or
 
 A read-only switch allows the user to focus the control, but doesn't allow them to change its state. You can set a switch as read-only via the prop `readOnly`.
 
-**Note:** We recommend avoiding read-only switches due to the lack of adequate `aria-readonly` support and conflicting user expectations. If you must use a read-only switch, you should always add an accessible name that makes it obvious the switch is read-only, be that via a visual label or an `aria-label` if there's no space for a visual label.
+**Note:** We recommend avoiding read-only switches due to the lack of adequate `aria-readonly` support and conflicting user expectations. If you must use a read-only switch, you should always add an accessible name that makes it obvious the switch is read-only, be that via a visual label or an `aria-label` in `inputProps` if there's no space for a visual label.
 
 ### Best practices
 

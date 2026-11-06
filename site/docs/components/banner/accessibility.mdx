@@ -10,11 +10,13 @@ data:
 
 ## Best practices
 
-Check and test any focusable elements included in the banner content.
+`Banner` does not add an announcement role or live region, or move focus automatically. Its `status` controls appearance, not announcement urgency. Describe the issue and any recovery action in text rather than relying on color or the status icon.
 
-When using a banner to alert the user, apply `role="alert"`. When using a banner to notify the user, apply `role="status"`.
+For dynamic feedback, use `role="status"` for a polite update or `role="alert"` when the message needs immediate announcement. Choose the announcement behavior for the situation; an error does not always require an assertive announcement. Avoid duplicating feedback already announced by another live region or focus change. For form validation, follow the [error summary pattern](/salt/patterns/forms#error-summary).
 
-- **Note:** There are known screen reader announcement issues when dynamically inserting content with `role="status"`. During your testing, if you find that adding `role="status"` to the banner does not properly announce content using a screen reader, we recommend preloading a container with `role="status"` that will house the banner. That will ensure the content is properly announced via screen reader.
+Test dynamic announcements with the browsers and screen readers you support. If a newly inserted `role="status"` region is not announced, mount an empty live region before updating its content and test again.
+
+Check keyboard access to any links and actions included in the banner. Adding an announcement role does not make its actions receive focus.
 
 ## Keyboard interactions
 

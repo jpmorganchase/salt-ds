@@ -1,0 +1,171 @@
+---
+title: AI coding agents
+description: "Point coding agents such as GitHub Copilot, Claude Code and Codex at Salt documentation that matches the version you install."
+layout: DetailTechnical
+sidebar:
+  label: AI coding agents
+---
+
+Coding agents often write Salt code from what they learned in training, which
+can describe an older version of Salt or miss it entirely. Salt packages include
+Markdown documentation for agents, generated from this site for the version you
+install, so agents can check the components, props and guidance that match your
+code.
+
+## Set up your project
+
+Install the Salt CLI and run `salt-ds init` from the application whose installed
+Salt packages you want agents to use. In a single-application repository, this
+is usually the repository root:
+
+```sh
+npm install --save-dev @salt-ds/cli
+npx salt-ds init --script typecheck
+```
+
+`salt-ds init` adds a Salt section to `AGENTS.md` that tells agents to read the
+relevant installed guidance before they change Salt UI, to prefer component
+props to custom CSS, and to
+[check what they wrote](#check-what-agents-write) before they finish. It includes
+a compressed index of every documentation page in the Salt packages resolved
+from that application. It records each package's documentation path,
+makes `CLAUDE.md` import `AGENTS.md` for Claude Code, and keeps your other
+instructions. Instruction-file support depends on the agent, client and mode;
+see [Agent compatibility](#agent-compatibility).
+
+`--script typecheck` also makes your `typecheck` script run that check, so it
+runs in CI and for agents that run your scripts without loading `AGENTS.md`. Use
+`--script lint` for a lint script instead. The check reports deprecated props
+and deprecated or unknown tokens as errors, which make the script fail with exit
+code 1, so fix any your code already uses before you add it to a script that
+gates your builds. Palette tokens and missing parts are warnings, which don't.
+The check also fails the script, with exit code 2, when it can't run, for
+example with "No files to check" in an application without script or style
+files, or when no installed Salt package ships its docs.
+
+Run `salt-ds init` again after you add or upgrade Salt packages or update the CLI.
+Salt package changes can update the indexed pages, and CLI changes can update the
+instructions even when the page list stays the same. The section leaves out
+package versions; each page states the version it documents.
+
+- Add `--check` to fail a CI job when an instruction file needs updating, for
+  example after an upgrade that adds pages. It checks every file the same
+  options would write, so pass `--no-claude` or `--copilot` with it as you do
+  for setup. Setup and `--check` also fail for malformed documentation
+  manifests, mismatched package versions or missing indexed pages.
+- Add `--no-claude` to leave `CLAUDE.md` alone.
+- Add `--copilot` to also add the section to `.github/copilot-instructions.md`
+  for GitHub Copilot, in the Git repository that holds the instructions folder,
+  keeping your other Copilot instructions. Its index paths are relative to the
+  repository root. Copilot reads one such file per repository, so in a
+  repository with several applications it indexes the application you last ran
+  `salt-ds init` for.
+- Add `--project <path>` to select another application. `salt-ds init` resolves
+  each package from that application's `node_modules` hierarchy, so packages can
+  be installed at different levels of a monorepo.
+- Add `--dir <path>` to choose the folder holding `AGENTS.md` and `CLAUDE.md`.
+  Without `--project`, this also selects the application to resolve packages from.
+
+For example, from a monorepo root:
+
+```sh
+npx salt-ds init --project apps/web --script typecheck
+```
+
+This writes the instructions under `apps/web` and updates the `typecheck` script
+in `apps/web/package.json`, using the Salt packages that `apps/web` resolves,
+wherever they're installed. Add `--dir .` only when you want the selected
+application's index in the repository-root instructions. For applications using
+different Salt versions, keep separate application-scoped instructions and use
+the root instructions to direct agents to the appropriate application.
+
+Agents read the documentation from `node_modules`, which Yarn Plug'n'Play
+installs don't create. To use it with Yarn, set `nodeLinker: node-modules` in
+`.yarnrc.yml`.
+
+Generate the section with `salt-ds init` rather than by hand, so the index
+matches your installed versions.
+
+## Accessibility repairs
+
+When the installed Core docs include it, the generated instructions also send
+agents repairing an accessibility issue or a failing accessibility check to
+[Fixing accessibility](./fixing-accessibility) and the affected components'
+accessibility guidance. [Choosing the right primitive](./choosing-the-right-primitive)
+and [composition pitfalls](./composition-pitfalls) are in the index with the
+other pages.
+
+## Agent compatibility
+
+Check your client's documentation for the instruction format and scope it loads:
+
+| Agent          | Setup                                                                                                                                                                                                                                                                                                                                                                                                    |
+| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Codex          | Reads `AGENTS.md`; its directory determines the scope. See [Codex instructions](https://developers.openai.com/codex/guides/agents-md).                                                                                                                                                                                                                                                                   |
+| Cursor         | Supports `AGENTS.md`; check the installed version's [rules documentation](https://cursor.com/docs/context/rules) for scope and settings.                                                                                                                                                                                                                                                                 |
+| Claude Code    | The generated `CLAUDE.md` imports `AGENTS.md`. See [Claude Code memory](https://code.claude.com/docs/en/memory) for loading and import behavior.                                                                                                                                                                                                                                                         |
+| GitHub Copilot | Add `--copilot` for clients that read `.github/copilot-instructions.md`. Formats vary by client and feature, so check the [custom instructions support matrix](https://docs.github.com/en/copilot/reference/custom-instructions-support), including the JetBrains entry if you use IntelliJ or WebStorm. A client that reads `AGENTS.md` doesn't need `--copilot`, and with it may load the index twice. |
+
+Custom instructions do not apply to every feature, such as inline code
+suggestions.
+
+To verify activation, ask the agent to open the installed Button documentation
+and report the package version and file path before making a change. Confirm
+that it reads the page indexed for the intended application.
+
+## What agents can read
+
+The index in `AGENTS.md` lists each package's pages by folder, with the other
+names people use for a component, such as "Modal" for Dialog, so agents can find
+the right page. Each package's `docs/index.md`, starting with
+`node_modules/@salt-ds/core/docs/index.md`, adds a short summary of every page.
+
+- Component pages combine the usage, examples and accessibility tabs from this
+  site with props tables and keyboard interactions. Under each table, they list
+  the HTML attributes the component also accepts and the Salt types the table
+  names. Agents consult the installed TypeScript declarations for anything else,
+  such as which element receives an attribute.
+- Pattern, getting started, foundation and theme pages, with lists of every design
+  token, icon and country symbol.
+- Example source code. Long pages keep their guidance and link to separate files
+  for their largest examples, and the longest also for their props tables.
+
+Each package documents its own components, such as `@salt-ds/lab/docs` for Lab
+components. Pages link to other packages' documentation by package name, so agents
+can follow the links into the Salt packages you have installed.
+
+## Check what agents write
+
+The section in `AGENTS.md` tells agents to run a check before they finish. It
+compares the files they changed with the docs of the Salt packages you installed,
+and reports deprecated or misspelled design tokens with the token to use
+instead when one is recorded, deprecated props, and components missing a part that Salt's examples
+always include, such as a `Toast` without `ToastContent`. Each report links to
+the page that explains it.
+
+You can run it yourself, or in CI, from the application folder:
+
+```sh
+npx salt-ds check
+```
+
+The check reads data that each installed Salt package ships with its docs, so it
+matches the versions you installed. Agents run it with `npx @salt-ds/cli`, which
+uses the installed CLI or downloads it.
+
+Without file or folder paths, it checks the files Git tracks or would add. Add
+`--changed` to check only files changed since the last commit, or `--json` for
+machine-readable results. It exits with 1 when it finds errors, and 2 when it
+can't run. Checking props and parts needs the application's `typescript`
+package.
+
+## Review what agents build
+
+Agents still make mistakes, such as rebuilding a component that Salt already
+provides or arranging a component's parts incorrectly. Ask your agent to run your
+project's build, tests and accessibility checks, and review the result as you
+would any change. [Choosing the right primitive](./choosing-the-right-primitive)
+and [composition pitfalls](./composition-pitfalls) describe what to look for.
+[Fixing accessibility](./fixing-accessibility) explains how to diagnose an issue
+and verify the affected behavior. A passing `salt-ds check` or automated
+accessibility scan does not establish that the whole application is accessible.

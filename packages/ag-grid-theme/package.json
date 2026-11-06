@@ -10,6 +10,7 @@
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "style": "salt-ag-theme.css",
   "files": [
+    "/docs",
     "/fonts",
     "/salt-ag-theme.css"
   ],

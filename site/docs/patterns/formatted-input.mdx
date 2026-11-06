@@ -8,10 +8,11 @@ aliases:
   - /salt/patterns/formatted-input
 data:
   resources: [
-      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-formatted-input--phone-number", label: "Examples" },
     ]
   components: ["Input", "Form field"]
 ---
+
+<LivePreview componentName="patterns/formatted-input" exampleName="PhoneNumber" />
 
 <Diagram
     src="/img/patterns/formatted-input/formatted-input-example.png"
@@ -31,6 +32,14 @@ data:
 - **[Date input](/salt/components/date-input)**: Best for single dates or date ranges.
 - **[International phone number input (pattern)](/salt/patterns/international-phone-number-input)**: Best for country-specific phone number entry with a location selector.
 </Callout>
+
+## When not to use
+
+- When users need to increment, decrement, or adjust a numeric value within a defined range, use [Number input](/salt/components/number-input) instead.
+- When users need to enter a single date or date range, use [Date input](/salt/components/date-input) instead.
+- When phone number entry needs country-specific formatting with a location selector, use the [International phone number input pattern](/salt/patterns/international-phone-number-input) instead.
+- When the value is open-ended text that does not need a strict format or validation pattern, use [Input](/salt/components/input) or [Multiline input](/salt/components/multiline-input) with helper text instead.
+- When users choose from a known set of values instead of typing a formatted value, use a selection component such as Dropdown or Combo box instead.
 
 ## How to build
 
@@ -79,6 +88,12 @@ Use helper text to provide formatting guidance and/or an example of the expected
 <Callout status="success" title="Best practices">
     Placeholder text should never be the only source of guidance. Placeholder text disappears once the user begins typing and may not be announced by all screen readers, so it must not be used to convey required formatting rules. Use labels and helper text to provide persistent formatting guidance. If you include placeholder text, use it only as a supplementary hint or example.
 </Callout>
+
+<LivePreview componentName="patterns/formatted-input" exampleName="CreditCard" />
+
+<LivePreview componentName="patterns/formatted-input" exampleName="Currency" />
+
+<LivePreview componentName="patterns/formatted-input" exampleName="PostalCode" />
 
 ## Formatting behavior
 
@@ -291,6 +306,8 @@ Dynamic preview shows the formatted result in real time as the user types. It he
   alt="Input dynamic preview example of the formatted input pattern"
   border
 />
+
+<LivePreview componentName="patterns/formatted-input" exampleName="PhoneNumberWithPreview" />
 
 ## Copy & paste behavior
 

@@ -1,5 +1,5 @@
 import { createRequire } from "node:module";
-import { dirname, join } from "node:path";
+import { dirname, isAbsolute, join, relative } from "node:path";
 import type { StorybookConfig } from "@storybook/react-vite";
 import { cssInline } from "css-inline-plugin";
 import remarkGfm from "remark-gfm";
@@ -13,7 +13,10 @@ const config: StorybookConfig = {
     options: {},
   },
   stories: ["../packages/*/stories/**/*.@(mdx|stories.@(js|jsx|ts|tsx))"],
-  staticDirs: ["../docs/public"],
+  staticDirs: [
+    "../docs/public",
+    { from: "../site/public/img/examples", to: "/img/examples" },
+  ],
   typescript: {
     reactDocgen: "react-docgen-typescript",
   },
@@ -35,10 +38,39 @@ const config: StorybookConfig = {
     getAbsolutePath("@storybook/addon-a11y"),
   ],
   async viteFinal(config, { configType }) {
-    const { mergeConfig } = await import("vite");
+    const { mergeConfig, transformWithOxc } = await import("vite");
+    const siteExamplesRoot = join(
+      config.root ?? process.cwd(),
+      "site",
+      "src",
+      "examples",
+    );
 
     const customConfig: UserConfig = {
-      plugins: [cssInline()],
+      plugins: [
+        {
+          // Stories render site examples, such as pattern examples, whose
+          // tsconfig preserves JSX for Next.js, so compile their TSX here.
+          name: "salt:site-examples-tsx",
+          enforce: "pre",
+          async transform(source, id) {
+            const sourcePath = id.split("?", 1)[0];
+            const relativePath = relative(siteExamplesRoot, sourcePath);
+            if (
+              !sourcePath.endsWith(".tsx") ||
+              relativePath.startsWith("..") ||
+              isAbsolute(relativePath)
+            ) {
+              return null;
+            }
+            return transformWithOxc(source, sourcePath, {
+              jsx: { runtime: "automatic" },
+              lang: "tsx",
+            });
+          },
+        },
+        cssInline(),
+      ],
       resolve: {
         alias: {
           "@salt-ds/ag-grid-theme/salt-ag-theme.css": join(

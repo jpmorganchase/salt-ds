@@ -21,6 +21,10 @@ data:
 - When the message always needs to be visible. Instead, place the message directly on the page.
 - When the message isn't about a UI element. Consider adding the message directly on the page or using [`Overlay`](../overlay), [`Dialog`](../dialog), or [`Banner`](../banner) instead.
 
+## Trigger
+
+`Tooltip` renders its child as the trigger, merging its own props and `ref` into the child's. Pass a single element that accepts props and a `ref`, such as a `Button`. Text or several children render nothing.
+
 ## Content
 
 Tooltip content will never truncate. It should be short and self-explanatory. If a longer message is necessary, consider adding it to the page so it's always visible.
