@@ -1,8 +1,14 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Non-Null assertion make tests easier. */
 /** biome-ignore-all lint/suspicious/noNonNullAssertedOptionalChain: Non-Null assertion make tests easier. */
 import type { StoryObj } from "@storybook/react-vite";
+import type { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { expect, userEvent, within } from "storybook/test";
+import dataGridExampleColumns from "../src/dependencies/dataGridExampleColumns";
+import dataGridExampleData from "../src/dependencies/dataGridExampleData";
+import { useAgGridHelpers } from "../src/dependencies/useAgGridHelpers";
+import { validationCellExampleColumns } from "../src/dependencies/validationExampleColumns";
+import { validationExampleData } from "../src/dependencies/validationExampleData";
 import {
   ColumnGroup,
   ContextMenu as ContextMenuGrid,
@@ -525,4 +531,195 @@ WrappedHeaderRowSelection.play = async ({ canvasElement }) => {
     await userEvent.click(within(row).getByRole("checkbox"));
     await expect(row).toHaveClass("ag-row-selected");
   }
+};
+
+// Validation status adornments must not replace the range selection border on cells at the edge of a range.
+export const CellValidationInRangeSelection: StoryObj<
+  typeof AgGridReact
+> = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={validationExampleData}
+        columnDefs={validationCellExampleColumns}
+        cellSelection
+        onFirstDataRendered={({ api }) => {
+          // Rows 6 - 8 are error / warning / error, so every edge of the range has validation cells
+          // in editable (Status, Value) and read-only (Color) columns.
+          api.addCellRange({
+            rowStartIndex: 6,
+            rowEndIndex: 8,
+            columnStart: "status",
+            columnEnd: "color",
+          });
+        }}
+      />
+    </div>
+  );
+};
+CellValidationInRangeSelection.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Do findAll here so this will also work in `side-by-side` mode
+  const grids = await canvas.findAllByRole("grid");
+
+  for (const grid of grids) {
+    const anchorCell = grid.querySelector<HTMLElement>(
+      '[row-index="6"] [col-id="status"]',
+    )!;
+
+    // Focus an editable error cell, then extend the range from it, so the top left corner of the range
+    // shows the edit flag, range border and status adornment together.
+    await userEvent.click(anchorCell);
+    await userEvent.keyboard(
+      "{Shift>}{ArrowDown}{ArrowDown}{ArrowRight}{ArrowRight}{/Shift}",
+    );
+
+    await expect(anchorCell).toHaveClass(
+      "error-cell",
+      "ag-cell-focus",
+      "ag-cell-range-top",
+      "ag-cell-range-left",
+    );
+    // Read-only error cell at the top right corner of the range
+    await expect(
+      grid.querySelector('[row-index="6"] [col-id="color"]'),
+    ).toHaveClass("error-cell", "ag-cell-range-top", "ag-cell-range-right");
+  }
+};
+
+// Pinned, editable, validation and custom colored cells side by side, so every kind of cell shows its gap.
+const cellGapColumns: ColDef[] = [
+  { headerName: "Currency", field: "currency", pinned: "left", width: 120 },
+  ...validationCellExampleColumns
+    .slice(0, 3)
+    .map((column) => ({ ...column, width: 120 })),
+  {
+    headerName: "Min",
+    field: "min",
+    type: "numericColumn",
+    cellClass: "numeric-cell",
+    cellStyle: { backgroundColor: "var(--salt-category-1-subtle-background)" },
+    width: 120,
+  },
+  {
+    headerName: "Max",
+    field: "max",
+    type: "numericColumn",
+    cellClass: "numeric-cell",
+    cellStyle: { backgroundColor: "var(--salt-category-2-subtle-background)" },
+    width: 120,
+  },
+];
+
+// Every cell leaves a 1px gap after it, matching the Figma column separator slot, and the pinned column separator fills the gap.
+export const CellGaps: StoryObj<typeof AgGridReact> = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={validationExampleData}
+        columnDefs={cellGapColumns}
+      />
+    </div>
+  );
+};
+CellGaps.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Do findAll here so this will also work in `side-by-side` mode
+  const grids = await canvas.findAllByRole("grid");
+
+  for (const grid of grids) {
+    // The focus ring of a read-only cell stays inside its gap
+    const readOnlyCell = grid.querySelector<HTMLElement>(
+      '[row-index="0"] [col-id="color"]',
+    )!;
+
+    await userEvent.click(readOnlyCell);
+
+    await expect(readOnlyCell).toHaveClass("ag-cell-focus", "warning-cell");
+  }
+};
+
+// The range selection background covers the gaps, so the range reads as one area.
+export const CellGapsInRangeSelection: StoryObj<typeof AgGridReact> = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={validationExampleData}
+        columnDefs={cellGapColumns}
+        cellSelection
+      />
+    </div>
+  );
+};
+CellGapsInRangeSelection.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Do findAll here so this will also work in `side-by-side` mode
+  const grids = await canvas.findAllByRole("grid");
+
+  for (const grid of grids) {
+    const anchorCell = grid.querySelector<HTMLElement>(
+      '[row-index="1"] [col-id="currency"]',
+    )!;
+
+    // Extend the range from the pinned column across every kind of cell
+    await userEvent.click(anchorCell);
+    await userEvent.keyboard(
+      "{Shift>}{ArrowDown}{ArrowDown}{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}{/Shift}",
+    );
+
+    await expect(
+      grid.querySelector('[row-index="3"] [col-id="max"]'),
+    ).toHaveClass("ag-cell-range-bottom", "ag-cell-range-right");
+  }
+};
+
+// AG Grid's own pagination panel. The Pagination example uses Salt components instead, so this covers the theme's paging panel styles.
+export const NativePagination = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={dataGridExampleData}
+        columnDefs={dataGridExampleColumns}
+        pagination
+        paginationPageSize={20}
+        paginationPageSizeSelector={[20, 50, 100]}
+      />
+    </div>
+  );
+};
+
+// Grouped columns show as chips in both the row group panel and the Row Groups drop zone of the columns tool panel.
+export const ColumnDropChips = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={dataGridExampleData}
+        columnDefs={dataGridExampleColumns.map((column) => ({
+          ...column,
+          enableRowGroup: true,
+          rowGroup: column.field === "code" || column.field === "capital",
+        }))}
+        rowGroupPanelShow="always"
+        sideBar={{ toolPanels: ["columns"], defaultToolPanel: "columns" }}
+      />
+    </div>
+  );
 };
