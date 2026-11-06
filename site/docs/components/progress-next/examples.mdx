@@ -12,7 +12,7 @@ data:
 
 Give `Progress` a `value` to show how much of a task is complete. It fills from `min` to `max`, which default to 0 and 100.
 
-The track is an outline in the bar color, so the bar ends where solid turns into outline.
+The track is a neutral outline, and the bar fills it, so the bar ends where solid turns into outline.
 
 <LivePreview componentName="progress-next" exampleName="Linear" />
 
@@ -60,7 +60,7 @@ Show the state of a task in place, with an icon and text as well as color.
 
 ## Buffer
 
-On linear progress, use `bufferValue` to show how much is ready ahead of the progress, such as the part of a video that has loaded. The buffer shows only when there's a `value`.
+On linear progress, use `bufferValue` to show how much is ready ahead of the progress, such as the part of a video that has loaded. The buffer is striped, so it stands apart from the empty track, and it shows only when there's a `value`.
 
 <LivePreview componentName="progress-next" exampleName="Buffer" />
 
