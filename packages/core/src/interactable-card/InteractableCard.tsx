@@ -153,7 +153,7 @@ export const InteractableCard = forwardRef<
       }
     }
   } else {
-    tabIndex = tabIndexProp ?? 0;
+    tabIndex = 0;
   }
 
   const cardRef = useRef<HTMLDivElement>(null);
@@ -203,7 +203,7 @@ export const InteractableCard = forwardRef<
       {...rest}
       onClick={handleClick}
       ref={handleRef}
-      tabIndex={tabIndex}
+      tabIndex={tabIndexProp ?? tabIndex}
     >
       {children}
     </div>
