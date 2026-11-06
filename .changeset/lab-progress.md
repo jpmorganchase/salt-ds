@@ -19,7 +19,7 @@ import { Progress } from "@salt-ds/lab";
 ```
 
 - `label`, `description` and `getValueText` show what's happening, in units that make sense to users. The value text is also the progress bar's `aria-valuetext`.
-- `bufferValue` shows how much is ready ahead of the progress on linear progress, such as the part of a video that has loaded.
+- `bufferValue` shows how much is ready ahead of the progress on linear progress, such as the part of a video that has loaded. The types only allow `bufferValue` on linear progress and `size` on circular progress.
 - `status` (`"success"` or `"error"`) shows the outcome in place, with an icon as well as color. On success, the icon replaces the value. `paused` shows "Paused" beside the value and keeps the accent color, like the "On hold" progression in the Indication pattern.
 - `size` sets the size of circular progress. Large circular progress shows its value inside and its label below, as it's used centered, such as in a page loader. Small circular progress, which fits in compact spaces such as buttons, hides its value unless you set `hideValue={false}`.
 - `delay` waits before showing, 1 second by default, so tasks that finish quickly show nothing.

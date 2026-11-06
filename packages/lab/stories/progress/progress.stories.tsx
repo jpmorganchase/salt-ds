@@ -17,6 +17,9 @@ export default {
   args: { delay: 0 },
 } as Meta<typeof Progress>;
 
+// The stories only pass `delay`, so circular and linear examples can share the same args.
+type StoryArgs = Pick<ProgressProps, "delay">;
+
 /** Runs a fake task: unknown size for `sizeUnknownFor` ms, then fills over `duration` ms. */
 function useSimulatedTask({
   duration = 4000,
@@ -63,26 +66,26 @@ function useSimulatedTask({
   return { running, value, start, reset };
 }
 
-export const Default: StoryFn<typeof Progress> = (args) => (
+export const Default: StoryFn<StoryArgs> = (args) => (
   <div style={{ width: 400 }}>
     <Progress label="Uploading report.pdf" value={38} {...args} />
   </div>
 );
 
-export const Indeterminate: StoryFn<typeof Progress> = (args) => (
+export const Indeterminate: StoryFn<StoryArgs> = (args) => (
   <div style={{ width: 400 }}>
     <Progress label="Loading accounts" {...args} />
   </div>
 );
 
 /** The buffer shows how much is ready ahead of the progress, such as the part of a video that has loaded. */
-export const Buffer: StoryFn<typeof Progress> = (args) => (
+export const Buffer: StoryFn<StoryArgs> = (args) => (
   <div style={{ width: 400 }}>
     <Progress label="Playing video" value={38} bufferValue={60} {...args} />
   </div>
 );
 
-export const Circular: StoryFn<typeof Progress> = (args) => (
+export const Circular: StoryFn<StoryArgs> = (args) => (
   <StackLayout gap={3}>
     <FlowLayout gap={3} align="center">
       <Progress shape="circular" size="small" aria-label="Loading" {...args} />
@@ -115,7 +118,7 @@ export const Circular: StoryFn<typeof Progress> = (args) => (
   </StackLayout>
 );
 
-export const ValueText: StoryFn<typeof Progress> = (args) => (
+export const ValueText: StoryFn<StoryArgs> = (args) => (
   <StackLayout gap={3} style={{ width: 400 }}>
     <Progress
       label="Uploading files"
@@ -134,7 +137,7 @@ export const ValueText: StoryFn<typeof Progress> = (args) => (
   </StackLayout>
 );
 
-export const States: StoryFn<typeof Progress> = (args) => (
+export const States: StoryFn<StoryArgs> = (args) => (
   <StackLayout gap={3} style={{ width: 400 }}>
     <Progress label="Uploading report.pdf" value={60} paused {...args} />
     <Progress
@@ -174,7 +177,7 @@ export const States: StoryFn<typeof Progress> = (args) => (
  * When a task's size isn't known yet, start indeterminate, then fill in place once it's known. The indicator keeps
  * its shape and position, so nothing moves.
  */
-export const IndeterminateToDeterminate: StoryFn<typeof Progress> = (args) => {
+export const IndeterminateToDeterminate: StoryFn<StoryArgs> = (args) => {
   const { running, value, start, reset } = useSimulatedTask({
     sizeUnknownFor: 2000,
   });
@@ -212,7 +215,7 @@ export const IndeterminateToDeterminate: StoryFn<typeof Progress> = (args) => {
 const DownloadButton = ({
   progressProps,
   ...buttonProps
-}: ButtonProps & { progressProps?: Partial<ProgressProps> }) => {
+}: ButtonProps & { progressProps?: StoryArgs }) => {
   const { running, value, start } = useSimulatedTask({ sizeUnknownFor: 1500 });
 
   return (
@@ -243,7 +246,7 @@ const DownloadButton = ({
  * Circular progress fits inside controls, such as a download button. Inside a button it takes the button's text color,
  * like an icon, so it contrasts with every button style.
  */
-export const InButton: StoryFn<typeof Progress> = (args) => (
+export const InButton: StoryFn<StoryArgs> = (args) => (
   <FlowLayout gap={1}>
     <DownloadButton sentiment="accented" progressProps={args} />
     <DownloadButton sentiment="neutral" progressProps={args} />
@@ -256,7 +259,7 @@ export const InButton: StoryFn<typeof Progress> = (args) => (
 );
 
 /** A page loader is a composition, not a component. */
-export const PageLoader: StoryFn<typeof Progress> = (args) => (
+export const PageLoader: StoryFn<StoryArgs> = (args) => (
   <StackLayout
     align="center"
     gap={3}
@@ -275,7 +278,7 @@ export const PageLoader: StoryFn<typeof Progress> = (args) => (
 /**
  * By default, progress waits 1 second before it shows, so tasks that finish quickly show nothing.
  */
-export const Delay: StoryFn<typeof Progress> = (args) => {
+export const Delay: StoryFn<StoryArgs> = (args) => {
   const quick = useSimulatedTask({ duration: 600 });
   const slow = useSimulatedTask({ duration: 4000 });
 

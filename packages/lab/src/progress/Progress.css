@@ -91,11 +91,13 @@
   overflow: hidden;
 }
 
+/* A border, rather than a box shadow, so the outline stays in Windows high contrast mode */
 .saltProgress-linear .saltProgress-track {
   position: absolute;
   inset: 0;
+  box-sizing: border-box;
+  border: var(--progress-outlineWidth) var(--salt-borderStyle-solid) var(--progress-trackColor);
   border-radius: var(--salt-palette-corner-strongest);
-  box-shadow: inset 0 0 0 var(--progress-outlineWidth) var(--progress-trackColor);
 }
 
 /* The bar is as tall as the track, so it covers the outline */

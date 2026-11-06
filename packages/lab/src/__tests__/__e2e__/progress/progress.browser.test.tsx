@@ -140,19 +140,26 @@ describe("GIVEN a Progress", () => {
       await expect.poll(bufferWidth).toBeCloseTo(0.6, 2);
     });
 
-    it.each([
-      ["it has no value", { label: "Loading", bufferValue: 60 }],
-      [
-        "it's circular",
-        {
-          shape: "circular" as const,
-          label: "Loading",
-          value: 20,
-          bufferValue: 60,
-        },
-      ],
-    ])("THEN it shows no buffer WHEN %s", async (_, props) => {
-      await renderWithSalt(<Progress delay={0} {...props} />);
+    it("THEN it shows no buffer WHEN it has no value", async () => {
+      await renderWithSalt(
+        <Progress delay={0} label="Loading" bufferValue={60} />,
+      );
+
+      await expect.element(page.getByRole("progressbar")).toBeInTheDocument();
+      expect(document.querySelector(".saltProgress-buffer")).toBeNull();
+    });
+
+    it("THEN it shows no buffer WHEN it's circular", async () => {
+      await renderWithSalt(
+        // @ts-expect-error: bufferValue is only for linear progress, but JavaScript users can still pass it
+        <Progress
+          delay={0}
+          shape="circular"
+          label="Loading"
+          value={20}
+          bufferValue={60}
+        />,
+      );
 
       await expect.element(page.getByRole("progressbar")).toBeInTheDocument();
       expect(document.querySelector(".saltProgress-buffer")).toBeNull();
@@ -281,6 +288,15 @@ describe("GIVEN a Progress", () => {
     );
 
     await expect.poll(liveRegionText).toContain("Uploading, error");
+  });
+
+  it("THEN size is only for circular progress, and bufferValue only for linear", () => {
+    // @ts-expect-error: size is only for circular progress
+    const linearWithSize = <Progress size="large" />;
+    // @ts-expect-error: bufferValue is only for linear progress
+    const circularWithBuffer = <Progress shape="circular" bufferValue={60} />;
+
+    expect([linearWithSize, circularWithBuffer]).toHaveLength(2);
   });
 
   it("THEN it waits 1 second before it shows, by default", async () => {

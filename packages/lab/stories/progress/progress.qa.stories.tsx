@@ -90,6 +90,20 @@ export const AllStates: StoryFn<QAContainerProps> = (props) => (
       value={100}
       status="success"
     />
+    <Progress
+      delay={0}
+      shape="circular"
+      size="large"
+      label="Loading your accounts"
+    />
+    <Progress
+      delay={0}
+      shape="circular"
+      size="large"
+      label="Uploading"
+      value={38}
+      description="About 2 minutes left"
+    />
   </QAContainer>
 );
 

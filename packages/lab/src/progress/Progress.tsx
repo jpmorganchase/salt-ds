@@ -26,12 +26,8 @@ export type ProgressShape = "linear" | "circular";
 export type ProgressSize = "small" | "medium" | "large";
 export type ProgressStatus = "success" | "error";
 
-export interface ProgressProps
+interface ProgressBaseProps
   extends Omit<ComponentPropsWithoutRef<"div">, "children"> {
-  /**
-   * The shape of the indicator. Choose it by the space it's in. Defaults to `"linear"`.
-   */
-  shape?: ProgressShape;
   /**
    * How much is done, between `min` and `max`. Leave it out for indeterminate progress, which loops until the work
    * finishes.
@@ -45,11 +41,6 @@ export interface ProgressProps
    * The maximum value. Defaults to 100.
    */
   max?: number;
-  /**
-   * Linear only. How much is ready ahead of `value`, such as the part of a video that has loaded but hasn't played. It
-   * shows only when there's a `value`.
-   */
-  bufferValue?: number;
   /**
    * What's happening, such as "Uploading report.pdf". It's shown, and used as the accessible name.
    */
@@ -76,10 +67,6 @@ export interface ProgressProps
    */
   paused?: boolean;
   /**
-   * Circular only. The size of the indicator. Defaults to `"medium"`.
-   */
-  size?: ProgressSize;
-  /**
    * Milliseconds to wait before showing, so tasks that finish quickly show nothing. Defaults to 1000.
    */
   delay?: number;
@@ -89,6 +76,36 @@ export interface ProgressProps
    */
   completionAnnouncement?: string | null;
 }
+
+export interface ProgressLinearProps extends ProgressBaseProps {
+  /**
+   * The shape of the indicator. Choose it by the space it's in. Defaults to `"linear"`.
+   */
+  shape?: "linear";
+  /**
+   * How much is ready ahead of `value`, such as the part of a video that has loaded but hasn't played. It shows only
+   * when there's a `value`.
+   */
+  bufferValue?: number;
+  size?: never;
+}
+
+export interface ProgressCircularProps extends ProgressBaseProps {
+  /**
+   * The shape of the indicator. Choose it by the space it's in.
+   */
+  shape: "circular";
+  /**
+   * The size of the indicator. Defaults to `"medium"`.
+   */
+  size?: ProgressSize;
+  bufferValue?: never;
+}
+
+/**
+ * `size` is only for circular progress, and `bufferValue` only for linear progress.
+ */
+export type ProgressProps = ProgressLinearProps | ProgressCircularProps;
 
 // Indeterminate progress repeats its announcement at the same times as Spinner
 const ANNOUNCER_INTERVAL = 5000;
