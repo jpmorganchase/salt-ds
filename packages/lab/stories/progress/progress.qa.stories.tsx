@@ -73,12 +73,12 @@ export const AllStates: StoryFn<QAContainerProps> = (props) => (
       value={38}
       aria-label="Uploading"
     />
-    <Progress delay={0} shape="circular" label="Paused" value={60} paused />
-    <Progress delay={0} shape="circular" label="Uploaded" status="success" />
+    <Progress delay={0} shape="circular" label="Uploading" value={60} paused />
+    <Progress delay={0} shape="circular" label="Uploading" status="success" />
     <Progress
       delay={0}
       shape="circular"
-      label="Failed"
+      label="Uploading"
       value={60}
       status="error"
     />

@@ -213,9 +213,14 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     const ariaValueText = [valueText, statusText].filter(Boolean).join(", ");
     const hideValue =
       hideValueProp ?? (shape === "circular" && size === "small");
-    const showValue = !hideValue && valueText !== undefined;
+    // The success icon says the task is complete, so the value would repeat it
+    const showValue =
+      !hideValue && valueText !== undefined && status !== "success";
+    const showPaused = paused && !status;
     const valueInside = shape === "circular" && size === "large";
-    const showHeader = Boolean(label || status || (showValue && !valueInside));
+    const showHeader = Boolean(
+      label || status || showPaused || (showValue && !valueInside),
+    );
 
     const indicatorClassName = clsx(
       withBaseName("indicator"),
@@ -233,6 +238,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
           shape === "circular" && withBaseName(size),
           status && withBaseName(status),
           paused && withBaseName("paused"),
+          !indeterminate && fraction === 0 && withBaseName("empty"),
           className,
         )}
         ref={ref}
@@ -280,7 +286,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
           {valueInside && showValue && (
             <Text
               className={withBaseName("valueInside")}
-              styleAs="label"
+              styleAs="h2"
               aria-hidden="true"
             >
               {valueText}
@@ -301,6 +307,15 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
                     status={status}
                     className={withBaseName("statusIcon")}
                   />
+                )}
+                {showPaused && (
+                  <Text
+                    className={withBaseName("value")}
+                    color="secondary"
+                    aria-hidden="true"
+                  >
+                    Paused
+                  </Text>
                 )}
                 {showValue && !valueInside && (
                   <Text

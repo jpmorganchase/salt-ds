@@ -151,11 +151,17 @@ export const States: StoryFn<typeof Progress> = (args) => (
       {...args}
     />
     <FlowLayout gap={3}>
-      <Progress shape="circular" label="Paused" value={60} paused {...args} />
-      <Progress shape="circular" label="Uploaded" status="success" {...args} />
       <Progress
         shape="circular"
-        label="Failed"
+        label="Uploading"
+        value={60}
+        paused
+        {...args}
+      />
+      <Progress shape="circular" label="Uploading" status="success" {...args} />
+      <Progress
+        shape="circular"
+        label="Uploading"
         value={60}
         status="error"
         {...args}
@@ -227,7 +233,8 @@ const DownloadButton = ({
       ) : (
         <DownloadIcon aria-hidden />
       )}
-      {running ? "Downloading" : "Download"}
+      {/* The label stays the same, so the button keeps its size */}
+      Download
     </Button>
   );
 };

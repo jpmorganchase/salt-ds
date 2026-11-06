@@ -215,6 +215,29 @@ describe("GIVEN a Progress", () => {
     });
   });
 
+  it("THEN it shows the success icon instead of the value WHEN it succeeds", async () => {
+    await renderWithSalt(
+      <Progress delay={0} label="Uploading" value={100} status="success" />,
+    );
+
+    await expect.element(page.getByText("100%")).not.toBeInTheDocument();
+    await expect
+      .element(page.getByRole("img", { name: "success" }))
+      .toBeInTheDocument();
+    await expect
+      .element(page.getByRole("progressbar"))
+      .toHaveAttribute("aria-valuetext", "100%, success");
+  });
+
+  it("THEN it shows that it's paused", async () => {
+    await renderWithSalt(
+      <Progress delay={0} label="Uploading" value={60} paused />,
+    );
+
+    await expect.element(page.getByText("Paused")).toBeInTheDocument();
+    await expect.element(page.getByText("60%")).toBeInTheDocument();
+  });
+
   describe.each(["linear", "circular"] as const)("WHEN it's %s", (shape) => {
     it.each([
       [{ status: "success" as const }, "100%, success"],
