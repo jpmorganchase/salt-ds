@@ -1,0 +1,95 @@
+/*
+  Prototype track and buffer styles for the TrackStyles and Buffer stories, so design can compare them with the current
+  design. They aren't part of Progress.
+*/
+
+/* Thin track: the original design, a thin neutral line behind a thicker bar, with a hollow buffer */
+.progressTrackThin.saltProgress-linear .saltProgress-indicator {
+  height: var(--salt-size-bar-strong);
+}
+
+.progressTrackThin.saltProgress-linear .saltProgress-track {
+  inset-block: calc((var(--salt-size-bar-strong) - var(--salt-size-bar)) / 2);
+  border: none;
+  background: var(--salt-sentiment-neutral-track);
+}
+
+.progressTrackThin.saltProgress-linear .saltProgress-buffer {
+  background: var(--salt-container-primary-background);
+  box-shadow: inset 0 0 0 var(--salt-size-fixed-100) var(--progress-barColor);
+  opacity: 1;
+}
+
+/* Neutral outline: the track is an outline in the neutral track color, and the bar fills it */
+.progressTrackOutline.saltProgress {
+  --progress-trackColor: var(--salt-sentiment-neutral-track);
+}
+
+/* Stop dot: a lighter track, with a dot that marks where it ends */
+.progressTrackStop.saltProgress-linear .saltProgress-track,
+.progressTrackLight.saltProgress-linear .saltProgress-track {
+  border: none;
+  background: var(--salt-separable-tertiary-borderColor);
+}
+
+.progressTrackStop.saltProgress-linear .saltProgress-indicator::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-end: 0;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--progress-barColor);
+}
+
+/* Loops have no end to mark */
+.progressTrackStop.saltProgress-linear .saltProgress-indeterminate::after {
+  content: none;
+}
+
+/* Tinted track: a tint of the bar color, so it follows the state colors */
+.progressTrackTint.saltProgress-linear .saltProgress-track {
+  border: none;
+  background: color-mix(in srgb, var(--progress-barColor) 25%, transparent);
+}
+
+/* Tinted outline: a tint of the bar color inside a neutral outline that meets 3:1 */
+.progressTrackTintOutline.saltProgress {
+  --progress-trackColor: var(--salt-sentiment-neutral-track);
+}
+
+.progressTrackTintOutline.saltProgress-linear .saltProgress-track {
+  background: color-mix(in srgb, var(--progress-barColor) 20%, transparent);
+}
+
+/* Light outline: a light track inside a neutral outline that meets 3:1 */
+.progressTrackLightOutline.saltProgress {
+  --progress-trackColor: var(--salt-sentiment-neutral-track);
+}
+
+.progressTrackLightOutline.saltProgress-linear .saltProgress-track {
+  background: var(--salt-separable-tertiary-borderColor);
+}
+
+/* On a filled track, the tinted buffer is stronger so it stands out from the fill */
+.progressTrackTint.saltProgress-linear .saltProgress-buffer,
+.progressTrackTintOutline.saltProgress-linear .saltProgress-buffer,
+.progressTrackLightOutline.saltProgress-linear .saltProgress-buffer {
+  opacity: 0.5;
+}
+
+/*
+  Pattern buffers: the marks are in the bar color, so they meet 3:1 like the bar, and the pattern tells the buffer apart
+  from any track fill without a second tint. They come last, so they replace the buffer of every track style.
+*/
+.progressBufferStripes.saltProgress-linear .saltProgress-buffer {
+  background: repeating-linear-gradient(-45deg, var(--progress-barColor) 0 1.5px, transparent 1.5px 4px);
+  box-shadow: none;
+  opacity: 1;
+}
+
+.progressBufferDots.saltProgress-linear .saltProgress-buffer {
+  background: radial-gradient(circle, var(--progress-barColor) 1px, transparent 1.5px) 0 50% / 4px 100% repeat-x;
+  box-shadow: none;
+  opacity: 1;
+}

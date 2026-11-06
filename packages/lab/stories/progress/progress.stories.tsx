@@ -7,8 +7,11 @@ import {
 } from "@salt-ds/core";
 import { DownloadIcon } from "@salt-ds/icons";
 import { Progress, type ProgressProps } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react-vite";
+import type { ArgTypes, Meta, StoryFn } from "@storybook/react-vite";
+import { clsx } from "clsx";
 import { useCallback, useEffect, useRef, useState } from "react";
+
+import "./progress.stories.css";
 
 export default {
   title: "Lab/Progress",
@@ -19,6 +22,23 @@ export default {
 
 // The stories only pass `delay`, so circular and linear examples can share the same args.
 type StoryArgs = Pick<ProgressProps, "delay">;
+
+// Prototype: the buffer can be a tint of the bar color, or a pattern in the bar color. See progress.stories.css.
+const bufferFills = {
+  tint: undefined,
+  stripes: "progressBufferStripes",
+  dots: "progressBufferDots",
+};
+
+type BufferFillArgs = StoryArgs & { bufferFill: keyof typeof bufferFills };
+
+const bufferFillArgTypes: Partial<ArgTypes<BufferFillArgs>> = {
+  bufferFill: {
+    control: "inline-radio",
+    options: Object.keys(bufferFills),
+    description: "Prototype: fills the buffer with a tint or a pattern.",
+  },
+};
 
 /** Runs a fake task: unknown size for `sizeUnknownFor` ms, then fills over `duration` ms. */
 function useSimulatedTask({
@@ -78,12 +98,23 @@ export const Indeterminate: StoryFn<StoryArgs> = (args) => (
   </div>
 );
 
-/** The buffer shows how much is ready ahead of the progress, such as the part of a video that has loaded. */
-export const Buffer: StoryFn<StoryArgs> = (args) => (
+/**
+ * The buffer shows how much is ready ahead of the progress, such as the part of a video that has loaded. Use the
+ * `bufferFill` control to try a pattern instead of a tint.
+ */
+export const Buffer: StoryFn<BufferFillArgs> = ({ bufferFill, ...args }) => (
   <div style={{ width: 400 }}>
-    <Progress label="Playing video" value={38} bufferValue={60} {...args} />
+    <Progress
+      className={bufferFills[bufferFill]}
+      label="Playing video"
+      value={38}
+      bufferValue={60}
+      {...args}
+    />
   </div>
 );
+Buffer.args = { bufferFill: "tint" };
+Buffer.argTypes = bufferFillArgTypes;
 
 export const Circular: StoryFn<StoryArgs> = (args) => (
   <StackLayout gap={3}>
@@ -257,6 +288,63 @@ export const InButton: StoryFn<StoryArgs> = (args) => (
     />
   </FlowLayout>
 );
+
+const trackStyles = [
+  { name: "Current: bar color outline", className: undefined },
+  { name: "Thin track (original)", className: "progressTrackThin" },
+  { name: "Neutral outline", className: "progressTrackOutline" },
+  { name: "Stop dot", className: "progressTrackStop" },
+  { name: "Light track", className: "progressTrackLight" },
+  { name: "Tinted track", className: "progressTrackTint" },
+  { name: "Tinted outline", className: "progressTrackTintOutline" },
+  { name: "Light outline", className: "progressTrackLightOutline" },
+];
+
+const trackStyleExamples: ProgressProps[] = [
+  { label: "Not started", value: 0 },
+  { label: "Uploading", value: 38 },
+  { label: "Loading", value: undefined },
+  { label: "Playing video", value: 38, bufferValue: 60 },
+  { label: "Buffering video", value: 0, bufferValue: 30 },
+  { label: "Uploading", value: 60, paused: true },
+  { label: "Uploading", value: 60, status: "error" },
+  { label: "Uploading", status: "success" },
+];
+
+/**
+ * Prototype: compares the current track with other track styles. The outline styles show filled versus empty, the stop
+ * dot marks where the track ends, and the light and tinted tracks rely on color alone. Use the `bufferFill` control to
+ * try a pattern buffer with every style.
+ */
+export const TrackStyles: StoryFn<BufferFillArgs> = ({
+  bufferFill,
+  ...args
+}) => (
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "repeat(4, 220px)",
+      gap: "var(--salt-spacing-300)",
+    }}
+  >
+    {trackStyles.map(({ name, className }) => (
+      <StackLayout gap={2} key={name}>
+        <Text styleAs="h3">{name}</Text>
+        {trackStyleExamples.map((example, index) => (
+          <Progress
+            // biome-ignore lint/suspicious/noArrayIndexKey: The examples are static.
+            key={index}
+            className={clsx(className, bufferFills[bufferFill])}
+            {...example}
+            {...args}
+          />
+        ))}
+      </StackLayout>
+    ))}
+  </div>
+);
+TrackStyles.args = { bufferFill: "tint" };
+TrackStyles.argTypes = bufferFillArgTypes;
 
 /** A page loader is a composition, not a component. */
 export const PageLoader: StoryFn<StoryArgs> = (args) => (
