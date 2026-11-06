@@ -1,20 +1,30 @@
-/* Styles applied to the root element */
+/* Styles applied to the root element. Override the colors with --saltProgress-barColor and --saltProgress-trackColor */
 .saltProgress {
-  --saltProgress-barColor: var(--salt-sentiment-accent-background);
+  --progress-barColor: var(--salt-sentiment-accent-background);
+  --progress-trackColor: var(--salt-sentiment-neutral-track);
+  --progress-trackOpacity: 1;
   color: var(--salt-content-primary-foreground);
   box-sizing: border-box;
 }
 
 .saltProgress-success {
-  --saltProgress-barColor: var(--salt-status-success-foreground-decorative);
+  --progress-barColor: var(--salt-status-success-foreground-decorative);
 }
 
 .saltProgress-error {
-  --saltProgress-barColor: var(--salt-status-error-foreground-decorative);
+  --progress-barColor: var(--salt-status-error-foreground-decorative);
 }
 
 .saltProgress-paused {
-  --saltProgress-barColor: var(--salt-sentiment-neutral-dataviz);
+  --progress-barColor: var(--salt-sentiment-neutral-dataviz);
+}
+
+/* Inside a button, progress takes the button's text color, like an icon, so it contrasts with any button style */
+.saltButton .saltProgress {
+  --progress-barColor: currentColor;
+  --progress-trackColor: currentColor;
+  --progress-trackOpacity: 0.3;
+  color: inherit;
 }
 
 .saltProgress-text {
@@ -82,7 +92,8 @@
   inset-inline: 0;
   top: calc((var(--salt-size-bar-strong) - var(--salt-size-bar)) / 2);
   height: var(--salt-size-bar);
-  background: var(--salt-sentiment-neutral-track);
+  background: var(--saltProgress-trackColor, var(--progress-trackColor));
+  opacity: var(--progress-trackOpacity);
 }
 
 .saltProgress-linear .saltProgress-bar {
@@ -90,7 +101,7 @@
   inset-block: 0;
   inset-inline-start: 0;
   width: calc(var(--saltProgress-fraction) * 100%);
-  background: var(--saltProgress-barColor);
+  background: var(--saltProgress-barColor, var(--progress-barColor));
   transition: width var(--salt-duration-perceptible) linear;
 }
 
@@ -160,12 +171,13 @@
 }
 
 .saltProgress-circular .saltProgress-track {
-  stroke: var(--salt-sentiment-neutral-track);
+  stroke: var(--saltProgress-trackColor, var(--progress-trackColor));
+  stroke-opacity: var(--progress-trackOpacity);
   stroke-width: var(--saltProgress-trackWidth);
 }
 
 .saltProgress-circular .saltProgress-bar {
-  stroke: var(--saltProgress-barColor);
+  stroke: var(--saltProgress-barColor, var(--progress-barColor));
   stroke-width: var(--saltProgress-barWidth);
   /* The circles have a path length of 100 */
   stroke-dasharray: calc(var(--saltProgress-fraction) * 100) 100;

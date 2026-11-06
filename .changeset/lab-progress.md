@@ -24,3 +24,4 @@ import { Progress } from "@salt-ds/lab";
 - `delay` waits before showing, 1 second by default, so tasks that finish quickly show nothing.
 - Indeterminate progress repeats its announcement like `Spinner`. Determinate progress announces at 25%, 50% and 75%, and when the task completes or fails.
 - Loops slow down when users have turned on reduced motion.
+- Inside a `Button`, progress takes the button's text color, like an icon, so it contrasts with every button style. Override the colors with `--saltProgress-barColor` and `--saltProgress-trackColor`.

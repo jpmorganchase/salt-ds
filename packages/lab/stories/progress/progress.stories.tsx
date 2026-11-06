@@ -1,6 +1,12 @@
-import { Button, FlowLayout, StackLayout, Text } from "@salt-ds/core";
+import {
+  Button,
+  type ButtonProps,
+  FlowLayout,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import { DownloadIcon } from "@salt-ds/icons";
-import { Progress } from "@salt-ds/lab";
+import { Progress, type ProgressProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useCallback, useEffect, useRef, useState } from "react";
 
@@ -190,29 +196,50 @@ export const IndeterminateToDeterminate: StoryFn<typeof Progress> = (args) => {
   );
 };
 
-/** Circular progress fits inside controls, such as a download button. */
-export const InButton: StoryFn<typeof Progress> = (args) => {
+const DownloadButton = ({
+  progressProps,
+  ...buttonProps
+}: ButtonProps & { progressProps?: Partial<ProgressProps> }) => {
   const { running, value, start } = useSimulatedTask({ sizeUnknownFor: 1500 });
 
   return (
-    <FlowLayout gap={1}>
-      <Button onClick={start} disabled={running} focusableWhenDisabled>
-        {running ? (
-          <Progress
-            shape="circular"
-            size="small"
-            aria-label="Downloading"
-            value={value}
-            {...args}
-          />
-        ) : (
-          <DownloadIcon aria-hidden />
-        )}
-        Download
-      </Button>
-    </FlowLayout>
+    // The button stays enabled, as disabled buttons are faded, but it ignores clicks while it's downloading
+    <Button
+      {...buttonProps}
+      onClick={running ? undefined : start}
+      aria-busy={running || undefined}
+    >
+      {running ? (
+        <Progress
+          shape="circular"
+          size="small"
+          aria-label="Downloading"
+          value={value}
+          {...progressProps}
+        />
+      ) : (
+        <DownloadIcon aria-hidden />
+      )}
+      {running ? "Downloading" : "Download"}
+    </Button>
   );
 };
+
+/**
+ * Circular progress fits inside controls, such as a download button. Inside a button it takes the button's text color,
+ * like an icon, so it contrasts with every button style.
+ */
+export const InButton: StoryFn<typeof Progress> = (args) => (
+  <FlowLayout gap={1}>
+    <DownloadButton sentiment="accented" progressProps={args} />
+    <DownloadButton sentiment="neutral" progressProps={args} />
+    <DownloadButton
+      sentiment="neutral"
+      appearance="transparent"
+      progressProps={args}
+    />
+  </FlowLayout>
+);
 
 /** A page loader is a composition, not a component. */
 export const PageLoader: StoryFn<typeof Progress> = (args) => (
