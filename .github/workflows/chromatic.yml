@@ -141,7 +141,7 @@ jobs:
           run-id: ${{ github.event.workflow_run.id }}
       - name: Publish to Chromatic
         if: ${{ steps.run_context.outputs.branchName == 'main' || steps.run_context.outputs.runChromatic == 'true' }}
-        uses: chromaui/action@add73a4a1d7bc609b8664be286b7309707f1938d # v18
+        uses: chromaui/action@6ac4c49524e1b1358b8c593c5eea877604228268 # v18
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitOnceUploaded: true
