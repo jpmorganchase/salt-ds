@@ -269,7 +269,7 @@
 }
 
 /* A rounded cap would still draw a dot when there's no progress */
-.saltProgress-empty .saltProgress-bar {
+.saltProgress-circular.saltProgress-empty .saltProgress-bar {
   visibility: hidden;
 }
 

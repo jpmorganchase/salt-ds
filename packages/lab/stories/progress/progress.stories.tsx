@@ -5,6 +5,7 @@ import {
   StackLayout,
   Text,
   ToggleButton,
+  useAriaAnnouncer,
 } from "@salt-ds/core";
 import { DownloadIcon } from "@salt-ds/icons";
 import { Progress, type ProgressProps } from "@salt-ds/lab";
@@ -301,6 +302,13 @@ const DownloadButton = ({
   ...buttonProps
 }: ButtonProps & { progressProps?: StoryArgs }) => {
   const { running, value, start } = useSimulatedTask({ sizeUnknownFor: 1500 });
+  const { announce } = useAriaAnnouncer();
+  const complete = !running && value === 100;
+
+  // The task owns completion: Progress is removed as soon as the download ends.
+  useEffect(() => {
+    if (complete) announce("Download complete");
+  }, [announce, complete]);
 
   return (
     // The button stays enabled, as disabled buttons are faded, but it ignores clicks while it's downloading
@@ -309,18 +317,20 @@ const DownloadButton = ({
       onClick={running ? undefined : start}
       aria-busy={running || undefined}
     >
-      {running ? (
-        <Progress
-          shape="circular"
-          size="small"
-          aria-label="Downloading"
-          value={value}
-          {...progressProps}
-        />
-      ) : (
-        <DownloadIcon aria-hidden />
-      )}
-      {/* The label stays the same, so the button keeps its size */}
+      {/* Keep the icon's space during the delay, and keep it out of the button's name. */}
+      <span className="progressButtonIcon" aria-hidden="true">
+        <DownloadIcon style={{ visibility: running ? "hidden" : undefined }} />
+        {running && (
+          <Progress
+            shape="circular"
+            size="small"
+            aria-label="Downloading"
+            value={value}
+            completionAnnouncement={null}
+            {...progressProps}
+          />
+        )}
+      </span>
       Download
     </Button>
   );
@@ -328,7 +338,8 @@ const DownloadButton = ({
 
 /**
  * Circular progress fits inside controls, such as a download button. Inside a button it takes the button's text color,
- * like an icon, so it contrasts with every button style.
+ * like an icon, so it contrasts with every button style. The icon slot and button name stay the same while loading,
+ * including during the delay before progress appears.
  */
 export const InButton: StoryFn<StoryArgs> = (args) => (
   <FlowLayout gap={1}>
@@ -341,6 +352,7 @@ export const InButton: StoryFn<StoryArgs> = (args) => (
     />
   </FlowLayout>
 );
+InButton.args = { delay: 1000 };
 
 const trackStyles = [
   { name: "Neutral outline (default)", className: undefined },

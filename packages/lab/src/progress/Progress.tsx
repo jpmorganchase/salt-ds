@@ -69,11 +69,12 @@ interface ProgressBaseProps
   paused?: boolean;
   /**
    * Milliseconds to wait before showing, so tasks that finish quickly show nothing. Defaults to 1000.
+   * Errors and tasks that are already complete when mounted show immediately.
    */
   delay?: number;
   /**
-   * What screen readers announce when the task completes, that is when `status` is `"success"` or the value reaches
-   * `max`. Set to `null` to turn it off.
+   * What screen readers announce when a visible task completes, that is when `status` is `"success"` or the value
+   * reaches `max`. Tasks that finish before the indicator appears are not announced. Set to `null` to turn it off.
    */
   completionAnnouncement?: string | null;
 }
@@ -121,6 +122,7 @@ const LOOP_EXIT: Record<ProgressShape, number> = { linear: 0.6, circular: 1 };
 function useLoopExit(
   indeterminate: boolean,
   shape: ProgressShape,
+  skipExit: boolean,
   progressbarRef: RefObject<HTMLElement | null>,
   targetWindow: Window | null | undefined,
 ) {
@@ -139,9 +141,9 @@ function useLoopExit(
       );
     const reducedMotion = targetWindow?.matchMedia?.(
       "(prefers-reduced-motion: reduce)",
-    ).matches;
+    );
     const timing =
-      loop?.playState === "running" && !reducedMotion
+      !skipExit && loop?.playState === "running" && !reducedMotion?.matches
         ? loop.effect?.getComputedTiming()
         : undefined;
     const remaining =
@@ -153,8 +155,18 @@ function useLoopExit(
       return;
     }
     const timer = setTimeout(() => setLooping(false), remaining);
-    return () => clearTimeout(timer);
-  }, [indeterminate, looping, shape, progressbarRef, targetWindow]);
+    const handleReducedMotion = (event: MediaQueryListEvent) => {
+      if (event.matches) {
+        clearTimeout(timer);
+        setLooping(false);
+      }
+    };
+    reducedMotion?.addEventListener("change", handleReducedMotion);
+    return () => {
+      clearTimeout(timer);
+      reducedMotion?.removeEventListener("change", handleReducedMotion);
+    };
+  }, [indeterminate, looping, shape, skipExit, progressbarRef, targetWindow]);
 
   return looping;
 }
@@ -206,16 +218,6 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     const descriptionId = `${id}-description`;
     const { announce } = useAriaAnnouncer();
 
-    const [visible, setVisible] = useState(delay <= 0);
-    useEffect(() => {
-      if (delay <= 0) {
-        setVisible(true);
-        return;
-      }
-      const timer = setTimeout(() => setVisible(true), delay);
-      return () => clearTimeout(timer);
-    }, [delay]);
-
     // A successful task is complete, so it fills even if its value hasn't caught up.
     const value = status === "success" ? max : valueProp;
     const indeterminate = value === undefined;
@@ -227,6 +229,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     const looping = useLoopExit(
       indeterminate,
       shape,
+      paused || status === "error",
       progressbarRef,
       targetWindow,
     );
@@ -248,6 +251,20 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
         : status === "success" || (!indeterminate && fraction >= 1)
           ? "success"
           : undefined;
+
+    const [visible, setVisible] = useState(delay <= 0 || outcome !== undefined);
+    useEffect(() => {
+      if (visible) return;
+      if (delay <= 0 || outcome === "error") {
+        setVisible(true);
+        return;
+      }
+      // A task that finishes before it appears must not reveal a stale indicator.
+      if (outcome === "success") return;
+
+      const timer = setTimeout(() => setVisible(true), delay);
+      return () => clearTimeout(timer);
+    }, [delay, outcome, visible]);
 
     // Indeterminate progress repeats its announcement while it loops, like Spinner.
     const loops = visible && indeterminate && !outcome && !paused;
@@ -273,7 +290,11 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     // Screen readers read a progress bar's value themselves, so only the outcome is announced, once.
     const announcedOutcome = useRef<string | undefined>(undefined);
     useEffect(() => {
-      if (!visible || !outcome || announcedOutcome.current === outcome) return;
+      if (!outcome) {
+        announcedOutcome.current = undefined;
+        return;
+      }
+      if (!visible || announcedOutcome.current === outcome) return;
       announcedOutcome.current = outcome;
       if (outcome === "error") {
         announce(`${labelText}, error`);

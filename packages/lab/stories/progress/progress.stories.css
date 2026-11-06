@@ -18,3 +18,17 @@
 .progressBufferDots.saltProgress-linear .saltProgress-buffer {
   background: radial-gradient(circle, var(--progress-barColor) 1px, transparent 1.5px) 0 50% / 4px 100% repeat-x;
 }
+
+/* Keep the icon's dimensions even while Progress is waiting to appear. */
+.progressButtonIcon {
+  display: inline-flex;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.progressButtonIcon .saltProgress {
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+}
