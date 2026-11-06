@@ -83,20 +83,18 @@ export interface ProgressLinearProps extends ProgressBaseProps {
    */
   shape?: "linear";
   /**
-   * How much is ready ahead of `value`, such as the part of a video that has loaded but hasn't played. It shows only
-   * when there's a `value`.
+   * Linear only. How much is ready ahead of `value`, such as the part of a video that has loaded but hasn't played. It
+   * shows only when there's a `value`.
    */
   bufferValue?: number;
   size?: never;
 }
 
 export interface ProgressCircularProps extends ProgressBaseProps {
-  /**
-   * The shape of the indicator. Choose it by the space it's in.
-   */
+  // Documented on ProgressLinearProps, so the props table shows one description
   shape: "circular";
   /**
-   * The size of the indicator. Defaults to `"medium"`.
+   * Circular only. The size of the indicator. Defaults to `"medium"`.
    */
   size?: ProgressSize;
   bufferValue?: never;
