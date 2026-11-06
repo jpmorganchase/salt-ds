@@ -12,7 +12,7 @@ data:
 
 Give `Progress` a `value` to show how much of a task is complete. It fills from `min` to `max`, which default to 0 and 100.
 
-The track is a neutral outline, and the bar fills it, so the bar ends where solid turns into outline.
+The track is a light neutral fill, and the bar fills it. The value is always shown as text, so how far the task has progressed doesn't rely on the track's contrast.
 
 <LivePreview componentName="progress-next" exampleName="Linear" />
 
@@ -37,7 +37,7 @@ Set `shape="circular"` for compact spaces, inside controls, and when centered in
 
 Circular progress comes in three sizes:
 
-- **Small** fits inside controls. It hides its value text, which screen readers still announce.
+- **Small** fits inside controls. It never shows its value text, which screen readers still announce.
 - **Medium** shows its label and value beside it.
 - **Large** shows its value inside, and its label below, as it's used centered.
 
@@ -47,7 +47,7 @@ Circular progress comes in three sizes:
 
 By default, the value shows as a percentage. Use `getValueText` to show it in units that make sense to users, and `description` for helper text.
 
-The value text is shown and used as the progress bar's `aria-valuetext`. To hide it, set `hideValue`.
+The value text is always shown, except on small circular progress, and is used as the progress bar's `aria-valuetext`.
 
 <LivePreview componentName="progress-next" exampleName="ValueText" />
 
@@ -63,7 +63,7 @@ Show the state of a task in place, with an icon and text as well as color.
 
 ## Buffer
 
-On linear progress, use `bufferValue` to show how much is ready ahead of the progress, such as the part of a video that has loaded. The buffer is striped, so it stands apart from the empty track, and it shows only when there's a `value`.
+On linear progress, use `bufferValue` to show how much is ready ahead of the progress, such as the part of a video that has loaded. The buffer is a solid neutral, with a 1px gap between it, the bar and the rest of the track, so the three parts stand apart. It shows only when there's a `value`.
 
 <LivePreview componentName="progress-next" exampleName="Buffer" />
 
