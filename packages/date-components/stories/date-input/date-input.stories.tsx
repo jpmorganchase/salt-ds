@@ -33,6 +33,11 @@ export default {
   title: "Date Components/Date Input",
   component: DateInputSingle,
   decorators: [withDateMock],
+  argTypes: {
+    disabled: {
+      control: { type: "boolean" },
+    },
+  },
 } as Meta<typeof DateInputSingle>;
 
 const DateInputSingleTemplate: StoryFn<DateInputSingleProps> = (args) => {
@@ -388,6 +393,18 @@ SingleBordered.args = {
 export const RangeBordered = DateInputRangeTemplate.bind({});
 RangeBordered.args = {
   bordered: true,
+  onDateValueChange: fn(),
+};
+
+export const SingleDisabled = DateInputSingleTemplate.bind({});
+SingleDisabled.args = {
+  disabled: true,
+  onDateValueChange: fn(),
+};
+
+export const RangeDisabled = DateInputRangeTemplate.bind({});
+RangeDisabled.args = {
+  disabled: true,
   onDateValueChange: fn(),
 };
 

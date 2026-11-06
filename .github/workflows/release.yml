@@ -38,7 +38,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: "24"
+          node-version: "26"
           package-manager-cache: false
       - name: Install dependencies
         run: yarn install
@@ -63,7 +63,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: "24"
+          node-version: "26"
           package-manager-cache: false
       - name: Install dependencies
         run: yarn install
@@ -89,7 +89,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: "24"
+          node-version: "26"
           package-manager-cache: false
           registry-url: "https://registry.npmjs.org"
       - name: Install dependencies
@@ -168,7 +168,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: "24"
+          node-version: "26"
           package-manager-cache: false
       - name: Install dependencies
         run: yarn install
@@ -319,7 +319,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: "24"
+          node-version: "26"
           package-manager-cache: false
           registry-url: "https://registry.npmjs.org"
       - name: Install npm with trusted publishing support
@@ -471,7 +471,7 @@ jobs:
       - name: Use Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
-          node-version: "24"
+          node-version: "26"
           package-manager-cache: false
           registry-url: "https://registry.npmjs.org"
 

@@ -5,7 +5,7 @@ import {
   type NumberInputProps,
 } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
-import { useState } from "react";
+import { type ReactNode, useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
@@ -21,6 +21,17 @@ const {
 } = composeStories(numberInputStories);
 
 const input = () => page.getByRole("spinbutton");
+
+// A trailing focusable lets Tab leave the input; Firefox keeps focus on the
+// last element in the test frame.
+function renderWithFocusableAfter(ui: ReactNode) {
+  return renderWithSalt(
+    <>
+      {ui}
+      <button type="button">After</button>
+    </>,
+  );
+}
 
 function button(kind: "increment" | "decrement") {
   const element = document.querySelector<HTMLElement>(
@@ -241,7 +252,7 @@ describe("Number Input", () => {
 
   it("clamps defaults and typed values to safe integers", async () => {
     const onNumberChange = vi.fn();
-    await renderWithSalt(
+    await renderWithFocusableAfter(
       <Default
         defaultValue={Number.MAX_SAFE_INTEGER + 1}
         onNumberChange={onNumberChange}
@@ -344,7 +355,7 @@ describe("Number Input", () => {
   });
 
   it("allows out-of-range input when clamp is false", async () => {
-    await renderWithSalt(<MinAndMaxValue />);
+    await renderWithFocusableAfter(<MinAndMaxValue />);
     input().element().focus();
     await userEvent.keyboard("2");
     await userEvent.tab();
@@ -370,7 +381,7 @@ describe("Number Input", () => {
 
   it("clamps typed values on blur and steps from the clamped result", async () => {
     const onNumberChange = vi.fn();
-    await renderWithSalt(
+    await renderWithFocusableAfter(
       <Default min={10} max={100} clamp onNumberChange={onNumberChange} />,
     );
     await typeValue("10000000");
@@ -410,7 +421,7 @@ describe("Number Input", () => {
     });
 
     it("formats and edits a controlled value", async () => {
-      await renderWithSalt(<ControlledFormatting />);
+      await renderWithFocusableAfter(<ControlledFormatting />);
       await expect.element(input()).toHaveValue("100K");
       input().element().focus();
       await userEvent.keyboard("{ArrowUp}");
@@ -467,7 +478,7 @@ describe("Number Input", () => {
     it("reports controlled formatted text while typing and its number on blur", async () => {
       const onChange = vi.fn();
       const onNumberChange = vi.fn();
-      await renderWithSalt(
+      await renderWithFocusableAfter(
         <ControlledPercentInput
           onChange={onChange}
           onNumberChange={onNumberChange}
@@ -509,7 +520,7 @@ describe("Number Input", () => {
         (event) => event?.persist(),
       );
       const onNumberChange = vi.fn();
-      await renderWithSalt(
+      await renderWithFocusableAfter(
         <Default
           defaultValue={12}
           onChange={onChange}
@@ -549,7 +560,7 @@ describe("Number Input", () => {
       [-5.8, 3, "-5.800"],
       [12.1111, 2, "12.11"],
     ])("formats %s at scale %s", async (defaultValue, decimalScale, value) => {
-      await renderWithSalt(
+      await renderWithFocusableAfter(
         <Default defaultValue={defaultValue} decimalScale={decimalScale} />,
       );
       await expect.element(input()).toHaveValue(value);
@@ -565,7 +576,7 @@ describe("Number Input", () => {
     ])(
       "normalizes typed value %s at scale %s",
       async (typedValue, decimalScale, value) => {
-        await renderWithSalt(<Default decimalScale={decimalScale} />);
+        await renderWithFocusableAfter(<Default decimalScale={decimalScale} />);
         await typeValue(typedValue);
         await userEvent.tab();
         await expect.element(input()).toHaveValue(value);
@@ -582,7 +593,7 @@ describe("Number Input", () => {
       async (value) => {
         const onChange = vi.fn();
         const onNumberChange = vi.fn();
-        await renderWithSalt(
+        await renderWithFocusableAfter(
           <Default onChange={onChange} onNumberChange={onNumberChange} />,
         );
         await typeValue(value);
@@ -622,7 +633,7 @@ describe("Number Input", () => {
     );
 
     it("keeps its formatted value through focus and blur", async () => {
-      await renderWithSalt(<ReadOnly decimalScale={2} />);
+      await renderWithFocusableAfter(<ReadOnly decimalScale={2} />);
       const textbox = page.getByRole("textbox");
       textbox.element().focus();
       await expect.element(textbox).toHaveValue("5.00");

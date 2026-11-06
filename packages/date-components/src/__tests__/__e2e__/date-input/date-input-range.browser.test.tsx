@@ -145,8 +145,16 @@ function registerAdapterTests(
     beforeEach(() => MockDate.set(new Date(2024, 4, 6)));
     afterEach(() => MockDate.reset());
 
+    // A trailing focusable lets Tab leave the inputs; Firefox keeps focus on
+    // the last element in the test frame.
     const render = (children: ReactNode, locale?: unknown) =>
-      renderWithSalt(children, { dateAdapter: adapter, dateLocale: locale });
+      renderWithSalt(
+        <>
+          {children}
+          <button type="button">After</button>
+        </>,
+        { dateAdapter: adapter, dateLocale: locale },
+      );
 
     const initialDate = {
       startDate: adapter.parse("05 Jan 2025", "DD MMM YYYY").date,
