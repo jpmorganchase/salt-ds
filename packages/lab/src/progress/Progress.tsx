@@ -266,7 +266,8 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
           aria-label={label ? undefined : ariaLabel}
           aria-labelledby={label ? labelId : ariaLabelledBy}
           aria-describedby={
-            clsx(description && descriptionId, ariaDescribedBy) || undefined
+            clsx(description ? descriptionId : undefined, ariaDescribedBy) ||
+            undefined
           }
           aria-valuemin={indeterminate ? undefined : min}
           aria-valuemax={indeterminate ? undefined : max}
