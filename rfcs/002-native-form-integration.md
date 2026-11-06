@@ -47,7 +47,7 @@ Existing native controls remain useful. The problem is consistency across the li
 
 This RFC covers form participation, semantic values, submission, defaults/reset, validation, labels/descriptions/errors, focus and refs, event routing, server rendering, form-library integration, React Actions, browser-originated changes, and migration.
 
-Applications retain business schemas, cross-field and server rules, network requests, persistence, field arrays, wizard navigation, and retention of unmounted-step values. Salt does not introduce a mandatory whole-form values store or schema engine. Replacing Salt with another library, changing its visual language, replacing date adapters, and raising React/browser minimums are outside this proposal.
+Applications retain business schemas, cross-field and server rules, network requests, persistence, field arrays, wizard navigation, and retention of unmounted-step values. Salt does not introduce a mandatory whole-form values store or schema engine. Changing Salt's visual language, replacing date adapters, and raising React/browser minimums are outside this proposal.
 
 Compatibility includes observable behavior as well as TypeScript: payloads, validation blocking, defaults/reset, callback arguments and order, `currentTarget`, ref targets, focus, accessible associations, and documented styling hooks. Adding a native element can change a payload without removing a prop. Native requiredness can block a previously accepted submission.
 
@@ -81,7 +81,7 @@ Keep native interaction inputs for text, textarea, checkbox, radio, switch, and 
 
 A selection-only ComboBox keeps its visible text input for editing and accessibility while representing committed selection separately. Free-text autocomplete is a different contract. A hidden input is appropriate for serialization alone; it must not be described as a validation proxy. A visually hidden select or text input has different focus and validation behavior. [HTML input states][html-input]
 
-[React Aria's HiddenSelect][aria-hidden-select] and [Base UI's forms guidance][base-forms] offer implementation references. They are evidence for techniques to investigate, not a dependency or a substitute for Salt's own browser and assistive-technology testing.
+Choose the companion through Salt's prototype and verify submission, validation, reset, browser-originated changes, and visible focus. A candidate mechanism is not a supported capability until the relevant browser and assistive-technology cases have been exercised.
 
 Every companion must satisfy these invariants:
 
@@ -204,7 +204,7 @@ Do not focus unconditionally from every `invalid` handler: both explicit checks 
 
 An error summary can navigate to a visible target and invoke an application reveal step for collapsed sections. Follow meaningful form-control order, rather than assuming registration order matches it. Unmounted wizard fields remain the application's workflow responsibility.
 
-Server errors need an explicit repeated-name/group mapping policy and should be tied to the submitted value or revision. Suppress or clear stale errors through documented rules; a late response must not replace a newer value's result. Salt supplies presentation/integration rather than a general asynchronous validation scheduler. [React Aria's form integration][aria-forms] is a useful reference.
+Server errors need an explicit repeated-name/group mapping policy and should be tied to the submitted value or revision. Suppress or clear stale errors through documented rules; a late response must not replace a newer value's result. Salt supplies presentation and integration; applications retain ownership of asynchronous validation scheduling.
 
 ### Disabled and read-only
 
@@ -222,7 +222,7 @@ React 19 function-valued actions consume `FormData` and reset uncontrolled field
 
 An optional Salt Form must preserve `action`/`formAction`, avoid unconditional `preventDefault()`, and retain server-action/progressive-enhancement behavior where applicable. Shared code continues to support React 16.14+. React 19-only helpers need an explicit boundary. Ordinary input/selection callbacks remain immediate; an Action suffix is not a rename for `onChange`. The broader Action policy belongs in [RFC 001](./001-component-contracts-and-react.md).
 
-Supply one maintained external-library recipe, initially React Hook Form or another agreed representative. Native controls expose registration/focus access; rich controls expose controlled value, blur, focus, and error integration. Avoid putting fake domain values into synthetic native events. The external library owns its values and validation, with repeated values and files handled explicitly.
+Supply one maintained recipe for an agreed external form-state integration. Native controls expose registration/focus access; rich controls expose controlled value, blur, focus, and error integration. Avoid putting fake domain values into synthetic native events. The external library owns its values and validation, with repeated values and files handled explicitly.
 
 ## 8. Component adoption and migration
 
@@ -304,7 +304,7 @@ Before supported release, all included controls must identify their semantic val
 | Replace rich controls with native select/date/number | Useful as additional options; does not preserve every specialized editing/selection requirement.           |
 | Global switch or changed legacy defaults             | Makes payload and lifecycle adoption implicit across reused trees.                                         |
 | Mandatory form-state/schema framework                | Competes with application state and broadens ownership.                                                    |
-| Whole-library rewrite or replacement                 | Outside the agreed direction; delays independently useful changes.                                         |
+| Wholesale Salt form rebuild                          | Outside the agreed direction; delays independently useful changes.                                         |
 | Form-associated custom elements                      | Possible separate research; not required to establish this React/native contract.                          |
 
 Principal risks are changed/duplicate payloads, invisible invalid controls, native/controlled divergence, Action resets losing values/errors, unsupported SSR claims, and two long-lived APIs. Mitigate them through exact payload assertions, plain-form focus tests, explicit ownership, local migration, private prototypes, and capability-specific documentation.
@@ -331,11 +331,10 @@ Open decisions do not block unrelated additive fixes. They do block publication 
 
 ## References
 
-Current-state links are pinned to the assessed Salt revision. External references describe the platform or implementation techniques; the Salt policies above remain proposals.
+Current-state links are pinned to the assessed Salt revision. Platform references describe HTML and React behavior; the Salt policies above remain proposals.
 
 - [HTML form control infrastructure][html-infrastructure] and [input states][html-input].
 - [React input][react-input], [form Actions][react-form], and [IDs across roots and SSR][react-id].
-- [Base UI forms][base-forms], [React Aria forms][aria-forms], and [HiddenSelect implementation][aria-hidden-select].
 
 [salt-input]: https://github.com/jpmorganchase/salt-ds/blob/3bd9580d2a09e9bc0415efd30469f211256fe08f/packages/core/src/input/Input.tsx
 [salt-multiline]: https://github.com/jpmorganchase/salt-ds/blob/3bd9580d2a09e9bc0415efd30469f211256fe08f/packages/core/src/multiline-input/MultilineInput.tsx
@@ -360,6 +359,3 @@ Current-state links are pinned to the assessed Salt revision. External reference
 [react-input]: https://react.dev/reference/react-dom/components/input
 [react-form]: https://react.dev/reference/react-dom/components/form
 [react-id]: https://react.dev/reference/react/useId
-[base-forms]: https://base-ui.com/react/handbook/forms
-[aria-forms]: https://react-aria.adobe.com/forms
-[aria-hidden-select]: https://github.com/adobe/react-spectrum/blob/main/packages/react-aria/src/select/HiddenSelect.tsx

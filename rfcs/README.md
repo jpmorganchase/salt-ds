@@ -21,7 +21,7 @@ The first review should decide whether the team agrees with these directions and
 
 ## Shared constraints
 
-- **Preserve the design system.** Learn from modern libraries without adopting another component library or rebuilding the catalog wholesale.
+- **Preserve Salt.** Retain Salt's architecture, visual language, and supported consumer patterns while delivering focused improvements.
 - **Keep the common support floor.** React 19 integration examples and the React 19 MFE scenario do not raise Salt's React or browser requirements. Newer capabilities need explicit boundaries and appropriate fallbacks.
 - **Treat behavior as part of compatibility.** Payloads, required blocking, reset, callback timing, ref targets, focus, associations, and supported styling hooks matter alongside TypeScript compatibility.
 - **Make adoption local.** A new provider or optional Form must not silently reinterpret existing descendants. Independently useful fixes can ship before broader contracts are ready.
@@ -98,7 +98,7 @@ Unresolved decisions should block only the capabilities that depend on them. The
 
 | Discussion or follow-up                                                                                                          | Where consolidated                     | How the final direction is represented                                                                       |
 | -------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- | ------------------------------------------------------------------------------------------------------------ |
-| Base UI comparison, other modern systems, and React direction, November 4–5                                                      | 001, with specialist detail in 002–004 | Learn from explicit contracts and implementation techniques; preserve Salt; start with tests and recipes.    |
+| Component architecture, interaction contracts, and React direction, November 4–5                                                 | 001, with specialist detail in 002–004 | Define explicit Salt contracts and implementation improvements; start with tests and recipes.                |
 | Form rebuild and detailed form RFC, November 5                                                                                   | 002                                    | Consolidates the earlier long draft while retaining lifecycle, migration, and unresolved publication gates.  |
 | Theme modernization and plan review, November 5                                                                                  | 003                                    | Uses the reviewed system-appearance-first order and retains current browser support.                         |
 | MFE investigation and the same-version/mostly-SPA clarification, November 4                                                      | 003                                    | Prioritizes correctness and ownership for the stated deployment model.                                       |

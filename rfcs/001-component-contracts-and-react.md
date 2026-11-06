@@ -13,7 +13,7 @@
 
 Improve Salt's consistency and composition while retaining its components, visual language, and supported applications. Start by making behavior explicit and testing it across component boundaries. Then introduce small capabilities where those tests expose a concrete gap.
 
-Modern libraries provide useful examples of explicit change reasons, composable interaction parts, stable selection identity, and complete lifecycle handling. They do not establish that Salt needs a replacement implementation. This proposal learns from those techniques while keeping compatibility and Salt's existing architecture central.
+Salt needs explicit change reasons where applications use them, composable interaction parts, stable selection identity, and complete lifecycle handling. This proposal develops those contracts within Salt's existing architecture and preserves supported consumer behavior.
 
 The immediate priorities are a shared popup conformance harness, complete React 19 integration recipes, and a bounded consumer fixture for lifecycle and React Compiler compatibility. Typed composition and stable selection identity follow as focused prototypes. New callback metadata is conditional on demonstrated application needs.
 
@@ -26,10 +26,10 @@ Salt already has substantial infrastructure. The problem is that an application 
 These observations are verified against the pinned baseline. They describe implementation and documented policy, not newly measured defects.
 
 | Area                     | Current foundation                                                                                                                                                                     | Opportunity                                                                                                                       |
-| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| ------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
 | Supported React versions | The contribution policy supports React 16.14 onward, requires compatible APIs, and describes React 16–19 browser and consumer-type checks.                                             | Keep the common component implementation compatible while documenting richer application integration for React 19.                |
-| Floating UI              | `useFloatingUI`, `FloatingComponentProvider`, and `FloatingPlatformProvider` support positioning, focus management, alternate floating surfaces, and target-platform integration.      | Exercise the shared behavior across popup families and custom floating implementations.                                           |
-| Popup callbacks          | `Dialog`, `Menu`, and `Overlay` expose boolean open notifications. List controls also expose the narrower optional `"input"                                                            | "manual"` reason.                                                                                                                 | Determine where application decisions need additional information without changing existing parameter meanings. |
+| Floating surfaces        | `useFloatingUI`, `FloatingComponentProvider`, and `FloatingPlatformProvider` support positioning, focus management, alternate floating surfaces, and target-platform integration.      | Exercise the shared behavior across popup families and custom floating implementations.                                           |
+| Popup callbacks          | `Dialog`, `Menu`, and `Overlay` expose boolean open notifications. List controls also expose the narrower optional `"input"` or `"manual"` reason.                                     | Determine where application decisions need additional information without changing existing parameter meanings.                   |
 | Controlled state         | `useControlled` separates controlled and uncontrolled ownership and warns about changing that ownership.                                                                               | Specify request, commit, callback, and focus timing for each component family.                                                    |
 | Selection                | `useListControl` has a registry and per-option store. Selection paths compare item values directly, including object identity.                                                         | Define how remote data, recreated objects, and temporarily unmounted options should be represented before adding an identity API. |
 | Composition              | `renderProps` supports JSX elements and callback rendering. `RenderPropsType` currently accepts an `any` callback argument. `mergeProps` chains events and merges classes/styles.      | Add useful types and test prop/ref/event behavior without silently replacing established merging rules.                           |
@@ -44,20 +44,20 @@ The goals are predictable behavior in composed interfaces, safe React 19 adoptio
 
 This RFC covers interaction state, popup lifecycle, focus, cancellation boundaries, render composition, selection identity, and React integration. [RFC 002](./002-native-form-integration.md) owns submission values, validation, reset, and field/form architecture. [RFC 003](./003-theme-and-runtime-integration.md) owns document-level styling and runtime coordination. [RFC 004](./004-guidance-and-maintainer-workflows.md) owns how the resulting contracts reach humans and agents.
 
-The proposal does not adopt another component library, raise Salt's React or browser minimum, rename the component catalog, introduce universal polymorphism, replace the styling system, or convert every callback into an Action. It excludes the separate build-tooling discussion. The Compiler fixture below is a consumer compatibility check, not a proposal to change how Salt publishes its packages.
+The proposal preserves Salt's architecture, React and browser minimums, component names, and styling system. Universal polymorphism and converting every callback into an Action are outside its scope. It excludes the separate build-tooling discussion. The Compiler fixture below is a consumer compatibility check, not a proposal to change how Salt publishes its packages.
 
-## 3. Lessons from modern implementations
+## 3. Design priorities for Salt
 
-The useful comparison is the contract each system makes explicit. The following are reference points, not dependencies or claims that their behavior should be copied wholesale.
+The following priorities address the integration needs identified in Salt's current implementation. Each improvement needs a concrete consumer case and a compatible adoption path.
 
-| Reference                                                                       | Relevant technique                                                                                    | Proposed application to Salt                                                                                                                                                       |
-| ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [Base UI composition][base-composition] and [customization][base-customization] | Documents render merging, ref forwarding, reason-bearing change details, and cancellation separately. | Make Salt's existing composition behavior explicit; prototype metadata only for a demonstrated use case. Preserve Salt's current ordering until an intentional change is reviewed. |
-| [React Aria selection][aria-selection]                                          | Represents selection through stable keys with controlled and uncontrolled interfaces.                 | Separate entity identity from labels, DOM IDs, and object references; test remote-data behavior.                                                                                   |
-| [Spectrum 2 migration][spectrum-migration]                                      | Makes API migration explicit and supplies component-level migration assistance.                       | Keep adoption local and explain changed behavior when a new contract is required. This does not propose adopting its visual or styling architecture.                               |
-| [Ark UI/Zag][ark-about]                                                         | Models complex component behavior through state machines and framework adapters.                      | Write explicit states and transitions for difficult interactions; do not require a state-machine runtime throughout Salt.                                                          |
-| [Ariakit dialogs][ariakit-dialog] and [Headless UI dialogs][headless-dialog]    | Document nested popup, controlled-state, focus, and transition scenarios.                             | Include comparable composed scenarios in Salt's conformance tests.                                                                                                                 |
-| [Radix composition][radix-composition]                                          | Makes the responsibilities of a custom rendered element explicit.                                     | Document which props and refs must reach the actual interactive element, and preserve semantic defaults.                                                                           |
+| Concern                         | Requirement for Salt                                                                | Proposed approach                                                                                                                        |
+| ------------------------------- | ----------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Change reasons and cancellation | Applications can distinguish interactions when they need different responses.       | Define component-specific reasons and cancellation only for demonstrated needs; preserve existing callback timing and argument meanings. |
+| Selection identity              | Selection survives data refreshes without depending on labels or object references. | Separate entity identity from labels, DOM IDs, and serialized values; test remote-data and temporarily absent-option behavior.           |
+| Migration                       | Consumers can adopt a new contract one component or screen at a time.               | Document changed behavior and provide focused migration examples when an explicit adoption boundary is needed.                           |
+| Interaction state               | Complex components have predictable transitions and cleanup.                        | Record states and transitions for difficult cases without requiring a new state-management mechanism throughout Salt.                    |
+| Composed popups                 | Nested, controlled, and transitioning popups maintain coherent focus and dismissal. | Establish component-specific expectations through shared conformance cases.                                                              |
+| Custom rendering                | Required props and refs reach the actual interactive element.                       | Document and test the existing render contract while preserving semantic defaults.                                                       |
 
 ## 4. A shared behavioral contract
 
@@ -143,7 +143,7 @@ A reason is useful when it changes application behavior, for example distinguish
 
 Inventory the existing signatures first. In particular, list controls already use their second open-change argument for a reason string. Replacing that argument with an object would change the public contract. The initial prototype should be internal or explicitly opt-in; choose the public extension only after compatibility review.
 
-If metadata is justified, define a small component-specific set of reasons, the originating event when one exists, and any relevant trigger or item identity. Programmatic changes and cleanup may have no originating DOM event. Do not fabricate an event or export an upstream library's reason union as Salt's permanent contract without reviewing it.
+If metadata is justified, define a small component-specific set of reasons, the originating event when one exists, and any relevant trigger or item identity. Programmatic changes and cleanup may have no originating DOM event. Do not fabricate an event. Review each reason and its meaning as part of Salt's public contract before publication.
 
 Distinguish three operations: preventing a browser default, preventing Salt's proposed state change, and stopping propagation to another popup. They affect different things. Adding a cancellation method requires calling the handler before the cancellable work and specifying what is cancelled. That timing is a behavioral contract, not an incidental extra argument.
 
@@ -188,7 +188,7 @@ This documentation branch does not claim those tests have run. Implementation PR
 
 ## 11. Alternatives and risks
 
-**Replace Salt internals with another library.** This would combine behavior, styling, support-floor, and migration decisions into a larger program. The identified improvements can be tested and delivered within Salt, so replacement is outside this proposal.
+**Rebuild Salt's interaction architecture.** This would combine behavior, styling, support-floor, and migration decisions into a larger program. The identified improvements can be tested and delivered through focused changes to the existing architecture.
 
 **Publish a uniform metadata or Action API immediately.** Uniform names are attractive, but callback timing and async ownership differ by component. Prove one application need and its compatibility boundary first.
 
@@ -223,14 +223,6 @@ Salt source links are pinned to the assessed baseline. External primary document
 [salt-button]: https://github.com/jpmorganchase/salt-ds/blob/3bd9580d2a09e9bc0415efd30469f211256fe08f/packages/core/src/button/Button.tsx
 [salt-input]: https://github.com/jpmorganchase/salt-ds/blob/3bd9580d2a09e9bc0415efd30469f211256fe08f/packages/core/src/input/Input.tsx
 [salt-render-guide]: https://github.com/jpmorganchase/salt-ds/blob/3bd9580d2a09e9bc0415efd30469f211256fe08f/site/docs/getting-started/render-prop.mdx
-[base-composition]: https://base-ui.com/react/handbook/composition
-[base-customization]: https://base-ui.com/react/handbook/customization
-[aria-selection]: https://react-aria.adobe.com/selection
-[spectrum-migration]: https://react-spectrum.adobe.com/migrating
-[ark-about]: https://ark-ui.com/docs/overview/about
-[ariakit-dialog]: https://ariakit.com/components/dialog
-[headless-dialog]: https://headlessui.com/react/dialog
-[radix-composition]: https://www.radix-ui.com/primitives/docs/guides/composition
 [react-transition]: https://react.dev/reference/react/useTransition
 [react-form]: https://react.dev/reference/react-dom/components/form
 [react-action-state]: https://react.dev/reference/react/useActionState

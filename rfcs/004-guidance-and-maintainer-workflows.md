@@ -66,7 +66,7 @@ The independent documentation branches are useful even if the larger agent-docs 
 | G7  | Adopt a proportional maintainer workflow using the existing contribution guide and check infrastructure.                  |
 | G8  | Keep runtime-generated UI as a separately approved experiment with application-owned actions and state.                   |
 
-These decisions request direction. They do not approve every existing branch change, finalize a new metadata schema, or commit the team to an external framework.
+These decisions request direction. They do not approve every existing branch change, finalize a new metadata schema, or select a runtime-UI implementation.
 
 ## 4. Documentation ownership and authoring
 
@@ -110,7 +110,7 @@ Guidance should answer concrete decisions such as these:
 | Delete the item that opened a dialog                           | Verify a logical surviving focus target and the resulting announcement after the trigger disappears.                                           |
 | Choose an input for a numeric quantity or identifier           | Explain stepping/range semantics and exceptions; a numeric keyboard hint alone does not determine the domain model.                            |
 
-Examples from Base UI or another system inform the questions, not Salt's exported names. Do not suggest that Salt has a `FilterProvider` or filterable-menu capability merely because another library does. Unsupported patterns require an explicit supported composition, a documented limitation, or a separate component proposal.
+Guidance must use Salt's actual exported APIs and documented capabilities for the installed version. Do not invent providers, props, or interactions to satisfy a requested pattern. Unsupported patterns require an explicit supported Salt composition, a documented limitation, or a separate component proposal.
 
 ### Content shape
 
@@ -192,7 +192,7 @@ Repository code generation produces code that an application's development and r
 
 If there is a committed product use case, approve one separate search–filter–detail experiment comparing a prebuilt Salt widget with composition from a curated serializable catalog. The application owns authoritative data, permissions, state, and allowed actions; a trusted renderer maps validated descriptions to supported Salt components. The model selects from that contract rather than supplying arbitrary executable event handlers.
 
-[A2UI][a2ui] and [json-render][json-render] are candidates for studying catalog/renderer boundaries. [MCP Apps][mcp-apps] addresses delivering interactive interfaces inside compatible hosts. None is selected here, and chat delivery is not a substitute for a Salt catalog or correct interaction design.
+Specify the Salt catalog and renderer contract before selecting an implementation. [MCP Apps][mcp-apps] addresses delivering interactive interfaces inside compatible hosts; the Salt catalog, state, actions, and interaction behavior still need their own contracts. No runtime-UI implementation is selected here.
 
 Measure completed tasks, state across updates and turns, keyboard/focus behavior, error recovery, latency, and repair effort. A valid JSON document or attractive screenshot is insufficient. Continue this work only if the concrete workflow benefits; it must not delay independently useful documentation and maintainer improvements.
 
@@ -232,6 +232,4 @@ Before publication, decide:
 [runbook]: https://github.com/jpmorganchase/salt-ds/blob/59c4b1d2014a129095b82f99a9fceb0b4c097a78/.github/maintainer-workflow.md
 [pilot-agents]: https://github.com/jpmorganchase/salt-ds/blob/59c4b1d2014a129095b82f99a9fceb0b4c097a78/AGENTS.md
 [benchmark]: https://github.com/christophhdesign/open-design-system-bench
-[a2ui]: https://github.com/a2ui-project/a2ui
-[json-render]: https://github.com/vercel-labs/json-render
 [mcp-apps]: https://modelcontextprotocol.io/extensions/apps/overview
