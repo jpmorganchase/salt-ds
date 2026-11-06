@@ -1,11 +1,11 @@
 /*
-  Styles applied to the root element. The track is an outline in the bar color, so the indicator is one color: the bar
-  and the outline both contrast with the background, and the bar ends where solid turns into outline. Override the
-  colors with --saltProgress-barColor and --saltProgress-trackColor, which defaults to the bar color.
+  Styles applied to the root element. The track is a neutral outline, and the bar fills it, so the bar ends where solid
+  turns into outline. The bar and the outline both contrast with the background. Override the colors with
+  --saltProgress-barColor and --saltProgress-trackColor.
 */
 .saltProgress {
   --progress-barColor: var(--saltProgress-barColor, var(--salt-sentiment-accent-background));
-  --progress-trackColor: var(--saltProgress-trackColor, var(--progress-barColor));
+  --progress-trackColor: var(--saltProgress-trackColor, var(--salt-sentiment-neutral-track));
   --progress-outlineWidth: var(--salt-size-fixed-100);
   color: var(--salt-content-primary-foreground);
   box-sizing: border-box;
@@ -22,6 +22,7 @@
 /* Inside a button, progress takes the button's text color, like an icon, so it contrasts with any button style */
 .saltButton .saltProgress {
   --progress-barColor: var(--saltProgress-barColor, currentColor);
+  --progress-trackColor: var(--saltProgress-trackColor, currentColor);
   color: inherit;
 }
 
@@ -114,18 +115,18 @@
     background-color var(--salt-duration-perceptible) ease-in-out;
 }
 
-/* The buffer is a tint of the bar color inside the outline */
+/*
+  The buffer is diagonal stripes in the bar color. The pattern tells it apart from the empty track, and its marks meet
+  3:1 like the bar.
+*/
 .saltProgress-linear .saltProgress-buffer {
   position: absolute;
   inset-block: 0;
   inset-inline-start: 0;
   width: calc(var(--saltProgress-bufferFraction) * 100%);
   border-radius: var(--salt-palette-corner-strongest);
-  background: var(--progress-barColor);
-  opacity: 0.3;
-  transition:
-    width var(--salt-duration-perceptible) linear,
-    background-color var(--salt-duration-perceptible) ease-in-out;
+  background: repeating-linear-gradient(-45deg, var(--progress-barColor) 0 1.5px, transparent 1.5px 4px);
+  transition: width var(--salt-duration-perceptible) linear;
 }
 
 /* A new loop starts from an empty track */
@@ -224,7 +225,7 @@
   fill: none;
 }
 
-/* The track is the outer and inner edges of the ring, in the bar color */
+/* The track is the outer and inner edges of the ring */
 .saltProgress-circular .saltProgress-track,
 .saltProgress-circular .saltProgress-trackInner {
   stroke: var(--progress-trackColor);
@@ -243,6 +244,7 @@
 /* Small rings are too thin to outline, so the track is a tint of the bar color */
 .saltProgress-small .saltProgress-track {
   r: calc((var(--saltProgress-size) - var(--saltProgress-ringWidth)) / 2);
+  stroke: var(--saltProgress-trackColor, var(--progress-barColor));
   stroke-width: var(--saltProgress-ringWidth);
   stroke-opacity: 0.3;
 }
@@ -317,8 +319,7 @@
 }
 
 /* Success changes color once the bar has filled */
-.saltProgress-success .saltProgress-bar,
-.saltProgress-success .saltProgress-buffer {
+.saltProgress-success .saltProgress-bar {
   transition-delay: 0s, var(--salt-duration-perceptible), 0s;
 }
 

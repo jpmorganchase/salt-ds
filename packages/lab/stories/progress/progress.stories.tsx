@@ -24,10 +24,10 @@ export default {
 // The stories only pass `delay`, so circular and linear examples can share the same args.
 type StoryArgs = Pick<ProgressProps, "delay">;
 
-// Prototype: the buffer can be a tint of the bar color, or a pattern in the bar color. See progress.stories.css.
+// Prototype: the buffer is stripes in the bar color, or try a tint or dots. See progress.stories.css.
 const bufferFills = {
-  tint: undefined,
-  stripes: "progressBufferStripes",
+  stripes: undefined,
+  tint: "progressBufferTint",
   dots: "progressBufferDots",
 };
 
@@ -37,7 +37,7 @@ const bufferFillArgTypes: Partial<ArgTypes<BufferFillArgs>> = {
   bufferFill: {
     control: "inline-radio",
     options: Object.keys(bufferFills),
-    description: "Prototype: fills the buffer with a tint or a pattern.",
+    description: "Prototype: fills the buffer with stripes, a tint or dots.",
   },
 };
 
@@ -101,7 +101,7 @@ export const Indeterminate: StoryFn<StoryArgs> = (args) => (
 
 /**
  * The buffer shows how much is ready ahead of the progress, such as the part of a video that has loaded. Use the
- * `bufferFill` control to try a pattern instead of a tint.
+ * `bufferFill` control to compare the stripes with a tint or dots.
  */
 export const Buffer: StoryFn<BufferFillArgs> = ({ bufferFill, ...args }) => (
   <div style={{ width: 400 }}>
@@ -114,7 +114,7 @@ export const Buffer: StoryFn<BufferFillArgs> = ({ bufferFill, ...args }) => (
     />
   </div>
 );
-Buffer.args = { bufferFill: "tint" };
+Buffer.args = { bufferFill: "stripes" };
 Buffer.argTypes = bufferFillArgTypes;
 
 export const Circular: StoryFn<StoryArgs> = (args) => (
@@ -343,17 +343,11 @@ export const InButton: StoryFn<StoryArgs> = (args) => (
 );
 
 const trackStyles = [
-  { name: "Current: bar color outline", className: undefined },
-  { name: "Thin track (original)", className: "progressTrackThin" },
-  { name: "Neutral outline", className: "progressTrackOutline" },
-  { name: "Stop dot", className: "progressTrackStop" },
-  { name: "Light track", className: "progressTrackLight" },
-  { name: "Tinted track", className: "progressTrackTint" },
-  { name: "Tinted outline", className: "progressTrackTintOutline" },
-  { name: "Light outline", className: "progressTrackLightOutline" },
+  { name: "Neutral outline (default)", className: undefined },
+  { name: "Bar color outline", className: "progressTrackBarOutline" },
 ];
 
-const trackStyleExamples: ProgressProps[] = [
+const linearTrackStyleExamples: ProgressProps[] = [
   { label: "Not started", value: 0 },
   { label: "Uploading", value: 38 },
   { label: "Loading", value: undefined },
@@ -364,10 +358,22 @@ const trackStyleExamples: ProgressProps[] = [
   { label: "Uploading", status: "success" },
 ];
 
+const circularTrackStyleExamples: ProgressProps[] = [
+  { shape: "circular", size: "small", "aria-label": "Uploading", value: 38 },
+  { shape: "circular", size: "medium", "aria-label": "Uploading", value: 38 },
+  { shape: "circular", size: "large", "aria-label": "Uploading", value: 38 },
+  {
+    shape: "circular",
+    size: "medium",
+    "aria-label": "Uploading",
+    value: 60,
+    status: "error",
+  },
+];
+
 /**
- * Prototype: compares the current track with other track styles. The outline styles show filled versus empty, the stop
- * dot marks where the track ends, and the light and tinted tracks rely on color alone. Use the `bufferFill` control to
- * try a pattern buffer with every style.
+ * Prototype: compares the default neutral outline with a bar color outline, which makes the whole indicator one color.
+ * Use the `bufferFill` control to compare the buffers too.
  */
 export const TrackStyles: StoryFn<BufferFillArgs> = ({
   bufferFill,
@@ -376,14 +382,14 @@ export const TrackStyles: StoryFn<BufferFillArgs> = ({
   <div
     style={{
       display: "grid",
-      gridTemplateColumns: "repeat(4, 220px)",
-      gap: "var(--salt-spacing-300)",
+      gridTemplateColumns: "repeat(2, 300px)",
+      gap: "var(--salt-spacing-400)",
     }}
   >
     {trackStyles.map(({ name, className }) => (
       <StackLayout gap={2} key={name}>
         <Text styleAs="h3">{name}</Text>
-        {trackStyleExamples.map((example, index) => (
+        {linearTrackStyleExamples.map((example, index) => (
           <Progress
             // biome-ignore lint/suspicious/noArrayIndexKey: The examples are static.
             key={index}
@@ -392,11 +398,22 @@ export const TrackStyles: StoryFn<BufferFillArgs> = ({
             {...args}
           />
         ))}
+        <FlowLayout gap={3} align="center">
+          {circularTrackStyleExamples.map((example, index) => (
+            <Progress
+              // biome-ignore lint/suspicious/noArrayIndexKey: The examples are static.
+              key={index}
+              className={className}
+              {...example}
+              {...args}
+            />
+          ))}
+        </FlowLayout>
       </StackLayout>
     ))}
   </div>
 );
-TrackStyles.args = { bufferFill: "tint" };
+TrackStyles.args = { bufferFill: "stripes" };
 TrackStyles.argTypes = bufferFillArgTypes;
 
 /** A page loader is a composition, not a component. */
