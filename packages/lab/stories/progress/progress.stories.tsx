@@ -243,6 +243,55 @@ export const IndeterminateToDeterminate: StoryFn<StoryArgs> = (args) => {
   );
 };
 
+/**
+ * Try the transitions between states, and interrupt them. When the value becomes known, the loop finishes its pass
+ * before the bar fills. Success changes color once the bar has filled, and a failed loop stops and fades out.
+ */
+export const Transitions: StoryFn<StoryArgs> = (args) => {
+  const [value, setValue] = useState<number | undefined>(undefined);
+  const [status, setStatus] = useState<ProgressProps["status"]>(undefined);
+  const [paused, setPaused] = useState(false);
+  const progressProps = { value, status, paused, ...args };
+
+  return (
+    <StackLayout gap={3} style={{ width: 400 }}>
+      <FlowLayout gap={1}>
+        <Button
+          onClick={() => {
+            setStatus(undefined);
+            setValue(undefined);
+          }}
+        >
+          Loop
+        </Button>
+        <Button
+          onClick={() => {
+            setStatus(undefined);
+            setValue((current) => Math.min((current ?? 0) + 20, 100));
+          }}
+        >
+          Add 20%
+        </Button>
+        <Button onClick={() => setPaused((current) => !current)}>
+          {paused ? "Resume" : "Pause"}
+        </Button>
+        <Button onClick={() => setStatus("success")}>Succeed</Button>
+        <Button onClick={() => setStatus("error")}>Fail</Button>
+      </FlowLayout>
+      <Progress label="Uploading report.pdf" {...progressProps} />
+      <FlowLayout gap={3} align="center">
+        <Progress shape="circular" label="Uploading" {...progressProps} />
+        <Progress
+          shape="circular"
+          size="large"
+          aria-label="Uploading"
+          {...progressProps}
+        />
+      </FlowLayout>
+    </StackLayout>
+  );
+};
+
 const DownloadButton = ({
   progressProps,
   ...buttonProps

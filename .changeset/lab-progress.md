@@ -27,4 +27,5 @@ import { Progress } from "@salt-ds/lab";
 - The track is an outline in the bar color, so the indicator is one color. The bar and the outline both contrast with the background, and the bar ends where solid turns into outline. Small circular progress is too thin to outline, so its track is a tint of the bar color, and the buffer is a tint of the bar color too.
 - Bars and rings have rounded ends, using `--salt-palette-corner-strongest`, like the compact stepper.
 - Loops slow down when users have turned on reduced motion.
+- State changes animate, and any of them can be interrupted. When the value becomes known, the loop finishes its pass before the bar fills, so the indicator never jumps; the value is still announced straight away. Success changes color once the bar has filled, and a failed loop stops where it is and fades out. With reduced motion, states change at once.
 - Inside a `Button`, progress takes the button's text color, like an icon, so it contrasts with every button style. Override the colors with `--saltProgress-barColor`, and `--saltProgress-trackColor`, which defaults to the bar color.

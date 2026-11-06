@@ -98,9 +98,10 @@
   box-sizing: border-box;
   border: var(--progress-outlineWidth) var(--salt-borderStyle-solid) var(--progress-trackColor);
   border-radius: var(--salt-palette-corner-strongest);
+  transition: border-color var(--salt-duration-perceptible) ease-in-out;
 }
 
-/* The bar is as tall as the track, so it covers the outline */
+/* The bar is as tall as the track, so it covers the outline. Value changes ease to the new value, from wherever it is */
 .saltProgress-linear .saltProgress-bar {
   position: absolute;
   inset-block: 0;
@@ -108,7 +109,9 @@
   width: calc(var(--saltProgress-fraction) * 100%);
   border-radius: var(--salt-palette-corner-strongest);
   background: var(--progress-barColor);
-  transition: width var(--salt-duration-perceptible) linear;
+  transition:
+    width var(--salt-duration-perceptible) linear,
+    background-color var(--salt-duration-perceptible) ease-in-out;
 }
 
 /* The buffer is a tint of the bar color inside the outline */
@@ -120,16 +123,34 @@
   border-radius: var(--salt-palette-corner-strongest);
   background: var(--progress-barColor);
   opacity: 0.3;
-  transition: width var(--salt-duration-perceptible) linear;
+  transition:
+    width var(--salt-duration-perceptible) linear,
+    background-color var(--salt-duration-perceptible) ease-in-out;
 }
 
-/* Indeterminate progress loops: a segment slides across the track, so it never looks like a fill */
+/* A new loop starts from an empty track */
 .saltProgress-linear .saltProgress-indeterminate .saltProgress-bar {
-  width: 66%;
   transition: none;
+}
+
+/*
+  Indeterminate progress loops: a segment slides across the track, so it never looks like a fill. When the value becomes
+  known, the segment finishes its pass and the bar fills from the start.
+*/
+.saltProgress-linear .saltProgress-loop {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: 66%;
+  border-radius: var(--salt-palette-corner-strongest);
+  background: var(--progress-barColor);
+  transition:
+    background-color var(--salt-duration-perceptible) ease-in-out,
+    opacity var(--salt-duration-perceptible) ease-in-out;
   animation: saltProgress-linear-loop 1.8s ease-in-out infinite;
 }
 
+/* The segment leaves the track at 60%, where the loop can stop */
 @keyframes saltProgress-linear-loop {
   0% {
     transform: translateX(-100%);
@@ -208,6 +229,7 @@
 .saltProgress-circular .saltProgress-trackInner {
   stroke: var(--progress-trackColor);
   stroke-width: var(--progress-outlineWidth);
+  transition: stroke var(--salt-duration-perceptible) ease-in-out;
 }
 
 .saltProgress-circular .saltProgress-track {
@@ -237,7 +259,11 @@
   stroke-linecap: round;
   /* The circles have a path length of 100 */
   stroke-dasharray: calc(var(--saltProgress-fraction) * 100) 100;
-  transition: stroke-dasharray var(--salt-duration-perceptible) linear;
+  /* Visibility changes at the end, so an emptying arc stays visible until it's gone */
+  transition:
+    stroke-dasharray var(--salt-duration-perceptible) linear,
+    stroke var(--salt-duration-perceptible) ease-in-out,
+    visibility var(--salt-duration-perceptible);
 }
 
 /* A rounded cap would still draw a dot when there's no progress */
@@ -245,14 +271,19 @@
   visibility: hidden;
 }
 
-/* Indeterminate progress loops: an arc turns around the track */
+/*
+  Indeterminate progress loops: an arc turns around the track. When the value becomes known, the arc finishes its turn
+  and settles from the top into the value.
+*/
 .saltProgress-circular .saltProgress-indeterminate {
   animation: saltProgress-circular-loop 0.9s linear infinite;
 }
 
 .saltProgress-circular .saltProgress-indeterminate .saltProgress-bar {
   stroke-dasharray: 25 100;
-  transition: none;
+  transition:
+    stroke var(--salt-duration-perceptible) ease-in-out,
+    opacity var(--salt-duration-perceptible) ease-in-out;
 }
 
 @keyframes saltProgress-circular-loop {
@@ -272,30 +303,42 @@
   justify-content: center;
 }
 
-/* A paused loop stops where it is, and a failed loop stops showing progress */
+/* A paused loop stops where it is. A failed loop stops too, and fades out so it no longer shows progress */
 .saltProgress-paused .saltProgress-indeterminate,
-.saltProgress-paused .saltProgress-indeterminate .saltProgress-bar {
+.saltProgress-paused .saltProgress-loop,
+.saltProgress-error .saltProgress-indeterminate,
+.saltProgress-error .saltProgress-loop {
   animation-play-state: paused;
 }
 
-.saltProgress-error .saltProgress-indeterminate,
+.saltProgress-error .saltProgress-loop,
 .saltProgress-error .saltProgress-indeterminate .saltProgress-bar {
-  animation: none;
+  opacity: 0;
 }
 
-.saltProgress-error .saltProgress-indeterminate .saltProgress-bar {
-  visibility: hidden;
+/* Success changes color once the bar has filled */
+.saltProgress-success .saltProgress-bar,
+.saltProgress-success .saltProgress-buffer {
+  transition-delay: 0s, var(--salt-duration-perceptible), 0s;
 }
 
-/* Loops slow down rather than stop, so indeterminate progress still reads as working */
+.saltProgress-success .saltProgress-track,
+.saltProgress-success .saltProgress-trackInner {
+  transition-delay: var(--salt-duration-perceptible);
+}
+
+/* Loops slow down rather than stop, so indeterminate progress still reads as working. Everything else changes at once */
 @media (prefers-reduced-motion: reduce) {
   .saltProgress-linear .saltProgress-bar,
   .saltProgress-linear .saltProgress-buffer,
+  .saltProgress-linear .saltProgress-loop,
+  .saltProgress .saltProgress-track,
+  .saltProgress .saltProgress-trackInner,
   .saltProgress-circular .saltProgress-bar {
     transition: none;
   }
 
-  .saltProgress-linear .saltProgress-indeterminate .saltProgress-bar {
+  .saltProgress-linear .saltProgress-loop {
     animation-duration: 5.4s;
   }
 

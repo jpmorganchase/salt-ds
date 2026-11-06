@@ -13,6 +13,7 @@ import {
   type CSSProperties,
   forwardRef,
   type ReactNode,
+  type RefObject,
   useEffect,
   useRef,
   useState,
@@ -109,6 +110,55 @@ export type ProgressProps = ProgressLinearProps | ProgressCircularProps;
 const ANNOUNCER_INTERVAL = 5000;
 const ANNOUNCER_TIMEOUT = 20000;
 
+// The point in each loop where the indicator can stop without jumping: the linear segment has left the track, and the
+// circular arc is back at the top. These match the keyframes in Progress.css.
+const LOOP_EXIT: Record<ProgressShape, number> = { linear: 0.6, circular: 1 };
+
+/**
+ * When the value becomes known, the loop finishes its pass before the indicator fills, so it never jumps. Waiting is
+ * cancelled if the value is lost again, and a paused, failed or reduced motion loop stops straight away.
+ */
+function useLoopExit(
+  indeterminate: boolean,
+  shape: ProgressShape,
+  progressbarRef: RefObject<HTMLElement | null>,
+  targetWindow: Window | null | undefined,
+) {
+  const [looping, setLooping] = useState(indeterminate);
+  if (indeterminate && !looping) {
+    setLooping(true);
+  }
+
+  useEffect(() => {
+    if (indeterminate || !looping) return;
+
+    const loop = progressbarRef.current
+      ?.getAnimations?.({ subtree: true })
+      .find((animation) =>
+        (animation as CSSAnimation).animationName?.startsWith("saltProgress-"),
+      );
+    const reducedMotion = targetWindow?.matchMedia?.(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const timing =
+      loop?.playState === "running" && !reducedMotion
+        ? loop.effect?.getComputedTiming()
+        : undefined;
+    const remaining =
+      Math.max(LOOP_EXIT[shape] - (timing?.progress ?? 1), 0) *
+      (Number(timing?.duration) || 0);
+
+    if (remaining <= 0) {
+      setLooping(false);
+      return;
+    }
+    const timer = setTimeout(() => setLooping(false), remaining);
+    return () => clearTimeout(timer);
+  }, [indeterminate, looping, shape, progressbarRef, targetWindow]);
+
+  return looping;
+}
+
 function getFraction(value: number, min: number, max: number) {
   if (max <= min) return 0;
   return Math.min(Math.max((value - min) / (max - min), 0), 1);
@@ -171,9 +221,19 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     const indeterminate = value === undefined;
     const fraction = indeterminate ? 0 : getFraction(value, min, max);
     const valueText = indeterminate ? undefined : getValueText(value, max, min);
+
+    // The indicator keeps looping until the loop's pass ends, but the value is announced straight away
+    const progressbarRef = useRef<HTMLDivElement>(null);
+    const looping = useLoopExit(
+      indeterminate,
+      shape,
+      progressbarRef,
+      targetWindow,
+    );
+    const shownFraction = looping ? 0 : fraction;
     const bufferFraction =
-      shape === "linear" && !indeterminate && bufferValue !== undefined
-        ? Math.max(getFraction(bufferValue, min, max), fraction)
+      shape === "linear" && !looping && bufferValue !== undefined
+        ? Math.max(getFraction(bufferValue, min, max), shownFraction)
         : undefined;
 
     const labelText =
@@ -239,11 +299,13 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
 
     const indicatorClassName = clsx(
       withBaseName("indicator"),
-      indeterminate && withBaseName("indeterminate"),
+      looping && withBaseName("indeterminate"),
     );
     const fractionStyle = {
-      "--saltProgress-fraction": fraction,
+      "--saltProgress-fraction": shownFraction,
     } as CSSProperties;
+    // The bar turns the success color once it has filled, so it doesn't change color while it loops
+    const barStatus = status === "success" && looping ? undefined : status;
 
     return (
       <div
@@ -251,9 +313,9 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
           withBaseName(),
           withBaseName(shape),
           shape === "circular" && withBaseName(size),
-          status && withBaseName(status),
+          barStatus && withBaseName(barStatus),
           paused && withBaseName("paused"),
-          !indeterminate && fraction === 0 && withBaseName("empty"),
+          !looping && fraction === 0 && withBaseName("empty"),
           className,
         )}
         ref={ref}
@@ -261,6 +323,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       >
         <div
           className={withBaseName("progressbar")}
+          ref={progressbarRef}
           id={id}
           role="progressbar"
           aria-label={label ? undefined : ariaLabel}
@@ -298,6 +361,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
                 />
               )}
               <div className={withBaseName("bar")} style={fractionStyle} />
+              {looping && <div className={withBaseName("loop")} />}
             </div>
           )}
           {valueInside && showValue && (

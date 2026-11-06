@@ -222,6 +222,68 @@ describe("GIVEN a Progress", () => {
     });
   });
 
+  describe("WHEN its value becomes known while it loops", () => {
+    const loop = () => document.querySelector(".saltProgress-loop");
+
+    function barWidth() {
+      const bar = document.querySelector<HTMLElement>(".saltProgress-bar");
+      const track = document.querySelector<HTMLElement>(
+        ".saltProgress-indicator",
+      );
+      return bar && track
+        ? bar.getBoundingClientRect().width / track.clientWidth
+        : null;
+    }
+
+    it("THEN it has the value straight away, and fills once the loop has left the track", async () => {
+      const rendered = await renderWithSalt(
+        <div style={{ width: 200 }}>
+          <Progress delay={0} label="Uploading" />
+        </div>,
+      );
+      await rendered.rerender(
+        <div style={{ width: 200 }}>
+          <Progress delay={0} label="Uploading" value={50} />
+        </div>,
+      );
+
+      await expect
+        .element(page.getByRole("progressbar"))
+        .toHaveAttribute("aria-valuenow", "50");
+      expect(loop()).not.toBeNull();
+      expect(barWidth()).toBe(0);
+
+      await expect.poll(loop, { timeout: 2000 }).toBeNull();
+      await expect.poll(barWidth).toBeCloseTo(0.5, 2);
+    });
+
+    it("THEN it keeps looping WHEN the value is lost again before the loop ends", async () => {
+      const rendered = await renderWithSalt(
+        <Progress delay={0} label="Uploading" />,
+      );
+      const segment = loop();
+      await rendered.rerender(
+        <Progress delay={0} label="Uploading" value={50} />,
+      );
+      await rendered.rerender(<Progress delay={0} label="Uploading" />);
+
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+      // The same segment is still looping, so the loop never restarted
+      expect(loop()).toBe(segment);
+    });
+
+    it("THEN it fills straight away WHEN it's paused", async () => {
+      const rendered = await renderWithSalt(
+        <Progress delay={0} label="Uploading" paused />,
+      );
+      await rendered.rerender(
+        <Progress delay={0} label="Uploading" value={50} paused />,
+      );
+
+      await expect.poll(loop, { timeout: 300 }).toBeNull();
+    });
+  });
+
   it("THEN it shows the success icon instead of the value WHEN it succeeds", async () => {
     await renderWithSalt(
       <Progress delay={0} label="Uploading" value={100} status="success" />,
