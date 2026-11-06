@@ -4,6 +4,7 @@ import {
   FlowLayout,
   StackLayout,
   Text,
+  ToggleButton,
 } from "@salt-ds/core";
 import { DownloadIcon } from "@salt-ds/icons";
 import { Progress, type ProgressProps } from "@salt-ds/lab";
@@ -253,6 +254,7 @@ export const Transitions: StoryFn<StoryArgs> = (args) => {
   const [paused, setPaused] = useState(false);
   const progressProps = { value, status, paused, ...args };
 
+  // Every control and indicator keeps its size in every state, so nothing moves when you press the buttons
   return (
     <StackLayout gap={3} style={{ width: 400 }}>
       <FlowLayout gap={1}>
@@ -272,22 +274,24 @@ export const Transitions: StoryFn<StoryArgs> = (args) => {
         >
           Add 20%
         </Button>
-        <Button onClick={() => setPaused((current) => !current)}>
-          {paused ? "Resume" : "Pause"}
-        </Button>
+        <ToggleButton
+          value="pause"
+          selected={paused}
+          onChange={() => setPaused((current) => !current)}
+        >
+          Pause
+        </ToggleButton>
         <Button onClick={() => setStatus("success")}>Succeed</Button>
         <Button onClick={() => setStatus("error")}>Fail</Button>
       </FlowLayout>
       <Progress label="Uploading report.pdf" {...progressProps} />
-      <FlowLayout gap={3} align="center">
-        <Progress shape="circular" label="Uploading" {...progressProps} />
-        <Progress
-          shape="circular"
-          size="large"
-          aria-label="Uploading"
-          {...progressProps}
-        />
-      </FlowLayout>
+      <Progress shape="circular" label="Uploading" {...progressProps} />
+      <Progress
+        shape="circular"
+        size="large"
+        label="Uploading"
+        {...progressProps}
+      />
     </StackLayout>
   );
 };
