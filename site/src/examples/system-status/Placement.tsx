@@ -21,7 +21,7 @@ export const Placement = (): ReactElement => (
         <Text color="inherit">New feature updates are available.</Text>
       </SystemStatusContent>
       <SystemStatusActions>
-        <OnSolidButton aria-label="Dismiss">
+        <OnSolidButton aria-label="Dismiss system status">
           <CloseIcon aria-hidden />
         </OnSolidButton>
       </SystemStatusActions>

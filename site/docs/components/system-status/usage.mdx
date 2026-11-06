@@ -12,7 +12,14 @@ data:
 
 The primary purpose of the system status is to provide information and, if necessary, prompt further action.
 
-We advise against embedding excessive content into the system status due to potential color contrast issues. If you need to include additional components within the system status, it will be the responsibility of the application team to ensure accessibility compliance.
+Always position the system status at the very top of the screen, spanning the full width of the page. See the [placement example](/salt/components/system-status/examples#placement) for more information.
+
+Configure it to close when:
+
+- The event that triggered it is resolved, such as when service is restored after an outage.
+- The information is no longer relevant, such as when scheduled maintenance has finished.
+
+We advise against embedding excessive content into the system status due to potential color contrast issues. If you need to include supporting actions, such as dismiss, use [`OnSolidButton`](/salt/components/button/examples#on-solid) within `SystemStatusActions`. If you need to include additional components within the system status, it will be the responsibility of the application team to ensure accessibility compliance.
 
 ### When to use
 
@@ -25,14 +32,14 @@ We advise against embedding excessive content into the system status due to pote
 - For general updates or information that requires immediate user action.
 - For inline messaging. Instead, use [`Banner`](../banner).
 - To show a notification that applies to the user’s current task or workflow. Use [`Banner`](../banner) instead.
-- To communicate when content is loading, instead use the Content Status pattern.
+- To communicate when content is loading. Instead, use the [content status pattern](/salt/patterns/content-status).
 - When the notification requires immediate action and relates to the user’s current task. Instead, use [`Dialog`](../dialog) to interrupt the user's workflow.
 
 ## Content
 
 A system status typically has one or two lines of text. Make content short, clear, and concise, allowing users to quickly understand the situation and/or next steps.
 
-Body Default applies to the content, however, if titles are necessary, configure them to display the Body Strong typography style across densities. See the [typography foundation](/salt/foundations/typography/) for more information.
+If a title is needed, use the bolder weight with `fontWeight="bolder"`, as shown in the [with title example](/salt/components/system-status/examples#with-title). See the [typography foundation](/salt/foundations/typography/) for more information.
 
 ## Import
 

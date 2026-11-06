@@ -1,5 +1,6 @@
 export * from "./Error";
 export * from "./Info";
+export * from "./Interactive";
 export * from "./Placement";
 export * from "./Success";
 export * from "./Warning";
