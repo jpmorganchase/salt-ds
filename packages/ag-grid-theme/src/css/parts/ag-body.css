@@ -520,6 +520,7 @@
 .ag-theme-salt-dark .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-inline-editing,
 .ag-theme-salt-compact-light .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-inline-editing,
 .ag-theme-salt-compact-dark .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-inline-editing {
+  /* biome-ignore lint/complexity/noImportantStyles: Overrides AG Grid's !important border color while editing. */
   border-right-color: transparent !important;
 }
 
@@ -535,6 +536,7 @@
 .ag-theme-salt-dark .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-inline-editing.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
 .ag-theme-salt-compact-light .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-inline-editing.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
 .ag-theme-salt-compact-dark .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-inline-editing.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell) {
+  /* biome-ignore lint/complexity/noImportantStyles: Overrides AG Grid's !important border color while editing. */
   border-right-color: var(--salt-separable-secondary-borderColor) !important;
 }
 
@@ -834,6 +836,10 @@
   background-color: var(--salt-status-success-background);
 }
 
+/*
+  Paint the range color on top of validation cells, and of cells colored with an inline style such as `cellStyle`, whose
+  color AG Grid's range color can't override.
+*/
 .ag-theme-salt-light .ag-root .ag-row .ag-cell.error-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing),
 .ag-theme-salt-dark .ag-root .ag-row .ag-cell.error-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing),
 .ag-theme-salt-compact-light .ag-root .ag-row .ag-cell.error-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing),
@@ -845,6 +851,12 @@
 .ag-theme-salt-light .ag-root .ag-row .ag-cell.success-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing),
 .ag-theme-salt-dark .ag-root .ag-row .ag-cell.success-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing),
 .ag-theme-salt-compact-light .ag-root .ag-row .ag-cell.success-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing),
-.ag-theme-salt-compact-dark .ag-root .ag-row .ag-cell.success-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing) {
-  background-image: linear-gradient(var(--ag-range-selection-background-color), var(--ag-range-selection-background-color));
+.ag-theme-salt-compact-dark .ag-root .ag-row .ag-cell.success-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing),
+.ag-theme-salt-light .ag-root .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing)[style*="background"],
+.ag-theme-salt-dark .ag-root .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing)[style*="background"],
+.ag-theme-salt-compact-light .ag-root .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing)[style*="background"],
+.ag-theme-salt-compact-dark .ag-root .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing)[style*="background"] {
+  /* The transparent bottom layer keeps the cell's own color inside the gap, while the range color covers it */
+  background-image: linear-gradient(var(--ag-range-selection-background-color), var(--ag-range-selection-background-color)), linear-gradient(transparent, transparent);
+  background-clip: border-box, padding-box;
 }

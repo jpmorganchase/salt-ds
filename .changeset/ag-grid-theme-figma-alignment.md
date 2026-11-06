@@ -23,7 +23,7 @@ Fixed AG Grid theme styling to align with the Salt Data Grid Figma designs.
 - Validation cells now leave a `--salt-spacing-100` gap between the cell text and the status adornment.
 - Right-aligned header text now has a `--salt-spacing-100` gap from the menu and filter icons when truncated.
 - Column group headers now show a right chevron when closed and a left chevron when open.
-- Validation cells inside a range selection keep their status background, with the range selection color painted on top.
+- Validation cells inside a range selection keep their status background, with the range selection color painted on top. Cells colored with an inline style, such as `cellStyle`, now also show the range selection color on top of their own color, instead of hiding it.
 - Menus now have a 1px gap between items, with separators drawn in the gap, use the Salt chevron for submenus, and show the Salt focus ring on keyboard focus.
 - Filter inputs and dropdowns are now bordered, `--salt-size-base` tall and use `--salt-palette-corner-weak`, with the Salt chevron for dropdowns. Filter buttons also use `--salt-palette-corner-weak`.
 - The columns tool panel now uses `--salt-spacing-300` padding and gaps, drop zones are drawn as a dashed box with a bolder message, side bar tabs have a `--salt-spacing-100` gap with a single divider beside them, and the pivot mode toggle matches Salt's `Switch`.
