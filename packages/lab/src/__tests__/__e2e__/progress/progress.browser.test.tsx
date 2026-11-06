@@ -185,6 +185,34 @@ describe("GIVEN a Progress", () => {
 
       await expect.poll(liveRegionText).toContain("Loading accounts");
     });
+
+    it("THEN it repeats its label after 5 seconds", async () => {
+      vi.useFakeTimers();
+      try {
+        const rendered = await renderWithSalt(
+          <Progress delay={0} label="Loading accounts" />,
+        );
+        await vi.advanceTimersByTimeAsync(5_000);
+        await expect.poll(liveRegionText).toContain("Loading accounts");
+
+        await rendered.unmount();
+        expect(vi.getTimerCount()).toBe(0);
+      } finally {
+        vi.useRealTimers();
+      }
+    });
+
+    it("THEN it doesn't announce completion WHEN it's removed", async () => {
+      const rendered = await renderWithSalt(
+        <Progress delay={0} label="Loading accounts" />,
+      );
+      await expect.poll(liveRegionText).toContain("Loading accounts");
+
+      // Removal could also mean the task was cancelled, so it isn't announced as finished
+      await rendered.rerender(<span>Done</span>);
+      await expect.element(page.getByText("Done")).toBeInTheDocument();
+      expect(liveRegionText()).not.toContain("finished");
+    });
   });
 
   describe.each(["linear", "circular"] as const)("WHEN it's %s", (shape) => {

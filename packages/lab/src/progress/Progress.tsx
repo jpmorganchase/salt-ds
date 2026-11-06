@@ -84,23 +84,15 @@ export interface ProgressProps
    */
   delay?: number;
   /**
-   * Indeterminate only. How often screen readers repeat the loading announcement, in milliseconds. Defaults to 5000.
-   */
-  announcerInterval?: number;
-  /**
-   * Indeterminate only. When screen readers stop repeating the loading announcement, in milliseconds. Defaults to
-   * 20000.
-   */
-  announcerTimeout?: number;
-  /**
-   * What screen readers announce while the task runs. Defaults to the label, when it's a string.
-   */
-  loadingAnnouncement?: string;
-  /**
-   * What screen readers announce when the task finishes. Set to `null` to turn it off.
+   * What screen readers announce when the task completes, that is when `status` is `"success"` or the value reaches
+   * `max`. Set to `null` to turn it off.
    */
   completionAnnouncement?: string | null;
 }
+
+// Indeterminate progress repeats its announcement at the same times as Spinner
+const ANNOUNCER_INTERVAL = 5000;
+const ANNOUNCER_TIMEOUT = 20000;
 
 function getFraction(value: number, min: number, max: number) {
   if (max <= min) return 0;
@@ -127,9 +119,6 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       paused = false,
       size = "medium",
       delay = 1000,
-      announcerInterval = 5000,
-      announcerTimeout = 20000,
-      loadingAnnouncement: loadingAnnouncementProp,
       completionAnnouncement: completionAnnouncementProp,
       className,
       id: idProp,
@@ -174,7 +163,6 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
 
     const labelText =
       typeof label === "string" ? label : (ariaLabel ?? "loading");
-    const loadingAnnouncement = loadingAnnouncementProp ?? labelText;
     const completionAnnouncement =
       completionAnnouncementProp === undefined
         ? `finished ${labelText}`
@@ -191,31 +179,21 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     useEffect(() => {
       if (!loops) return;
 
-      announce(loadingAnnouncement);
+      announce(labelText);
       const startTime = Date.now();
-      const interval =
-        announcerInterval > 0 &&
-        setInterval(() => {
-          if (Date.now() - startTime > announcerTimeout) {
-            announce(
-              `${loadingAnnouncement} is still in progress, but will no longer announce.`,
-            );
-            interval && clearInterval(interval);
-            return;
-          }
-          announce(loadingAnnouncement);
-        }, announcerInterval);
+      const interval = setInterval(() => {
+        if (Date.now() - startTime > ANNOUNCER_TIMEOUT) {
+          announce(
+            `${labelText} is still in progress, but will no longer announce.`,
+          );
+          clearInterval(interval);
+          return;
+        }
+        announce(labelText);
+      }, ANNOUNCER_INTERVAL);
 
-      return () => {
-        interval && clearInterval(interval);
-      };
-    }, [
-      loops,
-      announce,
-      loadingAnnouncement,
-      announcerInterval,
-      announcerTimeout,
-    ]);
+      return () => clearInterval(interval);
+    }, [loops, announce, labelText]);
 
     // Screen readers read a progress bar's value themselves, so only the outcome is announced, once.
     const announcedOutcome = useRef<string | undefined>(undefined);
@@ -228,34 +206,6 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
         announce(completionAnnouncement);
       }
     }, [visible, outcome, announce, labelText, completionAnnouncement]);
-
-    // Indeterminate progress announces completion when it's removed, like Spinner.
-    const latest = useRef({
-      visible,
-      indeterminate,
-      outcome,
-      completionAnnouncement,
-    });
-    latest.current = {
-      visible,
-      indeterminate,
-      outcome,
-      completionAnnouncement,
-    };
-    useEffect(
-      () => () => {
-        const current = latest.current;
-        if (
-          current.visible &&
-          current.indeterminate &&
-          !current.outcome &&
-          current.completionAnnouncement
-        ) {
-          announce(current.completionAnnouncement);
-        }
-      },
-      [announce],
-    );
 
     if (!visible) return null;
 

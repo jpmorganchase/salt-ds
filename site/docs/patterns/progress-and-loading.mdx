@@ -206,7 +206,7 @@ Every indicator in the family sounds the same to screen reader users as it looks
 
 - **Stepper:** screen readers announce the current step and its position, such as "Step 2 of 4: Payment details". Steps aren't announced as progress.
 - **Determinate progress:** screen readers read the label and the value from the progress bar, in the same units as the visible text, so changes of value aren't announced. When the task completes or fails, that's announced.
-- **Indeterminate progress:** in either shape, screen readers announce the label when the indicator appears, repeat it while loading continues, and announce when loading finishes. Announcements are polite and never interrupt users.
+- **Indeterminate progress:** in either shape, screen readers announce the label when the indicator appears and repeat it while loading continues. Removing the indicator isn't announced, as it could mean the task was cancelled. When a task completes or fails, that's announced, and a region that's loading announces when its content has loaded. Announcements are polite and never interrupt users.
 - **Meter:** screen readers announce a meter's value as an amount, not as progress through a task.
 - **Skeleton:** skeletons are hidden from screen readers. The region that's loading is marked as busy, and screen readers announce when its content has loaded.
 - **Page loader:** screen readers announce the status message in the same way as indeterminate progress.
@@ -269,9 +269,7 @@ import { Progress } from "@salt-ds/core";
 | `paused`                 | `boolean`                         | `false`                 | Whether the task is paused.                                                   |
 | `size`                   | `"small" \| "medium" \| "large"`  | `"medium"`              | Circular only. The size of the indicator.                                     |
 | `delay`                  | `number`                          | `1000`                  | Milliseconds to wait before showing, so quick tasks show nothing.             |
-| `announcerInterval`      | `number`                          | `5000`                  | Indeterminate only. How often screen readers repeat the label.                |
-| `announcerTimeout`       | `number`                          | `20000`                 | Indeterminate only. When screen readers stop repeating the label.             |
-| `completionAnnouncement` | `string \| null`                  | `"Finished {label}"`    | What screen readers announce when the task finishes.                          |
+| `completionAnnouncement` | `string \| null`                  | `"Finished {label}"`    | What screen readers announce when the task completes.                         |
 
 ### Meter
 

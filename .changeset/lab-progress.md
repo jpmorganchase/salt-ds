@@ -23,6 +23,6 @@ import { Progress } from "@salt-ds/lab";
 - `status` (`"success"` or `"error"`) and `paused` show the state of the task in place, with an icon and text as well as color.
 - `size` sets the size of circular progress. Large circular progress shows its value inside, and small circular progress, which fits in compact spaces such as buttons, hides its value unless you set `hideValue={false}`.
 - `delay` waits before showing, 1 second by default, so tasks that finish quickly show nothing.
-- Indeterminate progress announces itself and repeats the announcement, like `Spinner`. Screen readers read the value of determinate progress themselves, so it only announces when the task completes or fails.
+- Indeterminate progress announces its label and repeats it, like `Spinner`. Screen readers read the value of determinate progress themselves, so it only announces when the task completes or fails. Removing progress isn't announced, as it could mean the task was cancelled.
 - Loops slow down when users have turned on reduced motion.
 - Inside a `Button`, progress takes the button's text color, like an icon, so it contrasts with every button style. Override the colors with `--saltProgress-barColor` and `--saltProgress-trackColor`.
