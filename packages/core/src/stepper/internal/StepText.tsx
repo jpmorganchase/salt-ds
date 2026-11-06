@@ -17,6 +17,7 @@ export function StepText({
   purpose,
   className,
   styleAs = "label",
+  color = purpose === "description" ? "secondary" : "primary",
   children,
   ...props
 }: StepTextProps) {
@@ -31,6 +32,7 @@ export function StepText({
   return (
     <Text
       id={id}
+      color={color}
       className={clsx(withBaseName(), withBaseName(purpose), className)}
       {...props}
     >
