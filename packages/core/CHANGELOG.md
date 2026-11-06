@@ -1,5 +1,20 @@
 # @salt-ds/core
 
+## 1.74.1
+
+### Patch Changes
+
+- aa3ce52: Updated `Dialog` border color to use `--salt-container-borderColor` instead of `--salt-separable-tertiary-borderColor`, to align with design.
+
+  The visible change is limited to the Legacy theme. In JPM Brand (Salt Next) and Salt (Interim) both tokens resolve to the same value, so there is no visual difference. In the Legacy theme, the `Dialog` border now uses the solid container border color used by `Card`, instead of the translucent separable border color.
+
+- 57304f5: Fixed `MegaMenu` returning focus to the trigger in Safari when tabbing out of the last item in the panel. Focus now moves to the next element after the trigger.
+- 57304f5: Fixed `MegaMenu` briefly moving focus to the trigger when tabbing out of the last item in the panel. Focus now moves straight to the next element.
+- 40fb09b: Fixed a disabled tertiary `ComboBox` having a transparent background. It now uses `--salt-editable-tertiary-background-disabled`, like `Input` and `Dropdown`.
+- 57304f5: Fixed leaf `TreeNode`s not being selected when the empty space reserved for the expansion icon is clicked.
+- Updated dependencies [2c3cf5d]
+  - @salt-ds/icons@1.19.0
+
 ## 1.74.0
 
 ### Minor Changes
