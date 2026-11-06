@@ -26,7 +26,7 @@ Users should always know:
 - **That the system is working**, when it can't.
 - **What's coming**, when content is on its way.
 
-Every indicator in the family shares the same visual and spoken language, so users learn it once. And when an action is quick, there's no indicator at all.
+Every indicator in the family shares the same visual and spoken language, so users learn it once. For actions that usually finish quickly, an optional delay avoids flashing an indicator.
 
 ## When to use
 
@@ -99,12 +99,14 @@ Pair progress with text, so users know what's happening without having to interp
 
 Progress can end in more than one way. Show the outcome in place, using an icon and text as well as color. Keep it on screen until users move on or dismiss it.
 
-- **In progress:** the work is running.
-- **Paused:** the work has stopped and can be resumed.
-- **Complete:** the work finished successfully. For simple actions, the result is the confirmation. For example, a new item appearing in a list needs no extra success message.
-- **Error:** the work failed. Explain why, and offer a way to retry.
+- **Active (`status="active"`, the default):** the work is running.
+- **Paused (`status="paused"`):** the work has stopped and can be resumed.
+- **Success (`status="success"`):** the work finished successfully. For simple actions, the result is the confirmation. For example, a new item appearing in a list needs no extra success message.
+- **Error (`status="error"`):** the work failed. Explain why, and offer a way to retry.
 
-Offer actions alongside progress when they help, such as pause, resume, cancel and retry.
+Reaching `max` fills the indicator but leaves the task active. For example, all bytes may have uploaded while the server is still processing the file. Set `status="success"` only when the application confirms that the task has finished.
+
+Offer actions alongside progress when they help, such as pause, resume, cancel and retry. These actions belong to the task owner: changing the indicator's status doesn't pause or cancel the underlying operation. Remove the indicator when cancelling a task; removal doesn't signal success.
 
 ### Progress or meter?
 
@@ -158,7 +160,7 @@ Stack these with a [`StackLayout`](/salt/components/layouts/stack-layout), and c
 
 Components that load content or start actions show loading in the same way, so users recognize it everywhere.
 
-- **Buttons:** a [button](/salt/components/button) that starts an action shows indeterminate circular progress, keeps its size and can't be pressed again until the action completes. This prevents duplicate submissions.
+- **Buttons:** a [button](/salt/components/button) that starts an action shows circular progress, keeps its size and accessible name, and can't be pressed again until the action completes. Reserve the icon's space even during an optional display delay. The button owns the task's announcements and sets `disableAnnouncer` on its nested progress indicator. This prevents duplicate submissions and announcements.
 - **Lists and combo boxes:** a [list box](/salt/components/list-box) or [combo box](/salt/components/combo-box) shows a loading state in place of its options, then the options as they arrive.
 - **Tables and data grids:** show a skeleton on first load. When refreshing data that's already visible, keep it on screen and show linear progress above it.
 - **Containers:** follow the [content status](/salt/patterns/content-status) pattern.
@@ -177,7 +179,9 @@ Don't use a [toast](/salt/components/toast) as the only place for a task's progr
 
 Match loading to how long users will wait. See [duration](/salt/foundations/duration) for more detail.
 
-- **Under 1 second:** don't show an indicator. If loading finishes within 1 second, users never see one.
+Progress appears immediately by default (`delay={0}`). Set `delay={1000}` when quick tasks should finish without showing an indicator.
+
+- **With a 1 second delay:** tasks that succeed before the indicator appears stay hidden and aren't announced by Progress. Errors show immediately, even during the delay.
 - **Once shown:** keep an indicator on screen for a short minimum time, so it doesn't flicker on and off.
 - **1–10 seconds:** show the indicator chosen with the [quick test](#quick-test).
 - **Over 10 seconds:** change the status message to say the system is still working, such as "Still working, please wait". If the work can't complete, show an error and offer a way to retry or cancel.
@@ -205,17 +209,19 @@ Match loading to how long users will wait. See [duration](/salt/foundations/dura
 Every indicator in the family sounds the same to screen reader users as it looks to sighted users.
 
 - **Stepper:** screen readers announce the current step and its position, such as "Step 2 of 4: Payment details". Steps aren't announced as progress.
-- **Determinate progress:** screen readers read the label and the value from the progress bar, in the same units as the visible text, so changes of value aren't announced. When the task completes or fails, that's announced.
+- **Determinate progress:** screen readers read the label and the value from the progress bar, in the same units as the visible text, so changes of value aren't announced separately. `status="success"` and `status="error"` announce the outcome. Reaching `max` alone doesn't announce completion.
 - **Indeterminate progress:** in either shape, screen readers announce the label when the indicator appears and repeat it while loading continues. Removing the indicator isn't announced, as it could mean the task was cancelled. When a task completes or fails, that's announced, and a region that's loading announces when its content has loaded. Announcements are polite and never interrupt users.
 - **Meter:** screen readers announce a meter's value as an amount, not as progress through a task.
 - **Skeleton:** skeletons are hidden from screen readers. The region that's loading is marked as busy, and screen readers announce when its content has loaded.
 - **Page loader:** screen readers announce the status message in the same way as indeterminate progress.
-- **States:** complete, paused and error states are announced, and use an icon and text as well as color.
+- **Progress states:** success and error outcomes are announced and shown with an icon. Paused progress displays "Paused" and includes the state in its accessible value text.
 - **Reduced motion:** when users have turned on reduced motion, loops slow down or stop, skeletons stop shimmering, and text carries the message.
+
+Choose one owner for live announcements. When a button or loading region already announces the task, set `disableAnnouncer` on its nested Progress. This suppresses loading, success and error announcements while preserving the progress bar's accessible name, role and value. Re-enabling announcements doesn't replay a success or error that occurred while they were disabled. Use `completionAnnouncement={null}` when only the success announcement should be suppressed.
 
 ## Suggested API
 
-This is a suggested API for the north star, for discussion. It builds on the `loading` and `loadingAnnouncement` props that `Button` has today.
+The Progress API below is available in `@salt-ds/lab`. The other APIs describe the north star, for discussion, and build on the `loading` and `loadingAnnouncement` props that `Button` has today.
 
 The API works with React 19's Suspense, transitions and actions. It also works with earlier versions of React, where you control loading with the `loading` props instead.
 
@@ -233,7 +239,7 @@ The API works with React 19's Suspense, transitions and actions. It also works w
 One component covers both shapes. Give it a value and it fills. Leave the value out and it loops.
 
 ```tsx
-import { Progress } from "@salt-ds/core";
+import { Progress } from "@salt-ds/lab";
 
 // Determinate: fills toward the end.
 <Progress
@@ -254,22 +260,32 @@ import { Progress } from "@salt-ds/core";
   max={totalBytes}
   label="Downloading report.pdf"
 />;
+
+// A full value can still be active while the server finishes processing.
+<Progress
+  value={100}
+  label="Processing report.pdf"
+  description="Upload complete. The server is still processing the file."
+/>;
+
+// The task owner confirms success separately from its measured progress.
+<Progress value={100} label="Report ready" status="success" />;
 ```
 
-| Prop                     | Type                              | Default                 | Description                                                                   |
-| ------------------------ | --------------------------------- | ----------------------- | ----------------------------------------------------------------------------- |
-| `shape`                  | `"linear" \| "circular"`          | `"linear"`              | The shape. Choose it by the space it's in.                                    |
-| `value`                  | `number`                          | –                       | How much is done. Leave it out for indeterminate progress.                    |
-| `min`, `max`             | `number`                          | `0`, `100`              | The range of the value.                                                       |
-| `bufferValue`            | `number`                          | –                       | Linear only. How much is buffered, such as when streaming.                    |
-| `label`                  | `ReactNode`                       | –                       | What's happening. Shown, and used as the accessible name.                     |
-| `description`            | `ReactNode`                       | –                       | Helper text, such as "About 2 minutes left".                                  |
-| `getValueText`           | `(value, max) => string`          | Percentage, such as 38% | The value that's shown and announced, such as "3 of 5 files".                 |
-| `status`                 | `"success" \| "error"`            | –                       | The outcome of the task.                                                      |
-| `paused`                 | `boolean`                         | `false`                 | Whether the task is paused.                                                   |
-| `size`                   | `"small" \| "medium" \| "large"`  | `"medium"`              | Circular only. The size of the indicator.                                     |
-| `delay`                  | `number`                          | `1000`                  | Milliseconds to wait before showing, so quick tasks show nothing.             |
-| `completionAnnouncement` | `string \| null`                  | `"Finished {label}"`    | What screen readers announce when the task completes.                         |
+| Prop                     | Type                                           | Default                 | Description                                                                                                  |
+| ------------------------ | ---------------------------------------------- | ----------------------- | ------------------------------------------------------------------------------------------------------------ |
+| `shape`                  | `"linear" \| "circular"`                       | `"linear"`              | The shape. Choose it by the space it's in.                                                                     |
+| `value`                  | `number`                                       | –                       | How much is done. Leave it out for indeterminate progress. Reaching `max` doesn't change the task's status.      |
+| `min`, `max`             | `number`                                       | `0`, `100`              | The range of the value.                                                                                        |
+| `bufferValue`            | `number`                                       | –                       | Linear only. How much is buffered, such as when streaming.                                                      |
+| `label`                  | `ReactNode`                                    | –                       | What's happening. Shown, and used as the accessible name.                                                       |
+| `description`            | `ReactNode`                                    | –                       | Helper text, such as "About 2 minutes left".                                                                    |
+| `getValueText`           | `(value, max, min) => string`                   | Percentage, such as 38% | The value that's shown and exposed to screen readers, such as "3 of 5 files".                                  |
+| `status`                 | `"active" \| "paused" \| "success" \| "error"` | `"active"`             | The state of the task. Set `"success"` when the task has finished successfully.                                 |
+| `size`                   | `"small" \| "medium" \| "large"`              | `"medium"`              | Circular only. The size of the indicator.                                                                       |
+| `delay`                  | `number`                                       | `0`                     | Milliseconds to wait before showing. Set `1000` to hide quick tasks; errors and initially successful tasks show immediately. |
+| `disableAnnouncer`       | `boolean`                                      | `false`                 | Suppresses all live announcements when the task owner handles them. The accessible name and value remain available. |
+| `completionAnnouncement` | `string \| null`                               | `"finished {label}"`    | Success announcement for `status="success"`. Set `null` to suppress only this announcement.                    |
 
 ### Meter
 
@@ -364,14 +380,14 @@ Text skeletons take the same `styleAs` values as `Text`, so they match the size 
 
 ### Refreshing content
 
-When content refreshes, keep it on screen and show progress alongside it. With a transition, React keeps the current content until the new content is ready. The progress `delay` means quick refreshes show nothing.
+When content refreshes, keep it on screen and show progress alongside it. With a transition, React keeps the current content until the new content is ready. Set `delay={1000}` when quick refreshes should show no indicator.
 
 ```tsx
 const [isPending, startTransition] = useTransition();
 
 <Button onClick={() => startTransition(refreshAccounts)}>Refresh</Button>;
 
-{isPending && <Progress shape="linear" label="Refreshing accounts" />}
+{isPending && <Progress shape="linear" label="Refreshing accounts" delay={1000} />}
 <AccountTable accounts={accounts} />;
 ```
 

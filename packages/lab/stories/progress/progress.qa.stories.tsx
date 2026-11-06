@@ -34,7 +34,15 @@ export const AllStates: StoryFn<QAContainerProps> = (props) => (
       <Progress delay={0} aria-label="Loading accounts" />
     </div>
     <div style={{ width: 300 }}>
-      <Progress delay={0} label="Uploading files" value={60} paused />
+      <Progress delay={0} label="Uploading files" value={60} status="paused" />
+    </div>
+    <div style={{ width: 300 }}>
+      <Progress
+        label="Processing files"
+        value={100}
+        status="active"
+        description="Upload complete. Processing is still in progress."
+      />
     </div>
     <div style={{ width: 300 }}>
       <Progress delay={0} label="Uploading files" status="success" />
@@ -73,7 +81,19 @@ export const AllStates: StoryFn<QAContainerProps> = (props) => (
       value={38}
       aria-label="Uploading"
     />
-    <Progress delay={0} shape="circular" label="Uploading" value={60} paused />
+    <Progress
+      delay={0}
+      shape="circular"
+      label="Uploading"
+      value={60}
+      status="paused"
+    />
+    <Progress
+      shape="circular"
+      label="Processing files"
+      value={100}
+      status="active"
+    />
     <Progress delay={0} shape="circular" label="Uploading" status="success" />
     <Progress
       delay={0}

@@ -25,7 +25,7 @@ const withBaseName = makePrefixer("saltProgress");
 
 export type ProgressShape = "linear" | "circular";
 export type ProgressSize = "small" | "medium" | "large";
-export type ProgressStatus = "success" | "error";
+export type ProgressStatus = "active" | "paused" | "success" | "error";
 
 interface ProgressBaseProps
   extends Omit<ComponentPropsWithoutRef<"div">, "children"> {
@@ -60,23 +60,25 @@ interface ProgressBaseProps
    */
   getValueText?: (value: number, max: number, min: number) => string;
   /**
-   * The outcome of the task.
+   * The state of the task. Defaults to `"active"`. Set to `"success"` when the task has finished successfully.
+   * Reaching `max` fills the indicator but doesn't change the task's state.
    */
   status?: ProgressStatus;
   /**
-   * Whether the task is paused.
-   */
-  paused?: boolean;
-  /**
-   * Milliseconds to wait before showing, so tasks that finish quickly show nothing. Defaults to 1000.
+   * Milliseconds to wait before showing, so tasks that finish quickly show nothing. Defaults to 0 (show immediately).
    * Errors and tasks that are already complete when mounted show immediately.
    */
   delay?: number;
   /**
-   * What screen readers announce when a visible task completes, that is when `status` is `"success"` or the value
-   * reaches `max`. Tasks that finish before the indicator appears are not announced. Set to `null` to turn it off.
+   * What screen readers announce when a visible task's `status` becomes `"success"`. Tasks that finish before the
+   * indicator appears are not announced. Set to `null` to turn off the success announcement.
    */
   completionAnnouncement?: string | null;
+  /**
+   * Disables automatic loading, success and error announcements. The progress bar's accessible name and value remain
+   * available. Use when a parent owns the task's announcements. Defaults to `false`.
+   */
+  disableAnnouncer?: boolean;
 }
 
 export interface ProgressLinearProps extends ProgressBaseProps {
@@ -116,7 +118,7 @@ const ANNOUNCER_TIMEOUT = 20000;
 const LOOP_EXIT: Record<ProgressShape, number> = { linear: 0.6, circular: 1 };
 
 /**
- * When the value becomes known, the loop finishes its pass before the indicator fills, so it never jumps. Waiting is
+ * When the value becomes known, the loop finishes its pass before the indicator fills. Waiting is
  * cancelled if the value is lost again, and a paused, failed or reduced motion loop stops straight away.
  */
 function useLoopExit(
@@ -192,11 +194,11 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       description,
       hideValue: hideValueProp,
       getValueText = defaultGetValueText,
-      status,
-      paused = false,
+      status = "active",
       size = "medium",
-      delay = 1000,
+      delay = 0,
       completionAnnouncement: completionAnnouncementProp,
+      disableAnnouncer = false,
       className,
       id: idProp,
       "aria-label": ariaLabel,
@@ -217,6 +219,10 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     const labelId = `${id}-label`;
     const descriptionId = `${id}-description`;
     const { announce } = useAriaAnnouncer();
+
+    const paused = status === "paused";
+    const outcome =
+      status === "success" || status === "error" ? status : undefined;
 
     // A successful task is complete, so it fills even if its value hasn't caught up.
     const value = status === "success" ? max : valueProp;
@@ -245,13 +251,6 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       completionAnnouncementProp === undefined
         ? `finished ${labelText}`
         : completionAnnouncementProp;
-    const outcome =
-      status === "error"
-        ? "error"
-        : status === "success" || (!indeterminate && fraction >= 1)
-          ? "success"
-          : undefined;
-
     const [visible, setVisible] = useState(delay <= 0 || outcome !== undefined);
     useEffect(() => {
       if (visible) return;
@@ -267,9 +266,9 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     }, [delay, outcome, visible]);
 
     // Indeterminate progress repeats its announcement while it loops, like Spinner.
-    const loops = visible && indeterminate && !outcome && !paused;
+    const loops = visible && indeterminate && status === "active";
     useEffect(() => {
-      if (!loops) return;
+      if (!loops || disableAnnouncer) return;
 
       announce(labelText);
       const startTime = Date.now();
@@ -285,37 +284,48 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       }, ANNOUNCER_INTERVAL);
 
       return () => clearInterval(interval);
-    }, [loops, announce, labelText]);
+    }, [loops, disableAnnouncer, announce, labelText]);
 
     // Screen readers read a progress bar's value themselves, so only the outcome is announced, once.
-    const announcedOutcome = useRef<string | undefined>(undefined);
+    const handledOutcome = useRef<string | undefined>(undefined);
     useEffect(() => {
       if (!outcome) {
-        announcedOutcome.current = undefined;
+        handledOutcome.current = undefined;
         return;
       }
-      if (!visible || announcedOutcome.current === outcome) return;
-      announcedOutcome.current = outcome;
+      if (disableAnnouncer) {
+        // Turning announcements back on must not replay an outcome handled by the parent.
+        handledOutcome.current = outcome;
+        return;
+      }
+      if (!visible || handledOutcome.current === outcome) return;
+      handledOutcome.current = outcome;
       if (outcome === "error") {
         announce(`${labelText}, error`);
       } else if (completionAnnouncement) {
         announce(completionAnnouncement);
       }
-    }, [visible, outcome, announce, labelText, completionAnnouncement]);
+    }, [
+      visible,
+      outcome,
+      disableAnnouncer,
+      announce,
+      labelText,
+      completionAnnouncement,
+    ]);
 
     if (!visible) return null;
 
-    const statusText = status ?? (paused ? "paused" : undefined);
+    const statusText = status === "active" ? undefined : status;
     const ariaValueText = [valueText, statusText].filter(Boolean).join(", ");
     const hideValue =
       hideValueProp ?? (shape === "circular" && size === "small");
     // The success icon says the task is complete, so the value would repeat it
     const showValue =
       !hideValue && valueText !== undefined && status !== "success";
-    const showPaused = paused && !status;
     const valueInside = shape === "circular" && size === "large";
     const showHeader = Boolean(
-      label || status || showPaused || (showValue && !valueInside),
+      label || outcome || paused || (showValue && !valueInside),
     );
 
     const indicatorClassName = clsx(
@@ -326,7 +336,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       "--saltProgress-fraction": shownFraction,
     } as CSSProperties;
     // The bar turns the success color once it has filled, so it doesn't change color while it loops
-    const barStatus = status === "success" && looping ? undefined : status;
+    const barStatus = outcome === "success" && looping ? undefined : outcome;
 
     return (
       <div
@@ -404,13 +414,13 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
                     {label}
                   </Text>
                 )}
-                {status && (
+                {outcome && (
                   <StatusIndicator
-                    status={status}
+                    status={outcome}
                     className={withBaseName("statusIcon")}
                   />
                 )}
-                {showPaused && (
+                {paused && (
                   <Text
                     className={withBaseName("value")}
                     color="secondary"

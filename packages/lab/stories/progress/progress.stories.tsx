@@ -18,8 +18,6 @@ import "./progress.stories.css";
 export default {
   title: "Lab/Progress",
   component: Progress,
-  // Show the indicator straight away. The Delay story shows the default delay.
-  args: { delay: 0 },
 } as Meta<typeof Progress>;
 
 // The stories only pass `delay`, so circular and linear examples can share the same args.
@@ -46,9 +44,11 @@ const bufferFillArgTypes: Partial<ArgTypes<BufferFillArgs>> = {
 function useSimulatedTask({
   duration = 4000,
   sizeUnknownFor = 0,
+  onComplete,
 }: {
   duration?: number;
   sizeUnknownFor?: number;
+  onComplete?: () => void;
 } = {}) {
   const [running, setRunning] = useState(false);
   const [value, setValue] = useState<number | undefined>(undefined);
@@ -71,7 +71,10 @@ function useSimulatedTask({
         setTimeout(
           () => {
             setValue((step / steps) * 100);
-            if (step === steps) setRunning(false);
+            if (step === steps) {
+              setRunning(false);
+              onComplete?.();
+            }
           },
           sizeUnknownFor + (duration / steps) * step,
         ),
@@ -172,7 +175,12 @@ export const ValueText: StoryFn<StoryArgs> = (args) => (
 
 export const States: StoryFn<StoryArgs> = (args) => (
   <StackLayout gap={3} style={{ width: 400 }}>
-    <Progress label="Uploading report.pdf" value={60} paused {...args} />
+    <Progress
+      label="Uploading report.pdf"
+      value={60}
+      status="paused"
+      {...args}
+    />
     <Progress
       label="Uploading report.pdf"
       value={100}
@@ -191,7 +199,7 @@ export const States: StoryFn<StoryArgs> = (args) => (
         shape="circular"
         label="Uploading"
         value={60}
-        paused
+        status="paused"
         {...args}
       />
       <Progress shape="circular" label="Uploading" status="success" {...args} />
@@ -204,6 +212,19 @@ export const States: StoryFn<StoryArgs> = (args) => (
       />
     </FlowLayout>
   </StackLayout>
+);
+
+/** Reaching the maximum fills the indicator. The task stays active until it reports success. */
+export const FullProgressStillProcessing: StoryFn<StoryArgs> = (args) => (
+  <div style={{ width: 400 }}>
+    <Progress
+      label="Processing report.pdf"
+      value={100}
+      status="active"
+      description="Upload complete. The server is still processing the file."
+      {...args}
+    />
+  </div>
 );
 
 /**
@@ -228,7 +249,7 @@ export const IndeterminateToDeterminate: StoryFn<StoryArgs> = (args) => {
           <Progress
             label="Downloading report.pdf"
             value={value}
-            status={value === 100 ? "success" : undefined}
+            status={running ? "active" : "success"}
             {...args}
           />
           <Progress
@@ -236,7 +257,7 @@ export const IndeterminateToDeterminate: StoryFn<StoryArgs> = (args) => {
             size="large"
             aria-label="Downloading report.pdf"
             value={value}
-            status={value === 100 ? "success" : undefined}
+            status={running ? "active" : "success"}
             {...args}
           />
         </>
@@ -251,9 +272,8 @@ export const IndeterminateToDeterminate: StoryFn<StoryArgs> = (args) => {
  */
 export const Transitions: StoryFn<StoryArgs> = (args) => {
   const [value, setValue] = useState<number | undefined>(undefined);
-  const [status, setStatus] = useState<ProgressProps["status"]>(undefined);
-  const [paused, setPaused] = useState(false);
-  const progressProps = { value, status, paused, ...args };
+  const [status, setStatus] = useState<ProgressProps["status"]>("active");
+  const progressProps = { value, status, ...args };
 
   // Every control and indicator keeps its size in every state, so nothing moves when you press the buttons
   return (
@@ -261,7 +281,7 @@ export const Transitions: StoryFn<StoryArgs> = (args) => {
       <FlowLayout gap={1}>
         <Button
           onClick={() => {
-            setStatus(undefined);
+            setStatus("active");
             setValue(undefined);
           }}
         >
@@ -269,7 +289,7 @@ export const Transitions: StoryFn<StoryArgs> = (args) => {
         </Button>
         <Button
           onClick={() => {
-            setStatus(undefined);
+            setStatus("active");
             setValue((current) => Math.min((current ?? 0) + 20, 100));
           }}
         >
@@ -277,8 +297,10 @@ export const Transitions: StoryFn<StoryArgs> = (args) => {
         </Button>
         <ToggleButton
           value="pause"
-          selected={paused}
-          onChange={() => setPaused((current) => !current)}
+          selected={status === "paused"}
+          onChange={() =>
+            setStatus((current) => (current === "paused" ? "active" : "paused"))
+          }
         >
           Pause
         </ToggleButton>
@@ -301,20 +323,29 @@ const DownloadButton = ({
   progressProps,
   ...buttonProps
 }: ButtonProps & { progressProps?: StoryArgs }) => {
-  const { running, value, start } = useSimulatedTask({ sizeUnknownFor: 1500 });
   const { announce } = useAriaAnnouncer();
-  const complete = !running && value === 100;
+  const downloadInProgress = useRef(false);
+  const { running, value, start } = useSimulatedTask({
+    sizeUnknownFor: 1500,
+    onComplete: () => {
+      downloadInProgress.current = false;
+      announce("Download complete", { ariaLive: "polite" });
+    },
+  });
 
-  // The task owns completion: Progress is removed as soon as the download ends.
-  useEffect(() => {
-    if (complete) announce("Download complete");
-  }, [announce, complete]);
+  // The task owns announcements, including completion after Progress is removed.
+  const startDownload = () => {
+    if (downloadInProgress.current) return;
+    downloadInProgress.current = true;
+    announce("Downloading", { ariaLive: "polite" });
+    start();
+  };
 
   return (
     // The button stays enabled, as disabled buttons are faded, but it ignores clicks while it's downloading
     <Button
       {...buttonProps}
-      onClick={running ? undefined : start}
+      onClick={startDownload}
       aria-busy={running || undefined}
     >
       {/* Keep the icon's space during the delay, and keep it out of the button's name. */}
@@ -326,8 +357,8 @@ const DownloadButton = ({
             size="small"
             aria-label="Downloading"
             value={value}
-            completionAnnouncement={null}
             {...progressProps}
+            disableAnnouncer
           />
         )}
       </span>
@@ -339,7 +370,7 @@ const DownloadButton = ({
 /**
  * Circular progress fits inside controls, such as a download button. Inside a button it takes the button's text color,
  * like an icon, so it contrasts with every button style. The icon slot and button name stay the same while loading,
- * including during the delay before progress appears.
+ * including during the optional delay before progress appears. The button owns announcements and ignores repeat presses.
  */
 export const InButton: StoryFn<StoryArgs> = (args) => (
   <FlowLayout gap={1}>
@@ -365,7 +396,7 @@ const linearTrackStyleExamples: ProgressProps[] = [
   { label: "Loading", value: undefined },
   { label: "Playing video", value: 38, bufferValue: 60 },
   { label: "Buffering video", value: 0, bufferValue: 30 },
-  { label: "Uploading", value: 60, paused: true },
+  { label: "Uploading", value: 60, status: "paused" },
   { label: "Uploading", value: 60, status: "error" },
   { label: "Uploading", status: "success" },
 ];
@@ -446,7 +477,7 @@ export const PageLoader: StoryFn<StoryArgs> = (args) => (
 );
 
 /**
- * By default, progress waits 1 second before it shows, so tasks that finish quickly show nothing.
+ * Progress appears immediately by default. Set a delay to hide the indicator for tasks that finish quickly.
  */
 export const Delay: StoryFn<StoryArgs> = (args) => {
   const quick = useSimulatedTask({ duration: 600 });
