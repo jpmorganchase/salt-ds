@@ -24,7 +24,7 @@ Leave out the `value` when you can't measure the task. Indeterminate progress lo
 
 ## From indeterminate to determinate
 
-When a task's size isn't known yet, start without a value, then add one once it's known. The indicator keeps its shape and position, so nothing moves.
+When a task's size isn't known yet, start without a value, then add one once it's known. The indicator keeps its shape and position, and the loop finishes its pass before it fills, so nothing jumps. The value is announced straight away.
 
 <LivePreview componentName="progress-next" exampleName="IndeterminateToDeterminate" />
 
@@ -53,8 +53,8 @@ The value text is shown and used as the progress bar's `aria-valuetext`. To hide
 Show the state of a task in place, with an icon and text as well as color.
 
 - **Paused:** set `paused`. Progress shows "Paused", keeps the accent color and stops looping.
-- **Success:** set `status="success"`. Progress fills and shows a success icon instead of the value.
-- **Error:** set `status="error"`. Progress stops where it failed, shows an error icon, and stops looping. Use `description` to explain why, and offer a way to retry.
+- **Success:** set `status="success"`. Progress fills, changes to the success color once it's full, and shows a success icon instead of the value.
+- **Error:** set `status="error"`. Progress stops where it failed and shows an error icon. A loop stops where it is and fades out. Use `description` to explain why, and offer a way to retry.
 
 <LivePreview componentName="progress-next" exampleName="States" />
 

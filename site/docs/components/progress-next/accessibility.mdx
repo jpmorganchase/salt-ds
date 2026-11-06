@@ -16,4 +16,4 @@ data:
 - Progress announces when a task completes or fails. Change the completion message with `completionAnnouncement`, or set it to `null` to turn it off. Removing progress isn't announced, as it could mean the task was cancelled.
 - States use an icon and text as well as color. The state is also part of the value text, such as "60%, paused".
 - The bar and the track's outline both contrast with the background, and the bar ends where solid turns into outline, so how far the task has progressed doesn't rely on color.
-- When users have turned on reduced motion, loops slow down rather than stop, so indeterminate progress still reads as working.
+- When users have turned on reduced motion, loops slow down rather than stop, so indeterminate progress still reads as working, and other state changes happen at once.
