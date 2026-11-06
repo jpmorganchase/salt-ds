@@ -343,18 +343,30 @@ function lineAndColumn(text, index) {
 }
 
 /**
- * The token reference page for the group a name points to, such as the text
- * characteristic for `--salt-text-…`: the page that lists most current tokens
- * starting the same way.
+ * The token reference page for a name that isn't a token: the page of the
+ * first suggestion, or else the page that lists most of the tokens sharing the
+ * longest start with it, such as the interact palette for
+ * `--salt-palette-interact-…`. Deprecated tokens are left out, since their page
+ * is the deprecated list rather than the group's.
  */
-function groupPage(name, tokens) {
-  const group = name.split("-")[3];
-  const counts = new Map();
-  for (const [candidate, info] of tokens) {
-    if (info.state !== "current" || candidate.split("-")[3] !== group) continue;
-    counts.set(info.page, (counts.get(info.page) ?? 0) + 1);
+function unknownTokenPage(name, tokens, suggestions) {
+  for (const suggestion of suggestions) {
+    const page = tokens.get(suggestion)?.page;
+    if (page) return page;
   }
-  return [...counts].sort((left, right) => right[1] - left[1])[0]?.[0];
+  const parts = name.slice("--salt-".length).split("-");
+  for (let length = parts.length - 1; length >= 1; length -= 1) {
+    const prefix = `--salt-${parts.slice(0, length).join("-")}-`;
+    const counts = new Map();
+    for (const [candidate, info] of tokens) {
+      if (info.state === "deprecated" || !candidate.startsWith(prefix))
+        continue;
+      counts.set(info.page, (counts.get(info.page) ?? 0) + 1);
+    }
+    if (counts.size > 0)
+      return [...counts].sort((left, right) => right[1] - left[1])[0][0];
+  }
+  return undefined;
 }
 
 /**
@@ -414,7 +426,9 @@ function checkTokens({ uses, text, file, data, problems, page }) {
         severity: "error",
         rule: "unknown-token",
         message: `${name} isn't a Salt token${suggestions.length > 0 ? `; did you mean ${suggestions.join(", ")}?` : ""}`,
-        page: page(groupPage(name, data.tokens) ?? "tokens.md"),
+        page: page(
+          unknownTokenPage(name, data.tokens, suggestions) ?? "tokens.md",
+        ),
       });
     } else if (info.state === "deprecated") {
       problems.push({

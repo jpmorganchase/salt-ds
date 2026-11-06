@@ -132,6 +132,57 @@ describe("salt-check", () => {
     ]);
   });
 
+  it("links an unknown token to the page of its suggestion, or of the tokens sharing the longest start", () => {
+    const theme = {
+      pages: [
+        "tokens/characteristics.md",
+        "tokens/deprecated.md",
+        "tokens/palette/corner.md",
+        "tokens/palette/interact.md",
+        "tokens/palette/neutral.md",
+      ],
+      tokens: {
+        "--salt-content-primary-foreground": ["current", 0],
+        "--salt-palette-corner-weak": ["current", 2],
+        "--salt-palette-corner-strong": ["current", 2],
+        "--salt-palette-interact-background": ["palette", 3],
+        "--salt-palette-neutral-border": ["palette", 4],
+        "--salt-palette-neutral-background": ["palette", 4],
+        "--salt-palette-neutral-foreground": ["palette", 4],
+        "--salt-palette-neutral-secondary-border": ["deprecated", 1, []],
+        "--salt-palette-neutral-tertiary-border": ["deprecated", 1, []],
+        "--salt-palette-neutral-quaternary-border": ["deprecated", 1, []],
+        "--salt-palette-neutral-quinary-border": ["deprecated", 1, []],
+      },
+    };
+    const root = project(
+      {
+        "src/app.css": `.a {
+  color: var(--salt-content-primary-forground);
+  color: var(--salt-palette-interact-foo);
+  color: var(--salt-palette-neutral-bordr);
+  color: var(--salt-palette-foo);
+  color: var(--salt-shadow-foo);
+}
+`,
+      },
+      { theme },
+    );
+    const pages = check(root)
+      .log.filter((line) => line.includes("unknown-token"))
+      .map((line) =>
+        line.replace(/^.*unknown-token: (\S+) .* See (\S+)\.$/, "$1 $2"),
+      );
+    const docs = "node_modules/@salt-ds/theme/docs";
+    expect(pages).toEqual([
+      `--salt-content-primary-forground ${docs}/tokens/characteristics.md`,
+      `--salt-palette-interact-foo ${docs}/tokens/palette/interact.md`,
+      `--salt-palette-neutral-bordr ${docs}/tokens/palette/neutral.md`,
+      `--salt-palette-foo ${docs}/tokens/palette/neutral.md`,
+      `--salt-shadow-foo ${docs}/tokens.md`,
+    ]);
+  });
+
   it("doesn't claim a deprecated token with no recorded replacement has none", () => {
     const root = project(
       { "src/app.css": ".a { color: var(--salt-old-color); }\n" },
