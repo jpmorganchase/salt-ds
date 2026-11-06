@@ -1,0 +1,231 @@
+/* Styles applied to the root element */
+.saltProgress {
+  --saltProgress-barColor: var(--salt-sentiment-accent-background);
+  color: var(--salt-content-primary-foreground);
+  box-sizing: border-box;
+}
+
+.saltProgress-success {
+  --saltProgress-barColor: var(--salt-status-success-foreground-decorative);
+}
+
+.saltProgress-error {
+  --saltProgress-barColor: var(--salt-status-error-foreground-decorative);
+}
+
+.saltProgress-paused {
+  --saltProgress-barColor: var(--salt-sentiment-neutral-dataviz);
+}
+
+.saltProgress-text {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.saltProgress-header {
+  display: flex;
+  align-items: center;
+  gap: var(--salt-spacing-100);
+}
+
+.saltProgress-label {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.saltProgress-value {
+  white-space: nowrap;
+}
+
+.saltProgress-statusIcon {
+  flex-shrink: 0;
+}
+
+/* Linear: label and value above the bar, helper text below it */
+.saltProgress-linear {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-template-areas:
+    "header"
+    "progressbar"
+    "description";
+  row-gap: var(--salt-spacing-50);
+}
+
+.saltProgress-linear .saltProgress-text {
+  display: contents;
+}
+
+.saltProgress-linear .saltProgress-header {
+  grid-area: header;
+  /* The label grows, so the status icon and value sit at the end, even without a label */
+  justify-content: flex-end;
+}
+
+.saltProgress-linear .saltProgress-progressbar {
+  grid-area: progressbar;
+}
+
+.saltProgress-linear .saltProgress-description {
+  grid-area: description;
+}
+
+.saltProgress-linear .saltProgress-indicator {
+  position: relative;
+  height: var(--salt-size-bar-strong);
+  overflow: hidden;
+}
+
+.saltProgress-linear .saltProgress-track {
+  position: absolute;
+  inset-inline: 0;
+  top: calc((var(--salt-size-bar-strong) - var(--salt-size-bar)) / 2);
+  height: var(--salt-size-bar);
+  background: var(--salt-sentiment-neutral-track);
+}
+
+.saltProgress-linear .saltProgress-bar {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: calc(var(--saltProgress-fraction) * 100%);
+  background: var(--saltProgress-barColor);
+  transition: width var(--salt-duration-perceptible) linear;
+}
+
+/* Indeterminate progress loops: a segment slides across the track, so it never looks like a fill */
+.saltProgress-linear .saltProgress-indeterminate .saltProgress-bar {
+  width: 66%;
+  transition: none;
+  animation: saltProgress-linear-loop 1.8s ease-in-out infinite;
+}
+
+@keyframes saltProgress-linear-loop {
+  0% {
+    transform: translateX(-100%);
+  }
+  60% {
+    transform: translateX(155%);
+  }
+  100% {
+    transform: translateX(200%);
+  }
+}
+
+/* Circular: the indicator, with the label, value and helper text beside it */
+.saltProgress-circular {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--salt-spacing-100);
+}
+
+.saltProgress-small {
+  --saltProgress-size: max(var(--salt-size-icon), 12px);
+  --saltProgress-trackWidth: var(--salt-size-fixed-200);
+  --saltProgress-barWidth: var(--salt-size-fixed-200);
+}
+
+.saltProgress-medium {
+  --saltProgress-size: var(--salt-size-base);
+  --saltProgress-trackWidth: var(--salt-size-bar);
+  --saltProgress-barWidth: var(--salt-size-bar);
+}
+
+.saltProgress-large {
+  --saltProgress-size: calc(var(--salt-size-base) * 3);
+  --saltProgress-trackWidth: var(--salt-size-bar);
+  --saltProgress-barWidth: var(--salt-size-bar-strong);
+}
+
+.saltProgress-circular .saltProgress-progressbar {
+  position: relative;
+  display: inline-flex;
+  flex-shrink: 0;
+}
+
+.saltProgress-circular .saltProgress-indicator {
+  display: block;
+  width: var(--saltProgress-size);
+  height: var(--saltProgress-size);
+  /* Start at the top */
+  transform: rotate(-90deg);
+}
+
+.saltProgress-circular circle {
+  cx: calc(var(--saltProgress-size) / 2);
+  cy: calc(var(--saltProgress-size) / 2);
+  r: calc((var(--saltProgress-size) - var(--saltProgress-barWidth)) / 2);
+  fill: none;
+}
+
+.saltProgress-circular .saltProgress-track {
+  stroke: var(--salt-sentiment-neutral-track);
+  stroke-width: var(--saltProgress-trackWidth);
+}
+
+.saltProgress-circular .saltProgress-bar {
+  stroke: var(--saltProgress-barColor);
+  stroke-width: var(--saltProgress-barWidth);
+  /* The circles have a path length of 100 */
+  stroke-dasharray: calc(var(--saltProgress-fraction) * 100) 100;
+  transition: stroke-dasharray var(--salt-duration-perceptible) linear;
+}
+
+/* Indeterminate progress loops: an arc turns around the track */
+.saltProgress-circular .saltProgress-indeterminate {
+  animation: saltProgress-circular-loop 0.9s linear infinite;
+}
+
+.saltProgress-circular .saltProgress-indeterminate .saltProgress-bar {
+  stroke-dasharray: 25 100;
+  transition: none;
+}
+
+@keyframes saltProgress-circular-loop {
+  from {
+    transform: rotate(-90deg);
+  }
+  to {
+    transform: rotate(270deg);
+  }
+}
+
+.saltProgress-valueInside {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* A paused loop stops where it is, and a failed loop stops showing progress */
+.saltProgress-paused .saltProgress-indeterminate,
+.saltProgress-paused .saltProgress-indeterminate .saltProgress-bar {
+  animation-play-state: paused;
+}
+
+.saltProgress-error .saltProgress-indeterminate,
+.saltProgress-error .saltProgress-indeterminate .saltProgress-bar {
+  animation: none;
+}
+
+.saltProgress-error .saltProgress-indeterminate .saltProgress-bar {
+  visibility: hidden;
+}
+
+/* Loops slow down rather than stop, so indeterminate progress still reads as working */
+@media (prefers-reduced-motion: reduce) {
+  .saltProgress-linear .saltProgress-bar,
+  .saltProgress-circular .saltProgress-bar {
+    transition: none;
+  }
+
+  .saltProgress-linear .saltProgress-indeterminate .saltProgress-bar {
+    animation-duration: 5.4s;
+  }
+
+  .saltProgress-circular .saltProgress-indeterminate {
+    animation-duration: 2.7s;
+  }
+}
