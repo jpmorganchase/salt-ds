@@ -75,6 +75,13 @@ export const Indeterminate: StoryFn<typeof Progress> = (args) => (
   </div>
 );
 
+/** The buffer shows how much is ready ahead of the progress, such as the part of a video that has loaded. */
+export const Buffer: StoryFn<typeof Progress> = (args) => (
+  <div style={{ width: 400 }}>
+    <Progress label="Playing video" value={38} bufferValue={60} {...args} />
+  </div>
+);
+
 export const Circular: StoryFn<typeof Progress> = (args) => (
   <StackLayout gap={3}>
     <FlowLayout gap={3} align="center">

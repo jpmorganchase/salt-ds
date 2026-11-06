@@ -46,6 +46,11 @@ export interface ProgressProps
    */
   max?: number;
   /**
+   * Linear only. How much is ready ahead of `value`, such as the part of a video that has loaded but hasn't played. It
+   * shows only when there's a `value`.
+   */
+  bufferValue?: number;
+  /**
    * What's happening, such as "Uploading report.pdf". It's shown, and used as the accessible name.
    */
   label?: ReactNode;
@@ -120,6 +125,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       value: valueProp,
       min = 0,
       max = 100,
+      bufferValue,
       label,
       description,
       hideValue: hideValueProp,
@@ -168,6 +174,10 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
     const indeterminate = value === undefined;
     const fraction = indeterminate ? 0 : getFraction(value, min, max);
     const valueText = indeterminate ? undefined : getValueText(value, max, min);
+    const bufferFraction =
+      shape === "linear" && !indeterminate && bufferValue !== undefined
+        ? Math.max(getFraction(bufferValue, min, max), fraction)
+        : undefined;
 
     const labelText =
       typeof label === "string" ? label : (ariaLabel ?? "loading");
@@ -329,6 +339,16 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
           ) : (
             <div className={indicatorClassName} aria-hidden="true">
               <div className={withBaseName("track")} />
+              {bufferFraction !== undefined && (
+                <div
+                  className={withBaseName("buffer")}
+                  style={
+                    {
+                      "--saltProgress-bufferFraction": bufferFraction,
+                    } as CSSProperties
+                  }
+                />
+              )}
               <div className={withBaseName("bar")} style={fractionStyle} />
             </div>
           )}

@@ -99,6 +99,66 @@ describe("GIVEN a Progress", () => {
     });
   });
 
+  describe("WHEN it has a buffer value", () => {
+    function bufferWidth() {
+      const buffer = document.querySelector<HTMLElement>(
+        ".saltProgress-buffer",
+      );
+      const track = document.querySelector<HTMLElement>(
+        ".saltProgress-indicator",
+      );
+      return buffer && track ? buffer.clientWidth / track.clientWidth : null;
+    }
+
+    it("THEN it shows the buffer ahead of the bar", async () => {
+      await renderWithSalt(
+        <div style={{ width: 200 }}>
+          <Progress
+            delay={0}
+            label="Playing video"
+            value={20}
+            bufferValue={60}
+          />
+        </div>,
+      );
+
+      await expect.poll(bufferWidth).toBeCloseTo(0.6, 2);
+    });
+
+    it("THEN the buffer never sits behind the bar", async () => {
+      await renderWithSalt(
+        <div style={{ width: 200 }}>
+          <Progress
+            delay={0}
+            label="Playing video"
+            value={60}
+            bufferValue={20}
+          />
+        </div>,
+      );
+
+      await expect.poll(bufferWidth).toBeCloseTo(0.6, 2);
+    });
+
+    it.each([
+      ["it has no value", { label: "Loading", bufferValue: 60 }],
+      [
+        "it's circular",
+        {
+          shape: "circular" as const,
+          label: "Loading",
+          value: 20,
+          bufferValue: 60,
+        },
+      ],
+    ])("THEN it shows no buffer WHEN %s", async (_, props) => {
+      await renderWithSalt(<Progress delay={0} {...props} />);
+
+      await expect.element(page.getByRole("progressbar")).toBeInTheDocument();
+      expect(document.querySelector(".saltProgress-buffer")).toBeNull();
+    });
+  });
+
   describe("WHEN it has no value", () => {
     it("THEN it's indeterminate, with no value", async () => {
       await renderWithSalt(<Progress delay={0} label="Loading accounts" />);

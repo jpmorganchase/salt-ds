@@ -105,6 +105,17 @@
   transition: width var(--salt-duration-perceptible) linear;
 }
 
+/* The buffer is a hollow segment ahead of the bar, like LinearProgress */
+.saltProgress-linear .saltProgress-buffer {
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: 0;
+  width: calc(var(--saltProgress-bufferFraction) * 100%);
+  background: var(--salt-container-primary-background);
+  box-shadow: inset 0 0 0 var(--salt-size-fixed-100) var(--saltProgress-barColor, var(--progress-barColor));
+  transition: width var(--salt-duration-perceptible) linear;
+}
+
 /* Indeterminate progress loops: a segment slides across the track, so it never looks like a fill */
 .saltProgress-linear .saltProgress-indeterminate .saltProgress-bar {
   width: 66%;
@@ -229,6 +240,7 @@
 /* Loops slow down rather than stop, so indeterminate progress still reads as working */
 @media (prefers-reduced-motion: reduce) {
   .saltProgress-linear .saltProgress-bar,
+  .saltProgress-linear .saltProgress-buffer,
   .saltProgress-circular .saltProgress-bar {
     transition: none;
   }
