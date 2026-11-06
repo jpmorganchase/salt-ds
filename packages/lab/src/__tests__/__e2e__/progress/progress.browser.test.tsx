@@ -203,21 +203,33 @@ describe("GIVEN a Progress", () => {
     });
   });
 
-  it("THEN it announces milestones and completion, not every value", async () => {
+  it("THEN it announces completion, not changes of value", async () => {
     const rendered = await renderWithSalt(
       <Progress delay={0} label="Uploading" value={10} />,
     );
-    expect(liveRegionText()).not.toContain("Uploading, 10%");
-
     await rendered.rerender(
       <Progress delay={0} label="Uploading" value={55} />,
     );
-    await expect.poll(liveRegionText).toContain("Uploading, 55%");
+    await expect
+      .element(page.getByRole("progressbar"))
+      .toHaveAttribute("aria-valuetext", "55%");
+    expect(liveRegionText()).not.toContain("55%");
 
     await rendered.rerender(
       <Progress delay={0} label="Uploading" value={100} />,
     );
     await expect.poll(liveRegionText).toContain("finished Uploading");
+  });
+
+  it("THEN it announces that the task failed", async () => {
+    const rendered = await renderWithSalt(
+      <Progress delay={0} label="Uploading" value={40} />,
+    );
+    await rendered.rerender(
+      <Progress delay={0} label="Uploading" value={40} status="error" />,
+    );
+
+    await expect.poll(liveRegionText).toContain("Uploading, error");
   });
 
   it("THEN it waits 1 second before it shows, by default", async () => {

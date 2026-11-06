@@ -64,8 +64,7 @@ export interface ProgressProps
    */
   hideValue?: boolean;
   /**
-   * Returns the value that's shown and announced, such as "3 of 5 files". Defaults to a percentage formatted for the
-   * user's locale.
+   * Returns the value that's shown and announced, such as "3 of 5 files". Defaults to a percentage, such as "38%".
    */
   getValueText?: (value: number, max: number, min: number) => string;
   /**
@@ -103,19 +102,13 @@ export interface ProgressProps
   completionAnnouncement?: string | null;
 }
 
-// Determinate progress announces these percentages, rather than every change of value.
-const MILESTONES = [75, 50, 25];
-
 function getFraction(value: number, min: number, max: number) {
   if (max <= min) return 0;
   return Math.min(Math.max((value - min) / (max - min), 0), 1);
 }
 
 function defaultGetValueText(value: number, max: number, min: number) {
-  return new Intl.NumberFormat(undefined, {
-    style: "percent",
-    maximumFractionDigits: 0,
-  }).format(getFraction(value, min, max));
+  return `${Math.round(getFraction(value, min, max) * 100)}%`;
 }
 
 export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
@@ -224,25 +217,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       announcerTimeout,
     ]);
 
-    const lastMilestone = useRef(0);
-    useEffect(() => {
-      if (!visible || indeterminate || outcome) return;
-      const milestone = MILESTONES.find((step) => fraction * 100 >= step);
-      if (milestone && milestone > lastMilestone.current) {
-        lastMilestone.current = milestone;
-        announce(`${labelText}, ${valueText}`);
-      }
-    }, [
-      visible,
-      indeterminate,
-      outcome,
-      fraction,
-      announce,
-      labelText,
-      valueText,
-    ]);
-
-    // Announce the outcome once, when the task completes or fails.
+    // Screen readers read a progress bar's value themselves, so only the outcome is announced, once.
     const announcedOutcome = useRef<string | undefined>(undefined);
     useEffect(() => {
       if (!visible || !outcome || announcedOutcome.current === outcome) return;

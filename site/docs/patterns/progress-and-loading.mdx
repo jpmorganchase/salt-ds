@@ -92,7 +92,7 @@ Indeterminate circular progress is what's often called a spinner. There's no sep
 Pair progress with text, so users know what's happening without having to interpret the indicator.
 
 - **Label:** what's happening, such as "Uploading report.pdf".
-- **Value:** how much is done, in units that make sense to users, such as "3 of 5 files" or "45 of 100 MB". Use a percentage only when there's no better unit. Format numbers for the user's locale.
+- **Value:** how much is done, in units that make sense to users, such as "3 of 5 files" or "45 of 100 MB". Use a percentage only when there's no better unit.
 - **Helper text (optional):** extra context, such as "About 2 minutes left".
 
 ### States
@@ -205,7 +205,7 @@ Match loading to how long users will wait. See [duration](/salt/foundations/dura
 Every indicator in the family sounds the same to screen reader users as it looks to sighted users.
 
 - **Stepper:** screen readers announce the current step and its position, such as "Step 2 of 4: Payment details". Steps aren't announced as progress.
-- **Determinate progress:** screen readers announce the label and the value in the same units as the visible text. Announcements happen at meaningful milestones, rather than every time the value changes.
+- **Determinate progress:** screen readers read the label and the value from the progress bar, in the same units as the visible text, so changes of value aren't announced. When the task completes or fails, that's announced.
 - **Indeterminate progress:** in either shape, screen readers announce the label when the indicator appears, repeat it while loading continues, and announce when loading finishes. Announcements are polite and never interrupt users.
 - **Meter:** screen readers announce a meter's value as an amount, not as progress through a task.
 - **Skeleton:** skeletons are hidden from screen readers. The region that's loading is marked as busy, and screen readers announce when its content has loaded.
@@ -264,12 +264,11 @@ import { Progress } from "@salt-ds/core";
 | `bufferValue`            | `number`                          | –                       | Linear only. How much is buffered, such as when streaming.                    |
 | `label`                  | `ReactNode`                       | –                       | What's happening. Shown, and used as the accessible name.                     |
 | `description`            | `ReactNode`                       | –                       | Helper text, such as "About 2 minutes left".                                  |
-| `getValueText`           | `(value, max) => string`          | Locale-formatted %      | The value that's shown and announced, such as "3 of 5 files".                 |
+| `getValueText`           | `(value, max) => string`          | Percentage, such as 38% | The value that's shown and announced, such as "3 of 5 files".                 |
 | `status`                 | `"success" \| "error"`            | –                       | The outcome of the task.                                                      |
 | `paused`                 | `boolean`                         | `false`                 | Whether the task is paused.                                                   |
 | `size`                   | `"small" \| "medium" \| "large"`  | `"medium"`              | Circular only. The size of the indicator.                                     |
 | `delay`                  | `number`                          | `1000`                  | Milliseconds to wait before showing, so quick tasks show nothing.             |
-| `minDuration`            | `number`                          | `500`                   | Once shown, the minimum milliseconds on screen, so it doesn't flicker. Doesn't apply to Suspense fallbacks, as React decides when they're removed. |
 | `announcerInterval`      | `number`                          | `5000`                  | Indeterminate only. How often screen readers repeat the label.                |
 | `announcerTimeout`       | `number`                          | `20000`                 | Indeterminate only. When screen readers stop repeating the label.             |
 | `completionAnnouncement` | `string \| null`                  | `"Finished {label}"`    | What screen readers announce when the task finishes.                          |
@@ -359,6 +358,7 @@ With a `loading` prop, you control it yourself. This works with any version of R
 | `errorFallback`          | `({ error, retry }) => ReactNode`     | What to show if loading fails. `retry` tries to load the region again.               |
 | `loadingAnnouncement`    | `string`                              | What screen readers announce while the region loads.                                 |
 | `completionAnnouncement` | `string \| null`                      | What screen readers announce when the content has loaded.                            |
+| `minDuration`            | `number`                              | Once the fallback shows, the minimum milliseconds it stays, so it doesn't flicker. Doesn't apply to Suspense, as React decides when fallbacks are removed. |
 
 `Skeleton` has no state or effects, so it can render as a server component and stream as a Suspense fallback. Its shimmer is CSS only, so it animates before the page is interactive.
 
