@@ -55,8 +55,8 @@ The value text is shown and used as the progress bar's `aria-valuetext`. To hide
 
 Show the state of a task in place, with an icon and text as well as color.
 
-- **Paused:** set `paused`. Progress shows "Paused", keeps the accent color and stops looping.
-- **Success:** set `status="success"`. Progress fills, changes to the success color once it's full, and shows a success icon instead of the value.
+- **Paused:** set `status="paused"`. Progress shows "Paused", keeps the accent color and stops looping.
+- **Success:** set `status="success"` when the task finishes. Progress fills, changes to the success color once it's full, and shows a success icon instead of the value. Reaching `max` fills the bar, but it stays active until you set the status.
 - **Error:** set `status="error"`. Progress stops where it failed and shows an error icon. A loop stops where it is and fades out. Use `description` to explain why, and offer a way to retry.
 
 <LivePreview componentName="progress-next" exampleName="States" />
@@ -73,7 +73,7 @@ Small circular progress fits inside a button that starts an action. Inside a `Bu
 
 Keep the button's label the same, so the button keeps its size. Keep the button enabled, as disabled buttons are faded, but ignore clicks until the action completes.
 
-Progress waits a second before it appears, so keep the icon's space until it does, and keep progress out of the button's name. The button's `aria-busy` says it's working. Announce completion from the task, as progress is removed as soon as the task ends.
+Set a `delay` so quick actions don't flash progress, and keep the icon's space until progress appears. Keep progress out of the button's name, as the button's `aria-busy` says it's working. Set `disableAnnouncer` and announce the start and completion from the button, as progress is removed as soon as the task ends.
 
 <LivePreview componentName="progress-next" exampleName="InButton" />
 
@@ -85,6 +85,6 @@ Use large circular progress in a page loader, when the application first opens a
 
 ## Delay
 
-By default, `Progress` waits 1 second before it shows, so tasks that finish quickly show nothing. Change it with `delay`.
+By default, `Progress` shows straight away. Set `delay` to wait before it shows, so tasks that finish quickly show nothing. This example waits 1 second.
 
 <LivePreview componentName="progress-next" exampleName="Delay" />

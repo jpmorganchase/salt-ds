@@ -13,8 +13,12 @@ export const Delay = (): ReactElement => {
         <Button onClick={quick.start}>Start a quick task</Button>
         <Button onClick={slow.start}>Start a slow task</Button>
       </FlowLayout>
-      {quick.running && <Progress label="Quick task" value={quick.value} />}
-      {slow.running && <Progress label="Slow task" value={slow.value} />}
+      {quick.running && (
+        <Progress label="Quick task" value={quick.value} delay={1000} />
+      )}
+      {slow.running && (
+        <Progress label="Slow task" value={slow.value} delay={1000} />
+      )}
     </StackLayout>
   );
 };

@@ -1,25 +1,34 @@
 import { Button, useAriaAnnouncer } from "@salt-ds/core";
 import { DownloadIcon } from "@salt-ds/icons";
 import { Progress } from "@salt-ds/lab";
-import { type ReactElement, useEffect } from "react";
+import { type ReactElement, useRef } from "react";
 import styles from "./InButton.module.css";
 import { useSimulatedTask } from "./useSimulatedTask";
 
 export const InButton = (): ReactElement => {
-  const { running, value, start } = useSimulatedTask({ sizeUnknownFor: 1500 });
   const { announce } = useAriaAnnouncer();
-  const complete = !running && value === 100;
+  const downloading = useRef(false);
+  const { running, value, start } = useSimulatedTask({
+    sizeUnknownFor: 1500,
+    onComplete: () => {
+      downloading.current = false;
+      announce("Download complete", { ariaLive: "polite" });
+    },
+  });
 
-  // The task announces completion, as progress is removed as soon as the download ends
-  useEffect(() => {
-    if (complete) announce("Download complete");
-  }, [announce, complete]);
+  // The button owns the announcements, including completion after progress is removed
+  const startDownload = () => {
+    if (downloading.current) return;
+    downloading.current = true;
+    announce("Downloading", { ariaLive: "polite" });
+    start();
+  };
 
   return (
     // The button stays enabled, as disabled buttons are faded, but it ignores clicks while it's downloading
     <Button
       sentiment="accented"
-      onClick={running ? undefined : start}
+      onClick={startDownload}
       aria-busy={running || undefined}
     >
       {/* The icon keeps its space while progress waits to appear, and stays out of the button's name */}
@@ -32,7 +41,8 @@ export const InButton = (): ReactElement => {
             size="small"
             aria-label="Downloading"
             value={value}
-            completionAnnouncement={null}
+            delay={1000}
+            disableAnnouncer
           />
         )}
       </span>
