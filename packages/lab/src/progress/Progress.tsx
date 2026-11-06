@@ -54,7 +54,8 @@ export interface ProgressProps
    */
   description?: ReactNode;
   /**
-   * Hides the value text. Screen readers still announce it.
+   * Hides the value text. Screen readers still announce it. Defaults to `true` for small circular progress, which is
+   * used in compact spaces such as buttons, and `false` otherwise.
    */
   hideValue?: boolean;
   /**
@@ -121,7 +122,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       max = 100,
       label,
       description,
-      hideValue = false,
+      hideValue: hideValueProp,
       getValueText = defaultGetValueText,
       status,
       paused = false,
@@ -275,6 +276,8 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
 
     const statusText = status ?? (paused ? "paused" : undefined);
     const ariaValueText = [valueText, statusText].filter(Boolean).join(", ");
+    const hideValue =
+      hideValueProp ?? (shape === "circular" && size === "small");
     const showValue = !hideValue && valueText !== undefined;
     const valueInside = shape === "circular" && size === "large";
     const showHeader = Boolean(label || status || (showValue && !valueInside));

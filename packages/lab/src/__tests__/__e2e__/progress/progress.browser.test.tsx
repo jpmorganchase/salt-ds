@@ -68,6 +68,35 @@ describe("GIVEN a Progress", () => {
         .element(page.getByRole("progressbar"))
         .toHaveAttribute("aria-valuetext", "38%");
     });
+
+    it("THEN it hides the value text by default WHEN it's small and circular", async () => {
+      const rendered = await renderWithSalt(
+        <Progress
+          delay={0}
+          shape="circular"
+          size="small"
+          aria-label="Downloading"
+          value={38}
+        />,
+      );
+
+      await expect.element(page.getByText("38%")).not.toBeInTheDocument();
+      await expect
+        .element(page.getByRole("progressbar", { name: "Downloading" }))
+        .toHaveAttribute("aria-valuetext", "38%");
+
+      await rendered.rerender(
+        <Progress
+          delay={0}
+          shape="circular"
+          size="small"
+          aria-label="Downloading"
+          value={38}
+          hideValue={false}
+        />,
+      );
+      await expect.element(page.getByText("38%")).toBeInTheDocument();
+    });
   });
 
   describe("WHEN it has no value", () => {
