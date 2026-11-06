@@ -169,6 +169,24 @@
   flex-shrink: 0;
 }
 
+/* Large rings are used centered, such as in a page loader, so their text sits below them */
+.saltProgress-circular.saltProgress-large {
+  flex-direction: column;
+  text-align: center;
+}
+
+.saltProgress-large .saltProgress-text {
+  align-items: center;
+}
+
+.saltProgress-large .saltProgress-header {
+  justify-content: center;
+}
+
+.saltProgress-large .saltProgress-label {
+  flex-grow: 0;
+}
+
 .saltProgress-circular .saltProgress-indicator {
   display: block;
   width: var(--saltProgress-size);
