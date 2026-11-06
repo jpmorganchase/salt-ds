@@ -1,0 +1,76 @@
+.saltCompactStepper {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: var(--salt-spacing-50);
+}
+
+.saltCompactStepper-barContainer {
+  position: relative;
+  width: 100%;
+  height: var(--salt-size-bar);
+}
+
+.saltCompactStepper-track {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+
+  border-top-width: var(--salt-size-fixed-200);
+  border-top-style: var(--salt-borderStyle-dotted);
+  border-top-color: var(--salt-sentiment-neutral-track);
+}
+
+.saltCompactStepper-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+
+  background: var(--salt-sentiment-accent-borderColor);
+  border-radius: var(--salt-palette-corner-strongest);
+}
+
+.saltCompactStepper-text {
+  text-align: start;
+  overflow-wrap: anywhere;
+}
+
+/* Visually hidden but read by screen readers. */
+.saltCompactStepper-screenReaderOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+}
+
+/* Excluded when copying the visible text. */
+.saltCompactStepper-state {
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.saltCompactStepper-icon {
+  --saltIcon-margin: calc((var(--salt-text-lineHeight) - max(var(--salt-size-icon), 12px)) / 2) var(--salt-spacing-50) 0;
+  vertical-align: top;
+}
+
+.saltCompactStepper-stage-locked .saltCompactStepper-icon {
+  --saltIcon-color: var(--salt-content-secondary-foreground);
+}
+
+.saltCompactStepper-status-warning .saltCompactStepper-icon {
+  --saltIcon-color: var(--salt-status-warning-foreground-decorative);
+}
+
+.saltCompactStepper-status-error .saltCompactStepper-icon {
+  --saltIcon-color: var(--salt-status-error-foreground-decorative);
+}
