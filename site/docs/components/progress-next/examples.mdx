@@ -73,6 +73,8 @@ Small circular progress fits inside a button that starts an action. Inside a `Bu
 
 Keep the button's label the same, so the button keeps its size. Keep the button enabled, as disabled buttons are faded, but ignore clicks until the action completes.
 
+Progress waits a second before it appears, so keep the icon's space until it does, and keep progress out of the button's name. The button's `aria-busy` says it's working. Announce completion from the task, as progress is removed as soon as the task ends.
+
 <LivePreview componentName="progress-next" exampleName="InButton" />
 
 ## Page loader
