@@ -44,3 +44,37 @@
 .progressTrackStop.saltProgress-linear .saltProgress-indeterminate::after {
   content: none;
 }
+
+/* Light track: a lighter track as tall as the bar, without a dot */
+.progressTrackLight.saltProgress-linear .saltProgress-track {
+  top: 0;
+  height: 100%;
+  background: var(--salt-separable-tertiary-borderColor);
+}
+
+/* Tinted track: a tint of the bar color as tall as the bar, so it follows the state colors */
+.progressTrackTint.saltProgress-linear .saltProgress-track {
+  top: 0;
+  height: 100%;
+  background: var(--saltProgress-barColor, var(--progress-barColor));
+  opacity: 0.25;
+}
+
+.progressTrackTint.saltProgress-linear .saltProgress-buffer,
+.progressTrackTintOutline.saltProgress-linear .saltProgress-buffer {
+  background: var(--saltProgress-barColor, var(--progress-barColor));
+  box-shadow: none;
+  opacity: 0.5;
+}
+
+/* Tinted outline: a tint of the bar color inside an outline that meets 3:1 */
+.progressTrackTintOutline.saltProgress-linear .saltProgress-indicator {
+  height: max(var(--salt-size-bar-strong), 6px);
+}
+
+.progressTrackTintOutline.saltProgress-linear .saltProgress-track {
+  top: 0;
+  height: 100%;
+  background: color-mix(in srgb, var(--saltProgress-barColor, var(--progress-barColor)) 20%, transparent);
+  box-shadow: inset 0 0 0 var(--salt-size-fixed-100) var(--salt-sentiment-neutral-track);
+}

@@ -261,6 +261,9 @@ const trackStyles = [
   { name: "Current", className: undefined },
   { name: "Outline track", className: "progressTrackOutline" },
   { name: "Stop dot", className: "progressTrackStop" },
+  { name: "Light track", className: "progressTrackLight" },
+  { name: "Tinted track", className: "progressTrackTint" },
+  { name: "Tinted outline", className: "progressTrackTintOutline" },
 ];
 
 const trackStyleExamples: ProgressProps[] = [
@@ -274,14 +277,14 @@ const trackStyleExamples: ProgressProps[] = [
 ];
 
 /**
- * Prototype: compares the current track with an outline track and a stop dot. Both keep a non-color cue between the
- * bar and the rest of the track: the outline by filled versus empty, and the stop dot by marking where the track ends.
+ * Prototype: compares the current track with other track styles. The outline styles show filled versus empty, the stop
+ * dot marks where the track ends, and the light and tinted tracks rely on color alone.
  */
 export const TrackStyles: StoryFn<typeof Progress> = (args) => (
   <div
     style={{
       display: "grid",
-      gridTemplateColumns: "repeat(3, 240px)",
+      gridTemplateColumns: "repeat(3, 220px)",
       gap: "var(--salt-spacing-300)",
     }}
   >
