@@ -10,6 +10,8 @@ import { Progress, type ProgressProps } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useCallback, useEffect, useRef, useState } from "react";
 
+import "./progress.stories.css";
+
 export default {
   title: "Lab/Progress",
   component: Progress,
@@ -253,6 +255,51 @@ export const InButton: StoryFn<typeof Progress> = (args) => (
       progressProps={args}
     />
   </FlowLayout>
+);
+
+const trackStyles = [
+  { name: "Current", className: undefined },
+  { name: "Outline track", className: "progressTrackOutline" },
+  { name: "Stop dot", className: "progressTrackStop" },
+];
+
+const trackStyleExamples: ProgressProps[] = [
+  { label: "Not started", value: 0 },
+  { label: "Uploading", value: 38 },
+  { label: "Loading", value: undefined },
+  { label: "Playing video", value: 38, bufferValue: 60 },
+  { label: "Uploading", value: 60, paused: true },
+  { label: "Uploading", value: 60, status: "error" },
+  { label: "Uploading", status: "success" },
+];
+
+/**
+ * Prototype: compares the current track with an outline track and a stop dot. Both keep a non-color cue between the
+ * bar and the rest of the track: the outline by filled versus empty, and the stop dot by marking where the track ends.
+ */
+export const TrackStyles: StoryFn<typeof Progress> = (args) => (
+  <div
+    style={{
+      display: "grid",
+      gridTemplateColumns: "repeat(3, 240px)",
+      gap: "var(--salt-spacing-300)",
+    }}
+  >
+    {trackStyles.map(({ name, className }) => (
+      <StackLayout gap={2} key={name}>
+        <Text styleAs="h3">{name}</Text>
+        {trackStyleExamples.map((example, index) => (
+          <Progress
+            // biome-ignore lint/suspicious/noArrayIndexKey: The examples are static.
+            key={index}
+            className={className}
+            {...example}
+            {...args}
+          />
+        ))}
+      </StackLayout>
+    ))}
+  </div>
 );
 
 /** A page loader is a composition, not a component. */
