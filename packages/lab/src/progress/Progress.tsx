@@ -260,7 +260,8 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
         >
           {shape === "circular" ? (
             <svg className={indicatorClassName} aria-hidden="true">
-              <circle className={withBaseName("track")} pathLength={100} />
+              <circle className={withBaseName("track")} />
+              <circle className={withBaseName("trackInner")} />
               <circle
                 className={withBaseName("bar")}
                 pathLength={100}

@@ -1,25 +1,27 @@
-/* Styles applied to the root element. Override the colors with --saltProgress-barColor and --saltProgress-trackColor */
+/*
+  Styles applied to the root element. The track is an outline in the bar color, so the indicator is one color: the bar
+  and the outline both contrast with the background, and the bar ends where solid turns into outline. Override the
+  colors with --saltProgress-barColor and --saltProgress-trackColor, which defaults to the bar color.
+*/
 .saltProgress {
-  --progress-barColor: var(--salt-sentiment-accent-background);
-  --progress-trackColor: var(--salt-sentiment-neutral-track);
-  --progress-trackOpacity: 1;
+  --progress-barColor: var(--saltProgress-barColor, var(--salt-sentiment-accent-background));
+  --progress-trackColor: var(--saltProgress-trackColor, var(--progress-barColor));
+  --progress-outlineWidth: var(--salt-size-fixed-100);
   color: var(--salt-content-primary-foreground);
   box-sizing: border-box;
 }
 
 .saltProgress-success {
-  --progress-barColor: var(--salt-status-success-foreground-decorative);
+  --progress-barColor: var(--saltProgress-barColor, var(--salt-status-success-foreground-decorative));
 }
 
 .saltProgress-error {
-  --progress-barColor: var(--salt-status-error-foreground-decorative);
+  --progress-barColor: var(--saltProgress-barColor, var(--salt-status-error-foreground-decorative));
 }
 
 /* Inside a button, progress takes the button's text color, like an icon, so it contrasts with any button style */
 .saltButton .saltProgress {
-  --progress-barColor: currentColor;
-  --progress-trackColor: currentColor;
-  --progress-trackOpacity: 0.3;
+  --progress-barColor: var(--saltProgress-barColor, currentColor);
   color: inherit;
 }
 
@@ -83,40 +85,39 @@
 /* Bars have rounded ends, like the compact stepper */
 .saltProgress-linear .saltProgress-indicator {
   position: relative;
-  height: var(--salt-size-bar-strong);
+  /* Tall enough to see inside the outline at every density */
+  height: max(var(--salt-size-bar-strong), 6px);
   border-radius: var(--salt-palette-corner-strongest);
   overflow: hidden;
 }
 
 .saltProgress-linear .saltProgress-track {
   position: absolute;
-  inset-inline: 0;
-  top: calc((var(--salt-size-bar-strong) - var(--salt-size-bar)) / 2);
-  height: var(--salt-size-bar);
+  inset: 0;
   border-radius: var(--salt-palette-corner-strongest);
-  background: var(--saltProgress-trackColor, var(--progress-trackColor));
-  opacity: var(--progress-trackOpacity);
+  box-shadow: inset 0 0 0 var(--progress-outlineWidth) var(--progress-trackColor);
 }
 
+/* The bar is as tall as the track, so it covers the outline */
 .saltProgress-linear .saltProgress-bar {
   position: absolute;
   inset-block: 0;
   inset-inline-start: 0;
   width: calc(var(--saltProgress-fraction) * 100%);
   border-radius: var(--salt-palette-corner-strongest);
-  background: var(--saltProgress-barColor, var(--progress-barColor));
+  background: var(--progress-barColor);
   transition: width var(--salt-duration-perceptible) linear;
 }
 
-/* The buffer is a hollow segment ahead of the bar, like LinearProgress */
+/* The buffer is a tint of the bar color inside the outline */
 .saltProgress-linear .saltProgress-buffer {
   position: absolute;
   inset-block: 0;
   inset-inline-start: 0;
   width: calc(var(--saltProgress-bufferFraction) * 100%);
   border-radius: var(--salt-palette-corner-strongest);
-  background: var(--salt-container-primary-background);
-  box-shadow: inset 0 0 0 var(--salt-size-fixed-100) var(--saltProgress-barColor, var(--progress-barColor));
+  background: var(--progress-barColor);
+  opacity: 0.3;
   transition: width var(--salt-duration-perceptible) linear;
 }
 
@@ -148,20 +149,18 @@
 
 .saltProgress-small {
   --saltProgress-size: max(var(--salt-size-icon), 12px);
-  --saltProgress-trackWidth: var(--salt-size-fixed-200);
-  --saltProgress-barWidth: var(--salt-size-fixed-200);
+  --saltProgress-ringWidth: var(--salt-size-fixed-200);
 }
 
+/* Rings are wide enough to see inside the outline at every density */
 .saltProgress-medium {
   --saltProgress-size: var(--salt-size-base);
-  --saltProgress-trackWidth: var(--salt-size-bar);
-  --saltProgress-barWidth: var(--salt-size-bar);
+  --saltProgress-ringWidth: max(var(--salt-size-bar), 4px);
 }
 
 .saltProgress-large {
   --saltProgress-size: calc(var(--salt-size-base) * 3);
-  --saltProgress-trackWidth: var(--salt-size-bar);
-  --saltProgress-barWidth: var(--salt-size-bar-strong);
+  --saltProgress-ringWidth: max(var(--salt-size-bar-strong), 4px);
 }
 
 .saltProgress-circular .saltProgress-progressbar {
@@ -181,19 +180,40 @@
 .saltProgress-circular circle {
   cx: calc(var(--saltProgress-size) / 2);
   cy: calc(var(--saltProgress-size) / 2);
-  r: calc((var(--saltProgress-size) - var(--saltProgress-barWidth)) / 2);
   fill: none;
 }
 
-.saltProgress-circular .saltProgress-track {
-  stroke: var(--saltProgress-trackColor, var(--progress-trackColor));
-  stroke-opacity: var(--progress-trackOpacity);
-  stroke-width: var(--saltProgress-trackWidth);
+/* The track is the outer and inner edges of the ring, in the bar color */
+.saltProgress-circular .saltProgress-track,
+.saltProgress-circular .saltProgress-trackInner {
+  stroke: var(--progress-trackColor);
+  stroke-width: var(--progress-outlineWidth);
 }
 
+.saltProgress-circular .saltProgress-track {
+  r: calc((var(--saltProgress-size) - var(--progress-outlineWidth)) / 2);
+}
+
+.saltProgress-circular .saltProgress-trackInner {
+  r: calc((var(--saltProgress-size) + var(--progress-outlineWidth)) / 2 - var(--saltProgress-ringWidth));
+}
+
+/* Small rings are too thin to outline, so the track is a tint of the bar color */
+.saltProgress-small .saltProgress-track {
+  r: calc((var(--saltProgress-size) - var(--saltProgress-ringWidth)) / 2);
+  stroke-width: var(--saltProgress-ringWidth);
+  stroke-opacity: 0.3;
+}
+
+.saltProgress-small .saltProgress-trackInner {
+  display: none;
+}
+
+/* The bar is as wide as the ring, so it covers the outline */
 .saltProgress-circular .saltProgress-bar {
-  stroke: var(--saltProgress-barColor, var(--progress-barColor));
-  stroke-width: var(--saltProgress-barWidth);
+  r: calc((var(--saltProgress-size) - var(--saltProgress-ringWidth)) / 2);
+  stroke: var(--progress-barColor);
+  stroke-width: var(--saltProgress-ringWidth);
   stroke-linecap: round;
   /* The circles have a path length of 100 */
   stroke-dasharray: calc(var(--saltProgress-fraction) * 100) 100;
