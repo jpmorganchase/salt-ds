@@ -97,9 +97,13 @@ export async function buildFixture(directory: string, stories: string[]) {
       virtualPlugin,
       docgen({
         tsconfigPath: path.join(directory, "tsconfig.json"),
-        include: ["src/Alpha.tsx", "src/aug/leaf.tsx"].map((filename) =>
-          path.join(directory, filename),
-        ),
+        include: [
+          "src/Alpha.tsx",
+          "src/aug/leaf.tsx",
+          "src/jsdoc/Widget.tsx",
+          "src/jsdoc/TaggedWidget.tsx",
+          "src/CtsWidget.tsx",
+        ].map((filename) => path.join(directory, filename)),
         fileSystemCache: false,
         shouldExtractLiteralValuesFromEnum: true,
       }),
@@ -208,6 +212,8 @@ export const fixtureFiles: Record<string, string> = {
   "src/generated-commonjs.js":
     "'use strict'; Object.defineProperty(exports, '__esModule', { value: true }); exports.generated = 1;",
   "src/generated-commonjs.cjs": "module.exports = { generated: 1 };",
+  "src/commonjs-module.d.cts":
+    "declare const generated: { value: number }; export = generated;",
   "src/data.json": '{ "generated": true }',
   "src/umd.d.ts": "export as namespace FixtureUmd; export const value: number;",
   "src/base-props.d.ts":
@@ -306,4 +312,37 @@ export const fixtureFiles: Record<string, string> = {
     "import './leaf'; declare module './leaf' { interface Props { /** augmented description */ tone?: 'warmAugmented' | 'cool' } }",
   "stories/augmented.stories.ts":
     "import { Widget } from '../src/aug/barrel'; export const Story = Widget;",
+  "src/jsdoc/erased.ts":
+    "export interface Props { /** JSDoc dependency */ tone?: 'warmJSDocType' | 'cool' }",
+  "src/jsdoc/types.js":
+    "/** @typedef {import('./erased').Props} Props */\nexport {};",
+  "src/jsdoc/Widget.tsx": [
+    "import { createElement } from 'react';",
+    "import type { Props } from './types.js';",
+    "export function JSDocWidget(props: Props) { return createElement('button', null, props.tone); }",
+  ].join("\n"),
+  "stories/jsdoc-import-type.stories.ts":
+    "import { JSDocWidget } from '../src/jsdoc/Widget'; export const Story = JSDocWidget;",
+  "src/jsdoc/erased-tag.ts":
+    "export interface Props { /** JSDoc import tag dependency */ tone?: 'warmJSDocTag' | 'cool' }",
+  "src/jsdoc/tag-types.js": [
+    "/** @import { Props as ImportedProps } from './erased-tag' */",
+    "/** @typedef {ImportedProps} Props */",
+    "export {};",
+  ].join("\n"),
+  "src/jsdoc/TaggedWidget.tsx": [
+    "import { createElement } from 'react';",
+    "import type { Props } from './tag-types.js';",
+    "export function JSDocTaggedWidget(props: Props) { return createElement('button', null, props.tone); }",
+  ].join("\n"),
+  "stories/jsdoc-import-tag.stories.ts":
+    "import { JSDocTaggedWidget } from '../src/jsdoc/TaggedWidget'; export const Story = JSDocTaggedWidget;",
+  "src/globals.d.cts":
+    "interface CtsGlobalProps { /** ambient declaration dependency */ tone?: 'warmCts' | 'cool' }",
+  "src/CtsWidget.tsx": [
+    "import { createElement } from 'react';",
+    "export function CtsWidget(props: CtsGlobalProps) { return createElement('button', null, props.tone); }",
+  ].join("\n"),
+  "stories/cts-global.stories.ts":
+    "import { CtsWidget } from '../src/CtsWidget'; export const Story = CtsWidget;",
 };

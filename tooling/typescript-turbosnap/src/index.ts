@@ -484,9 +484,10 @@ export function createForwardGraph({
       continue;
     // allowJs + include:packages also loads generated dist-cjs outputs. CommonJS
     // modules are not ambient scripts even though isExternalModule() is false.
+    // A declaration file such as globals.d.cts can still declare global types.
     const commonJs = Boolean(
       ("commonJsModuleIndicator" in sf && sf.commonJsModuleIndicator) ||
-        /\.(?:cjs|cts)$/.test(sf.fileName),
+        (!sf.isDeclarationFile && /\.(?:cjs|cts)$/.test(sf.fileName)),
     );
     if (!ts.isExternalModule(sf) && !commonJs && !/\.json$/.test(sf.fileName))
       globalInputs.add(sf.fileName);
@@ -532,31 +533,37 @@ export function createForwardGraph({
       name: string,
       specifier: string | undefined,
     ) => importBinding(target, name, sf.fileName, specifier);
+    const consumeBindings = (
+      target: string | undefined,
+      clause: ts.ImportClause | undefined,
+      specifier: string | undefined,
+    ): void => {
+      if (!clause) {
+        consume(target, "*", specifier);
+        return;
+      }
+      if (clause.name) consume(target, "default", specifier);
+      const bindings = clause.namedBindings;
+      if (bindings && ts.isNamedImports(bindings)) {
+        for (const binding of bindings.elements)
+          consume(
+            target,
+            binding.propertyName?.text ?? binding.name.text,
+            specifier,
+          );
+        if (!bindings.elements.length) consume(target, "*", specifier);
+      } else if (bindings) consume(target, "*", specifier);
+    };
     for (const statement of sf.statements) {
       if (ts.isImportDeclaration(statement)) {
         const target = resolve(statement.moduleSpecifier, sf);
         const clause = statement.importClause;
-        if (!clause)
-          consume(target, "*", specifierText(statement.moduleSpecifier));
-        else if (!facade) {
-          if (clause.name)
-            consume(
-              target,
-              "default",
-              specifierText(statement.moduleSpecifier),
-            );
-          const bindings = clause.namedBindings;
-          if (bindings && ts.isNamedImports(bindings)) {
-            for (const binding of bindings.elements)
-              consume(
-                target,
-                binding.propertyName?.text ?? binding.name.text,
-                specifierText(statement.moduleSpecifier),
-              );
-            if (!bindings.elements.length)
-              consume(target, "*", specifierText(statement.moduleSpecifier));
-          } else if (bindings)
-            consume(target, "*", specifierText(statement.moduleSpecifier));
+        if (!clause || !facade) {
+          consumeBindings(
+            target,
+            clause,
+            specifierText(statement.moduleSpecifier),
+          );
         } else if (target && !sideEffectFree(target)) {
           consume(target, "*", specifierText(statement.moduleSpecifier));
         }
@@ -585,6 +592,7 @@ export function createForwardGraph({
           consume(resolve(expression, sf), "*", expression.text);
       }
     }
+    const isJavaScript = Boolean(sf.flags & ts.NodeFlags.JavaScriptFile);
     const visit = (node: ts.Node): void => {
       if (
         ts.isImportTypeNode(node) &&
@@ -600,6 +608,12 @@ export function createForwardGraph({
           qualifier && ts.isIdentifier(qualifier) ? qualifier.text : "*",
           literal.text,
         );
+      } else if (ts.isJSDocImportTag(node)) {
+        consumeBindings(
+          resolve(node.moduleSpecifier, sf),
+          node.importClause,
+          specifierText(node.moduleSpecifier),
+        );
       } else if (
         ts.isCallExpression(node) &&
         node.arguments.length &&
@@ -612,9 +626,16 @@ export function createForwardGraph({
           consume(resolve(literal, sf), "*", literal.text);
         }
       }
-      ts.forEachChild(node, visit);
+      // forEachChild omits attached JSDoc. getChildren includes every physical
+      // comment, including adjacent @import/@typedef blocks and EOF comments.
+      // Only JavaScript needs this syntax walk; TypeScript keeps the AST walk.
+      if (isJavaScript) {
+        for (const child of node.getChildren(sf)) visit(child);
+      } else {
+        ts.forEachChild(node, visit);
+      }
     };
-    ts.forEachChild(sf, visit);
+    visit(sf);
     for (const reference of sf.referencedFiles)
       connect(
         [path.resolve(path.dirname(sf.fileName), reference.fileName)],

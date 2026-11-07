@@ -8,17 +8,17 @@ TypeScript program, instead of finding references to every variable declaration.
 
 - Runtime imports, including functions, classes, aliases, CSS, dynamic imports,
   and sources outside `tsconfig.include`, such as Storybook's preview.
-- Type-only imports and inherited types that can affect generated docgen metadata
-  even when the bundler removes them.
+- Type-only imports, JavaScript JSDoc imports, and inherited types that can affect
+  generated docgen metadata even when the bundler removes them.
 - The selected export through a barrel, retaining each barrel on the route as an
   input. Unrelated exports remain separate only when the barrel contains imports
   and exports and its package declares JavaScript side-effect-free code.
 - Namespace imports, unknown side-effect contracts, and mixed implementation
   modules conservatively include their dependencies.
-- Module augmentations, global declarations, TypeScript configuration files, and
-  package manifests. Global inputs connect to real runtime modules through one
-  shared node; connecting that node to Storybook's virtual app would interfere
-  with Chromatic's story discovery.
+- Module augmentations, global declarations (including ambient `.d.cts` files),
+  TypeScript configuration files, and package manifests. Global inputs connect
+  to real runtime modules through one shared node; connecting that node to
+  Storybook's virtual app would interfere with Chromatic's story discovery.
 
 The graph uses the existing Storybook stats format: a dependency's `reasons`
 identify its importers. It keeps the existing plugin name and

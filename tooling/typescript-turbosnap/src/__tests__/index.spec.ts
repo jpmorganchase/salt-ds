@@ -52,11 +52,14 @@ describe("TypeScript TurboSnap graph", () => {
     }
     reversedStats = reversed.getStats().toJson();
 
-    // Both declarations are erased by Vite but contribute to emitted docgen.
+    // These inputs are erased by Vite but contribute to emitted docgen.
     // Changing them in a second real build proves they are observable inputs.
     for (const [filename, from, to] of [
       ["src/base-props.d.ts", "warmInherited", "brightInherited"],
       ["src/aug/augment.d.ts", "warmAugmented", "brightAugmented"],
+      ["src/jsdoc/erased.ts", "warmJSDocType", "brightJSDocType"],
+      ["src/jsdoc/erased-tag.ts", "warmJSDocTag", "brightJSDocTag"],
+      ["src/globals.d.cts", "warmCts", "brightCts"],
     ]) {
       await fs.writeFile(
         path.join(directory, filename),
@@ -118,6 +121,7 @@ describe("TypeScript TurboSnap graph", () => {
   it.each([
     "src/generated-commonjs.js",
     "src/generated-commonjs.cjs",
+    "src/commonjs-module.d.cts",
     "src/data.json",
   ])("does not mistake unbuilt %s for an ambient global script", (filename) => {
     expect(baseline.stats.modules.map((module) => module.name)).not.toContain(
@@ -126,16 +130,19 @@ describe("TypeScript TurboSnap graph", () => {
     expect(affectedStories(baseline.stats, stories, filename)).toEqual([]);
   });
 
-  it.each(["src/props.ts", "src/base-props.d.ts", "src/aug/augment.d.ts"])(
-    "retains %s even though Vite never parses it",
-    (filename) => {
-      expect(baseline.parsed.has(filename)).toBe(false);
-      expect(changed.parsed.has(filename)).toBe(false);
-      expect(baseline.stats.modules.map((module) => module.name)).toContain(
-        `./${filename}`,
-      );
-    },
-  );
+  it.each([
+    "src/props.ts",
+    "src/base-props.d.ts",
+    "src/aug/augment.d.ts",
+    "src/jsdoc/types.js",
+    "src/jsdoc/tag-types.js",
+  ])("retains %s even though Vite never parses it", (filename) => {
+    expect(baseline.parsed.has(filename)).toBe(false);
+    expect(changed.parsed.has(filename)).toBe(false);
+    expect(baseline.stats.modules.map((module) => module.name)).toContain(
+      `./${filename}`,
+    );
+  });
 
   it("emits different docgen metadata when erased inherited props change", () => {
     expect(baseline.code).toContain("__docgenInfo");
@@ -152,6 +159,47 @@ describe("TypeScript TurboSnap graph", () => {
     expect(changed.code).toContain("brightAugmented");
     expect(changed.code).not.toContain("warmAugmented");
   });
+
+  it.each<[string, string, string, string, string[]]>([
+    [
+      "a JSDoc typedef import",
+      "src/jsdoc/erased.ts",
+      "warmJSDocType",
+      "brightJSDocType",
+      storyPaths("jsdoc-import-type"),
+    ],
+    [
+      "a JSDoc @import tag",
+      "src/jsdoc/erased-tag.ts",
+      "warmJSDocTag",
+      "brightJSDocTag",
+      storyPaths("jsdoc-import-tag"),
+    ],
+    [
+      "a global .d.cts declaration without imports or exports",
+      "src/globals.d.cts",
+      "warmCts",
+      "brightCts",
+      [...stories].sort(),
+    ],
+  ])(
+    "tracks erased props from %s when they change emitted docgen",
+    (_name, filename, before, after, expected) => {
+      expect(baseline.parsed.has(filename)).toBe(false);
+      expect(changed.parsed.has(filename)).toBe(false);
+      expect(baseline.code).toContain("__docgenInfo");
+      expect(baseline.code).toContain(before);
+      expect(changed.code).toContain("__docgenInfo");
+      expect(changed.code).toContain(after);
+      expect(changed.code).not.toContain(before);
+      expect(affectedStories(baseline.stats, stories, filename)).toEqual(
+        expected,
+      );
+      expect(affectedStories(changed.stats, stories, filename)).toEqual(
+        expected,
+      );
+    },
+  );
 
   describe.each(["bundler order", "reverse bundler order"])("%s", (order) => {
     it.each<[string, string[]]>([
