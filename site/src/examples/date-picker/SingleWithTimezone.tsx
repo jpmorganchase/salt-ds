@@ -239,7 +239,6 @@ export const SingleWithTimezone = (): ReactElement => {
         <FormField style={{ width: "120px" }}>
           <FormFieldLabel>Select a Timezone</FormFieldLabel>
           <Dropdown
-            aria-label="timezone dropdown"
             selected={[selectedTimezone]}
             onSelectionChange={handleTimezoneChange}
             style={{ minWidth: "120px", width: "min-content" }}

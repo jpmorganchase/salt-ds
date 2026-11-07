@@ -1,3 +1,9 @@
+import {
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
+  RangeSlider,
+} from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
@@ -65,6 +71,38 @@ describe("Given a Range Slider", () => {
     await renderWithSalt(<Default />);
     await expect.element(sliders()).toHaveLength(2);
     await expectValues("0", "50");
+  });
+
+  it("applies aria-describedby to both thumb inputs", async () => {
+    await renderWithSalt(
+      <>
+        <span id="external-description">Filters by price</span>
+        <Default aria-describedby="external-description" />
+      </>,
+    );
+    const described = Array.from(
+      document.querySelectorAll('[aria-describedby~="external-description"]'),
+    );
+    expect(described).toEqual([
+      sliders().nth(0).element(),
+      sliders().nth(1).element(),
+    ]);
+  });
+
+  it("describes both thumb inputs with FormField helper text", async () => {
+    await renderWithSalt(
+      <FormField>
+        <FormFieldLabel>Price</FormFieldLabel>
+        <RangeSlider />
+        <FormFieldHelperText>Filter by price range</FormFieldHelperText>
+      </FormField>,
+    );
+    await expect
+      .element(sliders().nth(0))
+      .toHaveAccessibleDescription(/Filter by price range/);
+    await expect
+      .element(sliders().nth(1))
+      .toHaveAccessibleDescription(/Filter by price range/);
   });
 
   it("moves the start thumb when the track is clicked nearer to it", async () => {
@@ -331,6 +369,16 @@ describe("Given a Range Slider", () => {
     );
     for (const text of ["Very low", "Very high", "Two", "Three"])
       await expect.element(page.getByText(text)).toBeInTheDocument();
+  });
+
+  it("doesn't add an empty aria-labelledby without a FormFieldLabel", async () => {
+    await renderWithSalt(
+      <FormField>
+        <RangeSlider aria-label="Range" defaultValue={[2, 4]} />
+      </FormField>,
+    );
+    for (const input of await sliders().elements())
+      expect(input).not.toHaveAttribute("aria-labelledby");
   });
 
   it("is disabled and omitted from tab order", async () => {

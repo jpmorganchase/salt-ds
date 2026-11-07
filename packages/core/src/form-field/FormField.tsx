@@ -8,18 +8,28 @@ import {
   type HTMLAttributes,
   isValidElement,
   type ReactNode,
+  useCallback,
+  useMemo,
   useRef,
+  useState,
 } from "react";
 import {
   type A11yValueProps,
   FormFieldContext,
   type FormFieldValidationStatus,
 } from "../form-field-context";
-import { capitalize, makePrefixer, useForkRef, useId } from "../utils";
+import {
+  capitalize,
+  makePrefixer,
+  useForkRef,
+  useId,
+  useIsomorphicLayoutEffect,
+} from "../utils";
 
 import formFieldCss from "./FormField.css";
 import { FormFieldHelperText } from "./FormFieldHelperText";
 import { FormFieldLabel } from "./FormFieldLabel";
+import { FormFieldInternalContext } from "./internal/FormFieldInternalContext";
 
 export type FormFieldLabelPlacement = "top" | "left" | "right";
 
@@ -59,18 +69,55 @@ export interface FormFieldProps
 
 const withBaseName = makePrefixer("saltFormField");
 
-function hasFormFieldControls(children: ReactNode): boolean {
-  return Children.toArray(children).some((child) => {
+interface FormFieldChildren {
+  hasControls: boolean;
+  hasLabel: boolean;
+  hasHelperText: boolean;
+}
+
+function getFormFieldChildren(
+  children: ReactNode,
+  result: FormFieldChildren = {
+    hasControls: false,
+    hasLabel: false,
+    hasHelperText: false,
+  },
+): FormFieldChildren {
+  for (const child of Children.toArray(children)) {
     if (!isValidElement<{ children?: ReactNode }>(child)) {
-      return true;
+      result.hasControls = true;
+    } else if (child.type === Fragment) {
+      getFormFieldChildren(child.props.children, result);
+    } else if (child.type === FormFieldLabel) {
+      result.hasLabel = true;
+    } else if (child.type === FormFieldHelperText) {
+      result.hasHelperText = true;
+    } else {
+      result.hasControls = true;
     }
+  }
+  return result;
+}
 
-    if (child.type === Fragment) {
-      return hasFormFieldControls(child.props.children);
-    }
-
-    return child.type !== FormFieldLabel && child.type !== FormFieldHelperText;
-  });
+/**
+ * Tracks whether any elements are registered, so nested or conditionally
+ * rendered ones are found. Starting from whether they're in FormField's
+ * children avoids a re-render when they register.
+ */
+function useRegisteredElements(initialValue: boolean) {
+  const countRef = useRef(0);
+  const [isRendered, setIsRendered] = useState(initialValue);
+  const register = useCallback(() => {
+    countRef.current += 1;
+    setIsRendered(true);
+    return () => {
+      countRef.current -= 1;
+      if (countRef.current === 0) {
+        setIsRendered(false);
+      }
+    };
+  }, []);
+  return [isRendered, register] as const;
 }
 
 export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
@@ -99,10 +146,67 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     const handleRef = useForkRef(ref, formFieldRef);
 
     const formId = useId(idProp);
-    const hasControls = hasFormFieldControls(children);
+    const formFieldChildren = getFormFieldChildren(children);
+
+    const [isLabelRegistered, registerLabel] = useRegisteredElements(
+      formFieldChildren.hasLabel,
+    );
+    const [isHelperTextRegistered, registerHelperText] = useRegisteredElements(
+      formFieldChildren.hasHelperText,
+    );
+    const [hasMounted, setHasMounted] = useState(false);
+    useIsomorphicLayoutEffect(() => {
+      setHasMounted(true);
+    }, []);
+
+    // A child component's output cannot be inspected before it renders. Keep
+    // deterministic IDs on the server and the first hydration render so nested
+    // labels and helper text are associated too. After mount, registration
+    // removes references to absent elements; unresolved IDs do not override an
+    // aria-label while the presence of those elements is still unknown.
+    const hasLabel =
+      !hasMounted || isLabelRegistered || formFieldChildren.hasLabel;
+    const hasHelperText =
+      !hasMounted || isHelperTextRegistered || formFieldChildren.hasHelperText;
 
     const labelId = formId ? `label-${formId}` : undefined;
     const helperTextId = formId ? `helperText-${formId}` : undefined;
+
+    const internalContextValue = useMemo(
+      () => ({
+        formFieldRef,
+        labelId,
+        helperTextId,
+        registerLabel,
+        registerHelperText,
+      }),
+      [labelId, helperTextId, registerLabel, registerHelperText],
+    );
+
+    const ariaLabelledBy = hasLabel ? labelId : undefined;
+    const ariaDescribedBy = hasHelperText ? helperTextId : undefined;
+    // Memoized so the re-render after mount doesn't re-render every consumer.
+    const contextValue = useMemo(
+      () => ({
+        a11yProps: {
+          "aria-labelledby": ariaLabelledBy,
+          "aria-describedby": ariaDescribedBy,
+        },
+        disabled,
+        necessity,
+        readOnly,
+        validationStatus,
+        formFieldRef,
+      }),
+      [
+        ariaLabelledBy,
+        ariaDescribedBy,
+        disabled,
+        necessity,
+        readOnly,
+        validationStatus,
+      ],
+    );
 
     return (
       <div
@@ -111,7 +215,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
           withBaseName(),
           {
             [withBaseName("disabled")]: disabled,
-            [withBaseName("hasControls")]: hasControls,
+            [withBaseName("hasControls")]: formFieldChildren.hasControls,
             [withBaseName(`label${capitalize(labelPlacement)}`)]:
               labelPlacement,
           },
@@ -119,20 +223,10 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
         )}
         {...restProps}
       >
-        <FormFieldContext.Provider
-          value={{
-            a11yProps: {
-              "aria-labelledby": labelId,
-              "aria-describedby": helperTextId,
-            },
-            disabled,
-            necessity,
-            readOnly,
-            validationStatus,
-            formFieldRef,
-          }}
-        >
-          {children}
+        <FormFieldContext.Provider value={contextValue}>
+          <FormFieldInternalContext.Provider value={internalContextValue}>
+            {children}
+          </FormFieldInternalContext.Provider>
         </FormFieldContext.Provider>
       </div>
     );

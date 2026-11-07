@@ -102,7 +102,10 @@ function isEmptyReadOnlyValue(
 export const PillInput = forwardRef(function PillInput(
   {
     "aria-activedescendant": ariaActiveDescendant,
+    "aria-describedby": ariaDescribedBy,
     "aria-expanded": ariaExpanded,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
     "aria-owns": ariaOwns,
     className: classNameProp,
     disabled,
@@ -153,6 +156,7 @@ export const PillInput = forwardRef(function PillInput(
   const restA11yProps = {
     "aria-activedescendant": ariaActiveDescendant,
     "aria-expanded": ariaExpanded,
+    "aria-label": ariaLabel,
     "aria-owns": ariaOwns,
   };
 
@@ -371,10 +375,12 @@ export const PillInput = forwardRef(function PillInput(
         </div>
         <input
           aria-describedby={
-            clsx(formFieldDescribedBy, inputDescribedBy) || undefined
+            clsx(formFieldDescribedBy, inputDescribedBy, ariaDescribedBy) ||
+            undefined
           }
           aria-labelledby={
-            clsx(formFieldLabelledBy, inputLabelledBy) || undefined
+            clsx(formFieldLabelledBy, inputLabelledBy, ariaLabelledBy) ||
+            undefined
           }
           autoComplete="off"
           className={clsx(withBaseName("input"), inputProps?.className)}

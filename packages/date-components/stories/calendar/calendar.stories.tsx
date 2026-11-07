@@ -1153,7 +1153,6 @@ export const SingleWithTimezone: StoryFn<React.FC<CalendarSingleProps>> = (
           <FormField>
             <FormFieldLabel>Select a Timezone</FormFieldLabel>
             <Dropdown
-              aria-label="timezone dropdown"
               selected={[selectedTimezone]}
               onSelectionChange={handleTimezoneSelect}
             >
@@ -1305,7 +1304,6 @@ export const RangeWithTimezone: StoryFn<React.FC<CalendarRangeProps>> = (
         <FormField>
           <FormFieldLabel>Select a Timezone</FormFieldLabel>
           <Dropdown
-            aria-label="timezone dropdown"
             selected={[selectedTimezone]}
             onSelectionChange={handleTimezoneSelect}
             style={{ minWidth: "120px", width: "min-content" }}

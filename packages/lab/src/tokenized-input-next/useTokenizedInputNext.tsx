@@ -8,6 +8,7 @@ import {
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import copy from "clipboard-copy";
+import { clsx } from "clsx";
 import {
   type ChangeEvent,
   type FocusEvent,
@@ -143,6 +144,7 @@ export function useTokenizedInputNext<Item>(
     selectedItems: selectedItemsProp,
     "aria-label": ariaLabel,
     "aria-describedby": ariaDescribedByProp,
+    "aria-labelledby": ariaLabelledByProp,
     expandButtonRef: expandButtonRefProp,
     ...restProps
   } = props;
@@ -666,9 +668,10 @@ export function useTokenizedInputNext<Item>(
       readOnly: readOnly ?? readOnlyProp,
       necessity: necessity,
       focused,
-      "aria-labelledby": ariaLabelledBy,
+      "aria-labelledby": clsx(ariaLabelledBy, ariaLabelledByProp) || undefined,
       "aria-label": ariaLabel,
-      "aria-describedby": ariaDescribedBy ?? ariaDescribedByProp,
+      "aria-describedby":
+        clsx(ariaDescribedBy, ariaDescribedByProp) || undefined,
       ...state,
       ...restProps,
       ...(disabled ? {} : eventHandlers),

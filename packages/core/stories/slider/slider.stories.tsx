@@ -1,6 +1,7 @@
 import {
   FlexLayout,
   FormField,
+  FormFieldHelperText,
   FormFieldLabel,
   NumberInput,
   Slider,
@@ -325,6 +326,16 @@ export const WithinFormField: StoryFn<SliderProps> = () => {
         <Slider showTicks marks={marks} min={0} max={10} />
       </FormField>
     </StackLayout>
+  );
+};
+
+export const WithHelperText: StoryFn<SliderProps> = () => {
+  return (
+    <FormField style={{ maxWidth: "400px", width: "90vw" }}>
+      <FormFieldLabel>Volume</FormFieldLabel>
+      <Slider minLabel="0" maxLabel="10" min={0} max={10} defaultValue={5} />
+      <FormFieldHelperText>Set the default playback volume</FormFieldHelperText>
+    </FormField>
   );
 };
 

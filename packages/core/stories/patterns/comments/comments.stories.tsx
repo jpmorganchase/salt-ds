@@ -472,8 +472,8 @@ export const WithMultilineInput = () => {
             bordered
             placeholder="Add a comment..."
             textAreaRef={textAreaRef}
+            aria-describedby={counterId}
             textAreaProps={{
-              "aria-describedby": counterId,
               "aria-invalid": validationStatus === "error",
               onChange: (event: ChangeEvent<HTMLTextAreaElement>) => {
                 const value = event.target.value;
