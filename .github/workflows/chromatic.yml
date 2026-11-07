@@ -146,17 +146,18 @@ jobs:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
           exitOnceUploaded: true
           # TurboSnap on every branch (incl. main). The `no turbosnap` PR
-          # label opts out per-PR. Theme files affect every story — force a
-          # full pass when they change.
+          # label opts out per-PR. Theme changes require a full visual pass.
+          # Guard AG Grid's nested CSS/font inputs and Storybook's static files;
+          # the prebuilt upload's module stats/metadata do not cover them.
           onlyChanged: ${{ steps.run_context.outputs.noTurbosnap != 'true' }}
-          externals: ${{ steps.run_context.outputs.noTurbosnap != 'true' && 'packages/(theme)/**' || '' }}
+          externals: ${{ steps.run_context.outputs.noTurbosnap != 'true' && '(packages/(theme|ag-grid-theme/src/(css|fonts))|docs/public)/**' || '' }}
           # Skip the build on main commits that only touch non-visual files;
           # otherwise fall back to the existing changeset-release/* skip glob.
           skip: ${{ steps.changed_files.outputs.skipChromatic == 'true' && '**' || 'changeset-release/*' }}
           autoAcceptChanges: ${{ steps.run_context.outputs.branchName == 'main' && steps.run_context.outputs.noTurbosnap != 'true' }}
           ignoreLastBuildOnBranch: "**"
-          # Expanded tracing is conservative — more snapshots, fewer missed
-          # regressions. Keep wherever TurboSnap is active.
+          # Expanded tracing lists individual modules in dependency diagnostics;
+          # it does not change which stories TurboSnap selects.
           traceChanged: ${{ steps.run_context.outputs.noTurbosnap != 'true' && 'expanded' || '' }}
           storybookBuildDir: ${{ runner.temp }}/storybook-static
           branchName: ${{ steps.run_context.outputs.branchName }}
