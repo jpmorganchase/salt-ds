@@ -13,13 +13,14 @@ committed dependency baseline remains the last published release. Use the local
 tarballs produced by the Mosaic snapshot workflow to exercise the migration:
 
 ```sh
-node site/scripts/use-local-mosaic.mjs /path/to/mosaic-snapshot-packages <full-snapshot-source-commit>
+node site/scripts/use-local-mosaic.mjs /path/to/mosaic-snapshot-packages <full-source-commit> <full-snapshot-commit>
 yarn install
 ```
 
 The script pins every Mosaic package to the same candidate, adds temporary file
 resolutions for its transitive dependencies and records the version, source
-commit and archive SHA-256 hashes in `site/mosaic-snapshot-manifest.json`.
+commit, generated snapshot commit and archive SHA-256 hashes in
+`site/mosaic-snapshot-manifest.json`.
 Keep these local dependency and lockfile changes on a separate verification
 branch. Once the snapshot is published, replace the local resolutions with its
 exact registry version before merging the integration.

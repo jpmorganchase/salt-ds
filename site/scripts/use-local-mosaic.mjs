@@ -5,11 +5,16 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 
 const rootDir = fileURLToPath(new URL("../../", import.meta.url));
-const [directory, sourceCommit] = process.argv.slice(2);
+const [directory, sourceCommit, snapshotCommit] = process.argv.slice(2);
 
-if (!directory || (sourceCommit && !/^[a-f0-9]{40}$/.test(sourceCommit))) {
+if (
+  !directory ||
+  [sourceCommit, snapshotCommit].some(
+    (commit) => commit && !/^[a-f0-9]{40}$/.test(commit),
+  )
+) {
   throw new Error(
-    "Usage: node site/scripts/use-local-mosaic.mjs <tarball-directory> [full-source-commit-sha]",
+    "Usage: node site/scripts/use-local-mosaic.mjs <tarball-directory> [full-source-commit-sha] [full-snapshot-commit-sha]",
   );
 }
 
@@ -75,6 +80,7 @@ writeJson(siteManifestPath, siteManifest);
 writeJson(path.join(rootDir, "site/mosaic-snapshot-manifest.json"), {
   snapshotVersion,
   sourceCommit: sourceCommit ?? null,
+  snapshotCommit: snapshotCommit ?? null,
   packages: [...mosaicPackages.values()].sort((a, b) =>
     a.name.localeCompare(b.name),
   ),
