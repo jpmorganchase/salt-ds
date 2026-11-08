@@ -44,7 +44,7 @@
     "moment-timezone": "^0.6.1",
     "next": "^16.4.2",
     "next-auth": "^5.0.0-beta.32",
-    "next-mdx-remote-client": "^1.0.3",
+    "next-mdx-remote-client": "^2.1.12",
     "shiki": "^4.0.0"
   },
   "devDependencies": {
@@ -56,8 +56,9 @@
     "concurrently": "^9.0.0",
     "cross-env": "^10.0.0",
     "cspell": "^10.0.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0",
-    "react-markdown": "^10.0.0"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-markdown": "^10.0.0",
+    "typescript": "^6.0.0"
   }
 }
