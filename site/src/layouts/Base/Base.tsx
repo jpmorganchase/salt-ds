@@ -8,6 +8,7 @@ import {
   type ReactNode,
   useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useState,
 } from "react";
@@ -77,6 +78,16 @@ export function Base({
   );
 
   const headingId = useId();
+  const mainId = useId();
+  const { setMainId } = frameControls;
+
+  // The frame's skip link must precede its retained header and always point to
+  // the current main element, including when an error boundary replaces a page.
+  useLayoutEffect(() => {
+    if (!frame.header || !setMainId) return;
+    setMainId(mainId);
+    return () => setMainId(undefined);
+  }, [frame.header, mainId, setMainId]);
 
   return (
     <LayoutContext.Provider value={context}>
@@ -87,12 +98,12 @@ export function Base({
           className,
         )}
       >
-        {headingId && (
-          <SkipLink targetId={headingId}>Skip to main content</SkipLink>
+        {!frame.header && mainId && (
+          <SkipLink targetId={mainId}>Skip to main content</SkipLink>
         )}
         {!frame.header && <AppHeader />}
         {LeftSidebar}
-        <main className={styles.middle}>
+        <main id={mainId} className={styles.middle}>
           {(title || description) && (
             <Heading title={title} description={description} id={headingId} />
           )}

@@ -16,7 +16,7 @@ export function ErrorPage({
   const route = usePathname() || "/salt/index";
   return (
     <StoreShell storeProps={{ layout: "DetailError", route }}>
-      <FrameSync route={route} />
+      <FrameSync route={route} preserveSharedConfig={status === 500} />
       {status === 404 ? <Page404 /> : <Page500 retry={retry} />}
     </StoreShell>
   );

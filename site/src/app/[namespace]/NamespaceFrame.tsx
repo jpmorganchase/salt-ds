@@ -8,6 +8,7 @@ import {
   type SiteState,
   StoreProvider,
 } from "@jpmorganchase/mosaic-store";
+import { SkipLink } from "@salt-ds/core";
 import { usePathname } from "next/navigation";
 import {
   createContext,
@@ -46,7 +47,11 @@ export function NamespaceFrame({
     initializeStore({ ...data, route: `/${namespace}/index` }),
   );
   const [drawerOpen, setDrawerOpen] = useState(false);
-  const controls = useMemo(() => ({ drawerOpen, setDrawerOpen }), [drawerOpen]);
+  const [mainId, setMainId] = useState<string>();
+  const controls = useMemo(
+    () => ({ drawerOpen, setDrawerOpen, mainId, setMainId }),
+    [drawerOpen, mainId],
+  );
   const frame = useMemo(() => ({ store, data }), [store, data]);
 
   useLayoutEffect(() => {
@@ -73,7 +78,16 @@ export function NamespaceFrame({
       <FrameContext.Provider value={frame}>
         <LayoutContext.Provider value={controls}>
           <StoreProvider value={store}>
-            {!landing && <AppHeader />}
+            {!landing && (
+              <>
+                {mainId && (
+                  <SkipLink key={mainId} targetId={mainId}>
+                    Skip to main content
+                  </SkipLink>
+                )}
+                <AppHeader />
+              </>
+            )}
             <FrameProvider value={FRAME}>{children}</FrameProvider>
           </StoreProvider>
         </LayoutContext.Provider>
@@ -86,16 +100,20 @@ export function NamespaceFrame({
 export function FrameSync({
   sharedConfig,
   route,
+  preserveSharedConfig = false,
 }: {
   sharedConfig?: SiteState["sharedConfig"];
   route: string;
+  preserveSharedConfig?: boolean;
 }) {
   const frame = useContext(FrameContext);
   useLayoutEffect(() => {
     frame?.store.setState({
-      sharedConfig: sharedConfig ?? frame.data.sharedConfig,
+      ...(!preserveSharedConfig && {
+        sharedConfig: sharedConfig ?? frame.data.sharedConfig,
+      }),
       route,
     });
-  }, [frame, route, sharedConfig]);
+  }, [frame, route, sharedConfig, preserveSharedConfig]);
   return null;
 }
