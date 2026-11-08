@@ -6,7 +6,7 @@ import {
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { Body } from "../../../Body/Body";
-import { canonicalRoute, resolveContent } from "../../../lib/content";
+import { resolveContent } from "../../../lib/content";
 import { StoreShell } from "../../providers";
 import { FrameSync } from "../NamespaceFrame";
 
@@ -34,12 +34,10 @@ export async function generateMetadata({
   params,
 }: PageProps): Promise<Metadata> {
   const routeParams = await params;
-  const { content, pathname: resolvedPath } = await resolveContent(
-    pathname(routeParams),
-  );
-  if (content.kind !== "mdx") return {};
+  const result = await resolveContent(pathname(routeParams));
+  if (result.kind !== "mdx") return {};
 
-  const { title, description, breadcrumbs } = content.frontmatter;
+  const { title, description, breadcrumbs } = result.mdx.frontmatter;
   return {
     title:
       typeof title === "string"
@@ -47,7 +45,7 @@ export async function generateMetadata({
         : undefined,
     description: typeof description === "string" ? description : undefined,
     alternates: {
-      canonical: canonicalRoute(content.frontmatter, resolvedPath),
+      canonical: result.pathname,
     },
     other:
       Array.isArray(breadcrumbs) && breadcrumbs.length > 0
@@ -58,18 +56,26 @@ export async function generateMetadata({
 
 export default async function DocumentationPage({ params }: PageProps) {
   const result = await resolveContent(pathname(await params));
-  const { content, sharedConfig } = result;
-  if (content.kind === "redirect") redirect(content.destination);
-  if (content.kind === "not-found") notFound();
+  if (result.kind === "redirect") redirect(result.destination);
+  if (result.kind === "not-found") notFound();
 
-  const route = canonicalRoute(content.frontmatter, result.pathname);
-  const source = await serializeMdxForClient(content.raw);
+  const { mdx, pathname: route } = result;
+  let { sharedConfig } = result;
+  const authored = mdx.frontmatter.sharedConfig;
+  if (authored && typeof authored === "object" && !Array.isArray(authored)) {
+    // Page-specific header/footer settings override the folder defaults.
+    // Capabilities still describe the source, so only Mosaic supplies them.
+    const { sourceCapabilities: _authoredCapabilities, ...overrides } =
+      authored as Record<string, unknown>;
+    sharedConfig = { ...sharedConfig, ...overrides };
+  }
+  const source = await serializeMdxForClient(mdx.raw);
   if ("error" in source) throw source.error;
 
   return (
     <StoreShell
       key={route}
-      storeProps={{ ...content.frontmatter, sharedConfig, route }}
+      storeProps={{ ...mdx.frontmatter, sharedConfig, route }}
     >
       <FrameSync sharedConfig={sharedConfig} route={route} />
       <Body source={source} />

@@ -72,7 +72,8 @@ trace. Existing `/components`, `/getting-started` and
 
 ## Integration boundaries
 
-- `src/lib/content.ts` resolves Mosaic content and folder index routes.
+- `src/lib/content.ts` calls Mosaic's shared route resolver. Aliases use the
+  backing document's configuration and public canonical URL.
 - `src/app/[namespace]/[...route]/page.tsx` compiles MDX on the server and emits
   document metadata.
 - `src/Body/Body.tsx` renders the compiled content with Salt's existing component

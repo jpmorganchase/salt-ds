@@ -43,6 +43,7 @@ const saltConfig = {
       modulePath: "@jpmorganchase/mosaic-plugins/SiteMapPlugin",
       options: {
         siteUrl: process.env.SITE_URL,
+        exclude: ["**/salt-github/**"],
       },
       priority: Number.NEGATIVE_INFINITY,
     },
@@ -89,6 +90,7 @@ export default deepmerge(saltConfig, {
       namespace: "salt",
       options: {
         prefixDir: "salt-github",
+        requestTimeout: 30_000,
         endpoints: [
           "https://api.github.com/repos/jpmorganchase/salt-ds/releases",
         ],
