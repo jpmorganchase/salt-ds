@@ -54,7 +54,7 @@ export function QuickLinks({
   links,
   children,
   ...rest
-}: QuickLinkProps): JSX.Element {
+}: QuickLinkProps) {
   return (
     <GridLayout
       className={styles.root}

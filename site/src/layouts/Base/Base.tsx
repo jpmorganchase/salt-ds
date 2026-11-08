@@ -1,3 +1,4 @@
+import { useFrame } from "@jpmorganchase/mosaic-layouts";
 import { useRoute, useStore } from "@jpmorganchase/mosaic-store";
 import { type DrawerProps, SkipLink, useId } from "@salt-ds/core";
 import { clsx } from "clsx";
@@ -5,6 +6,7 @@ import dynamic from "next/dynamic";
 import {
   type ComponentType,
   type ReactNode,
+  useContext,
   useEffect,
   useMemo,
   useState,
@@ -38,7 +40,12 @@ export function Base({
   }));
 
   const isMobileOrTablet = useIsMobileView();
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [localDrawerOpen, setLocalDrawerOpen] = useState(false);
+  const frame = useFrame();
+  const frameControls = useContext(LayoutContext);
+  const { drawerOpen, setDrawerOpen } = frame.header
+    ? frameControls
+    : { drawerOpen: localDrawerOpen, setDrawerOpen: setLocalDrawerOpen };
 
   const { route } = useRoute();
 
@@ -47,7 +54,7 @@ export function Base({
       // Close drawer whenever a page loads
       setDrawerOpen(false);
     }
-  }, [route]);
+  }, [route, setDrawerOpen]);
 
   const LeftSidebar = isMobileOrTablet ? (
     <Drawer
@@ -66,7 +73,7 @@ export function Base({
       drawerOpen,
       setDrawerOpen,
     }),
-    [drawerOpen],
+    [drawerOpen, setDrawerOpen],
   );
 
   const headingId = useId();
@@ -83,7 +90,7 @@ export function Base({
         {headingId && (
           <SkipLink targetId={headingId}>Skip to main content</SkipLink>
         )}
-        <AppHeader />
+        {!frame.header && <AppHeader />}
         {LeftSidebar}
         <main className={styles.middle}>
           {(title || description) && (

@@ -33,7 +33,7 @@ function PatternPageHeading({
   title,
   description,
   id,
-}: PageHeadingProps): JSX.Element {
+}: PageHeadingProps) {
   const resourcesArray =
     useStore((state: CustomSiteState) => state.data?.resources) ?? [];
   const showThemeControl =
