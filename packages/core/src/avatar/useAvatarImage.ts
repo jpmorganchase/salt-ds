@@ -24,7 +24,7 @@ export function useAvatarImage({
   src,
   referrerPolicy,
   crossOrigin,
-}: ImgHTMLAttributes<HTMLImageElement>) {
+}: ImgHTMLAttributes<HTMLImageElement> & { src?: string }) {
   const isHydrated = useIsHydrated();
   const imageRef = useRef<HTMLImageElement | null>(null);
   const image = (() => {
