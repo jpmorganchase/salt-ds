@@ -50,11 +50,7 @@ interface QuickLinkProps extends GridLayoutProps<"div"> {
   links: QuickLinkData[];
 }
 
-export function QuickLinks({
-  links,
-  children,
-  ...rest
-}: QuickLinkProps) {
+export function QuickLinks({ links, children, ...rest }: QuickLinkProps) {
   return (
     <GridLayout
       className={styles.root}
