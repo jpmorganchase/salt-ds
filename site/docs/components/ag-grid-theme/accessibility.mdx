@@ -8,4 +8,32 @@ data:
   $ref: ./#/data
 ---
 
-This package has no accessibility guidance.
+AG Grid provides the grid's keyboard navigation and its ARIA roles: the grid is a `grid`, or a `treegrid` when it groups rows or shows tree data. The Salt theme styles it, including focus. See AG Grid's [accessibility](https://www.ag-grid.com/react-data-grid/accessibility/) and [keyboard navigation](https://www.ag-grid.com/react-data-grid/keyboard-navigation/) guides for what the grid does and the options that change it.
+
+## Best practices
+
+**Say what the grid shows**
+
+- Put a visible heading right before the grid that says what it shows, as for a [Table](../table/accessibility).
+
+**Announce changes to the rows**
+
+- When filtering, adding or deleting changes the rows away from the user's focus, [announce](/salt/components/aria-announcer/usage#announcing-from-an-event) the result, such as the number of rows shown. See [List filtering](/salt/patterns/list-filtering).
+- AG Grid announces some changes itself, such as row selection, its loading and "no rows" overlays, and its own pagination panel, so don't announce those again. Check what your version of AG Grid announces.
+- When an action removes the row that has focus, move focus to a control that remains, such as the same control in the next row. See [Returning focus after an action](/salt/components/dialog/accessibility#returning-focus-after-an-action).
+
+**Make selection scope clear**
+
+- When users select rows in bulk, say which rows a selection includes: the loaded rows, the current page, the filtered results or all records. See [Checkbox selection](./examples#checkbox-selection).
+
+**Don't rely on color for validation**
+
+- A cell's or row's validation state is shown with color and an icon. Say what's wrong in text too, such as in a tooltip or a message near the grid. See [Semantic use of color](/salt/foundations/color/semantic-use-of-color).
+
+**Keep cell content usable with the keyboard**
+
+- Prefer AG Grid's provided cell editors and filters, which work with the grid's keyboard navigation. If a cell renders interactive content, such as a Salt `Button` or `Link`, check that keyboard users can reach and use it, and see AG Grid's guidance on custom components and keyboard events.
+
+**Check target sizes in compact grids**
+
+- In HD Compact, rows are 21px apart, closer than the 24px that WCAG 2.2's [Target Size (Minimum)](https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html) asks between small targets, so row checkboxes in a compact grid don't meet it. Use the theme without HD Compact where users select rows.

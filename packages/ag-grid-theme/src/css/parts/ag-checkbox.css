@@ -1,6 +1,8 @@
 /* CHECKBOX */
+.ag-theme-salt .ag-checkbox-input-wrapper,
 .ag-theme-salt-light .ag-checkbox-input-wrapper,
 .ag-theme-salt-dark .ag-checkbox-input-wrapper,
+.ag-theme-salt-compact .ag-checkbox-input-wrapper,
 .ag-theme-salt-compact-light .ag-checkbox-input-wrapper,
 .ag-theme-salt-compact-dark .ag-checkbox-input-wrapper {
   height: var(--salt-size-selectable);
@@ -17,8 +19,10 @@
   clip-path: border-box;
 }
 
+.ag-theme-salt .ag-checkbox-input-wrapper input,
 .ag-theme-salt-light .ag-checkbox-input-wrapper input,
 .ag-theme-salt-dark .ag-checkbox-input-wrapper input,
+.ag-theme-salt-compact .ag-checkbox-input-wrapper input,
 .ag-theme-salt-compact-light .ag-checkbox-input-wrapper input,
 .ag-theme-salt-compact-dark .ag-checkbox-input-wrapper input {
   /* Keep the whole box clickable, including the border */
@@ -29,23 +33,29 @@
 }
 
 /* The border is drawn above, so the unchecked glyph isn't needed */
+.ag-theme-salt .ag-checkbox-input-wrapper::after,
 .ag-theme-salt-light .ag-checkbox-input-wrapper::after,
 .ag-theme-salt-dark .ag-checkbox-input-wrapper::after,
+.ag-theme-salt-compact .ag-checkbox-input-wrapper::after,
 .ag-theme-salt-compact-light .ag-checkbox-input-wrapper::after,
 .ag-theme-salt-compact-dark .ag-checkbox-input-wrapper::after {
   content: none;
 }
 
+.ag-theme-salt .ag-checkbox-input-wrapper.ag-checked,
 .ag-theme-salt-light .ag-checkbox-input-wrapper.ag-checked,
 .ag-theme-salt-dark .ag-checkbox-input-wrapper.ag-checked,
+.ag-theme-salt-compact .ag-checkbox-input-wrapper.ag-checked,
 .ag-theme-salt-compact-light .ag-checkbox-input-wrapper.ag-checked,
 .ag-theme-salt-compact-dark .ag-checkbox-input-wrapper.ag-checked {
   border-color: var(--ag-checkbox-checked-color);
 }
 
 /* The solid checked glyph covers the whole box, including the border, and is clipped to the rounded corners */
+.ag-theme-salt .ag-checkbox-input-wrapper.ag-checked::after,
 .ag-theme-salt-light .ag-checkbox-input-wrapper.ag-checked::after,
 .ag-theme-salt-dark .ag-checkbox-input-wrapper.ag-checked::after,
+.ag-theme-salt-compact .ag-checkbox-input-wrapper.ag-checked::after,
 .ag-theme-salt-compact-light .ag-checkbox-input-wrapper.ag-checked::after,
 .ag-theme-salt-compact-dark .ag-checkbox-input-wrapper.ag-checked::after {
   content: var(--ag-icon-font-code-checkbox-checked);
@@ -53,16 +63,20 @@
   left: calc(-1 * var(--salt-size-fixed-100));
 }
 
+.ag-theme-salt .ag-checkbox-input-wrapper.ag-indeterminate,
 .ag-theme-salt-light .ag-checkbox-input-wrapper.ag-indeterminate,
 .ag-theme-salt-dark .ag-checkbox-input-wrapper.ag-indeterminate,
+.ag-theme-salt-compact .ag-checkbox-input-wrapper.ag-indeterminate,
 .ag-theme-salt-compact-light .ag-checkbox-input-wrapper.ag-indeterminate,
 .ag-theme-salt-compact-dark .ag-checkbox-input-wrapper.ag-indeterminate {
   border-color: var(--ag-checkbox-unchecked-color);
 }
 
 /* Matching the indeterminate bar in Salt's CheckboxIcon */
+.ag-theme-salt .ag-checkbox-input-wrapper.ag-indeterminate::after,
 .ag-theme-salt-light .ag-checkbox-input-wrapper.ag-indeterminate::after,
 .ag-theme-salt-dark .ag-checkbox-input-wrapper.ag-indeterminate::after,
+.ag-theme-salt-compact .ag-checkbox-input-wrapper.ag-indeterminate::after,
 .ag-theme-salt-compact-light .ag-checkbox-input-wrapper.ag-indeterminate::after,
 .ag-theme-salt-compact-dark .ag-checkbox-input-wrapper.ag-indeterminate::after {
   content: "";

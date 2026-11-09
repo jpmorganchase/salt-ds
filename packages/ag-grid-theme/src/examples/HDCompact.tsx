@@ -34,7 +34,6 @@ const HDCompact = (props: AgGridReactProps) => {
   const { themeNext } = useTheme();
   const { agGridProps, containerProps } = useAgGridHelpers({
     compact: true,
-    density: "high",
   });
 
   const Provider = themeNext ? SaltProviderNext : SaltProvider;

@@ -1,5 +1,9 @@
 div[class*="ag-theme-salt"] {
-  /* Row height includes the 1px row border, so cell content matches the header row height */
+  /*
+    AG Grid reads the row and header heights from these variables, so they follow the
+    density of the nearest SaltProvider without setting rowHeight or headerHeight. A row's
+    height includes its bottom border, so rows are a border taller than the header.
+  */
   --ag-row-height: calc(var(--salt-size-base) + var(--salt-spacing-100) + var(--salt-size-fixed-100));
   --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   --ag-background-color: var(--salt-container-primary-background);
@@ -84,7 +88,8 @@ div[class*="ag-theme-salt"] {
   --ag-pinned-row-border: none;
 }
 
-div[class*="ag-theme-salt-compact"] {
+/* HD Compact applies in high density only; in other densities the grid uses that density's sizes. */
+.salt-density-high div[class*="ag-theme-salt-compact"] {
   /*
     Ensures icon / country symbol renders correct height.
     This also means we don't need to touch `--ag-row-height`, which would impact some internal ag grid height calculation like `--ag-internal-padded-row-height` vs `--ag-internal-calculated-line-height`
@@ -94,8 +99,10 @@ div[class*="ag-theme-salt-compact"] {
   --salt-size-selectable: 12px;
 }
 
+.ag-theme-salt .ag-root-wrapper,
 .ag-theme-salt-light .ag-root-wrapper,
 .ag-theme-salt-dark .ag-root-wrapper,
+.ag-theme-salt-compact .ag-root-wrapper,
 .ag-theme-salt-compact-light .ag-root-wrapper,
 .ag-theme-salt-compact-dark .ag-root-wrapper {
   border: none;
