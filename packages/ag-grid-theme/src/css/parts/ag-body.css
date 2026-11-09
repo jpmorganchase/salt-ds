@@ -552,22 +552,17 @@
 
 /*
   Range selection backgrounds cover the gap, so the range reads as one area, like the Figma "Cell selection overlay".
-  When the grid doesn't have focus, AG Grid also colors the cell the range started from.
+  When the grid doesn't have focus, AG Grid also colors the cell the range started from. It colors a single cell range
+  then too, which stays inside its cell like the focus ring.
   [VERSION DIVERGENCE]: v36 renamed .ag-body-viewport to .ag-grid-viewport, so both are matched.
 */
 .ag-theme-salt-light .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-focus),
 .ag-theme-salt-dark .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-focus),
 .ag-theme-salt-compact-light .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-focus),
 .ag-theme-salt-compact-dark .ag-ltr .ag-root .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-focus),
-[class*="ag-theme-salt"] .ag-ltr .ag-root:not(.ag-context-menu-open) .ag-grid-viewport:not(.ag-has-focus) .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-inline-editing),
-[class*="ag-theme-salt"] .ag-ltr .ag-root:not(.ag-context-menu-open) .ag-body-viewport:not(.ag-has-focus) .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-inline-editing) {
-  background-clip: var(--cellRangeGap-backgroundClip, border-box);
-}
-
-/* The gap after the last column of a range is outside the range, so the range color stops at the range border */
-[class*="ag-theme-salt"] .ag-cell.ag-cell-range-right,
-[class*="ag-theme-salt"] .ag-cell.ag-cell-range-single-cell {
-  --cellRangeGap-backgroundClip: padding-box;
+[class*="ag-theme-salt"] .ag-ltr .ag-root:not(.ag-context-menu-open) .ag-grid-viewport:not(.ag-has-focus) .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell):not(.ag-cell-inline-editing),
+[class*="ag-theme-salt"] .ag-ltr .ag-root:not(.ag-context-menu-open) .ag-body-viewport:not(.ag-has-focus) .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell):not(.ag-cell-inline-editing) {
+  background-clip: border-box;
 }
 
 /* Cell focus rings are drawn on ::before, inside the padding box, so they stay clear of the gap */
@@ -879,15 +874,15 @@
 .ag-theme-salt-dark .ag-root .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing)[style*="background"],
 .ag-theme-salt-compact-light .ag-root .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing)[style*="background"],
 .ag-theme-salt-compact-dark .ag-root .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-focus):not(.ag-cell-inline-editing)[style*="background"],
-[class*="ag-theme-salt"] .ag-root:not(.ag-context-menu-open) .ag-grid-viewport:not(.ag-has-focus) .ag-row .ag-cell.error-cell.ag-cell-range-selected:not(.ag-cell-inline-editing),
-[class*="ag-theme-salt"] .ag-root:not(.ag-context-menu-open) .ag-grid-viewport:not(.ag-has-focus) .ag-row .ag-cell.warning-cell.ag-cell-range-selected:not(.ag-cell-inline-editing),
-[class*="ag-theme-salt"] .ag-root:not(.ag-context-menu-open) .ag-grid-viewport:not(.ag-has-focus) .ag-row .ag-cell.success-cell.ag-cell-range-selected:not(.ag-cell-inline-editing),
-[class*="ag-theme-salt"] .ag-root:not(.ag-context-menu-open) .ag-grid-viewport:not(.ag-has-focus) .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-inline-editing)[style*="background"],
-[class*="ag-theme-salt"] .ag-root:not(.ag-context-menu-open) .ag-body-viewport:not(.ag-has-focus) .ag-row .ag-cell.error-cell.ag-cell-range-selected:not(.ag-cell-inline-editing),
-[class*="ag-theme-salt"] .ag-root:not(.ag-context-menu-open) .ag-body-viewport:not(.ag-has-focus) .ag-row .ag-cell.warning-cell.ag-cell-range-selected:not(.ag-cell-inline-editing),
-[class*="ag-theme-salt"] .ag-root:not(.ag-context-menu-open) .ag-body-viewport:not(.ag-has-focus) .ag-row .ag-cell.success-cell.ag-cell-range-selected:not(.ag-cell-inline-editing),
-[class*="ag-theme-salt"] .ag-root:not(.ag-context-menu-open) .ag-body-viewport:not(.ag-has-focus) .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-inline-editing)[style*="background"] {
+[class*="ag-theme-salt"] .ag-root:not(.ag-context-menu-open) .ag-grid-viewport:not(.ag-has-focus) .ag-row .ag-cell.error-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell):not(.ag-cell-inline-editing),
+[class*="ag-theme-salt"] .ag-root:not(.ag-context-menu-open) .ag-grid-viewport:not(.ag-has-focus) .ag-row .ag-cell.warning-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell):not(.ag-cell-inline-editing),
+[class*="ag-theme-salt"] .ag-root:not(.ag-context-menu-open) .ag-grid-viewport:not(.ag-has-focus) .ag-row .ag-cell.success-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell):not(.ag-cell-inline-editing),
+[class*="ag-theme-salt"] .ag-root:not(.ag-context-menu-open) .ag-grid-viewport:not(.ag-has-focus) .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell):not(.ag-cell-inline-editing)[style*="background"],
+[class*="ag-theme-salt"] .ag-root:not(.ag-context-menu-open) .ag-body-viewport:not(.ag-has-focus) .ag-row .ag-cell.error-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell):not(.ag-cell-inline-editing),
+[class*="ag-theme-salt"] .ag-root:not(.ag-context-menu-open) .ag-body-viewport:not(.ag-has-focus) .ag-row .ag-cell.warning-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell):not(.ag-cell-inline-editing),
+[class*="ag-theme-salt"] .ag-root:not(.ag-context-menu-open) .ag-body-viewport:not(.ag-has-focus) .ag-row .ag-cell.success-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell):not(.ag-cell-inline-editing),
+[class*="ag-theme-salt"] .ag-root:not(.ag-context-menu-open) .ag-body-viewport:not(.ag-has-focus) .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell):not(.ag-cell-inline-editing)[style*="background"] {
   /* The transparent bottom layer keeps the cell's own color inside the gap, while the range color covers it */
   background-image: linear-gradient(var(--ag-range-selection-background-color), var(--ag-range-selection-background-color)), linear-gradient(transparent, transparent);
-  background-clip: var(--cellRangeGap-backgroundClip, border-box), padding-box;
+  background-clip: border-box, padding-box;
 }
