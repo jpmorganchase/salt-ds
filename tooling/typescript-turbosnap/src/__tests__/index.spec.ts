@@ -111,12 +111,23 @@ describe("TypeScript TurboSnap graph", () => {
     ["ambient global declarations", "ambient.d.ts"],
     ["a UMD global namespace", "src/umd.d.ts"],
     ["an extended TypeScript config", "tsconfig.base.json"],
-    ["the sideEffects package contract", "package.json"],
   ])("conservatively covers every story for %s", (_name, filename) => {
     expect(affectedStories(baseline.stats, stories, filename)).toEqual(
       [...stories].sort(),
     );
   });
+
+  it.each(["package.json", "src/effects/package.json"])(
+    "leaves %s to Chromatic's dependency tracing",
+    (filename) => {
+      // A manifest node would reach Storybook's preview through any module it
+      // imports, so every version-only release bump would rebuild every story.
+      expect(baseline.stats.modules.map((module) => module.name)).not.toContain(
+        `./${filename}`,
+      );
+      expect(affectedStories(baseline.stats, stories, filename)).toEqual([]);
+    },
+  );
 
   it.each([
     "src/generated-commonjs.js",

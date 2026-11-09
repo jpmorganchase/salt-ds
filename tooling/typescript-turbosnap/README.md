@@ -11,14 +11,22 @@ TypeScript program, instead of finding references to every variable declaration.
 - Type-only imports, JavaScript JSDoc imports, and inherited types that can affect
   generated docgen metadata even when the bundler removes them.
 - The selected export through a barrel, retaining each barrel on the route as an
-  input. Unrelated exports remain separate only when the barrel contains imports
-  and exports and its package declares JavaScript side-effect-free code.
+  input. Unrelated exports remain separate only when the barrel contains only
+  import and export statements and its package declares JavaScript
+  side-effect-free code.
 - Namespace imports, unknown side-effect contracts, and mixed implementation
   modules conservatively include their dependencies.
 - Module augmentations, global declarations (including ambient `.d.cts` files),
-  TypeScript configuration files, and package manifests. Global inputs connect
-  to real runtime modules through one shared node; connecting that node to
-  Storybook's virtual app would interfere with Chromatic's story discovery.
+  and TypeScript configuration files. Global inputs connect to real runtime
+  modules through one shared node; connecting that node to Storybook's virtual
+  app would interfere with Chromatic's story discovery.
+
+Package manifests are deliberately not graph inputs. Storybook's preview imports
+from `@salt-ds/core`, so a manifest node would make every version-only release
+bump trace to the preview and force a full rebuild. Chromatic handles dependency
+changes through the lockfile. A change to a package's `sideEffects` field alters
+which barrel exports are treated as separate, so add the `no turbosnap` label to
+pull requests that change it.
 
 The graph uses the existing Storybook stats format: a dependency's `reasons`
 identify its importers. It keeps the existing plugin name and

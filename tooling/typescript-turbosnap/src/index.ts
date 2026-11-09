@@ -24,7 +24,7 @@ type ModuleMetadata = {
   facade: boolean;
 };
 
-type PackageInfo = { filename: string; sideEffects: unknown };
+type PackageInfo = { sideEffects: unknown };
 
 type Stats = {
   modules: {
@@ -293,7 +293,6 @@ export function createForwardGraph({
             fs.readFileSync(filename, "utf8"),
           );
           result = {
-            filename,
             sideEffects:
               manifest &&
               typeof manifest === "object" &&
@@ -303,7 +302,7 @@ export function createForwardGraph({
           };
         } catch {
           // An unreadable sideEffects contract cannot enable precise facades.
-          result = { filename, sideEffects: undefined };
+          result = { sideEffects: undefined };
         }
         break;
       }
@@ -684,11 +683,13 @@ export function createForwardGraph({
       for (const importer of runtimeFiles) {
         if (!isVirtual(importer)) add(globalGuard, importer);
       }
+    // Package manifests are deliberately not inputs. Chromatic traces changed
+    // manifests found in the stats, and Storybook's preview imports package
+    // modules such as SaltProvider, so a version-only release bump would force
+    // a full rebuild. Chromatic handles dependency changes through the lockfile.
     for (const importer of runtimeFiles) {
       if (isVirtual(importer)) continue;
       for (const input of configInputs) add(input, importer);
-      const manifest = packageFor(importer);
-      if (manifest) add(manifest.filename, importer);
     }
     drain();
     const stats = {

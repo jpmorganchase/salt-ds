@@ -28,8 +28,9 @@ const nodeModules = fileURLToPath(
 );
 
 export async function createFixture(files: Record<string, string>) {
-  const directory = await fs.mkdtemp(
-    path.join(os.tmpdir(), "salt-typescript-turbosnap-"),
+  // Vite reports real paths. On macOS os.tmpdir() is a symlink into /private.
+  const directory = await fs.realpath(
+    await fs.mkdtemp(path.join(os.tmpdir(), "salt-typescript-turbosnap-")),
   );
   temporaryDirectories.add(directory);
 
