@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
@@ -29,6 +32,9 @@ export const withTableBaseName = makePrefixer("saltTable");
 
 export const Table = forwardRef<HTMLTableElement, TableProps>(
   function Table(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltTable", props);
+
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-table",
@@ -45,7 +51,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
       "aria-labelledby": ariaLabelledBy,
       id,
       ...rest
-    } = props;
+    } = propsWithDefaults;
 
     const tableId = useId(id);
     const { setId, setLabelledBy } = useTable();
@@ -75,6 +81,7 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
         aria-labelledby={labelledBy}
         ref={ref}
         {...rest}
+        {...rootDataAttributes}
       >
         {children}
       </table>

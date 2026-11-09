@@ -55,6 +55,11 @@ export * from "./rating";
  * Defines the components that support useClassNameInjection via module augmentation of @salt-ds/styles ComponentPropsMap
  */
 export type {} from "./registerClassNameInjection";
+/**
+ * Defines the curated defaultable props for components that support useComponentDefaults
+ * via module augmentation of @salt-ds/styles ComponentDefaultablePropsMap.
+ */
+export type {} from "./registerComponentDefaults";
 export * from "./salt-provider";
 export * from "./scrim";
 export * from "./segmented-button-group";

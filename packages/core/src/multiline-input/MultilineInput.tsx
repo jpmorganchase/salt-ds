@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
@@ -80,8 +83,11 @@ export interface MultilineInputProps
 }
 
 export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
-  function MultilineInput(
-    {
+  function MultilineInput(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltMultilineInput", props);
+
+    const {
       "aria-activedescendant": ariaActiveDescendant,
       "aria-expanded": ariaExpanded,
       "aria-owns": ariaOwns,
@@ -104,9 +110,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
       validationStatus: validationStatusProp,
       variant = "primary",
       ...other
-    },
-    ref,
-  ) {
+    } = propsWithDefaults;
     const [inputElement, setInputElement] =
       useState<HTMLTextAreaElement | null>(null);
     const handleInputElement = useCallback(
@@ -236,6 +240,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
         ref={ref}
         style={multilineInputStyles}
         {...other}
+        {...rootDataAttributes}
       >
         {startAdornment && (
           <div className={withBaseName("startAdornmentContainer")}>

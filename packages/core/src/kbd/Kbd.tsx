@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
@@ -17,7 +20,14 @@ const withBaseName = makePrefixer("saltKbd");
 
 export const Kbd = forwardRef<HTMLDivElement, KbdProps>(
   function Kbd(props, ref) {
-    const { children, className, variant = "primary", ...rest } = props;
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltKbd", props);
+    const {
+      children,
+      className,
+      variant = "primary",
+      ...rest
+    } = propsWithDefaults;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -31,6 +41,7 @@ export const Kbd = forwardRef<HTMLDivElement, KbdProps>(
         ref={ref}
         className={clsx(withBaseName(), withBaseName(variant), className)}
         {...rest}
+        {...rootDataAttributes}
       >
         {children}
       </kbd>

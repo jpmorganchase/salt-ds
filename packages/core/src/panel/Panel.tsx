@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { forwardRef, type HTMLAttributes } from "react";
@@ -30,35 +33,39 @@ export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
 
 const withBaseName = makePrefixer("saltPanel");
 
-export const Panel = forwardRef<HTMLDivElement, PanelProps>(function Panel(
-  {
-    elevation = "flat",
-    className,
-    children,
-    variant = "primary",
-    ...restProps
-  },
-  ref,
-) {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-panel",
-    css: panelCss,
-    window: targetWindow,
-  });
+export const Panel = forwardRef<HTMLDivElement, PanelProps>(
+  function Panel(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltPanel", props);
+    const {
+      elevation = "flat",
+      className,
+      children,
+      variant = "primary",
+      ...restProps
+    } = propsWithDefaults;
 
-  return (
-    <div
-      className={clsx(
-        withBaseName(),
-        withBaseName(variant),
-        elevation && withBaseName(elevation),
-        className,
-      )}
-      ref={ref}
-      {...restProps}
-    >
-      {children}
-    </div>
-  );
-});
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-panel",
+      css: panelCss,
+      window: targetWindow,
+    });
+
+    return (
+      <div
+        className={clsx(
+          withBaseName(),
+          withBaseName(variant),
+          elevation && withBaseName(elevation),
+          className,
+        )}
+        ref={ref}
+        {...restProps}
+        {...rootDataAttributes}
+      >
+        {children}
+      </div>
+    );
+  },
+);

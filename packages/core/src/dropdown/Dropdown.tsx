@@ -10,6 +10,7 @@ import {
 import {
   useClassNameInjection,
   useComponentCssInjection,
+  useComponentDefaults,
 } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -128,9 +129,13 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
   props: DropdownProps<Item>,
   ref: ForwardedRef<HTMLButtonElement>,
 ) {
-  const { className, props: finalProps } = useClassNameInjection(
+  const { props: propsWithDefaults, rootDataAttributes } = useComponentDefaults(
     "saltDropdown",
     props,
+  );
+  const { className, props: finalProps } = useClassNameInjection(
+    "saltDropdown",
+    propsWithDefaults,
   );
   const {
     "aria-labelledby": ariaLabelledBy,
@@ -487,6 +492,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
           onFocus: handleFocus,
           onBlur: handleBlur,
           ...rest,
+          ...rootDataAttributes,
         })}
       >
         {startAdornment && (

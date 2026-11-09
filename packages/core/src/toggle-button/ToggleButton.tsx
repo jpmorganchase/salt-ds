@@ -1,6 +1,7 @@
 import {
   useClassNameInjection,
   useComponentCssInjection,
+  useComponentDefaults,
 } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -61,9 +62,11 @@ const withBaseName = makePrefixer("saltToggleButton");
 
 export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
   function ToggleButton(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltToggleButton", props);
     const { className, props: finalProps } = useClassNameInjection(
       "saltToggleButton",
-      props,
+      propsWithDefaults,
     );
     const {
       appearance: appearanceProp,
@@ -155,6 +158,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       type: "button",
       disabled: disabled,
       ...rest,
+      ...rootDataAttributes,
     };
 
     return (

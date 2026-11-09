@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
@@ -26,17 +29,18 @@ export interface TFootProps extends ComponentPropsWithoutRef<"tfoot"> {
 }
 
 export const TFoot = forwardRef<HTMLTableSectionElement, TFootProps>(
-  function TFoot(
-    {
+  function TFoot(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltTFoot", props);
+    const {
       children,
       className,
       sticky = false,
       variant,
       divider = "primary",
       ...rest
-    },
-    ref,
-  ) {
+    } = propsWithDefaults;
+
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-table-tfoot",
@@ -55,6 +59,7 @@ export const TFoot = forwardRef<HTMLTableSectionElement, TFootProps>(
           className,
         )}
         {...rest}
+        {...rootDataAttributes}
       >
         {children}
       </tfoot>

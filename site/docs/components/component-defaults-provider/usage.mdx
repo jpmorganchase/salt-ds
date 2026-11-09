@@ -1,0 +1,59 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Import
+
+To import `ComponentDefaultsProvider` from the styles package, use:
+
+```js
+import { ComponentDefaultsProvider } from "@salt-ds/styles";
+```
+
+## Basic usage
+
+Wrap the part of your app where defaults should apply and provide a static registry keyed by supported component names.
+
+```tsx
+import { Button, Input } from "@salt-ds/core";
+import {
+  ComponentDefaultsProvider,
+  type ComponentDefaultsRegistry,
+} from "@salt-ds/styles";
+
+const defaults: ComponentDefaultsRegistry = {
+  saltButton: {
+    props: { appearance: "transparent", sentiment: "neutral" },
+  },
+  saltInput: {
+    props: { bordered: true },
+    rootDataAttributes: { "data-owner": "payments-mfe" },
+  },
+};
+
+export function App() {
+  return (
+    <ComponentDefaultsProvider value={defaults}>
+      <Button>Action</Button>
+      <Input placeholder="Search" />
+    </ComponentDefaultsProvider>
+  );
+}
+```
+
+## Rules
+
+- Instance props always win over provider defaults.
+- Only curated defaultable props are supported per component.
+- `rootDataAttributes` supports root-level `data-*` attributes only.
+- The provider is tree-scoped like any React context provider.
+
+## Props
+
+<PropsTable packageName="styles" componentName="ComponentDefaultsProvider" />
