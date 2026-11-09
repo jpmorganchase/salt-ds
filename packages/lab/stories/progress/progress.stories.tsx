@@ -22,17 +22,19 @@ export default {
 // The stories only pass `delay`, so circular and linear examples can share the same args.
 type StoryArgs = Pick<ProgressProps, "delay">;
 
-// Prototype: the buffer is a solid neutral, or try the accent at 30% alpha in light mode and 50% in dark mode, or stripes, a tint or dots in the bar color. See progress.stories.css.
+// Prototype: the buffer is an outline in the bar color, or try a neutral outline or a filled buffer. See progress.stories.css.
 const bufferFills = {
-  solid: undefined,
-  accent: "progressBufferAccent",
-  stripes: "progressBufferStripes",
-  tint: "progressBufferTint",
-  dots: "progressBufferDots",
-  dot: "progressBufferDot",
-  fade: "progressBufferFade",
-  barDot: "progressBufferDot progressBufferBarColor",
-  barFade: "progressBufferFade progressBufferBarColor",
+  outlineAccent: undefined,
+  outlineNeutral: "progressBufferOutlineNeutral",
+  solid: "progressBufferSolid",
+  accent: "progressBufferSolid progressBufferAccent",
+  stripes: "progressBufferSolid progressBufferStripes",
+  tint: "progressBufferSolid progressBufferTint",
+  dots: "progressBufferSolid progressBufferDots",
+  dot: "progressBufferSolid progressBufferDot",
+  fade: "progressBufferSolid progressBufferFade",
+  barDot: "progressBufferSolid progressBufferDot progressBufferBarColor",
+  barFade: "progressBufferSolid progressBufferFade progressBufferBarColor",
 };
 
 type BufferFillArgs = StoryArgs & { bufferFill: keyof typeof bufferFills };
@@ -42,7 +44,7 @@ const bufferFillArgTypes: Partial<ArgTypes<BufferFillArgs>> = {
     control: "inline-radio",
     options: Object.keys(bufferFills),
     description:
-      "Prototype: fills the buffer with a solid neutral, the accent at 30% alpha in light mode and 50% in dark mode, stripes, a tint, dots, a dot where it ends, or a fade from the bar. The bar dot and bar fade follow the bar color.",
+      "Prototype: the buffer is an outline in the bar color by default. Try a neutral outline, or fill it with a solid neutral, the accent at 30% alpha in light mode and 50% in dark mode, stripes, a tint, dots, a dot where it ends, or a fade from the bar. The bar dot and bar fade follow the bar color.",
   },
 };
 
@@ -111,7 +113,7 @@ export const Indeterminate: StoryFn<StoryArgs> = (args) => (
 
 /**
  * The buffer shows how much is ready ahead of the progress, such as the part of a video that has loaded. Use the
- * `bufferFill` control to compare the solid neutral with stripes, a tint or dots.
+ * `bufferFill` control to compare the accent outline with other buffers.
  */
 export const Buffer: StoryFn<BufferFillArgs> = ({ bufferFill, ...args }) => (
   <div style={{ width: 400 }}>
@@ -124,7 +126,7 @@ export const Buffer: StoryFn<BufferFillArgs> = ({ bufferFill, ...args }) => (
     />
   </div>
 );
-Buffer.args = { bufferFill: "solid" };
+Buffer.args = { bufferFill: "outlineAccent" };
 Buffer.argTypes = bufferFillArgTypes;
 
 export const Circular: StoryFn<StoryArgs> = (args) => (
@@ -422,15 +424,19 @@ export const TrackStyles: StoryFn<BufferFillArgs> = ({
     ))}
   </StackLayout>
 );
-TrackStyles.args = { bufferFill: "solid" };
+TrackStyles.args = { bufferFill: "outlineAccent" };
 TrackStyles.argTypes = bufferFillArgTypes;
 
 const containerBuffers = [
-  { name: "Solid neutral (default)", className: undefined },
-  { name: "Accent 30% light, 50% dark", className: "progressBufferAccent" },
+  { name: "Accent outline (default)", className: undefined },
+  { name: "Solid neutral", className: "progressBufferSolid" },
+  {
+    name: "Accent 30% light, 50% dark",
+    className: "progressBufferSolid progressBufferAccent",
+  },
   {
     name: "Accent 3:1, 78% light, 95% dark",
-    className: "progressBufferAccentContrast",
+    className: "progressBufferSolid progressBufferAccentContrast",
   },
 ];
 
@@ -453,7 +459,7 @@ export const BufferOnContainers: StoryFn<StoryArgs> = (args) => (
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "repeat(3, 260px)",
+            gridTemplateColumns: "repeat(4, 220px)",
             gap: "var(--salt-spacing-400)",
           }}
         >

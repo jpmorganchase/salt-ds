@@ -329,8 +329,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       withBaseName("indicator"),
       looping && withBaseName("indeterminate"),
     );
-    // The bar, buffer and track are positioned from these, so they're set on the indicator. Without a buffer, the track
-    // starts where the bar ends.
+    // The bar and the buffer's outline are positioned from these, so they're set on the indicator
     const indicatorStyle = {
       "--saltProgress-fraction": shownFraction,
       "--saltProgress-bufferFraction": bufferFraction ?? shownFraction,

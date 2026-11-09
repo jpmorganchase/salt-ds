@@ -203,46 +203,83 @@ describe("GIVEN a Progress", () => {
   });
 
   describe("WHEN it has a buffer value", () => {
-    // The buffer is cut where the bar ends, and the track where the buffer ends
-    function cutAt(part: "buffer" | "track") {
-      const element = document.querySelector(`.saltProgress-${part}`);
-      return element
-        ? Number(getComputedStyle(element).getPropertyValue("--progress-cutAt"))
+    // How far along the track the buffer's outline ends
+    function outlineEnd() {
+      const buffer = document.querySelector(".saltProgress-buffer");
+      const indicator = document.querySelector(".saltProgress-indicator");
+      return buffer && indicator
+        ? Number.parseFloat(getComputedStyle(buffer, "::before").width) /
+            indicator.getBoundingClientRect().width
         : null;
     }
 
-    it("THEN it shows the buffer between the bar and the rest of the track", async () => {
+    it("THEN it outlines the buffer in the bar color and fills it with the primary background", async () => {
       await renderWithSalt(
-        <Progress
-          delay={0}
-          label="Playing video"
-          value={20}
-          bufferValue={60}
-        />,
+        <div style={{ width: 200 }}>
+          <Progress
+            delay={0}
+            label="Playing video"
+            value={20}
+            bufferValue={60}
+          />
+        </div>,
       );
 
-      await expect.poll(() => cutAt("buffer")).toBeCloseTo(0.2, 2);
-      await expect.poll(() => cutAt("track")).toBeCloseTo(0.6, 2);
+      await expect.poll(outlineEnd).toBeCloseTo(0.6, 2);
+
+      const progress = document.querySelector(".saltProgress");
+      const buffer = document.querySelector(".saltProgress-buffer");
+      const bar = document.querySelector(".saltProgress-bar");
+      if (!progress || !buffer || !bar) {
+        throw new Error("Progress buffer is missing");
+      }
+      const outline = getComputedStyle(buffer, "::before");
+      expect(outline.borderTopColor).toBe(
+        getComputedStyle(bar).backgroundColor,
+      );
+      const primary = document.createElement("div");
+      primary.style.background = "var(--salt-container-primary-background)";
+      progress.append(primary);
+      expect(outline.backgroundColor).toBe(
+        getComputedStyle(primary).backgroundColor,
+      );
+      primary.remove();
     });
 
     it("THEN the buffer never sits behind the bar", async () => {
       await renderWithSalt(
-        <Progress
-          delay={0}
-          label="Playing video"
-          value={60}
-          bufferValue={20}
-        />,
+        <div style={{ width: 200 }}>
+          <Progress
+            delay={0}
+            label="Playing video"
+            value={60}
+            bufferValue={20}
+          />
+        </div>,
       );
 
-      await expect.poll(() => cutAt("track")).toBeCloseTo(0.6, 2);
+      await expect.poll(outlineEnd).toBeCloseTo(0.6, 2);
     });
 
-    it("THEN the track starts where the bar ends WHEN there's no buffer", async () => {
-      await renderWithSalt(<Progress delay={0} label="Uploading" value={38} />);
+    it("THEN the track runs behind the bar, with no gap", async () => {
+      await renderWithSalt(
+        <div style={{ width: 200 }}>
+          <Progress
+            delay={0}
+            label="Playing video"
+            value={20}
+            bufferValue={60}
+          />
+        </div>,
+      );
 
-      expect(document.querySelector(".saltProgress-buffer")).toBeNull();
-      await expect.poll(() => cutAt("track")).toBeCloseTo(0.38, 2);
+      const track = document.querySelector(".saltProgress-track");
+      const indicator = document.querySelector(".saltProgress-indicator");
+      if (!track || !indicator) throw new Error("Progress track is missing");
+      expect(getComputedStyle(track).maskImage).toBe("none");
+      expect(track.getBoundingClientRect().width).toBe(
+        indicator.getBoundingClientRect().width,
+      );
     });
 
     it("THEN it shows no buffer WHEN it has no value", async () => {
