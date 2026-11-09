@@ -1,3 +1,4 @@
+import { useDensity } from "@salt-ds/core";
 import {
   type GridApi,
   type GridReadyEvent,
@@ -30,10 +31,11 @@ export function useAgGridHelpers({
 } {
   const apiRef = useRef<{ api: GridApi } | undefined>(undefined);
   const [isGridReady, setGridReady] = useState(false);
+  const density = useDensity();
 
   const className = clsx(
     containerClassName,
-    compact ? "ag-theme-salt-compact" : "ag-theme-salt",
+    compact && density === "high" ? "ag-theme-salt-compact" : "ag-theme-salt",
   );
 
   const onGridReady = useCallback(({ api }: GridReadyEvent) => {

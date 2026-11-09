@@ -1,3 +1,4 @@
+import { useDensity } from "@salt-ds/core";
 import {
   type GridApi,
   type GridReadyEvent,
@@ -24,9 +25,11 @@ export function useAgGridHelpers(compact = false): {
 } {
   const apiRef = useRef<{ api: GridApi } | undefined>(undefined);
   const [isGridReady, setGridReady] = useState(false);
+  const density = useDensity();
 
-  // HD Compact applies in high density; in other densities the grid uses that density's sizes.
-  const className = compact ? "ag-theme-salt-compact" : "ag-theme-salt";
+  // Only opt into HD Compact when the nearest provider uses high density.
+  const className =
+    compact && density === "high" ? "ag-theme-salt-compact" : "ag-theme-salt";
 
   const onGridReady = ({ api }: GridReadyEvent) => {
     apiRef.current = { api };

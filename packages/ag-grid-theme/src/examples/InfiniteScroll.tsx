@@ -1,4 +1,4 @@
-import { Spinner } from "@salt-ds/core";
+import { Spinner, useDensity } from "@salt-ds/core";
 import type { IDatasource } from "ag-grid-community";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
@@ -34,11 +34,21 @@ const datasource: IDatasource = {
 
 const InfiniteScroll = (props: AgGridReactProps) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
+  const density = useDensity();
+  // The infinite row model reacts to rowHeight changes, but not CSS height changes.
+  const rowHeight = {
+    high: 25,
+    medium: 37,
+    low: 49,
+    touch: 61,
+    mobile: 61,
+  }[density];
 
   return (
     <div {...containerProps}>
       <AgGridReact
         {...agGridProps}
+        rowHeight={rowHeight}
         {...props}
         columnDefs={dataGridInfiniteScrollExampleColumns}
         rowModelType="infinite"

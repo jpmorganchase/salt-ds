@@ -88,8 +88,8 @@ div[class*="ag-theme-salt"] {
   --ag-pinned-row-border: none;
 }
 
-/* HD Compact applies in high density only; in other densities the grid uses that density's sizes. */
-.salt-density-high div[class*="ag-theme-salt-compact"] {
+/* HD Compact is intended for high density; the class remains an explicit opt-in. */
+div[class*="ag-theme-salt-compact"] {
   /*
     Ensures icon / country symbol renders correct height.
     This also means we don't need to touch `--ag-row-height`, which would impact some internal ag grid height calculation like `--ag-internal-padded-row-height` vs `--ag-internal-calculated-line-height`
