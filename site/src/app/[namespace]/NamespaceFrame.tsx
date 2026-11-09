@@ -1,6 +1,6 @@
 "use client";
 
-import { FrameProvider } from "@jpmorganchase/mosaic-layouts";
+import { FrameProvider } from "@jpmorganchase/mosaic-layouts/frame";
 import {
   disposeStore,
   initializeStore,

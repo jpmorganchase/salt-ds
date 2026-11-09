@@ -1,4 +1,4 @@
-import { useFrame } from "@jpmorganchase/mosaic-layouts";
+import { useFrame } from "@jpmorganchase/mosaic-layouts/frame";
 import { useRoute, useStore } from "@jpmorganchase/mosaic-store";
 import { type DrawerProps, SkipLink, useId } from "@salt-ds/core";
 import { clsx } from "clsx";
