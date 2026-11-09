@@ -11,6 +11,10 @@
   grid-template-columns: 100%;
 }
 
+.desktopSidebar {
+  display: contents;
+}
+
 .middle {
   grid-area: middle;
   display: flex;
@@ -31,6 +35,15 @@
 }
 
 @media not screen and (min-width: 960px) {
+  .root {
+    grid-template-areas: "header" "middle" "footer";
+    grid-template-columns: 100%;
+  }
+
+  .desktopSidebar {
+    display: none;
+  }
+
   .content {
     padding-inline: var(--salt-spacing-100);
   }

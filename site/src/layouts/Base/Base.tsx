@@ -57,18 +57,6 @@ export function Base({
     }
   }, [route, setDrawerOpen]);
 
-  const LeftSidebar = isMobileOrTablet ? (
-    <Drawer
-      open={drawerOpen}
-      onOpenChange={(newOpen) => setDrawerOpen(newOpen)}
-    >
-      {LeftSidebarProp}
-    </Drawer>
-  ) : (
-    LeftSidebarProp
-  );
-  const RightSidebar = isMobileOrTablet ? undefined : RightSidebarProp;
-
   const context = useMemo(
     () => ({
       drawerOpen,
@@ -94,7 +82,7 @@ export function Base({
       <div
         className={clsx(
           styles.root,
-          { [styles.oneColumn]: !LeftSidebar || isMobileOrTablet },
+          { [styles.oneColumn]: !LeftSidebarProp },
           className,
         )}
       >
@@ -102,14 +90,23 @@ export function Base({
           <SkipLink targetId={mainId}>Skip to main content</SkipLink>
         )}
         {!frame.header && <AppHeader />}
-        {LeftSidebar}
+        {LeftSidebarProp && (
+          <div className={styles.desktopSidebar}>{LeftSidebarProp}</div>
+        )}
+        {isMobileOrTablet && (
+          <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
+            {LeftSidebarProp}
+          </Drawer>
+        )}
         <main id={mainId} className={styles.middle}>
           {(title || description) && (
             <Heading title={title} description={description} id={headingId} />
           )}
           <div className={styles.twoColumn}>
             <div className={styles.content}>{children}</div>
-            {RightSidebar}
+            {RightSidebarProp && (
+              <div className={styles.desktopSidebar}>{RightSidebarProp}</div>
+            )}
           </div>
         </main>
         <Footer />

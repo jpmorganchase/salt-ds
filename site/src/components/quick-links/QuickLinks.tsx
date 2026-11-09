@@ -22,14 +22,16 @@ export function QuickLink({
   children,
   action,
   href,
+  prefetch,
 }: {
   title: string;
   children?: ReactNode;
   action: string;
   href: string;
+  prefetch?: boolean;
 }) {
   return (
-    <LinkBase href={href} passHref legacyBehavior>
+    <LinkBase href={href} prefetch={prefetch} passHref legacyBehavior>
       <LinkCard className={styles.card}>
         <div className={styles.cardContent}>
           <Text className={styles.cardTitle} styleAs="h2">
@@ -49,12 +51,14 @@ export function QuickLink({
 
 interface QuickLinkProps extends GridLayoutProps<"div"> {
   links: QuickLinkData[];
+  prefetch?: boolean;
 }
 
 export function QuickLinks({
   links,
   children,
   className,
+  prefetch,
   ...rest
 }: QuickLinkProps) {
   return (
@@ -66,7 +70,13 @@ export function QuickLinks({
     >
       {children ||
         links.map(({ href, title, description, action }) => (
-          <QuickLink key={href} href={href} title={title} action={action}>
+          <QuickLink
+            key={href}
+            href={href}
+            title={title}
+            action={action}
+            prefetch={prefetch}
+          >
             {description}
           </QuickLink>
         ))}

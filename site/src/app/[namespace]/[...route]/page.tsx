@@ -19,7 +19,12 @@ function pathname({ namespace, route }: Awaited<PageProps["params"]>) {
 }
 
 export async function generateStaticParams() {
-  if (resolveMosaicMode().mode !== "snapshot-file") return [];
+  // Development renders requested pages on demand, including in snapshot mode.
+  if (
+    process.env.NODE_ENV !== "production" ||
+    resolveMosaicMode().mode !== "snapshot-file"
+  )
+    return [];
   const routes = await loadSitemap();
   return routes.flatMap((path) => {
     const [namespace, ...route] = path.split("/").filter(Boolean);
