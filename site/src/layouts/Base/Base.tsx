@@ -1,6 +1,6 @@
 import { useFrame } from "@jpmorganchase/mosaic-layouts/frame";
 import { useRoute, useStore } from "@jpmorganchase/mosaic-store";
-import { type DrawerProps, SkipLink, useId } from "@salt-ds/core";
+import { type DrawerProps, useId } from "@salt-ds/core";
 import { clsx } from "clsx";
 import dynamic from "next/dynamic";
 import {
@@ -14,7 +14,7 @@ import {
 } from "react";
 import { AppHeader, Footer } from "src/components";
 import { useIsMobileView } from "src/utils/useIsMobileView";
-import { LayoutContext } from "../LayoutContext";
+import { LayoutContext, MAIN_CONTENT_ID } from "../LayoutContext";
 import styles from "./Base.module.css";
 import { PageHeading, type PageHeadingProps } from "./PageHeading";
 
@@ -66,11 +66,11 @@ export function Base({
   );
 
   const headingId = useId();
-  const mainId = useId();
+  const localMainId = useId();
+  const mainId = frame.header ? MAIN_CONTENT_ID : localMainId;
   const { setMainId } = frameControls;
 
-  // The frame's skip link must precede its retained header and always point to
-  // the current main element, including when an error boundary replaces a page.
+  // Let the retained header know when the page-owned drawer can open.
   useLayoutEffect(() => {
     if (!frame.header || !setMainId) return;
     setMainId(mainId);
@@ -87,7 +87,9 @@ export function Base({
         )}
       >
         {!frame.header && mainId && (
-          <SkipLink targetId={mainId}>Skip to main content</SkipLink>
+          <a className={styles.skipLink} href={`#${mainId}`}>
+            Skip to main content
+          </a>
         )}
         {!frame.header && <AppHeader />}
         {LeftSidebarProp && (
@@ -98,7 +100,7 @@ export function Base({
             {LeftSidebarProp}
           </Drawer>
         )}
-        <main id={mainId} className={styles.middle}>
+        <main id={mainId} className={styles.middle} tabIndex={-1}>
           {(title || description) && (
             <Heading title={title} description={description} id={headingId} />
           )}

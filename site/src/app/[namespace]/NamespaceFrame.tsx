@@ -8,7 +8,6 @@ import {
   type SiteState,
   StoreProvider,
 } from "@jpmorganchase/mosaic-store";
-import { SkipLink } from "@salt-ds/core";
 import { usePathname } from "next/navigation";
 import {
   createContext,
@@ -20,7 +19,8 @@ import {
   useState,
 } from "react";
 import { AppHeader } from "../../components/app-header";
-import { LayoutContext } from "../../layouts/LayoutContext";
+import styles from "../../layouts/Base/Base.module.css";
+import { LayoutContext, MAIN_CONTENT_ID } from "../../layouts/LayoutContext";
 import { type NamespaceData, NamespaceDataContext } from "../providers";
 
 const FRAME = { header: true };
@@ -80,11 +80,9 @@ export function NamespaceFrame({
           <StoreProvider value={store}>
             {!landing && (
               <>
-                {mainId && (
-                  <SkipLink key={mainId} targetId={mainId}>
-                    Skip to main content
-                  </SkipLink>
-                )}
+                <a className={styles.skipLink} href={`#${MAIN_CONTENT_ID}`}>
+                  Skip to main content
+                </a>
                 <AppHeader />
               </>
             )}
