@@ -18,6 +18,16 @@ data:
 
 <LivePreview componentName="stepper" exampleName="Vertical" />
 
+## Compact
+
+<LivePreview componentName="stepper" exampleName="Compact" />
+
+`CompactStepper` condenses progress into a single track with the current step as text, for example "Step 2 of 4: Payment details". Use it in space-constrained views, such as mobile or dense layouts. Like `Stepper`, it isn't interactive or navigable.
+
+`CompactStepper` shows the first `Step` with `stage="active"` or `stage="locked"`, and fills the track in proportion to the number of steps before it. When every step is `completed`, it shows the last step and fills the track.
+
+An icon appears before the step label when the current step has `status="error"` or `status="warning"`, or when its `stage` is `locked`. When both are set, `status` takes precedence over `stage`.
+
 ## Stage + Status
 
 <LivePreview componentName="stepper" exampleName="StageStatus" />

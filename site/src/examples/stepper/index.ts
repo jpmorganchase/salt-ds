@@ -1,3 +1,4 @@
+export * from "./Compact";
 export * from "./Horizontal";
 export * from "./NestedSteps";
 export * from "./Reducer";
