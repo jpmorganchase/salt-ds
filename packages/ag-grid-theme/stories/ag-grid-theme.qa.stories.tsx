@@ -685,6 +685,48 @@ CellGapsInRangeSelection.play = async ({ canvasElement }) => {
   }
 };
 
+// When the grid doesn't have focus, AG Grid colors the cell the range started from, so the gap after it is colored too.
+export const CellGapsInBlurredRangeSelection: StoryObj<
+  typeof AgGridReact
+> = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={dataGridExampleData}
+        columnDefs={dataGridExampleColumns}
+        cellSelection
+      />
+    </div>
+  );
+};
+CellGapsInBlurredRangeSelection.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Do findAll here so this will also work in `side-by-side` mode
+  const grids = await canvas.findAllByRole("grid");
+
+  for (const grid of grids) {
+    const anchorCell = grid.querySelector<HTMLElement>(
+      '[row-index="1"] [col-id="name"]',
+    )!;
+
+    await userEvent.click(anchorCell);
+    await userEvent.keyboard(
+      "{Shift>}{ArrowDown}{ArrowRight}{ArrowRight}{/Shift}",
+    );
+    (grid.ownerDocument.activeElement as HTMLElement | null)?.blur();
+
+    await expect(anchorCell).toHaveClass(
+      "ag-cell-focus",
+      "ag-cell-range-selected",
+    );
+    await expect(grid.querySelector(".ag-has-focus")).toBeNull();
+  }
+};
+
 // AG Grid's own pagination panel. The Pagination example uses Salt components instead, so this covers the theme's paging panel styles.
 export const NativePagination = () => {
   const { agGridProps, containerProps } = useAgGridHelpers();
