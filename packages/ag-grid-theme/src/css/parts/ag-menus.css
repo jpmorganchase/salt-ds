@@ -1,133 +1,173 @@
+.ag-theme-salt .ag-menu,
 .ag-theme-salt-light .ag-menu,
 .ag-theme-salt-dark .ag-menu,
+.ag-theme-salt-compact .ag-menu,
 .ag-theme-salt-compact-light .ag-menu,
 .ag-theme-salt-compact-dark .ag-menu {
   padding: var(--salt-spacing-100);
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
 }
+.ag-theme-salt .ag-tabs,
 .ag-theme-salt-light .ag-tabs,
 .ag-theme-salt-dark .ag-tabs,
+.ag-theme-salt-compact .ag-tabs,
 .ag-theme-salt-compact-light .ag-tabs,
 .ag-theme-salt-compact-dark .ag-tabs {
   padding: var(--salt-spacing-100);
 }
+.ag-theme-salt .ag-popup-child:not(.ag-tooltip-custom),
 .ag-theme-salt-light .ag-popup-child:not(.ag-tooltip-custom),
 .ag-theme-salt-dark .ag-popup-child:not(.ag-tooltip-custom),
+.ag-theme-salt-compact .ag-popup-child:not(.ag-tooltip-custom),
 .ag-theme-salt-compact-light .ag-popup-child:not(.ag-tooltip-custom),
 .ag-theme-salt-compact-dark .ag-popup-child:not(.ag-tooltip-custom) {
   box-shadow: var(--salt-overlayable-shadow-popout);
 }
 /* Popup editors wrap the editor that draws the border, so round the wrapper for its shadow to follow */
+.ag-theme-salt .ag-popup-editor,
 .ag-theme-salt-light .ag-popup-editor,
 .ag-theme-salt-dark .ag-popup-editor,
+.ag-theme-salt-compact .ag-popup-editor,
 .ag-theme-salt-compact-light .ag-popup-editor,
 .ag-theme-salt-compact-dark .ag-popup-editor {
   border-radius: var(--salt-palette-corner, 0);
 }
 /* Dialogs (e.g. Choose Columns) match Salt's Dialog */
+.ag-theme-salt .ag-dialog,
 .ag-theme-salt-light .ag-dialog,
 .ag-theme-salt-dark .ag-dialog,
+.ag-theme-salt-compact .ag-dialog,
 .ag-theme-salt-compact-light .ag-dialog,
 .ag-theme-salt-compact-dark .ag-dialog {
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-borderColor);
   border-radius: var(--salt-palette-corner, 0);
 }
+.ag-theme-salt .ag-dialog .ag-panel-title-bar,
 .ag-theme-salt-light .ag-dialog .ag-panel-title-bar,
 .ag-theme-salt-dark .ag-dialog .ag-panel-title-bar,
+.ag-theme-salt-compact .ag-dialog .ag-panel-title-bar,
 .ag-theme-salt-compact-light .ag-dialog .ag-panel-title-bar,
 .ag-theme-salt-compact-dark .ag-dialog .ag-panel-title-bar {
   color: var(--salt-content-primary-foreground);
   font-weight: var(--salt-text-fontWeight-bolder);
 }
+.ag-theme-salt .ag-menu-header,
 .ag-theme-salt-light .ag-menu-header,
 .ag-theme-salt-dark .ag-menu-header,
+.ag-theme-salt-compact .ag-menu-header,
 .ag-theme-salt-compact-light .ag-menu-header,
 .ag-theme-salt-compact-dark .ag-menu-header {
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
   background-color: var(--salt-container-primary-background);
 }
+.ag-theme-salt .ag-menu-body,
 .ag-theme-salt-light .ag-menu-body,
 .ag-theme-salt-dark .ag-menu-body,
+.ag-theme-salt-compact .ag-menu-body,
 .ag-theme-salt-compact-light .ag-menu-body,
 .ag-theme-salt-compact-dark .ag-menu-body {
   padding: 0;
 }
+.ag-theme-salt .ag-menu-list,
 .ag-theme-salt-light .ag-menu-list,
 .ag-theme-salt-dark .ag-menu-list,
+.ag-theme-salt-compact .ag-menu-list,
 .ag-theme-salt-compact-light .ag-menu-list,
 .ag-theme-salt-compact-dark .ag-menu-list {
   padding: 0;
 }
+.ag-theme-salt .ag-menu-option,
 .ag-theme-salt-light .ag-menu-option,
 .ag-theme-salt-dark .ag-menu-option,
+.ag-theme-salt-compact .ag-menu-option,
 .ag-theme-salt-compact-light .ag-menu-option,
 .ag-theme-salt-compact-dark .ag-menu-option {
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
 }
 
+.ag-theme-salt .ag-menu-option-icon,
 .ag-theme-salt-light .ag-menu-option-icon,
+.ag-theme-salt .ag-compact-menu-option-icon,
 .ag-theme-salt-light .ag-compact-menu-option-icon,
 .ag-theme-salt-dark .ag-menu-option-icon,
 .ag-theme-salt-dark .ag-compact-menu-option-icon,
+.ag-theme-salt-compact .ag-menu-option-icon,
 .ag-theme-salt-compact-light .ag-menu-option-icon,
+.ag-theme-salt-compact .ag-compact-menu-option-icon,
 .ag-theme-salt-compact-light .ag-compact-menu-option-icon,
 .ag-theme-salt-compact-dark .ag-menu-option-icon,
 .ag-theme-salt-compact-dark .ag-compact-menu-option-icon {
   padding-inline-start: var(--salt-spacing-100);
 }
+.ag-theme-salt .ag-tab,
 .ag-theme-salt-light .ag-tab,
 .ag-theme-salt-dark .ag-tab,
+.ag-theme-salt-compact .ag-tab,
 .ag-theme-salt-compact-light .ag-tab,
 .ag-theme-salt-compact-dark .ag-tab {
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   flex: 1 1 auto;
 }
+.ag-theme-salt .ag-column-select-header,
 .ag-theme-salt-light .ag-column-select-header,
 .ag-theme-salt-dark .ag-column-select-header,
+.ag-theme-salt-compact .ag-column-select-header,
 .ag-theme-salt-compact-light .ag-column-select-header,
 .ag-theme-salt-compact-dark .ag-column-select-header {
   height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   border: 0;
 }
 /* Submenu arrows use the Salt chevron, matching Figma */
+.ag-theme-salt .ag-menu,
 .ag-theme-salt-light .ag-menu,
 .ag-theme-salt-dark .ag-menu,
+.ag-theme-salt-compact .ag-menu,
 .ag-theme-salt-compact-light .ag-menu,
 .ag-theme-salt-compact-dark .ag-menu {
   --ag-icon-font-code-small-right: var(--ag-icon-font-code-next);
   --ag-icon-font-code-small-left: var(--ag-icon-font-code-previous);
 }
 /* Menu items have a 1px gap between them and around the list, matching Figma */
+.ag-theme-salt .ag-menu-list,
 .ag-theme-salt-light .ag-menu-list,
 .ag-theme-salt-dark .ag-menu-list,
+.ag-theme-salt-compact .ag-menu-list,
 .ag-theme-salt-compact-light .ag-menu-list,
 .ag-theme-salt-compact-dark .ag-menu-list {
   border-collapse: separate;
   border-spacing: 0 var(--salt-size-fixed-100);
 }
 /* The separator is drawn in the gap above the next item, so it doesn't add extra space */
+.ag-theme-salt .ag-menu-separator,
 .ag-theme-salt-light .ag-menu-separator,
 .ag-theme-salt-dark .ag-menu-separator,
+.ag-theme-salt-compact .ag-menu-separator,
 .ag-theme-salt-compact-light .ag-menu-separator,
 .ag-theme-salt-compact-dark .ag-menu-separator {
   display: none;
 }
+.ag-theme-salt .ag-menu-separator + .ag-menu-option > .ag-menu-option-part,
 .ag-theme-salt-light .ag-menu-separator + .ag-menu-option > .ag-menu-option-part,
 .ag-theme-salt-dark .ag-menu-separator + .ag-menu-option > .ag-menu-option-part,
+.ag-theme-salt-compact .ag-menu-separator + .ag-menu-option > .ag-menu-option-part,
 .ag-theme-salt-compact-light .ag-menu-separator + .ag-menu-option > .ag-menu-option-part,
 .ag-theme-salt-compact-dark .ag-menu-separator + .ag-menu-option > .ag-menu-option-part {
   box-shadow: 0 calc(-1 * var(--salt-size-fixed-100)) 0 var(--salt-separable-tertiary-borderColor);
 }
 /* Keyboard focus uses the Salt focus ring, like MenuItem, instead of the AG Grid focus box */
+.ag-theme-salt .ag-menu-option:focus-visible,
 .ag-theme-salt-light .ag-menu-option:focus-visible,
 .ag-theme-salt-dark .ag-menu-option:focus-visible,
+.ag-theme-salt-compact .ag-menu-option:focus-visible,
 .ag-theme-salt-compact-light .ag-menu-option:focus-visible,
 .ag-theme-salt-compact-dark .ag-menu-option:focus-visible {
   outline: var(--salt-focused-outline);
   outline-offset: calc(var(--salt-size-fixed-100) * -2);
 }
+.ag-theme-salt .ag-menu-option:focus-visible::after,
 .ag-theme-salt-light .ag-menu-option:focus-visible::after,
 .ag-theme-salt-dark .ag-menu-option:focus-visible::after,
+.ag-theme-salt-compact .ag-menu-option:focus-visible::after,
 .ag-theme-salt-compact-light .ag-menu-option:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-menu-option:focus-visible::after {
   content: none;
@@ -136,14 +176,18 @@
   Pressed menu items match MenuItem's active state. Options are table rows, so the top and bottom borders are drawn
   by the cells, in the gaps between items.
 */
+.ag-theme-salt .ag-menu-option:not(.ag-menu-option-disabled):active,
 .ag-theme-salt-light .ag-menu-option:not(.ag-menu-option-disabled):active,
 .ag-theme-salt-dark .ag-menu-option:not(.ag-menu-option-disabled):active,
+.ag-theme-salt-compact .ag-menu-option:not(.ag-menu-option-disabled):active,
 .ag-theme-salt-compact-light .ag-menu-option:not(.ag-menu-option-disabled):active,
 .ag-theme-salt-compact-dark .ag-menu-option:not(.ag-menu-option-disabled):active {
   background-color: var(--salt-selectable-background-selected);
 }
+.ag-theme-salt .ag-menu-option:not(.ag-menu-option-disabled):active > .ag-menu-option-part,
 .ag-theme-salt-light .ag-menu-option:not(.ag-menu-option-disabled):active > .ag-menu-option-part,
 .ag-theme-salt-dark .ag-menu-option:not(.ag-menu-option-disabled):active > .ag-menu-option-part,
+.ag-theme-salt-compact .ag-menu-option:not(.ag-menu-option-disabled):active > .ag-menu-option-part,
 .ag-theme-salt-compact-light .ag-menu-option:not(.ag-menu-option-disabled):active > .ag-menu-option-part,
 .ag-theme-salt-compact-dark .ag-menu-option:not(.ag-menu-option-disabled):active > .ag-menu-option-part {
   box-shadow:

@@ -12,31 +12,41 @@ data:
 
 ### When to use
 
-When you want to use the Salt theme with AG Grid.
+- When you want to use the Salt theme with AG Grid for complex or high-volume data.
+- When you need advanced grid behaviors such as frozen columns, editable cells, custom cell renderers, sorting, filtering, or selection.
 
 ### When not to use
 
-When you want to use a component that is not related to AG Grid.
+- When you need simple tabular structure, including application-filtered rows or ordinary links and actions in cells, use [Table](../table).
+- When you do not need AG Grid's advanced grid behaviors, use a simpler presentation component instead.
 
-<Callout title="Note">
+## Set up
 
-AG Grid v28–v32 requires no additional theme configuration. If you're using AG Grid v33–v36, set `theme="legacy"` on each grid:
+The Salt AG Grid theme is a CSS theme. It takes its mode and density from the nearest `SaltProvider`, so a grid needs one class name and no theme-specific options.
 
-```jsx
-<AgGridReact theme="legacy" />
+### 1. Install the packages
+
+Install the theme with AG Grid's Community packages:
+
+```sh
+npm install @salt-ds/ag-grid-theme ag-grid-community ag-grid-react
 ```
 
-You can instead use `provideGlobalGridOptions({ theme: "legacy" })` to configure every grid in your application. Refer to the [AG Grid migration guide](https://www.ag-grid.com/javascript-data-grid/theming-migration/#continue-with-legacy-themes) for more information.
+If you have an AG Grid Enterprise license, also install `ag-grid-enterprise`.
 
-</Callout>
+### 2. Register AG Grid's modules
 
-## Import
+AG Grid v33 and later need the modules a grid uses registered before the grid is created. Register them once, where your application starts.
 
-Make sure to install the necessary AG Grid packages. You will need to install `ag-grid-react`. You should also install any [packages](https://www.ag-grid.com/react-data-grid/packages/) and [modules](https://www.ag-grid.com/react-data-grid/modules/) that are necessary for your project, such as `ag-grid-community` and `ag-grid-enterprise`.
+With AG Grid Community:
 
-To install the `@salt-ds/ag-grid-theme` package, run the command appropriate to your environment: `yarn add @salt-ds/ag-grid-theme` or `npm install @salt-ds/ag-grid-theme`
+```js
+import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
 
-AG Grid v33+ requires applications to register the modules they use before creating a grid. For example, register all enterprise features with:
+ModuleRegistry.registerModules([AllCommunityModule]);
+```
+
+With AG Grid Enterprise:
 
 ```js
 import { ModuleRegistry } from "ag-grid-community";
@@ -45,45 +55,73 @@ import { AllEnterpriseModule } from "ag-grid-enterprise";
 ModuleRegistry.registerModules([AllEnterpriseModule]);
 ```
 
-### Import Salt AG Grid theme
+<Callout title="Enterprise features">
 
-To import the Salt AG Grid theme, use:
+Features marked as AG Grid Enterprise features in the [examples](./examples), such as the Set filter (`agSetColumnFilter`), cell selection, row grouping and the status bar, need `ag-grid-enterprise` and a license. With only `ag-grid-community`, a grid that uses one logs an AG Grid error that the feature's module isn't registered (error #200). With Community, filter with `agTextColumnFilter`, `agNumberColumnFilter` or `agDateColumnFilter`.
+
+</Callout>
+
+### 3. Import the CSS
 
 ```js
 import "ag-grid-community/styles/ag-grid.css";
 import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
 ```
 
-Then wrap your AG Grid with the corresponding class names shown below:
+### 4. Apply the theme
 
-```js
-<div
-  className="REPLACE_ME_WITH_CORRECT_CLASS"
-  style={{ height: 400, width: 600 }}
->
-  <AgGridReact rowData={rowData} columnDefs={columnDefs} />
+Put the grid in a container with the `ag-theme-salt` class name, and set `theme="legacy"` on the grid:
+
+```jsx
+<div className="ag-theme-salt" style={{ height: 400 }}>
+  <AgGridReact theme="legacy" rowData={rowData} columnDefs={columnDefs} />
 </div>
 ```
 
-For light mode, use these CSS class name `.ag-theme-salt-light`.
+- **`theme="legacy"`:** from v33, AG Grid styles grids with its Theming API unless told otherwise, and reports an error when that's used with a CSS theme such as Salt's (error #239). Set `theme="legacy"` on each grid, or once for every grid with `provideGlobalGridOptions({ theme: "legacy" })`. See AG Grid's [guide to legacy themes](https://www.ag-grid.com/javascript-data-grid/theming-migration/#continue-with-legacy-themes).
+- **Height:** AG Grid fills its container, so give the container a height, or set `domLayout="autoHeight"` on the grid to size it to its rows.
+- **Mode and density:** the grid follows the nearest `SaltProvider`, as other Salt components do. Don't set `rowHeight` or `headerHeight`: the theme sets them for each density, and the options override it.
 
-For dark mode, use these CSS class name `.ag-theme-salt-dark`.
+## Density
 
-For `compact` version, use these CSS class names:
+Rows and the header follow the density of the nearest `SaltProvider`:
 
-```
-.ag-theme-salt-compact-light
-.ag-theme-salt-compact-dark
-```
+| Density          | Row height | Header height |
+| ---------------- | ---------- | ------------- |
+| High             | 25px       | 24px          |
+| Medium           | 37px       | 36px          |
+| Low              | 49px       | 48px          |
+| Touch and mobile | 61px       | 60px          |
 
-For variants add additional CSS class names:
+A row's height includes the border below it.
 
-```
-.ag-theme-salt-variant-secondary
-.ag-theme-salt-variant-tertiary
-.ag-theme-salt-variant-zebra
-```
+AG Grid from v33 updates the grid when density changes. Older versions, such as v28, read the heights when the grid is created, so if your application changes density while a grid is shown, remount the grid, for example with `key={density}`.
 
-For editable fields, add the class name `.editable-cell` to the `cellClass` array in your column definition.
+### HD Compact
 
-For fields displaying numeric values, add the class name `.numeric-cell` to the `cellClass` array in your column definition.
+`ag-theme-salt-compact` in place of `ag-theme-salt` makes a grid more compact in high density, with 21px rows and a 20px header. It applies in high density only: in other densities the grid has that density's sizes. HD Compact is specific to AG Grid; other Salt components and patterns don't have a compact mode.
+
+## Class names
+
+The theme's other options are class names:
+
+| Class name                                                                                        | Where                                      | What it does                                                                                                     |
+| ------------------------------------------------------------------------------------------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
+| `ag-theme-salt`                                                                                   | Container                                  | Applies the theme.                                                                                               |
+| `ag-theme-salt-compact`                                                                           | Container, in place of `ag-theme-salt`     | Applies the theme with HD Compact sizes in high density.                                                         |
+| `ag-theme-salt-variant-secondary`, `ag-theme-salt-variant-tertiary`                               | Container, with the theme class            | Uses the secondary or tertiary background. See [Variants](./examples#variants).                                  |
+| `ag-theme-salt-variant-zebra`                                                                     | Container, with the theme class            | Alternates row backgrounds. See [Zebra](./examples#zebra).                                                       |
+| `ag-theme-salt-header-primary`, `ag-theme-salt-header-secondary`, `ag-theme-salt-header-tertiary` | Container, with the theme class            | Sets the header's background. See [Header variant](./examples#header-variant).                                   |
+| `editable-cell`                                                                                   | A column's `cellClass`                     | Styles editable cells, and AG Grid's provided cell editors in them. See [Cell editors](./examples#cell-editors). |
+| `numeric-cell`                                                                                    | A column's `cellClass`                     | Right-aligns numeric values.                                                                                     |
+| `warning-cell`, `success-cell`, `error-cell`                                                      | A column's `cellClass` or `cellClassRules` | Shows a validation state on an editable cell. See [Cell validation](./examples#cell-validation).                 |
+| `warning-row`, `success-row`, `error-row`                                                         | The grid's `rowClass` or `rowClassRules`   | Shows a validation state on a row. See [Row validation](./examples#row-validation).                              |
+
+`ag-theme-salt-light`, `ag-theme-salt-dark`, `ag-theme-salt-compact-light` and `ag-theme-salt-compact-dark` still work, and are the same as `ag-theme-salt` and `ag-theme-salt-compact`: the mode comes from the `SaltProvider` either way.
+
+## AG Grid versions
+
+The theme supports AG Grid v28 to v36.
+
+- **v28 to v32:** skip registering modules and `theme="legacy"`; the rest of the setup is the same.
+- **v33 and later:** follow every step above.

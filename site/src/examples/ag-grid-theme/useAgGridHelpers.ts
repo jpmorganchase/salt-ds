@@ -1,4 +1,3 @@
-import { useDensity, useTheme } from "@salt-ds/core";
 import {
   type GridApi,
   type GridReadyEvent,
@@ -6,12 +5,16 @@ import {
 } from "ag-grid-community";
 import { AllEnterpriseModule } from "ag-grid-enterprise";
 import type { AgGridReactProps } from "ag-grid-react";
-import { type HTMLAttributes, useMemo, useRef, useState } from "react";
+import { type HTMLAttributes, useRef, useState } from "react";
 
-// [VERSION DIVERGENCE]: AG Grid v33+ requires module registration
+// [VERSION DIVERGENCE]: AG Grid v33+ requires module registration. These examples register
+// AG Grid Enterprise, because some of them use Enterprise features; an app with only
+// ag-grid-community registers AllCommunityModule from "ag-grid-community" instead.
 ModuleRegistry.registerModules([AllEnterpriseModule]);
 
-// Helps to set className, rowHeight and headerHeight depending on the current density
+// Sets the theme class name and the grid options the examples share. The theme follows the
+// mode and density of the nearest SaltProvider, including row and header heights, so these
+// options are only what the examples have in common.
 export function useAgGridHelpers(compact = false): {
   containerProps: HTMLAttributes<HTMLDivElement>;
   agGridProps: AgGridReactProps;
@@ -21,30 +24,9 @@ export function useAgGridHelpers(compact = false): {
 } {
   const apiRef = useRef<{ api: GridApi } | undefined>(undefined);
   const [isGridReady, setGridReady] = useState(false);
-  const density = useDensity();
-  const { mode } = useTheme();
 
-  // Row height is 1px more than header row, to count for border between rows
-  const [rowHeight, headerRowHeight] = useMemo(() => {
-    switch (density) {
-      case compact && "high":
-        return [21, 20];
-      case "high":
-        return [25, 24];
-      case "medium":
-        return [37, 36];
-      case "low":
-        return [49, 48];
-      case "touch":
-        return [61, 60];
-      default:
-        return [25, 24];
-    }
-  }, [density, compact]);
-
-  const className = `ag-theme-salt${
-    compact && density === "high" ? "-compact" : ""
-  }-${mode}`;
+  // HD Compact applies in high density; in other densities the grid uses that density's sizes.
+  const className = compact ? "ag-theme-salt-compact" : "ag-theme-salt";
 
   const onGridReady = ({ api }: GridReadyEvent) => {
     apiRef.current = { api };
@@ -62,16 +44,11 @@ export function useAgGridHelpers(compact = false): {
       onGridReady,
       // [VERSION DIVERGENCE]: In v36, sizing on gridReady can run before vertical-scroll visibility is known. Let AG Grid defer fitting until data is rendered.
       autoSizeStrategy: { type: "fitGridWidth" },
-      rowHeight,
-      headerHeight: headerRowHeight,
       suppressMenuHide: true,
       defaultColDef: {
         filter: true,
         resizable: true,
         sortable: true,
-        filterParams: {
-          cellHeight: rowHeight,
-        },
       },
     },
     isGridReady,

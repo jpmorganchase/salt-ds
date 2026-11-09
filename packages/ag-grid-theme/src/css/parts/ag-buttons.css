@@ -1,7 +1,9 @@
 /* BUTTON */
 /* Matching Salt's Button: neutral, appearance="transparent" */
+.ag-theme-salt .ag-standard-button,
 .ag-theme-salt-light .ag-standard-button,
 .ag-theme-salt-dark .ag-standard-button,
+.ag-theme-salt-compact .ag-standard-button,
 .ag-theme-salt-compact-light .ag-standard-button,
 .ag-theme-salt-compact-dark .ag-standard-button {
   background: var(--salt-actionable-subtle-background);
@@ -18,8 +20,10 @@
   padding: 0 calc(var(--salt-spacing-100) - var(--salt-size-fixed-100));
 }
 
+.ag-theme-salt .ag-standard-button:hover,
 .ag-theme-salt-light .ag-standard-button:hover,
 .ag-theme-salt-dark .ag-standard-button:hover,
+.ag-theme-salt-compact .ag-standard-button:hover,
 .ag-theme-salt-compact-light .ag-standard-button:hover,
 .ag-theme-salt-compact-dark .ag-standard-button:hover {
   background: var(--salt-actionable-subtle-background-hover);
@@ -27,8 +31,10 @@
   color: var(--salt-actionable-subtle-foreground-hover);
 }
 
+.ag-theme-salt .ag-standard-button:active,
 .ag-theme-salt-light .ag-standard-button:active,
 .ag-theme-salt-dark .ag-standard-button:active,
+.ag-theme-salt-compact .ag-standard-button:active,
 .ag-theme-salt-compact-light .ag-standard-button:active,
 .ag-theme-salt-compact-dark .ag-standard-button:active {
   background: var(--salt-actionable-subtle-background-active);
@@ -36,20 +42,26 @@
   color: var(--salt-actionable-subtle-foreground-active);
 }
 
+.ag-theme-salt .ag-ltr .ag-filter-apply-panel-button,
 .ag-theme-salt-light .ag-ltr .ag-filter-apply-panel-button,
 .ag-theme-salt-dark .ag-ltr .ag-filter-apply-panel-button,
+.ag-theme-salt-compact .ag-ltr .ag-filter-apply-panel-button,
 .ag-theme-salt-compact-light .ag-ltr .ag-filter-apply-panel-button,
 .ag-theme-salt-compact-dark .ag-ltr .ag-filter-apply-panel-button {
   margin-left: var(--salt-spacing-100);
 }
 
 /* The apply button matches Salt's Button: accented, appearance="solid" */
+.ag-theme-salt .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
 .ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
 .ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
+.ag-theme-salt-compact .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
 .ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
 .ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"],
+.ag-theme-salt .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"],
 .ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"],
 .ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"],
+.ag-theme-salt-compact .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"],
 .ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"],
 .ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"] {
   background: var(--salt-actionable-accented-bold-background);
@@ -57,12 +69,16 @@
   color: var(--salt-actionable-accented-bold-foreground);
 }
 
+.ag-theme-salt .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
 .ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
 .ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
+.ag-theme-salt-compact .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
 .ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
 .ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:hover,
+.ag-theme-salt .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover,
 .ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover,
 .ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover,
+.ag-theme-salt-compact .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover,
 .ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover,
 .ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:hover {
   background: var(--salt-actionable-accented-bold-background-hover);
@@ -70,12 +86,16 @@
   color: var(--salt-actionable-accented-bold-foreground-hover);
 }
 
+.ag-theme-salt .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:active,
 .ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:active,
 .ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:active,
+.ag-theme-salt-compact .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:active,
 .ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:active,
 .ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[ref="applyFilterButton"]:active,
+.ag-theme-salt .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:active,
 .ag-theme-salt-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:active,
 .ag-theme-salt-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:active,
+.ag-theme-salt-compact .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:active,
 .ag-theme-salt-compact-light .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:active,
 .ag-theme-salt-compact-dark .ag-standard-button.ag-filter-apply-panel-button[data-ref="applyFilterButton"]:active {
   background: var(--salt-actionable-accented-bold-background-active);
@@ -83,8 +103,10 @@
   color: var(--salt-actionable-accented-bold-foreground-active);
 }
 
+.ag-theme-salt .ag-keyboard-focus .ag-header-cell:focus::after,
 .ag-theme-salt-light .ag-keyboard-focus .ag-header-cell:focus::after,
 .ag-theme-salt-dark .ag-keyboard-focus .ag-header-cell:focus::after,
+.ag-theme-salt-compact .ag-keyboard-focus .ag-header-cell:focus::after,
 .ag-theme-salt-compact-light .ag-keyboard-focus .ag-header-cell:focus::after,
 .ag-theme-salt-compact-dark .ag-keyboard-focus .ag-header-cell:focus::after {
   border: 0;
@@ -94,68 +116,100 @@
   AG Grid draws keyboard focus as a 1px box in ::after for these elements. Draw it as the Salt focus ring instead,
   around the whole element.
 */
+.ag-theme-salt .ag-advanced-filter-builder-item-button:focus-visible::after,
 .ag-theme-salt-light .ag-advanced-filter-builder-item-button:focus-visible::after,
 .ag-theme-salt-dark .ag-advanced-filter-builder-item-button:focus-visible::after,
+.ag-theme-salt-compact .ag-advanced-filter-builder-item-button:focus-visible::after,
 .ag-theme-salt-compact-light .ag-advanced-filter-builder-item-button:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-advanced-filter-builder-item-button:focus-visible::after,
+.ag-theme-salt .ag-advanced-filter-builder-pill:focus-visible::after,
 .ag-theme-salt-light .ag-advanced-filter-builder-pill:focus-visible::after,
 .ag-theme-salt-dark .ag-advanced-filter-builder-pill:focus-visible::after,
+.ag-theme-salt-compact .ag-advanced-filter-builder-pill:focus-visible::after,
 .ag-theme-salt-compact-light .ag-advanced-filter-builder-pill:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-advanced-filter-builder-pill:focus-visible::after,
+.ag-theme-salt .ag-advanced-filter-header-cell:focus-visible::after,
 .ag-theme-salt-light .ag-advanced-filter-header-cell:focus-visible::after,
 .ag-theme-salt-dark .ag-advanced-filter-header-cell:focus-visible::after,
+.ag-theme-salt-compact .ag-advanced-filter-header-cell:focus-visible::after,
 .ag-theme-salt-compact-light .ag-advanced-filter-header-cell:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-advanced-filter-header-cell:focus-visible::after,
+.ag-theme-salt .ag-autocomplete-virtual-list-item:focus-visible::after,
 .ag-theme-salt-light .ag-autocomplete-virtual-list-item:focus-visible::after,
 .ag-theme-salt-dark .ag-autocomplete-virtual-list-item:focus-visible::after,
+.ag-theme-salt-compact .ag-autocomplete-virtual-list-item:focus-visible::after,
 .ag-theme-salt-compact-light .ag-autocomplete-virtual-list-item:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-autocomplete-virtual-list-item:focus-visible::after,
+.ag-theme-salt .ag-charts-data-group-title-bar:focus-visible::after,
 .ag-theme-salt-light .ag-charts-data-group-title-bar:focus-visible::after,
 .ag-theme-salt-dark .ag-charts-data-group-title-bar:focus-visible::after,
+.ag-theme-salt-compact .ag-charts-data-group-title-bar:focus-visible::after,
 .ag-theme-salt-compact-light .ag-charts-data-group-title-bar:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-charts-data-group-title-bar:focus-visible::after,
+.ag-theme-salt .ag-charts-format-top-level-group-title-bar:focus-visible::after,
 .ag-theme-salt-light .ag-charts-format-top-level-group-title-bar:focus-visible::after,
 .ag-theme-salt-dark .ag-charts-format-top-level-group-title-bar:focus-visible::after,
+.ag-theme-salt-compact .ag-charts-format-top-level-group-title-bar:focus-visible::after,
 .ag-theme-salt-compact-light .ag-charts-format-top-level-group-title-bar:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-charts-format-top-level-group-title-bar:focus-visible::after,
+.ag-theme-salt .ag-column-select-header-icon:focus-visible::after,
 .ag-theme-salt-light .ag-column-select-header-icon:focus-visible::after,
 .ag-theme-salt-dark .ag-column-select-header-icon:focus-visible::after,
+.ag-theme-salt-compact .ag-column-select-header-icon:focus-visible::after,
 .ag-theme-salt-compact-light .ag-column-select-header-icon:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-column-select-header-icon:focus-visible::after,
+.ag-theme-salt .ag-column-select-virtual-list-item:focus-visible::after,
 .ag-theme-salt-light .ag-column-select-virtual-list-item:focus-visible::after,
 .ag-theme-salt-dark .ag-column-select-virtual-list-item:focus-visible::after,
+.ag-theme-salt-compact .ag-column-select-virtual-list-item:focus-visible::after,
 .ag-theme-salt-compact-light .ag-column-select-virtual-list-item:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-column-select-virtual-list-item:focus-visible::after,
+.ag-theme-salt .ag-filter-toolpanel-header:focus-visible::after,
 .ag-theme-salt-light .ag-filter-toolpanel-header:focus-visible::after,
 .ag-theme-salt-dark .ag-filter-toolpanel-header:focus-visible::after,
+.ag-theme-salt-compact .ag-filter-toolpanel-header:focus-visible::after,
 .ag-theme-salt-compact-light .ag-filter-toolpanel-header:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-filter-toolpanel-header:focus-visible::after,
+.ag-theme-salt .ag-filter-virtual-list-item:focus-visible::after,
 .ag-theme-salt-light .ag-filter-virtual-list-item:focus-visible::after,
 .ag-theme-salt-dark .ag-filter-virtual-list-item:focus-visible::after,
+.ag-theme-salt-compact .ag-filter-virtual-list-item:focus-visible::after,
 .ag-theme-salt-compact-light .ag-filter-virtual-list-item:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-filter-virtual-list-item:focus-visible::after,
+.ag-theme-salt .ag-multi-filter-group-title-bar:focus-visible::after,
 .ag-theme-salt-light .ag-multi-filter-group-title-bar:focus-visible::after,
 .ag-theme-salt-dark .ag-multi-filter-group-title-bar:focus-visible::after,
+.ag-theme-salt-compact .ag-multi-filter-group-title-bar:focus-visible::after,
 .ag-theme-salt-compact-light .ag-multi-filter-group-title-bar:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-multi-filter-group-title-bar:focus-visible::after,
+.ag-theme-salt .ag-rich-select-virtual-list-item:focus-visible::after,
 .ag-theme-salt-light .ag-rich-select-virtual-list-item:focus-visible::after,
 .ag-theme-salt-dark .ag-rich-select-virtual-list-item:focus-visible::after,
+.ag-theme-salt-compact .ag-rich-select-virtual-list-item:focus-visible::after,
 .ag-theme-salt-compact-light .ag-rich-select-virtual-list-item:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-rich-select-virtual-list-item:focus-visible::after,
+.ag-theme-salt .ag-select-agg-func-virtual-list-item:focus-visible::after,
 .ag-theme-salt-light .ag-select-agg-func-virtual-list-item:focus-visible::after,
 .ag-theme-salt-dark .ag-select-agg-func-virtual-list-item:focus-visible::after,
+.ag-theme-salt-compact .ag-select-agg-func-virtual-list-item:focus-visible::after,
 .ag-theme-salt-compact-light .ag-select-agg-func-virtual-list-item:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-select-agg-func-virtual-list-item:focus-visible::after,
+.ag-theme-salt .ag-tab:focus-visible::after,
 .ag-theme-salt-light .ag-tab:focus-visible::after,
 .ag-theme-salt-dark .ag-tab:focus-visible::after,
+.ag-theme-salt-compact .ag-tab:focus-visible::after,
 .ag-theme-salt-compact-light .ag-tab:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-tab:focus-visible::after,
+.ag-theme-salt .ag-virtual-list-item:focus-visible::after,
 .ag-theme-salt-light .ag-virtual-list-item:focus-visible::after,
 .ag-theme-salt-dark .ag-virtual-list-item:focus-visible::after,
+.ag-theme-salt-compact .ag-virtual-list-item:focus-visible::after,
 .ag-theme-salt-compact-light .ag-virtual-list-item:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-virtual-list-item:focus-visible::after,
+.ag-theme-salt .ag-filter-toolpanel-group-title-bar:focus-visible::after,
 .ag-theme-salt-light .ag-filter-toolpanel-group-title-bar:focus-visible::after,
 .ag-theme-salt-dark .ag-filter-toolpanel-group-title-bar:focus-visible::after,
+.ag-theme-salt-compact .ag-filter-toolpanel-group-title-bar:focus-visible::after,
 .ag-theme-salt-compact-light .ag-filter-toolpanel-group-title-bar:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-filter-toolpanel-group-title-bar:focus-visible::after {
   top: 0;
@@ -166,19 +220,25 @@
 }
 
 /* Column group header cells use the Salt focus ring, like column header cells */
+.ag-theme-salt .ag-header-group-cell:focus-visible::after,
 .ag-theme-salt-light .ag-header-group-cell:focus-visible::after,
 .ag-theme-salt-dark .ag-header-group-cell:focus-visible::after,
+.ag-theme-salt-compact .ag-header-group-cell:focus-visible::after,
 .ag-theme-salt-compact-light .ag-header-group-cell:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-header-group-cell:focus-visible::after {
   content: none;
 }
 
+.ag-theme-salt button[class^="ag-"]:focus,
 .ag-theme-salt-light button[class^="ag-"]:focus,
 .ag-theme-salt-dark button[class^="ag-"]:focus,
+.ag-theme-salt-compact button[class^="ag-"]:focus,
 .ag-theme-salt-compact-light button[class^="ag-"]:focus,
 .ag-theme-salt-compact-dark button[class^="ag-"]:focus,
+.ag-theme-salt input[class^="ag-"][type="button"]:focus,
 .ag-theme-salt-light input[class^="ag-"][type="button"]:focus,
 .ag-theme-salt-dark input[class^="ag-"][type="button"]:focus,
+.ag-theme-salt-compact input[class^="ag-"][type="button"]:focus,
 .ag-theme-salt-compact-light input[class^="ag-"][type="button"]:focus,
 .ag-theme-salt-compact-dark input[class^="ag-"][type="button"]:focus {
   box-shadow: none;
@@ -188,8 +248,10 @@
   outline-offset: var(--salt-focused-outlineOffset);
 }
 
+.ag-theme-salt .ag-menu .ag-filter-body-wrapper,
 .ag-theme-salt-light .ag-menu .ag-filter-body-wrapper,
 .ag-theme-salt-dark .ag-menu .ag-filter-body-wrapper,
+.ag-theme-salt-compact .ag-menu .ag-filter-body-wrapper,
 .ag-theme-salt-compact-light .ag-menu .ag-filter-body-wrapper,
 .ag-theme-salt-compact-dark .ag-menu .ag-filter-body-wrapper {
   display: flex;
@@ -199,51 +261,65 @@
   margin-top: var(--salt-spacing-100);
 }
 
+.ag-theme-salt .ag-menu .ag-menu-column-select-wrapper,
 .ag-theme-salt-light .ag-menu .ag-menu-column-select-wrapper,
 .ag-theme-salt-dark .ag-menu .ag-menu-column-select-wrapper,
+.ag-theme-salt-compact .ag-menu .ag-menu-column-select-wrapper,
 .ag-theme-salt-compact-light .ag-menu .ag-menu-column-select-wrapper,
 .ag-theme-salt-compact-dark .ag-menu .ag-menu-column-select-wrapper {
   margin-top: var(--salt-spacing-100);
 }
 
 /* Filter menu content lines up with the menu padding, with --salt-spacing-100 between rows and above the buttons */
+.ag-theme-salt .ag-filter-menu .ag-filter-body-wrapper,
 .ag-theme-salt-light .ag-filter-menu .ag-filter-body-wrapper,
 .ag-theme-salt-dark .ag-filter-menu .ag-filter-body-wrapper,
+.ag-theme-salt-compact .ag-filter-menu .ag-filter-body-wrapper,
 .ag-theme-salt-compact-light .ag-filter-menu .ag-filter-body-wrapper,
 .ag-theme-salt-compact-dark .ag-filter-menu .ag-filter-body-wrapper {
   margin-top: 0;
 }
 
+.ag-theme-salt .ag-filter-menu .ag-filter-apply-panel,
 .ag-theme-salt-light .ag-filter-menu .ag-filter-apply-panel,
 .ag-theme-salt-dark .ag-filter-menu .ag-filter-apply-panel,
+.ag-theme-salt-compact .ag-filter-menu .ag-filter-apply-panel,
 .ag-theme-salt-compact-light .ag-filter-menu .ag-filter-apply-panel,
 .ag-theme-salt-compact-dark .ag-filter-menu .ag-filter-apply-panel {
   padding: var(--salt-spacing-100) 0 0;
 }
 
+.ag-theme-salt .ag-filter .ag-select:not(.ag-cell-editor),
 .ag-theme-salt-light .ag-filter .ag-select:not(.ag-cell-editor),
 .ag-theme-salt-dark .ag-filter .ag-select:not(.ag-cell-editor),
+.ag-theme-salt-compact .ag-filter .ag-select:not(.ag-cell-editor),
 .ag-theme-salt-compact-light .ag-filter .ag-select:not(.ag-cell-editor),
 .ag-theme-salt-compact-dark .ag-filter .ag-select:not(.ag-cell-editor) {
   min-height: var(--salt-size-base);
 }
 
+.ag-theme-salt .ag-simple-filter-body-wrapper > *,
 .ag-theme-salt-light .ag-simple-filter-body-wrapper > *,
 .ag-theme-salt-dark .ag-simple-filter-body-wrapper > *,
+.ag-theme-salt-compact .ag-simple-filter-body-wrapper > *,
 .ag-theme-salt-compact-light .ag-simple-filter-body-wrapper > *,
 .ag-theme-salt-compact-dark .ag-simple-filter-body-wrapper > * {
   margin-bottom: var(--salt-spacing-100);
 }
 
+.ag-theme-salt .ag-simple-filter-body-wrapper > :last-child,
 .ag-theme-salt-light .ag-simple-filter-body-wrapper > :last-child,
 .ag-theme-salt-dark .ag-simple-filter-body-wrapper > :last-child,
+.ag-theme-salt-compact .ag-simple-filter-body-wrapper > :last-child,
 .ag-theme-salt-compact-light .ag-simple-filter-body-wrapper > :last-child,
 .ag-theme-salt-compact-dark .ag-simple-filter-body-wrapper > :last-child {
   margin-bottom: 0;
 }
 
+.ag-theme-salt .ag-mini-filter,
 .ag-theme-salt-light .ag-mini-filter,
 .ag-theme-salt-dark .ag-mini-filter,
+.ag-theme-salt-compact .ag-mini-filter,
 .ag-theme-salt-compact-light .ag-mini-filter,
 .ag-theme-salt-compact-dark .ag-mini-filter {
   /* Line the search input up with the filter list and buttons, with a gap before the list as in Figma */
@@ -251,8 +327,10 @@
   padding: 0;
 }
 
+.ag-theme-salt .ag-set-filter-item,
 .ag-theme-salt-light .ag-set-filter-item,
 .ag-theme-salt-dark .ag-set-filter-item,
+.ag-theme-salt-compact .ag-set-filter-item,
 .ag-theme-salt-compact-light .ag-set-filter-item,
 .ag-theme-salt-compact-dark .ag-set-filter-item {
   margin: 0;
@@ -260,8 +338,10 @@
   padding-right: var(--salt-spacing-100);
 }
 
+.ag-theme-salt .ag-status-bar,
 .ag-theme-salt-light .ag-status-bar,
 .ag-theme-salt-dark .ag-status-bar,
+.ag-theme-salt-compact .ag-status-bar,
 .ag-theme-salt-compact-light .ag-status-bar,
 .ag-theme-salt-compact-dark .ag-status-bar {
   border: none;
@@ -275,16 +355,20 @@
   padding: 0 var(--salt-spacing-100);
 }
 
+.ag-theme-salt .ag-status-name-value,
 .ag-theme-salt-light .ag-status-name-value,
 .ag-theme-salt-dark .ag-status-name-value,
+.ag-theme-salt-compact .ag-status-name-value,
 .ag-theme-salt-compact-light .ag-status-name-value,
 .ag-theme-salt-compact-dark .ag-status-name-value {
   padding: 0;
   margin: 0 var(--salt-spacing-100);
 }
 
+.ag-theme-salt .ag-status-name-value-value,
 .ag-theme-salt-light .ag-status-name-value-value,
 .ag-theme-salt-dark .ag-status-name-value-value,
+.ag-theme-salt-compact .ag-status-name-value-value,
 .ag-theme-salt-compact-light .ag-status-name-value-value,
 .ag-theme-salt-compact-dark .ag-status-name-value-value {
   font-weight: var(--salt-text-fontWeight-bolder);
@@ -292,8 +376,10 @@
 }
 
 /* Pagination panel, matching the Figma "AG Pagination": no border, secondary text, and --salt-spacing-300 between groups */
+.ag-theme-salt .ag-paging-panel,
 .ag-theme-salt-light .ag-paging-panel,
 .ag-theme-salt-dark .ag-paging-panel,
+.ag-theme-salt-compact .ag-paging-panel,
 .ag-theme-salt-compact-light .ag-paging-panel,
 .ag-theme-salt-compact-dark .ag-paging-panel {
   border-top: none;
@@ -301,36 +387,48 @@
   padding: 0 var(--salt-spacing-50);
 }
 
+.ag-theme-salt .ag-paging-page-size,
 .ag-theme-salt-light .ag-paging-page-size,
 .ag-theme-salt-dark .ag-paging-page-size,
+.ag-theme-salt-compact .ag-paging-page-size,
 .ag-theme-salt-compact-light .ag-paging-page-size,
 .ag-theme-salt-compact-dark .ag-paging-page-size,
+.ag-theme-salt .ag-paging-row-summary-panel,
 .ag-theme-salt-light .ag-paging-row-summary-panel,
 .ag-theme-salt-dark .ag-paging-row-summary-panel,
+.ag-theme-salt-compact .ag-paging-row-summary-panel,
 .ag-theme-salt-compact-light .ag-paging-row-summary-panel,
 .ag-theme-salt-compact-dark .ag-paging-row-summary-panel,
+.ag-theme-salt .ag-paging-page-summary-panel,
 .ag-theme-salt-light .ag-paging-page-summary-panel,
 .ag-theme-salt-dark .ag-paging-page-summary-panel,
+.ag-theme-salt-compact .ag-paging-page-summary-panel,
 .ag-theme-salt-compact-light .ag-paging-page-summary-panel,
 .ag-theme-salt-compact-dark .ag-paging-page-summary-panel {
   margin: 0;
   margin-inline-start: var(--salt-spacing-300);
 }
 
+.ag-theme-salt .ag-paging-row-summary-panel-number,
 .ag-theme-salt-light .ag-paging-row-summary-panel-number,
 .ag-theme-salt-dark .ag-paging-row-summary-panel-number,
+.ag-theme-salt-compact .ag-paging-row-summary-panel-number,
 .ag-theme-salt-compact-light .ag-paging-row-summary-panel-number,
 .ag-theme-salt-compact-dark .ag-paging-row-summary-panel-number,
+.ag-theme-salt span.ag-paging-number,
 .ag-theme-salt-light span.ag-paging-number,
 .ag-theme-salt-dark span.ag-paging-number,
+.ag-theme-salt-compact span.ag-paging-number,
 .ag-theme-salt-compact-light span.ag-paging-number,
 .ag-theme-salt-compact-dark span.ag-paging-number {
   font-weight: var(--salt-text-fontWeight-bolder);
 }
 
 /* Paging buttons are transparent buttons around the icon, like the Figma pagination controls */
+.ag-theme-salt .ag-paging-button,
 .ag-theme-salt-light .ag-paging-button,
 .ag-theme-salt-dark .ag-paging-button,
+.ag-theme-salt-compact .ag-paging-button,
 .ag-theme-salt-compact-light .ag-paging-button,
 .ag-theme-salt-compact-dark .ag-paging-button {
   display: inline-flex;
@@ -343,23 +441,29 @@
   border-radius: var(--salt-palette-corner-weak, 0);
 }
 
+.ag-theme-salt .ag-paging-button:not(.ag-disabled):hover,
 .ag-theme-salt-light .ag-paging-button:not(.ag-disabled):hover,
 .ag-theme-salt-dark .ag-paging-button:not(.ag-disabled):hover,
+.ag-theme-salt-compact .ag-paging-button:not(.ag-disabled):hover,
 .ag-theme-salt-compact-light .ag-paging-button:not(.ag-disabled):hover,
 .ag-theme-salt-compact-dark .ag-paging-button:not(.ag-disabled):hover {
   background-color: var(--salt-actionable-subtle-background-hover);
   --ag-icon-font-color: var(--salt-actionable-subtle-foreground-hover);
 }
 
+.ag-theme-salt .ag-paging-button:focus-visible,
 .ag-theme-salt-light .ag-paging-button:focus-visible,
 .ag-theme-salt-dark .ag-paging-button:focus-visible,
+.ag-theme-salt-compact .ag-paging-button:focus-visible,
 .ag-theme-salt-compact-light .ag-paging-button:focus-visible,
 .ag-theme-salt-compact-dark .ag-paging-button:focus-visible {
   outline: var(--salt-focused-outline);
 }
 
+.ag-theme-salt .ag-paging-button:focus-visible::after,
 .ag-theme-salt-light .ag-paging-button:focus-visible::after,
 .ag-theme-salt-dark .ag-paging-button:focus-visible::after,
+.ag-theme-salt-compact .ag-paging-button:focus-visible::after,
 .ag-theme-salt-compact-light .ag-paging-button:focus-visible::after,
 .ag-theme-salt-compact-dark .ag-paging-button:focus-visible::after {
   content: none;
@@ -371,15 +475,19 @@
   That variable is disabled in ag-root-var.css so these higher-specificity outer borders
   remain the single separators and retain v32 geometry. Both outer elements are removed in v36.
 */
+.ag-theme-salt .ag-floating-top:not(.ag-invisible),
 .ag-theme-salt-light .ag-floating-top:not(.ag-invisible),
 .ag-theme-salt-dark .ag-floating-top:not(.ag-invisible),
+.ag-theme-salt-compact .ag-floating-top:not(.ag-invisible),
 .ag-theme-salt-compact-light .ag-floating-top:not(.ag-invisible),
 .ag-theme-salt-compact-dark .ag-floating-top:not(.ag-invisible) {
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
 }
 
+.ag-theme-salt .ag-floating-bottom:not(.ag-invisible),
 .ag-theme-salt-light .ag-floating-bottom:not(.ag-invisible),
 .ag-theme-salt-dark .ag-floating-bottom:not(.ag-invisible),
+.ag-theme-salt-compact .ag-floating-bottom:not(.ag-invisible),
 .ag-theme-salt-compact-light .ag-floating-bottom:not(.ag-invisible),
 .ag-theme-salt-compact-dark .ag-floating-bottom:not(.ag-invisible) {
   border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
@@ -390,8 +498,10 @@
   fallback painter for widths the cell containers do not cover (columns narrower than the
   grid, full-width pinned rows). Recolor it to the Salt bold separator. Inert pre-v36.
 */
+.ag-theme-salt .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before,
 .ag-theme-salt-light .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before,
 .ag-theme-salt-dark .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before,
+.ag-theme-salt-compact .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before,
 .ag-theme-salt-compact-light .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before,
 .ag-theme-salt-compact-dark .ag-grid-scrollable-area.ag-has-bottom-pinned-rows .ag-grid-pinned-bottom-rows-container::before {
   border-top-color: var(--salt-container-bold-borderColor);
@@ -443,8 +553,10 @@
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
 }
 
+.ag-theme-salt .ag-column-drop-horizontal,
 .ag-theme-salt-light .ag-column-drop-horizontal,
 .ag-theme-salt-dark .ag-column-drop-horizontal,
+.ag-theme-salt-compact .ag-column-drop-horizontal,
 .ag-theme-salt-compact-light .ag-column-drop-horizontal,
 .ag-theme-salt-compact-dark .ag-column-drop-horizontal {
   border-bottom: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
