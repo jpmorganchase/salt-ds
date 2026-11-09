@@ -9,7 +9,7 @@ import {
 } from "@salt-ds/core";
 import { DownloadIcon } from "@salt-ds/icons";
 import { Progress, type ProgressProps } from "@salt-ds/lab";
-import type { ArgTypes, Meta, StoryFn } from "@storybook/react-vite";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import "./progress.stories.css";
@@ -21,32 +21,6 @@ export default {
 
 // The stories only pass `delay`, so circular and linear examples can share the same args.
 type StoryArgs = Pick<ProgressProps, "delay">;
-
-// Prototype: the buffer is an outline in the bar color, or try a neutral outline or a filled buffer. See progress.stories.css.
-const bufferFills = {
-  outlineAccent: undefined,
-  outlineNeutral: "progressBufferOutlineNeutral",
-  solid: "progressBufferSolid",
-  accent: "progressBufferSolid progressBufferAccent",
-  stripes: "progressBufferSolid progressBufferStripes",
-  tint: "progressBufferSolid progressBufferTint",
-  dots: "progressBufferSolid progressBufferDots",
-  dot: "progressBufferSolid progressBufferDot",
-  fade: "progressBufferSolid progressBufferFade",
-  barDot: "progressBufferSolid progressBufferDot progressBufferBarColor",
-  barFade: "progressBufferSolid progressBufferFade progressBufferBarColor",
-};
-
-type BufferFillArgs = StoryArgs & { bufferFill: keyof typeof bufferFills };
-
-const bufferFillArgTypes: Partial<ArgTypes<BufferFillArgs>> = {
-  bufferFill: {
-    control: "inline-radio",
-    options: Object.keys(bufferFills),
-    description:
-      "Prototype: the buffer is an outline in the bar color by default. Try a neutral outline, or fill it with a solid neutral, the accent at 30% alpha in light mode and 50% in dark mode, stripes, a tint, dots, a dot where it ends, or a fade from the bar. The bar dot and bar fade follow the bar color.",
-  },
-};
 
 /** Runs a fake task: unknown size for `sizeUnknownFor` ms, then fills over `duration` ms. */
 function useSimulatedTask({
@@ -110,24 +84,6 @@ export const Indeterminate: StoryFn<StoryArgs> = (args) => (
     <Progress label="Loading accounts" {...args} />
   </div>
 );
-
-/**
- * The buffer shows how much is ready ahead of the progress, such as the part of a video that has loaded. Use the
- * `bufferFill` control to compare the accent outline with other buffers.
- */
-export const Buffer: StoryFn<BufferFillArgs> = ({ bufferFill, ...args }) => (
-  <div style={{ width: 400 }}>
-    <Progress
-      className={bufferFills[bufferFill]}
-      label="Playing video"
-      value={38}
-      bufferValue={60}
-      {...args}
-    />
-  </div>
-);
-Buffer.args = { bufferFill: "outlineAccent" };
-Buffer.argTypes = bufferFillArgTypes;
 
 export const Circular: StoryFn<StoryArgs> = (args) => (
   <StackLayout gap={3}>
@@ -397,84 +353,17 @@ const linearTrackStyleExamples: ProgressProps[] = [
   { label: "Not started", value: 0 },
   { label: "Uploading", value: 38 },
   { label: "Loading", value: undefined },
-  { label: "Playing video", value: 38, bufferValue: 60 },
-  { label: "Buffering video", value: 0, bufferValue: 30 },
   { label: "Uploading", value: 60, status: "paused" },
   { label: "Uploading", value: 60, status: "error" },
   { label: "Uploading", status: "success" },
 ];
 
-/**
- * Prototype: shows the light track in every state of linear progress. Use the `bufferFill` control to compare the
- * buffers.
- */
-export const TrackStyles: StoryFn<BufferFillArgs> = ({
-  bufferFill,
-  ...args
-}) => (
+/** Prototype: shows the light track in every state of linear progress. */
+export const TrackStyles: StoryFn<StoryArgs> = (args) => (
   <StackLayout gap={2} style={{ width: 260 }}>
     {linearTrackStyleExamples.map((example, index) => (
-      <Progress
-        // biome-ignore lint/suspicious/noArrayIndexKey: The examples are static.
-        key={index}
-        className={bufferFills[bufferFill]}
-        {...example}
-        {...args}
-      />
-    ))}
-  </StackLayout>
-);
-TrackStyles.args = { bufferFill: "outlineAccent" };
-TrackStyles.argTypes = bufferFillArgTypes;
-
-const containerBuffers = [
-  { name: "Accent outline (default)", className: undefined },
-  { name: "Solid neutral", className: "progressBufferSolid" },
-  {
-    name: "Accent 30% light, 50% dark",
-    className: "progressBufferSolid progressBufferAccent",
-  },
-  {
-    name: "Accent 3:1, 78% light, 95% dark",
-    className: "progressBufferSolid progressBufferAccentContrast",
-  },
-];
-
-/**
- * Prototype: compares buffers on each container background. Switch between light and dark mode in the toolbar. The
- * accent 3:1 buffer meets 3:1 against every container, so it's close to the bar's color.
- */
-export const BufferOnContainers: StoryFn<StoryArgs> = (args) => (
-  <StackLayout gap={2}>
-    {(["primary", "secondary", "tertiary"] as const).map((container) => (
-      <StackLayout
-        key={container}
-        gap={2}
-        style={{
-          padding: "var(--salt-spacing-300)",
-          background: `var(--salt-container-${container}-background)`,
-        }}
-      >
-        <Text styleAs="h3">Container {container}</Text>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(4, 220px)",
-            gap: "var(--salt-spacing-400)",
-          }}
-        >
-          {containerBuffers.map(({ name, className }) => (
-            <Progress
-              key={name}
-              className={className}
-              label={name}
-              value={38}
-              bufferValue={60}
-              {...args}
-            />
-          ))}
-        </div>
-      </StackLayout>
+      // biome-ignore lint/suspicious/noArrayIndexKey: The examples are static.
+      <Progress key={index} {...example} {...args} />
     ))}
   </StackLayout>
 );

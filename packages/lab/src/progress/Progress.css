@@ -1,11 +1,5 @@
-/* Registered, so the fractions animate and everything positioned from them moves together */
+/* Registered, so the fraction animates and everything positioned from it moves together */
 @property --saltProgress-fraction {
-  syntax: "<number>";
-  inherits: true;
-  initial-value: 0;
-}
-
-@property --saltProgress-bufferFraction {
   syntax: "<number>";
   inherits: true;
   initial-value: 0;
@@ -99,47 +93,23 @@
 }
 
 /*
-  The track runs behind the bar, and the buffer is an outline over the track. The fractions animate, rather than each
-  part's size, so the bar and the outline move together.
+  The track runs behind the bar. The fraction animates, rather than the bar's width, so the bar eases to each new value
+  from wherever it is.
 */
 .saltProgress-linear .saltProgress-indicator {
   --progress-height: max(var(--salt-size-bar-strong), 6px);
   position: relative;
-  /* Tall enough to see the fill inside the buffer's outline at every density */
   height: var(--progress-height);
   border-radius: var(--salt-palette-corner-strongest);
   overflow: hidden;
-  transition:
-    --saltProgress-fraction var(--salt-duration-perceptible) linear,
-    --saltProgress-bufferFraction var(--salt-duration-perceptible) linear;
-}
-
-.saltProgress-linear .saltProgress-track,
-.saltProgress-linear .saltProgress-buffer {
-  position: absolute;
-  inset: 0;
+  transition: --saltProgress-fraction var(--salt-duration-perceptible) linear;
 }
 
 .saltProgress-linear .saltProgress-track {
+  position: absolute;
+  inset: 0;
   background: var(--progress-trackColor);
   opacity: var(--progress-trackOpacity);
-}
-
-/*
-  The buffer is a 1px outline in the bar color that ends where the buffer ends, filled with the primary container
-  background so it stands apart from the track. The bar sits on top of it, so the outline's lines run into the bar.
-*/
-.saltProgress-linear .saltProgress-buffer::before {
-  content: "";
-  position: absolute;
-  inset-block: 0;
-  inset-inline-start: 0;
-  width: calc(var(--saltProgress-bufferFraction) * 100%);
-  box-sizing: border-box;
-  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--progress-barColor);
-  border-radius: var(--salt-palette-corner-strongest);
-  background: var(--salt-container-primary-background);
-  transition: border-color var(--salt-duration-perceptible) ease-in-out;
 }
 
 .saltProgress-linear .saltProgress-bar {
@@ -324,8 +294,7 @@
   transition-delay: 0s, var(--salt-duration-perceptible), 0s;
 }
 
-.saltProgress-success.saltProgress-linear .saltProgress-bar,
-.saltProgress-success.saltProgress-linear .saltProgress-buffer::before {
+.saltProgress-success.saltProgress-linear .saltProgress-bar {
   transition-delay: var(--salt-duration-perceptible);
 }
 
@@ -333,7 +302,6 @@
 @media (prefers-reduced-motion: reduce) {
   .saltProgress-linear .saltProgress-indicator,
   .saltProgress-linear .saltProgress-bar,
-  .saltProgress-linear .saltProgress-buffer::before,
   .saltProgress-linear .saltProgress-loop,
   .saltProgress-circular .saltProgress-bar {
     transition: none;

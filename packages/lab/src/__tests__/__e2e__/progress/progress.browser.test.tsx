@@ -202,110 +202,19 @@ describe("GIVEN a Progress", () => {
     });
   });
 
-  describe("WHEN it has a buffer value", () => {
-    // How far along the track the buffer's outline ends
-    function outlineEnd() {
-      const buffer = document.querySelector(".saltProgress-buffer");
-      const indicator = document.querySelector(".saltProgress-indicator");
-      return buffer && indicator
-        ? Number.parseFloat(getComputedStyle(buffer, "::before").width) /
-            indicator.getBoundingClientRect().width
-        : null;
-    }
+  it("THEN the track runs the full width behind the bar", async () => {
+    await renderWithSalt(
+      <div style={{ width: 200 }}>
+        <Progress delay={0} label="Uploading" value={20} />
+      </div>,
+    );
 
-    it("THEN it outlines the buffer in the bar color and fills it with the primary background", async () => {
-      await renderWithSalt(
-        <div style={{ width: 200 }}>
-          <Progress
-            delay={0}
-            label="Playing video"
-            value={20}
-            bufferValue={60}
-          />
-        </div>,
-      );
-
-      await expect.poll(outlineEnd).toBeCloseTo(0.6, 2);
-
-      const progress = document.querySelector(".saltProgress");
-      const buffer = document.querySelector(".saltProgress-buffer");
-      const bar = document.querySelector(".saltProgress-bar");
-      if (!progress || !buffer || !bar) {
-        throw new Error("Progress buffer is missing");
-      }
-      const outline = getComputedStyle(buffer, "::before");
-      expect(outline.borderTopColor).toBe(
-        getComputedStyle(bar).backgroundColor,
-      );
-      const primary = document.createElement("div");
-      primary.style.background = "var(--salt-container-primary-background)";
-      progress.append(primary);
-      expect(outline.backgroundColor).toBe(
-        getComputedStyle(primary).backgroundColor,
-      );
-      primary.remove();
-    });
-
-    it("THEN the buffer never sits behind the bar", async () => {
-      await renderWithSalt(
-        <div style={{ width: 200 }}>
-          <Progress
-            delay={0}
-            label="Playing video"
-            value={60}
-            bufferValue={20}
-          />
-        </div>,
-      );
-
-      await expect.poll(outlineEnd).toBeCloseTo(0.6, 2);
-    });
-
-    it("THEN the track runs behind the bar, with no gap", async () => {
-      await renderWithSalt(
-        <div style={{ width: 200 }}>
-          <Progress
-            delay={0}
-            label="Playing video"
-            value={20}
-            bufferValue={60}
-          />
-        </div>,
-      );
-
-      const track = document.querySelector(".saltProgress-track");
-      const indicator = document.querySelector(".saltProgress-indicator");
-      if (!track || !indicator) throw new Error("Progress track is missing");
-      expect(getComputedStyle(track).maskImage).toBe("none");
-      expect(track.getBoundingClientRect().width).toBe(
-        indicator.getBoundingClientRect().width,
-      );
-    });
-
-    it("THEN it shows no buffer WHEN it has no value", async () => {
-      await renderWithSalt(
-        <Progress delay={0} label="Loading" bufferValue={60} />,
-      );
-
-      await expect.element(page.getByRole("progressbar")).toBeInTheDocument();
-      expect(document.querySelector(".saltProgress-buffer")).toBeNull();
-    });
-
-    it("THEN it shows no buffer WHEN it's circular", async () => {
-      await renderWithSalt(
-        // @ts-expect-error: bufferValue is only for linear progress, but JavaScript users can still pass it
-        <Progress
-          delay={0}
-          shape="circular"
-          label="Loading"
-          value={20}
-          bufferValue={60}
-        />,
-      );
-
-      await expect.element(page.getByRole("progressbar")).toBeInTheDocument();
-      expect(document.querySelector(".saltProgress-buffer")).toBeNull();
-    });
+    const track = document.querySelector(".saltProgress-track");
+    const indicator = document.querySelector(".saltProgress-indicator");
+    if (!track || !indicator) throw new Error("Progress track is missing");
+    expect(track.getBoundingClientRect().width).toBe(
+      indicator.getBoundingClientRect().width,
+    );
   });
 
   describe("WHEN it has no value", () => {
@@ -775,12 +684,12 @@ describe("GIVEN a Progress", () => {
   it("THEN it enforces shape-specific props and the status API", () => {
     // @ts-expect-error: size is only for circular progress
     const linearWithSize = <Progress size="large" />;
-    // @ts-expect-error: bufferValue is only for linear progress
-    const circularWithBuffer = <Progress shape="circular" bufferValue={60} />;
+    // @ts-expect-error: buffer isn't supported
+    const withBuffer = <Progress bufferValue={60} />;
     // @ts-expect-error: pausing is expressed through status, not a separate flag
     const legacyPaused = <Progress paused />;
 
-    expect([linearWithSize, circularWithBuffer, legacyPaused]).toHaveLength(3);
+    expect([linearWithSize, withBuffer, legacyPaused]).toHaveLength(3);
   });
 
   it.each([undefined, "active"] as const)(

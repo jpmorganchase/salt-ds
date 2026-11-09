@@ -277,7 +277,6 @@ import { Progress } from "@salt-ds/lab";
 | `shape`                  | `"linear" \| "circular"`                       | `"linear"`              | The shape. Choose it by the space it's in.                                                                     |
 | `value`                  | `number`                                       | –                       | How much is done. Leave it out for indeterminate progress. Reaching `max` doesn't change the task's status.      |
 | `min`, `max`             | `number`                                       | `0`, `100`              | The range of the value.                                                                                        |
-| `bufferValue`            | `number`                                       | –                       | Linear only. How much is buffered, such as when streaming.                                                      |
 | `label`                  | `ReactNode`                                    | –                       | What's happening. Shown, and used as the accessible name.                                                       |
 | `description`            | `ReactNode`                                    | –                       | Helper text, such as "About 2 minutes left".                                                                    |
 | `getValueText`           | `(value, max, min) => string`                   | Percentage, such as 38% | The value that's shown and exposed to screen readers, such as "3 of 5 files".                                  |
