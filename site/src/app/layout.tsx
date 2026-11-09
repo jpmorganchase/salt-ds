@@ -25,22 +25,35 @@ export const metadata: Metadata = {
 };
 
 const themePreference = `
-  try {
-    const mode = JSON.parse(localStorage.getItem("mosaic-theme-pref"))?.state?.colorMode;
-    document.documentElement.setAttribute("data-mode", mode === "dark" ? "dark" : "light");
-  } catch (error) { /* Storage can be unavailable. Keep the default light mode. */ }
+  (() => {
+    const root = document.documentElement;
+    try {
+      const mode = JSON.parse(localStorage.getItem("mosaic-theme-pref"))?.state?.colorMode;
+      root.setAttribute("data-mode", mode === "dark" ? "dark" : "light");
+    } catch (error) { /* Storage can be unavailable. Keep the default light mode. */ }
+    // Match Salt's md breakpoint before any body content can paint. React still
+    // hydrates with the server's low-density state, then synchronizes in layout.
+    const mobile = !window.matchMedia("(min-width: 960px)").matches;
+    root.classList.toggle("salt-density-low", !mobile);
+    root.classList.toggle("salt-density-mobile", mobile);
+  })();
 `;
 
 export default function RootLayout({ children }: { children: ReactNode }) {
   return (
     <html
       lang="en"
-      className={`salt-theme salt-theme-next ${themeClassName}`}
+      className={`salt-theme salt-theme-next salt-density-low ${themeClassName}`}
+      data-mode="light"
+      data-accent="teal"
+      data-corner="rounded"
+      data-heading-font="Amplitude"
+      data-action-font="Amplitude"
       data-scroll-behavior="smooth"
       suppressHydrationWarning
     >
       <head>
-        {/* biome-ignore lint/security/noDangerouslySetInnerHtml: Apply the saved colour mode before the first paint. */}
+        {/* biome-ignore lint/security/noDangerouslySetInnerHtml: Apply colour mode and responsive density before the first paint. */}
         <script dangerouslySetInnerHTML={{ __html: themePreference }} />
       </head>
       <body>

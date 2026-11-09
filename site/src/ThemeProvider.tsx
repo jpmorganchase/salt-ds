@@ -1,10 +1,13 @@
 import { useColorMode } from "@jpmorganchase/mosaic-store";
-import { type Density, SaltProviderNext } from "@salt-ds/core";
+import {
+  type Density,
+  SaltProviderNext,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
 import {
   type Dispatch,
   type ReactNode,
   type SetStateAction,
-  useEffect,
   useState,
 } from "react";
 import { useIsMobileView } from "./utils/useIsMobileView";
@@ -25,7 +28,9 @@ function DensitySetter({
 
   const density = isMobileOrTablet ? "mobile" : "low";
 
-  useEffect(() => {
+  // The head bootstrap has already selected the CSS density. Update provider
+  // context before a hydrated frame paints, rather than after the first paint.
+  useIsomorphicLayoutEffect(() => {
     setDensity(density);
   }, [density, setDensity]);
 
@@ -40,6 +45,8 @@ export function ThemeProvider({
 }: ThemeProviderProps) {
   const colorMode = useColorMode();
 
+  // Keep server and initial client markup identical; DensitySetter synchronizes
+  // the viewport-dependent context during the hydration layout effects.
   const [density, setDensity] = useState<Density>("low");
 
   return (

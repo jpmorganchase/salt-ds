@@ -5,6 +5,7 @@ import {
   LinkCard,
   Text,
 } from "@salt-ds/core";
+import { clsx } from "clsx";
 import type { ReactNode } from "react";
 import { LinkBase } from "../link/Link";
 import styles from "./QuickLinks.module.css";
@@ -50,10 +51,15 @@ interface QuickLinkProps extends GridLayoutProps<"div"> {
   links: QuickLinkData[];
 }
 
-export function QuickLinks({ links, children, ...rest }: QuickLinkProps) {
+export function QuickLinks({
+  links,
+  children,
+  className,
+  ...rest
+}: QuickLinkProps) {
   return (
     <GridLayout
-      className={styles.root}
+      className={clsx(styles.root, className)}
       columns={{ md: 4, sm: 2, xs: 1 }}
       gap={{ md: 3, xs: 1 }}
       {...rest}
