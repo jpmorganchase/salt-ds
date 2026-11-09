@@ -2,6 +2,11 @@ module.exports = {
   outputFileTracingIncludes: {
     "/*": ["snapshots/**/*"],
   },
+  experimental: {
+    // Start tracing after the server compile so it can overlap the client build.
+    webpackBuildWorker: true,
+    parallelServerBuildTraces: true,
+  },
   transpilePackages: [
     "@jpmorganchase/mosaic-site-middleware",
     "@jpmorganchase/mosaic-store",
