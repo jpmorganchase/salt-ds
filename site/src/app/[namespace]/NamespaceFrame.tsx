@@ -19,7 +19,7 @@ import {
   useState,
 } from "react";
 import { AppHeader } from "../../components/app-header";
-import styles from "../../layouts/Base/Base.module.css";
+import { SkipToMainContent } from "../../layouts/Base/SkipToMainContent";
 import { LayoutContext, MAIN_CONTENT_ID } from "../../layouts/LayoutContext";
 import { type NamespaceData, NamespaceDataContext } from "../providers";
 
@@ -80,9 +80,7 @@ export function NamespaceFrame({
           <StoreProvider value={store}>
             {!landing && (
               <>
-                <a className={styles.skipLink} href={`#${MAIN_CONTENT_ID}`}>
-                  Skip to main content
-                </a>
+                <SkipToMainContent targetId={MAIN_CONTENT_ID} />
                 <AppHeader />
               </>
             )}

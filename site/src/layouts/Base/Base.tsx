@@ -17,6 +17,7 @@ import { useIsMobileView } from "src/utils/useIsMobileView";
 import { LayoutContext, MAIN_CONTENT_ID } from "../LayoutContext";
 import styles from "./Base.module.css";
 import { PageHeading, type PageHeadingProps } from "./PageHeading";
+import { SkipToMainContent } from "./SkipToMainContent";
 
 const Drawer = dynamic<DrawerProps>(() =>
   import("./Drawer").then((mod) => mod.Drawer),
@@ -86,11 +87,7 @@ export function Base({
           className,
         )}
       >
-        {!frame.header && mainId && (
-          <a className={styles.skipLink} href={`#${mainId}`}>
-            Skip to main content
-          </a>
-        )}
+        {!frame.header && mainId && <SkipToMainContent targetId={mainId} />}
         {!frame.header && <AppHeader />}
         {LeftSidebarProp && (
           <div className={styles.desktopSidebar}>{LeftSidebarProp}</div>
@@ -100,7 +97,7 @@ export function Base({
             {LeftSidebarProp}
           </Drawer>
         )}
-        <main id={mainId} className={styles.middle} tabIndex={-1}>
+        <main id={mainId} className={styles.middle}>
           {(title || description) && (
             <Heading title={title} description={description} id={headingId} />
           )}
