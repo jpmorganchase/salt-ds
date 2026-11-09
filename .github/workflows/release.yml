@@ -1,5 +1,15 @@
 name: Release
 
+# npm trusts this workflow file to publish every package, so stable releases,
+# tagged version publishes and pull request snapshot releases all live here.
+#
+# Snapshot releases run on `workflow_dispatch`: npm refuses trusted-publishing
+# token exchanges for `issue_comment` runs. A `/snapshot-release` comment is
+# turned into a dispatch by snapshot-release.yml, and people with write access
+# can also start one from the Actions tab. Pull request code only runs in the
+# credential-free snapshot-build job; the publish job checks every tarball
+# before publishing it (see scripts/snapshot/).
+
 on:
   push:
     branches:
@@ -7,17 +17,37 @@ on:
   workflow_dispatch:
     inputs:
       release_tag:
-        description: "Existing @salt-ds/<library>@<version> tag to publish"
-        required: true
+        description: "Existing @salt-ds/<library>@<version> tag to publish (leave empty for a snapshot release)"
+        required: false
         type: string
-  issue_comment:
-    types:
-      - created
+      pull_request:
+        description: "Pull request number to publish a snapshot release of (leave empty to publish release_tag)"
+        required: false
+        type: string
+      sha:
+        description: "Snapshot release: expected head commit (the run stops if the pull request has moved on)"
+        required: false
+        type: string
+      comment_id:
+        description: "Snapshot release: comment that requested the release (set by snapshot-release.yml)"
+        required: false
+        type: string
+      dry_run:
+        description: "Snapshot release: check everything, including npm trusted publishing, without publishing"
+        required: false
+        type: boolean
+        default: false
 
 permissions: {}
 
+# No job restores or saves caches. `workflow_dispatch` runs can write to the
+# default branch's cache by default, and snapshot runs build pull request code.
+cache-mode: none
+
+# Snapshot runs get a group per pull request, so they can't hold up a stable
+# release, and a second request can't cancel one mid-publish.
 concurrency:
-  group: ${{ github.workflow }}-${{ github.event_name == 'issue_comment' && github.event.issue.number || github.ref }}
+  group: ${{ github.workflow }}-${{ github.event_name == 'workflow_dispatch' && inputs.pull_request != '' && format('snapshot-{0}', inputs.pull_request) || github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -210,7 +240,8 @@ jobs:
     if: |
       github.event_name == 'workflow_dispatch' &&
       github.repository == 'jpmorganchase/salt-ds' &&
-      github.ref == 'refs/heads/main'
+      github.ref == 'refs/heads/main' &&
+      inputs.pull_request == ''
     runs-on: ubuntu-latest
     timeout-minutes: 30
     permissions:
@@ -341,323 +372,206 @@ jobs:
             --commit "$RELEASE_COMMIT" \
             --npm-tag latest
 
-  snapshot:
-    name: Snapshot Release
+  # Snapshot releases. Started by snapshot-release.yml (a `/snapshot-release`
+  # comment) or by hand from the Actions tab; GitHub only lets people with
+  # write access start a workflow_dispatch run.
+
+  snapshot-check:
+    name: Check Snapshot Request
     if: |
-      github.event_name == 'issue_comment' &&
+      github.event_name == 'workflow_dispatch' &&
       github.repository == 'jpmorganchase/salt-ds' &&
-      github.event.issue.pull_request &&
-      (
-        github.event.comment.body == '/release-pr' ||
-        startsWith(github.event.comment.body, '/release-pr ') ||
-        startsWith(github.event.comment.body, format('/release-pr{0}', fromJSON('"\n"'))) ||
-        startsWith(github.event.comment.body, format('/release-pr{0}', fromJSON('"\r"'))) ||
-        startsWith(github.event.comment.body, format('/release-pr{0}', fromJSON('"\t"'))) ||
-        github.event.comment.body == '/snapshot-release' ||
-        startsWith(github.event.comment.body, '/snapshot-release ') ||
-        startsWith(github.event.comment.body, format('/snapshot-release{0}', fromJSON('"\n"'))) ||
-        startsWith(github.event.comment.body, format('/snapshot-release{0}', fromJSON('"\r"'))) ||
-        startsWith(github.event.comment.body, format('/snapshot-release{0}', fromJSON('"\t"')))
-      )
+      inputs.pull_request != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read # Check out this workflow's own commit for the request script.
+      pull-requests: read # Read the pull request's state and head commit.
+    outputs:
+      sha: ${{ steps.check.outputs.sha }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Check the pull request
+        id: check
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        env:
+          PULL_REQUEST: ${{ inputs.pull_request }}
+          EXPECTED_SHA: ${{ inputs.sha }}
+          RELEASE_TAG: ${{ inputs.release_tag }}
+        with:
+          script: |
+            if (process.env.RELEASE_TAG) {
+              core.setFailed('Set either release_tag or pull_request, not both.');
+              return;
+            }
+            const { pathToFileURL } = require('node:url');
+            const { checkSnapshotDispatch } = await import(
+              pathToFileURL(`${process.env.GITHUB_WORKSPACE}/scripts/snapshot/request.mjs`).href
+            );
+            const result = await checkSnapshotDispatch({
+              github,
+              context,
+              pullRequest: process.env.PULL_REQUEST,
+              expectedSha: process.env.EXPECTED_SHA,
+            });
+            if (!result.ok) {
+              core.setFailed(result.reason);
+              return;
+            }
+            core.setOutput('sha', result.sha);
+
+  snapshot-build:
+    name: Build Snapshot Packages
+    needs: snapshot-check
     runs-on: ubuntu-latest
     timeout-minutes: 30
+    # Runs pull request code, so it gets read access and nothing else: no
+    # id-token, no npm credentials, no write token and no cache access.
     permissions:
       contents: read
-      issues: write # Needed to post and update the snapshot status comment on the PR's issue timeline.
-      pull-requests: write # Needed to add reactions to the trigger comment (PR comments are scoped under the pull_requests permission, not issues).
-      id-token: write # Needed for npm trusted publishing provenance.
-    concurrency:
-      group: ${{ github.workflow }}-snapshot-${{ github.event.issue.number }}
-      cancel-in-progress: false
+    outputs:
+      changesets: ${{ steps.version.outputs.changesets }}
     steps:
-      - name: Enforce write permissions
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
-        env:
-          COMMENT_ID: ${{ github.event.comment.id }}
-        with:
-          script: |
-            const username = context.payload.comment.user.login;
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`;
-
-            const response = await github.rest.repos.getCollaboratorPermissionLevel({
-              owner,
-              repo,
-              username,
-            });
-
-            const permission = response.data.permission;
-            const allowedPermissions = new Set(["admin", "maintain", "write"]);
-
-            if (allowedPermissions.has(permission)) {
-              await github.rest.reactions.createForIssueComment({
-                owner,
-                repo,
-                comment_id: process.env.COMMENT_ID,
-                content: "eyes",
-              });
-            } else {
-              const errorMessage = `Snapshot release was not started because @${username} does not have write permissions.`;
-
-              await github.rest.issues.createComment({
-                issue_number: context.issue.number,
-                owner,
-                repo,
-                body: `${errorMessage}\n\n[View workflow run](${runUrl})`,
-              });
-
-              core.setFailed(errorMessage);
-            }
-
-      - name: Validate pull request
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
-        id: pr_data
-        with:
-          script: |
-            try {
-              const pullRequest = await github.rest.pulls.get({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                pull_number: context.issue.number,
-              });
-
-              core.setOutput("headRepository", pullRequest.data.head.repo.full_name);
-              core.setOutput("headSha", pullRequest.data.head.sha);
-
-              if (pullRequest.data.head.repo.fork) {
-                const errorMessage = 'snapshot releases not supported on pull requests from forked repositories.';
-                await github.rest.issues.createComment({
-                  issue_number: context.issue.number,
-                  owner: context.repo.owner,
-                  repo: context.repo.repo,
-                  body: errorMessage,
-                });
-                core.setFailed(errorMessage);
-              }
-            } catch (err) {
-              core.setFailed(`Request failed with error ${err}`);
-            }
-
-      - name: Create snapshot status comment
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
-        id: snapshot_status
-        env:
-          HEAD_SHA: ${{ steps.pr_data.outputs.headSha }}
-        with:
-          script: |
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            const headSha = process.env.HEAD_SHA;
-            const shortSha = headSha.slice(0, 7);
-            const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`;
-
-            const response = await github.rest.issues.createComment({
-              issue_number: context.issue.number,
-              owner,
-              repo,
-              body: `Snapshot release started for \`${shortSha}\`.\n\n[View workflow run](${runUrl})`,
-            });
-
-            core.setOutput("commentId", response.data.id);
-
       - name: Checkout pull request
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          repository: ${{ steps.pr_data.outputs.headRepository }}
-          ref: ${{ steps.pr_data.outputs.headSha }}
+          ref: ${{ needs.snapshot-check.outputs.sha }}
           persist-credentials: false
-
       - name: Use Node.js
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: "26"
           package-manager-cache: false
-          registry-url: "https://registry.npmjs.org"
-
       - name: Install dependencies
         run: yarn install
-
       - name: Create snapshot versions
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
-        with:
-          script: |
-            let output = '';
-            const exitCode = await exec.exec(
-              'yarn',
-              ['changeset', 'version', '--snapshot', 'snapshot'],
-              {
-                ignoreReturnCode: true,
-                listeners: {
-                  stdout: (data) => { output += data.toString(); },
-                  stderr: (data) => { output += data.toString(); },
-                },
-              },
-            );
-
-            if (exitCode === 0) {
-              return;
-            }
-
-            if (exitCode === 1 && output.includes('No unreleased changesets found.')) {
-              core.info('No unreleased changesets found; continuing without snapshot version changes.');
-              return;
-            }
-
-            core.setFailed(`Snapshot version creation failed with exit code ${exitCode}.`);
-
+        id: version
+        run: |
+          if output=$(yarn changeset version --snapshot snapshot 2>&1); then code=0; else code=$?; fi
+          printf '%s\n' "$output"
+          if grep -q "No unreleased changesets found" <<< "$output"; then
+            echo "::notice::No unreleased changesets found, so there is nothing to publish."
+            echo "changesets=false" >> "$GITHUB_OUTPUT"
+          elif [ "$code" -ne 0 ]; then
+            exit "$code"
+          else
+            echo "changesets=true" >> "$GITHUB_OUTPUT"
+          fi
       - name: Build snapshot packages
+        if: steps.version.outputs.changesets == 'true'
         run: yarn build
+      - name: Pack snapshot packages
+        if: steps.version.outputs.changesets == 'true'
+        run: |
+          dir="$RUNNER_TEMP/snapshot-tarballs"
+          mkdir -p "$dir"
+          yarn workspaces foreach --all --no-private pack --out "$dir/%s-%v.tgz"
+          # Packages without changesets keep their released version and aren't published.
+          find "$dir" -name '*.tgz' ! -name '*-0.0.0-snapshot-*' -delete
+          ls "$dir"
+      - name: Upload tarballs
+        if: steps.version.outputs.changesets == 'true'
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: snapshot-tarballs
+          path: ${{ runner.temp }}/snapshot-tarballs/*.tgz
+          if-no-files-found: error
+          retention-days: 7
 
-      - name: Publish snapshot packages
+  snapshot-publish:
+    name: Publish Snapshot Packages
+    needs: snapshot-build
+    if: needs.snapshot-build.outputs.changesets == 'true'
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    # Holds the publish credential, so it never runs pull request code: it
+    # checks out this workflow's own commit and only reads the tarballs.
+    permissions:
+      contents: read # Check out this workflow's own commit for the publish scripts.
+      id-token: write # Needed for npm trusted publishing.
+    outputs:
+      published: ${{ steps.publish.outputs.published }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Use Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: "26"
+          package-manager-cache: false
+      - name: Install npm with trusted publishing support
+        run: npm install --global npm@11.11.0 --ignore-scripts
+      - name: Download tarballs
+        uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          name: snapshot-tarballs
+          path: ${{ runner.temp }}/snapshot-tarballs
+      - name: Check and publish tarballs
         id: publish
+        env:
+          DRY_RUN: ${{ inputs.dry_run }}
+        run: |
+          if [ "$DRY_RUN" = "true" ]; then
+            node scripts/snapshot/publishTarballs.mjs "$RUNNER_TEMP/snapshot-tarballs" --dry-run
+          else
+            node scripts/snapshot/publishTarballs.mjs "$RUNNER_TEMP/snapshot-tarballs"
+          fi
+
+  snapshot-report:
+    name: Report Snapshot Release
+    needs:
+      - snapshot-check
+      - snapshot-build
+      - snapshot-publish
+    if: |
+      always() &&
+      github.event_name == 'workflow_dispatch' &&
+      github.repository == 'jpmorganchase/salt-ds' &&
+      inputs.pull_request != ''
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read # Check out this workflow's own commit for the report script.
+      issues: write # Comment on the pull request.
+      pull-requests: write # React to the request comment.
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Report on the pull request
         uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
         env:
-          NPM_CONFIG_PROVENANCE: "true"
+          PULL_REQUEST: ${{ inputs.pull_request }}
+          COMMENT_ID: ${{ inputs.comment_id }}
+          SHA: ${{ needs.snapshot-check.outputs.sha }}
+          BUILD_RESULT: ${{ needs.snapshot-build.result }}
+          CHANGESETS: ${{ needs.snapshot-build.outputs.changesets }}
+          RESULT: ${{ needs.snapshot-publish.result }}
+          PUBLISHED: ${{ needs.snapshot-publish.outputs.published }}
+          DRY_RUN: ${{ inputs.dry_run }}
         with:
           script: |
-            // Yarn's npm OIDC "trusted publishing" auth exchange is done
-            // per-package, and `changeset publish` fires up to 10 of these
-            // in parallel. Under that concurrency the exchange occasionally
-            // fails (rate limiting/transient network errors), which Yarn
-            // surfaces as a generic `YN0033: No authentication configured
-            // for request` rather than a retryable error. `changeset
-            // publish` is safe to re-run: packages already published to the
-            // registry are detected and skipped, so a retry only needs to
-            // succeed for the packages that failed the first time.
-            const maxAttempts = 3;
-            const combinedOutput = [];
-
-            for (let attempt = 1; attempt <= maxAttempts; attempt++) {
-              let output = '';
-              const exitCode = await exec.exec(
-                'yarn',
-                ['changeset', 'publish', '--tag', 'snapshot', '--no-git-tag'],
-                {
-                  ignoreReturnCode: true,
-                  listeners: {
-                    stdout: (data) => { output += data.toString(); },
-                    stderr: (data) => { output += data.toString(); },
-                  },
-                },
-              );
-
-              combinedOutput.push(output);
-
-              if (exitCode === 0) {
-                break;
-              }
-
-              if (attempt === maxAttempts) {
-                throw new Error(
-                  `yarn changeset publish failed after ${maxAttempts} attempts (exit code ${exitCode}).`,
-                );
-              }
-
-              core.warning(
-                `yarn changeset publish failed (attempt ${attempt}/${maxAttempts}), retrying...`,
-              );
-              await new Promise((resolve) => setTimeout(resolve, attempt * 10000));
-            }
-
-            // `changeset publish` prints a banner followed by an indented
-            // list of `name@version` tags for each successfully published
-            // package, e.g.
-            //
-            //   🦋  packages published successfully:
-            //   🦋    @salt-ds/core@0.0.0-snapshot-20260814000000
-            //   🦋    @salt-ds/lab@0.0.0-snapshot-20260814000000
-            //
-            // Anchoring on the banner string avoids picking up unrelated
-            // `name@version` mentions in warnings or errors. Tags are
-            // collected across all attempts since a retry's banner only
-            // lists packages published during that specific attempt.
-            const newTags = new Set();
-            for (const output of combinedOutput) {
-              const [, after = ''] = output.split('packages published successfully:\n');
-              after
-                .split('\n')
-                .flatMap((line) => Array.from(line.matchAll(/\s+(\S+@\S+)/g), (m) => m[1]))
-                .forEach((tag) => newTags.add(tag));
-            }
-
-            core.setOutput('publishedTags', Array.from(newTags).join('\n'));
-
-      - name: Update snapshot status comment
-        if: success() && steps.snapshot_status.outputs.commentId != ''
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
-        env:
-          COMMENT_ID: ${{ github.event.comment.id }}
-          HEAD_SHA: ${{ steps.pr_data.outputs.headSha }}
-          PUBLISHED_TAGS: ${{ steps.publish.outputs.publishedTags }}
-          STATUS_COMMENT_ID: ${{ steps.snapshot_status.outputs.commentId }}
-        with:
-          script: |
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            const statusCommentId = Number.parseInt(process.env.STATUS_COMMENT_ID, 10);
-            const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`;
-            const shortSha = process.env.HEAD_SHA.slice(0, 7);
-            const newTags = (process.env.PUBLISHED_TAGS || '')
-              .split('\n')
-              .map((tag) => tag.trim())
-              .filter(Boolean);
-
-            if (newTags.length) {
-              const multiple = newTags.length > 1;
-              const body = (
-                `Snapshot release completed for \`${shortSha}\`.\n\n` +
-                `🫰✨ **Thanks @${context.actor}! ` +
-                `Your snapshot${multiple ? 's have' : ' has'} been published to npm.**\n\n` +
-                `Test the snapshot${multiple ? 's' : ''} by updating your \`package.json\` ` +
-                `with the newly published version${multiple ? 's' : ''}:\n` +
-                newTags.map((tag) => (
-                  '```sh\n' +
-                  `yarn add ${tag}\n` +
-                  '```'
-                )).join('\n') +
-                `\n\n[View workflow run](${runUrl})`
-              );
-
-              await github.rest.issues.updateComment({
-                owner,
-                repo,
-                comment_id: statusCommentId,
-                body,
-              });
-
-              await github.rest.reactions.createForIssueComment({
-                owner,
-                repo,
-                comment_id: process.env.COMMENT_ID,
-                content: "rocket",
-              });
-            } else {
-              await github.rest.issues.updateComment({
-                owner,
-                repo,
-                comment_id: statusCommentId,
-                body: `Snapshot release finished for \`${shortSha}\`, but no packages were published.\n\n[View workflow run](${runUrl})`,
-              });
-            }
-
-      - name: Update snapshot status on failure
-        if: ${{ steps.snapshot_status.outputs.commentId != '' && (failure() || cancelled()) }}
-        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
-        env:
-          STATUS_COMMENT_ID: ${{ steps.snapshot_status.outputs.commentId }}
-          HEAD_SHA: ${{ steps.pr_data.outputs.headSha }}
-        with:
-          script: |
-            const owner = context.repo.owner;
-            const repo = context.repo.repo;
-            const statusCommentId = Number.parseInt(process.env.STATUS_COMMENT_ID, 10);
-            const runUrl = `https://github.com/${owner}/${repo}/actions/runs/${context.runId}`;
-            const shortSha = process.env.HEAD_SHA.slice(0, 7);
-
-            await github.rest.issues.updateComment({
-              owner,
-              repo,
-              comment_id: statusCommentId,
-              body: `Snapshot release failed for \`${shortSha}\`.\n\n[View workflow run](${runUrl})`,
+            const { pathToFileURL } = require('node:url');
+            const { reportSnapshotRelease } = await import(
+              pathToFileURL(`${process.env.GITHUB_WORKSPACE}/scripts/snapshot/request.mjs`).href
+            );
+            await reportSnapshotRelease({
+              github,
+              context,
+              core,
+              pullRequest: process.env.PULL_REQUEST,
+              commentId: process.env.COMMENT_ID,
+              sha: process.env.SHA,
+              result: process.env.RESULT,
+              published: process.env.PUBLISHED,
+              dryRun: process.env.DRY_RUN === 'true',
+              noChangesets:
+                process.env.BUILD_RESULT === 'success' &&
+                process.env.CHANGESETS === 'false',
             });

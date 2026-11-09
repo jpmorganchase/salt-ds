@@ -167,12 +167,20 @@ describe("GIVEN a list", () => {
       });
 
       it("THEN re-focus on the last focused item", async () => {
-        await renderWithSalt(<SingleSelectList />);
+        // Firefox does not Tab from the document body into the test iframe, so
+        // Tab from a preceding button instead.
+        await renderWithSalt(
+          <>
+            <button type="button">Before</button>
+            <SingleSelectList />
+          </>,
+        );
         await focusList();
         await userEvent.keyboard("{ArrowDown}");
         await option(2).click();
-        (await listbox().element()).blur();
+        page.getByRole("button", { name: "Before" }).element().focus();
         await userEvent.tab();
+        await expect.element(listbox()).toHaveFocus();
         await expect.element(option(2)).toHaveClass("saltListItemNext-focused");
       });
     });
