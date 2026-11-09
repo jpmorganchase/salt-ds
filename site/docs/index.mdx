@@ -19,31 +19,33 @@ data:
   prefetch={false}
   links={[
     {
-      title: 'Foundations',
-      description: 'Apply core principles for a cohesive and user-friendly design language.',
-      action: 'Learn about Salt Foundations',
-      href: '/salt/foundations'
-    },
-    {
-      title: 'Components',
-      description: 'Find accessible, well-documented UI components and examples.',
-      action: 'Play with Salt Components',
-      href: '/salt/components'
-    },
-    {
-      title: 'Patterns',
+      title: "Foundations",
       description:
-        'Use detailed pattern guidance to create compositions that are specific to your use case.',
-      action: 'Be inspired with Salt Patterns',
-      href: '/salt/patterns'
+        "Apply core principles for a cohesive and user-friendly design language.",
+      action: "Learn about Salt Foundations",
+      href: "/salt/foundations",
     },
     {
-      title: 'Tokens & Themes',
+      title: "Components",
       description:
-        'Understand the structure of our design tokens and how they are used to create Salt themes.',
-      action: 'Apply Salt Themes',
-      href: '/salt/themes'
-    }
+        "Find accessible, well-documented UI components and examples.",
+      action: "Play with Salt Components",
+      href: "/salt/components",
+    },
+    {
+      title: "Patterns",
+      description:
+        "Use detailed pattern guidance to create compositions that are specific to your use case.",
+      action: "Be inspired with Salt Patterns",
+      href: "/salt/patterns",
+    },
+    {
+      title: "Tokens & Themes",
+      description:
+        "Understand the structure of our design tokens and how they are used to create Salt themes.",
+      action: "Apply Salt Themes",
+      href: "/salt/themes",
+    },
   ]}
 />
 
@@ -52,37 +54,37 @@ data:
 <Impact
   impacts={[
     {
-      title: 'Small components, flexible patterns',
+      title: "Small components, flexible patterns",
       description:
-        "We can't build components for every use case across every line of business, so we focus on building small, quality components and demonstrate putting them together as pattern examples for specific business requirements."
+        "We can't build components for every use case across every line of business, so we focus on building small, quality components and demonstrate putting them together as pattern examples for specific business requirements.",
     },
     {
-      title: 'Lightweight, dependency-light',
+      title: "Lightweight, dependency-light",
       description:
-        "We aim to keep Salt as lightweight as possible, with minimal dependencies. We've built our components from the ground up to be customizable and easy to keep up-to-date."
+        "We aim to keep Salt as lightweight as possible, with minimal dependencies. We've built our components from the ground up to be customizable and easy to keep up-to-date.",
     },
     {
-      title: 'Composable APIs',
+      title: "Composable APIs",
       description:
-        'We have looked at the friction points of legacy APIs to make them more consistent and composable. Our components have features for most common use cases and their APIs allow them to be composed with other elements for nuanced cases.'
+        "We have looked at the friction points of legacy APIs to make them more consistent and composable. Our components have features for most common use cases and their APIs allow them to be composed with other elements for nuanced cases.",
     },
     {
-      title: 'A systematic spacing grid',
+      title: "A systematic spacing grid",
       description:
-        "All of our components support our four density systems by using a 4px scaling grid. This allows you to use components that 'fit' together cohesively at a size which is optimal for the amount of data you have on the screen."
+        "All of our components support our four density systems by using a 4px scaling grid. This allows you to use components that 'fit' together cohesively at a size which is optimal for the amount of data you have on the screen.",
     },
     {
-      title: 'WCAG 2.1 accessibility',
+      title: "WCAG 2.1 accessibility",
       description:
-        'Our components follow Web Content Accessibility Guidelines (WCAG) 2.1 to AA standards as a core requirement, not an afterthought. We believe in digital inclusion and commit to supporting diverse user needs.'
+        "Our components follow Web Content Accessibility Guidelines (WCAG) 2.1 to AA standards as a core requirement, not an afterthought. We believe in digital inclusion and commit to supporting diverse user needs.",
     },
     {
-      title: 'Token-driven styling',
+      title: "Token-driven styling",
       description:
-        'Styling is driven holistically through an abstraction of CSS variables that link components together. No third-party libraries, just vanilla CSS!'
-    }
+        "Styling is driven holistically through an abstraction of CSS variables that link components together. No third-party libraries, just vanilla CSS!",
+    },
   ]}
-  action={{ label: 'Learn more about Salt', href: '/salt/about' }}
+  action={{ label: "Learn more about Salt", href: "/salt/about" }}
 />
 
 ## How to find help
@@ -105,17 +107,21 @@ data:
 
 ## Latest updates
 
-<ArticleCards className="saltLandingUpdates" columns={{ xs: 1, sm: 2 }} gap={{ md: 3, xs: 1 }}>
+<ArticleCards
+  className="saltLandingUpdates"
+  columns={{ xs: 1, sm: 2 }}
+  gap={{ md: 3, xs: 1 }}
+>
   {meta.data.latestUpdates
     .sort((a, b) => b.lastModifiedDate - a.lastModifiedDate)
     .slice(0, 2)
-    .map(update => (
+    .map((update) => (
       <ArticleCard
         key={update.route}
         title={update.title}
         description={update.description}
         timestamp={update.lastModifiedDate}
-        action={{ href: update.data.href, label: 'Read the release notes' }}
+        action={{ href: update.data.href, label: "Read the release notes" }}
       />
     ))}
 </ArticleCards>
