@@ -98,27 +98,23 @@ export const CompactStepper = forwardRef<HTMLDivElement, CompactStepperProps>(
         {...rest}
       >
         <div className={withBaseName("barContainer")} aria-hidden="true">
-          <div className={withBaseName("track")} />
           {current && (
             <div
               className={withBaseName("bar")}
               style={{ width: `${progress}%` }}
             />
           )}
+          <div className={withBaseName("track")} />
         </div>
         {current && (
           <Text className={withBaseName("text")}>
-            {`Step ${currentIndex + 1} of ${totalSteps}:`}
-            {Icon ? (
-              <>
-                {/* The icon margin sets the visible gap; this keeps a word break for assistive technology. */}
-                <span className={withBaseName("screenReaderOnly")}>
-                  {"\u00A0"}
-                </span>
-                <Icon className={withBaseName("icon")} size={1} aria-hidden />
-              </>
-            ) : (
-              " "
+            <span className={withBaseName("count")}>
+              {`Step ${currentIndex + 1} of ${totalSteps}:`}
+            </span>
+            {/* The count's margin sets the visible gap; this space keeps the word break for wrapping, copying and assistive technology. */}
+            <span className={withBaseName("separator")}> </span>
+            {Icon && (
+              <Icon className={withBaseName("icon")} size={1} aria-hidden />
             )}
             <Text
               as="span"

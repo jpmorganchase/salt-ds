@@ -32,6 +32,12 @@ export const AllStates: StoryFn<QAContainerProps> = (props) => (
       </CompactStepper>
       <CompactStepper>
         <Step label="Personal details" stage="completed" />
+        <Step label="Payment details" stage="completed" />
+        <Step label="Review" stage="completed" />
+        <Step label="Confirmation" stage="completed" />
+      </CompactStepper>
+      <CompactStepper>
+        <Step label="Personal details" stage="completed" />
         <Step label="Payment details" stage="active" status="error" />
         <Step label="Review" />
         <Step label="Confirmation" />
