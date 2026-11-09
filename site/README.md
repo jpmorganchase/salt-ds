@@ -5,12 +5,15 @@ the layouts, navigation, search UI, MDX component registry and live examples.
 The public Salt packages retain their existing React support; React 19 is the
 documentation application's runtime.
 
-## Mosaic integration candidate
+## Mosaic integration snapshot
 
-This migration branch needs Mosaic's App Router packages, including the
-namespace frame API. Until the combined Mosaic snapshot is published, the
-committed dependency baseline remains the last published release. Use the local
-tarballs produced by the Mosaic snapshot workflow to exercise the migration:
+The documentation site pins Mosaic to `0.0.0-snapshot-20261109102658`, published
+from commit `d2b7ced5fe82323b892b0dccf0fad3201cfe4d43`.
+[Mosaic #893](https://github.com/jpmorganchase/mosaic/pull/893),
+[snapshot release run](https://github.com/jpmorganchase/mosaic/actions/runs/42600848142).
+
+For testing future local candidates in a separate verification branch, use the
+tarballs produced by the Mosaic snapshot workflow:
 
 ```sh
 node site/scripts/use-local-mosaic.mjs /path/to/mosaic-snapshot-packages <full-source-commit> <full-snapshot-commit>
@@ -21,9 +24,6 @@ The script pins every Mosaic package to the same candidate, adds temporary file
 resolutions for its transitive dependencies and records the version, source
 commit, generated snapshot commit and archive SHA-256 hashes in
 `site/mosaic-snapshot-manifest.json`.
-Keep these local dependency and lockfile changes on a separate verification
-branch. Once the snapshot is published, replace the local resolutions with its
-exact registry version before merging the integration.
 
 ## Local authoring
 
