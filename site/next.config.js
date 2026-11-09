@@ -1,6 +1,9 @@
+const legacyDocumentationRoutes = require("./src/lib/legacyDocumentationRoutes.json");
+
 module.exports = {
   outputFileTracingIncludes: {
     "/*": ["snapshots/**/*"],
+    proxy: ["snapshots/**/*"],
   },
   experimental: {
     // Start tracing after the server compile so it can overlap the client build.
@@ -16,20 +19,10 @@ module.exports = {
       // These rewrites are checked after headers/redirects
       // and before all files including _next/public files which
       // allows overriding page files
-      beforeFiles: [
-        {
-          source: "/getting-started/:path*",
-          destination: "/salt/getting-started/:path*",
-        },
-        {
-          source: "/components/:path*",
-          destination: "/salt/components/:path*",
-        },
-        {
-          source: "/support-and-contributions/:path*",
-          destination: "/salt/support-and-contributions/:path*",
-        },
-      ],
+      beforeFiles: legacyDocumentationRoutes.map((section) => ({
+        source: `/${section}/:path*`,
+        destination: `/salt/${section}/:path*`,
+      })),
       // These rewrites are checked after pages/public files
       // are checked but before dynamic routes
       afterFiles: [],
