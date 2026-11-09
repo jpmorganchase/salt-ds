@@ -1076,7 +1076,7 @@
   },
   {
     "iconName": "progress-active",
-    "synonym": ["circle", "status", "current", "live", "running", "radio"],
+    "synonym": ["circle", "status", "current", "live", "running"],
     "category": "indicators"
   },
   {
