@@ -26,54 +26,60 @@ const statusBar = {
   ],
 };
 
-const HDCompact = (props: AgGridReactProps) => {
+const HDCompactGrid = (props: AgGridReactProps) => {
   const [selected, setSelected] = useState("primary");
   const onChange = (event: SyntheticEvent<HTMLButtonElement>) => {
     setSelected(event.currentTarget.value);
   };
-  const { themeNext } = useTheme();
   const { agGridProps, containerProps } = useAgGridHelpers({
     compact: true,
   });
 
+  return (
+    <StackLayout style={{ width: "100%" }}>
+      <ToggleButtonGroup onChange={onChange} value={selected}>
+        <ToggleButton value="primary">Primary</ToggleButton>
+        <ToggleButton value="secondary">Secondary</ToggleButton>
+        <ToggleButton value="zebra">Zebra</ToggleButton>
+      </ToggleButtonGroup>
+      <div
+        {...containerProps}
+        className={clsx(containerProps.className, {
+          "ag-theme-salt-variant-secondary": selected === "secondary",
+          "ag-theme-salt-variant-zebra": selected === "zebra",
+        })}
+      >
+        <AgGridReact
+          columnDefs={dataGridExampleColumnsHdCompact}
+          rowData={dataGridExampleData}
+          statusBar={statusBar}
+          rowSelection="multiple"
+          {...agGridProps}
+          {...props}
+          cellSelection={true}
+          onFirstDataRendered={(params) => {
+            params.api.forEachNode((node, index) => {
+              if (node.data && index < 3) {
+                node.setSelected(true);
+              }
+            });
+          }}
+          components={{
+            DropdownEditor,
+          }}
+        />
+      </div>
+    </StackLayout>
+  );
+};
+
+const HDCompact = (props: AgGridReactProps) => {
+  const { themeNext } = useTheme();
   const Provider = themeNext ? SaltProviderNext : SaltProvider;
 
   return (
     <Provider density="high">
-      <StackLayout style={{ width: "100%" }}>
-        <ToggleButtonGroup onChange={onChange} value={selected}>
-          <ToggleButton value="primary">Primary</ToggleButton>
-          <ToggleButton value="secondary">Secondary</ToggleButton>
-          <ToggleButton value="zebra">Zebra</ToggleButton>
-        </ToggleButtonGroup>
-        <div
-          {...containerProps}
-          className={clsx(containerProps.className, {
-            "ag-theme-salt-variant-secondary": selected === "secondary",
-            "ag-theme-salt-variant-zebra": selected === "zebra",
-          })}
-        >
-          <AgGridReact
-            columnDefs={dataGridExampleColumnsHdCompact}
-            rowData={dataGridExampleData}
-            statusBar={statusBar}
-            rowSelection="multiple"
-            {...agGridProps}
-            {...props}
-            cellSelection={true}
-            onFirstDataRendered={(params) => {
-              params.api.forEachNode((node, index) => {
-                if (node.data && index < 3) {
-                  node.setSelected(true);
-                }
-              });
-            }}
-            components={{
-              DropdownEditor,
-            }}
-          />
-        </div>
-      </StackLayout>
+      <HDCompactGrid {...props} />
     </Provider>
   );
 };

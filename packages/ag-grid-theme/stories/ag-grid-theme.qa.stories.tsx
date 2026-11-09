@@ -1,5 +1,6 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Non-Null assertion make tests easier. */
 /** biome-ignore-all lint/suspicious/noNonNullAssertedOptionalChain: Non-Null assertion make tests easier. */
+import { Button, type Density, SaltProvider } from "@salt-ds/core";
 import type { StoryObj } from "@storybook/react-vite";
 import type { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
@@ -16,7 +17,9 @@ import {
   ContextMenu as ContextMenuGrid,
   CustomFilter,
   Default,
+  HDCompact,
   HeaderVariants as HeaderVariantsGrid,
+  InfiniteScroll,
   ProvidedCellEditors,
   ToolPanel,
   VariantZebra,
@@ -1052,5 +1055,110 @@ ColumnDropChipsInPivotMode.play = async ({ canvasElement }) => {
       lastDropZone.getBoundingClientRect().bottom,
     ).toBeLessThanOrEqual(panel.getBoundingClientRect().bottom);
     panel.scrollTop = 0;
+  }
+};
+
+async function expectFirstRowHeight(container: HTMLElement, height: number) {
+  await waitFor(() => {
+    const row = container.querySelector<HTMLElement>(".ag-row[row-index='0']")!;
+    expect(row).toBeInTheDocument();
+    expect(row.getBoundingClientRect().height).toBe(height);
+    expect(getComputedStyle(row.querySelector(".ag-cell")!).lineHeight).toBe(
+      `${height - 1}px`,
+    );
+  });
+}
+
+const InfiniteScrollDensityGrid = () => {
+  const [density, setDensity] = useState<Density>("high");
+
+  return (
+    <div data-testid="infinite-density-grid">
+      <Button onClick={() => setDensity("touch")}>Touch density</Button>
+      <SaltProvider density={density}>
+        <InfiniteScroll />
+      </SaltProvider>
+    </div>
+  );
+};
+
+export const InfiniteScrollDensityChange: StoryObj<typeof AgGridReact> = {
+  render: () => <InfiniteScrollDensityGrid />,
+};
+InfiniteScrollDensityChange.play = async ({ canvasElement }) => {
+  for (const container of await within(canvasElement).findAllByTestId(
+    "infinite-density-grid",
+  )) {
+    await within(container).findAllByText("AL");
+    await expectFirstRowHeight(container, 25);
+    const gridRoot = container.querySelector(".ag-root-wrapper");
+
+    await userEvent.click(
+      within(container).getByRole("button", { name: "Touch density" }),
+    );
+
+    await expectFirstRowHeight(container, 61);
+    // Changing density must resize the existing grid rather than discard its state.
+    expect(container.querySelector(".ag-root-wrapper")).toBe(gridRoot);
+  }
+};
+
+const CompactDensityGrid = () => {
+  const { containerProps, agGridProps } = useAgGridHelpers({ compact: true });
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        columnDefs={[{ field: "name" }]}
+        rowData={[{ name: "Density row" }]}
+      />
+    </div>
+  );
+};
+
+const NestedCompactDensityGrid = () => {
+  const [density, setDensity] = useState<Density>("medium");
+  return (
+    <div data-testid="nested-compact-density-grid">
+      <SaltProvider density="high">
+        <Button onClick={() => setDensity("high")}>High density</Button>
+        <SaltProvider density={density}>
+          <CompactDensityGrid />
+        </SaltProvider>
+      </SaltProvider>
+    </div>
+  );
+};
+
+export const CompactUsesNearestDensity: StoryObj<typeof AgGridReact> = {
+  render: () => <NestedCompactDensityGrid />,
+};
+CompactUsesNearestDensity.play = async ({ canvasElement }) => {
+  for (const container of await within(canvasElement).findAllByTestId(
+    "nested-compact-density-grid",
+  )) {
+    await expectFirstRowHeight(container, 37);
+    await userEvent.click(
+      within(container).getByRole("button", { name: "High density" }),
+    );
+    await expectFirstRowHeight(container, 21);
+  }
+};
+
+export const CompactExampleOverridesOuterDensity: StoryObj<typeof AgGridReact> =
+  {
+    render: () => (
+      <div data-testid="compact-example-density-grid">
+        <SaltProvider density="medium">
+          <HDCompact />
+        </SaltProvider>
+      </div>
+    ),
+  };
+CompactExampleOverridesOuterDensity.play = async ({ canvasElement }) => {
+  for (const container of await within(canvasElement).findAllByTestId(
+    "compact-example-density-grid",
+  )) {
+    await expectFirstRowHeight(container, 21);
   }
 };

@@ -32,7 +32,7 @@ const HDCompactGrid = () => {
     <StackLayout style={{ width: "100%" }}>
       <Banner>
         <BannerContent>
-          Compact only works in high density, which is enforced here.
+          Compact is intended for high density, which this example uses.
         </BannerContent>
       </Banner>
       <div {...containerProps}>

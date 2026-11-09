@@ -56,7 +56,7 @@ Header variants create a visual distinction between the header and the body of t
 
 ### HD Compact
 
-`ag-theme-salt-compact`, in place of `ag-theme-salt`, makes the grid more compact in high density; in other densities the grid has that density's sizes. HD Compact applies exclusively to AG Grid and is not a systemic feature of the Salt Design System: other Salt components and patterns do not support a compact mode. This example also shows the status bar and cell selection, which are AG Grid Enterprise features.
+`ag-theme-salt-compact`, in place of `ag-theme-salt`, makes the grid more compact and is intended for high density. This example uses a high-density `SaltProvider`; the shared helper applies the compact class only when its nearest provider is high density. HD Compact applies exclusively to AG Grid and is not a systemic feature of the Salt Design System: other Salt components and patterns do not support a compact mode. This example also shows the status bar and cell selection, which are AG Grid Enterprise features.
 
 <LivePreview componentName="ag-grid-theme" exampleName="HDCompact" />
 
@@ -97,6 +97,8 @@ The example below suppresses AG Grid's built-in pagination panel and composes Sa
 ### Infinite scroll
 
 The grid requests additional row blocks as the user scrolls. This example simulates a loading delay by slicing generated local data into blocks. It does not implement remote fetching, filtering, sorting, or failure recovery. Apply [Content status guidance](/salt/patterns/content-status#choosing-how-to-communicate-loading-and-recovery) when building those application behaviors.
+
+The infinite row model needs an explicit `rowHeight` to resize existing rows when density changes. This example derives it from `useDensity()`, using the heights in [Density](./usage#density), so the grid updates without remounting.
 
 <LivePreview componentName="ag-grid-theme" exampleName="InfiniteScroll" />
 

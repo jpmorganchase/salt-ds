@@ -22,7 +22,7 @@ data:
 
 ## Set up
 
-The Salt AG Grid theme is a CSS theme. It takes its mode and density from the nearest `SaltProvider`, so a grid needs one class name and no theme-specific options.
+The Salt AG Grid theme is a CSS theme. Apply it with a container class name; its mode and density come from the nearest `SaltProvider`.
 
 ### 1. Install the packages
 
@@ -80,7 +80,7 @@ Put the grid in a container with the `ag-theme-salt` class name, and set `theme=
 
 - **`theme="legacy"`:** from v33, AG Grid styles grids with its Theming API unless told otherwise, and reports an error when that's used with a CSS theme such as Salt's (error #239). Set `theme="legacy"` on each grid, or once for every grid with `provideGlobalGridOptions({ theme: "legacy" })`. See AG Grid's [guide to legacy themes](https://www.ag-grid.com/javascript-data-grid/theming-migration/#continue-with-legacy-themes).
 - **Height:** AG Grid fills its container, so give the container a height, or set `domLayout="autoHeight"` on the grid to size it to its rows.
-- **Mode and density:** the grid follows the nearest `SaltProvider`, as other Salt components do. Don't set `rowHeight` or `headerHeight`: the theme sets them for each density, and the options override it.
+- **Mode and density:** the theme follows the nearest `SaltProvider`, as other Salt components do. Leave `rowHeight` and `headerHeight` unset to use the theme's sizes, except when the row model needs an explicit height to respond to density changes. See [Density](#density).
 
 ## Density
 
@@ -95,11 +95,15 @@ Rows and the header follow the density of the nearest `SaltProvider`:
 
 A row's height includes the border below it.
 
-AG Grid from v33 updates the grid when density changes. Older versions, such as v28, read the heights when the grid is created, so if your application changes density while a grid is shown, remount the grid, for example with `key={density}`.
+With the client-side row model, AG Grid from v33 updates the grid when density changes. The infinite row model does not update its row heights from CSS changes: use `useDensity()` to set `rowHeight` to the corresponding value in the table, and update that option when density changes. See [Infinite scroll](./examples#infinite-scroll).
+
+Older versions, such as v28, read the theme's heights when the grid is created, so if your application changes density while a grid is shown, remount the grid, for example with `key={density}`.
 
 ### HD Compact
 
-`ag-theme-salt-compact` in place of `ag-theme-salt` makes a grid more compact in high density, with 21px rows and a 20px header. It applies in high density only: in other densities the grid has that density's sizes. HD Compact is specific to AG Grid; other Salt components and patterns don't have a compact mode.
+`ag-theme-salt-compact` in place of `ag-theme-salt` makes a grid more compact, with 21px rows and a 20px header in high density. HD Compact is intended for high density: use `useDensity()` to apply the compact class only when the nearest `SaltProvider` has `density="high"`, and use `ag-theme-salt` otherwise. The example helpers do this; the CSS class itself applies compact sizing wherever it is used, preserving the existing compact classes' behavior.
+
+HD Compact is specific to AG Grid; other Salt components and patterns don't have a compact mode.
 
 ## Class names
 
@@ -108,7 +112,7 @@ The theme's other options are class names:
 | Class name                                                                                        | Where                                      | What it does                                                                                                     |
 | ------------------------------------------------------------------------------------------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
 | `ag-theme-salt`                                                                                   | Container                                  | Applies the theme.                                                                                               |
-| `ag-theme-salt-compact`                                                                           | Container, in place of `ag-theme-salt`     | Applies the theme with HD Compact sizes in high density.                                                         |
+| `ag-theme-salt-compact`                                                                           | Container, in place of `ag-theme-salt`     | Applies the theme with HD Compact sizes, intended for high density.                                              |
 | `ag-theme-salt-variant-secondary`, `ag-theme-salt-variant-tertiary`                               | Container, with the theme class            | Uses the secondary or tertiary background. See [Variants](./examples#variants).                                  |
 | `ag-theme-salt-variant-zebra`                                                                     | Container, with the theme class            | Alternates row backgrounds. See [Zebra](./examples#zebra).                                                       |
 | `ag-theme-salt-header-primary`, `ag-theme-salt-header-secondary`, `ag-theme-salt-header-tertiary` | Container, with the theme class            | Sets the header's background. See [Header variant](./examples#header-variant).                                   |
