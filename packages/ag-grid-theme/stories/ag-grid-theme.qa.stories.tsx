@@ -3,9 +3,11 @@
 import type { StoryObj } from "@storybook/react-vite";
 import type { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
+import { useState } from "react";
 import { expect, userEvent, waitFor, within } from "storybook/test";
 import dataGridExampleColumns from "../src/dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../src/dependencies/dataGridExampleData";
+import { shortColorData } from "../src/dependencies/dataGridExampleDataCellEditors";
 import { useAgGridHelpers } from "../src/dependencies/useAgGridHelpers";
 import { validationCellExampleColumns } from "../src/dependencies/validationExampleColumns";
 import { validationExampleData } from "../src/dependencies/validationExampleData";
@@ -294,6 +296,78 @@ ToolPanelColumns.play = async ({ canvasElement }) => {
   }
 };
 
+// At the default panel width, larger densities need to wrap the filter actions.
+export const ToolPanelFilterActionsLow: StoryObj<typeof AgGridReact> = {
+  render: () => <ToolPanel />,
+  globals: { density: "low" },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const filtersTabs = await canvas.findAllByRole("tab", { name: "Filters" });
+
+    for (const tab of filtersTabs) {
+      await userEvent.click(tab);
+      const gridRoot = tab.closest<HTMLElement>(".ag-root-wrapper")!;
+      const panel = within(gridRoot).getByRole("tabpanel", { name: "Filters" });
+      await userEvent.click(within(panel).getByText("Name", { exact: true }));
+
+      const reset = await within(panel).findByRole("button", { name: "Reset" });
+      const apply = within(panel).getByRole("button", { name: "Apply" });
+      const actions = reset.closest<HTMLElement>(".ag-filter-apply-panel")!;
+      actions.scrollIntoView({ block: "nearest" });
+
+      // DOM visibility alone does not detect a button clipped by overflow:hidden.
+      const actionBounds = actions.getBoundingClientRect();
+      const panelBounds = panel.getBoundingClientRect();
+      for (const button of [reset, apply]) {
+        const bounds = button.getBoundingClientRect();
+        await expect(bounds.width).toBeGreaterThan(0);
+        await expect(bounds.height).toBeGreaterThan(0);
+        await expect(bounds.left).toBeGreaterThanOrEqual(actionBounds.left);
+        await expect(bounds.right).toBeLessThanOrEqual(actionBounds.right);
+        await expect(bounds.top).toBeGreaterThanOrEqual(actionBounds.top);
+        await expect(bounds.bottom).toBeLessThanOrEqual(actionBounds.bottom);
+        await expect(bounds.top).toBeGreaterThanOrEqual(panelBounds.top);
+        await expect(bounds.bottom).toBeLessThanOrEqual(panelBounds.bottom);
+      }
+
+      const alaskaCheckbox = within(panel).getByRole("checkbox", {
+        name: "Alaska",
+      });
+      await expect(alaskaCheckbox).toBeChecked();
+      await expect(
+        within(gridRoot).getByRole("gridcell", { name: "Alaska" }),
+      ).toBeInTheDocument();
+      await userEvent.click(alaskaCheckbox);
+      await expect(alaskaCheckbox).not.toBeChecked();
+      await userEvent.click(apply);
+      await waitFor(async () => {
+        await expect(
+          within(gridRoot).queryByRole("gridcell", {
+            name: "Alaska",
+          }),
+        ).not.toBeInTheDocument();
+      });
+      await userEvent.click(reset);
+      await waitFor(async () => {
+        await expect(
+          within(panel).getByRole("checkbox", { name: "Alaska" }),
+        ).toBeChecked();
+        await expect(
+          within(gridRoot).getByRole("gridcell", {
+            name: "Alaska",
+          }),
+        ).toBeInTheDocument();
+      });
+      actions.scrollIntoView({ block: "nearest" });
+    }
+  },
+};
+
+export const ToolPanelFilterActionsTouch: StoryObj<typeof AgGridReact> = {
+  ...ToolPanelFilterActionsLow,
+  globals: { density: "touch" },
+};
+
 export const EditableCellFocus: StoryObj<typeof AgGridReact> = () => {
   return <ColumnGroup />;
 };
@@ -427,6 +501,84 @@ EditableCellRichSelectEditing.play = async ({ canvasElement }) => {
       "ag-rich-select-virtual-list-container",
     );
   }
+};
+
+const richSelectHitTestingColumns: ColDef[] = [
+  {
+    field: "color",
+    editable: true,
+    cellClass: "editable-cell",
+    cellEditor: "agRichSelectCellEditor",
+    cellEditorParams: {
+      values: shortColorData,
+      valueListMaxHeight: 180,
+    },
+  },
+];
+
+const RichSelectHitTestingGrid = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+  const [rowData] = useState(() => [{ color: "Black" }]);
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={rowData}
+        columnDefs={richSelectHitTestingColumns}
+      />
+    </div>
+  );
+};
+
+// Rich Select computes the clicked row from the list's outer top edge.
+export const RichSelectOptionHitTesting: StoryObj<typeof AgGridReact> = {
+  render: () => <RichSelectHitTestingGrid />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const cells = await canvas.findAllByRole("gridcell", { name: "Black" });
+
+    for (const cell of cells) {
+      const gridRoot = cell.closest<HTMLElement>(".ag-root-wrapper")!;
+
+      for (const { value, bottomInset, scroll } of [
+        { value: "Baby blue", bottomInset: 4, scroll: false },
+        { value: "Baby blue", bottomInset: 1, scroll: false },
+        { value: "White", bottomInset: 1, scroll: true },
+      ]) {
+        await userEvent.dblClick(cell);
+        const listbox = await within(gridRoot).findByRole("listbox");
+        const list = listbox.closest<HTMLElement>(".ag-rich-select-list")!;
+
+        if (scroll) {
+          await userEvent.keyboard("{End}{ArrowUp}");
+          await waitFor(async () => {
+            await expect(list.scrollTop).toBeGreaterThan(0);
+          });
+        }
+
+        const option = await within(listbox).findByText(value, { exact: true });
+        const row = option.closest<HTMLElement>(".ag-virtual-list-item")!;
+        const bounds = row.getBoundingClientRect();
+        const coords = {
+          clientX: bounds.left + bounds.width / 2,
+          clientY: bounds.bottom - bottomInset,
+        };
+        const target = canvasElement.ownerDocument.elementFromPoint(
+          coords.clientX,
+          coords.clientY,
+        )!;
+        await expect(row.contains(target)).toBe(true);
+
+        // Default synthetic clicks have no row-relative clientY and miss this regression.
+        await userEvent.pointer({ keys: "[MouseLeft]", target, coords });
+        await waitFor(async () => {
+          await expect(cell).not.toHaveClass("ag-cell-inline-editing");
+          await expect(cell).toHaveTextContent(value);
+        });
+      }
+    }
+  },
 };
 
 export const ContextMenu: StoryObj<typeof AgGridReact> = () => {

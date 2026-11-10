@@ -300,4 +300,14 @@
 .ag-theme-salt-compact-light .ag-filter-toolpanel .ag-filter-apply-panel,
 .ag-theme-salt-compact-dark .ag-filter-toolpanel .ag-filter-apply-panel {
   padding: var(--salt-spacing-100) 0 0;
+  /* Keep every action visible when the panel is too narrow for a single row. */
+  flex-wrap: wrap;
+  gap: var(--salt-spacing-100);
+}
+
+.ag-theme-salt-light .ag-filter-toolpanel .ag-filter-apply-panel-button,
+.ag-theme-salt-dark .ag-filter-toolpanel .ag-filter-apply-panel-button,
+.ag-theme-salt-compact-light .ag-filter-toolpanel .ag-filter-apply-panel-button,
+.ag-theme-salt-compact-dark .ag-filter-toolpanel .ag-filter-apply-panel-button {
+  margin: 0;
 }
