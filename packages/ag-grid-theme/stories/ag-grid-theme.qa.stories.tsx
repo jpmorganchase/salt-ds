@@ -308,7 +308,12 @@ export const ToolPanelFilterActionsLow: StoryObj<typeof AgGridReact> = {
       await userEvent.click(tab);
       const gridRoot = tab.closest<HTMLElement>(".ag-root-wrapper")!;
       const panel = within(gridRoot).getByRole("tabpanel", { name: "Filters" });
-      await userEvent.click(within(panel).getByText("Name", { exact: true }));
+      await userEvent.click(
+        within(panel).getByText("Name", {
+          selector: ".ag-filter-toolpanel-group-title",
+          exact: true,
+        }),
+      );
 
       const reset = await within(panel).findByRole("button", { name: "Reset" });
       const apply = within(panel).getByRole("button", { name: "Apply" });
@@ -557,18 +562,22 @@ export const RichSelectOptionHitTesting: StoryObj<typeof AgGridReact> = {
           });
         }
 
-        const option = await within(listbox).findByText(value, { exact: true });
-        const row = option.closest<HTMLElement>(".ag-virtual-list-item")!;
-        const bounds = row.getBoundingClientRect();
-        const coords = {
-          clientX: bounds.left + bounds.width / 2,
-          clientY: bounds.bottom - bottomInset,
-        };
-        const target = canvasElement.ownerDocument.elementFromPoint(
-          coords.clientX,
-          coords.clientY,
-        )!;
-        await expect(row.contains(target)).toBe(true);
+        // Virtual rows can exist before their scroll position has settled.
+        const { target, coords } = await waitFor(async () => {
+          const option = within(listbox).getByText(value, { exact: true });
+          const row = option.closest<HTMLElement>(".ag-virtual-list-item")!;
+          const bounds = row.getBoundingClientRect();
+          const coords = {
+            clientX: bounds.left + bounds.width / 2,
+            clientY: bounds.bottom - bottomInset,
+          };
+          const target = canvasElement.ownerDocument.elementFromPoint(
+            coords.clientX,
+            coords.clientY,
+          )!;
+          await expect(row.contains(target)).toBe(true);
+          return { target, coords };
+        });
 
         // Default synthetic clicks have no row-relative clientY and miss this regression.
         await userEvent.pointer({ keys: "[MouseLeft]", target, coords });
