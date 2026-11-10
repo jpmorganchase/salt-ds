@@ -22,7 +22,24 @@ data:
 
 ## Set up
 
-The Salt AG Grid theme is a CSS theme. Apply it with a container class name; its mode and density come from the nearest `SaltProvider`.
+The Salt AG Grid theme is a CSS theme. Apply it with a container class name; its mode and density follow the nearest `SaltProvider` automatically. The theme styles AG Grid; AG Grid and your application remain responsible for grid behavior and data.
+
+For AG Grid v33 and later, this is the smallest setup using Community modules:
+
+```tsx
+import { AllCommunityModule, ModuleRegistry } from "ag-grid-community";
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/styles/ag-grid.css";
+import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
+
+ModuleRegistry.registerModules([AllCommunityModule]);
+
+<div className="ag-theme-salt" style={{ height: 400 }}>
+  <AgGridReact theme="legacy" rowData={rowData} columnDefs={columnDefs} />
+</div>;
+```
+
+Install the packages and review the configuration details below before using the example in your application.
 
 ### 1. Install the packages
 
@@ -84,7 +101,16 @@ Put the grid in a container with the `ag-theme-salt` class name, and set `theme=
 
 ## Density
 
-Rows and the header follow the density of the nearest `SaltProvider`:
+**AG Grid follows the density of the nearest `SaltProvider` automatically.** For the client-side row model on AG Grid v33 and later, leave `rowHeight` and `headerHeight` unset. The theme supplies those sizes through CSS.
+
+There are two exceptions:
+
+- **Infinite row model:** AG Grid does not resize existing rows when CSS density changes. Derive `rowHeight` from `useDensity()` and update it when density changes. See [Infinite scroll](./examples#infinite-scroll).
+- **AG Grid v28 to v32:** these versions read row sizes when the grid is created. If density changes while a grid is visible, remount it with a key such as `key={density}`.
+
+### Size reference
+
+Rows and the header use these sizes:
 
 | Density          | Row height | Header height |
 | ---------------- | ---------- | ------------- |
@@ -95,19 +121,17 @@ Rows and the header follow the density of the nearest `SaltProvider`:
 
 A row's height includes the border below it.
 
-With the client-side row model, AG Grid from v33 updates the grid when density changes. The infinite row model does not update its row heights from CSS changes: use `useDensity()` to set `rowHeight` to the corresponding value in the table, and update that option when density changes. See [Infinite scroll](./examples#infinite-scroll).
+### HD Compact (opt-in)
 
-Older versions, such as v28, read the theme's heights when the grid is created, so if your application changes density while a grid is shown, remount the grid, for example with `key={density}`.
+For specialised, high-density grids, use `ag-theme-salt-compact` instead of `ag-theme-salt` for 21px rows and a 20px header. **HD Compact is not a Salt density:** other Salt components and patterns do not support it. Prefer the standard theme unless your grid needs the extra density.
 
-### HD Compact
+The compact class applies compact sizing wherever it is used, including outside high density, for compatibility. If your application switches density dynamically, apply the compact class only in high density and fall back to `ag-theme-salt` otherwise. The [HD Compact example](./examples#hd-compact) demonstrates this; you do not need `useDensity()` solely to use a static compact grid.
 
-`ag-theme-salt-compact` in place of `ag-theme-salt` makes a grid more compact, with 21px rows and a 20px header in high density. HD Compact is intended for high density: use `useDensity()` to apply the compact class only when the nearest `SaltProvider` has `density="high"`, and use `ag-theme-salt` otherwise. The example helpers do this; the CSS class itself applies compact sizing wherever it is used, preserving the existing compact classes' behavior.
+## Customisation
 
-HD Compact is specific to AG Grid; other Salt components and patterns don't have a compact mode.
+Use AG Grid's configuration APIs for sorting, filtering, editing, selection and data behavior. Use the documented Salt theme classes below for appearance. Avoid depending on AG Grid's internal DOM selectors: those can change between AG Grid versions.
 
-## Class names
-
-The theme's other options are class names:
+The theme's visual options are class names:
 
 | Class name                                                                                        | Where                                      | What it does                                                                                                     |
 | ------------------------------------------------------------------------------------------------- | ------------------------------------------ | ---------------------------------------------------------------------------------------------------------------- |
@@ -121,11 +145,11 @@ The theme's other options are class names:
 | `warning-cell`, `success-cell`, `error-cell`                                                      | A column's `cellClass` or `cellClassRules` | Shows a validation state on an editable cell. See [Cell validation](./examples#cell-validation).                 |
 | `warning-row`, `success-row`, `error-row`                                                         | The grid's `rowClass` or `rowClassRules`   | Shows a validation state on a row. See [Row validation](./examples#row-validation).                              |
 
-`ag-theme-salt-light`, `ag-theme-salt-dark`, `ag-theme-salt-compact-light` and `ag-theme-salt-compact-dark` still work, and are the same as `ag-theme-salt` and `ag-theme-salt-compact`: the mode comes from the `SaltProvider` either way.
-
-## AG Grid versions
+## Migration and compatibility
 
 The theme supports AG Grid v28 to v36.
 
-- **v28 to v32:** skip registering modules and `theme="legacy"`; the rest of the setup is the same.
-- **v33 and later:** follow every step above.
+- **Existing theme classes:** `ag-theme-salt-light`, `ag-theme-salt-dark`, `ag-theme-salt-compact-light` and `ag-theme-salt-compact-dark` continue to work. Prefer `ag-theme-salt` or `ag-theme-salt-compact` for new integrations; mode comes from the nearest `SaltProvider`.
+- **Explicit heights:** if you previously passed `rowHeight` and `headerHeight` for client-side grids, remove them to let CSS respond to density changes on AG Grid v33 and later. Keep reactive `rowHeight` for the infinite row model.
+- **v28 to v32:** skip module registration and `theme="legacy"`; remount the grid if density changes while it is visible.
+- **v33 to v36:** register the required modules and use `theme="legacy"` as shown above.
