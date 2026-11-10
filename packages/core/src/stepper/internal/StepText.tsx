@@ -17,7 +17,7 @@ export function StepText({
   purpose,
   className,
   styleAs = purpose === "description" ? "label" : undefined,
-  color = purpose === "description" ? "secondary" : "primary",
+  color = purpose === "description" ? "secondary" : undefined,
   children,
   ...props
 }: StepTextProps) {
