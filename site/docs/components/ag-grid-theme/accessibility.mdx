@@ -10,6 +10,19 @@ data:
 
 AG Grid provides the grid's keyboard navigation and its ARIA roles: the grid is a `grid`, or a `treegrid` when it groups rows or shows tree data. The Salt theme styles it, including focus. See AG Grid's [accessibility](https://www.ag-grid.com/react-data-grid/accessibility/) and [keyboard navigation](https://www.ag-grid.com/react-data-grid/keyboard-navigation/) guides for what the grid does and the options that change it.
 
+## Responsibilities
+
+| Concern | Who handles it |
+| --- | --- |
+| Grid roles and built-in keyboard navigation | AG Grid |
+| Theme colors and focus styling | Salt theme |
+| Accessible names and context | Application |
+| Custom cell renderers and editors | Application, integrated with AG Grid keyboard behavior |
+| Selection scope and changes to data | AG Grid and application, depending on the data source |
+| Validation messages and recovery | Application |
+
+Applying the Salt theme does not make custom grid content or application behavior accessible automatically. Test the configured grid with keyboard and assistive technology.
+
 ## Best practices
 
 **Say what the grid shows**
@@ -18,9 +31,9 @@ AG Grid provides the grid's keyboard navigation and its ARIA roles: the grid is 
 
 **Announce changes to the rows**
 
-- When filtering, adding or deleting changes the rows away from the user's focus, [announce](/salt/components/aria-announcer/usage#announcing-from-an-event) the result, such as the number of rows shown. See [List filtering](/salt/patterns/list-filtering).
+- When filtering, adding or deleting changes the rows away from the user's focus, announce the result through an appropriate live region, such as the number of rows shown.
 - AG Grid announces some changes itself, such as row selection, its loading and "no rows" overlays, and its own pagination panel, so don't announce those again. Check what your version of AG Grid announces.
-- When an action removes the row that has focus, move focus to a control that remains, such as the same control in the next row. See [Returning focus after an action](/salt/components/dialog/accessibility#returning-focus-after-an-action).
+- When an action removes the row that has focus, move focus to a control that remains, such as the same control in the next row.
 
 **Make selection scope clear**
 
@@ -33,4 +46,3 @@ AG Grid provides the grid's keyboard navigation and its ARIA roles: the grid is 
 **Keep cell content usable with the keyboard**
 
 - Prefer AG Grid's provided cell editors and filters, which work with the grid's keyboard navigation. If a cell renders interactive content, such as a Salt `Button` or `Link`, check that keyboard users can reach and use it, and see AG Grid's guidance on custom components and keyboard events.
-
