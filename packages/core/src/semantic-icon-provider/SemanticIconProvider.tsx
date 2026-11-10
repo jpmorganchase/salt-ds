@@ -15,9 +15,9 @@ import {
   InfoSolidIcon,
   LockedIcon,
   OverflowMenuIcon,
+  ProgressActiveIcon,
   ProgressDraftIcon,
   ProgressInprogressIcon,
-  StepActiveIcon,
   SuccessCircleSolidIcon,
   TearOutIcon,
   TriangleDownIcon,
@@ -85,7 +85,7 @@ export interface SemanticIconProviderProps {
 }
 
 const defaultIconMap: SemanticIconMap = {
-  ActiveIcon: StepActiveIcon,
+  ActiveIcon: ProgressActiveIcon,
   CalendarIcon: CalendarIcon,
   CloseIcon: CloseIcon,
   CollapseGroupIcon: ChevronDownIcon,
