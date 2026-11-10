@@ -1076,7 +1076,7 @@
   },
   {
     "iconName": "progress-active",
-    "synonym": ["circle", "status", "current", "live", "running"],
+    "synonym": ["progress", "circle fill", "status", "work in progress", "wip"],
     "category": "indicators"
   },
   {
