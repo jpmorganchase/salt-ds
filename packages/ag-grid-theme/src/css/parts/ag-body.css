@@ -110,6 +110,12 @@
 .ag-theme-salt-compact-light .ag-cell,
 .ag-theme-salt-compact-dark .ag-cell {
   border-radius: var(--salt-palette-corner-weak, 0);
+  /* These values belong to each cell, including cells in a nested grid. */
+  --cellRangeGap-backgroundClip: border-box;
+  --cellRangeGap-borderTopWidth: 0px;
+  --cellRangeGap-borderBottomWidth: 0px;
+  --cellRangeGap-separatorColor: transparent;
+  --cellRangeGap-leftSeparator: none;
 }
 
 .ag-theme-salt-light .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
@@ -117,6 +123,7 @@
 .ag-theme-salt-compact-light .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell),
 .ag-theme-salt-compact-dark .ag-cell.ag-cell-last-left-pinned:not(.ag-cell-range-right):not(.ag-cell-range-single-cell) {
   border-right-color: var(--salt-separable-secondary-borderColor);
+  --cellRangeGap-separatorColor: var(--salt-separable-secondary-borderColor);
 }
 
 .ag-theme-salt-light .ag-cell.ag-cell-first-right-pinned:not(.ag-cell-range-left):not(.ag-cell-range-single-cell),
@@ -789,6 +796,70 @@
   border-left: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
+/*
+  The cell clips its contents at the padding edge, so extending ::before cannot paint across the transparent right
+  border. Fill that border with only the missing ends of the range outline, retaining the pinned separator between
+  them. This leaves text clipping, validation adornments and the gap after the range unchanged.
+*/
+[class*="ag-theme-salt"] .ag-cell.ag-cell-range-top {
+  --cellRangeGap-borderTopWidth: var(--salt-focused-outlineWidth);
+}
+
+[class*="ag-theme-salt"] .ag-cell.ag-cell-range-bottom {
+  --cellRangeGap-borderBottomWidth: var(--salt-focused-outlineWidth);
+}
+
+[class*="ag-theme-salt"] .ag-ltr .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell):not(.ag-cell-range-right):not(.ag-cell-inline-editing) {
+  border-image-source: linear-gradient(
+    to bottom,
+    var(--salt-focused-outlineColor) var(--cellRangeGap-borderTopWidth),
+    var(--cellRangeGap-separatorColor) var(--cellRangeGap-borderTopWidth),
+    var(--cellRangeGap-separatorColor) calc(100% - var(--cellRangeGap-borderBottomWidth)),
+    var(--salt-focused-outlineColor) calc(100% - var(--cellRangeGap-borderBottomWidth))
+  );
+  border-image-slice: 0 1 0 0;
+  border-image-width: 0 1 0 0;
+  border-image-repeat: stretch;
+}
+
+/*
+  A border image replaces every native border, including the first right-pinned cell's left separator. Paint that
+  separator and its range-outline ends through the border box instead. The transparent last layer controls where the cell's base color ends;
+  the selection overlay below adds its own layer when the cell is tinted.
+*/
+[class*="ag-theme-salt"] .ag-ltr .ag-cell-first-right-pinned.ag-cell-range-selected:not(.ag-cell-range-single-cell):not(.ag-cell-range-right):not(.ag-cell-inline-editing):not(.ag-cell-range-left) {
+  --cellRangeGap-leftSeparator: linear-gradient(
+    to bottom,
+    var(--salt-focused-outlineColor) var(--cellRangeGap-borderTopWidth),
+    var(--salt-separable-secondary-borderColor) var(--cellRangeGap-borderTopWidth),
+    var(--salt-separable-secondary-borderColor) calc(100% - var(--cellRangeGap-borderBottomWidth)),
+    var(--salt-focused-outlineColor) calc(100% - var(--cellRangeGap-borderBottomWidth))
+  );
+}
+
+[class*="ag-theme-salt"] .ag-ltr .ag-cell-first-right-pinned.ag-cell-range-selected:not(.ag-cell-range-single-cell):not(.ag-cell-range-right):not(.ag-cell-inline-editing) {
+  background-image: var(--cellRangeGap-leftSeparator), linear-gradient(transparent, transparent);
+  background-origin: border-box;
+  background-clip: border-box, border-box;
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-size:
+    var(--salt-size-fixed-100) 100%,
+    auto;
+}
+
+[class*="ag-theme-salt"] .ag-ltr .ag-cell-first-right-pinned.ag-cell-range-selected.error-cell:not(.ag-cell-range-single-cell):not(.ag-cell-range-right):not(.ag-cell-inline-editing),
+[class*="ag-theme-salt"] .ag-ltr .ag-cell-first-right-pinned.ag-cell-range-selected.warning-cell:not(.ag-cell-range-single-cell):not(.ag-cell-range-right):not(.ag-cell-inline-editing),
+[class*="ag-theme-salt"] .ag-ltr .ag-cell-first-right-pinned.ag-cell-range-selected.success-cell:not(.ag-cell-range-single-cell):not(.ag-cell-range-right):not(.ag-cell-inline-editing),
+[class*="ag-theme-salt"] .ag-ltr .ag-cell-first-right-pinned.ag-cell-range-selected:not(.ag-cell-range-single-cell):not(.ag-cell-range-right):not(.ag-cell-inline-editing)[style*="background"],
+[class*="ag-theme-salt"] .ag-ltr .ag-has-focus .ag-cell-first-right-pinned.ag-cell-range-selected.ag-cell-focus:not(.ag-cell-range-single-cell):not(.ag-cell-range-right):not(.ag-cell-inline-editing),
+[class*="ag-theme-salt"]
+  .ag-ltr
+  .ag-context-menu-open
+  .ag-cell-first-right-pinned.ag-cell-range-selected.ag-cell-focus:not(.ag-cell-range-single-cell):not(.ag-cell-range-right):not(.ag-cell-inline-editing) {
+  background-clip: border-box, padding-box;
+}
+
 /* Only round the outer corners of a multi-cell range, so it reads as a single rounded selection */
 .ag-theme-salt-light .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell),
 .ag-theme-salt-dark .ag-cell.ag-cell-range-selected:not(.ag-cell-range-single-cell),
@@ -888,6 +959,13 @@
 [class*="ag-theme-salt"] .ag-root:not(.ag-context-menu-open) .ag-body-viewport:not(.ag-has-focus) .ag-row .ag-cell.success-cell.ag-cell-range-selected:not(.ag-cell-inline-editing),
 [class*="ag-theme-salt"] .ag-root:not(.ag-context-menu-open) .ag-body-viewport:not(.ag-has-focus) .ag-row .ag-cell.ag-cell-range-selected:not(.ag-cell-inline-editing)[style*="background"] {
   /* The transparent bottom layer keeps the cell's own color inside the gap, while the range color covers it */
-  background-image: linear-gradient(var(--ag-range-selection-background-color), var(--ag-range-selection-background-color)), linear-gradient(transparent, transparent);
-  background-clip: var(--cellRangeGap-backgroundClip, border-box), padding-box;
+  background-image:
+    var(--cellRangeGap-leftSeparator), linear-gradient(var(--ag-range-selection-background-color), var(--ag-range-selection-background-color)), linear-gradient(transparent, transparent);
+  background-clip: border-box, var(--cellRangeGap-backgroundClip, border-box), padding-box;
+  background-position: left top;
+  background-repeat: no-repeat;
+  background-size:
+    var(--salt-size-fixed-100) 100%,
+    auto,
+    auto;
 }

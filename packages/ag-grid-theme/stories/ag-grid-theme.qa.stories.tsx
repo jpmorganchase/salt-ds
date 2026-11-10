@@ -3,7 +3,7 @@
 import type { StoryObj } from "@storybook/react-vite";
 import type { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { expect, userEvent, within } from "storybook/test";
+import { expect, userEvent, waitFor, within } from "storybook/test";
 import dataGridExampleColumns from "../src/dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../src/dependencies/dataGridExampleData";
 import { useAgGridHelpers } from "../src/dependencies/useAgGridHelpers";
@@ -685,6 +685,60 @@ CellGapsInRangeSelection.play = async ({ canvasElement }) => {
   }
 };
 
+// A single-row range exercises both horizontal borders, including the separator before the right-pinned columns.
+export const CellGapsInRightPinnedRangeSelection: StoryObj<
+  typeof AgGridReact
+> = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={validationExampleData}
+        columnDefs={cellGapColumns.map((column) => ({
+          ...column,
+          pinned:
+            column.field === "min" || column.field === "max"
+              ? "right"
+              : column.pinned,
+        }))}
+        cellSelection
+      />
+    </div>
+  );
+};
+CellGapsInRightPinnedRangeSelection.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const grids = await canvas.findAllByRole("grid");
+
+  for (const grid of grids) {
+    const anchorCell = grid.querySelector<HTMLElement>(
+      '[row-index="1"] [col-id="currency"]',
+    )!;
+
+    await userEvent.click(anchorCell);
+    await userEvent.keyboard(
+      "{Shift>}{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}{/Shift}",
+    );
+
+    await expect(
+      grid.querySelector('[row-index="1"] [col-id="min"]'),
+    ).toHaveClass(
+      "ag-cell-first-right-pinned",
+      "ag-cell-range-top",
+      "ag-cell-range-bottom",
+    );
+    await expect(
+      grid.querySelector('[row-index="1"] [col-id="max"]'),
+    ).toHaveClass(
+      "ag-cell-range-top",
+      "ag-cell-range-bottom",
+      "ag-cell-range-right",
+    );
+  }
+};
+
 // When the grid doesn't have focus, AG Grid colors the cell the range started from, so the gap after it is colored too.
 export const CellGapsInBlurredRangeSelection: StoryObj<
   typeof AgGridReact
@@ -764,4 +818,63 @@ export const ColumnDropChips = () => {
       />
     </div>
   );
+};
+
+// Pivot Mode adds another drop zone; the column picker and every drop zone must remain usable when space is limited.
+export const ColumnDropChipsInPivotMode: StoryObj<typeof AgGridReact> = () => {
+  return <ColumnDropChips />;
+};
+ColumnDropChipsInPivotMode.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const grids = await canvas.findAllByRole("treegrid");
+
+  for (const grid of grids) {
+    const panel = grid
+      .closest(".ag-root-wrapper")!
+      .querySelector<HTMLElement>(".ag-column-panel")!;
+    const pivotToggle = panel.querySelector<HTMLInputElement>(
+      ".ag-pivot-mode-panel input",
+    )!;
+
+    await userEvent.click(pivotToggle);
+    await expect(pivotToggle).toBeChecked();
+
+    const picker = panel.querySelector<HTMLElement>(".ag-column-select")!;
+    const header = picker.querySelector<HTMLElement>(
+      ".ag-column-select-header",
+    )!;
+    const list = picker.querySelector<HTMLElement>(".ag-column-select-list")!;
+
+    // Visibility assertions alone do not detect the original zero-height, clipped picker.
+    await expect(picker.getBoundingClientRect().height).toBeGreaterThan(
+      header.getBoundingClientRect().height,
+    );
+    const search = within(picker).getByRole("textbox", {
+      name: "Filter Columns Input",
+    });
+    await userEvent.type(search, "Capital");
+
+    await waitFor(async () => {
+      const column = within(picker).getByText("Capital");
+      const row = column.closest<HTMLElement>(".ag-virtual-list-item")!;
+      const rowBounds = row.getBoundingClientRect();
+      const listBounds = list.getBoundingClientRect();
+
+      await expect(rowBounds.height).toBeGreaterThan(0);
+      await expect(listBounds.height).toBeGreaterThanOrEqual(rowBounds.height);
+      await expect(rowBounds.top).toBeGreaterThanOrEqual(listBounds.top);
+      await expect(rowBounds.bottom).toBeLessThanOrEqual(listBounds.bottom);
+    });
+    await userEvent.clear(search);
+
+    // The last drop zone must be reachable even when it starts below the panel's viewport.
+    panel.scrollTop = panel.scrollHeight;
+    const lastDropZone = panel.querySelector<HTMLElement>(
+      ".ag-column-drop-vertical-pivot",
+    )!;
+    await expect(
+      lastDropZone.getBoundingClientRect().bottom,
+    ).toBeLessThanOrEqual(panel.getBoundingClientRect().bottom);
+    panel.scrollTop = 0;
+  }
 };
