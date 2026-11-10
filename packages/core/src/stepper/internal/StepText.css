@@ -30,11 +30,6 @@
 
 .saltStepText-description {
   grid-area: description;
-  font-size: var(--salt-text-label-fontSize);
-  font-weight: var(--salt-text-label-fontWeight-bolder);
-  font-family: var(--salt-text-fontFamily);
-  line-height: var(--salt-text-label-lineHeight);
-  letter-spacing: var(--salt-text-letterSpacing);
 }
 
 .saltStepper-vertical .saltStepText-description {

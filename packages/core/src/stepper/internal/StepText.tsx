@@ -16,7 +16,7 @@ export function StepText({
   id,
   purpose,
   className,
-  styleAs = "label",
+  styleAs = purpose === "description" ? "label" : undefined,
   color = purpose === "description" ? "secondary" : "primary",
   children,
   ...props
@@ -32,6 +32,7 @@ export function StepText({
   return (
     <Text
       id={id}
+      styleAs={styleAs}
       color={color}
       className={clsx(withBaseName(), withBaseName(purpose), className)}
       {...props}
