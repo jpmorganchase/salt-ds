@@ -799,8 +799,19 @@ export const NativePagination = () => {
   );
 };
 
-// Grouped columns show as chips in both the row group panel and the Row Groups drop zone of the columns tool panel.
-export const ColumnDropChips = () => {
+const columnDropChipColumns: ColDef[] = dataGridExampleColumns.map(
+  (column) => ({
+    ...column,
+    enableRowGroup: true,
+    rowGroup: column.field === "code" || column.field === "capital",
+  }),
+);
+const columnDropChipsSideBar = {
+  toolPanels: ["columns"],
+  defaultToolPanel: "columns",
+};
+
+const ColumnDropChipsGrid = ({ pivotMode = false }) => {
   const { agGridProps, containerProps } = useAgGridHelpers();
 
   return (
@@ -808,21 +819,21 @@ export const ColumnDropChips = () => {
       <AgGridReact
         {...agGridProps}
         rowData={dataGridExampleData}
-        columnDefs={dataGridExampleColumns.map((column) => ({
-          ...column,
-          enableRowGroup: true,
-          rowGroup: column.field === "code" || column.field === "capital",
-        }))}
+        columnDefs={columnDropChipColumns}
+        pivotMode={pivotMode}
         rowGroupPanelShow="always"
-        sideBar={{ toolPanels: ["columns"], defaultToolPanel: "columns" }}
+        sideBar={columnDropChipsSideBar}
       />
     </div>
   );
 };
 
+// Grouped columns show as chips in both the row group panel and the Row Groups drop zone of the columns tool panel.
+export const ColumnDropChips = () => <ColumnDropChipsGrid />;
+
 // Pivot Mode adds another drop zone; the column picker and every drop zone must remain usable when space is limited.
 export const ColumnDropChipsInPivotMode: StoryObj<typeof AgGridReact> = () => {
-  return <ColumnDropChips />;
+  return <ColumnDropChipsGrid pivotMode />;
 };
 ColumnDropChipsInPivotMode.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
@@ -834,7 +845,6 @@ ColumnDropChipsInPivotMode.play = async ({ canvasElement }) => {
       ".ag-pivot-mode-panel input",
     )!;
 
-    await userEvent.click(pivotToggle);
     await expect(pivotToggle).toBeChecked();
 
     const picker = panel.querySelector<HTMLElement>(".ag-column-select")!;
@@ -870,6 +880,13 @@ ColumnDropChipsInPivotMode.play = async ({ canvasElement }) => {
     const lastDropZone = panel.querySelector<HTMLElement>(
       ".ag-column-drop-vertical-pivot",
     )!;
+    await expect(panel).toBeInTheDocument();
+    await expect(
+      panel.querySelector(".ag-pivot-mode-panel input"),
+    ).toBeChecked();
+    await expect(lastDropZone.getBoundingClientRect().height).toBeGreaterThan(
+      0,
+    );
     await expect(
       lastDropZone.getBoundingClientRect().bottom,
     ).toBeLessThanOrEqual(panel.getBoundingClientRect().bottom);
