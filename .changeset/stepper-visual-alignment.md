@@ -2,10 +2,10 @@
 "@salt-ds/core": patch
 ---
 
-Updated `Stepper` to match the design:
+Updated `Stepper` styling so the current step and completed progress are easier to pick out:
 
-- Pending and active steps use `ProgressDraftIcon` and `ProgressActiveIcon`, so they're visually consistent with the in-progress step icon.
-- Only the active step's label is bold, so the current step stands out.
-- The track after completed and in-progress steps uses the accent color, so progress is easier to see.
-- Descriptions use the label text style, and the secondary text color unless the step has a `status`, so they clearly read as supporting text.
+- Pending and active steps use `ProgressDraftIcon` and `ProgressActiveIcon`, matching the in-progress icon. These are the default `PendingIcon` and `ActiveIcon` in `SemanticIconProvider`, so `useIcon()` returns them too. To keep the previous icons, pass `iconMap={{ PendingIcon: StepDefaultIcon, ActiveIcon: StepActiveIcon }}`.
+- Only the active step's label is bold.
+- The track after completed and in-progress steps uses the accent color.
+- Descriptions use the regular label weight instead of semibold.
 - In a vertical `Stepper`, labels are centered with their icons, and steps are evenly spaced whether or not they have a description.
