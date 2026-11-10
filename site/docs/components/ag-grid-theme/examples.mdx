@@ -10,9 +10,9 @@ data:
 
 <AGThemeProvider>
 
-These examples combine AG Grid behavior with Salt styling. Each grid is set up as [Set up](./usage#set-up) describes: the `ag-theme-salt` class name and `theme="legacy"`, with the mode and density from the nearest `SaltProvider`. The examples register AG Grid Enterprise, and the ones that use an Enterprise feature say so; the rest work with AG Grid Community. Available features and configuration depend on the AG Grid version, row model, and license; the Salt theme does not supply data loading or application logic.
+These examples show how Salt styles AG Grid and how to compose Salt controls with AG Grid behavior. Start with [Set up](./usage#set-up). Salt provides the visual theme, not data loading, filtering logic or application state. The examples register AG Grid Enterprise; examples requiring an Enterprise license are identified below. The others work with Community.
 
-## Styling
+## Appearance
 
 ### Default
 
@@ -56,7 +56,7 @@ Header variants create a visual distinction between the header and the body of t
 
 ### HD Compact
 
-`ag-theme-salt-compact`, in place of `ag-theme-salt`, makes the grid more compact and is intended for high density. This example uses a high-density `SaltProvider`; the shared helper applies the compact class only when its nearest provider is high density. HD Compact applies exclusively to AG Grid and is not a systemic feature of the Salt Design System: other Salt components and patterns do not support a compact mode. This example also shows the status bar and cell selection, which are AG Grid Enterprise features.
+`ag-theme-salt-compact` is an opt-in presentation for specialised high-density grids, not another Salt density. This example applies it only in high density; the class itself retains its compact sizing for compatibility at other densities. The status bar and cell selection shown here require AG Grid Enterprise.
 
 <LivePreview componentName="ag-grid-theme" exampleName="HDCompact" />
 
@@ -72,7 +72,7 @@ Text in header cells can be wrapped when space is limited. This example also sho
 
 <LivePreview componentName="ag-grid-theme" exampleName="WrappedHeader" />
 
-## Data
+## Working with data
 
 ### Floating filter
 
@@ -90,13 +90,13 @@ Users can quickly filter table information with the controls at the top.
 
 Users can move between pages using the controls in the lower right.
 
-The example below suppresses AG Grid's built-in pagination panel and composes Salt controls around AG Grid's pagination state. AG Grid owns the pages of generated local rows; the example synchronizes the active page, page count, page size, and displayed range with the grid. It does not implement remote data loading. Follow [Pagination data and page ownership](../pagination/usage#data-and-page-ownership) when adapting it.
+The example below suppresses AG Grid's built-in pagination panel and composes Salt controls around AG Grid's pagination state. AG Grid owns the pages of generated local rows; the example synchronizes the active page, page count, page size, and displayed range with the grid. It does not implement remote data loading. When adapting it for remote data, decide whether AG Grid or your application owns pagination state, and keep the controls in sync with the actual page and result count.
 
 <LivePreview componentName="ag-grid-theme" exampleName="Pagination" />
 
 ### Infinite scroll
 
-The grid requests additional row blocks as the user scrolls. This example simulates a loading delay by slicing generated local data into blocks. It does not implement remote fetching, filtering, sorting, or failure recovery. Apply [Content status guidance](/salt/patterns/content-status#choosing-how-to-communicate-loading-and-recovery) when building those application behaviors.
+The grid requests additional row blocks as the user scrolls. This example simulates a loading delay by slicing generated local data into blocks. It does not implement remote fetching, filtering, sorting, or failure recovery. For a real data source, handle loading, empty results, errors and retries in your application; the example does not implement those states.
 
 The infinite row model needs an explicit `rowHeight` to resize existing rows when density changes. This example derives it from `useDensity()`, using the heights in [Density](./usage#density), so the grid updates without remounting.
 
@@ -138,11 +138,11 @@ Users can drag rows to rearrange.
 
 <LivePreview componentName="ag-grid-theme" exampleName="DragRowOrder" />
 
-## Selection and editing
+## Interaction
 
 ### Checkbox selection
 
-Users can select rows via checkboxes. Make the scope of a bulk selection explicit: loaded rows, the current page, filtered results, or all records, as supported by the grid configuration and data source. Do not imply that unloaded records are selected unless the application supports that operation. Follow [List filtering guidance](/salt/patterns/list-filtering#clearing-and-selection) when filters hide selected records or affect unsaved edits.
+Users can select rows via checkboxes. Make the scope of a bulk selection explicit: loaded rows, the current page, filtered results, or all records, as supported by the grid configuration and data source. Do not imply that unloaded records are selected unless the application supports that operation. When filtering hides selected records or unsaved edits, decide whether selection persists and communicate that behavior to users.
 
 <LivePreview componentName="ag-grid-theme" exampleName="CheckboxSelection" />
 
@@ -168,7 +168,7 @@ Rows can show validation states (warning, success and error) using the class nam
 
 <LivePreview componentName="ag-grid-theme" exampleName="RowValidation" />
 
-## AG Grid Enterprise features
+## Advanced features (AG Grid Enterprise)
 
 These examples need `ag-grid-enterprise` and a license, with its modules registered as [Set up](./usage#set-up) shows.
 
