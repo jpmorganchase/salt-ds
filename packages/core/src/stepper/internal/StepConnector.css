@@ -25,7 +25,7 @@
 }
 
 .saltStepper-vertical .saltStepConnector {
-  min-height: var(--salt-size-base);
+  min-height: var(--salt-spacing-300);
   align-self: stretch;
   justify-self: center;
 

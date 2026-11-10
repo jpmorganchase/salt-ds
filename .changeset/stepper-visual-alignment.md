@@ -8,3 +8,4 @@ Fixed `Stepper` not matching the design:
 - The track after a completed or in-progress `Step` now uses the accent color.
 - A `Step` description now uses the label text style, and the secondary text color when it has no `status`.
 - A `Step` label is now bold only when the step is active, at any nesting depth.
+- In a vertical `Stepper`, a `Step` label is now centered with its icon, and a `Step` without a description no longer has extra space below it.
