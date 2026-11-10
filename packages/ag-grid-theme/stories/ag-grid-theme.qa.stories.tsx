@@ -826,12 +826,10 @@ export const ColumnDropChipsInPivotMode: StoryObj<typeof AgGridReact> = () => {
 };
 ColumnDropChipsInPivotMode.play = async ({ canvasElement }) => {
   const canvas = within(canvasElement);
-  const grids = await canvas.findAllByRole("treegrid");
+  const pivotModeLabels = await canvas.findAllByText("Pivot Mode");
 
-  for (const grid of grids) {
-    const panel = grid
-      .closest(".ag-root-wrapper")!
-      .querySelector<HTMLElement>(".ag-column-panel")!;
+  for (const label of pivotModeLabels) {
+    const panel = label.closest<HTMLElement>(".ag-column-panel")!;
     const pivotToggle = panel.querySelector<HTMLInputElement>(
       ".ag-pivot-mode-panel input",
     )!;
