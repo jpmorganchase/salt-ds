@@ -969,6 +969,8 @@
   /* The transparent bottom layer keeps the cell's own color inside the gap, while the range color covers it */
   background-image:
     var(--cellRangeGap-leftSeparator), linear-gradient(var(--ag-range-selection-background-color), var(--ag-range-selection-background-color)), linear-gradient(transparent, transparent);
+  /* Size the non-repeating range overlay across the cell's transparent border as well as its padding box. */
+  background-origin: border-box;
   background-clip: border-box, var(--cellRangeGap-backgroundClip, border-box), padding-box;
   background-position: left top;
   background-repeat: no-repeat;
