@@ -17,15 +17,8 @@
   padding-left: calc(var(--step-depth) * var(--salt-spacing-100));
 }
 
-.saltStep-depth-0.saltStep-stage-active > .saltText.saltStepText-label,
-.saltStep-depth-0.saltStep-hasActiveStep > .saltText.saltStepText-label {
+.saltStep-stage-active > .saltText.saltStepText-label {
   font-weight: var(--salt-text-fontWeight-bolder);
-}
-
-@supports selector(:has(*)) {
-  .saltStep-depth-0:has(.saltStep-stage-active) > .saltText.saltStepText-label {
-    font-weight: var(--salt-text-fontWeight-bolder);
-  }
 }
 
 .saltStepText-description {
