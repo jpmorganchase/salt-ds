@@ -1,10 +1,5 @@
 .saltStepText-label {
   grid-area: label;
-  font-size: var(--salt-text-fontSize);
-  line-height: var(--salt-text-lineHeight);
-  font-family: var(--salt-text-fontFamily);
-  color: var(--salt-content-primary-foreground);
-  font-weight: var(--salt-text-fontWeight);
 }
 
 .saltStepper-horizontal .saltStepText-label {
@@ -36,12 +31,4 @@
 .saltStepper-vertical .saltStepText-description {
   padding-bottom: var(--salt-spacing-300);
   padding-left: calc(var(--step-depth) * var(--salt-spacing-100));
-}
-
-.saltStep-status-warning > .saltStepText-description {
-  color: var(--salt-status-warning-foreground-informative);
-}
-
-.saltStep-status-error > .saltStepText-description {
-  color: var(--salt-status-error-foreground-informative);
 }

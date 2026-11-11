@@ -212,7 +212,12 @@ export const Step = forwardRef<HTMLLIElement, StepProps>(function Step(
         </StepText>
       )}
       {description && (
-        <StepText id={descriptionId} purpose="description" aria-hidden>
+        <StepText
+          id={descriptionId}
+          purpose="description"
+          color={status}
+          aria-hidden
+        >
           {description}
         </StepText>
       )}
