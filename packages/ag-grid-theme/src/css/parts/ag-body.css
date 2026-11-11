@@ -257,23 +257,33 @@
   --salt-editable-borderColor-hover: var(--salt-status-error-borderColor);
 }
 
-.ag-theme-salt .ag-cell.error-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
-.ag-theme-salt-light .ag-cell.error-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
-.ag-theme-salt-dark .ag-cell.error-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
-.ag-theme-salt-compact .ag-cell.error-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
-.ag-theme-salt-compact-light .ag-cell.error-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
-.ag-theme-salt-compact-dark .ag-cell.error-cell:not(.numeric-cell):not(.ag-cell-inline-editing) {
+/* Right-aligned cells, from the numeric-cell class or AG Grid's rightAligned
+   and numericColumn column types (ag-right-aligned-cell), put the status
+   adornment on the left, away from the value, and keep the edited value on
+   the right. AG Grid's own CSS aligns its types' text. */
+.ag-theme-salt .ag-cell.error-cell:not(.numeric-cell):not(.ag-right-aligned-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-light .ag-cell.error-cell:not(.numeric-cell):not(.ag-right-aligned-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .ag-cell.error-cell:not(.numeric-cell):not(.ag-right-aligned-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact .ag-cell.error-cell:not(.numeric-cell):not(.ag-right-aligned-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .ag-cell.error-cell:not(.numeric-cell):not(.ag-right-aligned-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .ag-cell.error-cell:not(.numeric-cell):not(.ag-right-aligned-cell):not(.ag-cell-inline-editing) {
   background: var(--salt-status-error-background);
   /* Give room for status adornment, with a gap between it and the text */
   padding-right: calc(2 * var(--salt-spacing-100) + var(--salt-size-adornment));
 }
 
 .ag-theme-salt .ag-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt .ag-cell.error-cell.ag-right-aligned-cell:not(.ag-cell-inline-editing),
 .ag-theme-salt-light .ag-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-light .ag-cell.error-cell.ag-right-aligned-cell:not(.ag-cell-inline-editing),
 .ag-theme-salt-dark .ag-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .ag-cell.error-cell.ag-right-aligned-cell:not(.ag-cell-inline-editing),
 .ag-theme-salt-compact .ag-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact .ag-cell.error-cell.ag-right-aligned-cell:not(.ag-cell-inline-editing),
 .ag-theme-salt-compact-light .ag-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing),
-.ag-theme-salt-compact-dark .ag-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing) {
+.ag-theme-salt-compact-light .ag-cell.error-cell.ag-right-aligned-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .ag-cell.error-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .ag-cell.error-cell.ag-right-aligned-cell:not(.ag-cell-inline-editing) {
   background: var(--salt-status-error-background);
   /* Give room for status adornment, with a gap between it and the text */
   padding-left: calc(2 * var(--salt-spacing-100) + var(--salt-size-adornment));
@@ -300,21 +310,27 @@
     no-repeat 50% 50%;
 }
 
-.ag-theme-salt .ag-cell.error-cell:not(.numeric-cell)::after,
-.ag-theme-salt-light .ag-cell.error-cell:not(.numeric-cell)::after,
-.ag-theme-salt-dark .ag-cell.error-cell:not(.numeric-cell)::after,
-.ag-theme-salt-compact .ag-cell.error-cell:not(.numeric-cell)::after,
-.ag-theme-salt-compact-light .ag-cell.error-cell:not(.numeric-cell)::after,
-.ag-theme-salt-compact-dark .ag-cell.error-cell:not(.numeric-cell)::after {
+.ag-theme-salt .ag-cell.error-cell:not(.numeric-cell):not(.ag-right-aligned-cell)::after,
+.ag-theme-salt-light .ag-cell.error-cell:not(.numeric-cell):not(.ag-right-aligned-cell)::after,
+.ag-theme-salt-dark .ag-cell.error-cell:not(.numeric-cell):not(.ag-right-aligned-cell)::after,
+.ag-theme-salt-compact .ag-cell.error-cell:not(.numeric-cell):not(.ag-right-aligned-cell)::after,
+.ag-theme-salt-compact-light .ag-cell.error-cell:not(.numeric-cell):not(.ag-right-aligned-cell)::after,
+.ag-theme-salt-compact-dark .ag-cell.error-cell:not(.numeric-cell):not(.ag-right-aligned-cell)::after {
   right: var(--salt-spacing-100);
 }
 
 .ag-theme-salt .ag-cell.error-cell.numeric-cell::after,
+.ag-theme-salt .ag-cell.error-cell.ag-right-aligned-cell::after,
 .ag-theme-salt-light .ag-cell.error-cell.numeric-cell::after,
+.ag-theme-salt-light .ag-cell.error-cell.ag-right-aligned-cell::after,
 .ag-theme-salt-dark .ag-cell.error-cell.numeric-cell::after,
+.ag-theme-salt-dark .ag-cell.error-cell.ag-right-aligned-cell::after,
 .ag-theme-salt-compact .ag-cell.error-cell.numeric-cell::after,
+.ag-theme-salt-compact .ag-cell.error-cell.ag-right-aligned-cell::after,
 .ag-theme-salt-compact-light .ag-cell.error-cell.numeric-cell::after,
-.ag-theme-salt-compact-dark .ag-cell.error-cell.numeric-cell::after {
+.ag-theme-salt-compact-light .ag-cell.error-cell.ag-right-aligned-cell::after,
+.ag-theme-salt-compact-dark .ag-cell.error-cell.numeric-cell::after,
+.ag-theme-salt-compact-dark .ag-cell.error-cell.ag-right-aligned-cell::after {
   left: var(--salt-spacing-100);
 }
 
@@ -332,23 +348,29 @@
   --salt-editable-borderColor-hover: var(--salt-status-warning-borderColor);
 }
 
-.ag-theme-salt .ag-cell.warning-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
-.ag-theme-salt-light .ag-cell.warning-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
-.ag-theme-salt-dark .ag-cell.warning-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
-.ag-theme-salt-compact .ag-cell.warning-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
-.ag-theme-salt-compact-light .ag-cell.warning-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
-.ag-theme-salt-compact-dark .ag-cell.warning-cell:not(.numeric-cell):not(.ag-cell-inline-editing) {
+.ag-theme-salt .ag-cell.warning-cell:not(.numeric-cell):not(.ag-right-aligned-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-light .ag-cell.warning-cell:not(.numeric-cell):not(.ag-right-aligned-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .ag-cell.warning-cell:not(.numeric-cell):not(.ag-right-aligned-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact .ag-cell.warning-cell:not(.numeric-cell):not(.ag-right-aligned-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .ag-cell.warning-cell:not(.numeric-cell):not(.ag-right-aligned-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .ag-cell.warning-cell:not(.numeric-cell):not(.ag-right-aligned-cell):not(.ag-cell-inline-editing) {
   background: var(--salt-status-warning-background);
   /* Give room for status adornment, with a gap between it and the text */
   padding-right: calc(2 * var(--salt-spacing-100) + var(--salt-size-adornment));
 }
 
 .ag-theme-salt .ag-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt .ag-cell.warning-cell.ag-right-aligned-cell:not(.ag-cell-inline-editing),
 .ag-theme-salt-light .ag-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-light .ag-cell.warning-cell.ag-right-aligned-cell:not(.ag-cell-inline-editing),
 .ag-theme-salt-dark .ag-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .ag-cell.warning-cell.ag-right-aligned-cell:not(.ag-cell-inline-editing),
 .ag-theme-salt-compact .ag-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact .ag-cell.warning-cell.ag-right-aligned-cell:not(.ag-cell-inline-editing),
 .ag-theme-salt-compact-light .ag-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing),
-.ag-theme-salt-compact-dark .ag-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing) {
+.ag-theme-salt-compact-light .ag-cell.warning-cell.ag-right-aligned-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .ag-cell.warning-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .ag-cell.warning-cell.ag-right-aligned-cell:not(.ag-cell-inline-editing) {
   background: var(--salt-status-warning-background);
   /* Give room for status adornment, with a gap between it and the text */
   padding-left: calc(2 * var(--salt-spacing-100) + var(--salt-size-adornment));
@@ -374,21 +396,27 @@
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6' %3E%3Cpath d='M0 6L3 0L6 6H0Z' /%3E%3C/svg%3E") no-repeat 50% 50%;
 }
 
-.ag-theme-salt .ag-cell.warning-cell:not(.numeric-cell)::after,
-.ag-theme-salt-light .ag-cell.warning-cell:not(.numeric-cell)::after,
-.ag-theme-salt-dark .ag-cell.warning-cell:not(.numeric-cell)::after,
-.ag-theme-salt-compact .ag-cell.warning-cell:not(.numeric-cell)::after,
-.ag-theme-salt-compact-light .ag-cell.warning-cell:not(.numeric-cell)::after,
-.ag-theme-salt-compact-dark .ag-cell.warning-cell:not(.numeric-cell)::after {
+.ag-theme-salt .ag-cell.warning-cell:not(.numeric-cell):not(.ag-right-aligned-cell)::after,
+.ag-theme-salt-light .ag-cell.warning-cell:not(.numeric-cell):not(.ag-right-aligned-cell)::after,
+.ag-theme-salt-dark .ag-cell.warning-cell:not(.numeric-cell):not(.ag-right-aligned-cell)::after,
+.ag-theme-salt-compact .ag-cell.warning-cell:not(.numeric-cell):not(.ag-right-aligned-cell)::after,
+.ag-theme-salt-compact-light .ag-cell.warning-cell:not(.numeric-cell):not(.ag-right-aligned-cell)::after,
+.ag-theme-salt-compact-dark .ag-cell.warning-cell:not(.numeric-cell):not(.ag-right-aligned-cell)::after {
   right: var(--salt-spacing-100);
 }
 
 .ag-theme-salt .ag-cell.warning-cell.numeric-cell::after,
+.ag-theme-salt .ag-cell.warning-cell.ag-right-aligned-cell::after,
 .ag-theme-salt-light .ag-cell.warning-cell.numeric-cell::after,
+.ag-theme-salt-light .ag-cell.warning-cell.ag-right-aligned-cell::after,
 .ag-theme-salt-dark .ag-cell.warning-cell.numeric-cell::after,
+.ag-theme-salt-dark .ag-cell.warning-cell.ag-right-aligned-cell::after,
 .ag-theme-salt-compact .ag-cell.warning-cell.numeric-cell::after,
+.ag-theme-salt-compact .ag-cell.warning-cell.ag-right-aligned-cell::after,
 .ag-theme-salt-compact-light .ag-cell.warning-cell.numeric-cell::after,
-.ag-theme-salt-compact-dark .ag-cell.warning-cell.numeric-cell::after {
+.ag-theme-salt-compact-light .ag-cell.warning-cell.ag-right-aligned-cell::after,
+.ag-theme-salt-compact-dark .ag-cell.warning-cell.numeric-cell::after,
+.ag-theme-salt-compact-dark .ag-cell.warning-cell.ag-right-aligned-cell::after {
   left: var(--salt-spacing-100);
 }
 
@@ -406,23 +434,29 @@
   --salt-editable-borderColor-hover: var(--salt-status-success-borderColor);
 }
 
-.ag-theme-salt .ag-cell.success-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
-.ag-theme-salt-light .ag-cell.success-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
-.ag-theme-salt-dark .ag-cell.success-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
-.ag-theme-salt-compact .ag-cell.success-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
-.ag-theme-salt-compact-light .ag-cell.success-cell:not(.numeric-cell):not(.ag-cell-inline-editing),
-.ag-theme-salt-compact-dark .ag-cell.success-cell:not(.numeric-cell):not(.ag-cell-inline-editing) {
+.ag-theme-salt .ag-cell.success-cell:not(.numeric-cell):not(.ag-right-aligned-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-light .ag-cell.success-cell:not(.numeric-cell):not(.ag-right-aligned-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .ag-cell.success-cell:not(.numeric-cell):not(.ag-right-aligned-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact .ag-cell.success-cell:not(.numeric-cell):not(.ag-right-aligned-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-light .ag-cell.success-cell:not(.numeric-cell):not(.ag-right-aligned-cell):not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .ag-cell.success-cell:not(.numeric-cell):not(.ag-right-aligned-cell):not(.ag-cell-inline-editing) {
   background: var(--salt-status-success-background);
   /* Give room for status adornment, with a gap between it and the text */
   padding-right: calc(2 * var(--salt-spacing-100) + var(--salt-size-adornment));
 }
 
 .ag-theme-salt .ag-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt .ag-cell.success-cell.ag-right-aligned-cell:not(.ag-cell-inline-editing),
 .ag-theme-salt-light .ag-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-light .ag-cell.success-cell.ag-right-aligned-cell:not(.ag-cell-inline-editing),
 .ag-theme-salt-dark .ag-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-dark .ag-cell.success-cell.ag-right-aligned-cell:not(.ag-cell-inline-editing),
 .ag-theme-salt-compact .ag-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact .ag-cell.success-cell.ag-right-aligned-cell:not(.ag-cell-inline-editing),
 .ag-theme-salt-compact-light .ag-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing),
-.ag-theme-salt-compact-dark .ag-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing) {
+.ag-theme-salt-compact-light .ag-cell.success-cell.ag-right-aligned-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .ag-cell.success-cell.numeric-cell:not(.ag-cell-inline-editing),
+.ag-theme-salt-compact-dark .ag-cell.success-cell.ag-right-aligned-cell:not(.ag-cell-inline-editing) {
   background: var(--salt-status-success-background);
   /* Give room for status adornment, with a gap between it and the text */
   padding-left: calc(2 * var(--salt-spacing-100) + var(--salt-size-adornment));
@@ -449,21 +483,27 @@
     no-repeat 50% 50%;
 }
 
-.ag-theme-salt .ag-cell.success-cell:not(.numeric-cell)::after,
-.ag-theme-salt-light .ag-cell.success-cell:not(.numeric-cell)::after,
-.ag-theme-salt-dark .ag-cell.success-cell:not(.numeric-cell)::after,
-.ag-theme-salt-compact .ag-cell.success-cell:not(.numeric-cell)::after,
-.ag-theme-salt-compact-light .ag-cell.success-cell:not(.numeric-cell)::after,
-.ag-theme-salt-compact-dark .ag-cell.success-cell:not(.numeric-cell)::after {
+.ag-theme-salt .ag-cell.success-cell:not(.numeric-cell):not(.ag-right-aligned-cell)::after,
+.ag-theme-salt-light .ag-cell.success-cell:not(.numeric-cell):not(.ag-right-aligned-cell)::after,
+.ag-theme-salt-dark .ag-cell.success-cell:not(.numeric-cell):not(.ag-right-aligned-cell)::after,
+.ag-theme-salt-compact .ag-cell.success-cell:not(.numeric-cell):not(.ag-right-aligned-cell)::after,
+.ag-theme-salt-compact-light .ag-cell.success-cell:not(.numeric-cell):not(.ag-right-aligned-cell)::after,
+.ag-theme-salt-compact-dark .ag-cell.success-cell:not(.numeric-cell):not(.ag-right-aligned-cell)::after {
   right: var(--salt-spacing-100);
 }
 
 .ag-theme-salt .ag-cell.success-cell.numeric-cell::after,
+.ag-theme-salt .ag-cell.success-cell.ag-right-aligned-cell::after,
 .ag-theme-salt-light .ag-cell.success-cell.numeric-cell::after,
+.ag-theme-salt-light .ag-cell.success-cell.ag-right-aligned-cell::after,
 .ag-theme-salt-dark .ag-cell.success-cell.numeric-cell::after,
+.ag-theme-salt-dark .ag-cell.success-cell.ag-right-aligned-cell::after,
 .ag-theme-salt-compact .ag-cell.success-cell.numeric-cell::after,
+.ag-theme-salt-compact .ag-cell.success-cell.ag-right-aligned-cell::after,
 .ag-theme-salt-compact-light .ag-cell.success-cell.numeric-cell::after,
-.ag-theme-salt-compact-dark .ag-cell.success-cell.numeric-cell::after {
+.ag-theme-salt-compact-light .ag-cell.success-cell.ag-right-aligned-cell::after,
+.ag-theme-salt-compact-dark .ag-cell.success-cell.numeric-cell::after,
+.ag-theme-salt-compact-dark .ag-cell.success-cell.ag-right-aligned-cell::after {
   left: var(--salt-spacing-100);
 }
 
@@ -484,11 +524,17 @@
 
 /* Special case when user finish editing and click out side of the grid. */
 .ag-theme-salt .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus),
+.ag-theme-salt .ag-cell.ag-right-aligned-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus),
 .ag-theme-salt-light .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus),
+.ag-theme-salt-light .ag-cell.ag-right-aligned-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus),
 .ag-theme-salt-dark .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus),
+.ag-theme-salt-dark .ag-cell.ag-right-aligned-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus),
 .ag-theme-salt-compact .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus),
+.ag-theme-salt-compact .ag-cell.ag-right-aligned-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus),
 .ag-theme-salt-compact-light .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus),
-.ag-theme-salt-compact-dark .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus) {
+.ag-theme-salt-compact-light .ag-cell.ag-right-aligned-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus),
+.ag-theme-salt-compact-dark .ag-cell.numeric-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus),
+.ag-theme-salt-compact-dark .ag-cell.ag-right-aligned-cell.ag-cell-inline-editing .ag-cell-editor input:not(:focus) {
   text-align: right;
 }
 
