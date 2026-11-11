@@ -1,7 +1,5 @@
 import {
   Button,
-  capitalize,
-  type Density,
   Dropdown,
   type Mode,
   Option,
@@ -25,6 +23,11 @@ import {
   SettingsIcon,
 } from "@salt-ds/icons";
 import { useState } from "react";
+import {
+  getDensityDisplayName,
+  type PreviewDensity,
+  previewDensities,
+} from "./previewDensity";
 import styles from "./ThemeSettingsOverlay.module.css";
 
 export type PreviewMode = Mode | "system";
@@ -45,13 +48,6 @@ const descriptions: Record<ThemeSettingsScope, string> = {
   textStyles: "Adjust the theme settings for the text styles in this preview",
 };
 
-const densityOptions: Density[] = ["high", "medium", "low", "touch", "mobile"];
-
-export function getDensityDisplayName(density: Density) {
-  const label = capitalize(density);
-  return density === "touch" ? `${label} (Deprecated)` : label;
-}
-
 export interface ThemeSettingsOverlayProps<T extends string> {
   /**
    * Determines the description, which explains what the settings affect.
@@ -62,11 +58,11 @@ export interface ThemeSettingsOverlayProps<T extends string> {
    * e.g. the heading of the section the settings belong to.
    */
   contextLabel?: string;
-  density?: Density;
+  density?: PreviewDensity;
   /**
    * The density control is only shown when this is provided.
    */
-  onDensityChange?: (density: Density) => void;
+  onDensityChange?: (density: PreviewDensity) => void;
   mode?: PreviewMode;
   onModeChange: (mode: PreviewMode) => void;
   theme?: T;
@@ -136,7 +132,7 @@ export function ThemeSettingsOverlay<T extends string>({
                 >
                   Density
                 </Text>
-                <Dropdown<Density>
+                <Dropdown<PreviewDensity>
                   bordered
                   aria-labelledby={densityLabelId}
                   selected={density ? [density] : []}
@@ -147,7 +143,7 @@ export function ThemeSettingsOverlay<T extends string>({
                   }}
                   valueToString={getDensityDisplayName}
                 >
-                  {densityOptions.map((value) => (
+                  {previewDensities.map((value) => (
                     <Option key={value} value={value} />
                   ))}
                 </Dropdown>
