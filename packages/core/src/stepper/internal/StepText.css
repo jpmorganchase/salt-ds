@@ -22,7 +22,7 @@
   font-weight: var(--salt-text-fontWeight-bolder);
 }
 
-/* A collapsed step stands in for the hidden active step it contains. :has() also covers steps the JS check can't see, such as those rendered by a wrapper component. */
+/* A collapsed step that contains active step. JS fallback is in hasActiveStep.ts */
 @supports selector(:has(*)) {
   .saltStep-collapsed:has(.saltStep-stage-active) > .saltText.saltStepText-label {
     font-weight: var(--salt-text-fontWeight-bolder);
