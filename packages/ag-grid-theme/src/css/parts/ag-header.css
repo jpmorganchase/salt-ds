@@ -39,9 +39,13 @@
 .ag-theme-salt-light .ag-header-cell:focus-visible,
 .ag-theme-salt-dark .ag-header-cell:focus-visible,
 .ag-theme-salt-compact-light .ag-header-cell:focus-visible,
-.ag-theme-salt-compact-dark .ag-header-cell:focus-visible {
+.ag-theme-salt-compact-dark .ag-header-cell:focus-visible,
+.ag-theme-salt-light .ag-header-group-cell:focus-visible,
+.ag-theme-salt-dark .ag-header-group-cell:focus-visible,
+.ag-theme-salt-compact-light .ag-header-group-cell:focus-visible,
+.ag-theme-salt-compact-dark .ag-header-group-cell:focus-visible {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
-  outline-offset: -2px;
+  outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
   border-width: 0;
 }
 
@@ -125,7 +129,7 @@
 .ag-theme-salt-dark .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total),
 .ag-theme-salt-compact-light .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total),
 .ag-theme-salt-compact-dark .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total) {
-  border-top-color: var(--salt-container-bold-borderColor);
+  border-top-color: var(--salt-separable-tertiary-borderColor);
 }
 
 .ag-theme-salt-light .ag-header-row:not(:first-child) .ag-header-cell:not(.ag-header-span-height.ag-header-span-total):focus,
@@ -137,6 +141,18 @@
 .ag-theme-salt-compact-light .ag-header-row:not(:first-child) .ag-header-group-cell.ag-header-group-cell-with-group:focus,
 .ag-theme-salt-compact-dark .ag-header-row:not(:first-child) .ag-header-group-cell.ag-header-group-cell-with-group:focus {
   border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
+}
+
+/*
+  Column group open / close buttons point the way the group will move, matching Figma: an open group shows a left
+  chevron (close) and a closed group shows a right chevron (open). Row groups keep their own icons.
+*/
+.ag-theme-salt-light .ag-header-group-cell,
+.ag-theme-salt-dark .ag-header-group-cell,
+.ag-theme-salt-compact-light .ag-header-group-cell,
+.ag-theme-salt-compact-dark .ag-header-group-cell {
+  --ag-icon-font-code-expanded: var(--ag-icon-font-code-previous);
+  --ag-icon-font-code-contracted: var(--ag-icon-font-code-next);
 }
 
 /** Move sort arrow towards menu icon */
@@ -183,6 +199,14 @@
   padding-right: var(--salt-spacing-100);
 }
 
+/* Keep truncated header text apart from the menu and filter icons, matching the Figma "Text container" padding */
+.ag-theme-salt-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-label,
+.ag-theme-salt-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-label,
+.ag-theme-salt-compact-light .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-label,
+.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell.ag-right-aligned-header .ag-header-cell-label {
+  padding-left: var(--salt-spacing-100);
+}
+
 .ag-theme-salt-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon,
 .ag-theme-salt-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon,
 .ag-theme-salt-compact-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-label-icon,
@@ -208,30 +232,106 @@
   background-color: transparent;
 }
 
-.ag-theme-salt-light .ag-floating-filter,
-.ag-theme-salt-dark .ag-floating-filter,
-.ag-theme-salt-compact-light .ag-floating-filter,
-.ag-theme-salt-compact-dark .ag-floating-filter {
-  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
-}
-
 .ag-theme-salt-light .ag-header-cell.ag-floating-filter,
 .ag-theme-salt-dark .ag-header-cell.ag-floating-filter,
 .ag-theme-salt-compact-light .ag-header-cell.ag-floating-filter,
 .ag-theme-salt-compact-dark .ag-header-cell.ag-floating-filter {
-  padding-left: 0;
+  /* Keeps the filter box (z-index: -1) above the header background */
+  isolation: isolate;
+  padding-inline-start: 0;
+  /* 1px gap so adjacent filter boxes don't share a border */
+  padding-inline-end: var(--salt-size-fixed-100);
 }
 
-/**
-  From v31, there's a "active" state of floating filter button next to the input. So we want to put the focus ring
-  not around the whole header cell, but around the input container.
+/* The filter box replaces the line between the column header row and the floating filter row */
+.ag-theme-salt-light .ag-header-row.ag-header-row-not-first .ag-header-cell.ag-floating-filter,
+.ag-theme-salt-dark .ag-header-row.ag-header-row-not-first .ag-header-cell.ag-floating-filter,
+.ag-theme-salt-compact-light .ag-header-row.ag-header-row-not-first .ag-header-cell.ag-floating-filter,
+.ag-theme-salt-compact-dark .ag-header-row.ag-header-row-not-first .ag-header-cell.ag-floating-filter,
+.ag-theme-salt-light .ag-header-row:not(:first-child) .ag-header-cell.ag-floating-filter.ag-floating-filter,
+.ag-theme-salt-dark .ag-header-row:not(:first-child) .ag-header-cell.ag-floating-filter.ag-floating-filter,
+.ag-theme-salt-compact-light .ag-header-row:not(:first-child) .ag-header-cell.ag-floating-filter.ag-floating-filter,
+.ag-theme-salt-compact-dark .ag-header-row:not(:first-child) .ag-header-cell.ag-floating-filter.ag-floating-filter {
+  border-top: none;
+}
+
+.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-full-body,
+.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-full-body,
+.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-full-body,
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-full-body {
+  /* Used when the floating filter button is suppressed */
+  position: relative;
+}
+
+/* Reserve space for the floating filter button, which sits inside the filter box */
+.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-body,
+.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-body,
+.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-body,
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-body {
+  padding-inline-end: calc(var(--ag-icon-size) + 2 * var(--salt-spacing-100));
+}
+
+.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-button,
+.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-button,
+.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-button,
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-button {
+  position: absolute;
+  inset-block: 0;
+  /*
+    The button is the size of the icon, with its hover drawn around it. Center the icon where the Figma button
+    (--salt-size-base less --salt-spacing-100) would be, inset by --salt-spacing-100 from the filter box.
+  */
+  inset-inline-end: calc(var(--salt-spacing-100) + var(--salt-size-fixed-100) + (var(--salt-size-base) - var(--salt-spacing-100) - var(--ag-icon-size)) / 2);
+  align-items: center;
+  margin: 0;
+}
+
+/* Lets the filter box below be positioned against the full width floating filter body */
+.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-input,
+.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-input,
+.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-input,
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-input,
+.ag-theme-salt-light .ag-floating-filter .ag-date-floating-filter-wrapper,
+.ag-theme-salt-light .ag-floating-filter .ag-date-floating-filter-wrapper .ag-filter-filter,
+.ag-theme-salt-dark .ag-floating-filter .ag-date-floating-filter-wrapper,
+.ag-theme-salt-dark .ag-floating-filter .ag-date-floating-filter-wrapper .ag-filter-filter,
+.ag-theme-salt-compact-light .ag-floating-filter .ag-date-floating-filter-wrapper,
+.ag-theme-salt-compact-light .ag-floating-filter .ag-date-floating-filter-wrapper .ag-filter-filter,
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-date-floating-filter-wrapper,
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-date-floating-filter-wrapper .ag-filter-filter,
+.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden),
+.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden),
+.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden),
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden) {
+  position: static;
+}
+
+/*
+  Filter box (Figma "Filter cell"), drawn from the visible input field so it is not shown for columns without a
+  floating filter. Read-only filters (e.g. set filter or multiple conditions) have a disabled input and no box,
+  matching the Figma "Read-only" floating filter. They can still be changed from the floating filter button.
 */
-.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-body:focus-within,
-.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-body:focus-within,
-.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-body:focus-within,
-.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-body:focus-within {
-  outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
-  outline-offset: -2px;
+.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden):not(.ag-disabled)::before,
+.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden):not(.ag-disabled)::before,
+.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden):not(.ag-disabled)::before,
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden):not(.ag-disabled)::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  box-sizing: border-box;
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
+  border-radius: var(--salt-palette-corner-weak, 0);
+}
+
+/* Active: focus ring around the whole box, including the floating filter button */
+.ag-theme-salt-light .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden):focus-within::before,
+.ag-theme-salt-dark .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden):focus-within::before,
+.ag-theme-salt-compact-light .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden):focus-within::before,
+.ag-theme-salt-compact-dark .ag-floating-filter .ag-floating-filter-input .ag-input-field:not(.ag-hidden):focus-within::before {
+  background-color: var(--salt-editable-primary-background);
+  border: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
 .ag-theme-salt-light .ag-header-cell-menu-button:hover,
@@ -258,14 +358,6 @@
 .ag-theme-salt-dark .ag-set-filter-group-icons:hover,
 .ag-theme-salt-compact-light .ag-set-filter-group-icons:hover,
 .ag-theme-salt-compact-dark .ag-set-filter-group-icons:hover,
-.ag-theme-salt-light .ag-group-expanded .ag-icon:hover,
-.ag-theme-salt-dark .ag-group-expanded .ag-icon:hover,
-.ag-theme-salt-compact-light .ag-group-expanded .ag-icon:hover,
-.ag-theme-salt-compact-dark .ag-group-expanded .ag-icon:hover,
-.ag-theme-salt-light .ag-group-contracted .ag-icon:hover,
-.ag-theme-salt-dark .ag-group-contracted .ag-icon:hover,
-.ag-theme-salt-compact-light .ag-group-contracted .ag-icon:hover,
-.ag-theme-salt-compact-dark .ag-group-contracted .ag-icon:hover,
 .ag-theme-salt-light .ag-chart-settings-prev:hover,
 .ag-theme-salt-dark .ag-chart-settings-prev:hover,
 .ag-theme-salt-compact-light .ag-chart-settings-prev:hover,
@@ -297,13 +389,63 @@
 .ag-theme-salt-light .ag-chart-menu-icon:hover,
 .ag-theme-salt-dark .ag-chart-menu-icon:hover,
 .ag-theme-salt-compact-light .ag-chart-menu-icon:hover,
-.ag-theme-salt-compact-dark .ag-chart-menu-icon:hover {
-  /* Button is the same size of icon, we're copying what ag quartz theme is doing */
-  box-shadow: 0 0 0 var(--salt-spacing-50) var(--salt-actionable-subtle-background-hover);
-  background-color: var(--salt-actionable-subtle-background-hover);
+.ag-theme-salt-compact-dark .ag-chart-menu-icon:hover,
+.ag-theme-salt-light .ag-chart-menu-toolbar-button:hover,
+.ag-theme-salt-dark .ag-chart-menu-toolbar-button:hover,
+.ag-theme-salt-compact-light .ag-chart-menu-toolbar-button:hover,
+.ag-theme-salt-compact-dark .ag-chart-menu-toolbar-button:hover {
   --ag-icon-font-color: var(--salt-actionable-subtle-foreground-hover);
   --ag-icon-font-color-filter: var(--salt-actionable-subtle-foreground-hover);
   --ag-icon-font-color-menu-alt: var(--salt-actionable-subtle-foreground-hover);
+}
+
+/*
+  Icon buttons are drawn like Salt's Button in an Input adornment: --salt-size-base less --salt-spacing-100, with
+  --salt-palette-corner-weaker, matching the Figma "Floating filter button". The button is drawn behind the icon,
+  centered on it, so the layout and click area don't change.
+  Icons inside a button (.ag-panel-title-bar-button-icon, .ag-chart-menu-icon) use the button's hover.
+*/
+[class*="ag-theme-salt"] .ag-header-cell-menu-button,
+[class*="ag-theme-salt"] .ag-header-cell-filter-button,
+[class*="ag-theme-salt"] .ag-panel-title-bar-button,
+[class*="ag-theme-salt"] .ag-header-expand-icon,
+[class*="ag-theme-salt"] .ag-column-group-icons,
+[class*="ag-theme-salt"] .ag-set-filter-group-icons,
+[class*="ag-theme-salt"] .ag-chart-settings-prev,
+[class*="ag-theme-salt"] .ag-chart-settings-next,
+[class*="ag-theme-salt"] .ag-chart-menu-toolbar-button,
+[class*="ag-theme-salt"] .ag-group-title-bar-icon,
+[class*="ag-theme-salt"] .ag-column-select-header-icon,
+[class*="ag-theme-salt"] .ag-floating-filter-button-button,
+[class*="ag-theme-salt"] .ag-filter-toolpanel-expand {
+  position: relative;
+  isolation: isolate;
+}
+
+[class*="ag-theme-salt"] .ag-header-cell-menu-button:hover::before,
+[class*="ag-theme-salt"] .ag-header-cell-filter-button:hover::before,
+[class*="ag-theme-salt"] .ag-panel-title-bar-button:hover::before,
+[class*="ag-theme-salt"] .ag-header-expand-icon:hover::before,
+[class*="ag-theme-salt"] .ag-column-group-icons:hover::before,
+[class*="ag-theme-salt"] .ag-set-filter-group-icons:hover::before,
+[class*="ag-theme-salt"] .ag-chart-settings-prev:hover::before,
+[class*="ag-theme-salt"] .ag-chart-settings-next:hover::before,
+[class*="ag-theme-salt"] .ag-chart-menu-toolbar-button:hover::before,
+[class*="ag-theme-salt"] .ag-group-title-bar-icon:hover::before,
+[class*="ag-theme-salt"] .ag-column-select-header-icon:hover::before,
+[class*="ag-theme-salt"] .ag-floating-filter-button-button:hover::before,
+[class*="ag-theme-salt"] .ag-filter-toolpanel-expand:hover::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: -1;
+  width: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  transform: translate(-50%, -50%);
+  border-radius: var(--salt-palette-corner-weaker, 0);
+  background-color: var(--salt-actionable-background-hover);
+  pointer-events: none;
 }
 
 /* Make filter and menu icon apart, to accomodate hover effects above */
@@ -331,20 +473,13 @@
   width: 0;
 }
 
-.ag-theme-salt-light .ag-ltr .ag-floating-filter-button,
-.ag-theme-salt-dark .ag-ltr .ag-floating-filter-button,
-.ag-theme-salt-compact-light .ag-ltr .ag-floating-filter-button,
-.ag-theme-salt-compact-dark .ag-ltr .ag-floating-filter-button {
-  margin-left: var(--salt-spacing-100);
-}
-
 .ag-theme-salt-light .ag-ltr .ag-floating-filter-button .ag-button:focus,
 .ag-theme-salt-dark .ag-ltr .ag-floating-filter-button .ag-button:focus,
 .ag-theme-salt-compact-light .ag-ltr .ag-floating-filter-button .ag-button:focus,
 .ag-theme-salt-compact-dark .ag-ltr .ag-floating-filter-button .ag-button:focus {
   border: none;
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
-  outline-offset: 2px;
+  outline-offset: var(--salt-focused-outlineOffset);
 }
 
 .ag-theme-salt-light .ag-floating-filter input[class^="ag-"][type="number"],
@@ -360,11 +495,15 @@
 .ag-theme-salt-compact-light .ag-floating-filter input[class^="ag-"][type="date"],
 .ag-theme-salt-compact-dark .ag-floating-filter input[class^="ag-"][type="date"] {
   /* Avoid floating filter's input clips focus ring */
-  height: calc(var(--salt-size-base) + var(--salt-spacing-100) - 6px);
+  height: calc(var(--salt-size-base) + var(--salt-spacing-100) - 2 * (var(--salt-focused-outlineWidth) + var(--salt-size-fixed-100)));
   /* Give internal <input> space for the outline */
   margin-inline: var(--salt-spacing-50);
   /* Together with margin, matching Salt Input padding */
   padding: 0 var(--salt-spacing-50);
+  color: var(--salt-content-secondary-foreground);
+  /* Filter values use body text (Figma "Body 1"), rather than the header label text inherited from the header row */
+  font-size: var(--salt-text-fontSize);
+  font-weight: var(--salt-text-fontWeight);
 }
 
 .ag-theme-salt-light .ag-floating-filter-input input[class^="ag-"][type="text"],
@@ -404,7 +543,7 @@
   /* Color for menu / filter icons */
   --ag-icon-font-color: var(--salt-actionable-subtle-foreground-active);
   /** don't show hover style, don't want to flip between light / dark */
-  --salt-actionable-subtle-background-hover: var(--salt-actionable-subtle-background-active);
+  --salt-actionable-background-hover: var(--salt-actionable-subtle-background-active);
 }
 
 .ag-theme-salt-light .ag-header-cell.ag-column-menu-visible .ag-icon,
