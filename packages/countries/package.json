@@ -44,7 +44,7 @@
     }
   },
   "devDependencies": {
-    "glob": "^13.0.0",
+    "glob": "^14.0.0",
     "mustache": "^4.2.0",
     "rimraf": "^6.0.0",
     "svgo": "^4.0.0"
