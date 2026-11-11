@@ -356,6 +356,7 @@ export * from "./PresentationSolid";
 export * from "./PriceLadder";
 export * from "./Print";
 export * from "./PrintSolid";
+export * from "./ProgressActive";
 export * from "./ProgressCancelled";
 export * from "./ProgressClosed";
 export * from "./ProgressComplete";
