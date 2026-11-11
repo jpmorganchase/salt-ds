@@ -17,8 +17,16 @@
   padding-left: calc(var(--step-depth) * var(--salt-spacing-100));
 }
 
-.saltStep-stage-active > .saltText.saltStepText-label {
+.saltStep-stage-active > .saltText.saltStepText-label,
+.saltStep-collapsed.saltStep-hasActiveStep > .saltText.saltStepText-label {
   font-weight: var(--salt-text-fontWeight-bolder);
+}
+
+/* A collapsed step stands in for the hidden active step it contains. :has() also covers steps the JS check can't see, such as those rendered by a wrapper component. */
+@supports selector(:has(*)) {
+  .saltStep-collapsed:has(.saltStep-stage-active) > .saltText.saltStepText-label {
+    font-weight: var(--salt-text-fontWeight-bolder);
+  }
 }
 
 .saltStepText-description {
