@@ -1,0 +1,96 @@
+---
+title: Decision button group
+description: "A decision button group presents a small set of related choices at the point where a user needs to decide."
+layout: DetailPattern
+tags:
+  - pattern
+aliases:
+  - /salt/patterns/decision-button-group
+data:
+  resources:
+    [
+      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-decision-button-group--default", label: "Examples" },
+    ]
+  components: ["Button", "Toggle Button"]
+  relatedPatterns: ["Button Bar"]
+---
+
+A decision button group arranges a group of related actions or mutually exclusive choices in a compact layout.
+
+<Diagram
+  src="/img/patterns/decision-button-group/decision-button-group-1.png"
+  srcDark="/img/patterns/decision-button-group/decision-button-group-1-dark.png"
+  alt="A default decision button group with Reject and Approve actions."
+  border
+/>
+
+## When to use
+
+Use a decision button group when:
+
+- The group represents one compact decision point in a flow.
+- The actions have equal or near-equal priority.
+
+### When not to use
+
+- One action is clearly primary and the others are secondary; use a [button bar](/salt/patterns/button-bar) instead.
+- The actions are unrelated or do not benefit from being grouped visually.
+- The group is being used as a page-level action bar, toolbar, or command surface.
+
+## How to build
+
+### Anatomy
+
+A decision button group typically contains two or more buttons placed together with consistent spacing:
+
+1. **Buttons:** Each button performs an action and activating one button does not select it. Buttons return to their resting state after activation.
+2. **Standalone toggle buttons:** The buttons represent a choice and the selected option needs to remain visible. If the choice is optional, selecting the currently selected option may clear the selection.
+
+<Diagram
+  src="/img/patterns/decision-button-group/decision-button-group-2.png"
+  srcDark="/img/patterns/decision-button-group/decision-button-group-2-dark.png"
+  alt="Comparison of a default decision button group and a selectable decision button group."
+  border
+/>
+
+### Layout
+
+- Use [Button](/salt/components/button) to display actions in a decision button group.
+- Use a standalone [Toggle Button](/salt/components/toggle-button) to display actions in a selectable decision button group.
+
+<Diagram
+  src="/img/patterns/decision-button-group/decision-button-group-3.png"
+  srcDark="/img/patterns/decision-button-group/decision-button-group-3-dark.png"
+  alt="A decision button group with spacing-100 between the buttons."
+  border
+/>
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+  Use spacing-100 between buttons. For more information, read Salt guidance on
+  horizontal spacing.
+</GuidanceCallout>
+
+## Selectable button group
+
+A decision button group can support two different interaction models. Choose the model based on what the user is doing. Use a selectable decision button group when each button represents a choice, rating, or decision. The user is choosing something, and the selected button remains visible as the current value. For example, Like/Dislike or Thumbs up/Thumbs down.
+
+## Deselection
+
+Use deselection behavior on a selectable decision button group when it represents a single choice from a small set of related options. When a user selects an option, any previously selected option in the group is deselected. This prevents conflicting selections.
+
+For optional choices, selecting the currently selected option may clear the selection and return the group to its initial unselected state. Use this only when “no choice” is a valid outcome, such as a feedback rating that can be removed.
+
+<Diagram
+  src="/img/patterns/decision-button-group/decision-button-group-4.png"
+  srcDark="/img/patterns/decision-button-group/decision-button-group-4-dark.png"
+  alt="Selectable decision button group examples showing selected and deselected options."
+  border
+/>
+
+## Grouping for accessibility
+
+Group the buttons together visually and semantically so assistive technology can identify the controls as part of one decision or action set. The group should always have an accessible name when the surrounding context does not already make its purpose clear.
+
+Good accessible group names describe the decision being made, not the visual layout. Each button still needs its own accessible name. The group name explains the shared purpose; the button name explains the individual option.
+
+:fragment{src="./fragments/feedback.mdx"}
