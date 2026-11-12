@@ -6,6 +6,7 @@ import { glob } from "glob";
 import Mustache from "mustache";
 import { optimize } from "svgo";
 import { svgAttributeMap } from "./svgAttributeMap.mjs";
+import { validateIconSynonyms } from "./validateIconSynonyms.mjs";
 
 const biome = new Biome();
 
@@ -429,6 +430,17 @@ const siteAllPath = path.join(
   basePath,
   "../../../site/src/components/icon-preview/allIconsList.ts",
 );
+
+const iconSynonyms = JSON.parse(
+  await fs.promises.readFile(
+    path.join(
+      basePath,
+      "../../../site/src/components/icon-preview/salt-icon-synonym.json",
+    ),
+    "utf-8",
+  ),
+);
+validateIconSynonyms(DEPRECATED_ICONS, iconSynonyms);
 
 await fs.promises.mkdir(componentsPath, { recursive: true });
 const icons = await generateIconComponents({
