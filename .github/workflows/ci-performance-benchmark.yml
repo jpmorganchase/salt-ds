@@ -13,22 +13,16 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  browser-tests:
+  compatibility-tests:
     name: React ${{ matrix.react }} / ${{ matrix.variant.name }} / sample ${{ matrix.sample }}
     runs-on: ubuntu-latest
     timeout-minutes: 20
     strategy:
       fail-fast: false
       matrix:
-        react: [19]
-        sample: [1, 2]
+        react: [16, 17, 18]
+        sample: [1]
         variant:
-          - name: baseline
-            ref: c69bf4650e6193e5161d57fe3bf78dce6f2c7888
-            shard: ""
-          - name: split
-            ref: ""
-            shard: ""
           - name: shard-1
             ref: ""
             shard: "1/2"
@@ -143,3 +137,289 @@ jobs:
           path: ${{ runner.temp }}/ci-performance
           if-no-files-found: warn
           retention-days: 7
+
+  paired-browser-tests:
+    name: React 19 / paired ${{ matrix.order }} / shard ${{ matrix.shard }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2]
+        order: [baseline-first, split-first]
+    env:
+      BASELINE_REF: c69bf4650e6193e5161d57fe3bf78dce6f2c7888
+      SPLIT_REF: 28af86c5d76936a76cff97368ed45772b8daa6e4
+      BENCHMARK_SHARD: ${{ matrix.shard }}/2
+      BENCHMARK_ORDER: ${{ matrix.order }}
+      BENCHMARK_JOB_NAME: React 19 / paired ${{ matrix.order }} / shard ${{ matrix.shard }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          fetch-depth: 3
+          persist-credentials: false
+      - name: Verify identical build inputs
+        run: |
+          git cat-file -e "$BASELINE_REF^{commit}"
+          git cat-file -e "$SPLIT_REF^{commit}"
+          for ref in "$SPLIT_REF" "$GITHUB_SHA"; do
+            git diff --exit-code "$BASELINE_REF" "$ref" -- . \
+              ':(exclude).github/workflows/ci-performance-benchmark.yml' \
+              ':(exclude)packages/date-components/src/__tests__/__e2e__/calendar' \
+              ':(exclude)packages/date-components/src/__tests__/__e2e__/date-picker'
+          done
+      - name: Use Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: "26"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Setup React
+        run: |
+          yarn set resolution react@npm:^18.0.0 npm:^19
+          yarn set resolution react-dom@npm:^18.0.0 npm:^19
+      - name: Prepare paired benchmark
+        id: prepare
+        run: |
+          mkdir -p "$RUNNER_TEMP/paired-ci-performance"
+          node <<'NODE'
+          const { execFileSync } = require("node:child_process");
+          const { writeFileSync } = require("node:fs");
+          const os = require("node:os");
+          const path = require("node:path");
+          const command = (name, args) => execFileSync(name, args, { encoding: "utf8" }).trim();
+          const react = require("react/package.json").version;
+          const reactDom = require("react-dom/package.json").version;
+          for (const version of [react, reactDom]) {
+            if (version.split(".")[0] !== "19") {
+              throw new Error(`Expected React 19, received ${version}`);
+            }
+          }
+          const metadata = {
+            jobName: process.env.BENCHMARK_JOB_NAME,
+            order: process.env.BENCHMARK_ORDER,
+            sample: 1,
+            shard: process.env.BENCHMARK_SHARD,
+            commit: command("git", ["rev-parse", "HEAD"]),
+            workflowCommit: process.env.GITHUB_SHA,
+            baselineRef: process.env.BASELINE_REF,
+            splitRef: process.env.SPLIT_REF,
+            runId: process.env.GITHUB_RUN_ID,
+            runAttempt: process.env.GITHUB_RUN_ATTEMPT,
+            recordedAt: new Date().toISOString(),
+            runner: {
+              name: process.env.RUNNER_NAME,
+              os: process.env.RUNNER_OS,
+              arch: process.env.RUNNER_ARCH,
+              imageOS: process.env.ImageOS,
+              imageVersion: process.env.ImageVersion,
+              cpuModels: [...new Set(os.cpus().map(({ model }) => model))],
+              logicalCPUs: os.cpus().length,
+              availableParallelism: os.availableParallelism(),
+              totalMemory: os.totalmem(),
+            },
+            versions: {
+              node: process.version,
+              yarn: command("yarn", ["--version"]),
+              react,
+              reactDom,
+              vitest: require("vitest/package.json").version,
+              playwright: require("playwright/package.json").version,
+              chrome: command("google-chrome", ["--version"]),
+            },
+          };
+          writeFileSync(path.join(process.env.RUNNER_TEMP, "paired-ci-performance", "environment.json"), JSON.stringify(metadata, null, 2));
+          console.log(JSON.stringify(metadata, null, 2));
+          NODE
+          cat > "$RUNNER_TEMP/paired-ci-performance/run-variant.cjs" <<'NODE'
+          const { execFileSync, spawnSync } = require("node:child_process");
+          const { mkdirSync, readFileSync, rmSync, writeFileSync } = require("node:fs");
+          const path = require("node:path");
+          const root = path.join(process.env.RUNNER_TEMP, "paired-ci-performance");
+          const environment = JSON.parse(readFileSync(path.join(root, "environment.json"), "utf8"));
+          const variant = process.env.BENCHMARK_VARIANT;
+          const testRef = { baseline: environment.baselineRef, split: environment.splitRef }[variant];
+          if (!testRef) throw new Error(`Unknown variant: ${variant}`);
+          const restoredPaths = [
+            "packages/date-components/src/__tests__/__e2e__/calendar",
+            "packages/date-components/src/__tests__/__e2e__/date-picker",
+          ];
+          // Update the index too, so switching layouts removes the prior layout's files.
+          execFileSync("git", ["restore", `--source=${testRef}`, "--staged", "--worktree", "--", ...restoredPaths], { stdio: "inherit" });
+          execFileSync("git", ["diff", "--exit-code", testRef, "--", ...restoredPaths], { stdio: "inherit" });
+          const clearedCaches = ["node_modules/.vite", ".vitest", "node_modules/.vitest-cache"];
+          for (const cache of clearedCaches) {
+            rmSync(path.resolve(cache), { recursive: true, force: true });
+          }
+          const output = path.join(root, variant);
+          mkdirSync(output, { recursive: true });
+          const metadata = {
+            ...environment,
+            variant,
+            testRef,
+            restoredPaths,
+            clearedCaches,
+            testStep: process.env.BENCHMARK_TEST_STEP,
+            position: Number(process.env.BENCHMARK_POSITION),
+            testStartedAt: new Date().toISOString(),
+          };
+          const metadataPath = path.join(output, "metadata.json");
+          writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
+          const started = performance.now();
+          const result = spawnSync("yarn", [
+            "run", "test:components",
+            `--shard=${environment.shard}`,
+            "--reporter=default", "--reporter=json",
+            `--outputFile.json=${path.join(output, "results.json")}`,
+          ], { stdio: "inherit" });
+          Object.assign(metadata, {
+            testCompletedAt: new Date().toISOString(),
+            testDurationMs: performance.now() - started,
+            testExitCode: result.status,
+            testSignal: result.signal,
+          });
+          writeFileSync(metadataPath, JSON.stringify(metadata, null, 2));
+          if (result.error) console.error(result.error);
+          process.exitCode = result.status ?? 1;
+          NODE
+          cat > "$RUNNER_TEMP/paired-ci-performance/collect-evidence.sh" <<'BASH'
+          set -euo pipefail
+          output="$RUNNER_TEMP/paired-ci-performance/${1:?variant is required}"
+          mkdir -p "$output"
+          if [[ -d .vitest/attachments ]]; then
+            cp -R .vitest/attachments "$output/attachments"
+          fi
+          if [[ -d test/browser/screenshots ]]; then
+            mv test/browser/screenshots "$output/screenshots"
+          fi
+          BASH
+      - name: Build packages
+        id: build
+        run: yarn run build
+      - name: Test baseline first
+        id: baseline_first
+        if: ${{ !cancelled() && steps.prepare.outcome == 'success' && steps.build.outcome == 'success' && matrix.order == 'baseline-first' }}
+        timeout-minutes: 12
+        env:
+          BENCHMARK_VARIANT: baseline
+          BENCHMARK_TEST_STEP: Test baseline first
+          BENCHMARK_POSITION: "1"
+        run: node "$RUNNER_TEMP/paired-ci-performance/run-variant.cjs"
+      - name: Collect baseline-first evidence
+        if: ${{ always() && steps.baseline_first.outcome != 'skipped' }}
+        run: bash "$RUNNER_TEMP/paired-ci-performance/collect-evidence.sh" baseline
+      - name: Test split second
+        id: split_second
+        if: ${{ !cancelled() && steps.prepare.outcome == 'success' && steps.build.outcome == 'success' && matrix.order == 'baseline-first' }}
+        timeout-minutes: 12
+        env:
+          BENCHMARK_VARIANT: split
+          BENCHMARK_TEST_STEP: Test split second
+          BENCHMARK_POSITION: "2"
+        run: node "$RUNNER_TEMP/paired-ci-performance/run-variant.cjs"
+      - name: Collect split-second evidence
+        if: ${{ always() && steps.split_second.outcome != 'skipped' }}
+        run: bash "$RUNNER_TEMP/paired-ci-performance/collect-evidence.sh" split
+      - name: Test split first
+        id: split_first
+        if: ${{ !cancelled() && steps.prepare.outcome == 'success' && steps.build.outcome == 'success' && matrix.order == 'split-first' }}
+        timeout-minutes: 12
+        env:
+          BENCHMARK_VARIANT: split
+          BENCHMARK_TEST_STEP: Test split first
+          BENCHMARK_POSITION: "1"
+        run: node "$RUNNER_TEMP/paired-ci-performance/run-variant.cjs"
+      - name: Collect split-first evidence
+        if: ${{ always() && steps.split_first.outcome != 'skipped' }}
+        run: bash "$RUNNER_TEMP/paired-ci-performance/collect-evidence.sh" split
+      - name: Test baseline second
+        id: baseline_second
+        if: ${{ !cancelled() && steps.prepare.outcome == 'success' && steps.build.outcome == 'success' && matrix.order == 'split-first' }}
+        timeout-minutes: 12
+        env:
+          BENCHMARK_VARIANT: baseline
+          BENCHMARK_TEST_STEP: Test baseline second
+          BENCHMARK_POSITION: "2"
+        run: node "$RUNNER_TEMP/paired-ci-performance/run-variant.cjs"
+      - name: Collect baseline-second evidence
+        if: ${{ always() && steps.baseline_second.outcome != 'skipped' }}
+        run: bash "$RUNNER_TEMP/paired-ci-performance/collect-evidence.sh" baseline
+      - name: Summarize both test outcomes
+        if: always()
+        env:
+          BASELINE_FIRST: ${{ steps.baseline_first.conclusion }}
+          SPLIT_SECOND: ${{ steps.split_second.conclusion }}
+          SPLIT_FIRST: ${{ steps.split_first.conclusion }}
+          BASELINE_SECOND: ${{ steps.baseline_second.conclusion }}
+        run: |
+          node <<'NODE'
+          const { appendFileSync, mkdirSync, writeFileSync } = require("node:fs");
+          const path = require("node:path");
+          const conclusions = {
+            "Test baseline first": process.env.BASELINE_FIRST,
+            "Test split second": process.env.SPLIT_SECOND,
+            "Test split first": process.env.SPLIT_FIRST,
+            "Test baseline second": process.env.BASELINE_SECOND,
+          };
+          const expected = process.env.BENCHMARK_ORDER === "baseline-first"
+            ? ["Test baseline first", "Test split second"]
+            : ["Test split first", "Test baseline second"];
+          const success = expected.every((step) => conclusions[step] === "success");
+          const summary = { order: process.env.BENCHMARK_ORDER, shard: process.env.BENCHMARK_SHARD, conclusions, success };
+          for (const variant of ["baseline", "split"]) {
+            const output = path.join(process.env.RUNNER_TEMP, "paired-ci-performance", variant);
+            mkdirSync(output, { recursive: true });
+            writeFileSync(path.join(output, "step-conclusions.json"), JSON.stringify(summary, null, 2));
+          }
+          appendFileSync(process.env.GITHUB_STEP_SUMMARY, [
+            "## Paired browser test outcomes", "", "| Step | Conclusion |", "| --- | --- |",
+            ...Object.entries(conclusions).map(([step, conclusion]) => `| ${step} | ${conclusion} |`), "",
+          ].join("\n"));
+          process.exitCode = success ? 0 : 1;
+          NODE
+      - name: Upload baseline evidence
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        if: always()
+        with:
+          name: ci-performance-react19-paired-${{ matrix.order }}-shard${{ matrix.shard }}-baseline
+          path: ${{ runner.temp }}/paired-ci-performance/baseline
+          if-no-files-found: warn
+          retention-days: 7
+      - name: Upload split evidence
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        if: always()
+        with:
+          name: ci-performance-react19-paired-${{ matrix.order }}-shard${{ matrix.shard }}-split
+          path: ${{ runner.temp }}/paired-ci-performance/split
+          if-no-files-found: warn
+          retention-days: 7
+
+  candidate-validation:
+    name: Validate benchmark candidate
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Use Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: "26"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn install --immutable
+      - name: Typecheck
+        run: yarn run typecheck
+      - name: Typecheck React 19
+        run: yarn run typecheck:react19
+      - name: Check changed test formatting and lint
+        run: >-
+          yarn biome ci --reporter=github
+          packages/date-components/src/__tests__/__e2e__/calendar
+          packages/date-components/src/__tests__/__e2e__/date-picker
+      - name: Check workflow formatting
+        run: yarn exec prettier --check .github/workflows/ci-performance-benchmark.yml
