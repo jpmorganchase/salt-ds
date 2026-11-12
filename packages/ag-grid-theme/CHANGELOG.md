@@ -458,7 +458,7 @@
   + import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
   ```
 
-  2. Update classnames used on the container around `AgGridReact`, which no longer has density portion. If you previously copied `useAgGridHelpers`, you'll need to copy a new version from [here](https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts).
+  2. Update classnames used on the container around `AgGridReact`, which no longer has density portion. If you previously copied `useAgGridHelpers`, you'll need to copy a new version from [here](https://github.com/jpmorganchase/salt-ds/blob/2cb267b0ee4b86cf73464508936b7fe902095fe5/site/src/examples/ag-grid-theme/useAgGridHelpers.ts).
 
   In light mode:
 
