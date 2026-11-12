@@ -101,12 +101,21 @@ Put the grid in a container with the `ag-theme-salt` class name, and set `theme=
 
 ## Density
 
-**Client-side grids on AG Grid v33 and later follow the density of the nearest `SaltProvider` through CSS, except in the cases below.** Leave `rowHeight` and `headerHeight` unset to use the sizes supplied by the theme.
+**On AG Grid v36.3 and later, client-side grids follow the density of the nearest `SaltProvider` through CSS, including columns with `autoHeight`.** Leave `rowHeight` and `headerHeight` unset to use the sizes supplied by the theme. The [Auto-height cells](./examples#auto-height-cells) example includes wrapped text, empty cells and fixed-height renderers.
 
-The following cases need additional handling:
+Column `autoHeight` sizes each row to its content. It is separate from `domLayout="autoHeight"`, which sizes the grid container to its rows.
 
-- **Infinite, server-side and viewport row models:** AG Grid does not resize existing rows when CSS density changes. Derive `rowHeight` from `useDensity()` and update it when density changes. The [Infinite scroll](./examples#infinite-scroll) example shows this approach.
-- **Auto-height columns with empty or fixed-height content:** CSS density changes may leave existing row heights unchanged when the auto-height content does not resize. For this case, derive `rowHeight` from `useDensity()` and update it when density changes. Column `autoHeight` is separate from `domLayout="autoHeight"`, which sizes the grid container to its rows.
+The versions below support automatic density changes when row sizing comes from the theme:
+
+| Grid configuration                                    | Automatic density changes from |
+| ----------------------------------------------------- | ------------------------------ |
+| Client-side, without `autoHeight` columns             | v33                            |
+| Infinite or viewport                                  | v36.2                          |
+| Server-side, without `autoHeight` columns             | v36.2                          |
+| Client-side or server-side, with `autoHeight` columns | v36.3                          |
+
+- **Uniform row heights on v33 to v36.1:** infinite, viewport and server-side grids need a reactive `rowHeight` to resize existing rows when density changes. Derive it from `useDensity()`. The [Infinite scroll](./examples#infinite-scroll) example retains this approach for compatibility with these versions.
+- **Auto-height columns before v36.3:** client-side and server-side grids may retain a previous row height when their auto-height content does not resize. Use v36.3 or later for automatic density changes in grids that mix wrapped, empty and fixed-height content.
 - **AG Grid v28 to v32:** these versions read row sizes when the grid is created. If density changes while a grid is visible, remount it with a key such as `key={density}`.
 
 ### Size reference
@@ -153,6 +162,6 @@ For a numeric column, set AG Grid's `type: "rightAligned"` or `type: "numericCol
 The theme supports AG Grid v28 to v36.
 
 - **Existing theme classes:** `ag-theme-salt-light`, `ag-theme-salt-dark`, `ag-theme-salt-compact-light` and `ag-theme-salt-compact-dark` continue to work. Prefer `ag-theme-salt` or `ag-theme-salt-compact` for new integrations; mode comes from the nearest `SaltProvider`.
-- **Explicit heights:** if you previously passed `rowHeight` and `headerHeight` for client-side grids, remove them to let CSS respond to density changes on AG Grid v33 and later, except in the cases described in [Density](#density). Keep reactive `rowHeight` for the infinite, server-side and viewport row models, and for auto-height columns with empty or fixed-height content.
+- **Explicit heights:** on AG Grid v36.3 and later, remove `rowHeight` and `headerHeight` if they only reproduce the theme's sizes, including for grids with `autoHeight` columns. For older versions, follow the row-model and version guidance in [Density](#density).
 - **v28 to v32:** skip module registration and `theme="legacy"`; remount the grid if density changes while it is visible.
 - **v33 to v36:** register the required modules and use `theme="legacy"` as shown above.

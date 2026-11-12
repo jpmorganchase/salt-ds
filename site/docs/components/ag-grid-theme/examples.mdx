@@ -72,6 +72,14 @@ Text in header cells can be wrapped when space is limited. This example also sho
 
 <LivePreview componentName="ag-grid-theme" exampleName="WrappedHeader" />
 
+### Auto-height cells
+
+Set `autoHeight: true` on a column to size each row to its content, and `wrapText: true` to wrap text within the column. This example includes short and wrapped text, an empty cell, and custom renderers with fixed heights of 14px and 100px.
+
+On AG Grid v36.3 and later, these rows follow density changes through CSS without setting `rowHeight`. Change the density using the page controls: the empty and small-content rows follow the theme's minimum height, while taller content remains visible. Column `autoHeight` is separate from `domLayout="autoHeight"`, which sizes the grid container to its rows. See [Density](./usage#density) for older versions.
+
+<LivePreview componentName="ag-grid-theme" exampleName="AutoHeight" />
+
 ## Working with data
 
 ### Floating filter
@@ -98,7 +106,7 @@ The example below suppresses AG Grid's built-in pagination panel and composes Sa
 
 The grid requests additional row blocks as the user scrolls. This example simulates a loading delay by slicing generated local data into blocks. It does not implement remote fetching, filtering, sorting, or failure recovery. For a real data source, handle loading, empty results, errors and retries in your application; the example does not implement those states.
 
-The infinite row model needs an explicit `rowHeight` to resize existing rows when density changes. This example derives it from `useDensity()`, using the heights in [Density](./usage#density), so the grid updates without remounting.
+The infinite row model follows CSS density changes from AG Grid v36.2. This example retains a reactive `rowHeight` for compatibility with earlier versions, deriving it from `useDensity()` and the heights in [Density](./usage#density), so the grid updates without remounting.
 
 <LivePreview componentName="ag-grid-theme" exampleName="InfiniteScroll" />
 

@@ -1,8 +1,9 @@
 div[class*="ag-theme-salt"] {
   /*
     AG Grid reads the row and header heights from these variables. Client-side grids
-    generally follow the nearest SaltProvider's density through CSS; some row models and
-    auto-height content need a reactive rowHeight, as described in the usage guide.
+    without auto-height columns follow CSS density changes from v33; v36.3 also updates
+    auto-height rows while preserving measured content. See the usage guide for other
+    row models and older-version limitations.
     A row's height includes its bottom border, so rows are a border taller than the header.
   */
   --ag-row-height: calc(var(--salt-size-base) + var(--salt-spacing-100) + var(--salt-size-fixed-100));
