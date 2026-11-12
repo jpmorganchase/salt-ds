@@ -1,0 +1,2300 @@
+{
+  "baseline_commit": "c69bf4650e6193e5161d57fe3bf78dce6f2c7888",
+  "split_commit": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+  "controlled_workflow_commit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+  "units": "seconds unless field explicitly names another unit",
+  "passing_reference": {
+    "artifact": "ci-performance-react19-baseline-sample1",
+    "run_id": 43327367902,
+    "tests": 3801,
+    "passed": 3777,
+    "skipped": 24
+  },
+  "stage_one": {
+    "run_url": "https://github.com/jpmorganchase/salt-ds/actions/runs/43327367902",
+    "samples": [
+      {
+        "scenario": "baseline",
+        "sample": 1,
+        "all_passed": true,
+        "tests": 3801,
+        "files": 148,
+        "statuses": {
+          "passed": 3777,
+          "skipped": 24
+        },
+        "test_step_max_seconds": 195.0,
+        "test_step_sum_seconds": 195.0,
+        "job_stage_envelope_seconds": 273.0,
+        "job_sum_seconds": 273.0,
+        "identities_match_passing_reference": true,
+        "statuses_match_passing_reference": true,
+        "jobs": [
+          {
+            "id": 131563109208,
+            "name": "React 19 / baseline / sample 1",
+            "url": "https://github.com/jpmorganchase/salt-ds/actions/runs/43327367902/job/131563109208",
+            "metadata": {
+              "jobName": "React 19 / baseline / sample 1",
+              "variant": "baseline",
+              "sample": 1,
+              "shard": null,
+              "commit": "c69bf4650e6193e5161d57fe3bf78dce6f2c7888",
+              "workflowCommit": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "runId": "43327367902",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:16:25.674Z",
+              "runner": {
+                "name": "GitHub Actions 1000115874",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261101.186.1",
+                "cpuModels": [
+                  "AMD EPYC 9V45 96-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "19.3.1",
+                "reactDom": "19.3.1",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 156.0.8078.79"
+              }
+            },
+            "steps": [
+              {
+                "name": "Set up job",
+                "seconds": 1.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Checkout",
+                "seconds": 3.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Use Node.js",
+                "seconds": 8.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Install dependencies",
+                "seconds": 11.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Setup React",
+                "seconds": 4.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Record benchmark environment",
+                "seconds": 3.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Build packages",
+                "seconds": 44.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Test Components",
+                "seconds": 195.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Collect failure screenshots",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Upload benchmark evidence",
+                "seconds": 1.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Use Node.js",
+                "seconds": 1.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Checkout",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "seconds": 0.0,
+                "conclusion": "success"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scenario": "baseline",
+        "sample": 2,
+        "all_passed": false,
+        "tests": 3801,
+        "files": 148,
+        "statuses": {
+          "passed": 3775,
+          "skipped": 24,
+          "failed": 2
+        },
+        "test_step_max_seconds": 317.0,
+        "test_step_sum_seconds": 317.0,
+        "job_stage_envelope_seconds": 442.0,
+        "job_sum_seconds": 442.0,
+        "identities_match_passing_reference": true,
+        "statuses_match_passing_reference": false,
+        "jobs": [
+          {
+            "id": 131563109256,
+            "name": "React 19 / baseline / sample 2",
+            "url": "https://github.com/jpmorganchase/salt-ds/actions/runs/43327367902/job/131563109256",
+            "metadata": {
+              "jobName": "React 19 / baseline / sample 2",
+              "variant": "baseline",
+              "sample": 2,
+              "shard": null,
+              "commit": "c69bf4650e6193e5161d57fe3bf78dce6f2c7888",
+              "workflowCommit": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "runId": "43327367902",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:16:39.923Z",
+              "runner": {
+                "name": "GitHub Actions 1000115875",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261111.196.1",
+                "cpuModels": [
+                  "AMD EPYC 7763 64-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "19.3.1",
+                "reactDom": "19.3.1",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 157.0.8103.50"
+              }
+            },
+            "steps": [
+              {
+                "name": "Set up job",
+                "seconds": 1.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Checkout",
+                "seconds": 4.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Use Node.js",
+                "seconds": 10.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Install dependencies",
+                "seconds": 19.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Setup React",
+                "seconds": 6.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Record benchmark environment",
+                "seconds": 2.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Build packages",
+                "seconds": 77.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Test Components",
+                "seconds": 317.0,
+                "conclusion": "failure"
+              },
+              {
+                "name": "Collect failure screenshots",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Upload benchmark evidence",
+                "seconds": 2.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Use Node.js",
+                "seconds": 0.0,
+                "conclusion": "skipped"
+              },
+              {
+                "name": "Post Checkout",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "seconds": 1.0,
+                "conclusion": "success"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scenario": "split",
+        "sample": 1,
+        "all_passed": true,
+        "tests": 3801,
+        "files": 163,
+        "statuses": {
+          "passed": 3777,
+          "skipped": 24
+        },
+        "test_step_max_seconds": 323.0,
+        "test_step_sum_seconds": 323.0,
+        "job_stage_envelope_seconds": 444.0,
+        "job_sum_seconds": 444.0,
+        "identities_match_passing_reference": true,
+        "statuses_match_passing_reference": true,
+        "jobs": [
+          {
+            "id": 131563109393,
+            "name": "React 19 / split / sample 1",
+            "url": "https://github.com/jpmorganchase/salt-ds/actions/runs/43327367902/job/131563109393",
+            "metadata": {
+              "jobName": "React 19 / split / sample 1",
+              "variant": "split",
+              "sample": 1,
+              "shard": null,
+              "commit": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "workflowCommit": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "runId": "43327367902",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:16:36.848Z",
+              "runner": {
+                "name": "GitHub Actions 1000115877",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261101.186.1",
+                "cpuModels": [
+                  "AMD EPYC 7763 64-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "19.3.1",
+                "reactDom": "19.3.1",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 156.0.8078.79"
+              }
+            },
+            "steps": [
+              {
+                "name": "Set up job",
+                "seconds": 1.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Checkout",
+                "seconds": 3.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Use Node.js",
+                "seconds": 8.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Install dependencies",
+                "seconds": 19.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Setup React",
+                "seconds": 6.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Record benchmark environment",
+                "seconds": 3.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Build packages",
+                "seconds": 76.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Test Components",
+                "seconds": 323.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Collect failure screenshots",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Upload benchmark evidence",
+                "seconds": 2.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Use Node.js",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Checkout",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "seconds": 0.0,
+                "conclusion": "success"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scenario": "split",
+        "sample": 2,
+        "all_passed": true,
+        "tests": 3801,
+        "files": 163,
+        "statuses": {
+          "passed": 3777,
+          "skipped": 24
+        },
+        "test_step_max_seconds": 271.0,
+        "test_step_sum_seconds": 271.0,
+        "job_stage_envelope_seconds": 382.0,
+        "job_sum_seconds": 382.0,
+        "identities_match_passing_reference": true,
+        "statuses_match_passing_reference": true,
+        "jobs": [
+          {
+            "id": 131563109181,
+            "name": "React 19 / split / sample 2",
+            "url": "https://github.com/jpmorganchase/salt-ds/actions/runs/43327367902/job/131563109181",
+            "metadata": {
+              "jobName": "React 19 / split / sample 2",
+              "variant": "split",
+              "sample": 2,
+              "shard": null,
+              "commit": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "workflowCommit": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "runId": "43327367902",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:16:37.027Z",
+              "runner": {
+                "name": "GitHub Actions 1000115873",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261101.186.1",
+                "cpuModels": [
+                  "INTEL(R) XEON(R) PLATINUM 8573C"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16758403072
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "19.3.1",
+                "reactDom": "19.3.1",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 156.0.8078.79"
+              }
+            },
+            "steps": [
+              {
+                "name": "Set up job",
+                "seconds": 1.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Checkout",
+                "seconds": 3.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Use Node.js",
+                "seconds": 10.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Install dependencies",
+                "seconds": 17.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Setup React",
+                "seconds": 6.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Record benchmark environment",
+                "seconds": 1.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Build packages",
+                "seconds": 67.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Test Components",
+                "seconds": 271.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Collect failure screenshots",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Upload benchmark evidence",
+                "seconds": 1.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Use Node.js",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Checkout",
+                "seconds": 1.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "seconds": 0.0,
+                "conclusion": "success"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scenario": "split-2shards",
+        "sample": 1,
+        "all_passed": true,
+        "tests": 3801,
+        "files": 163,
+        "statuses": {
+          "passed": 3777,
+          "skipped": 24
+        },
+        "test_step_max_seconds": 129.0,
+        "test_step_sum_seconds": 247.0,
+        "job_stage_envelope_seconds": 228.0,
+        "job_sum_seconds": 429.0,
+        "identities_match_passing_reference": true,
+        "statuses_match_passing_reference": true,
+        "jobs": [
+          {
+            "id": 131563109472,
+            "name": "React 19 / shard-1 / sample 1",
+            "url": "https://github.com/jpmorganchase/salt-ds/actions/runs/43327367902/job/131563109472",
+            "metadata": {
+              "jobName": "React 19 / shard-1 / sample 1",
+              "variant": "shard-1",
+              "sample": 1,
+              "shard": "1/2",
+              "commit": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "workflowCommit": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "runId": "43327367902",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:16:32.756Z",
+              "runner": {
+                "name": "GitHub Actions 1000115880",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261111.196.1",
+                "cpuModels": [
+                  "AMD EPYC 9V74 80-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "19.3.1",
+                "reactDom": "19.3.1",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 157.0.8103.50"
+              }
+            },
+            "steps": [
+              {
+                "name": "Set up job",
+                "seconds": 1.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Checkout",
+                "seconds": 3.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Use Node.js",
+                "seconds": 9.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Install dependencies",
+                "seconds": 15.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Setup React",
+                "seconds": 5.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Record benchmark environment",
+                "seconds": 2.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Build packages",
+                "seconds": 58.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Test Components",
+                "seconds": 129.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Collect failure screenshots",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Upload benchmark evidence",
+                "seconds": 2.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Use Node.js",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Checkout",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "seconds": 0.0,
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 131563109402,
+            "name": "React 19 / shard-2 / sample 1",
+            "url": "https://github.com/jpmorganchase/salt-ds/actions/runs/43327367902/job/131563109402",
+            "metadata": {
+              "jobName": "React 19 / shard-2 / sample 1",
+              "variant": "shard-2",
+              "sample": 1,
+              "shard": "2/2",
+              "commit": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "workflowCommit": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "runId": "43327367902",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:16:27.033Z",
+              "runner": {
+                "name": "GitHub Actions 1000115878",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261101.186.1",
+                "cpuModels": [
+                  "AMD EPYC 9V45 96-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "19.3.1",
+                "reactDom": "19.3.1",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 156.0.8078.79"
+              }
+            },
+            "steps": [
+              {
+                "name": "Set up job",
+                "seconds": 2.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Checkout",
+                "seconds": 3.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Use Node.js",
+                "seconds": 7.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Install dependencies",
+                "seconds": 11.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Setup React",
+                "seconds": 5.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Record benchmark environment",
+                "seconds": 3.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Build packages",
+                "seconds": 49.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Test Components",
+                "seconds": 118.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Collect failure screenshots",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Upload benchmark evidence",
+                "seconds": 1.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Use Node.js",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Checkout",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "seconds": 0.0,
+                "conclusion": "success"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "scenario": "split-2shards",
+        "sample": 2,
+        "all_passed": true,
+        "tests": 3801,
+        "files": 163,
+        "statuses": {
+          "passed": 3777,
+          "skipped": 24
+        },
+        "test_step_max_seconds": 139.0,
+        "test_step_sum_seconds": 250.0,
+        "job_stage_envelope_seconds": 234.0,
+        "job_sum_seconds": 429.0,
+        "identities_match_passing_reference": true,
+        "statuses_match_passing_reference": true,
+        "jobs": [
+          {
+            "id": 131563109418,
+            "name": "React 19 / shard-1 / sample 2",
+            "url": "https://github.com/jpmorganchase/salt-ds/actions/runs/43327367902/job/131563109418",
+            "metadata": {
+              "jobName": "React 19 / shard-1 / sample 2",
+              "variant": "shard-1",
+              "sample": 2,
+              "shard": "1/2",
+              "commit": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "workflowCommit": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "runId": "43327367902",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:16:30.150Z",
+              "runner": {
+                "name": "GitHub Actions 1000115876",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261111.196.1",
+                "cpuModels": [
+                  "AMD EPYC 9V45 96-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "19.3.1",
+                "reactDom": "19.3.1",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 157.0.8103.50"
+              }
+            },
+            "steps": [
+              {
+                "name": "Set up job",
+                "seconds": 1.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Checkout",
+                "seconds": 3.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Use Node.js",
+                "seconds": 10.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Install dependencies",
+                "seconds": 12.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Setup React",
+                "seconds": 5.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Record benchmark environment",
+                "seconds": 9.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Build packages",
+                "seconds": 49.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Test Components",
+                "seconds": 139.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Collect failure screenshots",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Upload benchmark evidence",
+                "seconds": 2.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Use Node.js",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Checkout",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "seconds": 0.0,
+                "conclusion": "success"
+              }
+            ]
+          },
+          {
+            "id": 131563109414,
+            "name": "React 19 / shard-2 / sample 2",
+            "url": "https://github.com/jpmorganchase/salt-ds/actions/runs/43327367902/job/131563109414",
+            "metadata": {
+              "jobName": "React 19 / shard-2 / sample 2",
+              "variant": "shard-2",
+              "sample": 2,
+              "shard": "2/2",
+              "commit": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "workflowCommit": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "runId": "43327367902",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:16:26.780Z",
+              "runner": {
+                "name": "GitHub Actions 1000115879",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261101.186.1",
+                "cpuModels": [
+                  "AMD EPYC 9V45 96-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "19.3.1",
+                "reactDom": "19.3.1",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 156.0.8078.79"
+              }
+            },
+            "steps": [
+              {
+                "name": "Set up job",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Checkout",
+                "seconds": 3.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Use Node.js",
+                "seconds": 8.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Install dependencies",
+                "seconds": 12.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Setup React",
+                "seconds": 4.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Record benchmark environment",
+                "seconds": 2.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Build packages",
+                "seconds": 50.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Test Components",
+                "seconds": 111.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Collect failure screenshots",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Upload benchmark evidence",
+                "seconds": 1.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Use Node.js",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Post Checkout",
+                "seconds": 0.0,
+                "conclusion": "success"
+              },
+              {
+                "name": "Complete job",
+                "seconds": 0.0,
+                "conclusion": "success"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "limitations": [
+      "Different versions across samples: inspect metadata before attributing time differences to code",
+      "Different runner_images across samples: inspect metadata before attributing time differences to code",
+      "Different cpu_models across samples: inspect metadata before attributing time differences to code"
+    ]
+  },
+  "stage_two": {
+    "run_url": "https://github.com/jpmorganchase/salt-ds/actions/runs/43328807419",
+    "all_jobs_successful": true,
+    "scenarios": [
+      {
+        "kind": "compatibility",
+        "order_or_react": "16",
+        "variant": "split",
+        "complete": true,
+        "all_phases_passed": true,
+        "tests": 3801,
+        "files": 163,
+        "identities_match_reference": true,
+        "statuses_match_reference": true,
+        "missing_identities": [],
+        "extra_identities": [],
+        "missing_statuses": [],
+        "extra_statuses": [],
+        "test_max_seconds": 126.0,
+        "test_sum_seconds": 236.0,
+        "api_test_max_seconds": 126.0,
+        "valid": true,
+        "status_comparison_policy": "Cross-React comparison verifies exact identity and successful execution; intentional existing version-specific skips require separate source/baseline verification.",
+        "job_wall_seconds": 245.0,
+        "job_sum_seconds": 460.0,
+        "members": [
+          {
+            "metadata": {
+              "jobName": "React 16 / shard-1 / sample 1",
+              "variant": "shard-1",
+              "sample": 1,
+              "shard": "1/2",
+              "commit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "workflowCommit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "runId": "43328807419",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:26:38.522Z",
+              "runner": {
+                "name": "GitHub Actions 1000115897",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261101.186.1",
+                "cpuModels": [
+                  "AMD EPYC 9V74 80-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "16.14.0",
+                "reactDom": "16.14.0",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 156.0.8078.79"
+              }
+            },
+            "job_id": 131567982705,
+            "job_conclusion": "success",
+            "step_conclusion": "success",
+            "test_seconds": 126.0,
+            "api_test_seconds": 126.0,
+            "job_seconds": 245.0,
+            "test_count": 2218,
+            "failures": [],
+            "skip_link": []
+          },
+          {
+            "metadata": {
+              "jobName": "React 16 / shard-2 / sample 1",
+              "variant": "shard-2",
+              "sample": 1,
+              "shard": "2/2",
+              "commit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "workflowCommit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "runId": "43328807419",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:26:34.312Z",
+              "runner": {
+                "name": "GitHub Actions 1000115895",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261101.186.1",
+                "cpuModels": [
+                  "Intel(R) Xeon(R) Platinum 8370C CPU @ 2.80GHz"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16758403072
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "16.14.0",
+                "reactDom": "16.14.0",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 156.0.8078.79"
+              }
+            },
+            "job_id": 131567982648,
+            "job_conclusion": "success",
+            "step_conclusion": "success",
+            "test_seconds": 110.0,
+            "api_test_seconds": 110.0,
+            "job_seconds": 215.0,
+            "test_count": 1583,
+            "failures": [],
+            "skip_link": [
+              {
+                "test": "GIVEN a SkipLink Axe Testing Story \"Default\", should not have axe violations",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink moves focus to the target when clicked",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink moves focus to the target with keyboard navigation",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink hides the skip link when its target is broken",
+                "status": "passed"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "compatibility",
+        "order_or_react": "17",
+        "variant": "split",
+        "complete": true,
+        "all_phases_passed": true,
+        "tests": 3801,
+        "files": 163,
+        "identities_match_reference": true,
+        "statuses_match_reference": true,
+        "missing_identities": [],
+        "extra_identities": [],
+        "missing_statuses": [],
+        "extra_statuses": [],
+        "test_max_seconds": 117.0,
+        "test_sum_seconds": 223.0,
+        "api_test_max_seconds": 117.0,
+        "valid": true,
+        "status_comparison_policy": "Cross-React comparison verifies exact identity and successful execution; intentional existing version-specific skips require separate source/baseline verification.",
+        "job_wall_seconds": 223.0,
+        "job_sum_seconds": 438.0,
+        "members": [
+          {
+            "metadata": {
+              "jobName": "React 17 / shard-1 / sample 1",
+              "variant": "shard-1",
+              "sample": 1,
+              "shard": "1/2",
+              "commit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "workflowCommit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "runId": "43328807419",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:26:34.640Z",
+              "runner": {
+                "name": "GitHub Actions 1000115903",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261101.186.1",
+                "cpuModels": [
+                  "AMD EPYC 9V74 80-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "17.0.2",
+                "reactDom": "17.0.2",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 156.0.8078.79"
+              }
+            },
+            "job_id": 131567982720,
+            "job_conclusion": "success",
+            "step_conclusion": "success",
+            "test_seconds": 117.0,
+            "api_test_seconds": 117.0,
+            "job_seconds": 223.0,
+            "test_count": 2218,
+            "failures": [],
+            "skip_link": []
+          },
+          {
+            "metadata": {
+              "jobName": "React 17 / shard-2 / sample 1",
+              "variant": "shard-2",
+              "sample": 1,
+              "shard": "2/2",
+              "commit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "workflowCommit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "runId": "43328807419",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:26:39.369Z",
+              "runner": {
+                "name": "GitHub Actions 1000115898",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261101.186.1",
+                "cpuModels": [
+                  "INTEL(R) XEON(R) PLATINUM 8573C"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16758403072
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "17.0.2",
+                "reactDom": "17.0.2",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 156.0.8078.79"
+              }
+            },
+            "job_id": 131567982792,
+            "job_conclusion": "success",
+            "step_conclusion": "success",
+            "test_seconds": 106.0,
+            "api_test_seconds": 106.0,
+            "job_seconds": 215.0,
+            "test_count": 1583,
+            "failures": [],
+            "skip_link": [
+              {
+                "test": "GIVEN a SkipLink Axe Testing Story \"Default\", should not have axe violations",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink moves focus to the target when clicked",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink moves focus to the target with keyboard navigation",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink hides the skip link when its target is broken",
+                "status": "passed"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "compatibility",
+        "order_or_react": "18",
+        "variant": "split",
+        "complete": true,
+        "all_phases_passed": true,
+        "tests": 3801,
+        "files": 163,
+        "identities_match_reference": true,
+        "statuses_match_reference": false,
+        "missing_identities": [],
+        "extra_identities": [],
+        "missing_statuses": [
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/cascading-menu/cascading-menu.browser.test.tsx",
+              "GIVEN a CascadingMenu component Sub menus navigation By Enter key",
+              "passed"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/cascading-menu/cascading-menu.browser.test.tsx",
+              "GIVEN a CascadingMenu component Sub menus navigation By Right Arrow key",
+              "passed"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/cascading-menu/cascading-menu.browser.test.tsx",
+              "GIVEN a CascadingMenu component Sub menus navigation Escape closes on 'topmost' menu",
+              "passed"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/combo-box-deprecated/combo-box-deprecated-keyboard-navigation.browser.test.tsx",
+              "A deprecated combo box highlights the selected item with a focus ring",
+              "passed"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-accessibility.browser.test.tsx",
+              "GIVEN a source List sets aria-selected for a selected item",
+              "passed"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-accessibility.browser.test.tsx",
+              "GIVEN a source List sets aria-selected in a multi-select list",
+              "passed"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-accessibility.browser.test.tsx",
+              "GIVEN a declarative List sets aria-selected for a selected item",
+              "passed"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-accessibility.browser.test.tsx",
+              "GIVEN a declarative List sets aria-selected in a multi-select list",
+              "passed"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-declarative.browser.test.tsx",
+              "GIVEN a declarative List selects a clicked item",
+              "passed"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-selection.browser.test.tsx",
+              "extended-selection source List adds selection with Control/Meta+click",
+              "passed"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-selection.browser.test.tsx",
+              "extended-selection source List selects a range with Shift+click",
+              "passed"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-selection.browser.test.tsx",
+              "extended-selection source List concatenates ranges with Control/Meta+Shift+click",
+              "passed"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-selection.browser.test.tsx",
+              "extended-selection declarative List adds selection with Control/Meta+click",
+              "passed"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-selection.browser.test.tsx",
+              "extended-selection declarative List selects a range with Shift+click",
+              "passed"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-selection.browser.test.tsx",
+              "extended-selection declarative List concatenates ranges with Control/Meta+Shift+click",
+              "passed"
+            ],
+            "count": 1
+          }
+        ],
+        "extra_statuses": [
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/cascading-menu/cascading-menu.browser.test.tsx",
+              "GIVEN a CascadingMenu component Sub menus navigation By Enter key",
+              "skipped"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/cascading-menu/cascading-menu.browser.test.tsx",
+              "GIVEN a CascadingMenu component Sub menus navigation By Right Arrow key",
+              "skipped"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/cascading-menu/cascading-menu.browser.test.tsx",
+              "GIVEN a CascadingMenu component Sub menus navigation Escape closes on 'topmost' menu",
+              "skipped"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/combo-box-deprecated/combo-box-deprecated-keyboard-navigation.browser.test.tsx",
+              "A deprecated combo box highlights the selected item with a focus ring",
+              "skipped"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-accessibility.browser.test.tsx",
+              "GIVEN a source List sets aria-selected for a selected item",
+              "skipped"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-accessibility.browser.test.tsx",
+              "GIVEN a source List sets aria-selected in a multi-select list",
+              "skipped"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-accessibility.browser.test.tsx",
+              "GIVEN a declarative List sets aria-selected for a selected item",
+              "skipped"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-accessibility.browser.test.tsx",
+              "GIVEN a declarative List sets aria-selected in a multi-select list",
+              "skipped"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-declarative.browser.test.tsx",
+              "GIVEN a declarative List selects a clicked item",
+              "skipped"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-selection.browser.test.tsx",
+              "extended-selection source List adds selection with Control/Meta+click",
+              "skipped"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-selection.browser.test.tsx",
+              "extended-selection source List selects a range with Shift+click",
+              "skipped"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-selection.browser.test.tsx",
+              "extended-selection source List concatenates ranges with Control/Meta+Shift+click",
+              "skipped"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-selection.browser.test.tsx",
+              "extended-selection declarative List adds selection with Control/Meta+click",
+              "skipped"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-selection.browser.test.tsx",
+              "extended-selection declarative List selects a range with Shift+click",
+              "skipped"
+            ],
+            "count": 1
+          },
+          {
+            "identity": [
+              "packages/lab/src/__tests__/__e2e__/list/list-selection.browser.test.tsx",
+              "extended-selection declarative List concatenates ranges with Control/Meta+Shift+click",
+              "skipped"
+            ],
+            "count": 1
+          }
+        ],
+        "test_max_seconds": 106.0,
+        "test_sum_seconds": 204.0,
+        "api_test_max_seconds": 106.0,
+        "valid": true,
+        "status_comparison_policy": "Cross-React comparison verifies exact identity and successful execution; intentional existing version-specific skips require separate source/baseline verification.",
+        "job_wall_seconds": 186.0,
+        "job_sum_seconds": 361.0,
+        "members": [
+          {
+            "metadata": {
+              "jobName": "React 18 / shard-1 / sample 1",
+              "variant": "shard-1",
+              "sample": 1,
+              "shard": "1/2",
+              "commit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "workflowCommit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "runId": "43328807419",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:26:29.092Z",
+              "runner": {
+                "name": "GitHub Actions 1000115901",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261101.186.1",
+                "cpuModels": [
+                  "AMD EPYC 9V45 96-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "18.3.1",
+                "reactDom": "18.3.1",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 156.0.8078.79"
+              }
+            },
+            "job_id": 131567982911,
+            "job_conclusion": "success",
+            "step_conclusion": "success",
+            "test_seconds": 106.0,
+            "api_test_seconds": 106.0,
+            "job_seconds": 186.0,
+            "test_count": 2218,
+            "failures": [],
+            "skip_link": []
+          },
+          {
+            "metadata": {
+              "jobName": "React 18 / shard-2 / sample 1",
+              "variant": "shard-2",
+              "sample": 1,
+              "shard": "2/2",
+              "commit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "workflowCommit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "runId": "43328807419",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:26:28.480Z",
+              "runner": {
+                "name": "GitHub Actions 1000115904",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261101.186.1",
+                "cpuModels": [
+                  "AMD EPYC 9V45 96-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "18.3.1",
+                "reactDom": "18.3.1",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 156.0.8078.79"
+              }
+            },
+            "job_id": 131567982931,
+            "job_conclusion": "success",
+            "step_conclusion": "success",
+            "test_seconds": 98.0,
+            "api_test_seconds": 98.0,
+            "job_seconds": 175.0,
+            "test_count": 1583,
+            "failures": [],
+            "skip_link": [
+              {
+                "test": "GIVEN a SkipLink Axe Testing Story \"Default\", should not have axe violations",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink moves focus to the target when clicked",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink moves focus to the target with keyboard navigation",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink hides the skip link when its target is broken",
+                "status": "passed"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "paired",
+        "order_or_react": "baseline-first",
+        "variant": "baseline",
+        "complete": true,
+        "all_phases_passed": true,
+        "tests": 3801,
+        "files": 148,
+        "identities_match_reference": true,
+        "statuses_match_reference": true,
+        "missing_identities": [],
+        "extra_identities": [],
+        "missing_statuses": [],
+        "extra_statuses": [],
+        "test_max_seconds": 199.42298265,
+        "test_sum_seconds": 300.171896307,
+        "api_test_max_seconds": 199.0,
+        "valid": true,
+        "members": [
+          {
+            "metadata": {
+              "jobName": "React 19 / paired baseline-first / shard 1",
+              "order": "baseline-first",
+              "sample": 1,
+              "shard": "1/2",
+              "commit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "workflowCommit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "baselineRef": "c69bf4650e6193e5161d57fe3bf78dce6f2c7888",
+              "splitRef": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "runId": "43328807419",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:26:37.438Z",
+              "runner": {
+                "name": "GitHub Actions 1000115902",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261101.186.1",
+                "cpuModels": [
+                  "AMD EPYC 9V74 80-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "19.3.1",
+                "reactDom": "19.3.1",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 156.0.8078.79"
+              },
+              "variant": "baseline",
+              "testRef": "c69bf4650e6193e5161d57fe3bf78dce6f2c7888",
+              "restoredPaths": [
+                "packages/date-components/src/__tests__/__e2e__/calendar",
+                "packages/date-components/src/__tests__/__e2e__/date-picker"
+              ],
+              "clearedCaches": [
+                "node_modules/.vite",
+                ".vitest",
+                "node_modules/.vitest-cache"
+              ],
+              "testStep": "Test baseline first",
+              "position": 1,
+              "testStartedAt": "2026-11-12T23:27:38.323Z",
+              "testCompletedAt": "2026-11-12T23:29:19.073Z",
+              "testDurationMs": 100748.91365700001,
+              "testExitCode": 0,
+              "testSignal": null
+            },
+            "job_id": 131567983368,
+            "job_conclusion": "success",
+            "step_conclusion": "success",
+            "test_seconds": 100.74891365700002,
+            "api_test_seconds": 101.0,
+            "job_seconds": 321.0,
+            "test_count": 2027,
+            "failures": [],
+            "skip_link": []
+          },
+          {
+            "metadata": {
+              "jobName": "React 19 / paired baseline-first / shard 2",
+              "order": "baseline-first",
+              "sample": 1,
+              "shard": "2/2",
+              "commit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "workflowCommit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "baselineRef": "c69bf4650e6193e5161d57fe3bf78dce6f2c7888",
+              "splitRef": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "runId": "43328807419",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:26:45.474Z",
+              "runner": {
+                "name": "GitHub Actions 1000115896",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261101.186.1",
+                "cpuModels": [
+                  "AMD EPYC 7763 64-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "19.3.1",
+                "reactDom": "19.3.1",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 156.0.8078.79"
+              },
+              "variant": "baseline",
+              "testRef": "c69bf4650e6193e5161d57fe3bf78dce6f2c7888",
+              "restoredPaths": [
+                "packages/date-components/src/__tests__/__e2e__/calendar",
+                "packages/date-components/src/__tests__/__e2e__/date-picker"
+              ],
+              "clearedCaches": [
+                "node_modules/.vite",
+                ".vitest",
+                "node_modules/.vitest-cache"
+              ],
+              "testStep": "Test baseline first",
+              "position": 1,
+              "testStartedAt": "2026-11-12T23:28:02.483Z",
+              "testCompletedAt": "2026-11-12T23:31:21.907Z",
+              "testDurationMs": 199422.98265,
+              "testExitCode": 0,
+              "testSignal": null
+            },
+            "job_id": 131567982833,
+            "job_conclusion": "success",
+            "step_conclusion": "success",
+            "test_seconds": 199.42298265,
+            "api_test_seconds": 199.0,
+            "job_seconds": 494.0,
+            "test_count": 1774,
+            "failures": [],
+            "skip_link": [
+              {
+                "test": "GIVEN a SkipLink Axe Testing Story \"Default\", should not have axe violations",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink moves focus to the target when clicked",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink moves focus to the target with keyboard navigation",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink hides the skip link when its target is broken",
+                "status": "passed"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "paired",
+        "order_or_react": "baseline-first",
+        "variant": "split",
+        "complete": true,
+        "all_phases_passed": true,
+        "tests": 3801,
+        "files": 163,
+        "identities_match_reference": true,
+        "statuses_match_reference": true,
+        "missing_identities": [],
+        "extra_identities": [],
+        "missing_statuses": [],
+        "extra_statuses": [],
+        "test_max_seconds": 166.466118862,
+        "test_sum_seconds": 282.682139579,
+        "api_test_max_seconds": 167.0,
+        "valid": true,
+        "members": [
+          {
+            "metadata": {
+              "jobName": "React 19 / paired baseline-first / shard 1",
+              "order": "baseline-first",
+              "sample": 1,
+              "shard": "1/2",
+              "commit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "workflowCommit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "baselineRef": "c69bf4650e6193e5161d57fe3bf78dce6f2c7888",
+              "splitRef": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "runId": "43328807419",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:26:37.438Z",
+              "runner": {
+                "name": "GitHub Actions 1000115902",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261101.186.1",
+                "cpuModels": [
+                  "AMD EPYC 9V74 80-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "19.3.1",
+                "reactDom": "19.3.1",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 156.0.8078.79"
+              },
+              "variant": "split",
+              "testRef": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "restoredPaths": [
+                "packages/date-components/src/__tests__/__e2e__/calendar",
+                "packages/date-components/src/__tests__/__e2e__/date-picker"
+              ],
+              "clearedCaches": [
+                "node_modules/.vite",
+                ".vitest",
+                "node_modules/.vitest-cache"
+              ],
+              "testStep": "Test split second",
+              "position": 2,
+              "testStartedAt": "2026-11-12T23:29:19.187Z",
+              "testCompletedAt": "2026-11-12T23:31:15.404Z",
+              "testDurationMs": 116216.02071699999,
+              "testExitCode": 0,
+              "testSignal": null
+            },
+            "job_id": 131567983368,
+            "job_conclusion": "success",
+            "step_conclusion": "success",
+            "test_seconds": 116.21602071699999,
+            "api_test_seconds": 116.0,
+            "job_seconds": 321.0,
+            "test_count": 2218,
+            "failures": [],
+            "skip_link": []
+          },
+          {
+            "metadata": {
+              "jobName": "React 19 / paired baseline-first / shard 2",
+              "order": "baseline-first",
+              "sample": 1,
+              "shard": "2/2",
+              "commit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "workflowCommit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "baselineRef": "c69bf4650e6193e5161d57fe3bf78dce6f2c7888",
+              "splitRef": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "runId": "43328807419",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:26:45.474Z",
+              "runner": {
+                "name": "GitHub Actions 1000115896",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261101.186.1",
+                "cpuModels": [
+                  "AMD EPYC 7763 64-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "19.3.1",
+                "reactDom": "19.3.1",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 156.0.8078.79"
+              },
+              "variant": "split",
+              "testRef": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "restoredPaths": [
+                "packages/date-components/src/__tests__/__e2e__/calendar",
+                "packages/date-components/src/__tests__/__e2e__/date-picker"
+              ],
+              "clearedCaches": [
+                "node_modules/.vite",
+                ".vitest",
+                "node_modules/.vitest-cache"
+              ],
+              "testStep": "Test split second",
+              "position": 2,
+              "testStartedAt": "2026-11-12T23:31:22.005Z",
+              "testCompletedAt": "2026-11-12T23:34:08.472Z",
+              "testDurationMs": 166466.118862,
+              "testExitCode": 0,
+              "testSignal": null
+            },
+            "job_id": 131567982833,
+            "job_conclusion": "success",
+            "step_conclusion": "success",
+            "test_seconds": 166.466118862,
+            "api_test_seconds": 167.0,
+            "job_seconds": 494.0,
+            "test_count": 1583,
+            "failures": [],
+            "skip_link": [
+              {
+                "test": "GIVEN a SkipLink Axe Testing Story \"Default\", should not have axe violations",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink moves focus to the target when clicked",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink moves focus to the target with keyboard navigation",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink hides the skip link when its target is broken",
+                "status": "passed"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "paired",
+        "order_or_react": "split-first",
+        "variant": "baseline",
+        "complete": true,
+        "all_phases_passed": true,
+        "tests": 3801,
+        "files": 148,
+        "identities_match_reference": true,
+        "statuses_match_reference": true,
+        "missing_identities": [],
+        "extra_identities": [],
+        "missing_statuses": [],
+        "extra_statuses": [],
+        "test_max_seconds": 178.604622046,
+        "test_sum_seconds": 299.086441312,
+        "api_test_max_seconds": 179.0,
+        "valid": true,
+        "members": [
+          {
+            "metadata": {
+              "jobName": "React 19 / paired split-first / shard 1",
+              "order": "split-first",
+              "sample": 1,
+              "shard": "1/2",
+              "commit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "workflowCommit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "baselineRef": "c69bf4650e6193e5161d57fe3bf78dce6f2c7888",
+              "splitRef": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "runId": "43328807419",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:26:38.570Z",
+              "runner": {
+                "name": "GitHub Actions 1000115900",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261111.196.1",
+                "cpuModels": [
+                  "AMD EPYC 7763 64-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "19.3.1",
+                "reactDom": "19.3.1",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 157.0.8103.50"
+              },
+              "variant": "baseline",
+              "testRef": "c69bf4650e6193e5161d57fe3bf78dce6f2c7888",
+              "restoredPaths": [
+                "packages/date-components/src/__tests__/__e2e__/calendar",
+                "packages/date-components/src/__tests__/__e2e__/date-picker"
+              ],
+              "clearedCaches": [
+                "node_modules/.vite",
+                ".vitest",
+                "node_modules/.vitest-cache"
+              ],
+              "testStep": "Test baseline second",
+              "position": 2,
+              "testStartedAt": "2026-11-12T23:30:31.781Z",
+              "testCompletedAt": "2026-11-12T23:32:32.264Z",
+              "testDurationMs": 120481.81926599999,
+              "testExitCode": 0,
+              "testSignal": null
+            },
+            "job_id": 131567983056,
+            "job_conclusion": "success",
+            "step_conclusion": "success",
+            "test_seconds": 120.48181926599999,
+            "api_test_seconds": 121.0,
+            "job_seconds": 394.0,
+            "test_count": 2027,
+            "failures": [],
+            "skip_link": []
+          },
+          {
+            "metadata": {
+              "jobName": "React 19 / paired split-first / shard 2",
+              "order": "split-first",
+              "sample": 1,
+              "shard": "2/2",
+              "commit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "workflowCommit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "baselineRef": "c69bf4650e6193e5161d57fe3bf78dce6f2c7888",
+              "splitRef": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "runId": "43328807419",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:26:38.083Z",
+              "runner": {
+                "name": "GitHub Actions 1000115899",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261101.186.1",
+                "cpuModels": [
+                  "AMD EPYC 9V74 80-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "19.3.1",
+                "reactDom": "19.3.1",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 156.0.8078.79"
+              },
+              "variant": "baseline",
+              "testRef": "c69bf4650e6193e5161d57fe3bf78dce6f2c7888",
+              "restoredPaths": [
+                "packages/date-components/src/__tests__/__e2e__/calendar",
+                "packages/date-components/src/__tests__/__e2e__/date-picker"
+              ],
+              "clearedCaches": [
+                "node_modules/.vite",
+                ".vitest",
+                "node_modules/.vitest-cache"
+              ],
+              "testStep": "Test baseline second",
+              "position": 2,
+              "testStartedAt": "2026-11-12T23:30:34.571Z",
+              "testCompletedAt": "2026-11-12T23:33:33.177Z",
+              "testDurationMs": 178604.622046,
+              "testExitCode": 0,
+              "testSignal": null
+            },
+            "job_id": 131567982905,
+            "job_conclusion": "success",
+            "step_conclusion": "success",
+            "test_seconds": 178.604622046,
+            "api_test_seconds": 179.0,
+            "job_seconds": 456.0,
+            "test_count": 1774,
+            "failures": [],
+            "skip_link": [
+              {
+                "test": "GIVEN a SkipLink Axe Testing Story \"Default\", should not have axe violations",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink moves focus to the target when clicked",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink moves focus to the target with keyboard navigation",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink hides the skip link when its target is broken",
+                "status": "passed"
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "kind": "paired",
+        "order_or_react": "split-first",
+        "variant": "split",
+        "complete": true,
+        "all_phases_passed": true,
+        "tests": 3801,
+        "files": 163,
+        "identities_match_reference": true,
+        "statuses_match_reference": true,
+        "missing_identities": [],
+        "extra_identities": [],
+        "missing_statuses": [],
+        "extra_statuses": [],
+        "test_max_seconds": 160.316982754,
+        "test_sum_seconds": 316.32530661600003,
+        "api_test_max_seconds": 161.0,
+        "valid": true,
+        "members": [
+          {
+            "metadata": {
+              "jobName": "React 19 / paired split-first / shard 1",
+              "order": "split-first",
+              "sample": 1,
+              "shard": "1/2",
+              "commit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "workflowCommit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "baselineRef": "c69bf4650e6193e5161d57fe3bf78dce6f2c7888",
+              "splitRef": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "runId": "43328807419",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:26:38.570Z",
+              "runner": {
+                "name": "GitHub Actions 1000115900",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261111.196.1",
+                "cpuModels": [
+                  "AMD EPYC 7763 64-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "19.3.1",
+                "reactDom": "19.3.1",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 157.0.8103.50"
+              },
+              "variant": "split",
+              "testRef": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "restoredPaths": [
+                "packages/date-components/src/__tests__/__e2e__/calendar",
+                "packages/date-components/src/__tests__/__e2e__/date-picker"
+              ],
+              "clearedCaches": [
+                "node_modules/.vite",
+                ".vitest",
+                "node_modules/.vitest-cache"
+              ],
+              "testStep": "Test split first",
+              "position": 1,
+              "testStartedAt": "2026-11-12T23:27:55.675Z",
+              "testCompletedAt": "2026-11-12T23:30:31.684Z",
+              "testDurationMs": 156008.323862,
+              "testExitCode": 0,
+              "testSignal": null
+            },
+            "job_id": 131567983056,
+            "job_conclusion": "success",
+            "step_conclusion": "success",
+            "test_seconds": 156.008323862,
+            "api_test_seconds": 156.0,
+            "job_seconds": 394.0,
+            "test_count": 2218,
+            "failures": [],
+            "skip_link": []
+          },
+          {
+            "metadata": {
+              "jobName": "React 19 / paired split-first / shard 2",
+              "order": "split-first",
+              "sample": 1,
+              "shard": "2/2",
+              "commit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "workflowCommit": "d03e0b271a96852c1a5a02659c893c35544d8a52",
+              "baselineRef": "c69bf4650e6193e5161d57fe3bf78dce6f2c7888",
+              "splitRef": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "runId": "43328807419",
+              "runAttempt": "1",
+              "recordedAt": "2026-11-12T23:26:38.083Z",
+              "runner": {
+                "name": "GitHub Actions 1000115899",
+                "os": "Linux",
+                "arch": "X64",
+                "imageOS": "ubuntu26",
+                "imageVersion": "20261101.186.1",
+                "cpuModels": [
+                  "AMD EPYC 9V74 80-Core Processor"
+                ],
+                "logicalCPUs": 4,
+                "availableParallelism": 4,
+                "totalMemory": 16759439360
+              },
+              "versions": {
+                "node": "v26.13.1",
+                "yarn": "4.17.0",
+                "react": "19.3.1",
+                "reactDom": "19.3.1",
+                "vitest": "5.0.5",
+                "playwright": "1.64.1",
+                "chrome": "Google Chrome 156.0.8078.79"
+              },
+              "variant": "split",
+              "testRef": "28af86c5d76936a76cff97368ed45772b8daa6e4",
+              "restoredPaths": [
+                "packages/date-components/src/__tests__/__e2e__/calendar",
+                "packages/date-components/src/__tests__/__e2e__/date-picker"
+              ],
+              "clearedCaches": [
+                "node_modules/.vite",
+                ".vitest",
+                "node_modules/.vitest-cache"
+              ],
+              "testStep": "Test split first",
+              "position": 1,
+              "testStartedAt": "2026-11-12T23:27:54.153Z",
+              "testCompletedAt": "2026-11-12T23:30:34.471Z",
+              "testDurationMs": 160316.982754,
+              "testExitCode": 0,
+              "testSignal": null
+            },
+            "job_id": 131567982905,
+            "job_conclusion": "success",
+            "step_conclusion": "success",
+            "test_seconds": 160.316982754,
+            "api_test_seconds": 161.0,
+            "job_seconds": 456.0,
+            "test_count": 1583,
+            "failures": [],
+            "skip_link": [
+              {
+                "test": "GIVEN a SkipLink Axe Testing Story \"Default\", should not have axe violations",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink moves focus to the target when clicked",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink moves focus to the target with keyboard navigation",
+                "status": "passed"
+              },
+              {
+                "test": "GIVEN a SkipLink hides the skip link when its target is broken",
+                "status": "passed"
+              }
+            ]
+          }
+        ]
+      }
+    ],
+    "paired_comparisons": [
+      {
+        "order": "baseline-first",
+        "valid": true,
+        "baseline_test_max_seconds": 199.42298265,
+        "split_test_max_seconds": 166.466118862,
+        "max_time_reduction_percent": 16.526111158331926,
+        "baseline_test_sum_seconds": 300.171896307,
+        "split_test_sum_seconds": 282.682139579,
+        "work_reduction_percent": 5.826580350517685
+      },
+      {
+        "order": "split-first",
+        "valid": true,
+        "baseline_test_max_seconds": 178.604622046,
+        "split_test_max_seconds": 160.316982754,
+        "max_time_reduction_percent": 10.239174710321874,
+        "baseline_test_sum_seconds": 299.086441312,
+        "split_test_sum_seconds": 316.32530661600003,
+        "work_reduction_percent": -5.7638404564173795
+      }
+    ],
+    "analysis_warnings": []
+  }
+}

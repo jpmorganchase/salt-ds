@@ -1,8 +1,5 @@
 name: "CI Performance Benchmark"
 on:
-  push:
-    branches:
-      - perf/ci-date-sharding-benchmark
   workflow_dispatch:
 
 permissions:
@@ -157,7 +154,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
         with:
-          fetch-depth: 3
+          fetch-depth: 0
           persist-credentials: false
       - name: Verify identical build inputs
         run: |
@@ -166,6 +163,8 @@ jobs:
           for ref in "$SPLIT_REF" "$GITHUB_SHA"; do
             git diff --exit-code "$BASELINE_REF" "$ref" -- . \
               ':(exclude).github/workflows/ci-performance-benchmark.yml' \
+              ':(exclude)benchmarks/ci-date-sharding/README.md' \
+              ':(exclude)benchmarks/ci-date-sharding/results.json' \
               ':(exclude)packages/date-components/src/__tests__/__e2e__/calendar' \
               ':(exclude)packages/date-components/src/__tests__/__e2e__/date-picker'
           done
