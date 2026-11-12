@@ -23,19 +23,30 @@ afterAll(() => {
 ModuleRegistry.registerModules([AllCommunityModule]);
 
 type Density = "high" | "medium" | "low" | "touch";
-type Content = "normal" | "wrapped" | "fixed" | "empty";
+type Content = "normal" | "mixed" | "fixed" | "tall" | "empty";
 interface RowData {
   value: string;
   other: string;
+  contentHeight?: number;
 }
 interface Grid {
   provider: HTMLDivElement;
   container: HTMLDivElement;
   api: GridApi<RowData>;
   root: Element;
+  rowCount: number;
 }
 const heights = { high: 25, medium: 37, low: 49, touch: 61 };
 const mounted: Grid[] = [];
+const densityChanges = [
+  ["high", false],
+  ["medium", false],
+  ["low", false],
+  ["touch", false],
+  ["high", false],
+  ["high", true],
+  ["high", false],
+] as const;
 
 function element(parent: Element, selector: string): HTMLElement {
   const result = parent.querySelector<HTMLElement>(selector);
@@ -46,11 +57,15 @@ function row(grid: Grid, index: number) {
   return element(grid.container, `.ag-row[row-index="${index}"]`);
 }
 function rowHeights(grid: Grid) {
-  return [0, 1].map((index) => row(grid, index).getBoundingClientRect().height);
+  return Array.from(
+    { length: grid.rowCount },
+    (_, index) => row(grid, index).getBoundingClientRect().height,
+  );
 }
 function modelHeights(grid: Grid) {
-  return [0, 1].map(
-    (index) => grid.api.getDisplayedRowAtIndex(index)?.rowHeight,
+  return Array.from(
+    { length: grid.rowCount },
+    (_, index) => grid.api.getDisplayedRowAtIndex(index)?.rowHeight,
   );
 }
 const frame = () =>
@@ -69,7 +84,7 @@ async function mountGrid(mode: string, content: Content): Promise<Grid> {
   provider.dataset.mode = mode;
   const container = document.createElement("div");
   container.className = "ag-theme-salt";
-  container.style.cssText = "height:450px;width:500px";
+  container.style.cssText = "height:600px;width:500px";
   provider.append(container);
   document.body.append(provider);
   // These references stay unchanged through every density and compact transition.
@@ -79,27 +94,37 @@ async function mountGrid(mode: string, content: Content): Promise<Grid> {
       width: 220,
       autoHeight: content !== "normal",
       wrapText: content !== "normal",
-      ...(content === "fixed"
-        ? {
-            cellRenderer: () => {
-              const renderer = document.createElement("div");
-              renderer.style.cssText =
-                "height:14px;line-height:14px;font-size:11px";
-              renderer.textContent = "Fixed height";
-              return renderer;
+      cellRendererSelector: ({ data }) =>
+        data?.contentHeight == null
+          ? undefined
+          : {
+              component: () => {
+                const renderer = document.createElement("div");
+                renderer.style.cssText = `height:${data.contentHeight}px;line-height:14px;font-size:11px`;
+                renderer.textContent = `${data.contentHeight}px content`;
+                return renderer;
+              },
             },
-          }
-        : {}),
     },
     { field: "other", width: 200 },
   ];
-  const rowData = [
+  const textRows: RowData[] = [
     "Short text",
     "Ordinary text that wraps onto several lines to exercise auto height while its font size and line height change with Salt density.",
-  ].map((value) => ({
-    value: content === "empty" ? "" : value,
-    other: "Normal cell",
-  }));
+  ].map((value) => ({ value, other: "Normal cell" }));
+  const emptyRow = { value: "", other: "Empty content" };
+  const fixedRow = { value: "", other: "Small renderer", contentHeight: 14 };
+  const tallRow = { value: "", other: "Tall renderer", contentHeight: 100 };
+  const rowData =
+    content === "mixed"
+      ? [...textRows, emptyRow, fixedRow, tallRow]
+      : content === "empty"
+        ? [emptyRow]
+        : content === "fixed"
+          ? [fixedRow]
+          : content === "tall"
+            ? [tallRow]
+            : textRows;
   const api = createGrid(container, {
     theme: "legacy",
     columnDefs,
@@ -111,10 +136,11 @@ async function mountGrid(mode: string, content: Content): Promise<Grid> {
     container,
     api,
     root: element(container, ".ag-root-wrapper"),
+    rowCount: rowData.length,
   };
   mounted.push(grid);
   await document.fonts.ready;
-  await expect.poll(() => rowHeights(grid).length).toBe(2);
+  await expect.poll(() => rowHeights(grid).length).toBe(grid.rowCount);
   return grid;
 }
 
@@ -140,27 +166,43 @@ async function setDensity(grid: Grid, density: Density, compact = false) {
   return height;
 }
 
-async function expectRows(grid: Grid, height: number) {
-  await expect.poll(() => rowHeights(grid)).toEqual([height, height]);
-  expect(modelHeights(grid)).toEqual([height, height]);
+function expectLayout(grid: Grid) {
+  expect(modelHeights(grid)).toEqual(rowHeights(grid));
+  for (let index = 1; index < grid.rowCount; index++) {
+    expect(row(grid, index).getBoundingClientRect().top).toBeGreaterThanOrEqual(
+      row(grid, index - 1).getBoundingClientRect().bottom,
+    );
+  }
 }
 
 describe.each(["light", "dark"])("AG Grid density in %s mode", (mode) => {
-  it("follows CSS density and compact changes without recreating the grid", async () => {
-    const grid = await mountGrid(mode, "normal");
-    for (const density of ["high", "medium", "low", "touch", "high"] as const) {
-      await expectRows(grid, await setDensity(grid, density));
-    }
-    await expectRows(grid, await setDensity(grid, "high", true));
-    await expectRows(grid, await setDensity(grid, "high"));
-  });
+  // Isolate fixed/empty content so another row's resize cannot mask stale minima or lost tall heights.
+  it.each(["normal", "fixed", "tall", "empty"] as const)(
+    "follows CSS density and compact changes with %s content",
+    async (content) => {
+      const grid = await mountGrid(mode, content);
+      for (const [density, compact] of densityChanges) {
+        const minimum = await setDensity(grid, density, compact);
+        const height = content === "tall" ? 100 : minimum;
+        await expect
+          .poll(() => rowHeights(grid))
+          .toEqual(Array(grid.rowCount).fill(height));
+        expectLayout(grid);
+      }
+    },
+  );
 
-  it("resizes short and wrapped auto-height cells when density changes", async () => {
-    const grid = await mountGrid(mode, "wrapped");
-    let highHeight = 0;
-    for (const density of ["high", "medium", "low", "touch", "high"] as const) {
-      const minimum = await setDensity(grid, density);
-      await expect.poll(() => rowHeights(grid)[0]).toBe(minimum);
+  it("resizes mixed auto-height rows while preserving taller content", async () => {
+    const grid = await mountGrid(mode, "mixed");
+    let wrappedHighHeight = 0;
+    for (const [density, compact] of densityChanges) {
+      const minimum = await setDensity(grid, density, compact);
+      await expect
+        .poll(() => {
+          const actual = rowHeights(grid);
+          return [actual[0], actual[2], actual[3], actual[4]];
+        })
+        .toEqual([minimum, minimum, minimum, 100]);
       await expect.poll(() => rowHeights(grid)[1]).toBeGreaterThan(minimum);
       await expect
         .poll(() => {
@@ -172,50 +214,15 @@ describe.each(["light", "dark"])("AG Grid density in %s mode", (mode) => {
         })
         .toBe(true);
       if (density === "high") {
-        if (highHeight) {
-          await expect.poll(() => rowHeights(grid)[1]).toBe(highHeight);
+        if (wrappedHighHeight) {
+          await expect.poll(() => rowHeights(grid)[1]).toBe(wrappedHighHeight);
         } else {
-          highHeight = rowHeights(grid)[1];
+          wrappedHighHeight = rowHeights(grid)[1];
         }
       } else if (density === "touch") {
-        expect(rowHeights(grid)[1]).toBeGreaterThan(highHeight);
+        expect(rowHeights(grid)[1]).toBeGreaterThan(wrappedHighHeight);
       }
-      expect(modelHeights(grid)).toEqual(rowHeights(grid));
-      expect(row(grid, 1).getBoundingClientRect().top).toBeGreaterThanOrEqual(
-        row(grid, 0).getBoundingClientRect().bottom,
-      );
+      expectLayout(grid);
     }
   });
-
-  it.each(["fixed", "empty"] as const)(
-    "supports reactive rowHeight with %s auto-height content",
-    async (content) => {
-      const grid = await mountGrid(mode, content);
-      await expectRows(grid, 25);
-      // The explicit height must recover rows after CSS-only density changes.
-      for (const [density, compact] of [
-        ["high", false],
-        ["touch", false],
-        ["high", false],
-        ["high", true],
-      ] as const) {
-        await setDensity(grid, density, compact);
-      }
-      // Fixed or empty content may not trigger an auto-height ResizeObserver update.
-      // An explicit reactive height must still update the existing row model.
-      grid.api.setGridOption("rowHeight", 21);
-      await expectRows(grid, 21);
-      for (const [density, compact] of [
-        ["high", false],
-        ["touch", false],
-        ["high", false],
-        ["high", true],
-        ["high", false],
-      ] as const) {
-        const height = await setDensity(grid, density, compact);
-        grid.api.setGridOption("rowHeight", height);
-        await expectRows(grid, height);
-      }
-    },
-  );
 });
