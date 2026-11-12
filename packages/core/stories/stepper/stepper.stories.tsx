@@ -1,5 +1,5 @@
 /** biome-ignore-all lint/correctness/useUniqueElementIds: id isn't the DOM id */
-import { StackLayout, Step, Stepper, Text, Tooltip } from "@salt-ds/core";
+import { StackLayout, Step, Stepper } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 
 export default {
@@ -199,31 +199,6 @@ export const StageStatus: StoryFn<typeof Stepper> = () => {
         <Step label="Locked" description="stage" stage="locked" />
         <Step label="Error" description="status" status="error" />
         <Step label="Warning" description="status" status="warning" />
-      </Stepper>
-    </StackLayout>
-  );
-};
-
-// Not something we document, but making it possible to use Tooltip with a Step.
-export const WithTooltip: StoryFn<typeof Stepper> = () => {
-  return (
-    <StackLayout
-      gap={10}
-      style={{
-        minWidth: "640px",
-        width: "100%",
-      }}
-    >
-      <Stepper>
-        <Tooltip placement="bottom" content={<Text>Content step 1</Text>}>
-          <Step label="Step 1" stage="completed" />
-        </Tooltip>
-        <Tooltip placement="bottom" content={<Text>Content step 2</Text>}>
-          <Step label="Step 2" stage="active" />
-        </Tooltip>
-        <Tooltip placement="bottom" content={<Text>Content step 3</Text>}>
-          <Step label="Step 3" />
-        </Tooltip>
       </Stepper>
     </StackLayout>
   );

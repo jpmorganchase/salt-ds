@@ -1,222 +1,718 @@
-/**
- * A modified version of: https://github.com/storybookjs/storybook/blob/8b16feb67674d6ccfdf3a1c539ca35e56f3e1968/code/builders/builder-vite/src/virtual-file-names.ts
- */
-
-import path, { relative } from "node:path";
-import slash from "slash";
+import fs from "node:fs";
+import path from "node:path";
 import type { BuilderStats } from "storybook/internal/types";
-import { Project } from "ts-morph";
+import ts from "typescript";
 import type { Plugin } from "vite";
 
-/*
- * Reason, Module, and Stats are copied from chromatic types
- * https://github.com/chromaui/chromatic-cli/blob/145a5e295dde21042e96396c7e004f250d842182/bin-src/types.ts#L265-L276
- */
-interface Reason {
-  moduleName: string;
-}
-interface Module {
-  id: string | number;
-  name: string;
-  modules?: Array<Pick<Module, "name">>;
-  reasons?: Reason[];
-}
-interface Stats {
-  modules: Module[];
-}
-
 type TurbosnapPluginOptions = {
-  /** Project root (https://vitejs.dev/config/#root) */
+  /** Project root (https://vite.dev/config/shared-options#root). */
   rootDir: string;
+  /** Resolved relative to rootDir; defaults to tsconfig.json. */
+  tsConfigFilePath?: string;
 };
 
-const SB_VIRTUAL_FILES = {
-  VIRTUAL_APP_FILE: "virtual:/@storybook/builder-vite/vite-app.js",
-  VIRTUAL_STORIES_FILE: "virtual:/@storybook/builder-vite/storybook-stories.js",
-  VIRTUAL_PREVIEW_FILE: "virtual:/@storybook/builder-vite/preview-entry.js",
-  VIRTUAL_ADDON_SETUP_FILE: "virtual:/@storybook/builder-vite/setup-addons.js",
+type RuntimeModule = {
+  id: string;
+  importedIds?: readonly string[];
+  dynamicallyImportedIds?: readonly string[];
 };
 
-function _getResolvedVirtualModuleId(virtualModuleId: string) {
-  return `\0${virtualModuleId}`;
-}
+type ModuleMetadata = {
+  imports: Map<string, { target: string | undefined; name: string }>;
+  targets: Set<string>;
+  exports?: Map<string, ts.Symbol>;
+  facade: boolean;
+};
 
-function getOriginalVirtualModuleId(resolvedVirtualModuleId: string) {
-  return resolvedVirtualModuleId.slice(1);
-}
+type PackageInfo = { sideEffects: unknown };
 
-/**
- * Strips off query params added by rollup/vite to ids, to make paths compatible for comparison with
- * git.
- */
-function stripQueryParams(filePath: string): string {
-  return filePath.split("?")[0];
-}
-
-/**
- * We only care about user code, not node_modules, vite files, or (most) virtual files.
- */
-function isUserCode(moduleName: string) {
-  if (!moduleName) {
-    return false;
-  }
-
-  // keep Storybook's virtual files because they import the story files, so they are essential to the module graph
-  if (
-    Object.values(SB_VIRTUAL_FILES).includes(
-      getOriginalVirtualModuleId(moduleName),
-    )
-  ) {
-    return true;
-  }
-
-  return Boolean(
-    !moduleName.startsWith("vite/") &&
-      !moduleName.startsWith("\0") &&
-      moduleName !== "react/jsx-runtime" &&
-      !moduleName.match(/node_modules\//) &&
-      !moduleName.includes("__tests__"),
-  );
-}
-
-/**
- * Convert an absolute path name to a path relative to the vite root, with a starting `./`
- */
-/** Convert an absolute path name to a path relative to the vite root, with a starting `./` */
-function normalize(workingDir: string, filename: string) {
-  // Do not try to resolve virtual files
-  if (filename.startsWith("virtual:")) {
-    // We have to append a forward slash because otherwise we break turbosnap.
-    // As soon as the chromatic-cli supports `virtual:` id's without a starting forward slash,
-    // we can remove adding the forward slash here
-    // Reference: https://github.com/chromaui/chromatic-cli/blob/v11.25.2/node-src/lib/getDependentStoryFiles.ts#L53
-    return `/${filename}`;
-  }
-  // ! Maintain backwards compatibility with the old virtual file names
-  // ! to ensure that the stats file doesn't change between the versions
-  // ! Turbosnap is also only compatible with the old virtual file names
-  // ! the old virtual file names did not start with the obligatory \0 character
-  if (
-    Object.values(SB_VIRTUAL_FILES).includes(
-      getOriginalVirtualModuleId(filename),
-    )
-  ) {
-    // We have to append a forward slash because otherwise we break turbosnap.
-    // As soon as the chromatic-cli supports `virtual:` id's without a starting forward slash,
-    // we can remove adding the forward slash here
-    // Reference: https://github.com/chromaui/chromatic-cli/blob/v11.25.2/node-src/lib/getDependentStoryFiles.ts#L53
-    return `/${getOriginalVirtualModuleId(filename)}`;
-  }
-
-  // Otherwise, we need them in the format `./path/to/file.js`.
-
-  const relativePath = relative(workingDir, stripQueryParams(filename));
-  // This seems hacky, got to be a better way to add a `./` to the start of a path.
-  return `./${slash(relativePath)}`;
-}
+type Stats = {
+  modules: {
+    id: string;
+    name: string;
+    reasons: { moduleName: string }[];
+  }[];
+};
 
 type StatsPlugin = Plugin & { storybookGetStats: () => BuilderStats };
 
-export function typescriptTurbosnap({
+const virtualPrefix = "virtual:/@storybook/builder-vite/";
+const stripQuery = (name: string) => name.split("?")[0];
+const absolute = (name: string) => path.resolve(stripQuery(name));
+const isVirtual = (name: string) =>
+  name.replace(/^\0/, "").startsWith(virtualPrefix);
+const isUserCode = (name: string | undefined): name is string =>
+  Boolean(
+    name &&
+      (isVirtual(name) ||
+        (!name.startsWith("\0") &&
+          !name.startsWith("vite/") &&
+          name !== "react/jsx-runtime" &&
+          !name.replaceAll("\\", "/").includes("/node_modules/"))),
+  );
+
+/**
+ * Builds a source-input graph, including
+ * erased type imports that can change generated docgen metadata. It does not
+ * run a language-service reference search for each variable declaration.
+ *
+ * A named import traverses the selected export through facades. Every facade on
+ * that route is retained as an input, but unrelated exports do not acquire an
+ * edge into the facade. Selectivity is enabled only for packages declaring
+ * JavaScript side-effect-free; unknown packages use conservative module edges.
+ */
+export function createForwardGraph({
   rootDir,
-}: TurbosnapPluginOptions): StatsPlugin {
-  const statsMap = new Map<string, Module>();
+  tsConfigFilePath = "tsconfig.json",
+}: TurbosnapPluginOptions) {
+  rootDir = path.resolve(rootDir);
+  tsConfigFilePath = path.resolve(rootDir, tsConfigFilePath);
+  const config = ts.readConfigFile(tsConfigFilePath, ts.sys.readFile);
+  if (config.error)
+    throw new Error(
+      ts.flattenDiagnosticMessageText(config.error.messageText, "\n"),
+    );
+  const configInputs = new Set([absolute(tsConfigFilePath)]);
+  const parsed = ts.parseJsonConfigFileContent(
+    config.config,
+    {
+      ...ts.sys,
+      readFile(filename) {
+        configInputs.add(absolute(filename));
+        return ts.sys.readFile(filename);
+      },
+    },
+    path.dirname(tsConfigFilePath),
+  );
+  if (parsed.errors.length) {
+    throw new Error(
+      parsed.errors
+        .map((error) =>
+          ts.flattenDiagnosticMessageText(error.messageText, "\n"),
+        )
+        .join("\n"),
+    );
+  }
+  const program = ts.createProgram(parsed.fileNames, parsed.options);
+  const checker = program.getTypeChecker();
+  const resolutionCache = ts.createModuleResolutionCache(
+    rootDir,
+    (name) => (ts.sys.useCaseSensitiveFileNames ? name : name.toLowerCase()),
+    parsed.options,
+  );
+  const graph = new Map<string, Set<string>>();
+  const modules = new Map<string, ModuleMetadata>();
+  const extraSources = new Map<string, ts.SourceFile | undefined>();
+  const exportCache = new Map<string, Set<string>>();
+  const sideEffectsCache = new Map<string, boolean>();
+  const packageCache = new Map<string, PackageInfo | undefined>();
+  const analysed = new Set<string>();
+  const pending: ts.SourceFile[] = [];
+  const runtimeFiles = new Set<string>();
+  const globalGuard = `\0${virtualPrefix}turbosnap-global-inputs.js`;
+  const globalInputs = new Set<string>();
+  const moduleAugmentations = new Map<string, Set<string>>();
+  const wholeModuleActive = new Set<string>();
 
-  function addFilesToModuleMap(filePath: string, reasonPaths: string[]) {
-    const normalizedFilePath = normalize(rootDir, filePath);
-    const normalizedReasons = reasonPaths.map((reasonPath) => ({
-      moduleName: normalize(rootDir, reasonPath),
-    }));
-
-    let m = statsMap.get(normalizedFilePath);
-
-    if (!m) {
-      m = {
-        id: normalizedFilePath,
-        name: normalizedFilePath,
-        reasons: [],
-      };
-    }
-
-    for (const reason of normalizedReasons) {
-      if (!m.reasons?.find((r) => r.moduleName === reason.moduleName)) {
-        m.reasons?.push(reason);
-      }
-    }
-
-    statsMap.set(normalizedFilePath, m);
+  function normalize(name: string): string {
+    if (isVirtual(name)) return `/${name.replace(/^\0/, "")}`;
+    return `./${path.relative(rootDir, stripQuery(name)).replaceAll("\\", "/")}`;
   }
 
-  const project = new Project({
-    tsConfigFilePath: "./tsconfig.json",
-  });
+  function entry(file: string): Set<string> {
+    const name = normalize(file);
+    let reasons = graph.get(name);
+    if (!reasons) {
+      reasons = new Set();
+      graph.set(name, reasons);
+    }
+    return reasons;
+  }
 
+  function add(dependency: string, importer: string): void {
+    if (!isUserCode(dependency) || !isUserCode(importer)) return;
+    const normalized = normalize(importer);
+    if (normalize(dependency) !== normalized) entry(dependency).add(normalized);
+  }
+
+  function source(file: string | undefined): ts.SourceFile | undefined {
+    if (!file || isVirtual(file)) return undefined;
+    const filename = absolute(file);
+    const existing = program.getSourceFile(filename);
+    if (existing) return existing;
+    if (extraSources.has(filename)) return extraSources.get(filename);
+    // Storybook preview/config modules may be outside tsconfig.include. Their
+    // imports must still be analyzed precisely, especially shared decorators.
+    if (!isUserCode(filename) || !/\.[cm]?[jt]sx?$/.test(filename))
+      return undefined;
+    const contents = ts.sys.readFile(filename);
+    const sf =
+      contents === undefined
+        ? undefined
+        : ts.createSourceFile(
+            filename,
+            contents,
+            ts.ScriptTarget.Latest,
+            true,
+            /tsx$/.test(filename)
+              ? ts.ScriptKind.TSX
+              : /jsx$/.test(filename)
+                ? ts.ScriptKind.JSX
+                : /\.[cm]?js$/.test(filename)
+                  ? ts.ScriptKind.JS
+                  : ts.ScriptKind.TS,
+          );
+    extraSources.set(filename, sf);
+    return sf;
+  }
+
+  function queue(file: string | undefined): void {
+    if (!file || !isUserCode(file)) return;
+    const sf = source(file);
+    if (sf && !analysed.has(sf.fileName)) pending.push(sf);
+  }
+
+  function connect(files: Iterable<string>, importer: string): void {
+    for (const file of files) {
+      add(file, importer);
+      queue(file);
+      // Augmentations can target a leaf reached through one or more facades.
+      // Attach them to the consumer of every resolved route, not only the
+      // spelling of its direct import.
+      addAugmentations(undefined, file, importer);
+    }
+  }
+
+  function specifierText(specifier: ts.Expression): string | undefined {
+    return ts.isStringLiteralLike(specifier) ? specifier.text : undefined;
+  }
+
+  function resolve(
+    specifier: string | ts.Expression,
+    sf: ts.SourceFile,
+  ): string | undefined {
+    const value =
+      typeof specifier === "string" ? specifier : specifierText(specifier);
+    if (value === undefined) return undefined;
+    const result = ts.resolveModuleName(
+      value,
+      sf.fileName,
+      parsed.options,
+      ts.sys,
+      resolutionCache,
+    ).resolvedModule;
+    if (result) return absolute(result.resolvedFileName);
+    // TS intentionally does not resolve arbitrary CSS/assets. Vite's actual
+    // resolved imports are retained below, including aliases and query suffixes.
+    if (value.startsWith("."))
+      return absolute(path.join(path.dirname(sf.fileName), value));
+    return undefined;
+  }
+
+  function exportedSymbol(
+    sf: ts.SourceFile,
+    name: string,
+  ): ts.Symbol | undefined {
+    const info = metadata(sf);
+    if (!info.exports) {
+      const symbol =
+        program.getSourceFile(sf.fileName) && checker.getSymbolAtLocation(sf);
+      info.exports = new Map(
+        symbol
+          ? checker.getExportsOfModule(symbol).map((item) => [item.name, item])
+          : [],
+      );
+    }
+    return info.exports.get(name);
+  }
+
+  function metadata(sf: ts.SourceFile): ModuleMetadata {
+    let info = modules.get(sf.fileName);
+    if (info) return info;
+    info = {
+      imports: new Map(),
+      targets: new Set(),
+      exports: undefined,
+      facade: true,
+    };
+    modules.set(sf.fileName, info);
+    for (const statement of sf.statements) {
+      if (ts.isImportDeclaration(statement)) {
+        const target = resolve(statement.moduleSpecifier, sf);
+        if (target) info.targets.add(target);
+        const clause = statement.importClause;
+        if (clause?.name)
+          info.imports.set(clause.name.text, { target, name: "default" });
+        if (clause?.namedBindings && ts.isNamedImports(clause.namedBindings)) {
+          for (const binding of clause.namedBindings.elements) {
+            info.imports.set(binding.name.text, {
+              target,
+              name: binding.propertyName?.text ?? binding.name.text,
+            });
+          }
+        } else if (
+          clause?.namedBindings &&
+          ts.isNamespaceImport(clause.namedBindings)
+        ) {
+          info.imports.set(clause.namedBindings.name.text, {
+            target,
+            name: "*",
+          });
+        }
+      } else if (ts.isExportDeclaration(statement)) {
+        const target =
+          statement.moduleSpecifier && resolve(statement.moduleSpecifier, sf);
+        if (target) info.targets.add(target);
+      } else if (
+        !(
+          ts.isEmptyStatement(statement) ||
+          (ts.isExportAssignment(statement) &&
+            ts.isIdentifier(statement.expression))
+        )
+      ) {
+        info.facade = false;
+      }
+    }
+    return info;
+  }
+
+  function packageFor(file: string): PackageInfo | undefined {
+    let directory = path.dirname(file);
+    const visited: string[] = [];
+    let result: PackageInfo | undefined;
+    while (true) {
+      if (packageCache.has(directory)) {
+        result = packageCache.get(directory);
+        break;
+      }
+      visited.push(directory);
+      const filename = path.join(directory, "package.json");
+      if (fs.existsSync(filename)) {
+        try {
+          const manifest: unknown = JSON.parse(
+            fs.readFileSync(filename, "utf8"),
+          );
+          result = {
+            sideEffects:
+              manifest &&
+              typeof manifest === "object" &&
+              "sideEffects" in manifest
+                ? manifest.sideEffects
+                : undefined,
+          };
+        } catch {
+          // An unreadable sideEffects contract cannot enable precise facades.
+          result = { sideEffects: undefined };
+        }
+        break;
+      }
+      const parent = path.dirname(directory);
+      if (parent === directory) break;
+      directory = parent;
+    }
+    for (const item of visited) packageCache.set(item, result);
+    return result;
+  }
+
+  function sideEffectFree(file: string): boolean {
+    const cached = sideEffectsCache.get(file);
+    if (cached !== undefined) return cached;
+    const contract = packageFor(file)?.sideEffects;
+    // These are the contracts used by Salt. Unrecognized glob syntax deliberately
+    // falls back to ordinary module propagation instead of guessing.
+    const safe =
+      /\.d\.[cm]?ts$/.test(file) ||
+      contract === false ||
+      (Array.isArray(contract) &&
+        contract.every(
+          (item) =>
+            typeof item === "string" &&
+            !item.startsWith("!") &&
+            /\.(?:css|scss|sass|less)$/.test(item),
+        ));
+    sideEffectsCache.set(file, safe);
+    return safe;
+  }
+
+  function preciseFacade(sf: ts.SourceFile): boolean {
+    return metadata(sf).facade && sideEffectFree(sf.fileName);
+  }
+
+  function ultimateDeclarations(symbol: ts.Symbol | undefined): string[] {
+    if (symbol && symbol.flags & ts.SymbolFlags.Alias) {
+      symbol = checker.getAliasedSymbol(symbol);
+    }
+    return (symbol?.declarations ?? []).map(
+      (declaration) => declaration.getSourceFile().fileName,
+    );
+  }
+
+  function resolveExport(
+    file: string | undefined,
+    name: string,
+    ancestors = new Set<string>(),
+  ): Set<string> {
+    if (!file || !isUserCode(file)) return new Set();
+    const key = `${file}\0${name}`;
+    const cached = exportCache.get(key);
+    if (cached) return cached;
+    const result = new Set([file]);
+    const sf = source(file);
+    if (!sf || ancestors.has(key)) return result;
+    const nextAncestors = new Set(ancestors).add(key);
+    const addExport = (
+      target: string | undefined,
+      targetName: string,
+    ): void => {
+      const dependencies =
+        targetName === "*"
+          ? wholeModule(target)
+          : resolveExport(target, targetName, nextAncestors);
+      for (const item of dependencies) result.add(item);
+    };
+    const symbol = exportedSymbol(sf, name);
+    for (const dependency of ultimateDeclarations(symbol))
+      if (isUserCode(dependency)) result.add(dependency);
+    for (const statement of sf.statements) {
+      if (ts.isExportDeclaration(statement)) {
+        const target =
+          statement.moduleSpecifier && resolve(statement.moduleSpecifier, sf);
+        const clause = statement.exportClause;
+        if (clause && ts.isNamedExports(clause)) {
+          for (const binding of clause.elements)
+            if (binding.name.text === name) {
+              const importedName =
+                binding.propertyName?.text ?? binding.name.text;
+              if (target) addExport(target, importedName);
+              else {
+                const imported = metadata(sf).imports.get(importedName);
+                if (imported) addExport(imported.target, imported.name);
+              }
+            }
+        } else if (
+          clause &&
+          ts.isNamespaceExport(clause) &&
+          clause.name.text === name
+        ) {
+          for (const item of wholeModule(target)) result.add(item);
+        } else if (!clause && target && name !== "default") {
+          const targetSource = source(target);
+          if (
+            targetSource &&
+            (!program.getSourceFile(targetSource.fileName) ||
+              exportedSymbol(targetSource, name))
+          )
+            addExport(target, name);
+        }
+      } else if (
+        name === "default" &&
+        ts.isExportAssignment(statement) &&
+        ts.isIdentifier(statement.expression)
+      ) {
+        const imported = metadata(sf).imports.get(statement.expression.text);
+        if (imported) addExport(imported.target, imported.name);
+      }
+    }
+    // Avoid caching a partial traversal of a cyclic re-export route. TS's final
+    // symbol declarations above still retain its concrete defining input.
+    if (ancestors.size === 0 && wholeModuleActive.size === 0)
+      exportCache.set(key, result);
+    return result;
+  }
+
+  function wholeModule(
+    file: string | undefined,
+    visited = new Set<string>(),
+  ): Set<string> {
+    if (!file || !isUserCode(file) || visited.has(file)) return new Set();
+    visited.add(file);
+    const result = new Set([file]);
+    const sf = source(file);
+    if (!sf || wholeModuleActive.has(file)) return result;
+    wholeModuleActive.add(file);
+    const symbol =
+      program.getSourceFile(sf.fileName) && checker.getSymbolAtLocation(sf);
+    for (const item of symbol ? checker.getExportsOfModule(symbol) : []) {
+      for (const dependency of resolveExport(file, item.name))
+        result.add(dependency);
+    }
+    // Export-star-only facades and side-effect-only modules may have no named
+    // exports. Retain their physical inputs for namespace/dynamic consumption.
+    if (metadata(sf).facade)
+      for (const target of metadata(sf).targets) {
+        for (const dependency of wholeModule(target, visited))
+          result.add(dependency);
+      }
+    wholeModuleActive.delete(file);
+    return result;
+  }
+
+  function addAugmentations(
+    specifier: string | undefined,
+    target: string | undefined,
+    importer: string,
+  ): void {
+    for (const key of [specifier, target]) {
+      if (!key) continue;
+      for (const dependency of moduleAugmentations.get(key) ?? []) {
+        add(dependency, importer);
+        queue(dependency);
+      }
+    }
+  }
+
+  function importBinding(
+    target: string | undefined,
+    name: string,
+    importer: string,
+    specifier: string | undefined,
+  ): void {
+    addAugmentations(specifier, target, importer);
+    connect(
+      name === "*" ? wholeModule(target) : resolveExport(target, name),
+      importer,
+    );
+  }
+
+  // Ambient inputs can change generated types/docgen without a runtime import.
+  // Global declarations use a conservative all-input guard; module augmentation
+  // is scoped to consumers of the augmented module. No identifier-wide checker
+  // scan or repeated reference searches are required.
+  for (const sf of program.getSourceFiles()) {
+    if (!isUserCode(sf.fileName) || program.isSourceFileDefaultLibrary(sf))
+      continue;
+    // allowJs + include:packages also loads generated dist-cjs outputs. CommonJS
+    // modules are not ambient scripts even though isExternalModule() is false.
+    // A declaration file such as globals.d.cts can still declare global types.
+    const commonJs = Boolean(
+      ("commonJsModuleIndicator" in sf && sf.commonJsModuleIndicator) ||
+        (!sf.isDeclarationFile && /\.(?:cjs|cts)$/.test(sf.fileName)),
+    );
+    if (!ts.isExternalModule(sf) && !commonJs && !/\.json$/.test(sf.fileName))
+      globalInputs.add(sf.fileName);
+    for (const statement of sf.statements) {
+      if (ts.isNamespaceExportDeclaration(statement))
+        globalInputs.add(sf.fileName);
+      if (!ts.isModuleDeclaration(statement)) continue;
+      if (
+        statement.flags & ts.NodeFlags.GlobalAugmentation ||
+        !ts.isStringLiteral(statement.name)
+      ) {
+        if (statement.flags & ts.NodeFlags.GlobalAugmentation)
+          globalInputs.add(sf.fileName);
+        continue;
+      }
+      const name = statement.name.text;
+      // Wildcard ambient asset declarations are compile-time typing for Vite
+      // imports. Guard these globally: changing them can change generated types.
+      if (name.includes("*")) {
+        globalInputs.add(sf.fileName);
+        continue;
+      }
+      const target = resolve(name, sf);
+      for (const key of new Set([name, target])) {
+        if (!key) continue;
+        let inputs = moduleAugmentations.get(key);
+        if (!inputs) {
+          inputs = new Set();
+          moduleAugmentations.set(key, inputs);
+        }
+        inputs.add(sf.fileName);
+      }
+    }
+  }
+
+  function analyse(sf: ts.SourceFile): void {
+    if (analysed.has(sf.fileName)) return;
+    analysed.add(sf.fileName);
+    entry(sf.fileName);
+    const facade = preciseFacade(sf);
+    const consume = (
+      target: string | undefined,
+      name: string,
+      specifier: string | undefined,
+    ) => importBinding(target, name, sf.fileName, specifier);
+    const consumeBindings = (
+      target: string | undefined,
+      clause: ts.ImportClause | undefined,
+      specifier: string | undefined,
+    ): void => {
+      if (!clause) {
+        consume(target, "*", specifier);
+        return;
+      }
+      if (clause.name) consume(target, "default", specifier);
+      const bindings = clause.namedBindings;
+      if (bindings && ts.isNamedImports(bindings)) {
+        for (const binding of bindings.elements)
+          consume(
+            target,
+            binding.propertyName?.text ?? binding.name.text,
+            specifier,
+          );
+        if (!bindings.elements.length) consume(target, "*", specifier);
+      } else if (bindings) consume(target, "*", specifier);
+    };
+    for (const statement of sf.statements) {
+      if (ts.isImportDeclaration(statement)) {
+        const target = resolve(statement.moduleSpecifier, sf);
+        const clause = statement.importClause;
+        if (!clause || !facade) {
+          consumeBindings(
+            target,
+            clause,
+            specifierText(statement.moduleSpecifier),
+          );
+        } else if (target && !sideEffectFree(target)) {
+          consume(target, "*", specifierText(statement.moduleSpecifier));
+        }
+      } else if (
+        ts.isExportDeclaration(statement) &&
+        statement.moduleSpecifier
+      ) {
+        const target = resolve(statement.moduleSpecifier, sf);
+        const clause = statement.exportClause;
+        // export type {} is commonly used specifically to load augmentations.
+        const emptyTypeExport =
+          statement.isTypeOnly &&
+          clause &&
+          ts.isNamedExports(clause) &&
+          !clause.elements.length;
+        if (!facade || emptyTypeExport || (target && !sideEffectFree(target))) {
+          consume(target, "*", specifierText(statement.moduleSpecifier));
+        }
+      } else if (
+        ts.isImportEqualsDeclaration(statement) &&
+        ts.isExternalModuleReference(statement.moduleReference) &&
+        statement.moduleReference.expression
+      ) {
+        const expression = statement.moduleReference.expression;
+        if (ts.isStringLiteralLike(expression))
+          consume(resolve(expression, sf), "*", expression.text);
+      }
+    }
+    const isJavaScript = Boolean(sf.flags & ts.NodeFlags.JavaScriptFile);
+    const visit = (node: ts.Node): void => {
+      if (
+        ts.isImportTypeNode(node) &&
+        ts.isLiteralTypeNode(node.argument) &&
+        ts.isStringLiteral(node.argument.literal)
+      ) {
+        const literal = node.argument.literal;
+        let qualifier = node.qualifier;
+        while (qualifier && ts.isQualifiedName(qualifier))
+          qualifier = qualifier.left;
+        consume(
+          resolve(literal, sf),
+          qualifier && ts.isIdentifier(qualifier) ? qualifier.text : "*",
+          literal.text,
+        );
+      } else if (ts.isJSDocImportTag(node)) {
+        consumeBindings(
+          resolve(node.moduleSpecifier, sf),
+          node.importClause,
+          specifierText(node.moduleSpecifier),
+        );
+      } else if (
+        ts.isCallExpression(node) &&
+        node.arguments.length &&
+        (node.expression.kind === ts.SyntaxKind.ImportKeyword ||
+          (ts.isIdentifier(node.expression) &&
+            node.expression.text === "require"))
+      ) {
+        const literal = node.arguments[0];
+        if (ts.isStringLiteralLike(literal)) {
+          consume(resolve(literal, sf), "*", literal.text);
+        }
+      }
+      // forEachChild omits attached JSDoc. getChildren includes every physical
+      // comment, including adjacent @import/@typedef blocks and EOF comments.
+      // Only JavaScript needs this syntax walk; TypeScript keeps the AST walk.
+      if (isJavaScript) {
+        for (const child of node.getChildren(sf)) visit(child);
+      } else {
+        ts.forEachChild(node, visit);
+      }
+    };
+    visit(sf);
+    for (const reference of sf.referencedFiles)
+      connect(
+        [path.resolve(path.dirname(sf.fileName), reference.fileName)],
+        sf.fileName,
+      );
+  }
+
+  function drain(): void {
+    let next = pending.pop();
+    while (next) {
+      analyse(next);
+      next = pending.pop();
+    }
+  }
+
+  function moduleParsed(mod: RuntimeModule): void {
+    if (!isUserCode(mod.id)) return;
+    runtimeFiles.add(mod.id);
+    entry(mod.id);
+    const sf = isVirtual(mod.id) ? undefined : source(mod.id);
+    const targets = sf && metadata(sf).targets;
+    for (const imported of [
+      ...(mod.importedIds ?? []),
+      ...(mod.dynamicallyImportedIds ?? []),
+    ]) {
+      if (!isUserCode(imported)) continue;
+      if (!sf || !targets?.has(absolute(imported))) {
+        connect(wholeModule(imported), mod.id);
+      }
+    }
+    if (sf) queue(sf.fileName);
+    drain();
+  }
+
+  function getStats(): Stats & { toJson: () => Stats } {
+    // Guard all ambient inputs even when Vite erased them and never called
+    // moduleParsed. They are intentionally conservative rather than invisible.
+    for (const dependency of globalInputs) {
+      add(dependency, globalGuard);
+      queue(dependency);
+    }
+    // A single bridge keeps the guard O(ambient inputs + runtime modules), not
+    // their Cartesian product. It never points into the app/glob virtuals,
+    // whose direct dependencies Chromatic interprets specially.
+    if (globalInputs.size)
+      for (const importer of runtimeFiles) {
+        if (!isVirtual(importer)) add(globalGuard, importer);
+      }
+    // Package manifests are deliberately not inputs. Chromatic traces changed
+    // manifests found in the stats, and Storybook's preview imports package
+    // modules such as SaltProvider, so a version-only release bump would force
+    // a full rebuild. Chromatic handles dependency changes through the lockfile.
+    for (const importer of runtimeFiles) {
+      if (isVirtual(importer)) continue;
+      for (const input of configInputs) add(input, importer);
+    }
+    drain();
+    const stats = {
+      modules: [...graph].map(([name, reasons]) => ({
+        id: name,
+        name,
+        reasons: [...reasons].map((moduleName) => ({ moduleName })),
+      })),
+    };
+    return { ...stats, toJson: () => stats };
+  }
+
+  return { moduleParsed, getStats };
+}
+
+export function typescriptTurbosnap(
+  options: TurbosnapPluginOptions,
+): StatsPlugin {
+  const graph = createForwardGraph(options);
   return {
     name: "storybook:rollup-plugin-webpack-stats",
     enforce: "post",
-    moduleParsed: (mod) => {
-      if (!isUserCode(mod.id)) {
-        return;
-      }
-
-      const file = project.getSourceFile(path.resolve(mod.id));
-
-      if (!file) {
-        const moduleImports = mod.importedIds.concat(
-          mod.dynamicallyImportedIds,
-        );
-
-        for (const moduleImport of moduleImports) {
-          if (isUserCode(moduleImport)) {
-            addFilesToModuleMap(moduleImport, [mod.id]);
-          }
-        }
-
-        return;
-      }
-
-      const filePath = file.getFilePath();
-      const declarations = file.getVariableDeclarations() ?? [];
-      const importDeclarations = file.getImportDeclarations() ?? [];
-
-      for (const declaration of declarations) {
-        const x = Array.from(
-          new Set(
-            declaration
-              .findReferences()
-              .flatMap((references) =>
-                references
-                  .getReferences()
-                  .map((reference) => reference.getSourceFile().getFilePath()),
-              )
-              .filter((path) => path !== filePath && isUserCode(path)),
-          ),
-        );
-
-        addFilesToModuleMap(filePath, x);
-      }
-
-      for (const importDeclaration of importDeclarations) {
-        if (
-          !(
-            importDeclaration.isModuleSpecifierRelative() &&
-            importDeclaration.getModuleSpecifierValue()?.endsWith(".css")
-          )
-        ) {
-          continue;
-        }
-
-        const cssFile = path.resolve(
-          path.dirname(filePath),
-          importDeclaration.getModuleSpecifierValue(),
-        );
-
-        addFilesToModuleMap(cssFile, [filePath]);
-      }
-    },
-    storybookGetStats() {
-      const stats: Stats = { modules: Array.from(statsMap.values()) };
-      return { ...stats, toJson: () => stats };
-    },
+    moduleParsed: graph.moduleParsed,
+    storybookGetStats: graph.getStats,
   };
 }

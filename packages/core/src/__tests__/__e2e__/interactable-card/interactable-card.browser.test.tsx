@@ -107,9 +107,74 @@ describe("Given an Interactable Card", () => {
     expect(onClick).not.toHaveBeenCalled();
     expect(onChange).not.toHaveBeenCalled();
   });
+
+  it("should respect a consumer-provided tabIndex", async () => {
+    await renderWithSalt(
+      <>
+        <button type="button">Before</button>
+        <InteractableCard>Card 1</InteractableCard>
+        <InteractableCard tabIndex={-1}>Card 2</InteractableCard>
+        <button type="button">After</button>
+      </>,
+    );
+
+    await expect
+      .element(page.getByRole("button", { name: "Card 2" }))
+      .toHaveAttribute("tabindex", "-1");
+    await expect
+      .element(page.getByRole("button", { name: "Card 1" }))
+      .toHaveAttribute("tabindex", "0");
+
+    await userEvent.tab();
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "Card 1" }))
+      .toHaveFocus();
+
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "After" }))
+      .toHaveFocus();
+  });
+
+  it("should respect a consumer-provided tabIndex when disabled", async () => {
+    await renderWithSalt(
+      <InteractableCard disabled tabIndex={0}>
+        Disabled
+      </InteractableCard>,
+    );
+
+    await expect
+      .element(page.getByRole("button", { name: "Disabled" }))
+      .toHaveAttribute("tabindex", "0");
+  });
 });
 
 describe("GIVEN a multiselect InteractableCardGroup", () => {
+  it("respects a consumer-provided tabIndex", async () => {
+    await renderWithSalt(
+      <>
+        <button type="button">Before</button>
+        <InteractableCardGroup multiSelect>
+          <InteractableCard value="one">One</InteractableCard>
+          <InteractableCard value="two" tabIndex={-1}>
+            Two
+          </InteractableCard>
+        </InteractableCardGroup>
+        <button type="button">After</button>
+      </>,
+    );
+
+    await expect.element(card("Two", true)).toHaveAttribute("tabindex", "-1");
+    await userEvent.tab();
+    await userEvent.tab();
+    await expect.element(card("One", true)).toHaveFocus();
+    await userEvent.tab();
+    await expect
+      .element(page.getByRole("button", { name: "After" }))
+      .toHaveFocus();
+  });
+
   it("renders checkbox cards with values", async () => {
     await renderWithSalt(<Cards multiSelect />);
     await expect.element(cards(true)).toHaveLength(3);

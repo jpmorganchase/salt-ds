@@ -15,9 +15,9 @@ import {
   InfoSolidIcon,
   LockedIcon,
   OverflowMenuIcon,
+  ProgressActiveIcon,
+  ProgressDraftIcon,
   ProgressInprogressIcon,
-  StepActiveIcon,
-  StepDefaultIcon,
   SuccessCircleSolidIcon,
   TearOutIcon,
   TriangleDownIcon,
@@ -85,7 +85,7 @@ export interface SemanticIconProviderProps {
 }
 
 const defaultIconMap: SemanticIconMap = {
-  ActiveIcon: StepActiveIcon,
+  ActiveIcon: ProgressActiveIcon,
   CalendarIcon: CalendarIcon,
   CloseIcon: CloseIcon,
   CollapseGroupIcon: ChevronDownIcon,
@@ -107,7 +107,7 @@ const defaultIconMap: SemanticIconMap = {
   LevelSeparatorIcon: ChevronRightIcon,
   NextIcon: ChevronRightIcon,
   OverflowIcon: OverflowMenuIcon,
-  PendingIcon: StepDefaultIcon,
+  PendingIcon: ProgressDraftIcon,
   PreviousIcon: ChevronLeftIcon,
   RatingIcon: FavoriteIcon,
   RatingSelectedIcon: FavoriteSolidIcon,

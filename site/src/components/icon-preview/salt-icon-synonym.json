@@ -1075,6 +1075,11 @@
     "category": "actions"
   },
   {
+    "iconName": "progress-active",
+    "synonym": ["progress", "circle fill", "status", "work in progress", "wip"],
+    "category": "indicators"
+  },
+  {
     "iconName": "progress-cancelled",
     "synonym": ["dismiss", "x", "status", "cancel", "shut", "minus", "exit"],
     "category": "indicators"
