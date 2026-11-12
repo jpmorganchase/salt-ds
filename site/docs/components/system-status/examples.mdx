@@ -10,7 +10,7 @@ data:
 
 ## Info
 
-Use the info system status to communicate important updates or new features that do not require immediate action.
+Use info system status to communicate important updates or new features that do not require immediate action.
 
 An info icon displays alongside a supporting message.
 
@@ -18,7 +18,7 @@ An info icon displays alongside a supporting message.
 
 ## Error
 
-Use error system status for critical issues that affect the user's ability to access or use the platform. The messaging should tell the user how to resolve the issue. When relevant, add a supporting action to help resolve it. See the [interactive example](#interactive) for how to add actions.
+Use error system status for critical issues that affect the user's ability to access or use the platform. The messaging should explain what's affected and, where possible, what the user can do, such as try again later. When relevant, add a supporting action, such as viewing the service status. See the [interactive example](#interactive) for how to add actions.
 
 An error icon displays alongside a supporting message.
 
@@ -26,7 +26,7 @@ An error icon displays alongside a supporting message.
 
 ## Warning
 
-Use warning system status to warn users about potential issues. Warnings announce scheduled outages or events that might impact the product experience, but don't prevent the user from using the application or completing their current workflow.
+Use warning system status to warn users about potential issues, such as scheduled outages or events that might impact the product experience. Warnings don't prevent the user from using the application or completing their current workflow.
 
 A warning icon displays alongside a supporting message.
 
@@ -56,16 +56,12 @@ Use `SystemStatusActions` to add actions such as view status and dismiss. Use [`
 
 ## Announced
 
-Announcements for a system status that is added to the page after it loads can be unreliable in screen readers. To make sure it's announced, add an empty live region to the page when it first loads, then add the system status inside it. This also applies to a system status that is dismissed and shown again.
-
-Use a container with `role="alert"` for an error system status, or `role="status"` for all other statuses.
+A system status added to the page after it loads isn't announced by screen readers on its own. To announce it, add it to a live region that's on the page from first load. See the [accessibility guidance](/salt/components/system-status/accessibility) for which role to use.
 
 <LivePreview componentName="system-status" exampleName="Announced" />
 
 ## Placement
 
-System status alerts are displayed at the very top of the screen, extending across the full width of the page.
-
-They are positioned at the same level as the main content, causing any subsequent content to shift accordingly. For example, when a system status is dismissed, the content below it would move up to its original position.
+A system status is positioned at the same level as the main content, causing any subsequent content to shift accordingly. For example, when a system status is dismissed, the content below it moves up to its original position.
 
 <LivePreview componentName="system-status" exampleName="Placement" />

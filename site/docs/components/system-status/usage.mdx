@@ -19,7 +19,7 @@ Remove it when:
 - The event that triggered it is resolved, such as when service is restored after an outage.
 - The information is no longer relevant, such as when scheduled maintenance has finished.
 
-We advise against embedding excessive content into the system status due to potential color contrast issues. If you need to include supporting actions, such as dismiss, use [`OnSolidButton`](/salt/components/button/examples#on-solid) within `SystemStatusActions`. If you need to include additional components within the system status, it will be the responsibility of the application team to ensure accessibility compliance.
+We advise against adding too much content to a system status because of potential color contrast issues. To add actions, such as dismiss, use [`OnSolidButton`](/salt/components/button/examples#on-solid) within `SystemStatusActions`. If you add other components, it's the application team's responsibility to make sure they're accessible.
 
 ### When to use
 
@@ -29,9 +29,7 @@ We advise against embedding excessive content into the system status due to pote
 
 ### When not to use
 
-- For general updates or information that requires immediate user action.
-- For inline messaging. Instead, use [`Banner`](../banner).
-- To show a notification that applies to the user’s current task or workflow. Use [`Banner`](../banner) instead.
+- For inline messaging, or a notification that applies to the user’s current task or workflow. Instead, use [`Banner`](../banner).
 - To communicate when content is loading. Instead, use the [content status pattern](/salt/patterns/content-status).
 - When the notification requires immediate action and relates to the user’s current task. Instead, use [`Dialog`](../dialog) to interrupt the user's workflow.
 
