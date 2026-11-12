@@ -5,15 +5,12 @@ export const Error = () => {
     <StackLayout gap={3} align="center">
       <StatusIndicator status="error" size={2} />
       <StackLayout gap={1} align="center">
-        <Text styleAs="h4" fontWeight="bolder">
-          Message title
-        </Text>
+        <Text fontWeight="bolder">Access denied</Text>
         <Text>
-          Supplementary content can go here if required. This content area is
-          flexible in height and width as needed.
+          You do not have access to this data.
         </Text>
       </StackLayout>
-      <Button>Reload</Button>
+      <Button>Log in</Button>
     </StackLayout>
   );
 };

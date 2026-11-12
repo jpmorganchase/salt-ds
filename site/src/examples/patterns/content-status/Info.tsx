@@ -5,15 +5,12 @@ export const Info = () => {
     <StackLayout gap={3} align="center">
       <StatusIndicator status="info" size={2} />
       <StackLayout gap={1} align="center">
-        <Text styleAs="h4" fontWeight="bolder">
-          Message title
-        </Text>
+        <Text fontWeight="bolder">No data available</Text>
         <Text>
-          Supplementary content can go here if required. This content area is
-          flexible in height and width as needed.
+          This table contains no entries.
         </Text>
       </StackLayout>
-      <Button>Action</Button>
+      <Button>Add entry</Button>
     </StackLayout>
   );
 };

@@ -60,11 +60,13 @@ An announcement dialog comprises of the following components:
 - Use the [Header block](/salt/patterns/header-block) to display a header and pre-header.
 - Use the [Dialog](/salt/components/dialog) and it's components as the base structure of the announcement dialog.
 - Use a [Button bar](/salt/patterns/button-bar) to display any actions at the bottom of the dialog. See the button bar pattern to understand how to implement actionable interactions within dialogs across your applications.
+- Place the content area and image side by side in a [`FlexLayout`](/salt/components/layouts/flex-layout), each in a `FlexItem` with `grow={1}` and `basis="50%"`. The default gap places `--salt-spacing-300` between them.
+- Use a [`StackLayout`](/salt/components/layouts/stack-layout) with `gap={1}` (`--salt-spacing-100`) between a content heading and its description.
 
 <Diagram
   src="/img/patterns/announcement-dialog/spacing.png"
   srcDark="/img/patterns/announcement-dialog/spacing-dark.png"
-  alt="Announcement dialog spacing and layout"
+  alt="Announcement dialog spacing: --salt-spacing-300 around the dialog edges, between the header, content and button bar, and between the description and image; --salt-spacing-100 between the content heading and its description."
   border
 />
 

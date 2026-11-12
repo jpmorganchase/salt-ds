@@ -10,6 +10,12 @@ import {
 import { SendIcon } from "@salt-ds/icons";
 import { CommentList, useCommentForm } from "./Default";
 
+const avatarImages: Record<string, string> = {
+  "Alex Rivera": "/img/examples/avatar.png",
+  "Jordan Lee": "/img/examples/avatar2.png",
+  "Sam Patel": "/img/examples/avatar3.png",
+};
+
 export const WithAvatar = () => {
   const {
     inputRef,
@@ -56,8 +62,8 @@ export const WithAvatar = () => {
         renderAvatar={(comment) => (
           <Avatar
             size={1}
-            color="accent"
             name={comment.name}
+            src={avatarImages[comment.name]}
             aria-hidden="true"
           />
         )}
