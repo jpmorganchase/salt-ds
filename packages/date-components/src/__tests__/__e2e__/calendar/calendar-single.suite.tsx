@@ -2,10 +2,6 @@ import type {
   DateFrameworkType,
   SaltDateAdapter,
 } from "@salt-ds/date-adapters";
-import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
-import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
-import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
-import { AdapterMoment } from "@salt-ds/date-adapters/moment";
 import {
   Calendar,
   CalendarGrid,
@@ -49,7 +45,7 @@ async function chooseTimezone(timezone: string) {
   await expect.element(locator).toHaveTextContent(timezone);
 }
 
-function registerSingleTests(
+export function registerSingleTests(
   // biome-ignore lint/suspicious/noExplicitAny: shared behavior across adapter date types
   adapter: SaltDateAdapter<any>,
 ) {
@@ -295,7 +291,7 @@ function registerSingleTests(
   });
 }
 
-function registerMultiselectTests(
+export function registerMultiselectTests(
   // biome-ignore lint/suspicious/noExplicitAny: shared behavior across adapter date types
   adapter: SaltDateAdapter<any>,
 ) {
@@ -439,17 +435,3 @@ function registerMultiselectTests(
     });
   });
 }
-
-describe('GIVEN a Calendar with selectionVariant="single"', () => {
-  registerSingleTests(new AdapterDateFnsTZ());
-  registerSingleTests(new AdapterDayjs());
-  registerSingleTests(new AdapterLuxon());
-  registerSingleTests(new AdapterMoment());
-});
-
-describe('GIVEN a Calendar with selectionVariant="single" and multiselect', () => {
-  registerMultiselectTests(new AdapterDateFnsTZ());
-  registerMultiselectTests(new AdapterDayjs());
-  registerMultiselectTests(new AdapterLuxon());
-  registerMultiselectTests(new AdapterMoment());
-});
