@@ -19,7 +19,11 @@ export const DestructiveActions = () => {
   const endItem = (
     <StackLayout direction={{ xs: "column", sm: "row" }} gap={1}>
       <FlexItem>
-        <Button appearance="transparent" style={{ width: "100%" }}>
+        <Button
+          appearance="transparent"
+          sentiment="negative"
+          style={{ width: "100%" }}
+        >
           Delete
         </Button>
       </FlexItem>

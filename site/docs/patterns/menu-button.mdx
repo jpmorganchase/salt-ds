@@ -13,8 +13,6 @@ data:
 
 <LivePreview componentName="patterns/menu-button" exampleName="MenuButton" />
 
-<Diagram src="/img/patterns/menu-button/create.png" alt="Menu button" border />
-
 ## When to use
 
 Use a menu button when multiple related actions need to be viewed in context but are not necessarily deemed high enough priority to be displayed on screen. When activated, the menu button reveals a list of actions a user can take. The options are displayed across a single level or multiple hierarchical levels, in a cascading menu. Choosing an enabled command invokes the application action and closes the menu; choosing a submenu trigger opens its submenu. Follow [Menu action outcomes](/salt/components/menu/usage#action-outcomes) for pending work and recovery.
@@ -49,18 +47,26 @@ A menu button contains:
   a menu item’s purpose.
 </GuidanceCallout>
 
+The example below adds a descriptive icon before each menu item label.
+
 <LivePreview componentName="patterns/menu-button" exampleName="WithIcons" />
 
 ### Layout
 
-- Use a [Button](/salt/components/button) inside `MenuTrigger` to open the menu.
+- Use a [Button](/salt/components/button) inside `MenuTrigger` to open the menu. Place a `ChevronDownIcon` after the button label.
 - Use [Menu](/salt/components/menu/usage#composition-and-labels), `MenuPanel`, and `MenuItem` to compose the commands and their labels.
 
-<Diagram src="/img/patterns/menu-button/layout.png" alt="layout" border />
+<Diagram
+  src="/img/patterns/menu-button/layout.png"
+  alt="A menu button: a Button labeled Create with a chevron icon, and a Menu of five items open below it."
+  border
+/>
 
-By default, the menu aligns below the trigger at its starting edge. Depending on where the button is positioned within the available space and layout of the interface, the menu will dynamically adjust positions in order for its options to remain visible.
+By default, the menu aligns below the trigger at its starting edge (`placement="bottom-start"`). Set the `placement` prop on `Menu` to align it to the end edge or above the trigger, as the example below shows.
 
-<Diagram src="/img/patterns/menu-button/position.png" alt="layout" border />
+<LivePreview componentName="patterns/menu-button" exampleName="Placement" />
+
+Depending on where the button is positioned within the available space and layout of the interface, the menu will dynamically adjust positions in order for its options to remain visible.
 
 <ImageSwitcher
   images={[
@@ -76,11 +82,9 @@ By default, the menu aligns below the trigger at its starting edge. Depending on
   label="Change screen space"
 />
 
-<LivePreview componentName="patterns/menu-button" exampleName="Placement" />
-
 ## Menu button
 
-Menu button uses a primary button and is used when actions in the menu are related to the core functionality of an application. The button value is typically a string supported by a chevron icon, or can be an icon-only button, provided the icon is well-known and not likely to be misinterpreted.
+Menu button uses a neutral solid button and is used when actions in the menu are related to the core functionality of an application. The button value is typically a string supported by a chevron icon, or can be an icon-only button, provided the icon is well-known and not likely to be misinterpreted.
 
 <ImageSwitcher
   images={[
@@ -104,7 +108,11 @@ Menu button uses a primary button and is used when actions in the menu are relat
 
 ## Overflow menu
 
-Overflow menus contain actions that affect a smaller type of content within an interface, such as within cards or data grids. This is typically represented by a three dot icon as the action button. This is useful when space is limited or the interface needs to remain uncluttered to reduce cognitive load.
+Overflow menus contain actions that affect a smaller type of content within an interface, such as within cards or data grids. This is typically represented by a three dot icon as the action button. This is useful when space is limited or the interface needs to remain uncluttered to reduce cognitive load. In the example below, a transparent button with `MicroMenuIcon` opens the menu.
+
+<LivePreview componentName="patterns/menu-button" exampleName="OverflowMenu" />
+
+The images below show overflow menus in the column headers of a data grid.
 
 <ImageSwitcher
   images={[
@@ -120,33 +128,15 @@ Overflow menus contain actions that affect a smaller type of content within an i
   label="Open overflow menu"
 />
 
-<LivePreview componentName="patterns/menu-button" exampleName="OverflowMenu" />
-
 ## Icon-only
 
-Icon-only menu buttons can be configured to contextually align to the product requirements, instead of being displayed as a chevron. See guidance for [button options](/salt/components/button) to select the most suitable button affordance for your application.
-
-<ImageSwitcher
-  images={[
-    {
-      src: "/img/patterns/menu-button/icon-only.png",
-      alt: "Icon only menu button",
-    },
-    {
-      src: "/img/patterns/menu-button/icon-only-open.png",
-      alt: "Open icon only menu button",
-    },
-  ]}
-  label="Open overflow menu"
-/>
+Icon-only menu buttons can be configured to contextually align to the product requirements, instead of being displayed as a chevron. See guidance for [button options](/salt/components/button) to select the most suitable button affordance for your application. Give the button an `aria-label` that names the menu, such as “Settings”.
 
 <LivePreview componentName="patterns/menu-button" exampleName="IconOnly" />
 
 ## Heading as menu
 
-A menu button beside a heading can expose commands for that section. If the control instead chooses a destination or changes the displayed content, follow [Navigation](/salt/patterns/navigation) or [view switching](/salt/components/toggle-button/usage#view-switching). Vertically align the trigger with its heading and use `--salt-spacing-100` between the button and text.
-
-<Diagram src="/img/patterns/menu-button/heading.png" alt="layout" border />
+A menu button beside a heading can expose commands for that section. If the control instead chooses a destination or changes the displayed content, follow [Navigation](/salt/patterns/navigation) or [view switching](/salt/components/toggle-button/usage#view-switching). Vertically align the trigger with its heading and use `--salt-spacing-100` between the button and text. The example below uses a `StackLayout` with `direction="row"`, `align="center"` and `gap={1}`.
 
 <LivePreview componentName="patterns/menu-button" exampleName="Heading" />
 
