@@ -132,7 +132,7 @@ async function setDensity(grid: Grid, density: Density, compact = false) {
           .height,
     )
     .toBe(height - 1);
-  // Let ResizeObserver and AG Grid's auto-height debounce finish before diagnostics.
+  // Let ResizeObserver and AG Grid's auto-height debounce finish before checking rows.
   await frame();
   await frame();
   await frame();
@@ -192,26 +192,15 @@ describe.each(["light", "dark"])("AG Grid density in %s mode", (mode) => {
     async (content) => {
       const grid = await mountGrid(mode, content);
       await expectRows(grid, 25);
-      const diagnostic = [];
+      // The explicit height must recover rows after CSS-only density changes.
       for (const [density, compact] of [
         ["high", false],
         ["touch", false],
         ["high", false],
         ["high", true],
       ] as const) {
-        const minimum = await setDensity(grid, density, compact);
-        diagnostic.push({
-          density,
-          compact,
-          minimum,
-          actual: rowHeights(grid),
-          model: modelHeights(grid),
-        });
+        await setDensity(grid, density, compact);
       }
-      console.info(
-        "AG_GRID_AUTOHEIGHT_CSS_DIAGNOSTIC",
-        JSON.stringify({ mode, content, steps: diagnostic }),
-      );
       // Fixed or empty content may not trigger an auto-height ResizeObserver update.
       // An explicit reactive height must still update the existing row model.
       grid.api.setGridOption("rowHeight", 21);
