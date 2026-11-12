@@ -4,12 +4,12 @@ import {
   SaltProvider,
   SaltProviderNext,
   StackLayout,
+  useDensity,
   useTheme,
 } from "@salt-ds/core";
 import { AgGridReact } from "ag-grid-react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { defaultColumns, defaultData } from "./data";
-import { useAgGridHelpers } from "./useAgGridHelpers";
 
 const statusBar = {
   statusPanels: [
@@ -24,9 +24,10 @@ const statusBar = {
 };
 
 const HDCompactGrid = () => {
-  // We've created a local custom hook to set the rows and column sizes.
-  // refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts
-  const { containerProps, agGridProps } = useAgGridHelpers(true);
+  const density = useDensity();
+  // Only opt into HD Compact when the nearest provider uses high density.
+  const className =
+    density === "high" ? "ag-theme-salt-compact" : "ag-theme-salt";
 
   return (
     <StackLayout style={{ width: "100%" }}>
@@ -35,14 +36,16 @@ const HDCompactGrid = () => {
           Compact is intended for high density, which this example uses.
         </BannerContent>
       </Banner>
-      <div {...containerProps}>
+      <div className={className} style={{ height: 500, width: "100%" }}>
         <AgGridReact
           columnDefs={defaultColumns}
           rowData={defaultData}
           statusBar={statusBar}
           rowSelection="multiple"
           cellSelection={true}
-          {...agGridProps}
+          theme="legacy"
+          autoSizeStrategy={{ type: "fitGridWidth" }}
+          defaultColDef={{ filter: true }}
         />
       </div>
     </StackLayout>

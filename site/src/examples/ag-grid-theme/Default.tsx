@@ -32,7 +32,6 @@ export const Default = (): ReactElement => {
         columnDefs={columnDefs}
         rowData={defaultData}
         rowSelection="single"
-        // [VERSION DIVERGENCE]: In v36, sizing on gridReady can run before vertical-scroll visibility is known. Let AG Grid defer fitting until data is rendered.
         autoSizeStrategy={{ type: "fitGridWidth" }}
       />
     </div>

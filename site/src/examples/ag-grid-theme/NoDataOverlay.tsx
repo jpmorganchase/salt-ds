@@ -7,7 +7,6 @@ import {
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { defaultColumns } from "./data";
-import { useAgGridHelpers } from "./useAgGridHelpers";
 
 // Assembling a custom Dialog so it's not floating to the center of the full screen.
 const CustomDialog = () => {
@@ -36,14 +35,12 @@ const CustomDialog = () => {
 };
 
 export const NoDataOverlay = (props: AgGridReactProps) => {
-  // We've created a local custom hook to set the rows and column sizes.
-  // refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div style={{ height: 800, width: 800 }} {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: "100%" }}>
       <AgGridReact
-        {...agGridProps}
+        theme="legacy"
+        autoSizeStrategy={{ type: "fitGridWidth" }}
+        defaultColDef={{ filter: true }}
         {...props}
         columnDefs={defaultColumns}
         rowData={[]}

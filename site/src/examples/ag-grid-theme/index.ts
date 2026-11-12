@@ -1,3 +1,5 @@
+import "./registerModules";
+
 export * from "./CellValidation";
 export * from "./CheckboxSelection";
 export * from "./Coloration";
