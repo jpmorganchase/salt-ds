@@ -4,6 +4,7 @@ import {
   StackLayout,
   ToggleButton,
   ToggleButtonGroup,
+  useDensity,
   useTheme,
 } from "@salt-ds/core";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
@@ -12,7 +13,6 @@ import { type SyntheticEvent, useState } from "react";
 import { DropdownEditor } from "../dependencies/cell-editors/DropdownEditor";
 import dataGridExampleColumnsHdCompact from "../dependencies/dataGridExampleColumnsHdCompact";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const statusBar = {
   statusPanels: [
@@ -31,9 +31,10 @@ const HDCompactGrid = (props: AgGridReactProps) => {
   const onChange = (event: SyntheticEvent<HTMLButtonElement>) => {
     setSelected(event.currentTarget.value);
   };
-  const { agGridProps, containerProps } = useAgGridHelpers({
-    compact: true,
-  });
+  const density = useDensity();
+  // Only opt into HD Compact when the nearest provider uses high density.
+  const className =
+    density === "high" ? "ag-theme-salt-compact" : "ag-theme-salt";
 
   return (
     <StackLayout style={{ width: "100%" }}>
@@ -43,18 +44,17 @@ const HDCompactGrid = (props: AgGridReactProps) => {
         <ToggleButton value="zebra">Zebra</ToggleButton>
       </ToggleButtonGroup>
       <div
-        {...containerProps}
-        className={clsx(containerProps.className, {
+        className={clsx(className, {
           "ag-theme-salt-variant-secondary": selected === "secondary",
           "ag-theme-salt-variant-zebra": selected === "zebra",
         })}
+        style={{ height: 500, width: 800 }}
       >
         <AgGridReact
           columnDefs={dataGridExampleColumnsHdCompact}
           rowData={dataGridExampleData}
           statusBar={statusBar}
           rowSelection="multiple"
-          {...agGridProps}
           {...props}
           cellSelection={true}
           onFirstDataRendered={(params) => {

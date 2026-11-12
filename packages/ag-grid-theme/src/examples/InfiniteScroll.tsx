@@ -3,7 +3,6 @@ import type { IDatasource } from "ag-grid-community";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridInfiniteScrollExampleColumns from "../dependencies/dataGridInfiniteScrollExampleColumns";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const generateData = function generateData<T extends { name: string }>(
   lst: T[],
@@ -33,7 +32,6 @@ const datasource: IDatasource = {
 };
 
 const InfiniteScroll = (props: AgGridReactProps) => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
   const density = useDensity();
   // The infinite row model reacts to rowHeight changes, but not CSS height changes.
   const rowHeight = {
@@ -45,9 +43,8 @@ const InfiniteScroll = (props: AgGridReactProps) => {
   }[density];
 
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         rowHeight={rowHeight}
         {...props}
         columnDefs={dataGridInfiniteScrollExampleColumns}

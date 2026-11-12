@@ -2,11 +2,8 @@ import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import { useCallback, useRef } from "react";
 import rowData from "../dependencies/dataGridExampleData";
 import columnDefs from "../dependencies/masterDetailExampleData";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const MasterDetail = (props: AgGridReactProps) => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   const gridRef = useRef<AgGridReact>(null);
 
   const onFirstDataRendered = useCallback(() => {
@@ -18,23 +15,22 @@ const MasterDetail = (props: AgGridReactProps) => {
 
   const detailCellRenderer = () => (
     <div
-      className={containerProps.className}
+      className="ag-theme-salt"
       style={{ height: "100%", padding: "var(--salt-spacing-300)" }}
     >
-      <AgGridReact columnDefs={columnDefs} rowData={rowData} {...agGridProps} />
+      <AgGridReact columnDefs={columnDefs} rowData={rowData} />
     </div>
   );
 
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         {...props}
         ref={gridRef}
         columnDefs={columnDefs}
         detailCellRenderer={detailCellRenderer}
         detailCellRendererParams={{
-          detailGridOptions: { theme: "legacy", columnDefs },
+          detailGridOptions: { columnDefs },
           getDetailRowData: (params: {
             successCallback: (data: typeof rowData) => void;
           }) => params.successCallback(rowData),

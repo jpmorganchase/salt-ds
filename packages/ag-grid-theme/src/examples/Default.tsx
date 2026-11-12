@@ -1,15 +1,11 @@
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
+import { clsx } from "clsx";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const Default = ({
   containerClassName,
   ...agProps
 }: AgGridReactProps & { containerClassName?: string }) => {
-  const { agGridProps, containerProps } = useAgGridHelpers({
-    containerClassName,
-  });
-
   const statusBar = {
     statusPanels: [
       {
@@ -20,9 +16,11 @@ const Default = ({
   };
 
   return (
-    <div {...containerProps}>
+    <div
+      className={clsx("ag-theme-salt", containerClassName)}
+      style={{ height: 500, width: 800 }}
+    >
       <AgGridReact
-        {...agGridProps}
         {...agProps}
         columnDefs={[
           {
