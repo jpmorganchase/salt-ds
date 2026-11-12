@@ -9,7 +9,8 @@ import {
 } from "@salt-ds/core";
 import { DownloadIcon } from "@salt-ds/icons";
 import { Progress, type ProgressProps } from "@salt-ds/lab";
-import type { Meta, StoryFn } from "@storybook/react-vite";
+import type { ArgTypes, Meta, StoryFn } from "@storybook/react-vite";
+import { clsx } from "clsx";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import "./progress.stories.css";
@@ -21,6 +22,64 @@ export default {
 
 // The stories only pass `delay`, so circular and linear examples can share the same args.
 type StoryArgs = Pick<ProgressProps, "delay">;
+
+// Prototype: the buffer options that reach 3:1 against the background. See progress.stories.css.
+const bufferFills = {
+  outlineAccent: undefined,
+  outlineNeutral: "progressBufferOutlineNeutral",
+  hollowAccent: "progressBufferHollow",
+  hollowNeutral: "progressBufferOutlineNeutral progressBufferHollow",
+  solid: "progressBufferSolid",
+  stripes: "progressBufferSolid progressBufferStripes",
+  dotNeutral: "progressBufferSolid progressBufferDot",
+  dotAccent: "progressBufferSolid progressBufferDot progressBufferBarColor",
+  fadeNeutral: "progressBufferSolid progressBufferFade",
+  fadeAccent: "progressBufferSolid progressBufferFade progressBufferBarColor",
+};
+
+type BufferFillArgs = StoryArgs & {
+  bufferFill: keyof typeof bufferFills;
+  stopDot: boolean;
+  trackOutline: boolean;
+};
+
+const bufferFillArgs: Omit<BufferFillArgs, keyof StoryArgs> = {
+  bufferFill: "outlineAccent",
+  stopDot: true,
+  trackOutline: false,
+};
+
+const bufferFillArgTypes: Partial<ArgTypes<BufferFillArgs>> = {
+  bufferFill: {
+    control: "inline-radio",
+    options: Object.keys(bufferFills),
+    description:
+      "Prototype: the buffer is an outline in the bar color by default. Try a neutral outline, either outline without its fill, a solid neutral, stripes in the bar color, or a neutral or accent dot or fade. Each reaches 3:1 against the background in light and dark mode, though the stripes are thin marks that render fainter.",
+  },
+  stopDot: {
+    control: "boolean",
+    description:
+      "Prototype: shows the dot that marks the end of the track while there's a buffer ahead of the bar.",
+  },
+  trackOutline: {
+    control: "boolean",
+    description:
+      "Prototype: outlines the track in the neutral track color, which reaches 3:1 against the background.",
+  },
+};
+
+/** The prototype classes for the buffer fill, stop dot and track outline controls */
+function prototypeClassName({
+  bufferFill,
+  stopDot,
+  trackOutline,
+}: Omit<BufferFillArgs, keyof StoryArgs>) {
+  return clsx(
+    bufferFills[bufferFill],
+    !stopDot && "progressNoStop",
+    trackOutline && "progressTrackOutline",
+  );
+}
 
 /** Runs a fake task: unknown size for `sizeUnknownFor` ms, then fills over `duration` ms. */
 function useSimulatedTask({
@@ -84,6 +143,29 @@ export const Indeterminate: StoryFn<StoryArgs> = (args) => (
     <Progress label="Loading accounts" {...args} />
   </div>
 );
+
+/**
+ * The buffer shows how much is ready ahead of the progress, such as the part of a video that has loaded. Use the
+ * `bufferFill` control to compare the accent outline with other buffers.
+ */
+export const Buffer: StoryFn<BufferFillArgs> = ({
+  bufferFill,
+  stopDot,
+  trackOutline,
+  ...args
+}) => (
+  <div style={{ width: 400 }}>
+    <Progress
+      className={prototypeClassName({ bufferFill, stopDot, trackOutline })}
+      label="Playing video"
+      value={38}
+      bufferValue={60}
+      {...args}
+    />
+  </div>
+);
+Buffer.args = bufferFillArgs;
+Buffer.argTypes = bufferFillArgTypes;
 
 export const Circular: StoryFn<StoryArgs> = (args) => (
   <StackLayout gap={3}>
@@ -353,20 +435,93 @@ const linearTrackStyleExamples: ProgressProps[] = [
   { label: "Not started", value: 0 },
   { label: "Uploading", value: 38 },
   { label: "Loading", value: undefined },
+  { label: "Playing video", value: 38, bufferValue: 60 },
+  { label: "Buffering video", value: 0, bufferValue: 30 },
   { label: "Uploading", value: 60, status: "paused" },
   { label: "Uploading", value: 60, status: "error" },
   { label: "Uploading", status: "success" },
 ];
 
-/** Prototype: shows the light track in every state of linear progress. */
-export const TrackStyles: StoryFn<StoryArgs> = (args) => (
+/**
+ * Prototype: shows the light track in every state of linear progress. Use the `bufferFill` control to compare the
+ * buffers.
+ */
+export const TrackStyles: StoryFn<BufferFillArgs> = ({
+  bufferFill,
+  stopDot,
+  trackOutline,
+  ...args
+}) => (
   <StackLayout gap={2} style={{ width: 260 }}>
     {linearTrackStyleExamples.map((example, index) => (
-      // biome-ignore lint/suspicious/noArrayIndexKey: The examples are static.
-      <Progress key={index} {...example} {...args} />
+      <Progress
+        // biome-ignore lint/suspicious/noArrayIndexKey: The examples are static.
+        key={index}
+        className={prototypeClassName({ bufferFill, stopDot, trackOutline })}
+        {...example}
+        {...args}
+      />
     ))}
   </StackLayout>
 );
+TrackStyles.args = bufferFillArgs;
+TrackStyles.argTypes = bufferFillArgTypes;
+
+/**
+ * Prototype: compares the buffer options on each container background. Switch between light and dark mode in the
+ * toolbar.
+ */
+export const BufferOnContainers: StoryFn<BufferFillArgs> = ({
+  bufferFill: _bufferFill,
+  stopDot,
+  trackOutline,
+  ...args
+}) => (
+  <StackLayout gap={2}>
+    {(["primary", "secondary", "tertiary"] as const).map((container) => (
+      <StackLayout
+        key={container}
+        gap={2}
+        style={{
+          padding: "var(--salt-spacing-300)",
+          background: `var(--salt-container-${container}-background)`,
+        }}
+      >
+        <Text styleAs="h3">Container {container}</Text>
+        <div
+          style={{
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 220px)",
+            gap: "var(--salt-spacing-400)",
+          }}
+        >
+          {(Object.keys(bufferFills) as (keyof typeof bufferFills)[]).map(
+            (name) => (
+              <Progress
+                key={name}
+                className={prototypeClassName({
+                  bufferFill: name,
+                  stopDot,
+                  trackOutline,
+                })}
+                label={name}
+                value={38}
+                bufferValue={60}
+                {...args}
+              />
+            ),
+          )}
+        </div>
+      </StackLayout>
+    ))}
+  </StackLayout>
+);
+
+BufferOnContainers.args = bufferFillArgs;
+BufferOnContainers.argTypes = {
+  ...bufferFillArgTypes,
+  bufferFill: { table: { disable: true } },
+};
 
 /** A page loader is a composition, not a component. */
 export const PageLoader: StoryFn<StoryArgs> = (args) => (

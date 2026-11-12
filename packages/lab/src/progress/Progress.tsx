@@ -83,6 +83,11 @@ export interface ProgressLinearProps extends ProgressBaseProps {
    * The shape of the indicator. Choose it by the space it's in. Defaults to `"linear"`.
    */
   shape?: "linear";
+  /**
+   * Linear only. How much is ready ahead of `value`, such as the part of a video that has loaded but hasn't played. It
+   * shows only when there's a `value`.
+   */
+  bufferValue?: number;
   size?: never;
 }
 
@@ -93,10 +98,11 @@ export interface ProgressCircularProps extends ProgressBaseProps {
    * Circular only. The size of the indicator. Defaults to `"medium"`.
    */
   size?: ProgressSize;
+  bufferValue?: never;
 }
 
 /**
- * `size` is only for circular progress.
+ * `size` is only for circular progress, and `bufferValue` only for linear progress.
  */
 export type ProgressProps = ProgressLinearProps | ProgressCircularProps;
 
@@ -180,6 +186,7 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       value: valueProp,
       min = 0,
       max = 100,
+      bufferValue,
       label,
       description,
       getValueText = defaultGetValueText,
@@ -229,6 +236,15 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       targetWindow,
     );
     const shownFraction = looping ? 0 : fraction;
+    const bufferFraction =
+      shape === "linear" && !looping && bufferValue !== undefined
+        ? Math.max(getFraction(bufferValue, min, max), shownFraction)
+        : undefined;
+    // A dot marks the end of the track while there's a buffer ahead of the bar to compare with the whole
+    const showStop =
+      bufferFraction !== undefined &&
+      bufferFraction > shownFraction &&
+      bufferFraction < 1;
 
     const labelText =
       typeof label === "string" ? label : (ariaLabel ?? "loading");
@@ -318,9 +334,10 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
       withBaseName("indicator"),
       looping && withBaseName("indeterminate"),
     );
-    // Set on the indicator, so the fraction animates there and the bar follows it
+    // The bar and the buffer's outline are positioned from these, so they're set on the indicator
     const indicatorStyle = {
       "--saltProgress-fraction": shownFraction,
+      "--saltProgress-bufferFraction": bufferFraction ?? shownFraction,
     } as CSSProperties;
     // The bar turns the success color once it has filled, so it doesn't change color while it loops
     const barStatus = outcome === "success" && looping ? undefined : outcome;
@@ -371,7 +388,11 @@ export const Progress = forwardRef<HTMLDivElement, ProgressProps>(
               aria-hidden="true"
             >
               <div className={withBaseName("track")} />
+              {bufferFraction !== undefined && (
+                <div className={withBaseName("buffer")} />
+              )}
               <div className={withBaseName("bar")} />
+              {showStop && <div className={withBaseName("stop")} />}
               {looping && <div className={withBaseName("loop")} />}
             </div>
           )}

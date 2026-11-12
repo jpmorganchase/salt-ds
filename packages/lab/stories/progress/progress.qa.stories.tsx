@@ -25,6 +25,9 @@ export const AllStates: StoryFn<QAContainerProps> = (props) => (
       />
     </div>
     <div style={{ width: 300 }}>
+      <Progress delay={0} label="Playing video" value={38} bufferValue={60} />
+    </div>
+    <div style={{ width: 300 }}>
       <Progress delay={0} label="Loading accounts" />
     </div>
     <div style={{ width: 300 }}>
