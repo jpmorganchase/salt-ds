@@ -12,7 +12,7 @@ data:
 
 Check and test any focusable elements included in the system status content.
 
-A system status doesn't have a live region role. Always render it inside a container with `role="alert"` for an error system status, or `role="status"` for all other statuses. To make sure screen readers announce a system status added to the page, add the container to the page when it first loads, then render the system status inside it. See the [announced example](/salt/components/system-status/examples#announced).
+A system status doesn't have a live region role. Always render it inside a container with `role="alert"` for an error system status, or `role="status"` for all other statuses. To make sure screen readers announce a system status added to the page, including one that is dismissed and shown again, add the container to the page when it first loads, then render the system status inside it. See the [announced example](/salt/components/system-status/examples#announced).
 
 - **Note:** During your testing, check that the system status is announced using a screen reader.
 
@@ -22,7 +22,7 @@ Give every action in a system status an accessible name that describes what it d
 
 ### Focus after dismissal
 
-A system status doesn't manage focus. When a user dismisses it, move focus to the control that showed the system status. If there isn't one, move focus to a logical place nearby, such as the start of the main content. Otherwise, focus is lost when the system status is removed from the page. See the [announced example](/salt/components/system-status/examples#announced).
+A system status doesn't manage focus. When a user dismisses it, move focus to the control that showed the system status. If there isn't one, for example because the system status was present when the page loaded, move focus to the next logical element. Otherwise, focus is lost when the system status is removed from the page. See the [announced example](/salt/components/system-status/examples#announced).
 
 ## Keyboard interactions
 
