@@ -22,7 +22,7 @@ data:
 
 ## Set up
 
-The Salt AG Grid theme is a CSS theme. Apply it with a container class name; its mode and density follow the nearest `SaltProvider` automatically. The theme styles AG Grid; AG Grid and your application remain responsible for grid behavior and data.
+The Salt AG Grid theme is a CSS theme. Apply it with a container class name; its mode and default sizes come from the nearest `SaltProvider`. The theme styles AG Grid; AG Grid and your application remain responsible for grid behavior and data.
 
 For AG Grid v33 and later, this is the smallest setup using Community modules:
 
@@ -101,11 +101,11 @@ Put the grid in a container with the `ag-theme-salt` class name, and set `theme=
 
 ## Density
 
-**AG Grid follows the density of the nearest `SaltProvider` automatically.** For the client-side row model on AG Grid v33 and later, leave `rowHeight` and `headerHeight` unset. The theme supplies those sizes through CSS.
+**Client-side grids on AG Grid v33 and later follow the density of the nearest `SaltProvider` automatically.** Leave `rowHeight` and `headerHeight` unset to use the sizes supplied by the theme.
 
-There are two exceptions:
+Other row models and older versions need additional handling:
 
-- **Infinite row model:** AG Grid does not resize existing rows when CSS density changes. Derive `rowHeight` from `useDensity()` and update it when density changes. See [Infinite scroll](./examples#infinite-scroll).
+- **Infinite, server-side and viewport row models:** AG Grid does not resize existing rows when CSS density changes. Derive `rowHeight` from `useDensity()` and update it when density changes. The [Infinite scroll](./examples#infinite-scroll) example shows this approach.
 - **AG Grid v28 to v32:** these versions read row sizes when the grid is created. If density changes while a grid is visible, remount it with a key such as `key={density}`.
 
 ### Size reference
@@ -152,6 +152,6 @@ For a numeric column, set AG Grid's `type: "rightAligned"` or `type: "numericCol
 The theme supports AG Grid v28 to v36.
 
 - **Existing theme classes:** `ag-theme-salt-light`, `ag-theme-salt-dark`, `ag-theme-salt-compact-light` and `ag-theme-salt-compact-dark` continue to work. Prefer `ag-theme-salt` or `ag-theme-salt-compact` for new integrations; mode comes from the nearest `SaltProvider`.
-- **Explicit heights:** if you previously passed `rowHeight` and `headerHeight` for client-side grids, remove them to let CSS respond to density changes on AG Grid v33 and later. Keep reactive `rowHeight` for the infinite row model.
+- **Explicit heights:** if you previously passed `rowHeight` and `headerHeight` for client-side grids, remove them to let CSS respond to density changes on AG Grid v33 and later. Keep reactive `rowHeight` for the infinite, server-side and viewport row models.
 - **v28 to v32:** skip module registration and `theme="legacy"`; remount the grid if density changes while it is visible.
 - **v33 to v36:** register the required modules and use `theme="legacy"` as shown above.
