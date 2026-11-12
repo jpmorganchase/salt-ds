@@ -1,6 +1,5 @@
 import type { Meta } from "@storybook/react-vite";
 import {
-  HorizontalMetric,
   HorizontalSizes,
   Indicators,
   LinkSubtitle,
@@ -10,7 +9,6 @@ import {
 } from "../../../../../site/src/examples/patterns/metric";
 
 export {
-  HorizontalMetric,
   HorizontalSizes,
   Indicators,
   LinkSubtitle,

@@ -7,15 +7,15 @@ export const VerticalSizes = () => {
       <StackLayout gap={0}>
         <Text fontWeight="bolder">Performance</Text>
         <Text color="secondary">Interactions</Text>
-        <Display3>
+        <Display1>
           801
           <ArrowUpIcon
             style={{
               fill: "var(--salt-sentiment-positive-foreground-decorative)",
             }}
-            size={1}
+            size={3}
           />
-        </Display3>
+        </Display1>
         <Text
           style={{
             color: "var(--salt-sentiment-positive-foreground-informative)",
@@ -47,15 +47,15 @@ export const VerticalSizes = () => {
       <StackLayout gap={0}>
         <Text fontWeight="bolder">Performance</Text>
         <Text color="secondary">Interactions</Text>
-        <Display1>
+        <Display3>
           801
           <ArrowUpIcon
             style={{
               fill: "var(--salt-sentiment-positive-foreground-decorative)",
             }}
-            size={3}
+            size={1}
           />
-        </Display1>
+        </Display3>
         <Text
           style={{
             color: "var(--salt-sentiment-positive-foreground-informative)",
