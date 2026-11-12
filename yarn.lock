@@ -2562,19 +2562,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@joshwooding/vite-plugin-react-docgen-typescript@npm:^0.7.0":
-  version: 0.7.0
-  resolution: "@joshwooding/vite-plugin-react-docgen-typescript@npm:0.7.0"
+"@joshwooding/vite-plugin-react-docgen-typescript@npm:^0.9.0":
+  version: 0.9.1
+  resolution: "@joshwooding/vite-plugin-react-docgen-typescript@npm:0.9.1"
   dependencies:
-    glob: "npm:^13.0.1"
     react-docgen-typescript: "npm:^2.2.2"
+    tinyglobby: "npm:^0.2.16"
   peerDependencies:
-    typescript: ">= 4.3.x"
+    typescript: ">=4.3.0 <7 || >=7.1.0-0 <8"
     vite: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/399c106f653c11ddc44ea9a61a52547e3856f028a9deda58aef6ee4bb00c7a1ffb5a755b9681a1439818b154868414b71cebde8876de225e63579d76c4742580
+  checksum: 10/0cac3057e0bdfc980a323df14db3ea3e37b6924e617e3db0d14c7f068f1c96d7870ef6c23aaf034f639c8d00cd5eeb7c1d5456ff2897501f9a23410a8685a754
   languageName: node
   linkType: hard
 
@@ -15630,7 +15630,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinyglobby@npm:^0.2.12, tinyglobby@npm:^0.2.13, tinyglobby@npm:^0.2.15, tinyglobby@npm:^0.2.17":
+"tinyglobby@npm:^0.2.12, tinyglobby@npm:^0.2.13, tinyglobby@npm:^0.2.15, tinyglobby@npm:^0.2.16, tinyglobby@npm:^0.2.17":
   version: 0.2.17
   resolution: "tinyglobby@npm:0.2.17"
   dependencies:
@@ -16301,7 +16301,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "vite-plugin-typescript-turbosnap@workspace:tooling/typescript-turbosnap"
   dependencies:
-    "@joshwooding/vite-plugin-react-docgen-typescript": "npm:^0.7.0"
+    "@joshwooding/vite-plugin-react-docgen-typescript": "npm:^0.9.0"
     typescript: "npm:^6.0.0"
     vite: "npm:^8.2.0"
   peerDependencies:
