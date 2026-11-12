@@ -1,0 +1,76 @@
+---
+title: Fixing accessibility
+description: "Diagnose accessibility issues in Salt applications, identify who owns the behavior, and verify a focused repair."
+layout: DetailTechnical
+sidebar:
+  label: Fixing accessibility
+---
+
+Use this guide for a reported accessibility issue or a failing accessibility
+check, including one found while working on another task.
+
+## Reproduce the issue
+
+Reproduce the issue in the rendered application before editing, and note the
+installed Salt version. Inspect the element that users interact with, not only
+its React props: its accessible name, role, state and relationships, and the
+keyboard and focus sequence through the interaction. For a visual issue,
+reproduce the theme, density, zoom or viewport it occurs in.
+
+## Read the relevant Salt guidance
+
+Read the affected components' usage and accessibility pages, plus any pattern or
+integration guidance they reference. Check the installed public types and
+exports when it's unclear which element a prop, ref or attribute reaches.
+
+For example, a field can show an error visually without exposing invalidity on
+its native control. Follow [FormField validation state](/salt/components/form-field/usage#validation-state)
+and [Form integration](./form-integration#validation-and-accessible-feedback)
+to connect the application's validation result, feedback and native attributes.
+
+For focus lost after closing a dialog, follow
+[Returning focus after an action](/salt/components/dialog/accessibility#returning-focus-after-an-action).
+Whether the trigger survives and where the user should continue are part of the
+application's workflow. Check the installed API before proposing a focus prop or
+callback. The [Deletion with focus example](/salt/components/dialog/examples#deletion-with-focus)
+coordinates a local removal with the dialog's closing lifecycle. Setting
+`open={false}` does not immediately make the background interactive; verify that
+the destination can receive focus instead of guessing a delay.
+
+## Identify who owns the repair
+
+| Evidence                                                                                                                  | Repair to investigate                                                                                                            |
+| ------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| The control is appropriate, but its name, state, feedback or event binding is missing or applied to the wrong element.    | Correct the application's content or wiring using the documented Salt API.                                                       |
+| Components work individually, but their composition creates conflicting interaction owners or loses focus during updates. | Fix the composition and state transitions; review [composition pitfalls](./composition-pitfalls).                                |
+| The component's semantics or interaction model do not match the user's task.                                              | Consult [Choosing the right primitive](./choosing-the-right-primitive), then change the component with evidence for that choice. |
+| A supported usage still fails in a minimal reproduction.                                                                  | Investigate a Salt defect or documentation discrepancy; record the version, reproduction and expected behavior.                  |
+
+Preserve the current component when its API can support the required behavior:
+an accessibility issue doesn't by itself call for a different component. Prefer
+documented props and native semantics; added ARIA must agree with the behavior of
+the rendered control.
+
+For a Salt defect, provide a focused reproduction, then fix it in Salt or use a
+documented workaround scoped to the problem. Editing the installed copy in
+`node_modules` is not a durable repair.
+
+## Verify the repair
+
+Repeat the original reproduction after the change, and add a focused regression
+test when the behavior can be tested reliably. Assert what users get, such as the
+control's accessible name or where focus lands, rather than only the presence of
+a prop in source.
+
+- For names, descriptions and errors, check the rendered associations, including
+  recovery from an error.
+- For keyboard or focus repairs, exercise the documented keys and the open, close,
+  cancel or removal transitions involved.
+- For announcements, verify with a browser and screen reader; a DOM assertion
+  doesn't confirm what is announced.
+- For visual repairs, check the affected theme, contrast, focus visibility, zoom
+  or layout.
+
+`salt-ds check` checks tokens, props and component parts, not keyboard, focus or
+screen-reader behavior. Automated accessibility scans also have limits; see the
+[W3C accessibility evaluation guidance](https://www.w3.org/WAI/test-evaluate/).

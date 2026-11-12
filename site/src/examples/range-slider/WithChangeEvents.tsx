@@ -18,15 +18,15 @@ export const WithChangeEvents = () => {
       />
       <Text>
         Value onChange: &nbsp;
-        <span style={{ color: "var(--salt-color-teal-500)" }}>
+        <Text as="span" fontWeight="bolder">
           [{valueOnChange[0]}, {valueOnChange[1]}]
-        </span>
+        </Text>
       </Text>
       <Text>
         Value onChangeEnd: &nbsp;
-        <span style={{ color: "var(--salt-color-teal-500)" }}>
+        <Text as="span" fontWeight="bolder">
           [{valueOnChangeEnd[0]}, {valueOnChangeEnd[1]}]
-        </span>
+        </Text>
       </Text>
     </StackLayout>
   );

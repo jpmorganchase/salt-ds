@@ -13,14 +13,42 @@ data:
 
 ### When to use
 
-- To present a set of selectable options that allow users to make a choice for an onward action, such as filtering a data grid, selecting a country or assigning a task.
+- To keep a selectable list visible while users choose one or more values, such as countries, assignees or filters.
 
 ### When not to use
 
-- If the list items provide navigation, consider using stacked [`NavigationItem`s](../navigation-item) to form a vertical navigation pattern.
-- If the list is likely to contain five items or fewer, consider using [`RadioButtonGroup`](../radio-button).
-- If the list is likely to contain between five and 10 items and doesn't need to be visible at all times, consider placing the list of items within [`Dropdown`](../dropdown).
-- If the list contains more than 10 items and you have limited screen space, consider using a [`ComboBox`](../combo-box).
+- When a small set of choices should be visible as radio buttons or checkboxes, or a popup would use the available space better. See [Choosing a selection control](#choosing-a-selection-control).
+- When items trigger actions or navigate to destinations. See [Alternatives](#alternatives).
+
+## Choosing a selection control
+
+Choose by what the user is selecting, whether one or multiple values are allowed,
+and whether the choices need to stay visible. Consider label length, available
+space and how easily users can find an option; an option count alone does not
+establish the right control.
+
+- Use [`RadioButtonGroup`](../radio-button) to compare a small, mutually exclusive set of choices visible together. The alternatives and the single selected value remain visible.
+- Use [`CheckboxGroup`](../checkbox) for independent choices visible together. Each choice has its own selected or unselected state.
+- Use `ListBox` to select one or more values from an always-visible list that users can browse.
+- Use [`Dropdown`](../dropdown) to select one or more values from a popup when space is limited. The selection stays visible while the list is closed.
+- Use [`ComboBox`](../combo-box) when users type to find and select from available choices. It provides an editable input alongside the options; the application supplies the filtering.
+
+### Alternatives
+
+These controls select values. Use [`Menu`](../menu) for a popup list of actions,
+such as Edit or Delete, and [`NavigationItem`](../navigation-item) for application
+destinations. Use [`ToggleButtonGroup`](../toggle-button/usage#view-switching)
+for persistent presentation choices such as List and Cards for the same records.
+For an on/off setting that takes effect immediately, use [`Switch`](../switch).
+
+### Filtering and submitted values
+
+`ComboBox` renders the options the application supplies. The application owns
+filtering, fetching and the number of rendered options; adding a combo box does
+not automatically filter or virtualize a large list. Keep its editable input text
+separate from the selected values, especially when submitting identifiers rather
+than labels. Follow [form integration](/salt/getting-started/form-integration#bind-the-value-that-the-user-is-choosing)
+for selection binding and serialization, including `ListBox` and `Dropdown`.
 
 ## Import
 

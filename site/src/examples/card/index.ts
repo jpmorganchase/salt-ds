@@ -11,7 +11,6 @@ export * from "./DisabledSelectionGroup";
 export * from "./Elevation";
 export * from "./FullWidthImage";
 export * from "./Ghost";
-export * from "./HoverStyling";
 export * from "./InteractableCardExample";
 export * from "./LinkCardExample";
 export * from "./Sections";

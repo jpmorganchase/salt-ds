@@ -28,7 +28,7 @@ You can customize the `FileDropZoneTrigger` label by using `children`.
 
 Inform users when a file cannot be uploaded successfully. Error messages should provide feedback to guide the user resolve the issue.
 
-When uploaded files fail to meet the validation criteria, change the `state` prop to `"error"` so the file drop zone will display the error state.
+When uploaded files fail to meet the validation criteria, change the `status` prop to `"error"` so the file drop zone will display the error state.
 
 <LivePreview componentName="file-drop-zone" exampleName="Error" />
 
@@ -36,12 +36,12 @@ When uploaded files fail to meet the validation criteria, change the `state` pro
 
 Inform users when files successfully upload. Success messages should reassure users that the action has been completed.
 
-When files upload successfully, change the `state` prop to `"success"` so the file drop zone will display the success state.
+When files upload successfully, change the `status` prop to `"success"` so the file drop zone will display the success state.
 
 <LivePreview componentName="file-drop-zone" exampleName="Success" />
 
 ## Disabled
 
-You can disable the file drop zone component by passing the `disabled` prop, with no resultant action when users drop a file onto the component.
+You can disable the file drop zone component by passing the `disabled` prop, with no resultant action when users drop a file onto the component. `disabled` on `FileDropZone` only stops dropping, so set it on `FileDropZoneTrigger` too to disable its button.
 
 <LivePreview componentName="file-drop-zone" exampleName="Disabled" />
