@@ -22,7 +22,7 @@ export const SingleSelection = () => {
       <InteractableCard value="card" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
-            <CreditCardIcon aria-hidden size={2} />
+            <CreditCardIcon aria-hidden />
             <H3 style={{ margin: 0 }}>Credit Card</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
@@ -34,7 +34,7 @@ export const SingleSelection = () => {
       <InteractableCard value="wire" style={{ width: "180px" }}>
         <StackLayout gap={1}>
           <StackLayout gap={1} direction="row" align="center">
-            <BankIcon aria-hidden size={2} />
+            <BankIcon aria-hidden />
             <H3 style={{ margin: 0 }}>Bank wire</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>

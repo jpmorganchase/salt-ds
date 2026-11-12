@@ -14,17 +14,10 @@ data:
 ---
 
 <LivePreview componentName="patterns/keyboard-shortcuts" exampleName="WithDialog" />
+
 The keyboard shortcuts pattern is a comprehensive and searchable list of the shortcuts that are currently available to the application user, helping them to quickly reference and learn key combinations and perform actions efficiently.
 
 This pattern is a recommended layout and should be displayed within an appropriate container component that fits the application's information architecture and supports the user's workflow.
-
- <Diagram
-    src="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-example.png"
-    srcDark="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-example-dark.png"
-    alt="Keyboard Shortcuts pattern example, showing the actions and respective key combinations side by side"
-    border
-    background="secondary"
-  />
 
 ## How to build
 
@@ -34,7 +27,7 @@ This pattern is a recommended layout and should be displayed within an appropria
 2. **Filter**: Allows users to quickly search and discover specific shortcuts by typing keywords.
 3. **Action name**: User-initiated commands—such as Save or Delete—that correspond to defined shortcuts. 
 4. **Description**: A brief description for actions that are unique to your application or require additional context to help users understand their purpose.
-3. **Key**: Keyboard shortcuts use a combination of modifier keys and character keys to perform actions.
+5. **Key**: Keyboard shortcuts use a combination of modifier keys and character keys to perform actions.
 
  <Diagram
     src="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-anatomy.png"
@@ -54,6 +47,10 @@ This pattern is a recommended layout and should be displayed within an appropria
 - Use [Combo box](/salt/components/combo-box) to display search field.
 - Use [Table](/salt/components/table) to display keyboard shortcut list.
 
+Turn on keyboard shortcuts in the example below to show the filter and the shortcut list.
+
+<LivePreview componentName="patterns/keyboard-shortcuts" exampleName="Default" />
+
 <Diagram
   src="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-layout.png"
   srcDark="/img/patterns/keyboard-shortcuts/keyboard-shortcuts-pattern-layout-dark.png"
@@ -61,8 +58,6 @@ This pattern is a recommended layout and should be displayed within an appropria
   border
   background="secondary"
 />
-
-<LivePreview componentName="patterns/keyboard-shortcuts" exampleName="Default" />
 
 ## When to use
 

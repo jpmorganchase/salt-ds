@@ -17,12 +17,6 @@ data:
   exampleName="SingleLevel"
 />
 
-<Diagram
-  src="/img/patterns/vertical-navigation/vertical-navigation-hero-shot.png"
-  alt="A vertical navigation."
-  border
-/>
-
 ## When to use
 
 Use vertical navigation to organize multiple sections of an application into a vertical hierarchy. The navigation pane can remain alongside the content when space allows.
@@ -68,11 +62,11 @@ You will typically use vertical navigation in a sidebar, on the left side of the
 
 ### Layout
 
-`VerticalNavigation` owns the column layout and spacing between its items. Keep the hierarchy wide and flat.
+`VerticalNavigation` owns the column layout and spacing between its items: a `--salt-spacing-fixed-100` gap separates the items, and each nested level is indented further than its parent. Keep the hierarchy wide and flat.
 
 <Diagram
   src="/img/patterns/vertical-navigation/vert-nav-layout.png"
-  alt="Spacing for a vertical navigation"
+  alt="Spacing for a vertical navigation: four items at levels 0, 1 and 2, separated by a --salt-spacing-fixed-100 gap, with level 0 labels in the bolder weight."
   border
 />
 
@@ -93,6 +87,8 @@ Nest `VerticalNavigationItem` entries inside `VerticalNavigationSubMenu` to crea
 
 Top-level hierarchy items labels use a strong font weight, and nested items use a regular font weight.
 
+<LivePreview componentName="patterns/vertical-navigation" exampleName="NestedGroup" />
+
 <Diagram
   src="/img/patterns/vertical-navigation/vert-nav-nested.png"
   alt="A multi-level vertical navigation group"
@@ -106,8 +102,6 @@ Top-level hierarchy items labels use a strong font weight, and nested items use 
 - When a parent has a single expansion trigger, activating it expands the group rather than navigating. Put any overview destination first in the group, without a chevron. A parent can instead have a destination link and a separate expansion control.
 
 </GuidanceCallout>
-
-<LivePreview componentName="patterns/vertical-navigation" exampleName="NestedGroup" />
 
 ### Blur active state
 
@@ -137,14 +131,14 @@ We recommend using a density that is one size smaller than the main navigation. 
 - It isn't the primary means of navigation for the entire application and doesn't need the same level of prominence as, for instance, the left-hand navigation.
 - A smaller density helps visually signify its hierarchy within the page.
 
+<LivePreview componentName="patterns/vertical-navigation" exampleName="SecondaryNavigation" />
+
 <Diagram
   src="/img/patterns/vertical-navigation/secondary-navigation.png"
   alt="The secondary navigation demonstrated"
   border
   caption="Vertical navigation placed on the right of an application for secondary navigation."
 />
-
-<LivePreview componentName="patterns/vertical-navigation" exampleName="SecondaryNavigation" />
 
 ## Within modals
 
