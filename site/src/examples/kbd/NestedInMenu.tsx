@@ -7,6 +7,7 @@ import {
   MenuItem,
   MenuPanel,
   MenuTrigger,
+  Text,
 } from "@salt-ds/core";
 import { MicroMenuIcon } from "@salt-ds/icons";
 import type { ReactElement } from "react";
@@ -31,7 +32,9 @@ function AlignmentMenu() {
             Text Align Left
             <FlexLayout gap={0.5} wrap align="center">
               <Kbd>Option</Kbd>
+              <Text>+</Text>
               <Kbd>Cmd</Kbd>
+              <Text>+</Text>
               <Kbd>L</Kbd>
             </FlexLayout>
           </FlexLayout>
@@ -49,7 +52,9 @@ function AlignmentMenu() {
             Text Align Center
             <FlexLayout gap={0.5} wrap align="center">
               <Kbd>Option</Kbd>
+              <Text>+</Text>
               <Kbd>Cmd</Kbd>
+              <Text>+</Text>
               <Kbd>C</Kbd>
             </FlexLayout>
           </FlexLayout>
@@ -67,7 +72,9 @@ function AlignmentMenu() {
             Text Align Right
             <FlexLayout gap={0.5} wrap align="center">
               <Kbd>Option</Kbd>
+              <Text>+</Text>
               <Kbd>Cmd</Kbd>
+              <Text>+</Text>
               <Kbd>R</Kbd>
             </FlexLayout>
           </FlexLayout>
@@ -98,6 +105,7 @@ export const NestedInMenu = (): ReactElement => (
           Copy
           <FlexLayout gap={0.5} wrap align="center">
             <Kbd>Cmd</Kbd>
+            <Text>+</Text>
             <Kbd>C</Kbd>
           </FlexLayout>
         </FlexLayout>
@@ -115,6 +123,7 @@ export const NestedInMenu = (): ReactElement => (
           Paste
           <FlexLayout gap={0.5} wrap align="center">
             <Kbd>Cmd</Kbd>
+            <Text>+</Text>
             <Kbd>V</Kbd>
           </FlexLayout>
         </FlowLayout>
@@ -132,7 +141,9 @@ export const NestedInMenu = (): ReactElement => (
           Duplicate
           <FlexLayout gap={0.5} wrap align="center">
             <Kbd>Cmd</Kbd>
+            <Text>+</Text>
             <Kbd>Shift</Kbd>
+            <Text>+</Text>
             <Kbd>D</Kbd>
           </FlexLayout>
         </FlexLayout>
