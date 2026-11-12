@@ -181,6 +181,16 @@ const DEPRECATED_ICONS = [
     replacement: "HelpCircleSolid",
     since: "1.18.0",
   },
+  {
+    componentName: "StepDefault",
+    replacement: "ProgressDraft",
+    since: "1.20.0",
+  },
+  {
+    componentName: "StepActive",
+    replacement: "ProgressActive",
+    since: "1.20.0",
+  },
 ];
 const deprecatedIconMap = new Map(
   DEPRECATED_ICONS.map((icon) => [icon.componentName, icon]),

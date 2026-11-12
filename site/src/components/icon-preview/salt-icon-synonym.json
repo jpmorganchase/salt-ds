@@ -1366,12 +1366,12 @@
   {
     "iconName": "step-active",
     "synonym": ["progress", "circle fill", "status", "work in progress", "wip"],
-    "category": "indicators"
+    "category": "deprecated"
   },
   {
     "iconName": "step-default",
     "synonym": ["progress", "circle", "status", "incomplete", "pending"],
-    "category": "indicators"
+    "category": "deprecated"
   },
   {
     "iconName": "stethoscope",
