@@ -6,7 +6,7 @@ Added `ag-theme-salt` and `ag-theme-salt-compact` class names. The theme takes i
 
 Row heights now include the border below each row, so the theme supplies rows of 25px, 37px, 49px and 61px in high, medium, low and touch density, with headers 1px shorter. Cell text stays vertically aligned when heights come from CSS.
 
-Client-side grids on AG Grid v33 and later follow density changes without setting `rowHeight` or `headerHeight`. Infinite-scroll examples retain a reactive `rowHeight` option because that row model does not update row heights from CSS changes.
+Client-side grids on AG Grid v33 and later generally follow density changes without setting `rowHeight` or `headerHeight`. Keep a reactive `rowHeight` for the infinite, server-side and viewport row models, which do not resize existing rows after CSS density changes. Auto-height columns with empty or fixed-height content may also retain a previous row height when their content does not resize; use a reactive `rowHeight` for these cases. The infinite-scroll examples demonstrate this approach.
 
 Cells of AG Grid's `rightAligned` and `numericColumn` column types now show validation states and edited values on the same sides as `numeric-cell` cells: the status adornment on the left, away from the value, and the edited value on the right. In a right-to-left grid, where AG Grid puts their values on the left, the adornment is on the right and the edited value on the left.
 
