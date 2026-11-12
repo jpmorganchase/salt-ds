@@ -13,7 +13,7 @@ import {
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
 import { useEffect, useState } from "react";
 import { Callout } from "../callout";
-import { getDensityDisplayName } from "../components/ThemeSettingsOverlay";
+import { getDensityDisplayName } from "../components/previewDensity";
 import styles from "./AllTokens.module.css";
 import {
   type Density,
