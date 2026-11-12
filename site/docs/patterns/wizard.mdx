@@ -15,14 +15,6 @@ data:
 
 <LivePreview componentName="patterns/wizard" exampleName="Horizontal" />
 
-<Diagram
-  src="/img/patterns/wizard/wizard-pattern-example.png"
-  srcDark="/img/patterns/wizard/wizard-pattern-example-dark.png"
-  alt="Example of a multi-step wizard workflow with stepper navigation"
-  border
-  background="secondary"
-/>
-
 ## When to use
 
 Use wizards to guide users through a series of steps or tasks in a specific, linear order, often with the goal of completing a complex process (e.g., software installation, account setup/onboarding, checkout). Users must complete each step in order before moving on to the next.
@@ -64,24 +56,31 @@ The wizard pattern can be used in different containers depending on your use cas
 - The title area of the wizard uses Salt [header block](/salt/patterns/header-block) pattern.
 - Use a [Stepper](/salt/components/stepper) component to display the steps of the flow. 
 - Follow the [button bar pattern](/salt/patterns/button-bar) guidance for button order layout and button positions in multi-step flows.
+- Apply `--salt-spacing-300` padding around the wizard, and `--salt-spacing-300` between the title area, the content area and the button bar.
 
 
 ### Wizard with a horizontal stepper
 
+Place the horizontal stepper beside the title area, with `--salt-spacing-300` between them. The example at the top of this page uses a horizontal stepper.
+
 <Diagram
   src="/img/patterns/wizard/wizard-pattern-layout-horizontal.png"
   srcDark="/img/patterns/wizard/wizard-pattern-layout-horizontal-dark.png"
-  alt="Horizontal wizard layout with stepper and content area spacing"
+  alt="Horizontal wizard layout: the title area and stepper side by side, the content area below and the button bar at the bottom, separated and padded by --salt-spacing-300."
   border
   background="secondary"
 />
 
 ### Wizard with a vertical stepper
 
+Place the vertical stepper below the title area, beside the content area, with `--salt-spacing-300` between the stepper and the content.
+
+<LivePreview componentName="patterns/wizard" exampleName="VerticalWithCancelConfirmation" />
+
 <Diagram
   src="/img/patterns/wizard/wizard-pattern-layout-vertical.png"
   srcDark="/img/patterns/wizard/wizard-pattern-layout-vertical-dark.png"
-  alt="Vertical wizard layout with stepper and content area arrangement"
+  alt="Vertical wizard layout: the title area at the top, the stepper beside the content area, and the button bar at the bottom, separated and padded by --salt-spacing-300."
   border
   background="secondary"
 />
@@ -89,8 +88,6 @@ The wizard pattern can be used in different containers depending on your use cas
 <GuidanceCallout type="positive" customPillText="Best practices">
   The wizard should maintain a consistent size as users navigate between steps, ensuring a stable and predictable layout throughout the workflow.
 </GuidanceCallout>
-
-<LivePreview componentName="patterns/wizard" exampleName="VerticalWithCancelConfirmation" />
 
 ## Horizontal stepper vs. vertical stepper
 
