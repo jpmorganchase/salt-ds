@@ -26,7 +26,7 @@ An error icon displays alongside a supporting message.
 
 ## Warning
 
-Use warning system status to alert users about potential issues. Warnings announce scheduled outages or events that might impact the product experience, but don't prevent the user from using the application or completing their current workflow.
+Use warning system status to warn users about potential issues. Warnings announce scheduled outages or events that might impact the product experience, but don't prevent the user from using the application or completing their current workflow.
 
 A warning icon displays alongside a supporting message.
 
@@ -58,7 +58,7 @@ Use `SystemStatusActions` to add actions such as view status and dismiss. Use [`
 
 Screen readers don't reliably announce a system status that is added to the page after it loads. To make sure it's announced, add an empty live region to the page when it first loads, then add the system status inside it.
 
-Use a container with `role="status"` for a system status that notifies the user, or `role="alert"` for one that alerts the user.
+Use a container with `role="alert"` for an error system status, or `role="status"` for all other statuses.
 
 <LivePreview componentName="system-status" exampleName="Announced" />
 

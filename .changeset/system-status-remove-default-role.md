@@ -4,7 +4,7 @@
 
 Removed the default `role="status"` from `SystemStatus`, matching `Banner`. Screen readers don't reliably announce a live region that is added to the page after it loads, so the default role couldn't be relied on to announce a system status.
 
-A `SystemStatus` rendered on its own is no longer a live region. To announce it, render it inside a container with `role="status"` or `role="alert"` that is on the page when it first loads. If your tests find `SystemStatus` by its role, target the container instead.
+A `SystemStatus` rendered on its own is no longer a live region. To announce it, render it inside a container with `role="alert"` for an error system status, or `role="status"` for all other statuses, and add that container to the page when it first loads. If your tests find `SystemStatus` by its role, target the container instead.
 
 ```tsx
 <div role="status">

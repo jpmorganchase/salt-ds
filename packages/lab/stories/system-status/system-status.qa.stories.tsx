@@ -20,6 +20,9 @@ export default {
 
 const statuses: ValidationStatus[] = ["info", "success", "warning", "error"];
 
+const liveRegionRole = (status: ValidationStatus) =>
+  status === "error" ? "alert" : "status";
+
 const actions = (
   <SystemStatusActions>
     <OnSolidButton>Action</OnSolidButton>
@@ -32,44 +35,52 @@ const actions = (
 export const ExamplesGrid: StoryFn = (props) => (
   <QAContainer cols={1} itemPadding={10} height={600} width={1000} {...props}>
     {statuses.map((status) => (
-      <SystemStatus key={status} status={status}>
+      <div key={status} role={liveRegionRole(status)}>
+        <SystemStatus status={status}>
+          <SystemStatusContent>
+            <Text color="inherit">Message</Text>
+          </SystemStatusContent>
+        </SystemStatus>
+      </div>
+    ))}
+    {statuses.map((status) => (
+      <div key={status} role={liveRegionRole(status)}>
+        <SystemStatus status={status}>
+          <SystemStatusContent>
+            <StackLayout gap={0.5}>
+              <Text color="inherit" fontWeight="bolder">
+                Title
+              </Text>
+              <Text color="inherit">Description</Text>
+            </StackLayout>
+          </SystemStatusContent>
+        </SystemStatus>
+      </div>
+    ))}
+    <div role="status">
+      <SystemStatus>
         <SystemStatusContent>
           <Text color="inherit">Message</Text>
         </SystemStatusContent>
+        {actions}
       </SystemStatus>
-    ))}
-    {statuses.map((status) => (
-      <SystemStatus key={status} status={status}>
+    </div>
+    <div role="status">
+      <SystemStatus status="warning">
         <SystemStatusContent>
           <StackLayout gap={0.5}>
             <Text color="inherit" fontWeight="bolder">
               Title
             </Text>
-            <Text color="inherit">Description</Text>
+            <Text color="inherit">
+              Description that is long enough to wrap onto several lines, so the
+              icon and actions can be checked against the first line of content.
+            </Text>
           </StackLayout>
         </SystemStatusContent>
+        {actions}
       </SystemStatus>
-    ))}
-    <SystemStatus>
-      <SystemStatusContent>
-        <Text color="inherit">Message</Text>
-      </SystemStatusContent>
-      {actions}
-    </SystemStatus>
-    <SystemStatus status="warning">
-      <SystemStatusContent>
-        <StackLayout gap={0.5}>
-          <Text color="inherit" fontWeight="bolder">
-            Title
-          </Text>
-          <Text color="inherit">
-            Description that is long enough to wrap onto several lines, so the
-            icon and actions can be checked against the first line of content.
-          </Text>
-        </StackLayout>
-      </SystemStatusContent>
-      {actions}
-    </SystemStatus>
+    </div>
   </QAContainer>
 );
 

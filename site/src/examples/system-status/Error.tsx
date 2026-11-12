@@ -3,9 +3,13 @@ import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const Error = (): ReactElement => (
-  <SystemStatus status="error" role="alert">
-    <SystemStatusContent>
-      <Text color="inherit">System failure. Please try again.</Text>
-    </SystemStatusContent>
-  </SystemStatus>
+  <div role="alert" style={{ width: "100%" }}>
+    <SystemStatus status="error">
+      <SystemStatusContent>
+        <Text color="inherit">
+          Some services are unavailable. Refresh the page to try again.
+        </Text>
+      </SystemStatusContent>
+    </SystemStatus>
+  </div>
 );
