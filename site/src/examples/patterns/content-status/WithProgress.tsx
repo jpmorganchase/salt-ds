@@ -6,9 +6,7 @@ export const WithProgress = () => {
       <CircularProgress aria-label="Download progress" value={50} />
       <StackLayout gap={1} align="center">
         <Text fontWeight="bolder">Downloading…</Text>
-        <Text>
-          We’re retrieving your data. This shouldn’t take long.
-        </Text>
+        <Text>We’re retrieving your data. This shouldn’t take long.</Text>
       </StackLayout>
       <Button>Cancel</Button>
     </StackLayout>

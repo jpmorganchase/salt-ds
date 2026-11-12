@@ -1,6 +1,7 @@
 import {
   Avatar,
   Button,
+  GridLayout,
   SplitLayout,
   StackLayout,
   Text,
@@ -14,7 +15,7 @@ import {
   MessageIcon,
   UserIcon,
 } from "@salt-ds/icons";
-import { useState } from "react";
+import { Fragment, useState } from "react";
 import { basicContact } from "./ContactDetails";
 
 const persona = "/img/examples/avatar.png";
@@ -26,14 +27,18 @@ export const CollapsibleDetails = () => {
     setExpandedDetails(!expandedDetails);
   }
   return (
-    <StackLayout direction="row" gap={2} style={{ width: "400px" }}>
+    <StackLayout
+      direction="row"
+      gap={2}
+      style={{ width: "400px", maxWidth: "100%" }}
+    >
       <Avatar
         src={persona as string}
         aria-label={basicContact.primary}
         fallbackIcon={<UserIcon />}
         size={2}
       />
-      <StackLayout direction={"column"} gap={1}>
+      <StackLayout direction={"column"} gap={1} style={{ minWidth: 0 }}>
         <StackLayout direction={"column"} gap={0.5}>
           <Text styleAs="h2">{basicContact.primary}</Text>
           <StackLayout direction={"column"} gap={0}>
@@ -98,31 +103,30 @@ export const CollapsibleDetails = () => {
           }
         />
         {expandedDetails && (
-          <StackLayout
-            direction={"row"}
-            gap={2}
+          <GridLayout
+            as="dl"
+            columns="max-content minmax(0, 1fr)"
+            rows="auto"
+            columnGap={2}
+            rowGap={0.5}
+            padding={1}
             style={{
               borderTop: "solid",
               borderWidth: "1px",
               borderColor: "var(--salt-separable-primary-borderColor)",
-              padding: "var(--salt-spacing-100)",
             }}
           >
-            <StackLayout direction={"column"} gap={0.5}>
-              {basicContact.metadata.map((metadata) => {
-                return (
-                  <Text color="secondary" key={metadata.label}>
-                    {metadata.label}
-                  </Text>
-                );
-              })}
-            </StackLayout>
-            <StackLayout direction={"column"} gap={0.5}>
-              {basicContact.metadata.map((metadata) => {
-                return <Text key={metadata.label}>{metadata.value}</Text>;
-              })}
-            </StackLayout>
-          </StackLayout>
+            {basicContact.metadata.map((metadata) => (
+              <Fragment key={metadata.label}>
+                <Text as="dt" color="secondary">
+                  {metadata.label}
+                </Text>
+                <Text as="dd" style={{ margin: 0, overflowWrap: "anywhere" }}>
+                  {metadata.value}
+                </Text>
+              </Fragment>
+            ))}
+          </GridLayout>
         )}
       </StackLayout>
     </StackLayout>

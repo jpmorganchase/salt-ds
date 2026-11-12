@@ -10,7 +10,7 @@ data:
   resources:
     [
     ]
-  components: ["Avatar", "Button", "Flow layout", "Icon", "Stack layout", "Text", "Tooltip"]
+  components: ["Avatar", "Button", "Flow layout", "Grid layout", "Icon", "Stack layout", "Text", "Tooltip"]
 ---
 
 <LivePreview componentName="patterns/contact-details" exampleName="ContactDetails" />
@@ -51,11 +51,12 @@ Keep label lengths similar to ensure close proximity to their respective values.
 - Use [`StackLayout`](/salt/components/layouts/stack-layout) with `direction="row"` and `gap={2}` (`--salt-spacing-200`) to display the avatar beside the text elements.
 - Stack the header above the additional details in a `StackLayout` with `direction="column"` and `gap={1}` (`--salt-spacing-100`).
 - In the header, use a column `StackLayout` with `gap={0.5}` (`--salt-spacing-50`) between the name and the further information. Display the name with the H2 text style, and the company name and ID with the H4 text style.
-- Display the additional details as a column of labels beside a column of values, in a row `StackLayout` with `gap={2}`. Each column is a `StackLayout` with `gap={0.5}`. Labels use the Body text style in the secondary color, and values use Body.
+- Display the additional details as a definition list using [`GridLayout`](/salt/components/layouts/grid-layout) with `as="dl"`, `columns="max-content minmax(0, 1fr)"`, `columnGap={2}` and `rowGap={0.5}`. Place each label immediately before its value in document order so the pair stays together for screen readers and shares a row when text wraps.
+- Use `Text as="dt" color="secondary"` for each label and `Text as="dd"` for its value, retaining the Body text style. `GridLayout` removes the definition list's default margin; reset each value's margin with `style={{ margin: 0 }}`.
 
 <Diagram
   src="/img/patterns/contact-details/contact-details-layout-1.png"
-  alt="Contact details layout: row stack layouts with gap 2 between the avatar and the text, and between the labels and values. The name uses H2 and the company details H4."
+  alt="Contact details spacing: gap 2 between the avatar and the text, and between the labels and values. The name uses H2 and the company details H4."
   border
 />
 
@@ -67,7 +68,7 @@ Keep label lengths similar to ensure close proximity to their respective values.
 
 <Diagram
   src="/img/patterns/contact-details/contact-details-layout-3.png"
-  alt="Contact details layout: column stack layouts with gap 0.5 in the header and in the labels column."
+  alt="Contact details spacing: gap 0.5 within the header and between the label-value rows."
   border
 />
 
