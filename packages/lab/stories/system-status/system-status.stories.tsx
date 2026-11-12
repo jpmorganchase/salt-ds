@@ -143,7 +143,9 @@ export const WithActions: StoryFn<typeof SystemStatus> = () => (
     <div role="alert">
       <SystemStatus status="error">
         <SystemStatusContent>
-          <Text color="inherit">System failure. Please try again.</Text>
+          <Text color="inherit">
+            Some services are unavailable. Refresh the page to try again.
+          </Text>
         </SystemStatusContent>
         <SystemStatusActions>
           <OnSolidButton>Try again</OnSolidButton>

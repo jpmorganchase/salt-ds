@@ -14,11 +14,15 @@ Check and test any focusable elements included in the system status content.
 
 A system status doesn't have a live region role. Always render it inside a container with `role="alert"` for an error system status, or `role="status"` for all other statuses. To make sure screen readers announce a system status added to the page, add the container to the page when it first loads, then render the system status inside it. See the [announced example](/salt/components/system-status/examples#announced).
 
-- **Note:** There are known screen reader announcement issues when dynamically inserting content with `role="status"`, which is why the container must be on the page before the system status is added. During your testing, check that the system status is properly announced using a screen reader.
+- **Note:** During your testing, check that the system status is announced using a screen reader.
 
 ### Accessible names for actions
 
 Give every action in a system status an accessible name that describes what it does. An icon-only close button needs an `aria-label`, such as "Dismiss system status".
+
+### Focus after dismissal
+
+A system status doesn't manage focus. When a user dismisses it, move focus back to the element that had focus before they reached the close button, such as the control that showed the system status. Otherwise, focus is lost when the system status is removed from the page. See the [announced example](/salt/components/system-status/examples#announced).
 
 ## Keyboard interactions
 
