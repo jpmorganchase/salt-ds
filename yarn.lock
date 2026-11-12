@@ -2562,19 +2562,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@joshwooding/vite-plugin-react-docgen-typescript@npm:^0.7.0":
-  version: 0.7.0
-  resolution: "@joshwooding/vite-plugin-react-docgen-typescript@npm:0.7.0"
+"@joshwooding/vite-plugin-react-docgen-typescript@npm:^0.9.0":
+  version: 0.9.1
+  resolution: "@joshwooding/vite-plugin-react-docgen-typescript@npm:0.9.1"
   dependencies:
-    glob: "npm:^13.0.1"
     react-docgen-typescript: "npm:^2.2.2"
+    tinyglobby: "npm:^0.2.16"
   peerDependencies:
-    typescript: ">= 4.3.x"
+    typescript: ">=4.3.0 <7 || >=7.1.0-0 <8"
     vite: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0
   peerDependenciesMeta:
     typescript:
       optional: true
-  checksum: 10/399c106f653c11ddc44ea9a61a52547e3856f028a9deda58aef6ee4bb00c7a1ffb5a755b9681a1439818b154868414b71cebde8876de225e63579d76c4742580
+  checksum: 10/0cac3057e0bdfc980a323df14db3ea3e37b6924e617e3db0d14c7f068f1c96d7870ef6c23aaf034f639c8d00cd5eeb7c1d5456ff2897501f9a23410a8685a754
   languageName: node
   linkType: hard
 
@@ -4248,7 +4248,7 @@ __metadata:
     "@salt-ds/styles": "workspace:*"
     "@salt-ds/window": "workspace:*"
     clsx: "npm:^2.0.0"
-    glob: "npm:^13.0.0"
+    glob: "npm:^14.0.0"
     mustache: "npm:^4.2.0"
     rimraf: "npm:^6.0.0"
     svgo: "npm:^4.0.0"
@@ -4363,7 +4363,7 @@ __metadata:
     "@salt-ds/styles": "workspace:*"
     "@salt-ds/window": "workspace:*"
     clsx: "npm:^2.0.0"
-    glob: "npm:^13.0.0"
+    glob: "npm:^14.0.0"
     mustache: "npm:^4.2.0"
     rimraf: "npm:^6.0.0"
     svgo: "npm:^4.0.0"
@@ -6277,17 +6277,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@ts-morph/common@npm:~0.28.1":
-  version: 0.28.1
-  resolution: "@ts-morph/common@npm:0.28.1"
-  dependencies:
-    minimatch: "npm:^10.0.1"
-    path-browserify: "npm:^1.0.1"
-    tinyglobby: "npm:^0.2.14"
-  checksum: 10/d5c6ed11cf046c186c7263c28c7e9b5fbefb61c65b99f66cfe6a3b249f70f3fbf116b5aace2980602a7ceabecdc399065d5a7f14aabe5475eb43fd573a3cc665
-  languageName: node
-  linkType: hard
-
 "@tybys/wasm-util@npm:^0.10.3":
   version: 0.10.3
   resolution: "@tybys/wasm-util@npm:0.10.3"
@@ -7872,13 +7861,6 @@ __metadata:
   version: 2.0.0
   resolution: "clsx@npm:2.0.0"
   checksum: 10/943766d1b02fee3538c871e56638d87f973fbc2d6291ce221215ea436fdecb9be97ad323f411839c2d52c45640c449b1a53fbfe7e8b3d529b4e263308b630c9a
-  languageName: node
-  linkType: hard
-
-"code-block-writer@npm:^13.0.3":
-  version: 13.0.3
-  resolution: "code-block-writer@npm:13.0.3"
-  checksum: 10/771546224f38610eecee0598e83c9e0f86dcd600ea316dbf27c2cfebaab4fed51b042325aa460b8e0f131fac5c1de208f6610a1ddbffe4b22e76f9b5256707cb
   languageName: node
   linkType: hard
 
@@ -12770,13 +12752,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path-browserify@npm:^1.0.1":
-  version: 1.0.1
-  resolution: "path-browserify@npm:1.0.1"
-  checksum: 10/7e7368a5207e7c6b9051ef045711d0dc3c2b6203e96057e408e6e74d09f383061010d2be95cb8593fe6258a767c3e9fc6b2bfc7ce8d48ae8c3d9f6994cca9ad8
-  languageName: node
-  linkType: hard
-
 "path-expression-matcher@npm:^1.5.0":
   version: 1.5.0
   resolution: "path-expression-matcher@npm:1.5.0"
@@ -15655,7 +15630,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"tinyglobby@npm:^0.2.12, tinyglobby@npm:^0.2.13, tinyglobby@npm:^0.2.14, tinyglobby@npm:^0.2.15, tinyglobby@npm:^0.2.17":
+"tinyglobby@npm:^0.2.12, tinyglobby@npm:^0.2.13, tinyglobby@npm:^0.2.15, tinyglobby@npm:^0.2.16, tinyglobby@npm:^0.2.17":
   version: 0.2.17
   resolution: "tinyglobby@npm:0.2.17"
   dependencies:
@@ -15822,16 +15797,6 @@ __metadata:
   version: 6.0.4
   resolution: "ts-mixer@npm:6.0.4"
   checksum: 10/f20571a4a4ff7b5e1a2ff659208c1ea9d4180dda932b71d289edc99e25a2948c9048e2e676b930302ac0f8e88279e0da6022823183e67de3906a3f3a8b72ea80
-  languageName: node
-  linkType: hard
-
-"ts-morph@npm:^27.0.0":
-  version: 27.0.2
-  resolution: "ts-morph@npm:27.0.2"
-  dependencies:
-    "@ts-morph/common": "npm:~0.28.1"
-    code-block-writer: "npm:^13.0.3"
-  checksum: 10/b9bd8ed86d4b76ca23446d3f808787cfe95a3bcb2316769a2f3fa262ea9ab4043bb76bf8aef677f9be0d758576f074df2926e701a535f84fd21946fdbf465148
   languageName: node
   linkType: hard
 
@@ -16336,7 +16301,9 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "vite-plugin-typescript-turbosnap@workspace:tooling/typescript-turbosnap"
   dependencies:
-    ts-morph: "npm:^27.0.0"
+    "@joshwooding/vite-plugin-react-docgen-typescript": "npm:^0.9.0"
+    typescript: "npm:^6.0.0"
+    vite: "npm:^8.2.0"
   peerDependencies:
     vite: ^8.0.0
   languageName: unknown

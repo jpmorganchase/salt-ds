@@ -17,6 +17,10 @@ const CustomDialog = () => {
         paddingBlock: "var(--salt-spacing-300)",
         border:
           "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-status-error-borderColor)",
+        // Matching Salt's Dialog
+        borderRadius: "var(--salt-palette-corner, 0)",
+        background: "var(--salt-container-primary-background)",
+        boxShadow: "var(--salt-overlayable-shadow-modal)",
       }}
     >
       <DialogHeader status="error" header="Can`t move file" />

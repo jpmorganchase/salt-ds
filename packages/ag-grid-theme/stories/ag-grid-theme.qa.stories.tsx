@@ -1,8 +1,16 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Non-Null assertion make tests easier. */
 /** biome-ignore-all lint/suspicious/noNonNullAssertedOptionalChain: Non-Null assertion make tests easier. */
 import type { StoryObj } from "@storybook/react-vite";
+import type { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
-import { expect, userEvent, within } from "storybook/test";
+import { useState } from "react";
+import { expect, userEvent, waitFor, within } from "storybook/test";
+import dataGridExampleColumns from "../src/dependencies/dataGridExampleColumns";
+import dataGridExampleData from "../src/dependencies/dataGridExampleData";
+import { shortColorData } from "../src/dependencies/dataGridExampleDataCellEditors";
+import { useAgGridHelpers } from "../src/dependencies/useAgGridHelpers";
+import { validationCellExampleColumns } from "../src/dependencies/validationExampleColumns";
+import { validationExampleData } from "../src/dependencies/validationExampleData";
 import {
   ColumnGroup,
   ContextMenu as ContextMenuGrid,
@@ -288,6 +296,83 @@ ToolPanelColumns.play = async ({ canvasElement }) => {
   }
 };
 
+// At the default panel width, larger densities need to wrap the filter actions.
+export const ToolPanelFilterActionsLow: StoryObj<typeof AgGridReact> = {
+  render: () => <ToolPanel />,
+  globals: { density: "low" },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const filtersTabs = await canvas.findAllByRole("tab", { name: "Filters" });
+
+    for (const tab of filtersTabs) {
+      await userEvent.click(tab);
+      const gridRoot = tab.closest<HTMLElement>(".ag-root-wrapper")!;
+      const panel = within(gridRoot).getByRole("tabpanel", { name: "Filters" });
+      await userEvent.click(
+        within(panel).getByText("Name", {
+          selector: ".ag-filter-toolpanel-group-title",
+          exact: true,
+        }),
+      );
+
+      const reset = await within(panel).findByRole("button", { name: "Reset" });
+      const apply = within(panel).getByRole("button", { name: "Apply" });
+      const actions = reset.closest<HTMLElement>(".ag-filter-apply-panel")!;
+      actions.scrollIntoView({ block: "nearest" });
+
+      // DOM visibility alone does not detect a button clipped by overflow:hidden.
+      const actionBounds = actions.getBoundingClientRect();
+      const panelBounds = panel.getBoundingClientRect();
+      for (const button of [reset, apply]) {
+        const bounds = button.getBoundingClientRect();
+        await expect(bounds.width).toBeGreaterThan(0);
+        await expect(bounds.height).toBeGreaterThan(0);
+        await expect(bounds.left).toBeGreaterThanOrEqual(actionBounds.left);
+        await expect(bounds.right).toBeLessThanOrEqual(actionBounds.right);
+        await expect(bounds.top).toBeGreaterThanOrEqual(actionBounds.top);
+        await expect(bounds.bottom).toBeLessThanOrEqual(actionBounds.bottom);
+        await expect(bounds.top).toBeGreaterThanOrEqual(panelBounds.top);
+        await expect(bounds.bottom).toBeLessThanOrEqual(panelBounds.bottom);
+      }
+
+      const alaskaCheckbox = within(panel).getByRole("checkbox", {
+        name: "Alaska",
+      });
+      await expect(alaskaCheckbox).toBeChecked();
+      await expect(
+        within(gridRoot).getByRole("gridcell", { name: "Alaska" }),
+      ).toBeInTheDocument();
+      await userEvent.click(alaskaCheckbox);
+      await expect(alaskaCheckbox).not.toBeChecked();
+      await userEvent.click(apply);
+      await waitFor(async () => {
+        await expect(
+          within(gridRoot).queryByRole("gridcell", {
+            name: "Alaska",
+          }),
+        ).not.toBeInTheDocument();
+      });
+      await userEvent.click(reset);
+      await waitFor(async () => {
+        await expect(
+          within(panel).getByRole("checkbox", { name: "Alaska" }),
+        ).toBeChecked();
+        await expect(
+          within(gridRoot).getByRole("gridcell", {
+            name: "Alaska",
+          }),
+        ).toBeInTheDocument();
+      });
+      actions.scrollIntoView({ block: "nearest" });
+    }
+  },
+};
+
+export const ToolPanelFilterActionsTouch: StoryObj<typeof AgGridReact> = {
+  ...ToolPanelFilterActionsLow,
+  globals: { density: "touch" },
+};
+
 export const EditableCellFocus: StoryObj<typeof AgGridReact> = () => {
   return <ColumnGroup />;
 };
@@ -423,6 +508,88 @@ EditableCellRichSelectEditing.play = async ({ canvasElement }) => {
   }
 };
 
+const richSelectHitTestingColumns: ColDef[] = [
+  {
+    field: "color",
+    editable: true,
+    cellClass: "editable-cell",
+    cellEditor: "agRichSelectCellEditor",
+    cellEditorParams: {
+      values: shortColorData,
+      valueListMaxHeight: 180,
+    },
+  },
+];
+
+const RichSelectHitTestingGrid = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+  const [rowData] = useState(() => [{ color: "Black" }]);
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={rowData}
+        columnDefs={richSelectHitTestingColumns}
+      />
+    </div>
+  );
+};
+
+// Rich Select computes the clicked row from the list's outer top edge.
+export const RichSelectOptionHitTesting: StoryObj<typeof AgGridReact> = {
+  render: () => <RichSelectHitTestingGrid />,
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    const cells = await canvas.findAllByRole("gridcell", { name: "Black" });
+
+    for (const cell of cells) {
+      const gridRoot = cell.closest<HTMLElement>(".ag-root-wrapper")!;
+
+      for (const { value, bottomInset, scroll } of [
+        { value: "Baby blue", bottomInset: 4, scroll: false },
+        { value: "Baby blue", bottomInset: 1, scroll: false },
+        { value: "White", bottomInset: 1, scroll: true },
+      ]) {
+        await userEvent.dblClick(cell);
+        const listbox = await within(gridRoot).findByRole("listbox");
+        const list = listbox.closest<HTMLElement>(".ag-rich-select-list")!;
+
+        if (scroll) {
+          await userEvent.keyboard("{End}{ArrowUp}");
+          await waitFor(async () => {
+            await expect(list.scrollTop).toBeGreaterThan(0);
+          });
+        }
+
+        // Virtual rows can exist before their scroll position has settled.
+        const { target, coords } = await waitFor(async () => {
+          const option = within(listbox).getByText(value, { exact: true });
+          const row = option.closest<HTMLElement>(".ag-virtual-list-item")!;
+          const bounds = row.getBoundingClientRect();
+          const coords = {
+            clientX: bounds.left + bounds.width / 2,
+            clientY: bounds.bottom - bottomInset,
+          };
+          const target = canvasElement.ownerDocument.elementFromPoint(
+            coords.clientX,
+            coords.clientY,
+          )!;
+          await expect(row.contains(target)).toBe(true);
+          return { target, coords };
+        });
+
+        // Default synthetic clicks have no row-relative clientY and miss this regression.
+        await userEvent.pointer({ keys: "[MouseLeft]", target, coords });
+        await waitFor(async () => {
+          await expect(cell).not.toHaveClass("ag-cell-inline-editing");
+          await expect(cell).toHaveTextContent(value);
+        });
+      }
+    }
+  },
+};
+
 export const ContextMenu: StoryObj<typeof AgGridReact> = () => {
   return <ContextMenuGrid />;
 };
@@ -524,5 +691,366 @@ WrappedHeaderRowSelection.play = async ({ canvasElement }) => {
   for (const row of rows) {
     await userEvent.click(within(row).getByRole("checkbox"));
     await expect(row).toHaveClass("ag-row-selected");
+  }
+};
+
+// Validation status adornments must not replace the range selection border on cells at the edge of a range.
+export const CellValidationInRangeSelection: StoryObj<
+  typeof AgGridReact
+> = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={validationExampleData}
+        columnDefs={validationCellExampleColumns}
+        cellSelection
+        onFirstDataRendered={({ api }) => {
+          // Rows 6 - 8 are error / warning / error, so every edge of the range has validation cells
+          // in editable (Status, Value) and read-only (Color) columns.
+          api.addCellRange({
+            rowStartIndex: 6,
+            rowEndIndex: 8,
+            columnStart: "status",
+            columnEnd: "color",
+          });
+        }}
+      />
+    </div>
+  );
+};
+CellValidationInRangeSelection.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Do findAll here so this will also work in `side-by-side` mode
+  const grids = await canvas.findAllByRole("grid");
+
+  for (const grid of grids) {
+    const anchorCell = grid.querySelector<HTMLElement>(
+      '[row-index="6"] [col-id="status"]',
+    )!;
+
+    // Focus an editable error cell, then extend the range from it, so the top left corner of the range
+    // shows the edit flag, range border and status adornment together.
+    await userEvent.click(anchorCell);
+    await userEvent.keyboard(
+      "{Shift>}{ArrowDown}{ArrowDown}{ArrowRight}{ArrowRight}{/Shift}",
+    );
+
+    await expect(anchorCell).toHaveClass(
+      "error-cell",
+      "ag-cell-focus",
+      "ag-cell-range-top",
+      "ag-cell-range-left",
+    );
+    // Read-only error cell at the top right corner of the range
+    await expect(
+      grid.querySelector('[row-index="6"] [col-id="color"]'),
+    ).toHaveClass("error-cell", "ag-cell-range-top", "ag-cell-range-right");
+  }
+};
+
+// Pinned, editable, validation and custom colored cells side by side, so every kind of cell shows its gap.
+const cellGapColumns: ColDef[] = [
+  { headerName: "Currency", field: "currency", pinned: "left", width: 120 },
+  ...validationCellExampleColumns
+    .slice(0, 3)
+    .map((column) => ({ ...column, width: 120 })),
+  {
+    headerName: "Min",
+    field: "min",
+    type: "numericColumn",
+    cellClass: "numeric-cell",
+    cellStyle: { backgroundColor: "var(--salt-category-1-subtle-background)" },
+    width: 120,
+  },
+  {
+    headerName: "Max",
+    field: "max",
+    type: "numericColumn",
+    cellClass: "numeric-cell",
+    cellStyle: { backgroundColor: "var(--salt-category-2-subtle-background)" },
+    width: 120,
+  },
+];
+
+// Every cell leaves a 1px gap after it, matching the Figma column separator slot, and the pinned column separator fills the gap.
+export const CellGaps: StoryObj<typeof AgGridReact> = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={validationExampleData}
+        columnDefs={cellGapColumns}
+      />
+    </div>
+  );
+};
+CellGaps.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Do findAll here so this will also work in `side-by-side` mode
+  const grids = await canvas.findAllByRole("grid");
+
+  for (const grid of grids) {
+    // The focus ring of a read-only cell stays inside its gap
+    const readOnlyCell = grid.querySelector<HTMLElement>(
+      '[row-index="0"] [col-id="color"]',
+    )!;
+
+    await userEvent.click(readOnlyCell);
+
+    await expect(readOnlyCell).toHaveClass("ag-cell-focus", "warning-cell");
+  }
+};
+
+// The range selection background covers the gaps, so the range reads as one area.
+export const CellGapsInRangeSelection: StoryObj<typeof AgGridReact> = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={validationExampleData}
+        columnDefs={cellGapColumns}
+        cellSelection
+      />
+    </div>
+  );
+};
+CellGapsInRangeSelection.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Do findAll here so this will also work in `side-by-side` mode
+  const grids = await canvas.findAllByRole("grid");
+
+  for (const grid of grids) {
+    const anchorCell = grid.querySelector<HTMLElement>(
+      '[row-index="1"] [col-id="currency"]',
+    )!;
+
+    // Extend the range from the pinned column across every kind of cell
+    await userEvent.click(anchorCell);
+    await userEvent.keyboard(
+      "{Shift>}{ArrowDown}{ArrowDown}{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}{/Shift}",
+    );
+
+    await expect(
+      grid.querySelector('[row-index="3"] [col-id="max"]'),
+    ).toHaveClass("ag-cell-range-bottom", "ag-cell-range-right");
+  }
+};
+
+// A single-row range exercises both horizontal borders, including the separator before the right-pinned columns.
+export const CellGapsInRightPinnedRangeSelection: StoryObj<
+  typeof AgGridReact
+> = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={validationExampleData}
+        columnDefs={cellGapColumns.map((column) => ({
+          ...column,
+          pinned:
+            column.field === "min" || column.field === "max"
+              ? "right"
+              : column.pinned,
+        }))}
+        cellSelection
+      />
+    </div>
+  );
+};
+CellGapsInRightPinnedRangeSelection.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const grids = await canvas.findAllByRole("grid");
+
+  for (const grid of grids) {
+    const anchorCell = grid.querySelector<HTMLElement>(
+      '[row-index="1"] [col-id="currency"]',
+    )!;
+
+    await userEvent.click(anchorCell);
+    await userEvent.keyboard(
+      "{Shift>}{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}{ArrowRight}{/Shift}",
+    );
+
+    await expect(
+      grid.querySelector('[row-index="1"] [col-id="min"]'),
+    ).toHaveClass(
+      "ag-cell-first-right-pinned",
+      "ag-cell-range-top",
+      "ag-cell-range-bottom",
+    );
+    await expect(
+      grid.querySelector('[row-index="1"] [col-id="max"]'),
+    ).toHaveClass(
+      "ag-cell-range-top",
+      "ag-cell-range-bottom",
+      "ag-cell-range-right",
+    );
+  }
+};
+
+// When the grid doesn't have focus, AG Grid colors the cell the range started from, so the gap after it is colored too.
+export const CellGapsInBlurredRangeSelection: StoryObj<
+  typeof AgGridReact
+> = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={dataGridExampleData}
+        columnDefs={dataGridExampleColumns}
+        cellSelection
+      />
+    </div>
+  );
+};
+CellGapsInBlurredRangeSelection.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+
+  // Do findAll here so this will also work in `side-by-side` mode
+  const grids = await canvas.findAllByRole("grid");
+
+  for (const grid of grids) {
+    const anchorCell = grid.querySelector<HTMLElement>(
+      '[row-index="1"] [col-id="name"]',
+    )!;
+
+    await userEvent.click(anchorCell);
+    await userEvent.keyboard(
+      "{Shift>}{ArrowDown}{ArrowRight}{ArrowRight}{/Shift}",
+    );
+    (grid.ownerDocument.activeElement as HTMLElement | null)?.blur();
+
+    await expect(anchorCell).toHaveClass(
+      "ag-cell-focus",
+      "ag-cell-range-selected",
+    );
+    await expect(grid.querySelector(".ag-has-focus")).toBeNull();
+  }
+};
+
+// AG Grid's own pagination panel. The Pagination example uses Salt components instead, so this covers the theme's paging panel styles.
+export const NativePagination = () => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={dataGridExampleData}
+        columnDefs={dataGridExampleColumns}
+        pagination
+        paginationPageSize={20}
+        paginationPageSizeSelector={[20, 50, 100]}
+      />
+    </div>
+  );
+};
+
+const columnDropChipColumns: ColDef[] = dataGridExampleColumns.map(
+  (column) => ({
+    ...column,
+    enableRowGroup: true,
+    rowGroup: column.field === "code" || column.field === "capital",
+  }),
+);
+const columnDropChipsSideBar = {
+  toolPanels: ["columns"],
+  defaultToolPanel: "columns",
+};
+
+const ColumnDropChipsGrid = ({ pivotMode = false }) => {
+  const { agGridProps, containerProps } = useAgGridHelpers();
+
+  return (
+    <div {...containerProps}>
+      <AgGridReact
+        {...agGridProps}
+        rowData={dataGridExampleData}
+        columnDefs={columnDropChipColumns}
+        pivotMode={pivotMode}
+        rowGroupPanelShow="always"
+        sideBar={columnDropChipsSideBar}
+      />
+    </div>
+  );
+};
+
+// Grouped columns show as chips in both the row group panel and the Row Groups drop zone of the columns tool panel.
+export const ColumnDropChips = () => <ColumnDropChipsGrid />;
+
+// Pivot Mode adds another drop zone; the column picker and every drop zone must remain usable when space is limited.
+export const ColumnDropChipsInPivotMode: StoryObj<typeof AgGridReact> = () => {
+  return <ColumnDropChipsGrid pivotMode />;
+};
+ColumnDropChipsInPivotMode.play = async ({ canvasElement }) => {
+  const canvas = within(canvasElement);
+  const pivotModeLabels = await canvas.findAllByText("Pivot Mode");
+
+  for (const label of pivotModeLabels) {
+    const panel = label.closest<HTMLElement>(".ag-column-panel")!;
+    const pivotToggle = panel.querySelector<HTMLInputElement>(
+      ".ag-pivot-mode-panel input",
+    )!;
+
+    await expect(pivotToggle).toBeChecked();
+
+    const picker = panel.querySelector<HTMLElement>(".ag-column-select")!;
+    const header = picker.querySelector<HTMLElement>(
+      ".ag-column-select-header",
+    )!;
+    const list = picker.querySelector<HTMLElement>(".ag-column-select-list")!;
+
+    // Visibility assertions alone do not detect the original zero-height, clipped picker.
+    await expect(picker.getBoundingClientRect().height).toBeGreaterThan(
+      header.getBoundingClientRect().height,
+    );
+    const search = within(picker).getByRole("textbox", {
+      name: "Filter Columns Input",
+    });
+    await userEvent.type(search, "Capital");
+
+    await waitFor(async () => {
+      const column = within(picker).getByText("Capital");
+      const row = column.closest<HTMLElement>(".ag-virtual-list-item")!;
+      const rowBounds = row.getBoundingClientRect();
+      const listBounds = list.getBoundingClientRect();
+
+      await expect(rowBounds.height).toBeGreaterThan(0);
+      await expect(listBounds.height).toBeGreaterThanOrEqual(rowBounds.height);
+      await expect(rowBounds.top).toBeGreaterThanOrEqual(listBounds.top);
+      await expect(rowBounds.bottom).toBeLessThanOrEqual(listBounds.bottom);
+    });
+    await userEvent.clear(search);
+
+    // The last drop zone must be reachable even when it starts below the panel's viewport.
+    panel.scrollTop = panel.scrollHeight;
+    const lastDropZone = panel.querySelector<HTMLElement>(
+      ".ag-column-drop-vertical-pivot",
+    )!;
+    await expect(panel).toBeInTheDocument();
+    await expect(
+      panel.querySelector(".ag-pivot-mode-panel input"),
+    ).toBeChecked();
+    await expect(lastDropZone.getBoundingClientRect().height).toBeGreaterThan(
+      0,
+    );
+    await expect(
+      lastDropZone.getBoundingClientRect().bottom,
+    ).toBeLessThanOrEqual(panel.getBoundingClientRect().bottom);
+    panel.scrollTop = 0;
   }
 };
