@@ -19,7 +19,6 @@ import {
 import { CloseIcon } from "@salt-ds/icons";
 import { AgGridReact } from "ag-grid-react";
 import { type ReactElement, useState } from "react";
-import { useAgGridHelpers } from "../ag-grid-theme/useAgGridHelpers";
 
 const placeholderText =
   "This placeholder text is provided to illustrate how content will appear within the component. The sentences are intended for demonstration only and do not convey specific information. Generic examples like this help review layout, spacing, and overall design. Adjust the wording as needed to fit your use case or display requirements.";
@@ -156,18 +155,18 @@ const TopContent = () => (
 );
 
 const BottomContent = () => {
-  const { containerProps, agGridProps } = useAgGridHelpers();
-
   return (
     <StackLayout gap={3}>
       <div
-        {...containerProps}
+        className="ag-theme-salt"
         style={{ height: "calc(3 * var(--salt-size-base))" }}
       >
         <AgGridReact
           columnDefs={columns}
           rowData={defaultData}
-          {...agGridProps}
+          theme="legacy"
+          autoSizeStrategy={{ type: "fitGridWidth" }}
+          defaultColDef={{ filter: true }}
         />
       </div>
       <FlowLayout gap={1}>

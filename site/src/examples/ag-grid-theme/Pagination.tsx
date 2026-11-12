@@ -24,7 +24,6 @@ import {
 } from "react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { defaultColumns, defaultData } from "./data";
-import { useAgGridHelpers } from "./useAgGridHelpers";
 
 const PAGE_SIZES = [20, 50, 100] as const;
 
@@ -45,9 +44,6 @@ const formatCount = (value: number) => value.toLocaleString("en-US");
 
 export const Pagination = (props: AgGridReactProps) => {
   const { onPaginationChanged: onPaginationChangedProp } = props;
-  // We've created a local custom hook to set the rows and column sizes.
-  // refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts
-  const { agGridProps, containerProps } = useAgGridHelpers();
   const gridApiRef = useRef<GridApi | undefined>(undefined);
   const rowData = useMemo(() => generateData(defaultData), []);
 
@@ -99,10 +95,12 @@ export const Pagination = (props: AgGridReactProps) => {
   const isOnLastPage = pageCount === 0 || page >= pageCount;
 
   return (
-    <StackLayout gap={0} style={{ width: containerProps.style?.width }}>
-      <div {...containerProps}>
+    <StackLayout gap={0} style={{ width: "100%" }}>
+      <div className="ag-theme-salt" style={{ height: 500, width: "100%" }}>
         <AgGridReact
-          {...agGridProps}
+          theme="legacy"
+          autoSizeStrategy={{ type: "fitGridWidth" }}
+          defaultColDef={{ filter: true }}
           {...props}
           columnDefs={defaultColumns}
           pagination

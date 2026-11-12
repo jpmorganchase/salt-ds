@@ -9,16 +9,11 @@ import { clsx } from "clsx";
 import { type SyntheticEvent, useState } from "react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { defaultColumns, defaultData } from "./data";
-import { useAgGridHelpers } from "./useAgGridHelpers";
 
 type HeaderVariant = "primary" | "secondary" | "tertiary";
 
 export const HeaderVariants = (props: AgGridReactProps) => {
   const [variant, setVariant] = useState<HeaderVariant>("secondary");
-
-  // We've created a local custom hook to set the rows and column sizes.
-  // refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts
-  const { agGridProps, containerProps } = useAgGridHelpers();
 
   const onVariantChange = (event: SyntheticEvent<HTMLButtonElement>) => {
     setVariant(event.currentTarget.value as HeaderVariant);
@@ -39,14 +34,13 @@ export const HeaderVariants = (props: AgGridReactProps) => {
         </ToggleButtonGroup>
       </StackLayout>
       <div
-        {...containerProps}
-        className={clsx(
-          containerProps.className,
-          `ag-theme-salt-header-${variant}`,
-        )}
+        className={clsx("ag-theme-salt", `ag-theme-salt-header-${variant}`)}
+        style={{ height: 500, width: "100%" }}
       >
         <AgGridReact
-          {...agGridProps}
+          theme="legacy"
+          autoSizeStrategy={{ type: "fitGridWidth" }}
+          defaultColDef={{ filter: true }}
           {...props}
           rowData={defaultData}
           columnDefs={defaultColumns}

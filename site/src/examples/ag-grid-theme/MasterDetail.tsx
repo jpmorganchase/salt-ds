@@ -2,13 +2,8 @@ import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import { useCallback, useRef } from "react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { defaultData, masterDetailColumns } from "./data";
-import { useAgGridHelpers } from "./useAgGridHelpers";
 
 export const MasterDetail = (props: AgGridReactProps) => {
-  // We've created a local custom hook to set the rows and column sizes.
-  // refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   const gridRef = useRef<AgGridReact>(null);
 
   const onFirstDataRendered = useCallback(() => {
@@ -20,19 +15,21 @@ export const MasterDetail = (props: AgGridReactProps) => {
 
   const detailCellRenderer = () => (
     <div
-      className={containerProps.className}
+      className="ag-theme-salt"
       style={{ height: "100%", padding: "var(--salt-spacing-300)" }}
     >
       <AgGridReact
         columnDefs={masterDetailColumns}
         rowData={defaultData}
-        {...agGridProps}
+        theme="legacy"
+        autoSizeStrategy={{ type: "fitGridWidth" }}
+        defaultColDef={{ filter: true }}
       />
     </div>
   );
 
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: "100%" }}>
       <AgGridReact
         ref={gridRef}
         columnDefs={masterDetailColumns}
@@ -49,7 +46,9 @@ export const MasterDetail = (props: AgGridReactProps) => {
         masterDetail={true}
         detailRowHeight={300}
         rowData={defaultData}
-        {...agGridProps}
+        theme="legacy"
+        autoSizeStrategy={{ type: "fitGridWidth" }}
+        defaultColDef={{ filter: true }}
         {...props}
         onFirstDataRendered={onFirstDataRendered}
       />
