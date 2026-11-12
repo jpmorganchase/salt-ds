@@ -4,6 +4,7 @@
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Status             | Draft for team discussion; no implementation or API approval implied                                                                                                                                       |
 | Date               | November 6, 2026                                                                                                                                                                                           |
+| Last updated       | November 12, 2026                                                                                                                                                                                          |
 | Source baseline    | [`3bd9580d2a09e9bc0415efd30469f211256fe08f`](https://github.com/jpmorganchase/salt-ds/commit/3bd9580d2a09e9bc0415efd30469f211256fe08f)                                                                     |
 | Decision requested | Approve shared behavioral contracts, a popup conformance pilot, and application-owned React 19 recipes; authorize bounded composition and identity investigations                                          |
 | First delivery     | Popup contract tests and React 19 integration examples, using existing Salt APIs                                                                                                                           |
@@ -63,15 +64,15 @@ The following priorities address the integration needs identified in Salt's curr
 
 Create a concise contract record for each affected component family. It should answer the questions below before proposing new APIs.
 
-| Concern         | Contract to record                                                                                                                    |
-| --------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
-| State ownership | Which props are controlled, which defaults initialize internal state, and whether those states can be controlled independently.       |
-| Change request  | What user interaction requests a change, what callback fires, and what happens when a controlled owner ignores or delays the request. |
-| Commit          | Which committed state determines rendered content, ARIA, focus, and selected option presentation.                                     |
-| Event routing   | Callback arguments, invocation order, duplicate-notification policy, and the documented effects of event prevention.                  |
-| Focus           | Initial focus, keyboard navigation, return focus, removed targets, pointer interactions, and focus after controlled updates.          |
-| Lifecycle       | Exit animation, unmount, reopening before exit completes, effect cleanup, and portal/target-window behavior.                          |
-| Accessibility   | Roles, names, descriptions, selected/expanded state, keyboard behavior, and announcement timing.                                      |
+| Concern         | Contract to record                                                                                                                                         |
+| --------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| State ownership | Which props are controlled, which defaults initialize internal state or define a reset baseline, and whether those states can be controlled independently. |
+| Change request  | What user interaction requests a change, what callback fires, and what happens when a controlled owner ignores or delays the request.                      |
+| Commit          | Which committed state determines rendered content, ARIA, focus, and selected option presentation.                                                          |
+| Event routing   | Callback arguments, invocation order, duplicate-notification policy, and the documented effects of event prevention.                                       |
+| Focus           | Initial focus, keyboard navigation, return focus, removed targets, pointer interactions, and focus after controlled updates.                               |
+| Lifecycle       | Exit animation, unmount, reopening before exit completes, effect cleanup, and portal/target-window behavior.                                               |
+| Accessibility   | Roles, names, descriptions, selected/expanded state, keyboard behavior, and announcement timing.                                                           |
 
 Separate a requested state change from an accepted controlled value. Receiving a close request must not make a controlled popup release focus ownership as if it had closed when its `open` prop remains true. Conversely, accepting a close must not leave a stale focus trap because an exit animation is still mounted. Each popup family needs an explicit policy; the harness proves the implementation against it.
 
@@ -111,9 +112,14 @@ Passing an `async` function to `onSelectionChange` must not quietly postpone a s
 
 **Save action.** Show an ordinary Salt `Button` calling an application-owned Action. The application maps pending state to existing loading feedback, announces the outcome, handles failures, and decides whether repeat invocation is allowed. Use an explicit button type and demonstrate unmount and retry behavior. No new `Button.action` prop is needed to establish the pattern.
 
-**Form submission.** Use a real `<form action={...}>`, a Salt submit button with `type="submit"`, and controls whose native participation is verified. Show `useActionState` or form status where it simplifies the application. React resets uncontrolled native form fields after a successful function Action, including a fulfilled Action that returns a validation error object; the recipe must deliberately preserve values when needed. [React forms][react-form] and [`useActionState`][react-action-state].
+**Form submission.** Use a real `<form action={...}>`, a Salt submit button with `type="submit"`, and controls whose native participation is verified. A function-valued `action` or `formAction` that completes without throwing resets uncontrolled native fields, including when it returns validation errors. Updated defaults can preserve values through that reset. [React form value preservation][react-form-preserve].
 
-For the initial recipe, use application-controlled Salt values with an explicit success/reset policy, or first demonstrate native-reset behavior for each existing control used. An application-uncontrolled Salt component is not necessarily an uncontrolled native input: the current `Input` writes its internally managed value to the native element, and the current state helper does not implement form reset or updated-default adoption. A function-valued Action does not establish reset support for those controls. [Salt Input][salt-input] and [controlled state][salt-controlled]. The complete reset and custom-selector contract belongs to RFC 002.
+Provide two explicitly labeled variants:
+
+- **Current Salt controls.** Use application-controlled values with an explicit success/reset policy until the alternative is verified for each control. The current `Input` passes its internally managed value to the native element; `useControlled` initializes from a default once and warns when that default changes. Keeping already-entered text is not evidence that a returned default or server-normalized value is adopted. [Salt Input][salt-input] and [controlled state][salt-controlled].
+- **Native default preservation.** Demonstrate an uncontrolled native input whose `defaultValue` comes from `useActionState` results. Returned validation errors retain the submitted values; a successful save can establish returned canonical values as the next defaults. This is the target integration for the new form contract, not a drop-in claim for existing Salt controls. The application owns the result and reset policy without tracking every keystroke. [React validation and preservation example][react-action-state].
+
+A variant that updates defaults with `useState` after `await` must wrap that update in an additional `startTransition`, following the current [React scheduling guidance][react-start-transition]. Each recipe must define whether editing is prevented while pending or a draft controlled from mount is reconciled with the submitted revision; disabling only submission does not protect later typing. RFC 002 owns the detailed [default/reset contract](./002-native-form-integration.md#5-controlled-state-defaults-and-reset) and [Action acceptance cases](./002-native-form-integration.md#react-action-value-preservation).
 
 **Remote `ComboBox`.** Keep the controlled editing text responsive and update it synchronously. Separate the query, selected entity, response data, and pending/error presentation. Demonstrate an older response arriving after a newer response and a selected item missing from the current results. Apply request cancellation or stale-response guards in application code. [React input guidance][react-input] requires synchronous controlled input updates; [`useDeferredValue`][react-deferred] can defer result rendering but does not itself debounce requests.
 
@@ -176,7 +182,7 @@ The slices below are proposals for implementation PRs. Approving this RFC author
 | Slice                       | Deliverable                                                                                                                           | Acceptance gate                                                                                                                                         |
 | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | 1. Popup contracts          | Small shared harness, documented family differences, initial nested/controlled/focus cases, and isolated fixes for confirmed defects. | Existing supported behavior remains covered; every changed expectation has an explicit rationale. Browser and React coverage is stated accurately.      |
-| 2. React recipes            | Save, native form Action, and remote `ComboBox` examples using current APIs.                                                          | Pending, failure, retry, duplicate requests, reset, stale responses, and focus are exercised; examples state their React requirement.                   |
+| 2. React recipes            | Save, form Action variants for current Salt and native inputs, and remote `ComboBox` examples.                                        | Pending, failure, retry, ordering, and focus are exercised; form variants cover the default/reset cases in RFC 002 and state their React requirement.   |
 | 3. Lifecycle fixture        | Compiled/uncompiled React 19 consumer cases, with lifecycle observations.                                                             | Equivalent user-visible behavior in the covered cases; no change to the common React support floor.                                                     |
 | 4. Identity and forms pilot | One object-valued selection case shared with RFC 002.                                                                                 | Stable selection after data refresh; explicit absent/removed-item policy; compatible legacy behavior and deterministic submission for the new contract. |
 | 5. Typed composition        | One focused render-typing and ref/event-composition prototype.                                                                        | Useful inference, compatible supported usage, explicit merge rules, and React 16–19 ref/type checks appropriate to the change.                          |
@@ -224,7 +230,8 @@ Salt source links are pinned to the assessed baseline. External primary document
 [salt-input]: https://github.com/jpmorganchase/salt-ds/blob/3bd9580d2a09e9bc0415efd30469f211256fe08f/packages/core/src/input/Input.tsx
 [salt-render-guide]: https://github.com/jpmorganchase/salt-ds/blob/3bd9580d2a09e9bc0415efd30469f211256fe08f/site/docs/getting-started/render-prop.mdx
 [react-transition]: https://react.dev/reference/react/useTransition
-[react-form]: https://react.dev/reference/react-dom/components/form
+[react-form-preserve]: https://react.dev/reference/react-dom/components/form#preserving-form-values-after-an-action
+[react-start-transition]: https://react.dev/reference/react/startTransition
 [react-action-state]: https://react.dev/reference/react/useActionState
 [react-input]: https://react.dev/reference/react-dom/components/input
 [react-deferred]: https://react.dev/reference/react/useDeferredValue

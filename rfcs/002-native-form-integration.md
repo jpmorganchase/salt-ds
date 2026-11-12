@@ -4,6 +4,7 @@
 | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Status               | Draft for team discussion; proposed decisions are not approved APIs                                                                              |
 | Date                 | November 6, 2026                                                                                                                                 |
+| Last updated         | November 12, 2026                                                                                                                                |
 | Source baseline      | [`3bd9580d2a09e9bc0415efd30469f211256fe08f`](https://github.com/jpmorganchase/salt-ds/tree/3bd9580d2a09e9bc0415efd30469f211256fe08f)             |
 | Decision requested   | Agree the target form contract, compatibility boundaries, and first two implementation slices                                                    |
 | First implementation | Characterize existing form behavior and add `Switch.inputRef`; then prototype a native field and a custom single-select field                    |
@@ -17,10 +18,11 @@ Keep the native elements that already underpin Salt. Give richer selectors an ex
 
 Deliver the improvements incrementally. Add independent capabilities to existing controls when their supported behavior is preserved. Introduce changes to value meaning, submitted entries, required blocking, reset, refs, or event routing through an explicit local adoption boundary. Public names and the companion implementation remain prototype decisions.
 
-Two acceptance examples express the benefit:
+Three acceptance examples express the benefit:
 
 - A required multiselect with two selected desks submits two desk IDs and is valid while its search input is empty.
 - An empty read-only reference can display an em dash while submitting an empty reference value.
+- An edit form preserves submitted values with returned validation errors and can adopt a saved, normalized value as its next reset default.
 
 The team is being asked to endorse this direction and begin bounded implementation, not approve every API sketch or a catalog-wide rebuild.
 
@@ -152,18 +154,26 @@ Controlled values remain application-owned throughout the component's lifetime. 
 
 Keep native input updates synchronous where they control the input. Avoid switching controlled/uncontrolled ownership during a component's lifetime. [React input reference][react-input]
 
-| Situation          | Target contract                                                                                         |
-| ------------------ | ------------------------------------------------------------------------------------------------------- |
-| Uncontrolled reset | Native entries, visible state, and semantic state return to the documented defaults.                    |
-| Controlled reset   | Supplied state remains authoritative; the application updates it through its documented reset path.     |
-| Canceled reset     | Neither native nor Salt-owned values are reset.                                                         |
-| Updated defaults   | Current documented defaults become the reset baseline without overwriting a dirty active edit.          |
-| Selector reset     | Selection, displayed labels, and entries agree; close the popup and restore its documented query state. |
-| Owner change       | Reset follows the actual current form owner.                                                            |
+| Situation          | Target contract                                                                                                                         |
+| ------------------ | --------------------------------------------------------------------------------------------------------------------------------------- |
+| Uncontrolled reset | Native entries, visible state, and semantic state return to the documented defaults.                                                    |
+| Controlled reset   | Supplied state remains authoritative; the application updates it through its documented reset path.                                     |
+| Canceled reset     | Neither native nor Salt-owned values are reset.                                                                                         |
+| Updated defaults   | Current documented defaults become the next reset baseline without overwriting a dirty active edit; reset uses that committed baseline. |
+| Selector reset     | Selection, displayed labels, and entries agree; close the popup and restore its documented query state.                                 |
+| Owner change       | Reset follows the actual current form owner.                                                                                            |
+
+### Defaults, the live edit, and Revert
+
+For the new uncontrolled contract, distinguish the live edit from the reset baseline. Accepting a changed default updates the baseline used by the next reset; it must not blindly copy that default into a dirty live edit. Native inputs keep these concepts separate. A custom control must prove when a new baseline becomes observable and use the latest committed baseline when resetting its semantic state, displayed value, and native participant. Do not install a generic effect that copies every changed default into the draft. [HTML input defaults and reset][html-input]
+
+Changing defaults also changes what a later native Reset button restores. The original page values, last successfully saved values, and last attempted submission can differ. An application-specific Revert operation must choose its intended baseline explicitly; preserving an invalid attempt does not make it the last saved record. Define this policy in the integration recipe rather than inferring the reset's cause from a native event.
+
+### Reset effects and error ownership
 
 Reset is not an ordinary user change. Do not fabricate an input/change callback; add a distinct reset signal only if a demonstrated integration needs one. Handle cancellation after all relevant listeners can act. Deferred handling must respect React 16 synthetic-event lifetime. Test both immediate payload observations where meaningful and rendered state after React commits; controlled companions must not temporarily publish conflicting reset values.
 
-Client interaction metadata, client errors, and externally supplied server errors have different owners. Manual reset can clear locally owned presentation according to policy; external errors remain application-controlled. A native reset event does not identify whether React Action handling, application code, or a button caused it. Reason-specific behavior needs explicit integration state, not assumptions about React internals.
+Client interaction metadata, client errors, and externally supplied server errors have different owners. Manual reset can clear locally owned presentation according to policy; external errors remain application-controlled. A native reset event does not identify whether React Action handling, application code, or a button caused it. Reason-specific behavior needs explicit integration state, not assumptions about React internals. Preserving values through an Action reset still runs the reset lifecycle. Verify that it does not erase returned external errors, produce unexpected focus changes, or leave selector query/popup state inconsistent with the documented reset policy.
 
 ## 6. Associations, validation, and focus
 
@@ -218,9 +228,39 @@ Preserve ordinary form submission, explicit submit/reset buttons, external owner
 
 A plain `new FormData(form)` snapshot does not automatically retain the activated submit button. Recipes must preserve the actual submitter through a method supported by the existing browser floor. Do not silently require a newer programmatic submission API.
 
-React 19 function-valued actions consume `FormData` and reset uncontrolled fields on normal completion, including returned validation errors. The integration must preserve values/defaults and externally owned errors deliberately. Mandatory scenario: submit, return errors, keep entered values, correct them, and resubmit. [React form reference][react-form]
+### React Action value preservation
+
+React 19 function-valued `action`/`formAction` handlers consume `FormData` and reset uncontrolled fields on normal completion, including when validation errors are returned. React applies updated defaults before that reset. Treat support for this sequence as an explicit acceptance requirement for the new form contract. [React form value preservation][react-form-preserve]
+
+The documented `useActionState` pattern returns values alongside errors and supplies those values through `defaultValue` for text inputs. The result state defines the reset baseline while native fields retain uncontrolled editing. A recipe using separate `useState` updates after `await` must use the additional `startTransition` required by current React scheduling. [React validation and preservation example][react-action-state] and [`startTransition`][react-start-transition]
+
+Application policy determines the next baseline:
+
+| Action outcome           | Next defaults                                              | Required result                                                         |
+| ------------------------ | ---------------------------------------------------------- | ----------------------------------------------------------------------- |
+| Save an edit             | Saved values, including any accepted server normalization. | The field reflects the saved baseline after reset.                      |
+| Return validation errors | The submitted values associated with those errors.         | Preserve the attempted values and their external errors for correction. |
+| Complete a create flow   | The application's chosen cleared or retained values.       | Reset follows that explicit policy.                                     |
+
+This is a target capability. The current `Input` passes internally managed state as the native `value`, and `useControlled` does not adopt changed defaults. Until reset/default behavior is demonstrated for each existing control, use the application-controlled Salt recipe from [RFC 001](./001-component-contracts-and-react.md#first-three-recipes). Do not infer compatibility from an unchanged typed value or alter the legacy state helper globally. [Salt Input][salt-input] and [controlled state][salt-controlled]
+
+Mandatory acceptance sequence for a native field and the custom-selector prototype:
+
+1. Start with default **A**, edit to **B**, and submit **B**.
+2. Return **B**, or a server-normalized **C**, as the next baseline through the Action integration.
+3. After the reset and its documented commit point, verify that the displayed value, semantic value, and subsequent `FormData` agree with that baseline. For a selector, also verify its selected label and separate query/popup reset policy.
+4. Repeat with returned validation errors. Keep the submitted values and correctly associated external errors, then correct the field and resubmit.
+5. Exercise a later native Reset and an application Revert with intentionally different attempted/saved baselines. Preserve the controlled and canceled-reset contracts from section 5.
+
+### Editing while an Action is pending
+
+Default preservation retains a submitted/result baseline; it is not a promise to preserve later typing. As an implication of the reset sequence, submitting **B**, continuing to edit to **D**, and then installing returned **B/C** as defaults can replace **D** during reset. The recipe must choose and test a policy: prevent editing while the submission is pending, or keep the live draft controlled from mount and reconcile it against the submitted revision. Disabling only the submit button is insufficient. Keep stale-result and stale-error handling consistent with that choice.
+
+### Integration boundaries
 
 An optional Salt Form must preserve `action`/`formAction`, avoid unconditional `preventDefault()`, and retain server-action/progressive-enhancement behavior where applicable. Shared code continues to support React 16.14+. React 19-only helpers need an explicit boundary. Ordinary input/selection callbacks remain immediate; an Action suffix is not a rename for `onChange`. The broader Action policy belongs in [RFC 001](./001-component-contracts-and-react.md).
+
+With an appropriate Server Function integration, `useActionState` can display returned values/errors before hydration completes. Any preservation claim before hydration must be verified on that path and on the actual native controls used; it does not establish interactive custom-widget behavior before JavaScript. [React server integration][react-action-state]
 
 Supply one maintained recipe for an agreed external form-state integration. Native controls expose registration/focus access; rich controls expose controlled value, blur, focus, and error integration. Avoid putting fake domain values into synthetic native events. The external library owns its values and validation, with repeated values and files handled explicitly.
 
@@ -237,7 +277,7 @@ Supply one maintained recipe for an agreed external form-state integration. Nati
 | File controls                          | Distinguish repeated picker/upload workflows from persistent form file fields.                                                                                |
 | NativeSelect                           | Useful native fallback; modern select styling/markup is a separate enhancement gate.                                                                          |
 
-FileDropZoneTrigger keeps its existing picker semantics. A persistent file field must handle actual files, dropped files, repeated selection, clearing, multiple files, and reset. A string companion cannot carry file contents. Document native empty-file entries; a controlled `File[]` cannot be treated like a controlled text value. Any native `FileList` synchronization needs its own browser evidence. [HTML file input][html-input]
+FileDropZoneTrigger keeps its existing picker semantics. A persistent file field must handle actual files, dropped files, repeated selection, clearing, multiple files, and reset. A string companion cannot carry file contents. Document native empty-file entries; a controlled `File[]` cannot be treated like a controlled text value. Native reset clears selected files; updating text defaults does not preserve a file selection. File recipes need an explicit retention or reselection policy. Any native `FileList` synchronization needs its own browser evidence. [HTML file input][html-input]
 
 Adopt a complete logical field, including label, description, and errors. Legacy fields/controls stay supported together; new Field/new controls and an explicit native-control path are supported under the new contract. Cross-wrapping old and new families requires a tested adapter, not accidental shared context. Coexistence in the same form does not imply every wrapper combination is supported.
 
@@ -259,13 +299,13 @@ This is a proposed additive API. **Exit:** useful native access and evidence tha
 
 ### PR2: Private native-field and Dropdown prototype
 
-Prototype associations/error presentation around a native input and form participation for a custom single-select. Use plain forms, external ownership, native submit/reset, and two invalid fields. Exercise requiredness, visible focus, cancellation, controlled acceptance/rejection, current defaults, and initial SSR/hydration paths.
+Prototype associations/error presentation around a native input and form participation for a custom single-select. Use plain forms, external ownership, native submit/reset, and two invalid fields. Exercise requiredness, visible focus, cancellation, controlled acceptance/rejection, current defaults, and initial SSR/hydration paths. Demonstrate that changing defaults leaves a dirty edit intact until reset, and that a subsequent ordinary reset uses the new baseline across displayed values, semantic state, and entries.
 
 **Exit:** the scoped native-field/single-select contract is coherent without Salt Form. Document companion tradeoffs and commit/reset boundaries. Keep the prototype outside supported exports.
 
 ### PR3: Multiselect and integration proof
 
-Add selection-only multiselect ComboBox and an “at least one” checkbox-group case. Demonstrate repeated values/order, empty queries, server errors with React 19, an external form library, mixed legacy/native/new usage, and supported SSR paths.
+Add selection-only multiselect ComboBox and an “at least one” checkbox-group case. Demonstrate repeated values/order, empty queries, server errors with React 19, an external form library, mixed legacy/native/new usage, and supported SSR paths. Exercise the Action sequence in section 7 with both the native-field and custom-selector prototypes: saved and normalized values, returned validation errors, the chosen pending-edit policy, and later Reset/Revert behavior.
 
 **Exit:** the model works across native, grouped, single-, and multiple-selection fields without changing legacy descendants. Resolve the decisions required for the selected public capabilities.
 
@@ -279,21 +319,21 @@ Publish the smallest useful surface under an agreed stability policy. Supply mig
 
 Use real-browser form tests, supplemented by SSR/type checks and focused manual accessibility/autofill evidence. An accessibility scan or snapshot alone cannot establish the lifecycle contract.
 
-| Area                          | Required evidence                                                                                                                                     |
-| ----------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Entries                       | Named/unnamed, empty, scalar/repeated values/order, unavailable selections, objects, checkedness, read-only, files, and submitter data.               |
-| Ownership/state               | External and changed owners; controlled accepted/rejected updates; documented immediate reads; current defaults; canceled reset.                      |
-| Validation                    | Logical requiredness, native/custom constraints, external mode, bypass submitters, disabled/read-only transitions, stale validity cleanup.            |
-| Focus/editing                 | Single label activation, correct refs, first-invalid target, no companion tab stop, IME/caret, Enter selection versus submission, and partial drafts. |
-| SSR                           | Initial associations and entries, explicit legacy IDs, wrappers, conditional parts, independent roots, and hydration.                                 |
-| Integration                   | Plain form, external library, Action success and returned errors, mixed native/legacy/new fields, and reset ownership.                                |
-| Accessibility/browser changes | Keyboard, representative screen-reader/browser combinations, zoom/reflow/forced colors, and specifically advertised autofill/restoration.             |
+| Area                          | Required evidence                                                                                                                                                                           |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Entries                       | Named/unnamed, empty, scalar/repeated values/order, unavailable selections, objects, checkedness, read-only, files, and submitter data.                                                     |
+| Ownership/state               | External and changed owners; controlled accepted/rejected updates; documented immediate reads; updated defaults without dirty-edit overwrite; later Reset/Revert baselines; canceled reset. |
+| Validation                    | Logical requiredness, native/custom constraints, external mode, bypass submitters, disabled/read-only transitions, stale validity cleanup.                                                  |
+| Focus/editing                 | Single label activation, correct refs, first-invalid target, no companion tab stop, IME/caret, Enter selection versus submission, and partial drafts.                                       |
+| SSR                           | Initial associations and entries, explicit legacy IDs, wrappers, conditional parts, independent roots, and hydration.                                                                       |
+| Integration                   | Plain form, external library, Action/default commit ordering, saved/normalized values, returned errors, pending edits, mixed native/legacy/new fields, and reset ownership.                 |
+| Accessibility/browser changes | Keyboard, representative screen-reader/browser combinations, zoom/reflow/forced colors, and specifically advertised autofill/restoration.                                                   |
 
 Retain the assessed [support floor][salt-platforms]: React 16.14+, Chrome 86+, Firefox 86+, Edge 85+, and Safari 15.4+. Test supported React majors and browser engines; current-engine CI does not prove an API exists in the minimum versions. Any modern native-select markup/styling needs a useful fallback and parser/hydration evidence. Do not switch an existing rich control's interaction engine by browser detection.
 
 Avoid a form-wide values subscription that rerenders every sibling. Install mechanisms for actual capabilities, including validation of unnamed required fields. Large collections must not require an unbounded second option DOM. Measure representative rendering/interaction/DOM size; this RFC promises no numerical performance gain.
 
-Before supported release, all included controls must identify their semantic value, entries, native participant, visible target, and validation owner. Plain-form submit/reset, logical requiredness, controlled/uncontrolled/canceled reset, returned-error value preservation, external-library integration, mixed adoption, declared SSR guarantees, and migration guidance are release requirements. Claims must match the evidence obtained.
+Before supported release, all included controls must identify their semantic value, entries, native participant, visible target, and validation owner. Plain-form submit/reset, logical requiredness, controlled/uncontrolled/canceled reset, updated-default Action resets, returned-error value preservation, pending-edit and Reset/Revert policies, external-library integration, mixed adoption, declared SSR guarantees, and migration guidance are release requirements. Claims must match the evidence obtained.
 
 ## 11. Alternatives, risks, and decisions still open
 
@@ -309,23 +349,23 @@ Before supported release, all included controls must identify their semantic val
 
 Principal risks are changed/duplicate payloads, invisible invalid controls, native/controlled divergence, Action resets losing values/errors, unsupported SSR claims, and two long-lived APIs. Mitigate them through exact payload assertions, plain-form focus tests, explicit ownership, local migration, private prototypes, and capability-specific documentation.
 
-| Open decision                              | Starting point                                                                | Gate                                             |
-| ------------------------------------------ | ----------------------------------------------------------------------------- | ------------------------------------------------ |
-| Public names/distribution                  | Visible local adoption; stable policy for any supported Next surface.         | Before PR4.                                      |
-| Field composition/SSR                      | Declarative metadata/parts plus explicit associations.                        | PR2/PR3.                                         |
-| Companion per selector                     | Native select where suitable; retained entries for large/remote data.         | Before advertising that capability.              |
-| Controlled commit boundary                 | Only accepted controlled state is authoritative; specify callback-time reads. | Before selector publication.                     |
-| Single ComboBox query edits                | Evaluate clearing selection; no silent stale-ID submission.                   | PR3.                                             |
-| Disabled/removed selections                | Distinguish temporary absence from authoritative domain changes.              | Before each choice capability.                   |
-| Object keys/labels/serializer and ordering | Separate responsibilities; logical collection order for ordinary sets.        | PR3/publication.                                 |
-| Radio naming                               | Explicit nonempty resolved name; separate unnamed-mode policy if needed.      | Before new radio-group publication.              |
-| Invalid formatted drafts                   | Preserve draft and validity; settle direct-snapshot protocol.                 | Before number/date migration.                    |
-| Default updates/reset notification         | Current defaults; no fabricated user change; cancellation-aware handling.     | PR2/PR3.                                         |
-| Standalone native feedback                 | Visible invalid focus and accessible explanation without mandatory Form.      | Before each advertised capability.               |
-| Server-error invalidation                  | Submitted-value/revision association; external ownership.                     | PR3.                                             |
-| Read-only without native support           | Preserve entries, prevent changes, define non-blocking validity policy.       | Before those controls migrate.                   |
-| NativeSelect enhancement                   | Useful fallback with separate markup/styling evidence.                        | Separate prototype.                              |
-| Legacy deprecation/removal                 | No date proposed.                                                             | Adoption evidence and approved migration policy. |
+| Open decision                              | Starting point                                                                                               | Gate                                             |
+| ------------------------------------------ | ------------------------------------------------------------------------------------------------------------ | ------------------------------------------------ |
+| Public names/distribution                  | Visible local adoption; stable policy for any supported Next surface.                                        | Before PR4.                                      |
+| Field composition/SSR                      | Declarative metadata/parts plus explicit associations.                                                       | PR2/PR3.                                         |
+| Companion per selector                     | Native select where suitable; retained entries for large/remote data.                                        | Before advertising that capability.              |
+| Controlled commit boundary                 | Only accepted controlled state is authoritative; specify callback-time reads.                                | Before selector publication.                     |
+| Single ComboBox query edits                | Evaluate clearing selection; no silent stale-ID submission.                                                  | PR3.                                             |
+| Disabled/removed selections                | Distinguish temporary absence from authoritative domain changes.                                             | Before each choice capability.                   |
+| Object keys/labels/serializer and ordering | Separate responsibilities; logical collection order for ordinary sets.                                       | PR3/publication.                                 |
+| Radio naming                               | Explicit nonempty resolved name; separate unnamed-mode policy if needed.                                     | Before new radio-group publication.              |
+| Invalid formatted drafts                   | Preserve draft and validity; settle direct-snapshot protocol.                                                | Before number/date migration.                    |
+| Default updates/reset notification         | Latest committed defaults; explicit Revert baseline; no fabricated user change; cancellation-aware handling. | PR2/PR3.                                         |
+| Standalone native feedback                 | Visible invalid focus and accessible explanation without mandatory Form.                                     | Before each advertised capability.               |
+| Server-error invalidation                  | Submitted-value/revision association; external ownership.                                                    | PR3.                                             |
+| Read-only without native support           | Preserve entries, prevent changes, define non-blocking validity policy.                                      | Before those controls migrate.                   |
+| NativeSelect enhancement                   | Useful fallback with separate markup/styling evidence.                                                       | Separate prototype.                              |
+| Legacy deprecation/removal                 | No date proposed.                                                                                            | Adoption evidence and approved migration policy. |
 
 Open decisions do not block unrelated additive fixes. They do block publication of capabilities whose behavior depends on them.
 
@@ -334,7 +374,7 @@ Open decisions do not block unrelated additive fixes. They do block publication 
 Current-state links are pinned to the assessed Salt revision. Platform references describe HTML and React behavior; the Salt policies above remain proposals.
 
 - [HTML form control infrastructure][html-infrastructure] and [input states][html-input].
-- [React input][react-input], [form Actions][react-form], and [IDs across roots and SSR][react-id].
+- [React input][react-input], [form Actions][react-form], [value preservation][react-form-preserve], [Action state][react-action-state], [Transition scheduling][react-start-transition], and [IDs across roots and SSR][react-id].
 
 [salt-input]: https://github.com/jpmorganchase/salt-ds/blob/3bd9580d2a09e9bc0415efd30469f211256fe08f/packages/core/src/input/Input.tsx
 [salt-multiline]: https://github.com/jpmorganchase/salt-ds/blob/3bd9580d2a09e9bc0415efd30469f211256fe08f/packages/core/src/multiline-input/MultilineInput.tsx
@@ -358,4 +398,7 @@ Current-state links are pinned to the assessed Salt revision. Platform reference
 [html-input]: https://html.spec.whatwg.org/multipage/input.html
 [react-input]: https://react.dev/reference/react-dom/components/input
 [react-form]: https://react.dev/reference/react-dom/components/form
+[react-form-preserve]: https://react.dev/reference/react-dom/components/form#preserving-form-values-after-an-action
+[react-action-state]: https://react.dev/reference/react/useActionState
+[react-start-transition]: https://react.dev/reference/react/startTransition
 [react-id]: https://react.dev/reference/react/useId
