@@ -24,14 +24,17 @@ describe("GIVEN a System status", () => {
       .toHaveAttribute("aria-hidden", "true");
   });
 
-  it("has a default status role", async () => {
-    const message = "example announcement";
+  it("does not have a role by default", async () => {
     await renderWithSalt(
-      <SystemStatus>
-        <SystemStatusContent>{message}</SystemStatusContent>
+      <SystemStatus data-testid="system-status">
+        <SystemStatusContent>
+          New feature updates are available.
+        </SystemStatusContent>
       </SystemStatus>,
     );
 
-    await expect.element(page.getByRole("status")).toHaveTextContent(message);
+    await expect
+      .element(page.getByTestId("system-status"))
+      .not.toHaveAttribute("role");
   });
 });

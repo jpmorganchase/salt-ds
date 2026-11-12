@@ -12,9 +12,9 @@ data:
 
 Check and test any focusable elements included in the system status content.
 
-When using a system status to alert the user, apply `role="alert"`. When using a system status to notify the user, use the default `role="status"`.
+A system status doesn't have a live region role. To make sure screen readers announce a system status added to the page, add a container with `role="status"` to the page when it first loads, then render the system status inside it. When the system status alerts the user, use `role="alert"` on the container instead. See the [announced example](/salt/components/system-status/examples#announced).
 
-- **Note:** There are known screen reader announcement issues when dynamically inserting content with `role="status"`, which a system status has by default. During your testing, check that a system status added to the page is properly announced using a screen reader.
+- **Note:** There are known screen reader announcement issues when dynamically inserting content with `role="status"`, which is why the container must be on the page before the system status is added. During your testing, check that the system status is properly announced using a screen reader.
 
 ### Accessible names for actions
 

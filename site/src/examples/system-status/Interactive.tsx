@@ -17,7 +17,7 @@ export const Interactive = (): ReactElement => (
     </SystemStatusContent>
     <SystemStatusActions>
       <OnSolidButton>View status</OnSolidButton>
-      <OnSolidButton aria-label="Dismiss">
+      <OnSolidButton aria-label="Dismiss system status">
         <CloseIcon aria-hidden />
       </OnSolidButton>
     </SystemStatusActions>
