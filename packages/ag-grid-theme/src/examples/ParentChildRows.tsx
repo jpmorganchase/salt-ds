@@ -1,15 +1,11 @@
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import parentChildExampleColumns from "../dependencies/parentChildExampleColumns";
 import parentChildExampleData from "../dependencies/parentChildExampleData";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const ParentChildRows = (props: AgGridReactProps) => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         {...props}
         animateRows
         treeData

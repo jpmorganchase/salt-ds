@@ -1,7 +1,6 @@
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const sumReducer = (acc: number, n: number) => acc + n;
 const minReducer = (acc: number, n: number) => (n < acc ? n : acc);
@@ -45,8 +44,6 @@ const PinnedRowsExample = function PinnedRowsExample({
   showHeader = true,
   ...rest
 }: PinnedRowsExampleProps) {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   const getColumnData = () => {
     if (!rowData) return [];
 
@@ -72,9 +69,8 @@ const PinnedRowsExample = function PinnedRowsExample({
   const pinnedBottomRowData = showFooter ? footerRow() : undefined;
   const pinnedTopRowData = showHeader ? [...headerRow] : undefined;
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         {...rest}
         columnDefs={columnDefs}
         rowSelection="multiple"

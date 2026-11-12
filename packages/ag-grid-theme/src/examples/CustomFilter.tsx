@@ -1,16 +1,15 @@
 import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
-import type { FilterModel } from "ag-grid-community";
+import type { FilterModel, GridApi } from "ag-grid-community";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import { useState } from "react";
 import customFilterExampleColumns from "../dependencies/customFilterExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 let savedFilterModel: FilterModel | null = null;
 
 const CustomFilter = (props: AgGridReactProps) => {
   const [hasSavedState, setHasSavedState] = useState(true);
-  const { api, agGridProps, containerProps } = useAgGridHelpers();
+  const [api, setApi] = useState<GridApi>();
 
   const handlePopMt100kClick = async () => {
     await api?.setColumnFilterModel("population", {
@@ -74,9 +73,9 @@ const CustomFilter = (props: AgGridReactProps) => {
         </Button>
       </FlowLayout>
 
-      <div {...containerProps}>
+      <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
         <AgGridReact
-          {...agGridProps}
+          onGridReady={(event) => setApi(event.api)}
           {...props}
           defaultColDef={{ floatingFilter: true, filter: true }}
           columnDefs={customFilterExampleColumns}

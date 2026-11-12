@@ -1,6 +1,6 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Non-Null assertion make tests easier. */
 /** biome-ignore-all lint/suspicious/noNonNullAssertedOptionalChain: Non-Null assertion make tests easier. */
-import { Button, type Density, SaltProvider } from "@salt-ds/core";
+import { Button, type Density, SaltProvider, useDensity } from "@salt-ds/core";
 import type { StoryObj } from "@storybook/react-vite";
 import type { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
@@ -9,7 +9,6 @@ import { expect, userEvent, waitFor, within } from "storybook/test";
 import dataGridExampleColumns from "../src/dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../src/dependencies/dataGridExampleData";
 import { shortColorData } from "../src/dependencies/dataGridExampleDataCellEditors";
-import { useAgGridHelpers } from "../src/dependencies/useAgGridHelpers";
 import { validationCellExampleColumns } from "../src/dependencies/validationExampleColumns";
 import { validationExampleData } from "../src/dependencies/validationExampleData";
 import {
@@ -28,6 +27,7 @@ import {
 
 import "ag-grid-community/styles/ag-grid.css";
 import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
+import "../src/dependencies/setupAgGrid";
 
 export default {
   title: "Ag Grid/Ag Grid Theme/Ag Grid Theme QA",
@@ -525,16 +525,11 @@ const richSelectHitTestingColumns: ColDef[] = [
 ];
 
 const RichSelectHitTestingGrid = () => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
   const [rowData] = useState(() => [{ color: "Black" }]);
 
   return (
-    <div {...containerProps}>
-      <AgGridReact
-        {...agGridProps}
-        rowData={rowData}
-        columnDefs={richSelectHitTestingColumns}
-      />
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
+      <AgGridReact rowData={rowData} columnDefs={richSelectHitTestingColumns} />
     </div>
   );
 };
@@ -701,12 +696,9 @@ WrappedHeaderRowSelection.play = async ({ canvasElement }) => {
 export const CellValidationInRangeSelection: StoryObj<
   typeof AgGridReact
 > = () => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         rowData={validationExampleData}
         columnDefs={validationCellExampleColumns}
         cellSelection
@@ -781,12 +773,9 @@ const cellGapColumns: ColDef[] = [
 
 // Every cell leaves a 1px gap after it, matching the Figma column separator slot, and the pinned column separator fills the gap.
 export const CellGaps: StoryObj<typeof AgGridReact> = () => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         rowData={validationExampleData}
         columnDefs={cellGapColumns}
       />
@@ -813,12 +802,9 @@ CellGaps.play = async ({ canvasElement }) => {
 
 // The range selection background covers the gaps, so the range reads as one area.
 export const CellGapsInRangeSelection: StoryObj<typeof AgGridReact> = () => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         rowData={validationExampleData}
         columnDefs={cellGapColumns}
         cellSelection
@@ -853,12 +839,9 @@ CellGapsInRangeSelection.play = async ({ canvasElement }) => {
 export const CellGapsInRightPinnedRangeSelection: StoryObj<
   typeof AgGridReact
 > = () => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         rowData={validationExampleData}
         columnDefs={cellGapColumns.map((column) => ({
           ...column,
@@ -907,12 +890,9 @@ CellGapsInRightPinnedRangeSelection.play = async ({ canvasElement }) => {
 export const CellGapsInBlurredRangeSelection: StoryObj<
   typeof AgGridReact
 > = () => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         rowData={dataGridExampleData}
         columnDefs={dataGridExampleColumns}
         cellSelection
@@ -947,12 +927,9 @@ CellGapsInBlurredRangeSelection.play = async ({ canvasElement }) => {
 
 // AG Grid's own pagination panel. The Pagination example uses Salt components instead, so this covers the theme's paging panel styles.
 export const NativePagination = () => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         rowData={dataGridExampleData}
         columnDefs={dataGridExampleColumns}
         pagination
@@ -976,12 +953,9 @@ const columnDropChipsSideBar = {
 };
 
 const ColumnDropChipsGrid = ({ pivotMode = false }) => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         rowData={dataGridExampleData}
         columnDefs={columnDropChipColumns}
         pivotMode={pivotMode}
@@ -1104,11 +1078,13 @@ InfiniteScrollDensityChange.play = async ({ canvasElement }) => {
 };
 
 const CompactDensityGrid = () => {
-  const { containerProps, agGridProps } = useAgGridHelpers({ compact: true });
+  const density = useDensity();
   return (
-    <div {...containerProps}>
+    <div
+      className={density === "high" ? "ag-theme-salt-compact" : "ag-theme-salt"}
+      style={{ height: 500, width: 800 }}
+    >
       <AgGridReact
-        {...agGridProps}
         columnDefs={[{ field: "name" }]}
         rowData={[{ name: "Density row" }]}
       />

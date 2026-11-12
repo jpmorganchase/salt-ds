@@ -2,7 +2,6 @@ import { Divider, StackLayout, Text } from "@salt-ds/core";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const CustomClickableStatusBar = () => {
   return (
@@ -36,21 +35,19 @@ const statusBar = {
 };
 
 const StatusBar = (props: AgGridReactProps) => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
     <StackLayout gap={2}>
       <Text>Select rows to enable status bar display</Text>
       <div
-        {...containerProps}
+        className="ag-theme-salt"
         style={{
-          ...containerProps.style,
+          height: 500,
+          width: 800,
           // Not part of the theme, add a border to check text center alignment
           borderBottom: "1px solid var(--salt-container-bold-borderColor)",
         }}
       >
         <AgGridReact
-          {...agGridProps}
           {...props}
           cellSelection
           rowSelection="multiple"

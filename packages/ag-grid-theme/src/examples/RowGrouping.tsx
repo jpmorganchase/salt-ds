@@ -1,15 +1,17 @@
+import { useDensity } from "@salt-ds/core";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridExampleRowGrouping from "../dependencies/dataGridExampleRowGrouping";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const RowGrouping = (props: AgGridReactProps) => {
-  const { agGridProps, containerProps } = useAgGridHelpers({ compact: true });
+  const density = useDensity();
+  // Only opt into HD Compact when the nearest provider uses high density.
+  const className =
+    density === "high" ? "ag-theme-salt-compact" : "ag-theme-salt";
 
   return (
-    <div {...containerProps}>
+    <div className={className} style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         {...props}
         columnDefs={dataGridExampleRowGrouping}
         rowData={dataGridExampleData}

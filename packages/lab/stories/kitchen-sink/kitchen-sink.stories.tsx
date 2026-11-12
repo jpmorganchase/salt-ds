@@ -92,6 +92,7 @@ import {
 
 import "ag-grid-community/styles/ag-grid.css";
 import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
+import "../../../ag-grid-theme/src/dependencies/setupAgGrid";
 
 export default {
   title: "Experimental/Kitchen Sink",
