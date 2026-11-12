@@ -12,7 +12,9 @@ data:
 
 Check and test any focusable elements included in the system status content.
 
-A system status doesn't have a live region role. Always render it inside a container with `role="alert"` for an error system status, or `role="status"` for all other statuses. To make sure screen readers announce a system status added to the page, including one that is dismissed and shown again, add the container to the page when it first loads, then render the system status inside it. See the [announced example](/salt/components/system-status/examples#announced).
+A system status doesn't have a live region role. A system status that's present when the page loads doesn't need one, because screen readers don't announce live region content that's on the page when it loads. To let screen reader users navigate to it, add `role="region"` and an `aria-label`, as shown in the [placement example](/salt/components/system-status/examples#placement).
+
+If you add a system status after the page loads, or show it again after it's dismissed, render it inside a container with `role="alert"` for an error system status, or `role="status"` for all other statuses. Add the container when the page first loads, then render the system status inside it. See the [announced example](/salt/components/system-status/examples#announced).
 
 - **Note:** During your testing, check that the system status is announced using a screen reader.
 

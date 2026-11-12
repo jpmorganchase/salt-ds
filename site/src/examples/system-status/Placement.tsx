@@ -16,18 +16,16 @@ import type { ReactElement } from "react";
 
 export const Placement = (): ReactElement => (
   <StackLayout gap={0} style={{ width: "100%" }}>
-    <div role="status">
-      <SystemStatus>
-        <SystemStatusContent>
-          <Text color="inherit">New feature updates are available.</Text>
-        </SystemStatusContent>
-        <SystemStatusActions>
-          <OnSolidButton aria-label="Dismiss system status">
-            <CloseIcon aria-hidden />
-          </OnSolidButton>
-        </SystemStatusActions>
-      </SystemStatus>
-    </div>
+    <SystemStatus role="region" aria-label="System status">
+      <SystemStatusContent>
+        <Text color="inherit">New feature updates are available.</Text>
+      </SystemStatusContent>
+      <SystemStatusActions>
+        <OnSolidButton aria-label="Dismiss system status">
+          <CloseIcon aria-hidden />
+        </OnSolidButton>
+      </SystemStatusActions>
+    </SystemStatus>
     <StackLayout
       style={{
         padding: "var(--salt-spacing-300) var(--salt-layout-page-margin)",

@@ -37,9 +37,6 @@ const messages: { status: ValidationStatus; message: string }[] = [
   },
 ];
 
-const liveRegionRole = (status?: ValidationStatus) =>
-  status === "error" ? "alert" : "status";
-
 const titledMessages: {
   status: ValidationStatus;
   title: string;
@@ -69,7 +66,7 @@ const titledMessages: {
 ];
 
 export const Default: StoryFn<typeof SystemStatus> = (args) => (
-  <div role={liveRegionRole(args.status)} style={{ width: 600 }}>
+  <div style={{ width: 600 }}>
     <SystemStatus {...args}>
       <SystemStatusContent>
         <Text color="inherit">New feature updates are available</Text>
@@ -81,13 +78,11 @@ export const Default: StoryFn<typeof SystemStatus> = (args) => (
 export const Statuses: StoryFn<typeof SystemStatus> = () => (
   <StackLayout gap={1} style={{ width: 600 }}>
     {messages.map(({ status, message }) => (
-      <div key={status} role={liveRegionRole(status)}>
-        <SystemStatus status={status}>
-          <SystemStatusContent>
-            <Text color="inherit">{message}</Text>
-          </SystemStatusContent>
-        </SystemStatus>
-      </div>
+      <SystemStatus key={status} status={status}>
+        <SystemStatusContent>
+          <Text color="inherit">{message}</Text>
+        </SystemStatusContent>
+      </SystemStatus>
     ))}
   </StackLayout>
 );
@@ -95,24 +90,22 @@ export const Statuses: StoryFn<typeof SystemStatus> = () => (
 export const WithTitle: StoryFn<typeof SystemStatus> = () => (
   <StackLayout gap={1} style={{ width: 600 }}>
     {titledMessages.map(({ status, title, description }) => (
-      <div key={status} role={liveRegionRole(status)}>
-        <SystemStatus status={status}>
-          <SystemStatusContent>
-            <StackLayout gap={0.5}>
-              <Text color="inherit" fontWeight="bolder">
-                {title}
-              </Text>
-              <Text color="inherit">{description}</Text>
-            </StackLayout>
-          </SystemStatusContent>
-        </SystemStatus>
-      </div>
+      <SystemStatus key={status} status={status}>
+        <SystemStatusContent>
+          <StackLayout gap={0.5}>
+            <Text color="inherit" fontWeight="bolder">
+              {title}
+            </Text>
+            <Text color="inherit">{description}</Text>
+          </StackLayout>
+        </SystemStatusContent>
+      </SystemStatus>
     ))}
   </StackLayout>
 );
 
 export const CustomContent: StoryFn<typeof SystemStatus> = (args) => (
-  <div role={liveRegionRole(args.status ?? "warning")} style={{ width: 600 }}>
+  <div style={{ width: 600 }}>
     <SystemStatus status="warning" {...args}>
       <SystemStatusContent>
         <Text color="inherit">
@@ -128,33 +121,29 @@ export const CustomContent: StoryFn<typeof SystemStatus> = (args) => (
 
 export const WithActions: StoryFn<typeof SystemStatus> = () => (
   <StackLayout gap={1} style={{ width: 600 }}>
-    <div role="status">
-      <SystemStatus>
-        <SystemStatusContent>
-          <Text color="inherit">New feature updates are available</Text>
-        </SystemStatusContent>
-        <SystemStatusActions>
-          <OnSolidButton aria-label="Dismiss system status">
-            <CloseIcon aria-hidden />
-          </OnSolidButton>
-        </SystemStatusActions>
-      </SystemStatus>
-    </div>
-    <div role="alert">
-      <SystemStatus status="error">
-        <SystemStatusContent>
-          <Text color="inherit">
-            Some services are unavailable. Refresh the page to try again.
-          </Text>
-        </SystemStatusContent>
-        <SystemStatusActions>
-          <OnSolidButton>Try again</OnSolidButton>
-          <OnSolidButton aria-label="Dismiss system status">
-            <CloseIcon aria-hidden />
-          </OnSolidButton>
-        </SystemStatusActions>
-      </SystemStatus>
-    </div>
+    <SystemStatus>
+      <SystemStatusContent>
+        <Text color="inherit">New feature updates are available</Text>
+      </SystemStatusContent>
+      <SystemStatusActions>
+        <OnSolidButton aria-label="Dismiss system status">
+          <CloseIcon aria-hidden />
+        </OnSolidButton>
+      </SystemStatusActions>
+    </SystemStatus>
+    <SystemStatus status="error">
+      <SystemStatusContent>
+        <Text color="inherit">
+          Some services are unavailable. Refresh the page to try again.
+        </Text>
+      </SystemStatusContent>
+      <SystemStatusActions>
+        <OnSolidButton>Try again</OnSolidButton>
+        <OnSolidButton aria-label="Dismiss system status">
+          <CloseIcon aria-hidden />
+        </OnSolidButton>
+      </SystemStatusActions>
+    </SystemStatus>
   </StackLayout>
 );
 
@@ -199,7 +188,7 @@ export const Announced: StoryFn<typeof SystemStatus> = () => {
 };
 
 export const LongContent: StoryFn<typeof SystemStatus> = (args) => (
-  <div role={liveRegionRole(args.status ?? "warning")} style={{ width: 600 }}>
+  <div style={{ width: 600 }}>
     <SystemStatus status="warning" {...args}>
       <SystemStatusContent>
         <StackLayout gap={0.5}>
@@ -227,18 +216,16 @@ export const LongContent: StoryFn<typeof SystemStatus> = (args) => (
 
 export const Placement: StoryFn<typeof SystemStatus> = (args) => (
   <StackLayout gap={0}>
-    <div role={liveRegionRole(args.status)}>
-      <SystemStatus {...args}>
-        <SystemStatusContent>
-          <Text color="inherit">New feature updates are available.</Text>
-        </SystemStatusContent>
-        <SystemStatusActions>
-          <OnSolidButton aria-label="Dismiss system status">
-            <CloseIcon aria-hidden />
-          </OnSolidButton>
-        </SystemStatusActions>
-      </SystemStatus>
-    </div>
+    <SystemStatus {...args}>
+      <SystemStatusContent>
+        <Text color="inherit">New feature updates are available.</Text>
+      </SystemStatusContent>
+      <SystemStatusActions>
+        <OnSolidButton aria-label="Dismiss system status">
+          <CloseIcon aria-hidden />
+        </OnSolidButton>
+      </SystemStatusActions>
+    </SystemStatus>
     <StackLayout
       style={{
         padding: "var(--salt-spacing-300) var(--salt-layout-page-margin)",

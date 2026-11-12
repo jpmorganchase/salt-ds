@@ -8,20 +8,18 @@ import {
 import type { ReactElement } from "react";
 
 export const Interactive = (): ReactElement => (
-  <div role="status" style={{ width: "100%" }}>
-    <SystemStatus status="warning">
-      <SystemStatusContent>
-        <Text color="inherit">
-          Some services are running slower than usual. We're working to restore
-          full performance.
-        </Text>
-      </SystemStatusContent>
-      <SystemStatusActions>
-        <OnSolidButton>View status</OnSolidButton>
-        <OnSolidButton aria-label="Dismiss system status">
-          <CloseIcon aria-hidden />
-        </OnSolidButton>
-      </SystemStatusActions>
-    </SystemStatus>
-  </div>
+  <SystemStatus status="warning">
+    <SystemStatusContent>
+      <Text color="inherit">
+        Some services are running slower than usual. We're working to restore
+        full performance.
+      </Text>
+    </SystemStatusContent>
+    <SystemStatusActions>
+      <OnSolidButton>View status</OnSolidButton>
+      <OnSolidButton aria-label="Dismiss system status">
+        <CloseIcon aria-hidden />
+      </OnSolidButton>
+    </SystemStatusActions>
+  </SystemStatus>
 );
