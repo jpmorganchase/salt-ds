@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/icons",
-  "version": "1.18.4",
+  "version": "1.19.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -47,7 +47,7 @@
     }
   },
   "devDependencies": {
-    "glob": "^13.0.0",
+    "glob": "^14.0.0",
     "mustache": "^4.2.0",
     "rimraf": "^6.0.0",
     "svgo": "^4.0.0"
