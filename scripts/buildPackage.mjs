@@ -94,6 +94,7 @@ function createBuildOptions(
       chunkFileNames: (chunk) =>
         moduleFileName(chunk, preserveModules, sourceRoot),
       exports: preserveModules ? "auto" : "named",
+      strict: true,
     },
     // Salt owns injection, including CSP nonces and the destination window.
     // Loading CSS as text preserves the exact authored stylesheet strings.
