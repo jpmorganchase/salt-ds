@@ -82,7 +82,7 @@ Salt supports the browsers in the `production` browserslist in the root `package
 
 Lowering can't help with:
 
-- Features that have no fallback, such as `:has()`, `:where()`, `aspect-ratio` and `accent-color`. Use them only where older browsers can do without them. A selector a browser doesn't support invalidates every selector in its list, so give such a selector a rule of its own.
+- Features that have no fallback, such as `:has()`, `:where()`, `aspect-ratio` and `overflow: clip`. Use them only where older browsers can do without them, for example inside `@supports`, or after a fallback declaration. A selector a browser doesn't support invalidates every selector in its list, so give such a selector a rule of its own.
 - `inset-inline-start`, `inset-inline-end`, `inset-inline` and the logical corner radii such as `border-start-end-radius`, which Lightning CSS could only lower by guessing the text direction from the element's language. The build keeps these as written, so they don't work in browsers that lack them.
 
 ### Render prop support
