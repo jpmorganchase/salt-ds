@@ -5,6 +5,7 @@ import {
   LinkCard,
   Text,
 } from "@salt-ds/core";
+import { clsx } from "clsx";
 import type { ReactNode } from "react";
 import { LinkBase } from "../link/Link";
 import styles from "./QuickLinks.module.css";
@@ -21,14 +22,16 @@ export function QuickLink({
   children,
   action,
   href,
+  prefetch,
 }: {
   title: string;
   children?: ReactNode;
   action: string;
   href: string;
+  prefetch?: boolean;
 }) {
   return (
-    <LinkBase href={href} passHref legacyBehavior>
+    <LinkBase href={href} prefetch={prefetch} passHref legacyBehavior>
       <LinkCard className={styles.card}>
         <div className={styles.cardContent}>
           <Text className={styles.cardTitle} styleAs="h2">
@@ -48,23 +51,32 @@ export function QuickLink({
 
 interface QuickLinkProps extends GridLayoutProps<"div"> {
   links: QuickLinkData[];
+  prefetch?: boolean;
 }
 
 export function QuickLinks({
   links,
   children,
+  className,
+  prefetch,
   ...rest
-}: QuickLinkProps): JSX.Element {
+}: QuickLinkProps) {
   return (
     <GridLayout
-      className={styles.root}
+      className={clsx(styles.root, className)}
       columns={{ md: 4, sm: 2, xs: 1 }}
       gap={{ md: 3, xs: 1 }}
       {...rest}
     >
       {children ||
         links.map(({ href, title, description, action }) => (
-          <QuickLink key={href} href={href} title={title} action={action}>
+          <QuickLink
+            key={href}
+            href={href}
+            title={title}
+            action={action}
+            prefetch={prefetch}
+          >
             {description}
           </QuickLink>
         ))}

@@ -26,6 +26,7 @@ export const LivePreview: FC<LivePreviewProps> = ({
 }) => {
   const siteMode = useColorMode();
   const [showCode, setShowCode] = useState<boolean>(false);
+  const [hasShownCode, setHasShownCode] = useState(false);
 
   const [ComponentExample, setComponentExample] = useState<{
     Example?: ElementType;
@@ -58,6 +59,7 @@ export const LivePreview: FC<LivePreviewProps> = ({
   const mode = (exampleMode === "system" ? siteMode : exampleMode) ?? siteMode;
   const handleShowCodeToggle = (event: ChangeEvent<HTMLInputElement>) => {
     const newShowCode = event.target.checked;
+    if (newShowCode) setHasShownCode(true);
     setShowCode(newShowCode);
   };
 
@@ -115,13 +117,15 @@ export const LivePreview: FC<LivePreviewProps> = ({
         hidden={!showCode}
         id={panelId}
       >
-        <div className={styles.codePanelInner}>
-          <Pre className={styles.codePreview}>
-            <div className="language-tsx">
-              {ComponentExample.sourceCode.trimEnd()}
-            </div>
-          </Pre>
-        </div>
+        {hasShownCode && (
+          <div className={styles.codePanelInner}>
+            <Pre className={styles.codePreview}>
+              <div className="language-tsx">
+                {ComponentExample.sourceCode.trimEnd()}
+              </div>
+            </Pre>
+          </div>
+        )}
       </div>
     </div>
   );

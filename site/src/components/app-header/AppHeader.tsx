@@ -2,7 +2,7 @@ import { useAppHeader } from "@jpmorganchase/mosaic-store";
 import { Button, type ComboBoxProps, Tooltip } from "@salt-ds/core";
 import { GithubIcon, MenuIcon } from "@salt-ds/icons";
 import dynamic from "next/dynamic";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
 import { LayoutContext } from "../../layouts/LayoutContext";
 import { useIsMobileView } from "../../utils/useIsMobileView";
 import { CTALink } from "../cta-link/CTALink";
@@ -20,12 +20,21 @@ export const AppHeader = () => {
   const layoutContext = useContext(LayoutContext);
   const appHeader = useAppHeader();
   const homeLink = appHeader?.homeLink;
+  const [hydrated, setHydrated] = useState(false);
+
+  useEffect(() => setHydrated(true), []);
+
+  // A retained header can hydrate before Base registers its page-owned drawer.
+  // Keep the server-rendered trigger disabled until both can handle the click.
+  const drawerReady =
+    hydrated && (!layoutContext.setMainId || !!layoutContext.mainId);
 
   return (
     <header className={styles.root}>
       {isMobileOrTablet && (
         <Button
           aria-label="Open menu"
+          disabled={!drawerReady}
           appearance="transparent"
           sentiment="neutral"
           onClick={() => layoutContext.setDrawerOpen(true)}

@@ -8,7 +8,7 @@ import {
   Text,
 } from "@salt-ds/core";
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import {
   type ChangeEvent,
   type ComponentPropsWithoutRef,

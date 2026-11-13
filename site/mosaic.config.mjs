@@ -5,7 +5,7 @@ import nextEnv from "@next/env";
 import deepmerge from "deepmerge";
 
 const projectDir = process.cwd();
-nextEnv.loadEnvConfig(projectDir);
+nextEnv.loadEnvConfig(projectDir, process.env.NODE_ENV === "development");
 
 const require = createRequire(import.meta.url);
 
@@ -36,6 +36,14 @@ const saltConfig = {
         maxLineLength: 240,
         maxLineCount: 240,
         keys: ["keywords", "content"],
+      },
+      priority: Number.NEGATIVE_INFINITY,
+    },
+    {
+      modulePath: "@jpmorganchase/mosaic-plugins/SiteMapPlugin",
+      options: {
+        siteUrl: process.env.SITE_URL,
+        exclude: ["**/salt-github/**"],
       },
       priority: Number.NEGATIVE_INFINITY,
     },
@@ -82,6 +90,7 @@ export default deepmerge(saltConfig, {
       namespace: "salt",
       options: {
         prefixDir: "salt-github",
+        requestTimeout: 30_000,
         endpoints: [
           "https://api.github.com/repos/jpmorganchase/salt-ds/releases",
         ],
