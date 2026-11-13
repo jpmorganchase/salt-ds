@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - perf/ci-browser-sharding-validation
   workflow_dispatch:
   pull_request:
 
