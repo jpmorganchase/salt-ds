@@ -3,6 +3,7 @@ import { argv } from "node:process";
 import url from "node:url";
 import { deleteSync } from "del";
 import esbuild from "esbuild";
+import { esbuildCssBaseline } from "../../../scripts/cssBaseline.mjs";
 
 const cwd = process.cwd();
 const packageJson = (
@@ -37,6 +38,7 @@ const context = await esbuild.context({
     ".ttf": "file",
   },
   write: true,
+  plugins: [esbuildCssBaseline()],
   bundle: true,
   logLevel: "info",
 });
