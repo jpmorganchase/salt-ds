@@ -39,11 +39,66 @@ export type ComponentDefaultsProviderProps = {
   value?: ComponentDefaultsRegistry;
 };
 
+type AnyDefaultsPayload = ComponentDefaultsPayload<Record<string, any>>;
+type LooseDefaultsRegistry = Record<string, AnyDefaultsPayload | undefined>;
+
+const mergePayload = (
+  outer?: AnyDefaultsPayload,
+  inner?: AnyDefaultsPayload,
+): AnyDefaultsPayload | undefined => {
+  if (!outer) return inner;
+  if (!inner) return outer;
+
+  const props =
+    outer.props || inner.props ? { ...outer.props, ...inner.props } : undefined;
+  const rootDataAttributes =
+    outer.rootDataAttributes || inner.rootDataAttributes
+      ? { ...outer.rootDataAttributes, ...inner.rootDataAttributes }
+      : undefined;
+
+  if (!props && !rootDataAttributes) {
+    return undefined;
+  }
+
+  return { props, rootDataAttributes };
+};
+
+const mergeRegistries = (
+  outer: ComponentDefaultsRegistry,
+  inner?: ComponentDefaultsRegistry,
+): ComponentDefaultsRegistry => {
+  if (!inner) return outer;
+
+  const outerLoose = outer as LooseDefaultsRegistry;
+  const innerLoose = inner as LooseDefaultsRegistry;
+  let mergedLoose = outerLoose;
+
+  for (const [component, innerPayload] of Object.entries(innerLoose)) {
+    if (!innerPayload) continue;
+
+    const outerPayload = outerLoose[component];
+    const nextPayload = mergePayload(outerPayload, innerPayload);
+
+    if (nextPayload !== outerPayload) {
+      if (mergedLoose === outerLoose) {
+        mergedLoose = { ...outerLoose };
+      }
+      mergedLoose[component] = nextPayload;
+    }
+  }
+
+  return mergedLoose as ComponentDefaultsRegistry;
+};
+
 export function ComponentDefaultsProvider({
   children,
   value,
 }: ComponentDefaultsProviderProps) {
-  const registry = useMemo(() => value ?? EMPTY_REGISTRY, [value]);
+  const outerRegistry = useContext(ComponentDefaultsContext);
+  const registry = useMemo(
+    () => mergeRegistries(outerRegistry, value),
+    [outerRegistry, value],
+  );
 
   return (
     <ComponentDefaultsContext.Provider value={registry}>

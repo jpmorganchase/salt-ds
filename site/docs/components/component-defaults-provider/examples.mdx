@@ -21,6 +21,8 @@ Use a `ComponentDefaultsProvider` to define default `bordered` values for suppor
 
 You can provide root-level `data-*` attributes through the provider to stamp telemetry or ownership metadata onto supported component roots.
 
+Defaults are merged across providers, and inner keys override matching outer keys.
+
 <LivePreview
   componentName="component-defaults-provider"
   exampleName="RootDataAttributes"

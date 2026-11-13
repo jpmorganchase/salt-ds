@@ -1,27 +1,33 @@
-import { Button, StackLayout, Text } from "@salt-ds/core";
+import { Button } from "@salt-ds/core";
 import {
   ComponentDefaultsProvider,
   type ComponentDefaultsRegistry,
 } from "@salt-ds/styles";
 
-const defaults: ComponentDefaultsRegistry = {
+const outerDefaults: ComponentDefaultsRegistry = {
   saltButton: {
     rootDataAttributes: {
-      "data-default-source": "component-defaults-provider",
+      "data-default-source": "outer-provider",
+      "data-default-region": "outer-region",
+    },
+  },
+};
+
+const innerDefaults: ComponentDefaultsRegistry = {
+  saltButton: {
+    rootDataAttributes: {
+      "data-default-source": "inner-provider",
+      "data-inner-default": "component-defaults-provider",
     },
   },
 };
 
 export const RootDataAttributes = () => {
   return (
-    <ComponentDefaultsProvider value={defaults}>
-      <StackLayout gap={1}>
-        <Text>
-          This button receives a root <code>data-default-source</code> attribute
-          from the provider.
-        </Text>
-        <Button>Defaulted button</Button>
-      </StackLayout>
+    <ComponentDefaultsProvider value={outerDefaults}>
+      <ComponentDefaultsProvider value={innerDefaults}>
+        <Button style={{ width: 180 }}>Defaulted button</Button>
+      </ComponentDefaultsProvider>
     </ComponentDefaultsProvider>
   );
 };

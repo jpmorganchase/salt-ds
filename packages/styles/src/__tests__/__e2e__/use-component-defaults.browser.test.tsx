@@ -175,10 +175,10 @@ describe("Given useComponentDefaults", () => {
     await expect.element(button()).not.toHaveAttribute("role");
   });
 
-  it("SHOULD use nested provider replacement semantics", async () => {
+  it("SHOULD merge nested provider defaults and let inner keys override", async () => {
     const outer: ComponentDefaultsRegistry = {
       Widget: {
-        props: { tone: "neutral", variant: "secondary" },
+        props: { tone: "neutral", variant: "secondary", title: "Outer title" },
       },
     };
 
@@ -197,6 +197,41 @@ describe("Given useComponentDefaults", () => {
     );
 
     await expect.element(button()).toHaveAttribute("tone", "accented");
-    await expect.element(button()).not.toHaveAttribute("variant");
+    await expect.element(button()).toHaveAttribute("variant", "secondary");
+    await expect.element(button()).toHaveAttribute("title", "Outer title");
+  });
+
+  it("SHOULD merge nested root data attributes and let inner keys override", async () => {
+    const outer: ComponentDefaultsRegistry = {
+      Widget: {
+        rootDataAttributes: {
+          "data-track": "outer",
+          "data-region": "outer-region",
+        },
+      },
+    };
+
+    const inner: ComponentDefaultsRegistry = {
+      Widget: {
+        rootDataAttributes: {
+          "data-track": "inner",
+          "data-layer": "inner-layer",
+        },
+      },
+    };
+
+    await renderWithSalt(
+      <ComponentDefaultsProvider value={outer}>
+        <ComponentDefaultsProvider value={inner}>
+          <TestComponent props={{}} />
+        </ComponentDefaultsProvider>
+      </ComponentDefaultsProvider>,
+    );
+
+    await expect.element(button()).toHaveAttribute("data-track", "inner");
+    await expect
+      .element(button())
+      .toHaveAttribute("data-region", "outer-region");
+    await expect.element(button()).toHaveAttribute("data-layer", "inner-layer");
   });
 });
