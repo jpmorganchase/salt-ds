@@ -14,11 +14,11 @@ Package JavaScript is built with tsdown (using Rolldown) into `dist-cjs` and `di
 
 TypeScript 7 generates `dist-types` declarations with full type inference and runs `yarn typecheck`. The native compiler is installed as `@typescript/native` and invoked through `scripts/typescript.mjs` to avoid relying on the shared `tsc` executable. TypeScript 6 remains installed as `typescript` for tools that use its JavaScript API, including Storybook's prop documentation.
 
-Run `node scripts/checkPackages.mjs` after `yarn build` to validate package outputs and dependency boundaries.
+Run `node scripts/checkPackages.mjs` after `yarn build` to validate package outputs, dependency boundaries and that every relative import resolves inside the packed archive.
 
-`yarn build` uses Yarn workspaces to build independent packages in parallel and dependencies before their consumers. Each JavaScript package builds both module formats alongside its declarations. Package build commands also work individually.
+`yarn build` uses Yarn workspaces to build independent packages in parallel and dependencies before their consumers. Each JavaScript package builds both module formats alongside its declarations. Package build commands also work individually. Each package that generates declarations needs its own `tsconfig.json`.
 
-Every build clears package outputs and regenerates assets, with no build cache. Generated files are formatted in batches with the native Biome CLI. The CSS jobs share one process while preserving stylesheet import order.
+Every build clears package outputs and regenerates assets, with no build cache. Generated files are formatted in batches with the native Biome CLI. The CSS jobs share one process while preserving stylesheet import order. Pass package names to rebuild specific CSS bundles, for example `yarn bundle:css core lab`.
 
 ## Packages
 

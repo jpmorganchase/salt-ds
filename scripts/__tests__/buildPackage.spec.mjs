@@ -169,4 +169,26 @@ export function Button() {
       (await readdir(cwd)).some((name) => name.startsWith(".salt-types-")),
     ).toBe(false);
   }, 30_000);
+
+  it("requires the package's own tsconfig for declarations", async () => {
+    // Relative options in an ancestor tsconfig would resolve from the package.
+    const packageDirectory = path.join(cwd, "packages/no-tsconfig");
+    await write(
+      "packages/no-tsconfig/package.json",
+      JSON.stringify({ name: "salt-build-no-tsconfig" }),
+    );
+    await write("packages/no-tsconfig/src/index.ts", "export const a = 1;");
+
+    const error = await buildPackage({ cwd: packageDirectory }).catch(
+      (reason) => reason,
+    );
+
+    expect(error).toBeInstanceOf(AggregateError);
+    expect(error.errors.map(({ message }) => message)).toContainEqual(
+      expect.stringMatching(/no-tsconfig must have its own tsconfig\.json$/),
+    );
+    expect(await readdir(packageDirectory)).not.toEqual(
+      expect.arrayContaining([expect.stringMatching(/^\.salt-types-/)]),
+    );
+  }, 30_000);
 });

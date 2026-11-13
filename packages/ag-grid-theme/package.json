@@ -18,7 +18,7 @@
   ],
   "scripts": {
     "build": "node ./scripts/build.mjs",
-    "build-watch": "yarn node ./scripts/build.mjs --watch"
+    "build-watch": "node ./scripts/build.mjs --watch"
   },
   "publishConfig": {
     "provenance": true

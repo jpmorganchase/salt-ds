@@ -1,4 +1,4 @@
-import { readFile } from "node:fs/promises";
+import { readFile, realpath } from "node:fs/promises";
 import path from "node:path";
 import browserslistToEsbuild from "browserslist-to-esbuild";
 import glob from "fast-glob";
@@ -135,9 +135,12 @@ async function preparePackage(cwd) {
 }
 
 export async function buildPackage({
-  cwd = process.cwd(),
+  cwd: packageDirectory = process.cwd(),
   entries = [{ input: "src/index.ts" }],
 } = {}) {
+  // Rolldown reports real module paths. Output names are derived relative to
+  // the source root, so a symlinked directory (such as macOS's /var) must match.
+  const cwd = await realpath(packageDirectory);
   const { name } = JSON.parse(
     await readFile(path.join(cwd, "package.json"), "utf8"),
   );

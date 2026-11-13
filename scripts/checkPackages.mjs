@@ -141,9 +141,42 @@ function packageNameFromSpecifier(specifier) {
   return scopeOrName.startsWith("@") ? `${scopeOrName}/${name}` : scopeOrName;
 }
 
+async function isFile(filePath) {
+  try {
+    return (await stat(filePath)).isFile();
+  } catch {
+    return false;
+  }
+}
+
+// `yarn pack` silently drops some paths, such as nested node_modules, so a
+// bundled helper could be missing from the archive while the build succeeds.
+async function resolvesInPackage(packageDirectory, file, specifier) {
+  const target = path.resolve(packageDirectory, path.dirname(file), specifier);
+  const relativeTarget = path.relative(packageDirectory, target);
+  if (relativeTarget === ".." || relativeTarget.startsWith(`..${path.sep}`)) {
+    return false;
+  }
+  // Built JavaScript imports exact files; declarations omit extensions.
+  const candidates = /\.d\.[cm]?ts$/.test(file)
+    ? [
+        `${target}.d.ts`,
+        path.join(target, "index.d.ts"),
+        target.replace(/\.js$/, ".d.ts"),
+      ]
+    : [target];
+  for (const candidate of candidates) {
+    if (await isFile(candidate)) {
+      return true;
+    }
+  }
+  return false;
+}
+
 // Biome checks source imports; this catches references added by the build,
-// such as types that tsc inlines from transitive dependencies.
-async function findUndeclaredImports(packageDirectory, manifest) {
+// such as types that tsc inlines from transitive dependencies, and relative
+// imports of files that are missing from the packed archive.
+async function findImportErrors(packageDirectory, manifest) {
   const declared = new Set([
     manifest.name,
     ...builtinModules,
@@ -152,6 +185,7 @@ async function findUndeclaredImports(packageDirectory, manifest) {
     ),
   ]);
   const undeclared = new Map();
+  const unresolved = [];
   const files = await readdir(packageDirectory, { recursive: true });
 
   for (const file of files) {
@@ -173,11 +207,22 @@ async function findUndeclaredImports(packageDirectory, manifest) {
         undeclared.set(name, file);
       }
     }
+    for (const { fileName: specifier } of importedFiles) {
+      if (
+        specifier.startsWith(".") &&
+        !(await resolvesInPackage(packageDirectory, file, specifier))
+      ) {
+        unresolved.push(`${file} imports missing file ${specifier}`);
+      }
+    }
   }
 
-  return [...undeclared].map(
-    ([name, file]) => `references undeclared dependency ${name} in ${file}`,
-  );
+  return [
+    ...[...undeclared].map(
+      ([name, file]) => `references undeclared dependency ${name} in ${file}`,
+    ),
+    ...unresolved,
+  ];
 }
 
 async function checkJavaScriptPackage(pkg, temporaryDirectory) {
@@ -235,9 +280,7 @@ async function checkJavaScriptPackage(pkg, temporaryDirectory) {
     }
   }
 
-  errors.push(
-    ...(await findUndeclaredImports(packageDirectory, packedManifest)),
-  );
+  errors.push(...(await findImportErrors(packageDirectory, packedManifest)));
 
   return errors;
 }
