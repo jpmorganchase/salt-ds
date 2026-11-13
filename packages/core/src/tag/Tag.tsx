@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
@@ -22,32 +25,43 @@ export interface TagProps extends ComponentPropsWithoutRef<"div"> {
   category?: number;
 }
 
-export const Tag = forwardRef<HTMLDivElement, TagProps>(function Tag(
-  { children, className, variant = "primary", category = 1, bordered, ...rest },
-  ref,
-) {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-tag",
-    css: tagCss,
-    window: targetWindow,
-  });
+export const Tag = forwardRef<HTMLDivElement, TagProps>(
+  function Tag(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltTag", props);
+    const {
+      children,
+      className,
+      variant = "primary",
+      category = 1,
+      bordered,
+      ...rest
+    } = propsWithDefaults;
 
-  return (
-    <div
-      ref={ref}
-      className={clsx(
-        withBaseName(),
-        withBaseName(`category-${category}`),
-        withBaseName(variant),
-        {
-          [withBaseName("bordered")]: bordered,
-        },
-        className,
-      )}
-      {...rest}
-    >
-      {children}
-    </div>
-  );
-});
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-tag",
+      css: tagCss,
+      window: targetWindow,
+    });
+
+    return (
+      <div
+        ref={ref}
+        className={clsx(
+          withBaseName(),
+          withBaseName(`category-${category}`),
+          withBaseName(variant),
+          {
+            [withBaseName("bordered")]: bordered,
+          },
+          className,
+        )}
+        {...rest}
+        {...rootDataAttributes}
+      >
+        {children}
+      </div>
+    );
+  },
+);

@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
@@ -65,6 +68,11 @@ export const InteractableCard = forwardRef<
   HTMLDivElement,
   InteractableCardProps
 >(function InteractableCard(props, ref) {
+  const { props: propsWithDefaults, rootDataAttributes } = useComponentDefaults(
+    "saltInteractableCard",
+    props,
+  );
+
   const {
     accent,
     accentPlacement,
@@ -82,7 +90,7 @@ export const InteractableCard = forwardRef<
     onKeyDown,
     tabIndex: tabIndexProp,
     ...rest
-  } = props;
+  } = propsWithDefaults;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -201,6 +209,7 @@ export const InteractableCard = forwardRef<
         className,
       )}
       {...rest}
+      {...rootDataAttributes}
       onClick={handleClick}
       ref={handleRef}
       tabIndex={tabIndexProp ?? tabIndex}

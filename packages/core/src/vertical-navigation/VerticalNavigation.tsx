@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef, useState } from "react";
@@ -20,7 +23,16 @@ export const VerticalNavigation = forwardRef<
   HTMLElement,
   VerticalNavigationProps
 >(function VerticalNavigation(props, ref) {
-  const { appearance = "bordered", children, className, ...rest } = props;
+  const { props: propsWithDefaults, rootDataAttributes } = useComponentDefaults(
+    "saltVerticalNavigation",
+    props,
+  );
+  const {
+    appearance = "bordered",
+    children,
+    className,
+    ...rest
+  } = propsWithDefaults;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -37,6 +49,7 @@ export const VerticalNavigation = forwardRef<
         ref={ref}
         className={clsx(withBaseName(), withBaseName(appearance), className)}
         {...rest}
+        {...rootDataAttributes}
       >
         <ol data-has-direct-icons={directIcons.length > 0}>{children}</ol>
       </nav>

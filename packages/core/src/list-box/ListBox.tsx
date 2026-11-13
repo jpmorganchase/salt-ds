@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
@@ -54,6 +57,11 @@ export const ListBox = forwardRef(function ListBox<Item>(
   props: ListBoxProps<Item>,
   ref: ForwardedRef<HTMLDivElement>,
 ) {
+  const { props: propsWithDefaults, rootDataAttributes } = useComponentDefaults(
+    "saltListBox",
+    props,
+  );
+
   const {
     bordered,
     className,
@@ -68,7 +76,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
     onFocus,
     onBlur,
     ...rest
-  } = props;
+  } = propsWithDefaults;
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-list-box",
@@ -266,6 +274,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
         onMouseDown={handleMouseDown}
         ref={handleRef}
         {...rest}
+        {...rootDataAttributes}
       >
         {children}
       </div>

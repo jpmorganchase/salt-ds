@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
@@ -100,7 +103,15 @@ function isEmptyReadOnlyValue(
 }
 
 export const PillInput = forwardRef(function PillInput(
-  {
+  props: PillInputProps,
+  ref: ForwardedRef<HTMLDivElement>,
+) {
+  const { props: propsWithDefaults, rootDataAttributes } = useComponentDefaults(
+    "saltPillInput",
+    props,
+  );
+
+  const {
     "aria-activedescendant": ariaActiveDescendant,
     "aria-expanded": ariaExpanded,
     "aria-owns": ariaOwns,
@@ -128,9 +139,8 @@ export const PillInput = forwardRef(function PillInput(
     truncate,
     bordered = false,
     ...other
-  }: PillInputProps,
-  ref: ForwardedRef<HTMLDivElement>,
-) {
+  } = propsWithDefaults;
+
   const targetWindow = useWindow();
   const { OverflowIcon, CloseIcon } = useIcon();
   useComponentCssInjection({
@@ -306,6 +316,7 @@ export const PillInput = forwardRef(function PillInput(
       ref={ref}
       style={inputStyle}
       {...other}
+      {...rootDataAttributes}
     >
       {startAdornment && (
         <div className={withBaseName("startAdornmentContainer")}>

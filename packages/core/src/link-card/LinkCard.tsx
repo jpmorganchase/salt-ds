@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
@@ -31,6 +34,9 @@ export interface LinkCardProps extends ComponentPropsWithoutRef<"a"> {
 
 export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
   function LinkCard(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltLinkCard", props);
+
     const {
       accent,
       borderColor,
@@ -40,7 +46,7 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
       href,
       variant = "primary",
       ...rest
-    } = props;
+    } = propsWithDefaults;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -67,6 +73,7 @@ export const LinkCard = forwardRef<HTMLAnchorElement, LinkCardProps>(
         )}
         href={href}
         {...rest}
+        {...rootDataAttributes}
         ref={ref}
       >
         {children}

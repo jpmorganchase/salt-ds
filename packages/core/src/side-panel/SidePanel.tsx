@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
@@ -52,6 +55,9 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
 
 export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
   function SidePanel(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltSidePanel", props);
+
     const {
       disableAnimation = false,
       position = "right",
@@ -63,7 +69,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
       "aria-labelledby": ariaLabelledBy,
       onAnimationEnd,
       ...rest
-    } = props;
+    } = propsWithDefaults;
 
     const sidePanelContext = useSidePanelContext();
     const { openState, setFloating, setPanelId, titleId } = sidePanelContext;
@@ -277,6 +283,7 @@ export const SidePanel = forwardRef<HTMLDivElement, SidePanelProps>(
         onAnimationEnd={handleAnimationEnd}
         tabIndex={-1}
         {...rest}
+        {...rootDataAttributes}
         id={id}
       >
         <SidePanelContext.Provider value={positionedContext}>

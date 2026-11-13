@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { forwardRef, type HTMLAttributes } from "react";
@@ -20,34 +23,44 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
 
 const withBaseName = makePrefixer("saltBanner");
 
-export const Banner = forwardRef<HTMLDivElement, BannerProps>(function Banner(
-  { children, className, variant = "primary", status = "info", ...rest },
-  ref,
-) {
-  const targetWindow = useWindow();
-  useComponentCssInjection({
-    testId: "salt-banner",
-    css: bannerCss,
-    window: targetWindow,
-  });
+export const Banner = forwardRef<HTMLDivElement, BannerProps>(
+  function Banner(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltBanner", props);
+    const {
+      children,
+      className,
+      variant = "primary",
+      status = "info",
+      ...rest
+    } = propsWithDefaults;
 
-  return (
-    <div
-      className={clsx(
-        withBaseName(),
-        withBaseName(status),
-        withBaseName(variant),
-        className,
-      )}
-      ref={ref}
-      {...rest}
-    >
-      <StatusIndicator
-        aria-hidden
-        status={status}
-        className={withBaseName("icon")}
-      />
-      {children}
-    </div>
-  );
-});
+    const targetWindow = useWindow();
+    useComponentCssInjection({
+      testId: "salt-banner",
+      css: bannerCss,
+      window: targetWindow,
+    });
+
+    return (
+      <div
+        className={clsx(
+          withBaseName(),
+          withBaseName(status),
+          withBaseName(variant),
+          className,
+        )}
+        ref={ref}
+        {...rest}
+        {...rootDataAttributes}
+      >
+        <StatusIndicator
+          aria-hidden
+          status={status}
+          className={withBaseName("icon")}
+        />
+        {children}
+      </div>
+    );
+  },
+);
