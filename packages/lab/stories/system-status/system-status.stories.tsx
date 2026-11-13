@@ -16,7 +16,7 @@ import {
   SystemStatusContent,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { useRef, useState } from "react";
+import { type ReactNode, useId, useRef, useState } from "react";
 
 export default {
   title: "Lab/System Status",
@@ -170,11 +170,11 @@ export const Announced: StoryFn<typeof SystemStatus> = () => {
             </SystemStatusContent>
             <SystemStatusActions>
               <OnSolidButton>View status</OnSolidButton>
-              <OnSolidButton
-                aria-label="Dismiss system status"
-                onClick={handleDismiss}
-              >
+              <OnSolidButton onClick={handleDismiss}>
                 <CloseIcon aria-hidden />
+                <span className="salt-visuallyHidden">
+                  Dismiss system status
+                </span>
               </OnSolidButton>
             </SystemStatusActions>
           </SystemStatus>
@@ -183,6 +183,93 @@ export const Announced: StoryFn<typeof SystemStatus> = () => {
       <Button ref={triggerRef} onClick={() => setOpen(true)}>
         Show system status
       </Button>
+    </StackLayout>
+  );
+};
+
+// TEMPORARY: screen reader investigation, remove before merging.
+const LiveRegionTest = ({
+  name,
+  atomic,
+  children,
+}: {
+  name: string;
+  atomic?: boolean;
+  children: ReactNode;
+}) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <StackLayout gap={1} style={{ width: "100%" }}>
+      <Text styleAs="h3">{name}</Text>
+      <div role="status" aria-atomic={atomic}>
+        {open && children}
+      </div>
+      <StackLayout direction="row" gap={1}>
+        <Button onClick={() => setOpen(true)}>Show {name}</Button>
+        <Button onClick={() => setOpen(false)}>Reset {name}</Button>
+      </StackLayout>
+    </StackLayout>
+  );
+};
+
+export const AnnouncedInvestigation: StoryFn<typeof SystemStatus> = () => {
+  const labelId = useId();
+  return (
+    <StackLayout gap={3} style={{ width: 600 }}>
+      <LiveRegionTest name="A">
+        <p>Maintenance on Saturday.</p>
+        <button type="button">View status</button>
+        <button type="button" aria-label="Dismiss system status">
+          <CloseIcon aria-hidden />
+        </button>
+      </LiveRegionTest>
+      <LiveRegionTest name="B">
+        <p>Maintenance on Saturday.</p>
+        <button type="button">View status</button>
+        <button type="button" aria-label="Dismiss system status">
+          Dismiss
+        </button>
+      </LiveRegionTest>
+      <LiveRegionTest name="C">
+        <p>Maintenance on Saturday.</p>
+        <button type="button">View status</button>
+        <button type="button">
+          <CloseIcon aria-hidden />
+          <span className="salt-visuallyHidden">Dismiss system status</span>
+        </button>
+      </LiveRegionTest>
+      <LiveRegionTest name="D">
+        <p>Maintenance on Saturday.</p>
+        <button type="button">View status</button>
+        <span id={labelId} hidden>
+          Dismiss system status
+        </span>
+        <button type="button" aria-labelledby={labelId}>
+          <CloseIcon aria-hidden />
+        </button>
+      </LiveRegionTest>
+      <LiveRegionTest name="E">
+        <p>
+          Maintenance on Saturday.{" "}
+          <span role="img" aria-label="Warning">
+            ⚠
+          </span>
+        </p>
+      </LiveRegionTest>
+      <LiveRegionTest name="F" atomic={false}>
+        <p>Maintenance on Saturday.</p>
+        <button type="button">View status</button>
+        <button type="button" aria-label="Dismiss system status">
+          <CloseIcon aria-hidden />
+        </button>
+      </LiveRegionTest>
+      <LiveRegionTest name="G">
+        <p>Maintenance on Saturday.</p>
+        <button type="button" aria-label="Dismiss system status">
+          <CloseIcon aria-hidden />
+        </button>
+        <p>Thank you.</p>
+      </LiveRegionTest>
     </StackLayout>
   );
 };
