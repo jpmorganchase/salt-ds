@@ -1,0 +1,90 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Linear
+
+Give `Progress` a `value` to show how much of a task is complete. It fills from `min` to `max`, which default to 0 and 100.
+
+The track is a light neutral fill, and the bar fills it. The value is always shown as text, so how far the task has progressed doesn't rely on the track's contrast.
+
+<LivePreview componentName="progress-next" exampleName="Linear" />
+
+## Indeterminate
+
+Leave out the `value` when you can't measure the task. Indeterminate progress loops until the work finishes, with a segment that slides across the track, so it never looks like a fill.
+
+<LivePreview componentName="progress-next" exampleName="Indeterminate" />
+
+## From indeterminate to determinate
+
+When a task's size isn't known yet, start without a value, then add one once it's known. The indicator keeps its shape and position, and the loop finishes its pass before it fills, so nothing jumps. The value is announced straight away.
+
+<LivePreview
+  componentName="progress-next"
+  exampleName="IndeterminateToDeterminate"
+/>
+
+## Circular
+
+Set `shape="circular"` for compact spaces, inside controls, and when centered in a region that's loading. Choose the shape by the space it's in, not by whether the task can be measured: circular progress fills and loops too.
+
+Circular progress comes in three sizes:
+
+- **Small** fits inside controls. It never shows its value text, which screen readers still announce.
+- **Medium** shows its label and value beside it.
+- **Large** shows its value inside, and its label below, as it's used centered.
+
+<LivePreview componentName="progress-next" exampleName="Circular" />
+
+## Value text
+
+By default, the value shows as a percentage. Use `getValueText` to show it in units that make sense to users, and `description` for helper text.
+
+The value text is always shown, except on small circular progress, and is used as the progress bar's `aria-valuetext`.
+
+<LivePreview componentName="progress-next" exampleName="ValueText" />
+
+## States
+
+Show the state of a task in place, with an icon and text as well as color.
+
+- **Paused:** set `status="paused"`. Progress shows "Paused", keeps the accent color and stops looping.
+- **Success:** set `status="success"` when the task finishes. Progress fills, changes to the success color once it's full, and shows a success icon instead of the value. Reaching `max` fills the bar, but it stays active until you set the status.
+- **Error:** set `status="error"`. Progress stops where it failed and shows an error icon. A loop stops where it is and fades out. Use `description` to explain why, and offer a way to retry.
+
+<LivePreview componentName="progress-next" exampleName="States" />
+
+## Buffer
+
+On linear progress, use `bufferValue` to show how much is ready ahead of the progress, such as the part of a video that has loaded. The buffer is an outline in the bar color, filled with the primary background, so it stands apart from the track. It shows only when there's a `value`. A small neutral dot marks the end of the track, so you can see how much is buffered out of the whole. It's hidden while nothing is buffered ahead of the bar, and once the buffer reaches the end.
+
+<LivePreview componentName="progress-next" exampleName="Buffer" />
+
+## In a button
+
+Small circular progress fits inside a button that starts an action. Inside a `Button`, progress takes the button's text color, like an icon, so it contrasts with every button style.
+
+Keep the button's label the same, so the button keeps its size. Keep the button enabled, as disabled buttons are faded, but ignore clicks until the action completes.
+
+Set a `delay` so quick actions don't flash progress, and keep the icon's space until progress appears. Keep progress out of the button's name, as the button's `aria-busy` says it's working. Set `disableAnnouncer` and announce the start and completion from the button, as progress is removed as soon as the task ends.
+
+<LivePreview componentName="progress-next" exampleName="InButton" />
+
+## Page loader
+
+Use large circular progress in a page loader, when the application first opens and there's nothing else to show. A page loader is a composition, not a component. See the [progress and loading](/salt/patterns/progress-and-loading#page-loader) pattern.
+
+<LivePreview componentName="progress-next" exampleName="PageLoader" />
+
+## Delay
+
+By default, `Progress` shows straight away. Set `delay` to wait before it shows, so tasks that finish quickly show nothing. This example waits 1 second.
+
+<LivePreview componentName="progress-next" exampleName="Delay" />

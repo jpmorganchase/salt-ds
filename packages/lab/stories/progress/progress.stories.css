@@ -1,0 +1,153 @@
+/*
+  Prototype buffer styles for the TrackStyles, Buffer and BufferOnContainers stories, so design can compare them with
+  the default accent outline. They aren't part of Progress.
+*/
+
+/*
+  Solid buffer: the buffer is filled with a solid neutral, and the bar, the buffer and the rest of the track are three
+  parts with a 1px gap between them. The other filled buffers build on it.
+*/
+.progressBufferSolid.saltProgress-linear .saltProgress-indicator {
+  --progress-radius: calc(var(--progress-height) / 2);
+  --progress-gap: var(--salt-size-fixed-100);
+}
+
+/*
+  The gaps: the buffer and the track are cut where the part before them ends, everything before its rounded end and a
+  circle around that end that's wider by the gap. There's no gap after a part with no width.
+*/
+.progressBufferSolid.saltProgress-linear .saltProgress-track,
+.progressBufferSolid.saltProgress-linear .saltProgress-buffer {
+  --progress-cutX: calc(var(--progress-cutAt) * 100% - var(--progress-radius));
+  --progress-cutRadius: calc(var(--progress-radius) + min(var(--progress-gap), var(--progress-cutAt) * 1000px));
+  --progress-cut:
+    linear-gradient(to right, transparent var(--progress-cutX), black var(--progress-cutX)),
+    radial-gradient(circle var(--progress-cutRadius) at var(--progress-cutX) 50%, transparent calc(var(--progress-cutRadius) - 0.25px), black calc(var(--progress-cutRadius) + 0.25px));
+  -webkit-mask: var(--progress-cut);
+  -webkit-mask-composite: source-in;
+  mask: var(--progress-cut);
+  mask-composite: intersect;
+}
+
+.progressBufferSolid.saltProgress-linear .saltProgress-track {
+  --progress-cutAt: var(--saltProgress-bufferFraction);
+}
+
+.progressBufferSolid.saltProgress-linear .saltProgress-buffer {
+  --progress-cutAt: var(--saltProgress-fraction);
+  background: var(--salt-sentiment-neutral-track);
+  clip-path: inset(0 calc((1 - var(--saltProgress-bufferFraction)) * 100%) 0 0 round var(--progress-radius));
+}
+
+.progressBufferSolid.saltProgress-linear .saltProgress-buffer::before {
+  content: none;
+}
+
+/* Neutral outline buffer: the default outline in the neutral track color, with the same primary fill */
+.progressBufferOutlineNeutral.saltProgress-linear .saltProgress-buffer::before {
+  border-color: var(--salt-sentiment-neutral-track);
+}
+
+/* Hollow outline buffer: the outline without a fill, so the track shows through */
+.progressBufferHollow.saltProgress-linear .saltProgress-buffer::before {
+  background: none;
+}
+
+/* Striped buffer: diagonal stripes in the bar color */
+.progressBufferStripes.saltProgress-linear .saltProgress-buffer {
+  background: repeating-linear-gradient(-45deg, var(--progress-barColor) 0 1.5px, transparent 1.5px 4px);
+}
+
+/*
+  Dot buffer: the track runs on after the bar, and a dot marks where the buffer ends. The track is cut around the bar's
+  end and around the dot, so both have a gap.
+*/
+.progressBufferDot.saltProgress-linear .saltProgress-track {
+  --progress-cutAt: var(--saltProgress-fraction);
+  --progress-dotCut: calc(var(--progress-radius) + var(--progress-gap));
+  --progress-dotHole: radial-gradient(
+    circle var(--progress-dotCut) at calc(var(--saltProgress-bufferFraction) * 100% - var(--progress-radius)) 50%,
+    transparent calc(var(--progress-dotCut) - 0.25px),
+    black calc(var(--progress-dotCut) + 0.25px)
+  );
+  -webkit-mask: var(--progress-cut), var(--progress-dotHole);
+  -webkit-mask-composite: source-in;
+  mask: var(--progress-cut), var(--progress-dotHole);
+  mask-composite: intersect;
+}
+
+.progressBufferDot.saltProgress-linear .saltProgress-buffer {
+  background: none;
+}
+
+.progressBufferDot.saltProgress-linear .saltProgress-buffer::after {
+  content: "";
+  position: absolute;
+  inset-block: 0;
+  inset-inline-start: calc(var(--saltProgress-bufferFraction) * 100% - var(--progress-height));
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--progressPrototype-bufferColor, var(--salt-sentiment-neutral-track));
+}
+
+/* Faded buffer: the buffer fades from the track's color at the bar to the solid neutral where it ends */
+.progressBufferFade.saltProgress-linear .saltProgress-buffer {
+  background: linear-gradient(
+    to right,
+    var(--progress-trackColor) calc(var(--saltProgress-fraction) * 100%),
+    var(--progressPrototype-bufferColor, var(--salt-sentiment-neutral-track)) calc(var(--saltProgress-bufferFraction) * 100%)
+  );
+}
+
+/* The accent dot and fade follow the bar color, so they're accent while active and the status color on success or error */
+.progressBufferBarColor.saltProgress {
+  --progressPrototype-bufferColor: var(--progress-barColor);
+}
+
+/* Stop dot off: hides the dot that marks the end of the track */
+.progressNoStop .saltProgress-stop {
+  display: none;
+}
+
+/*
+  Track outline: a 1px outline in the neutral track color, which reaches 3:1 against the background. It runs the full
+  length of the track, over the buffer's fill, but under an outline buffer's own outline, the bar and the stop dot.
+*/
+.progressTrackOutline.saltProgress-linear .saltProgress-indicator {
+  isolation: isolate;
+}
+
+.progressTrackOutline.saltProgress-linear .saltProgress-indicator::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  box-sizing: border-box;
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-sentiment-neutral-track);
+  border-radius: var(--salt-palette-corner-strongest);
+  pointer-events: none;
+}
+
+.progressTrackOutline.saltProgress-linear .saltProgress-buffer::before {
+  z-index: 2;
+}
+
+.progressTrackOutline.saltProgress-linear .saltProgress-bar,
+.progressTrackOutline.saltProgress-linear .saltProgress-stop,
+.progressTrackOutline.saltProgress-linear .saltProgress-loop {
+  z-index: 3;
+}
+
+/* Keep the icon's dimensions even while Progress is waiting to appear. */
+.progressButtonIcon {
+  display: inline-flex;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.progressButtonIcon .saltProgress {
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+}
