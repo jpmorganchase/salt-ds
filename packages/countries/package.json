@@ -22,7 +22,7 @@
     "*.css"
   ],
   "scripts": {
-    "build": "yarn clean && yarn build:countries && node ../../scripts/build.mjs",
+    "build": "yarn clean && yarn build:countries && node ./scripts/build.mjs",
     "build:countries": "node ./scripts/generateCountrySymbol.mjs '*.svg'",
     "clean": "rimraf ./src/components",
     "copy:css": "node ./scripts/copyCss.mjs"

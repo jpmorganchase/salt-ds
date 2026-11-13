@@ -10,7 +10,7 @@ Follow below instructions to contribute to Salt.
 
 ## Build tooling
 
-Package JavaScript is built with tsdown (using Rolldown) into `dist-cjs` and `dist-es`. Component CSS is imported as text so Salt's style injection continues to control nonces and target windows. The separate CSS bundles and themes use esbuild.
+Package JavaScript is built with tsdown (using Rolldown) into `dist-cjs` and `dist-es`. Component CSS is imported as text so Salt's style injection continues to control nonces and target windows. CSS and generated country components are explicit entries to preserve their existing CommonJS default exports when imported directly. The separate CSS bundles and themes use esbuild.
 
 TypeScript 7 generates `dist-types` declarations with full type inference and runs `yarn typecheck`. The native compiler is installed as `@typescript/native` and invoked through `scripts/typescript.mjs` to avoid relying on the shared `tsc` executable. TypeScript 6 remains installed as `typescript` for tools that use its JavaScript API, including Storybook's prop documentation.
 

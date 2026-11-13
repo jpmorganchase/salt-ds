@@ -85,7 +85,9 @@ export function Button() {
     await buildPackage({ cwd });
 
     const require = createRequire(path.join(cwd, "package.json"));
-    expect(require("./dist-cjs/Button.css.js").default).toBe(css);
+    const builtCss = require("./dist-cjs/Button.css.js");
+    expect(typeof builtCss).toBe("string");
+    expect(builtCss).toBe(css);
     expect(require("./dist-cjs/index.js").Button()).toBe(
       `${css}-salt${process.env.NODE_ENV === "production" ? "prod" : "dev"}`,
     );
@@ -119,6 +121,35 @@ export function Button() {
     expect(
       await readFile(path.join(cwd, "dist-types/Button.d.ts"), "utf8"),
     ).toContain("Button(): string");
+  }, 30_000);
+
+  it("preserves default-export deep imports alongside the package entry", async () => {
+    await write(
+      "src/index.ts",
+      'export { default as Item } from "./internal/Item";',
+    );
+    await write(
+      "src/internal/Item.ts",
+      "export default function Item() { return 42; }",
+    );
+
+    await buildPackage({
+      cwd,
+      entries: [
+        {
+          input: {
+            index: "src/index.ts",
+            "internal/Item": "src/internal/Item.ts",
+          },
+        },
+      ],
+    });
+
+    const require = createRequire(path.join(cwd, "package.json"));
+    const Item = require("./dist-cjs/internal/Item.js");
+    expect(typeof Item).toBe("function");
+    expect(Item()).toBe(42);
+    expect(require("./dist-cjs/index.js").Item).toBe(Item);
   }, 30_000);
 
   it("fails on declaration type errors and removes its temporary configuration", async () => {

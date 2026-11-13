@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import browserslistToEsbuild from "browserslist-to-esbuild";
+import glob from "fast-glob";
 import { getTsconfig } from "get-tsconfig";
 import { build } from "tsdown";
 import { makeTypings } from "./makeTypings.mjs";
@@ -15,24 +16,38 @@ function isExternal(id) {
   return !id.startsWith("\0") && !id.startsWith(".") && !path.isAbsolute(id);
 }
 
-function moduleFileName(chunk, preserveModules) {
+function moduleFileName(chunk, preserveModules, sourceRoot) {
   // CSS and a component commonly share a basename (Button.css/Button.tsx).
   // Keep the asset suffix so it cannot take the component's published path.
   const extension = path.extname(chunk.facadeModuleId ?? "");
-  return preserveModules && [".css", ".json"].includes(extension)
-    ? `[name]${extension}.js`
+  if (preserveModules && extension === ".css") {
+    return `${path.relative(sourceRoot, chunk.facadeModuleId).split(path.sep).join("/")}.js`;
+  }
+  return preserveModules && extension === ".json"
+    ? "[name].json.js"
     : "[name].js";
 }
 
 function createBuildOptions(
   cwd,
   { input, directory = "", preserveModules = true },
+  cssEntries,
 ) {
+  const sourceRoot = path.join(cwd, "src");
+  const inputEntries = typeof input === "string" ? { index: input } : input;
   return {
     config: false,
     cwd,
-    entry: { index: path.resolve(cwd, input) },
-    root: path.join(cwd, "src"),
+    entry: {
+      ...Object.fromEntries(
+        Object.entries(inputEntries).map(([name, file]) => [
+          name,
+          path.resolve(cwd, file),
+        ]),
+      ),
+      ...(preserveModules ? cssEntries : {}),
+    },
+    root: sourceRoot,
     format: {
       esm: { outDir: path.join(cwd, "dist-es", directory) },
       cjs: { outDir: path.join(cwd, "dist-cjs", directory) },
@@ -74,8 +89,10 @@ function createBuildOptions(
       },
     },
     outputOptions: {
-      entryFileNames: (chunk) => moduleFileName(chunk, preserveModules),
-      chunkFileNames: (chunk) => moduleFileName(chunk, preserveModules),
+      entryFileNames: (chunk) =>
+        moduleFileName(chunk, preserveModules, sourceRoot),
+      chunkFileNames: (chunk) =>
+        moduleFileName(chunk, preserveModules, sourceRoot),
       exports: preserveModules ? "auto" : "named",
     },
     // Salt owns injection, including CSP nonces and the destination window.
@@ -89,8 +106,17 @@ function createBuildOptions(
 }
 
 async function buildJavaScript(cwd, entries) {
+  // cjsDefault applies only to explicit entries. Keep the existing bare-string
+  // require(".../Button.css.js") contract as well as each stylesheet's filename.
+  const cssFiles = await glob("**/*.css", {
+    cwd: path.join(cwd, "src"),
+    ignore: ["**/__tests__/**"],
+  });
+  const cssEntries = Object.fromEntries(
+    cssFiles.map((file) => [`_css/${file}`, path.join(cwd, "src", file)]),
+  );
   for (const entry of entries) {
-    await build(createBuildOptions(cwd, entry));
+    await build(createBuildOptions(cwd, entry, cssEntries));
   }
 }
 
