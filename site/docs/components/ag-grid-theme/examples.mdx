@@ -56,7 +56,7 @@ Header variants create a visual distinction between the header and the body of t
 
 ### HD Compact
 
-`ag-theme-salt-compact` is an opt-in presentation for specialized high-density grids, not another Salt density. This example applies it only in high density; the class itself retains its compact sizing for compatibility at other densities. The status bar and cell selection shown here require AG Grid Enterprise.
+`ag-theme-salt-compact` is an opt-in presentation for specialized high-density grids, not another Salt density. It is intended for high density, so this example sets high density on its own `SaltProvider`. See [Density](./usage#density) for applying it when density changes. The status bar and cell selection shown here require AG Grid Enterprise.
 
 <LivePreview componentName="ag-grid-theme" exampleName="HDCompact" />
 
@@ -166,7 +166,7 @@ You can also pair an editor with one of AG Grid's provided [column filter types]
 
 ### Cell validation
 
-[Editable cells](#cell-editors) can show validation states (warning, success and error) using the class names `warning-cell`, `success-cell` and `error-cell`. Tell users what's wrong in text as well, such as in a tooltip or a message near the grid: the state's color and icon alone don't say it. This example's Rich Select editor is an AG Grid Enterprise feature.
+Cells can show validation states (warning, success and error) using the class names `warning-cell`, `success-cell` and `error-cell`. When combined with [editable cells](#cell-editors), the editable border also reflects the validation state. Tell users what's wrong in text as well, such as in a tooltip or a message near the grid: the state's color and icon alone don't say it. This example's Rich Select editor is an AG Grid Enterprise feature.
 
 <LivePreview componentName="ag-grid-theme" exampleName="CellValidation" />
 

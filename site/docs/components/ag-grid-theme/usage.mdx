@@ -135,7 +135,20 @@ A row's height includes the border below it.
 
 For specialized, high-density grids, use `ag-theme-salt-compact` instead of `ag-theme-salt` for 21px rows and a 20px header. **HD Compact is not a Salt density:** other Salt components and patterns do not support it. Prefer the standard theme unless your grid needs the extra density.
 
-The compact class applies compact sizing wherever it is used, including outside high density, for compatibility. If your application switches density dynamically, apply the compact class only in high density and fall back to `ag-theme-salt` otherwise. The [HD Compact example](./examples#hd-compact) demonstrates this; you do not need `useDensity()` solely to use a static compact grid.
+The compact class applies compact sizing wherever it is used, including outside high density, for compatibility. If your application switches density dynamically, apply the compact class only in high density and fall back to `ag-theme-salt` otherwise:
+
+```tsx
+const density = useDensity();
+
+<div
+  className={density === "high" ? "ag-theme-salt-compact" : "ag-theme-salt"}
+  style={{ height: 400 }}
+>
+  <AgGridReact theme="legacy" rowData={rowData} columnDefs={columnDefs} />
+</div>;
+```
+
+A grid that is always high density, such as the [HD Compact example](./examples#hd-compact), can use `ag-theme-salt-compact` without `useDensity()`.
 
 ## Customization
 
@@ -152,7 +165,7 @@ The theme's visual options are class names:
 | `ag-theme-salt-header-primary`, `ag-theme-salt-header-secondary`, `ag-theme-salt-header-tertiary` | Container, with the theme class            | Sets the header's background. See [Header variant](./examples#header-variant).                                                                                           |
 | `editable-cell`                                                                                   | A column's `cellClass`                     | Styles editable cells, and AG Grid's provided cell editors in them. See [Cell editors](./examples#cell-editors).                                                         |
 | `numeric-cell`                                                                                    | A column's `cellClass`                     | Right-aligns values, with validation states and edited values to match. AG Grid's `rightAligned` and `numericColumn` column types do the same and also align the header. |
-| `warning-cell`, `success-cell`, `error-cell`                                                      | A column's `cellClass` or `cellClassRules` | Shows a validation state on an editable cell. See [Cell validation](./examples#cell-validation).                                                                         |
+| `warning-cell`, `success-cell`, `error-cell`                                                      | A column's `cellClass` or `cellClassRules` | Shows a validation state on a cell; with `editable-cell`, the editable border reflects it too. See [Cell validation](./examples#cell-validation).                        |
 | `warning-row`, `success-row`, `error-row`                                                         | The grid's `rowClass` or `rowClassRules`   | Shows a validation state on a row. See [Row validation](./examples#row-validation).                                                                                      |
 
 For a numeric column, set AG Grid's `type: "rightAligned"` or `type: "numericColumn"`, which right-aligns its header and values. The theme lines up validation states and edited values with them, as it does for `numeric-cell`.

@@ -33,7 +33,7 @@ const datasource: IDatasource = {
 
 const InfiniteScroll = (props: AgGridReactProps) => {
   const density = useDensity();
-  // The infinite row model reacts to rowHeight changes, but not CSS height changes.
+  // Before AG Grid v36.2, the infinite row model resizes rows when rowHeight changes, but not when the CSS height changes.
   const rowHeight = {
     high: 25,
     medium: 37,
