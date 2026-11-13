@@ -1,18 +1,13 @@
-import { OnSolidButton, Text } from "@salt-ds/core";
-import {
-  SystemStatus,
-  SystemStatusActions,
-  SystemStatusContent,
-} from "@salt-ds/lab";
+import { Text } from "@salt-ds/core";
+import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
 import type { ReactElement } from "react";
 
 export const Error = (): ReactElement => (
-  <SystemStatus status="error" role="alert">
+  <SystemStatus status="error">
     <SystemStatusContent>
-      <Text color="inherit">System failure. Please try again.</Text>
+      <Text color="inherit">
+        Some services are unavailable. Refresh the page to try again.
+      </Text>
     </SystemStatusContent>
-    <SystemStatusActions>
-      <OnSolidButton>Try again</OnSolidButton>
-    </SystemStatusActions>
   </SystemStatus>
 );

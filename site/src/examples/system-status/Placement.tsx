@@ -16,12 +16,12 @@ import type { ReactElement } from "react";
 
 export const Placement = (): ReactElement => (
   <StackLayout gap={0} style={{ width: "100%" }}>
-    <SystemStatus>
+    <SystemStatus role="region" aria-label="System status">
       <SystemStatusContent>
         <Text color="inherit">New feature updates are available.</Text>
       </SystemStatusContent>
       <SystemStatusActions>
-        <OnSolidButton aria-label="Dismiss">
+        <OnSolidButton aria-label="Dismiss system status">
           <CloseIcon aria-hidden />
         </OnSolidButton>
       </SystemStatusActions>

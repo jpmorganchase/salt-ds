@@ -9,10 +9,12 @@ data:
   alsoKnownAs: ["System Message"]
   relatedComponents:
     [
+      { name: "Banner", relationship: "similarTo" },
       { name: "Content status", relationship: "similarTo" },
       { name: "Dialog", relationship: "similarTo" },
       { name: "Toast", relationship: "similarTo" },
       { name: "Tooltip", relationship: "similarTo" },
+      { name: "Button", relationship: "contains" },
       { name: "Icon", relationship: "contains" },
       { name: "Status indicator", relationship: "contains" },
     ]

@@ -10,21 +10,25 @@ data:
 
 ## Info
 
-Use the info system status to communicate important updates or new features that do not require immediate action.
+Use info system status to communicate important updates or new features that do not require immediate action.
+
+An info icon displays alongside a supporting message.
 
 <LivePreview componentName="system-status" exampleName="Info" />
 
 ## Error
 
-Use error system status for critical issues that affect the user's ability to access or use the platform. When relevant, add a secondary action to help resolve the issue.
+Use error system status for critical issues that affect the user's ability to access or use the platform. The messaging should explain what's affected and, where possible, what the user can do, such as try again later. When relevant, add a supporting action, such as viewing the service status. See the [interactive example](#interactive) for how to add actions.
+
+An error icon displays alongside a supporting message.
 
 <LivePreview componentName="system-status" exampleName="Error" />
 
 ## Warning
 
-Warnings announce scheduled outages or events that might impact the product experience, but don't prevent the user from using the application or completing their current workflow.
+Use warning system status to warn users about potential issues, such as scheduled outages or events that might impact the product experience. Warnings don't prevent the user from using the application or completing their current workflow.
 
-Use warning system status to alert users about potential issues.
+A warning icon displays alongside a supporting message.
 
 <LivePreview componentName="system-status" exampleName="Warning" />
 
@@ -32,18 +36,32 @@ Use warning system status to alert users about potential issues.
 
 Use success system status to communicate successfully completed system actions.
 
+A success icon displays alongside a supporting message.
+
 <LivePreview componentName="system-status" exampleName="Success" />
 
-## With Title
+## With title
 
 Use a title in a system status to highlight important information, and use description text to provide supporting details.
 
 <LivePreview componentName="system-status" exampleName="WithTitle" />
 
+## Interactive
+
+The interactive system status includes actions that let users respond to it.
+
+Use `SystemStatusActions` to add actions such as view status and dismiss. Use [`OnSolidButton`](/salt/components/button/examples#on-solid) for these actions.
+
+<LivePreview componentName="system-status" exampleName="Interactive" />
+
+## Announced
+
+A system status added to the page after it loads isn't announced by screen readers on its own. To announce it, add it to a live region that's on the page from first load. See the [accessibility guidance](/salt/components/system-status/accessibility) for which role to use.
+
+<LivePreview componentName="system-status" exampleName="Announced" />
+
 ## Placement
 
-System status alerts are displayed at the very top of the screen, extending across the full width of the page.
-
-They are positioned at the same level as the main content, causing any subsequent content to shift accordingly. For example, when a system status is dismissed, the content below it would move up to its original position.
+A system status is positioned at the same level as the main content, causing any subsequent content to shift accordingly. For example, when a system status is dismissed, the content below it moves up to its original position.
 
 <LivePreview componentName="system-status" exampleName="Placement" />
