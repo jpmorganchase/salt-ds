@@ -1,5 +1,16 @@
 # @salt-ds/core
 
+## 1.75.1
+
+### Patch Changes
+
+- e1e38ea: Packages are now built with tsdown and their type declarations are generated with TypeScript 7. Entry points, export maps and existing deep import paths are unchanged. The compiled output now includes shared compiler helper modules under `_virtual/`.
+- Updated dependencies [40bb637]
+- Updated dependencies [e1e38ea]
+  - @salt-ds/icons@1.20.0
+  - @salt-ds/styles@0.4.3
+  - @salt-ds/window@0.1.3
+
 ## 1.75.0
 
 ### Minor Changes
