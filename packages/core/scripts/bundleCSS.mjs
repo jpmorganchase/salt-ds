@@ -5,6 +5,7 @@ import { fileURLToPath } from "node:url";
 import { deleteSync } from "del";
 import esbuild from "esbuild";
 import glob from "fast-glob";
+import { esbuildCssBaseline } from "../../../scripts/cssBaseline.mjs";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const buildFolder = path.join(__dirname, "../css");
@@ -53,6 +54,7 @@ function runBuild() {
         ".ttf": "file",
       },
       write: true,
+      plugins: [esbuildCssBaseline()],
       bundle: true,
       logLevel: "info",
     })

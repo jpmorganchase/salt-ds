@@ -7,6 +7,7 @@ import browserslistToEsbuild from "browserslist-to-esbuild";
 import { rollup } from "rollup";
 import esbuild from "rollup-plugin-esbuild";
 import postcss from "rollup-plugin-postcss";
+import { postcssCssBaseline } from "./cssBaseline.mjs";
 import { makeTypings } from "./makeTypings.mjs";
 import { emptyDir } from "./utils.mjs";
 
@@ -56,7 +57,7 @@ const bundle = await rollup({
       minify: false,
       sourceMap: true,
     }),
-    postcss({ extract: false, inject: false }),
+    postcss({ extract: false, inject: false, plugins: [postcssCssBaseline()] }),
     json(),
   ],
 });

@@ -76,6 +76,15 @@ To check types, run:
 - `yarn typecheck` and `yarn typecheck:react19` to type check the source with the React 18 and 19 types.
 - `yarn typecheck:consumer` after `yarn build` to type check an application that uses the built packages with the React 16 to 19 types.
 
+### Supporting browsers
+
+Salt supports the browsers in the `production` browserslist in the root `package.json`. Write modern CSS: the package builds, Storybook and the browser tests lower it to those browsers with Lightning CSS, through `scripts/cssBaseline.mjs`. Lowering adds vendor prefixes and fallbacks such as `:-webkit-any()` for `:is()`, flattens nesting and expands properties such as `inset`.
+
+Lowering can't help with:
+
+- Features that have no fallback, such as `:has()`, `:where()`, `aspect-ratio` and `accent-color`. Use them only where older browsers can do without them. A selector a browser doesn't support invalidates every selector in its list, so give such a selector a rule of its own.
+- `inset-inline-start`, `inset-inline-end`, `inset-inline` and the logical corner radii such as `border-start-end-radius`, which Lightning CSS could only lower by guessing the text direction from the element's language. The build keeps these as written, so they don't work in browsers that lack them.
+
 ### Render prop support
 
 Expose `render` when consumers need to compose a Salt component with another component, such as a routing link, or when changing the rendered element is a valid case-by-case escape hatch. Keep the default element semantically correct so most consumers do not need `render`.
