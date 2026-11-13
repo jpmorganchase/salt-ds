@@ -120,6 +120,28 @@ for (const [version, [react, reactDom]] of Object.entries(reactTypes)) {
   } else {
     console.log(`React ${version} types: no errors${otherNote}`);
   }
+
+  // Keep exact-optional assignments separate: the existing declaration surface
+  // has unrelated exact-mode errors. The full check above still checks library
+  // declarations with skipLibCheck=false under the supported compiler options.
+  const optionalProgram = ts.createProgram({
+    rootNames: [path.join(fixtureDir, "exact-optional-properties.ts")],
+    options: {
+      ...program.getCompilerOptions(),
+      exactOptionalPropertyTypes: true,
+      skipLibCheck: true,
+    },
+  });
+  const optionalDiagnostics = ts.getPreEmitDiagnostics(optionalProgram);
+  if (optionalDiagnostics.length > 0) {
+    failed = true;
+    console.error(
+      `React ${version} exact optional props: ${optionalDiagnostics.length} errors`,
+    );
+    console.error(ts.formatDiagnostics(optionalDiagnostics, formatHost));
+  } else {
+    console.log(`React ${version} exact optional props: no errors`);
+  }
 }
 
 process.exitCode = failed ? 1 : 0;

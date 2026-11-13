@@ -21,6 +21,7 @@ import type { InputLegacyProps as InputProps } from "../../input-legacy";
 import { useList } from "../../list-deprecated";
 import { defaultItemToString } from "../../tokenized-input/internal/defaultItemToString";
 import { getDefaultFilter, getDefaultFilterRegex } from "../filterHelpers";
+import type { ComboBoxReturnValue } from "./ComboBoxReturnValue";
 import type { DefaultComboBoxProps } from "./DefaultComboBox";
 import { isToggleList, usePopperStatus } from "./usePopperStatus";
 
@@ -333,7 +334,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
       isListOpen && selectionChanged ? null : ariaActiveDescendant,
   };
 
-  return {
+  const result = {
     inputRef: handleInputRef,
     listContext: {
       state,
@@ -362,4 +363,7 @@ export const useComboBox = <Item>(props: UseComboBoxProps<Item>) => {
       isListOpen: isListOpen && Boolean(source.length),
     },
   };
+  // TS7 otherwise narrows optional properties inferred from these spreads.
+  const returnValue: ComboBoxReturnValue<typeof result, "listProps"> = result;
+  return returnValue;
 };

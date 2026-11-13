@@ -28,6 +28,7 @@ import {
 import { defaultItemToString } from "../../tokenized-input/internal/defaultItemToString";
 
 import { getDefaultFilter, getDefaultFilterRegex } from "../filterHelpers";
+import type { ComboBoxReturnValue } from "./ComboBoxReturnValue";
 import type { MultiSelectComboBoxProps } from "./MultiSelectComboBox";
 import { isToggleList, usePopperStatus } from "./usePopperStatus";
 
@@ -432,7 +433,7 @@ export const useMultiSelectComboBox = <Item>(
       .join(" "),
   } as ExpandButtonProps;
 
-  return {
+  const result = {
     inputHelpers,
     inputRef: handleInputRef,
     listContext: {
@@ -458,4 +459,10 @@ export const useMultiSelectComboBox = <Item>(
       isListOpen: isListOpen && Boolean(source.length),
     },
   };
+  // TS7 otherwise narrows optional properties inferred from these spreads.
+  const returnValue: ComboBoxReturnValue<
+    typeof result,
+    "inputProps" | "listProps"
+  > = result;
+  return returnValue;
 };
