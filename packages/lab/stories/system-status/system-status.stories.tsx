@@ -16,7 +16,7 @@ import {
   SystemStatusContent,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { type ReactNode, useId, useRef, useState } from "react";
+import { type ReactNode, useEffect, useId, useRef, useState } from "react";
 
 export default {
   title: "Lab/System Status",
@@ -188,67 +188,146 @@ export const Announced: StoryFn<typeof SystemStatus> = () => {
 };
 
 // TEMPORARY: screen reader investigation, remove before merging.
+type InvestigationRegion = "status" | "status-not-atomic" | "polite" | "alert";
+
+const investigationRegionProps = {
+  status: { role: "status" },
+  "status-not-atomic": { role: "status", "aria-atomic": false },
+  polite: { "aria-live": "polite" },
+  alert: { role: "alert" },
+} as const;
+
 const LiveRegionTest = ({
-  name,
-  atomic,
+  id,
+  description,
+  region = "status",
   children,
 }: {
-  name: string;
-  atomic?: boolean;
+  id: string;
+  description: string;
+  region?: InvestigationRegion;
   children: ReactNode;
 }) => {
   const [open, setOpen] = useState(false);
+  const timeoutRef = useRef<number | undefined>(undefined);
+
+  useEffect(() => () => window.clearTimeout(timeoutRef.current), []);
+
+  // Clears first, then re-inserts, so the same variant can be re-announced
+  // without a separate reset step.
+  const handleShow = () => {
+    window.clearTimeout(timeoutRef.current);
+    setOpen(false);
+    timeoutRef.current = window.setTimeout(() => setOpen(true), 500);
+  };
+
+  const handleClear = () => {
+    window.clearTimeout(timeoutRef.current);
+    setOpen(false);
+  };
+
   return (
     <StackLayout gap={1} style={{ width: "100%" }}>
-      <Text styleAs="h3">{name}</Text>
-      <div role="status" aria-atomic={atomic}>
-        {open && children}
-      </div>
+      <Text>
+        <strong>{id}</strong>: {description}
+      </Text>
+      <div {...investigationRegionProps[region]}>{open && children}</div>
       <StackLayout direction="row" gap={1}>
-        <Button onClick={() => setOpen(true)}>Show {name}</Button>
-        <Button onClick={() => setOpen(false)}>Reset {name}</Button>
+        <Button onClick={handleShow}>Show {id}</Button>
+        <Button onClick={handleClear}>Clear {id}</Button>
       </StackLayout>
     </StackLayout>
   );
 };
 
+const InvestigationMessage = () => <p>Maintenance on Saturday.</p>;
+
 export const AnnouncedInvestigation: StoryFn<typeof SystemStatus> = () => {
-  const labelId = useId();
+  const hiddenLabelId = useId();
+  const externalLabelId = useId();
+
   return (
-    <StackLayout gap={3} style={{ width: 600 }}>
-      <LiveRegionTest name="A">
-        <p>Maintenance on Saturday.</p>
+    <StackLayout gap={4} style={{ width: 640 }}>
+      <Text>
+        Press Show to insert the content into the live region. Pressing Show
+        again clears and re-inserts it after 500ms.
+      </Text>
+
+      <LiveRegionTest
+        id="A"
+        description='role="status". Icon-only button named with aria-label.'
+      >
+        <InvestigationMessage />
         <button type="button">View status</button>
         <button type="button" aria-label="Dismiss system status">
           <CloseIcon aria-hidden />
         </button>
       </LiveRegionTest>
-      <LiveRegionTest name="B">
-        <p>Maintenance on Saturday.</p>
+
+      <LiveRegionTest
+        id="B"
+        description='role="status". Button with visible text "Dismiss" and aria-label.'
+      >
+        <InvestigationMessage />
         <button type="button">View status</button>
         <button type="button" aria-label="Dismiss system status">
           Dismiss
         </button>
       </LiveRegionTest>
-      <LiveRegionTest name="C">
-        <p>Maintenance on Saturday.</p>
+
+      <LiveRegionTest
+        id="C"
+        description='role="status". Icon button named with visually hidden text.'
+      >
+        <InvestigationMessage />
         <button type="button">View status</button>
         <button type="button">
           <CloseIcon aria-hidden />
           <span className="salt-visuallyHidden">Dismiss system status</span>
         </button>
       </LiveRegionTest>
-      <LiveRegionTest name="D">
-        <p>Maintenance on Saturday.</p>
+
+      <LiveRegionTest
+        id="D"
+        description='role="status". Icon button named with aria-labelledby, pointing to a hidden element.'
+      >
+        <InvestigationMessage />
         <button type="button">View status</button>
-        <span id={labelId} hidden>
+        <span id={hiddenLabelId} hidden>
           Dismiss system status
         </span>
-        <button type="button" aria-labelledby={labelId}>
+        <button type="button" aria-labelledby={hiddenLabelId}>
           <CloseIcon aria-hidden />
         </button>
       </LiveRegionTest>
-      <LiveRegionTest name="E">
+
+      <Text id={externalLabelId}>Dismiss system status</Text>
+      <LiveRegionTest
+        id="E"
+        description='role="status". Icon button named with aria-labelledby, pointing to visible text outside the live region (shown above).'
+      >
+        <InvestigationMessage />
+        <button type="button">View status</button>
+        <button type="button" aria-labelledby={externalLabelId}>
+          <CloseIcon aria-hidden />
+        </button>
+      </LiveRegionTest>
+
+      <LiveRegionTest
+        id="F"
+        description='role="status". Icon button named only with a title attribute.'
+      >
+        <InvestigationMessage />
+        <button type="button">View status</button>
+        <button type="button" title="Dismiss system status">
+          <CloseIcon aria-hidden />
+        </button>
+      </LiveRegionTest>
+
+      <LiveRegionTest
+        id="G"
+        description='role="status". No buttons. Inline span with role="img" and aria-label="Warning".'
+      >
         <p>
           Maintenance on Saturday.{" "}
           <span role="img" aria-label="Warning">
@@ -256,20 +335,111 @@ export const AnnouncedInvestigation: StoryFn<typeof SystemStatus> = () => {
           </span>
         </p>
       </LiveRegionTest>
-      <LiveRegionTest name="F" atomic={false}>
-        <p>Maintenance on Saturday.</p>
-        <button type="button">View status</button>
-        <button type="button" aria-label="Dismiss system status">
-          <CloseIcon aria-hidden />
-        </button>
-      </LiveRegionTest>
-      <LiveRegionTest name="G">
-        <p>Maintenance on Saturday.</p>
+
+      <LiveRegionTest
+        id="H"
+        description='role="status". aria-label button between two paragraphs.'
+      >
+        <InvestigationMessage />
         <button type="button" aria-label="Dismiss system status">
           <CloseIcon aria-hidden />
         </button>
         <p>Thank you.</p>
       </LiveRegionTest>
+
+      <LiveRegionTest
+        id="I"
+        region="status-not-atomic"
+        description='Same as A, but role="status" with aria-atomic="false".'
+      >
+        <InvestigationMessage />
+        <button type="button">View status</button>
+        <button type="button" aria-label="Dismiss system status">
+          <CloseIcon aria-hidden />
+        </button>
+      </LiveRegionTest>
+
+      <LiveRegionTest
+        id="J"
+        region="polite"
+        description='Same as A, but aria-live="polite" instead of role="status".'
+      >
+        <InvestigationMessage />
+        <button type="button">View status</button>
+        <button type="button" aria-label="Dismiss system status">
+          <CloseIcon aria-hidden />
+        </button>
+      </LiveRegionTest>
+
+      <LiveRegionTest
+        id="K"
+        region="alert"
+        description='Same as A, but role="alert" instead of role="status".'
+      >
+        <InvestigationMessage />
+        <button type="button">View status</button>
+        <button type="button" aria-label="Dismiss system status">
+          <CloseIcon aria-hidden />
+        </button>
+      </LiveRegionTest>
+
+      <LiveRegionTest
+        id="L"
+        description='role="status". Salt SystemStatus as in the docs example: OnSolidButton with CloseIcon and aria-label.'
+      >
+        <SystemStatus>
+          <SystemStatusContent>
+            <Text color="inherit">Maintenance on Saturday.</Text>
+          </SystemStatusContent>
+          <SystemStatusActions>
+            <OnSolidButton>View status</OnSolidButton>
+            <OnSolidButton aria-label="Dismiss system status">
+              <CloseIcon aria-hidden />
+            </OnSolidButton>
+          </SystemStatusActions>
+        </SystemStatus>
+      </LiveRegionTest>
+
+      <LiveRegionTest
+        id="M"
+        description='role="status". Salt SystemStatus with the dismiss button named by visually hidden text.'
+      >
+        <SystemStatus>
+          <SystemStatusContent>
+            <Text color="inherit">Maintenance on Saturday.</Text>
+          </SystemStatusContent>
+          <SystemStatusActions>
+            <OnSolidButton>View status</OnSolidButton>
+            <OnSolidButton>
+              <CloseIcon aria-hidden />
+              <span className="salt-visuallyHidden">Dismiss system status</span>
+            </OnSolidButton>
+          </SystemStatusActions>
+        </SystemStatus>
+      </LiveRegionTest>
+
+      <StackLayout gap={1}>
+        <Text>
+          <strong>N</strong>: Static buttons, not in a live region. Tab to each
+          one, and inspect AXTitle and AXDescription in Accessibility
+          Inspector.
+        </Text>
+        <StackLayout direction="row" gap={1}>
+          <button type="button" aria-label="N1 aria-label">
+            <CloseIcon aria-hidden />
+          </button>
+          <button type="button">
+            <CloseIcon aria-hidden />
+            <span className="salt-visuallyHidden">N2 visually hidden text</span>
+          </button>
+          <button type="button" title="N3 title">
+            <CloseIcon aria-hidden />
+          </button>
+          <button type="button" aria-label="N4 aria-label">
+            Dismiss
+          </button>
+        </StackLayout>
+      </StackLayout>
     </StackLayout>
   );
 };
