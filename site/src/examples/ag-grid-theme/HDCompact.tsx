@@ -4,7 +4,6 @@ import {
   SaltProvider,
   SaltProviderNext,
   StackLayout,
-  useDensity,
   useTheme,
 } from "@salt-ds/core";
 import { AgGridReact } from "ag-grid-react";
@@ -24,11 +23,6 @@ const statusBar = {
 };
 
 const HDCompactGrid = () => {
-  const density = useDensity();
-  // Only opt into HD Compact when the nearest provider uses high density.
-  const className =
-    density === "high" ? "ag-theme-salt-compact" : "ag-theme-salt";
-
   return (
     <StackLayout style={{ width: "100%" }}>
       <Banner>
@@ -36,7 +30,10 @@ const HDCompactGrid = () => {
           Compact is intended for high density, which this example uses.
         </BannerContent>
       </Banner>
-      <div className={className} style={{ height: 500, width: "100%" }}>
+      <div
+        className="ag-theme-salt-compact"
+        style={{ height: 500, width: "100%" }}
+      >
         <AgGridReact
           columnDefs={defaultColumns}
           rowData={defaultData}
