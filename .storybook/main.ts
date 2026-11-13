@@ -5,6 +5,7 @@ import { cssInline } from "css-inline-plugin";
 import remarkGfm from "remark-gfm";
 import type { UserConfig } from "vite";
 import { typescriptTurbosnap } from "vite-plugin-typescript-turbosnap";
+import { postcssCssBaseline } from "../scripts/cssBaseline.mjs";
 
 const require = createRequire(import.meta.url);
 const config: StorybookConfig = {
@@ -54,6 +55,9 @@ const config: StorybookConfig = {
 
     const customConfig: UserConfig = {
       plugins: [cssInline()],
+      css: {
+        postcss: { plugins: [postcssCssBaseline()] },
+      },
       resolve: {
         alias: {
           "@salt-ds/ag-grid-theme/salt-ag-theme.css": join(

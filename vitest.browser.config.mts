@@ -10,6 +10,7 @@ import { cssInline } from "css-inline-plugin";
 import type { Plugin } from "vite";
 import { defineConfig } from "vitest/config";
 import type { BrowserCommand } from "vitest/node";
+import { postcssCssBaseline } from "./scripts/cssBaseline.mjs";
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
@@ -173,6 +174,9 @@ const legacyReactAliases: Alias[] =
 
 export default defineConfig({
   plugins: [rootDevelopmentPathsPlugin(), react(), cssInline()],
+  css: {
+    postcss: { plugins: [postcssCssBaseline()] },
+  },
   define: {
     "process.env": {},
   },
