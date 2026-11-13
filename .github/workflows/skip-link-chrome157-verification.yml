@@ -1,0 +1,117 @@
+name: SkipLink Chrome 157 verification
+on:
+  push:
+    branches:
+      - verify/skip-link-chrome-157
+permissions:
+  contents: read
+jobs:
+  skip-link:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout the exact PR source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          ref: cbe1faa8c129b389db3ec8a7e30db6febf3000ad
+          fetch-depth: 2
+          persist-credentials: false
+      - name: Use Node.js
+        uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: "26"
+          cache: "yarn"
+      - name: Install dependencies
+        run: yarn --immutable
+      - name: Download Chrome for Testing 157.0.8103.78
+        run: |
+          curl --fail --location --retry 3 https://storage.googleapis.com/chrome-for-testing-public/157.0.8103.78/linux64/chrome-linux64.zip --output "$RUNNER_TEMP/skip-link-chrome.zip"
+          unzip -q "$RUNNER_TEMP/skip-link-chrome.zip" -d "$RUNNER_TEMP/skip-link-chrome"
+          echo "SKIP_LINK_CHROME_PATH=$RUNNER_TEMP/skip-link-chrome/chrome-linux64/chrome" >> "$GITHUB_ENV"
+      - name: Verify source and browser versions
+        run: |
+          git rev-parse HEAD
+          yarn node --input-type=module <<'NODE'
+          import { chromium } from "playwright";
+          const browser = await chromium.launch({ executablePath: process.env.SKIP_LINK_CHROME_PATH });
+          try {
+            const version = browser.version();
+            console.log("Verification browser:", version);
+            if (version !== "157.0.8103.78") throw new Error("Unexpected browser version");
+          } finally {
+            await browser.close();
+          }
+          NODE
+      - name: Build packages
+        run: yarn build
+      - name: Configure the explicitly selected Chrome binary
+        run: |
+          cat > skip-link-verification.config.mts <<'EOF'
+          import { playwright } from "@vitest/browser-playwright";
+          import config from "./vitest.browser.config.mts";
+          export default {
+            ...config,
+            test: {
+              ...config.test,
+              browser: {
+                ...config.test?.browser,
+                provider: playwright({
+                  launchOptions: { executablePath: process.env.SKIP_LINK_CHROME_PATH },
+                }),
+              },
+            },
+          };
+          EOF
+      - name: Reproduce the two baseline focus failures
+        run: |
+          git restore --source=c69bf4650e6193e5161d57fe3bf78dce6f2c7888 --worktree -- packages/core/stories/skip-link/skip-link.stories.tsx packages/core/src/__tests__/__e2e__/skip-link/skip-link.browser.test.tsx
+          set +e
+          yarn vitest run --config skip-link-verification.config.mts --browser.headless --maxWorkers=1 packages/core/src/__tests__/__e2e__/skip-link/skip-link.browser.test.tsx --reporter=default --reporter=json --outputFile.json="$RUNNER_TEMP/skip-link-baseline.json"
+          skip_link_baseline_status=$?
+          set -e
+          test "$skip_link_baseline_status" -eq 1
+          yarn node --input-type=module <<'NODE'
+          import { readFileSync } from "node:fs";
+          const report = JSON.parse(readFileSync(process.env.RUNNER_TEMP + "/skip-link-baseline.json", "utf8"));
+          const tests = report.testResults.flatMap(result => result.assertionResults);
+          const failed = tests.filter(test => test.status === "failed");
+          const expected = new Set([
+            "moves focus to the target when clicked",
+            "moves focus to the target with keyboard navigation",
+          ]);
+          if (tests.length !== 4 || failed.length !== 2 || tests.filter(test => test.status === "passed").length !== 2) {
+            throw new Error("Baseline did not produce exactly the expected two failures and two passes");
+          }
+          for (const test of failed) {
+            if (!expected.delete(test.title) || !test.failureMessages.some(message => message.includes("expected '0' to be '1'") && message.includes("expectSkipLinkOpacity"))) {
+              throw new Error("Unexpected baseline failure: " + test.title);
+            }
+          }
+          if (expected.size) throw new Error("A required baseline focus failure was missing");
+          console.log("Confirmed both original SkipLink focus failures on Chrome 157.");
+          NODE
+      - name: Verify the exact PR fix
+        run: |
+          git restore --source=cbe1faa8c129b389db3ec8a7e30db6febf3000ad --worktree -- packages/core/stories/skip-link/skip-link.stories.tsx packages/core/src/__tests__/__e2e__/skip-link/skip-link.browser.test.tsx
+          git diff --exit-code cbe1faa8c129b389db3ec8a7e30db6febf3000ad -- packages/core/stories/skip-link/skip-link.stories.tsx packages/core/src/__tests__/__e2e__/skip-link/skip-link.browser.test.tsx
+          yarn vitest run --config skip-link-verification.config.mts --browser.headless --maxWorkers=1 packages/core/src/__tests__/__e2e__/skip-link/skip-link.browser.test.tsx --reporter=default --reporter=json --outputFile.json="$RUNNER_TEMP/skip-link-fixed.json"
+          yarn node --input-type=module <<'NODE'
+          import { readFileSync } from "node:fs";
+          const report = JSON.parse(readFileSync(process.env.RUNNER_TEMP + "/skip-link-fixed.json", "utf8"));
+          const tests = report.testResults.flatMap(result => result.assertionResults);
+          if (tests.length !== 4 || tests.some(test => test.status !== "passed")) {
+            throw new Error("The patched SkipLink suite must pass all four tests");
+          }
+          console.log("All four patched SkipLink tests passed on Chrome 157.");
+          NODE
+      - name: Upload verification evidence
+        if: always()
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: skip-link-chrome-157
+          path: |
+            ${{ runner.temp }}/skip-link-baseline.json
+            ${{ runner.temp }}/skip-link-fixed.json
+            .vitest/attachments
+            test/browser/screenshots
+          if-no-files-found: warn
