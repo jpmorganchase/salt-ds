@@ -1364,16 +1364,6 @@
     "category": "logos"
   },
   {
-    "iconName": "step-active",
-    "synonym": ["progress", "circle fill", "status", "work in progress", "wip"],
-    "category": "indicators"
-  },
-  {
-    "iconName": "step-default",
-    "synonym": ["progress", "circle", "status", "incomplete", "pending"],
-    "category": "indicators"
-  },
-  {
     "iconName": "stethoscope",
     "synonym": ["healthcare", "medicine", "medical", "clinic", "doctor"],
     "category": "objects"

@@ -1,7 +1,6 @@
 import { useColorMode } from "@jpmorganchase/mosaic-store";
 import {
   Code,
-  type Density,
   Display1,
   Display2,
   Display3,
@@ -20,6 +19,7 @@ import {
   TextNotation,
   type TextProps,
 } from "@salt-ds/core";
+import { clsx } from "clsx";
 import {
   type ComponentType,
   type ReactNode,
@@ -29,6 +29,10 @@ import {
 } from "react";
 import {
   getDensityDisplayName,
+  type PreviewDensity,
+  usePreviewDensity,
+} from "../components/previewDensity";
+import {
   type PreviewMode,
   ThemeSettingsOverlay,
 } from "../components/ThemeSettingsOverlay";
@@ -81,16 +85,18 @@ const themeOptions = themes.map(({ displayName, value }) => ({
 }));
 
 const defaultTheme: ThemeType = "next";
-const defaultDensity: Density = "medium";
+const defaultDensity: PreviewDensity = "medium";
 const defaultMode: PreviewMode = "system";
 
 export const TextStylesPreview = () => {
   const siteMode = useColorMode();
   const [theme, setTheme] = useState<ThemeType>(defaultTheme);
-  const [density, setDensity] = useState<Density>(defaultDensity);
+  const [density, setDensity] = useState<PreviewDensity>(defaultDensity);
   const [mode, setMode] = useState<PreviewMode>(defaultMode);
   const [metrics, setMetrics] = useState<Record<string, Metrics>>({});
   const listRef = useRef<HTMLUListElement>(null);
+  const { density: saltDensity, themeClassName: densityThemeClassName } =
+    usePreviewDensity(density);
 
   // Sizes are read from the rendered samples so they always match the selected theme and density.
   // biome-ignore lint/correctness/useExhaustiveDependencies: re-measure when the theme or density changes
@@ -164,8 +170,8 @@ export const TextStylesPreview = () => {
       {theme === "next" ? (
         <SaltProviderNext
           applyClassesTo="scope"
-          theme=""
-          density={density}
+          theme={densityThemeClassName ?? ""}
+          density={saltDensity}
           mode={previewMode}
           headingFont="Amplitude"
           actionFont="Amplitude"
@@ -175,8 +181,11 @@ export const TextStylesPreview = () => {
       ) : (
         <SaltProvider
           applyClassesTo="scope"
-          theme={theme === "salt-interim" ? "salt-interim" : ""}
-          density={density}
+          theme={clsx(
+            theme === "salt-interim" && "salt-interim",
+            densityThemeClassName,
+          )}
+          density={saltDensity}
           mode={previewMode}
         >
           {preview}

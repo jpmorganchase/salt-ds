@@ -29,16 +29,20 @@ The repo contains below packages under `/packages`
    - Name it using kebab casing e.g. `icon-name.svg`. Solid variants use the `_solid` suffix e.g. `icon-name_solid.svg`.
    - Remove everything except the icon paths (Figma frames, background rects, wrapping groups) and remove `fill` attributes so the icon inherits its color.
    - Keep the `width="12" height="12" viewBox="0 0 12 12"` attributes. See existing SVGs in the folder for reference.
-2. If the icon replaces an existing one, add an entry to `DEPRECATED_ICONS` in `packages/icons/scripts/generateIcons.mjs`, e.g. `{ componentName: "OldName", replacement: "NewName", since: "1.19.0" }`.
-3. Navigate to `packages/icons` e.g. `cd packages/icons`.
-4. Run `yarn build:icons` to build the icons. This generates the component in `src/components`, and updates `src/components/index.ts`, `saltIcons.css`, `stories/icon.all.ts` and `site/src/components/icon-preview/allIconsList.ts`.
-5. Update the icon synonyms used by the site's icon search:
-   1. Add a row for the icon to the Icons Synonym List spreadsheet.
+2. If the icon replaces an existing one, add an entry to `DEPRECATED_ICONS` in `packages/icons/scripts/generateIcons.mjs`, e.g. `{ componentName: "OldName", replacement: "NewName", since: "1.20.0" }`. Keep the deprecated icon's SVG and exports for compatibility.
+3. Update the icon synonyms used by the site's icon search:
+
+   1. Add a row for the new icon and remove rows for any deprecated icons from the Icons Synonym List spreadsheet.
    2. Copy the spreadsheet to `scripts/Icons Synonym List.xlsx`.
    3. From the repository root, run `node scripts/makeSynonym.mjs`. This regenerates `site/src/components/icon-preview/salt-icon-synonym.json` from the spreadsheet.
    4. Review the diff. The script regenerates the whole file, so if the spreadsheet is out of date it can revert changes made directly to the JSON. Keep only the intended changes and update the spreadsheet to match.
    5. Delete `scripts/Icons Synonym List.xlsx`. Do not commit it.
-6. Run `yarn test:components packages/icons` to verify the icons.
+
+   Remove the entire JSON entry for each deprecated icon. An empty synonym array or an explicit `deprecated` category is not sufficient. The missing entry places the icon in the site's Deprecated group and keeps it searchable by component name only.
+
+4. Navigate to `packages/icons` e.g. `cd packages/icons`.
+5. Run `yarn build:icons` to build the icons. This first checks that deprecated icons have no matching synonym entries, including shared entries for solid variants. The check also runs in CI through `yarn build`. Generation then updates `src/components`, `src/components/index.ts`, `saltIcons.css`, `stories/icon.all.ts` and `site/src/components/icon-preview/allIconsList.ts`.
+6. From the repository root, run `yarn test:components packages/icons` to verify the icons.
 7. Write a changeset using `yarn changeset`, this should have the format:
 
 ```md

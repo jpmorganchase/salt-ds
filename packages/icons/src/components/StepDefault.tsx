@@ -6,6 +6,7 @@ import { Icon, type IconProps } from "../icon";
 
 export type StepDefaultIconProps = IconProps;
 
+/** @deprecated since 1.20.0. Use `ProgressDraftIcon` instead. */
 export const StepDefaultIcon = forwardRef<SVGSVGElement, StepDefaultIconProps>(
   function StepDefaultIcon(props: StepDefaultIconProps, ref) {
     return (
