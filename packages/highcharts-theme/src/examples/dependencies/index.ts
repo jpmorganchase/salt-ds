@@ -4,7 +4,9 @@ export { boxPlotOptions } from "./boxPlotOptions";
 export { bubbleOptions } from "./bubbleOptions";
 export { bulletOptions } from "./bulletOptions";
 export { candlestickOptions } from "./candlestickOptions";
+export { centeredConversionFunnelOptions } from "./centeredConversionFunnelOptions";
 export { columnOptions } from "./columnOptions";
+export { conversionFunnelOptions } from "./conversionFunnelOptions";
 export { donutOptions } from "./donutOptions";
 export { dualAxisOptions } from "./dualAxisOptions";
 export {

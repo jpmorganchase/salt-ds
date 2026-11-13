@@ -64,6 +64,36 @@ A stacked bar chart is a variation of the bar chart, with the `plotOptions.serie
 
 <LivePreview componentName="chart" exampleName="StackedBarChart" />
 
+## Conversion funnel charts
+
+Use a conversion funnel to show how many items reach each stage of a process. Bar width represents the count at each stage. Use counts from the same cohort and time frame, and keep stages in process order. If a later value increases, allow the bar to widen instead of sorting the stages or forcing the funnel to narrow.
+
+The percentages in the left-aligned example show the count as a percentage of the initial stage. This differs from the conversion rate between consecutive stages; label the denominator clearly when presenting either measure.
+
+### Centered conversion funnel
+
+Use centered bars to emphasize the overall shape of the funnel. Each bar has the same height, and its width is proportional to the stage count.
+
+<Callout title="Note">
+  This example uses an inverted `columnrange` series. In Highcharts v10 and v11,
+  import `highcharts/highcharts-more` and initialize it with your `Highcharts`
+  instance, as shown in the example. In Highcharts v12+, import the module for
+  its side effect instead. See [Module loading](./usage#module-loading).
+</Callout>
+
+<LivePreview
+  componentName="chart"
+  exampleName="CenteredConversionFunnelChart"
+/>
+
+### Left-aligned conversion funnel
+
+Use left-aligned bars to compare stage counts from a shared zero baseline. The circles show the percentage of the initial stage, while the optional connectors emphasize the progression between stages. Use the "Show connectors" switch to toggle them.
+
+This example combines a standard bar series with custom shapes drawn using the Highcharts SVG renderer.
+
+<LivePreview componentName="chart" exampleName="ConversionFunnelChart" />
+
 ## Waterfall chart
 
 Use a waterfall chart to show the cumulative effect of sequential positive and negative values. This is ideal for visualizing financial data, showing how an initial value is affected by a series of changes.
