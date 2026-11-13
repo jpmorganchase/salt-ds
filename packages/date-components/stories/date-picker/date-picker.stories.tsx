@@ -63,7 +63,7 @@ import {
 } from "react";
 // CustomDatePickerPanel is a sample component, representing a composition you could create yourselves, not intended for importing into your own projects
 // refer to https://github.com/jpmorganchase/salt-ds/blob/main/packages/date-components/src/date-picker/useDatePicker.ts to create your own
-import { CustomDatePickerPanel } from "./CustomDatePickerPanel";
+import { CustomDatePickerPanel } from "../../../../site/src/examples/date-picker/CustomDatePickerPanel";
 import "moment/dist/locale/zh-cn";
 import "moment/dist/locale/es";
 import "dayjs/locale/es";

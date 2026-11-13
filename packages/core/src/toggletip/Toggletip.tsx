@@ -19,7 +19,7 @@ export interface ToggletipProps {
    * Callback function triggered when open state changes.
    */
   onOpenChange?: (open: boolean) => void;
-  /*
+  /**
    * Set the placement of the Toggletip component relative to the trigger element. Defaults to `top`.
    */
   placement?: "top" | "bottom" | "left" | "right";

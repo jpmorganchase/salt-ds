@@ -9,17 +9,11 @@ aliases:
 data:
   resources:
     [
-      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-comments", label: "Comments examples" },
     ]
   components: ["Avatar", "Form field", "Input", "Multiline input"]
 ---
 
-<Diagram
-  src="/img/patterns/comments/comments-hero-shot.png"
-  srcDark="/img/patterns/comments/comments-hero-shot-dark.png"
-  alt="Example showing comments."
-  border
-/>
+<LivePreview componentName="patterns/comments" exampleName="Default" />
 
 ## When to use
 
@@ -27,6 +21,13 @@ data:
 - Capture collaborative notes and reminders in shared contexts.
 - Maintain an auditable discussion log.
 - Suitable for forums, activity feeds, support threads, and collaborative workspaces.
+
+## When not to use
+
+- When users only need to read system-generated events or history, use an activity log, timeline, or audit trail instead.
+- When feedback should be private or submitted once, use a form, survey, or support intake flow instead.
+- When the content is long-form documentation, decisions, or instructions, use a document, page, or knowledge base pattern instead.
+- When real-time conversation is the primary task, use a messaging or chat experience instead.
 
 ## How to build
 
@@ -50,12 +51,15 @@ Each comment tile can include:
 
 ### Layout
 
-Use [`StackLayout`](/salt/components/layouts/stack-layout) to display the input and the comments list. 
+- Use [`StackLayout`](/salt/components/layouts/stack-layout) with `direction="column"` to display the input and the comments list.
+- Use a [`FormField`](/salt/components/form-field) with a label for the input.
+- Lay out each comment with a `StackLayout` that has `gap={1}` and `padding={1}` (`--salt-spacing-100`). Separate comments with a border that uses `--salt-separable-tertiary-borderColor`.
+- Display the author with the H4 text style, and the role and timestamp with the Label text style in the secondary color.
 
 <Diagram
   src="/img/patterns/comments/comments-layout.png"
   srcDark="/img/patterns/comments/comments-layout-dark.png"
-  alt="comments layout"
+  alt="Comments layout: a form field above a column stack layout of comments, each comment a column stack layout with gap 1."
   border
 />
 
@@ -64,31 +68,24 @@ Use [`StackLayout`](/salt/components/layouts/stack-layout) to display the input 
 Include when identity cues improve scanning or clarify ownership.
 
 - Avatar: Show a photo; fall back to initials. Keep size and placement consistent.
-- Role: Use a short, standardized role or title. 
+- Role: Use a short, standardized role or title.
 
-<Diagram
-  src="/img/patterns/comments/comments-avatar.png"
-  srcDark="/img/patterns/comments/comments-avatar-dark.png"
-  alt="comments with avatars"
-  border
-/>
+The example below shows a photo avatar beside each comment, with the role before the timestamp.
 
-Use the [`Avatar`](/salt/components/avatar) component’s categorical colors to differentiate authors.
+<LivePreview componentName="patterns/comments" exampleName="WithAvatar" />
 
-<Diagram
-  src="/img/patterns/comments/comments-user-role.png"
-  srcDark="/img/patterns/comments/comments-user-role-dark.png"
-  alt="comments with user roles"
-  border
-/>
+Use the [`Avatar`](/salt/components/avatar) component’s categorical colors to differentiate authors, as in the example below.
+
+<LivePreview componentName="patterns/comments" exampleName="WithCategoricalAvatar" />
 
 ## Timestamp
 
 Always show a timestamp and the last edit time.
+
 <Diagram
   src="/img/patterns/comments/comments-timestamp.png"
   srcDark="/img/patterns/comments/comments-timestamp-dark.png"
-  alt="comments with time stamp"
+  alt="A comment with its timestamp followed by an italic edited time, for example (Edited 04:46 PM)."
   border
 />
 
@@ -101,33 +98,23 @@ Always show a timestamp and the last edit time.
 
 Use a short, neutral message to indicate there are no comments yet.
 
-<Diagram
-  src="/img/patterns/comments/comments-empty-state.png"
-  srcDark="/img/patterns/comments/comments-empty-state-dark.png"
-  alt="Comments with empty state"
-  border
-/>
-
 <GuidanceCallout type="positive" customPillText="Best practices">
   - Use direct language that sets expectations (for example, “No comments yet.”).
   - Keep it compact; avoid decorative imagery or filler.
 </GuidanceCallout>
 
+<LivePreview componentName="patterns/comments" exampleName="WithEmptyState" />
+
 ## Multiline input
 
 Use a [`MultilineInput`](/salt/components/multiline-input) when longer messages are common; this reduces scrolling while composing.
-
-<Diagram
-  src="/img/patterns/comments/comments-multiline-input.png"
-  srcDark="/img/patterns/comments/comments-multiline-input-dark.png"
-  alt="Comments with multiline input"
-  border
-/>
 
 <GuidanceCallout type="positive" customPillText="Best practices">
   - Use a multiline field only if a meaningful portion of users will benefit.
   - Auto‑grow to a sensible maximum height, then scroll within the field so the thread stays visible.
 </GuidanceCallout>
+
+<LivePreview componentName="patterns/comments" exampleName="WithMultilineInput" />
 
 ## Display order
 
@@ -147,18 +134,12 @@ Choose the order that best fits the task.
 
 Offer recovery without losing work by showing an inline error. Preserve the failed comment text.
 
-<Diagram
-  src="/img/patterns/comments/comments-submission-error.png"
-  srcDark="/img/patterns/comments/comments-submission-error-dark.png"
-  alt="Comments with submission error"
-  border
-/>
-
 <GuidanceCallout type="positive" customPillText="Best practices">
   - Use clear, actionable copy that states what happened and what the user can do next.
   - Provide Retry and Dismiss actions; keep the message visible until resolved.
   - Support stacked errors if multiple submissions fail.
 </GuidanceCallout>
 
+<LivePreview componentName="patterns/comments" exampleName="WithSubmissionError" />
 
 :fragment{src="./fragments/feedback.mdx"}

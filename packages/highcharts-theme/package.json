@@ -17,7 +17,8 @@
   "files": [
     "dist-cjs",
     "dist-es",
-    "dist-types"
+    "dist-types",
+    "docs"
   ],
   "publishConfig": {
     "main": "dist-cjs/index.js",

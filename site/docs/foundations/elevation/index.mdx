@@ -10,52 +10,53 @@ Shadow creates the perception of depth and distance between layers, establishing
 
 ## Shadow ramps
 
-Salt provides a ramp consisting of five levels of shadow, ranging from shadow-100 to shadow-500. Each level has specific horizontal and vertical offsets that change as the shadows grow, providing a graduated effect between soft and strong shadows.
+Salt provides a ramp consisting of five levels of shadow, ranging from lowest to medium. Each level has specific horizontal and vertical offsets that change as the shadows grow, providing a graduated effect between soft and strong shadows.
 
 <Image
   src="/img/foundations/shadow-ramps.png"
   alt="Diagram to show all five shadow levels."
 />
 
-There are six shadow levels to choose from.
+Apply a shadow with the overlayable characteristic token for its purpose, which uses the matching level of the ramp in each theme and mode. Shadows are darker in dark mode.
 
-| Token               | X-Axis (px) | Y-Axis (px) | Blur (px) |
-| ------------------- | ----------- | ----------- | --------- |
-| `--salt-shadow-100` | 0           | 1           | 3         |
-| `--salt-shadow-200` | 0           | 2           | 4         |
-| `--salt-shadow-300` | 0           | 4           | 8         |
-| `--salt-shadow-400` | 0           | 6           | 10        |
-| `--salt-shadow-500` | 0           | 12          | 40        |
+| Purpose         | Token                              | Level                     | X-Axis (px) | Y-Axis (px) | Blur (px) |
+| --------------- | ---------------------------------- | ------------------------- | ----------- | ----------- | --------- |
+| Scrollable area | `--salt-overlayable-shadow-scroll` | `--salt-shadow-lowest`    | 0           | 1           | 3         |
+| Region          | `--salt-overlayable-shadow-region` | `--salt-shadow-lower`     | 0           | 2           | 4         |
+| Hover           | `--salt-overlayable-shadow-hover`  | `--salt-shadow-low`       | 0           | 4           | 8         |
+| Pop-out         | `--salt-overlayable-shadow-popout` | `--salt-shadow-mediumLow` | 0           | 6           | 10        |
+| Dragged item    | `--salt-overlayable-shadow-drag`   | `--salt-shadow-mediumLow` | 0           | 6           | 10        |
+| Modal           | `--salt-overlayable-shadow-modal`  | `--salt-shadow-medium`    | 0           | 12          | 40        |
 
-### shadow-100: Scrollable area
+### Scrollable area
 
-Shadow-100 is the closest to the surface and is used exclusively for scrollable areas where the content exceeds the visible screen space, allowing users to scroll up or down. This is typically positioned at the top of an overflowing area, providing a subtle hint of depth without casting a noticeable shadow.
+The scrollable area shadow is the closest to the surface and is used exclusively for scrollable areas where the content exceeds the visible screen space, allowing users to scroll up or down. This is typically positioned at the top of an overflowing area, providing a subtle hint of depth without casting a noticeable shadow.
 
-### shadow-200: Region
+### Region
 
-Shadow-200 introduces a slight elevation, offering a soft shadow that begins to separate elements from the background. This level is suitable for components that require a gentle lift, such as cards or small panels.
+The region shadow introduces a slight elevation, offering a soft shadow that begins to separate elements from the background. This level is suitable for components that require a gentle lift, such as cards or small panels.
 
 <Image
   src="/img/foundations/shadow-container.png"
   alt="Diagram showing a region shadow on a container."
 />
 
-### shadow-300: Hover
+### Hover
 
-Shadow-300 provides a moderate level of separation with a more pronounced shadow. It is ideal for elements that need to stand out more distinctly, such as dropdown menus or tooltips.
+The hover shadow provides a moderate level of separation with a more pronounced shadow. It is ideal for elements that need to stand out more distinctly, such as dropdown menus or tooltips.
 
-### shadow-400: Pop-out
+### Pop-out
 
-Shadow-400 offers a strong contrast with well-defined edges, making it perfect for components that require significant emphasis such as a popout. A popout is a window above the interface with a shadow that temporarily overlays elements, e.g. Toast, Tooltip, Overlay.
+The pop-out shadow offers a strong contrast with well-defined edges, making it perfect for components that require significant emphasis such as a popout. A popout is a window above the interface with a shadow that temporarily overlays elements, e.g. Toast, Tooltip, Overlay.
 
 <Image
   src="/img/foundations/shadow-popout.png"
   alt="Diagram showing a pop-out shadow."
 />
 
-### shadow-500: Modal
+### Modal
 
-Shadow-500 is the furthest away from the surface and is reserved for modal dialogs only. It creates a dramatic effect with a strong shadow, ensuring that modal dialogs are clearly distinguished from the rest of the content. For a modal, the user must interact with the overlay window, which typically has a scrim behind it, before interacting with the page content.
+The modal shadow is the furthest away from the surface and is reserved for modal dialogs only. It creates a dramatic effect with a strong shadow, ensuring that modal dialogs are clearly distinguished from the rest of the content. For a modal, the user must interact with the overlay window, which typically has a scrim behind it, before interacting with the page content.
 
 <Image
   src="/img/foundations/shadow-modal.png"

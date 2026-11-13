@@ -10,11 +10,10 @@
 
 export interface DateFrameworkTypeMap {};
 /**
- * Represents the date object of a date framework.
+ * The date object of the date adapter the app uses, such as `Date` for date-fns, `Dayjs` for Day.js, `DateTime` for Luxon or `Moment` for Moment.js.
  *
- * If the DateFrameworkTypeMap is empty, it defaults to any; otherwise, it is a union of all types in the map.
+ * Importing an adapter adds its date object to `DateFrameworkTypeMap`. If the DateFrameworkTypeMap is empty, it defaults to any; otherwise, it is a union of all types in the map.
  */
-
 export type DateFrameworkType = keyof DateFrameworkTypeMap extends never
   ? // biome-ignore lint/suspicious/noExplicitAny: date framework
     any

@@ -1,0 +1,73 @@
+import {
+  Avatar,
+  Button,
+  FormField,
+  FormFieldHelperText,
+  FormFieldLabel,
+  Input,
+  StackLayout,
+} from "@salt-ds/core";
+import { SendIcon } from "@salt-ds/icons";
+import { CommentList, useCommentForm } from "./Default";
+
+const avatarImages: Record<string, string> = {
+  "Alex Rivera": "/img/examples/avatar.png",
+  "Jordan Lee": "/img/examples/avatar2.png",
+  "Sam Patel": "/img/examples/avatar3.png",
+};
+
+export const WithAvatar = () => {
+  const {
+    inputRef,
+    inputValue,
+    validationStatus,
+    comments,
+    handleSubmit,
+    handleChange,
+  } = useCommentForm();
+
+  return (
+    <StackLayout gap={0} style={{ width: "100%", maxWidth: "420px" }}>
+      <form
+        style={{ padding: "var(--salt-spacing-100)" }}
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleSubmit();
+        }}
+      >
+        <FormField validationStatus={validationStatus}>
+          <FormFieldLabel>Write a comment</FormFieldLabel>
+          <Input
+            bordered
+            placeholder="Add a comment..."
+            inputRef={inputRef}
+            inputProps={{ "aria-invalid": validationStatus === "error" }}
+            endAdornment={
+              inputValue && (
+                <Button aria-label="Send comment" type="submit">
+                  <SendIcon aria-hidden />
+                </Button>
+              )
+            }
+            value={inputValue}
+            onChange={handleChange}
+          />
+          {validationStatus === "error" && (
+            <FormFieldHelperText>Comment can't be blank</FormFieldHelperText>
+          )}
+        </FormField>
+      </form>
+      <CommentList
+        comments={comments}
+        renderAvatar={(comment) => (
+          <Avatar
+            size={1}
+            name={comment.name}
+            src={avatarImages[comment.name]}
+            aria-hidden="true"
+          />
+        )}
+      />
+    </StackLayout>
+  );
+};

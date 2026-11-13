@@ -1,0 +1,425 @@
+import path from "node:path";
+import { toString as nodeText } from "mdast-util-to-string";
+import { siteAnchorMap } from "./anchors.mjs";
+import {
+  DROPPED_FRAGMENTS,
+  GENERATED_MARKER,
+  INDEX_SECTIONS,
+  PACKAGE_DESCRIPTIONS,
+  RELATIONSHIP_LABELS,
+  SITE_ORIGIN,
+  SUMMARY_MAX_LENGTH,
+} from "./config.mjs";
+import { compareText } from "./files.mjs";
+import { docLink } from "./links.mjs";
+import {
+  convertMdx,
+  demoteHeadings,
+  parseMarkdown,
+  stringifyMarkdown,
+  stripFragments,
+  u,
+} from "./mdx.mjs";
+import { placeExamples } from "./placement.mjs";
+
+export function summarize(text, maxLength = SUMMARY_MAX_LENGTH) {
+  const clean = text.replace(/\s+/g, " ").trim();
+  if (clean.length <= maxLength) return clean;
+  const window = clean.slice(0, maxLength);
+  const sentenceEnd = window.lastIndexOf(". ");
+  if (sentenceEnd > maxLength / 2) return window.slice(0, sentenceEnd + 1);
+  const wordEnd = window.lastIndexOf(" ");
+  return `${window.slice(0, wordEnd > 0 ? wordEnd : maxLength)}…`;
+}
+
+function plainText(markdown) {
+  return nodeText(parseMarkdown(markdown));
+}
+
+/**
+ * Links to the pages one level below `doc`, each with the first sentence of
+ * its summary, as the site lists them with `meta.data.items`.
+ */
+function childPageList(doc, shared) {
+  const prefix = `${doc.route}/`;
+  const children = (shared.documents ?? [])
+    .filter(
+      (other) =>
+        other.route.startsWith(prefix) &&
+        !other.route.slice(prefix.length).includes("/"),
+    )
+    .sort((left, right) => compareText(left.title, right.title));
+  if (children.length === 0) return [];
+  return [
+    u.list(
+      children.map((child) => {
+        const summary =
+          typeof child.summary === "string"
+            ? (/^.*?\.(?=\s|$)/.exec(plainText(child.summary).trim())?.[0] ??
+              plainText(child.summary).trim())
+            : "";
+        return u.listItem([
+          u.paragraph([
+            u.link(
+              docLink({
+                fromPackage: doc.packageName,
+                fromDocPath: doc.docPath,
+                toPackage: child.packageName,
+                toDocPath: child.docPath,
+              }),
+              [u.text(child.title)],
+            ),
+            ...(summary ? [u.text(`: ${summary}`)] : []),
+          ]),
+        ]);
+      }),
+    ),
+  ];
+}
+
+function location(page, node) {
+  const line = node?.position?.start?.line;
+  return line
+    ? `site/docs/${page.relativePath}:${line + page.lineOffset}`
+    : `site/docs/${page.relativePath}`;
+}
+
+async function convertPage(page, doc, shared) {
+  const ctx = {
+    sitePath: page.sitePath,
+    packageName: doc.packageName,
+    docPath: doc.docPath,
+    links: shared.links,
+    examples: shared.examples,
+    props: shared.props,
+    subcomponents: (packageDirectory, name) =>
+      shared.subcomponents?.(packageDirectory, name) ?? [],
+    referenceLink: (packageName, docPath) =>
+      docLink({
+        fromPackage: doc.packageName,
+        fromDocPath: doc.docPath,
+        toPackage: packageName,
+        toDocPath: docPath,
+      }),
+    error: (node, message) =>
+      shared.errors.push(`${location(page, node)}: ${message}`),
+    warn: (node, message) =>
+      shared.warnings.push(`${location(page, node)}: ${message}`),
+    note: (node, message) =>
+      shared.notes.push(`${location(page, node)}: ${message}`),
+    childPages: () => childPageList(doc, shared),
+    deprecatedToken: (name) => shared.deprecatedTokens?.get(name),
+    // The first page whose props table documents a component is its page.
+    // Packages can export different components with one name, such as Lab's
+    // legacy Tab, so a page is recorded for the table's package.
+    recordComponent: (name, packageDirectory) => {
+      const key = `${packageDirectory}/${name}`;
+      if (!shared.componentPages?.has(key)) {
+        shared.componentPages?.set(key, {
+          packageName: doc.packageName,
+          docPath: doc.docPath,
+        });
+      }
+    },
+  };
+  try {
+    const { source, fragments } = stripFragments(page.body);
+    for (const fragment of fragments) {
+      if (!DROPPED_FRAGMENTS.has(path.posix.basename(fragment.src))) {
+        shared.errors.push(
+          `site/docs/${page.relativePath}:${fragment.line + page.lineOffset}: unsupported fragment ${fragment.src}. Handle it in tooling/agent-docs.`,
+        );
+      }
+    }
+    return await convertMdx(source, ctx);
+  } catch (error) {
+    const line = error?.place?.line ?? error?.line;
+    shared.errors.push(
+      `site/docs/${page.relativePath}${line ? `:${line + page.lineOffset}` : ""}: cannot parse MDX (${error.reason ?? error.message}).`,
+    );
+    return [];
+  }
+}
+
+function fact(label, phrasing) {
+  return u.listItem([u.paragraph([u.text(`${label}: `), ...phrasing])]);
+}
+
+function joinPhrasing(parts) {
+  return parts.flatMap((part, index) =>
+    index === 0 ? part : [u.text(", "), ...part],
+  );
+}
+
+function referenceTo(doc, target, label) {
+  return target
+    ? [
+        u.link(
+          docLink({
+            fromPackage: doc.packageName,
+            fromDocPath: doc.docPath,
+            toPackage: target.packageName,
+            toDocPath: target.docPath,
+          }),
+          [u.text(label)],
+        ),
+      ]
+    : [u.text(label)];
+}
+
+function commonFacts(doc, shared) {
+  const version = shared.packages.get(doc.packageName)?.version;
+  return [fact("Package", [u.inlineCode(`${doc.packageName}@${version}`)])];
+}
+
+function websiteFact(doc) {
+  const url = `${SITE_ORIGIN}${doc.route}`;
+  return fact("Website", [u.link(url, [u.text(url)])]);
+}
+
+/** Rewrites links in frontmatter text, whose line numbers aren't the page's. */
+function rewriteLinks(nodes, doc, page, shared) {
+  const ctx = {
+    sitePath: page.sitePath,
+    packageName: doc.packageName,
+    docPath: doc.docPath,
+    error: (_node, message) =>
+      shared.errors.push(`${location(page)}: ${message}`),
+  };
+  const visit = (parent) => {
+    const children = [];
+    for (const node of parent.children ?? []) {
+      if (node.type === "link" || node.type === "definition") {
+        const url = shared.links.resolve(node.url, ctx, node);
+        if (url === null) {
+          if (node.type === "link") children.push(...visit(node));
+          continue;
+        }
+        node.url = url;
+      }
+      if (node.children) node.children = visit(node);
+      children.push(node);
+    }
+    return children;
+  };
+  return visit({ children: nodes });
+}
+
+function frontmatterNodes(value, doc, page, shared) {
+  return typeof value === "string" && value.trim()
+    ? rewriteLinks(parseMarkdown(value).children, doc, page, shared)
+    : [];
+}
+
+function isLabelParagraph(node) {
+  return (
+    node?.type === "paragraph" &&
+    node.children.length === 1 &&
+    node.children[0].type === "strong"
+  );
+}
+
+/** The first paragraph, or a leading callout, summarizes a page without a description. */
+function firstParagraphText(nodes) {
+  const first = nodes.find(
+    (node) => node.type === "paragraph" || node.type === "blockquote",
+  );
+  if (!first) return "";
+  if (first.type === "paragraph") return nodeText(first);
+  const paragraph = first.children.find(
+    (child) => child.type === "paragraph" && !isLabelParagraph(child),
+  );
+  return paragraph ? nodeText(paragraph) : "";
+}
+
+/**
+ * Renders a page's Markdown and any example files moved off it. A component
+ * page's examples come after its usage and accessibility guidance, so a short
+ * first example can stay; on other pages examples can come first, so they
+ * all move when the page is too long.
+ */
+function finishDocument(doc, children, summary, segments) {
+  // Before placement, which copies the nodes.
+  const anchorMap = siteAnchorMap(children, segments);
+  const placed = placeExamples(children, {
+    title: doc.title,
+    docPath: doc.docPath,
+    keepShortFirst: doc.kind === "component",
+  });
+  return {
+    markdown: stringifyMarkdown({ type: "root", children: placed.children }),
+    summary,
+    files: placed.files,
+    anchorMap,
+  };
+}
+
+export async function renderComponentDocument(doc, shared) {
+  const facts = commonFacts(doc, shared);
+  const dependency = doc.index.frontmatter.data?.externalDependency;
+  if (typeof dependency?.name === "string" && dependency.name.trim()) {
+    const name = [u.inlineCode(dependency.name)];
+    facts.push(
+      ...rewriteLinks(
+        [
+          fact(
+            "External dependency",
+            typeof dependency.url === "string" && dependency.url.trim()
+              ? [u.link(dependency.url, name)]
+              : name,
+          ),
+        ],
+        doc,
+        doc.index,
+        shared,
+      ),
+    );
+  }
+  if (
+    typeof dependency?.compatibleVersions === "string" &&
+    dependency.compatibleVersions.trim()
+  ) {
+    facts.push(
+      fact("Compatible versions", [
+        u.inlineCode(dependency.compatibleVersions),
+      ]),
+    );
+  }
+  if (dependency?.licenseRequired === true) {
+    facts.push(fact("License required", [u.text("Yes")]));
+  }
+  if (doc.aliases.length > 0) {
+    facts.push(fact("Also known as", [u.text(doc.aliases.join(", "))]));
+  }
+  const related = doc.relatedComponents
+    .filter((item) => typeof item?.name === "string")
+    .map((item) => {
+      const label = RELATIONSHIP_LABELS[item.relationship];
+      const target = shared.componentsByTitle.get(item.name.toLowerCase());
+      return [
+        ...referenceTo(doc, target, item.name),
+        ...(label ? [u.text(` (${label})`)] : []),
+      ];
+    });
+  if (related.length > 0) {
+    facts.push(fact("Related components", joinPhrasing(related)));
+  }
+  const patterns = doc.relatedPatterns
+    .filter((name) => typeof name === "string")
+    .map((name) =>
+      referenceTo(doc, shared.patternsByTitle.get(name.toLowerCase()), name),
+    );
+  if (patterns.length > 0) {
+    facts.push(fact("Related patterns", joinPhrasing(patterns)));
+  }
+  facts.push(websiteFact(doc));
+
+  const overview = await convertPage(doc.index, doc, shared);
+  const segments = [{ route: doc.route, nodes: overview }];
+  const children = [
+    u.heading(1, [u.text(doc.title)]),
+    ...frontmatterNodes(doc.summary, doc, doc.index, shared),
+    ...frontmatterNodes(dependency?.description, doc, doc.index, shared),
+    u.list(facts),
+    ...overview,
+  ];
+  for (const tab of doc.tabs) {
+    const content = await convertPage(tab.page, doc, shared);
+    segments.push({ route: tab.page.route, nodes: content });
+    if (content.length === 0) continue;
+    children.push(
+      u.heading(2, [u.text(tab.heading)]),
+      ...demoteHeadings(content, 1),
+    );
+  }
+  return finishDocument(
+    doc,
+    children,
+    typeof doc.summary === "string" ? plainText(doc.summary) : "",
+    segments,
+  );
+}
+
+export async function renderPageDocument(doc, shared) {
+  const content = await convertPage(doc.page, doc, shared);
+  const children = [
+    u.heading(1, [u.text(doc.title)]),
+    ...frontmatterNodes(doc.summary, doc, doc.page, shared),
+    u.list([...commonFacts(doc, shared), websiteFact(doc)]),
+    ...content,
+  ];
+  return finishDocument(
+    doc,
+    children,
+    typeof doc.summary === "string"
+      ? plainText(doc.summary)
+      : firstParagraphText(content),
+    [{ route: doc.route, nodes: content }],
+  );
+}
+
+function sectionFor(entry) {
+  if (entry.section) return entry.section;
+  return entry.docPath.split("/")[0].replace(/\.md$/, "");
+}
+
+/**
+ * Renders `docs/manifest.json`: every page an index lists, which
+ * agents-md.mjs compresses into the AGENTS.md block.
+ */
+export function renderManifest({ packageName, version, entries }) {
+  const pages = entries
+    .map((entry) => ({
+      path: entry.docPath,
+      title: entry.title,
+      section: sectionFor(entry),
+      ...(entry.aliases?.length > 0 ? { aliases: entry.aliases } : {}),
+    }))
+    .sort((left, right) =>
+      left.path < right.path ? -1 : left.path > right.path ? 1 : 0,
+    );
+  return `${JSON.stringify({ schemaVersion: 1, name: packageName, version, pages }, null, 2)}\n`;
+}
+
+/** Renders `docs/index.md` for one package. */
+export function renderIndex({ packageName, version, entries, otherPackages }) {
+  const lines = [
+    GENERATED_MARKER,
+    "",
+    `# ${packageName} ${version} documentation`,
+    "",
+    `Generated from the Salt documentation site for \`${packageName}@${version}\`, the version installed with this file. Prefer these pages to prior knowledge of Salt: APIs and guidance change between versions.`,
+    "",
+    "- Read a component's page before using it. It covers usage guidance, props, accessibility and examples.",
+    "- Use Salt components, their props and patterns before writing custom markup or CSS, and use Salt design tokens in any custom CSS.",
+    "- Links such as `@salt-ds/theme/docs/index.md` point to another Salt package's docs, found where packages are installed (usually `node_modules`). Only use Salt packages the project has installed.",
+    "",
+  ];
+  for (const section of INDEX_SECTIONS) {
+    const sectionEntries = entries
+      .filter((entry) => sectionFor(entry) === section.key)
+      .sort((left, right) => compareText(left.title, right.title));
+    if (sectionEntries.length === 0) continue;
+    lines.push(`## ${section.title}`, "");
+    for (const entry of sectionEntries) {
+      const summary = entry.summary ? `: ${summarize(entry.summary)}` : "";
+      const aliases =
+        entry.aliases?.length > 0
+          ? ` Also known as: ${entry.aliases.join(", ")}.`
+          : "";
+      lines.push(`- [${entry.title}](${entry.docPath})${summary}${aliases}`);
+    }
+    lines.push("");
+  }
+  if (otherPackages.length > 0) {
+    lines.push("## Other Salt packages", "");
+    for (const other of otherPackages) {
+      const description = PACKAGE_DESCRIPTIONS[other] ?? "";
+      lines.push(
+        `- \`${other}/docs/index.md\`${description ? `: ${description}` : ""}`,
+      );
+    }
+    lines.push("");
+  }
+  return `${lines.join("\n").trimEnd()}\n`;
+}

@@ -1,0 +1,80 @@
+---
+title: Styling by meaning
+description: "Salt styles elements by what they are, not by the value asked for. When a request names a color, weight, size or spacing, use the Salt variant or the token Salt's guidance gives for that use."
+layout: DetailTechnical
+sidebar:
+  label: Styling by meaning
+---
+
+Salt styles an element by what it is. A button's color comes from its
+sentiment, a container's padding from its size, and every value from a Salt
+theme, so the same element looks the same across an application and follows the
+mode and density. When a request names a value, such as a hex color, a font
+weight or a number of pixels, find what the element is and use the Salt variant
+or token for that, rather than the value or the nearest token to it.
+
+## Color and emphasis
+
+Choose the variant for the element's role, and let it give the color and the
+emphasis:
+
+- A call to action: [`Button`](/salt/components/button) with
+  `sentiment="accented"` and `appearance="solid"`.
+- An action with negative, cautionary or positive outcomes: `sentiment="negative"`,
+  `"caution"` or `"positive"`.
+- Text: [`Text`](/salt/components/text)'s `color` and `styleAs` props, such as
+  `color="secondary"` for less important text.
+
+In a group of actions, such as a [button bar](/salt/patterns/button-bar), keep
+one solid button for the main path, and give the others, whatever their
+sentiment, a bordered or transparent appearance.
+
+Don't add a color or font weight of your own on top of the variant: the
+variant already sets them, and a value of your own doesn't follow the mode or
+the theme.
+
+When no component prop covers the styling, choose a semantic characteristic
+token for the element's role, such as content, container, status or sentiment.
+Raw color foundation tokens, including RGB and alpha variants, and color
+palette tokens are theme implementation details. Don't use them directly in
+application CSS, even when their current value matches the requested color.
+
+Charts follow the same rule: use the semantic
+[category tokens](/salt/themes/design-tokens/category-characteristic#categories-and-data-visualization),
+such as `--salt-category-1-dataviz`, for categorical series. Their colors can
+change with the theme without changing the category's meaning.
+
+### Brand colors
+
+A brand's colors come from its Salt theme. Don't set or override Salt's design
+tokens in an application to match a brand color:
+[extended styling](/salt/themes/extended-styling) explains that Salt strongly
+recommends against custom themes made by overriding tokens. If a request names a
+brand color, use the variant for the element's role, and tell the requester
+that the color comes from their Salt theme.
+
+## Size and spacing
+
+Non-color foundation tokens can be used directly where their guidance says
+to do so, such as spacing tokens. The restriction on raw color foundations
+does not prohibit these documented uses.
+
+Use the token that Salt's guidance gives for the use, not the token nearest the
+value asked for. For example, [spacing](/salt/foundations/spacing) pads
+containers by their size:
+
+| Container size | Padding              |
+| -------------- | -------------------- |
+| Large          | `--salt-spacing-300` |
+| Medium         | `--salt-spacing-200` |
+| Small          | `--salt-spacing-100` |
+
+So a request for 13px of padding in a small summary panel is
+`--salt-spacing-100` or `--salt-spacing-200`, depending on the panel, not
+`--salt-spacing-150`, which is nearer to 13px. A layout's `padding` and `gap`
+props take the same steps.
+
+## Say what you used
+
+When you use a Salt variant or token in place of a value someone asked for, say
+which one and why, so they can confirm it or take it to the design system team.

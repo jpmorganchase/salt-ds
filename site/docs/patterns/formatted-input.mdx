@@ -2,23 +2,18 @@
 title: Formatted input
 description: "Formatted input is an input behavior that guides users to enter data in a predefined pattern (e.g., phone numbers, card numbers, currency, postal/ZIP codes). As users type and when they submit, the value is validated against that pattern and displayed in a consistent, standardized format that matches it."
 layout: DetailPattern
+alsoKnownAs: ["Input mask", "Masked input", "Phone number", "Card number", "Postal code"]
 tags:
   - pattern
 aliases:
   - /salt/patterns/formatted-input
 data:
   resources: [
-      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-formatted-input--phone-number", label: "Examples" },
     ]
   components: ["Input", "Form field"]
 ---
 
-<Diagram
-    src="/img/patterns/formatted-input/formatted-input-example.png"
-    srcDark="/img/patterns/formatted-input/formatted-input-example-dark.png"
-    alt="Formatted input pattern example"
-    border
- />
+<LivePreview componentName="patterns/formatted-input" exampleName="PhoneNumber" />
 
 ## When to use
 - When user input must follow a specific format.
@@ -31,6 +26,14 @@ data:
 - **[Date input](/salt/components/date-input)**: Best for single dates or date ranges.
 - **[International phone number input (pattern)](/salt/patterns/international-phone-number-input)**: Best for country-specific phone number entry with a location selector.
 </Callout>
+
+## When not to use
+
+- When users need to increment, decrement, or adjust a numeric value within a defined range, use [Number input](/salt/components/number-input) instead.
+- When users need to enter a single date or date range, use [Date input](/salt/components/date-input) instead.
+- When phone number entry needs country-specific formatting with a location selector, use the [International phone number input pattern](/salt/patterns/international-phone-number-input) instead.
+- When the value is open-ended text that does not need a strict format or validation pattern, use [Input](/salt/components/input) or [Multiline input](/salt/components/multiline-input) with helper text instead.
+- When users choose from a known set of values instead of typing a formatted value, use a selection component such as Dropdown or Combo box instead.
 
 ## How to build
 
@@ -55,7 +58,7 @@ Formatted input contains:
 <Diagram
   src="/img/patterns/formatted-input/formatted-input-layout.png"
   srcDark="/img/patterns/formatted-input/formatted-input-layout-dark.png"
-  alt="The layout of the formatted input pattern"
+  alt="Formatted input layout: a form field wrapping a label, an input and helper text."
   border
 />
 
@@ -69,16 +72,17 @@ Formatted input contains:
 
 Use helper text to provide formatting guidance and/or an example of the expected format.
 
-<Diagram
-  src="/img/patterns/formatted-input/formatted-input-guidance.png"
-  srcDark="/img/patterns/formatted-input/formatted-input-guidance-dark.png"
-  alt="Formatting guidance for the formatted input pattern"
-  border
-/>
-
 <Callout status="success" title="Best practices">
     Placeholder text should never be the only source of guidance. Placeholder text disappears once the user begins typing and may not be announced by all screen readers, so it must not be used to convey required formatting rules. Use labels and helper text to provide persistent formatting guidance. If you include placeholder text, use it only as a supplementary hint or example.
 </Callout>
+
+The examples below give the expected format in helper text, as the phone number example at the top of this page does.
+
+<LivePreview componentName="patterns/formatted-input" exampleName="CreditCard" />
+
+<LivePreview componentName="patterns/formatted-input" exampleName="Currency" />
+
+<LivePreview componentName="patterns/formatted-input" exampleName="PostalCode" />
 
 ## Formatting behavior
 
@@ -277,6 +281,10 @@ Dynamic preview shows the formatted result in real time as the user types. It he
     - Place the dynamic preview near the label when there is enough space and it won’t compete with or crowd the label content.
     - If the label is likely to impede the preview, place the dynamic preview next to the input instead.
 </Callout>
+
+<LivePreview componentName="patterns/formatted-input" exampleName="PhoneNumberWithPreview" />
+
+The images below show the preview while typing and the formatted value after the user leaves the field, with the preview near the label and next to the input.
 
 <Diagram
   src="/img/patterns/formatted-input/formatted-input-dynamic-preview.png"

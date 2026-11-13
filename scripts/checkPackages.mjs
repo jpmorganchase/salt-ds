@@ -14,6 +14,8 @@ import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
 import ts from "typescript";
+import { readManifest } from "../packages/cli/lib/agents-md.mjs";
+import { publishesDocs } from "../tooling/agent-docs/src/config.mjs";
 
 const execFile = promisify(execFileCallback);
 const rootDir = path.resolve(
@@ -86,6 +88,47 @@ function packagePath(directory, target) {
   return path.join(directory, target.replace(/^\.?\//, ""));
 }
 
+async function checkAgentDocs(manifest, directory) {
+  if (!publishesDocs(manifest.files)) return [];
+  // salt-ds init indexes manifest.json, and salt-ds check reads
+  // salt-check.json, in each package's docs.
+  const required = ["index.md", "manifest.json", "salt-check.json"];
+  const errors = [];
+  for (const file of required) {
+    if (!(await pathExists(path.join(directory, "docs", file)))) {
+      errors.push(
+        `is missing docs/${file}; run yarn build to generate agent docs`,
+      );
+    }
+  }
+  if (errors.length === 0) {
+    try {
+      readManifest(directory, manifest.name.replace(/^@salt-ds\//, ""));
+    } catch (error) {
+      errors.push(error.message);
+    }
+    let data;
+    try {
+      data = JSON.parse(
+        await readFile(path.join(directory, "docs", "salt-check.json"), "utf8"),
+      );
+    } catch (error) {
+      errors.push(`has unreadable docs/salt-check.json: ${error.message}`);
+      return errors;
+    }
+    if (
+      data.schemaVersion !== 1 ||
+      data.name !== manifest.name ||
+      data.version !== manifest.version
+    ) {
+      errors.push(
+        "has docs/salt-check.json for another package, version or schema",
+      );
+    }
+  }
+  return errors;
+}
+
 async function checkCssPackage(pkg) {
   const { directory, manifest } = pkg;
   const targets = new Set([manifest.style, ...(manifest.files ?? [])]);
@@ -100,6 +143,7 @@ async function checkCssPackage(pkg) {
     }
   }
 
+  errors.push(...(await checkAgentDocs(manifest, directory)));
   return errors;
 }
 
@@ -167,8 +211,8 @@ async function findUndeclaredImports(packageDirectory, manifest) {
   );
 }
 
-async function checkJavaScriptPackage(pkg, temporaryDirectory) {
-  const { manifest } = pkg;
+/** Packs a package and returns the extracted directory and packed manifest. */
+async function packPackage(manifest, temporaryDirectory) {
   const archiveName = `${manifest.name
     .replace(/^@/, "")
     .replaceAll("/", "-")}.tgz`;
@@ -177,14 +221,52 @@ async function checkJavaScriptPackage(pkg, temporaryDirectory) {
     temporaryDirectory,
     archiveName.replace(/\.tgz$/, ""),
   );
-
   await run(yarn, ["workspace", manifest.name, "pack", "--out", archivePath]);
   await mkdir(extractedDirectory);
   await run("tar", ["-xzf", archivePath, "-C", extractedDirectory]);
-
   const packageDirectory = path.join(extractedDirectory, "package");
-  const packedManifest = await readJson(
-    path.join(packageDirectory, "package.json"),
+  return {
+    packageDirectory,
+    packedManifest: await readJson(path.join(packageDirectory, "package.json")),
+  };
+}
+
+/** A command-line package: every bin target is a packed file. */
+async function checkBinPackage(pkg, temporaryDirectory) {
+  const { packageDirectory, packedManifest } = await packPackage(
+    pkg.manifest,
+    temporaryDirectory,
+  );
+  const errors = [];
+  const bins =
+    typeof packedManifest.bin === "string"
+      ? { [packedManifest.name]: packedManifest.bin }
+      : packedManifest.bin;
+  for (const [name, target] of Object.entries(bins)) {
+    try {
+      if (!(await stat(packagePath(packageDirectory, target))).isFile()) {
+        errors.push(`bin ${name} target is not a file: ${target}`);
+      }
+    } catch {
+      errors.push(`bin ${name} points to missing file ${target}`);
+    }
+  }
+  const workspaceRanges = findWorkspaceRanges(packedManifest);
+  if (workspaceRanges.length > 0) {
+    errors.push(
+      `contains unresolved workspace ranges at ${workspaceRanges.join(", ")}`,
+    );
+  }
+  errors.push(
+    ...(await findUndeclaredImports(packageDirectory, packedManifest)),
+  );
+  return errors;
+}
+
+async function checkJavaScriptPackage(pkg, temporaryDirectory) {
+  const { packageDirectory, packedManifest } = await packPackage(
+    pkg.manifest,
+    temporaryDirectory,
   );
   const errors = [];
   const workspaceRanges = findWorkspaceRanges(packedManifest);
@@ -225,6 +307,7 @@ async function checkJavaScriptPackage(pkg, temporaryDirectory) {
   errors.push(
     ...(await findUndeclaredImports(packageDirectory, packedManifest)),
   );
+  errors.push(...(await checkAgentDocs(packedManifest, packageDirectory)));
 
   return errors;
 }
@@ -240,7 +323,9 @@ try {
       ...checkBoundaries(pkg.manifest),
       ...(pkg.manifest.main
         ? await checkJavaScriptPackage(pkg, temporaryDirectory)
-        : await checkCssPackage(pkg)),
+        : pkg.manifest.bin
+          ? await checkBinPackage(pkg, temporaryDirectory)
+          : await checkCssPackage(pkg)),
     ];
 
     errors.push(

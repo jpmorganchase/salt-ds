@@ -38,11 +38,13 @@ The separator will span across the layout component if the `direction` is `colum
 
 ### Responsive props
 
-A responsive prop takes either multiple values (one value per breakpoint) or a single value that would take effect across all different screen sizes. For example, this is a layout that will responsively change direction from row to column at specific breakpoints or viewport sizes:
+A responsive prop takes either multiple values (one value per breakpoint) or a single value that would take effect across all different screen sizes. For example, this layout is a column below the `md` breakpoint and a row from `md` up:
 
 ```js
-direction={{ xs: "column", sm: "column", lg: "row", md: "row ", xl: "row" }}
+direction={{ xs: "column", md: "row" }}
 ```
+
+See [responsive props](/salt/foundations/responsiveness/breakpoints#responsive-props) for how values apply across breakpoints.
 
 <LivePreview componentName="stack-layout" exampleName="ResponsiveLayout" />
 

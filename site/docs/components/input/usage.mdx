@@ -16,9 +16,12 @@ To avoid misleading users, set the width to correlate to the length of the answe
 
 To ask a user a subjective question to which user responses will vary and the length of their answer is likely to be less than a single line.
 
+For a value in a set format, such as a phone number, card number or postal code, follow the [formatted input pattern](/salt/patterns/formatted-input), which uses `Input` and formats the value when the user leaves the field.
+
 ### When not to use
 
-When the content is likely to exceed a single line. Instead, use [`MultilineInput`](/salt/components/multiline-input). Input field width and height should always reflect the amount of content expected in the field.
+- When the content is likely to exceed a single line. Instead, use [`MultilineInput`](/salt/components/multiline-input). Input field width and height should always reflect the amount of content expected in the field.
+- When users enter an exact number within a set range, such as a quantity of items. Instead, use [`NumberInput`](/salt/components/number-input).
 
 ## Import
 

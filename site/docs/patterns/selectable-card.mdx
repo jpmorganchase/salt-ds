@@ -9,17 +9,11 @@ aliases:
 data:
   resources:
     [
-      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-selectable-card--single-selection", label: "Examples" },
     ]
   components: ["Card", "Checkbox", "Radio button", "Stack layout", "Grid layout"]
 ---
 
-<Diagram
-  src="/img/patterns/selectable-card/selectable-card-group.png"
-  srcDark="/img/patterns/selectable-card/selectable-card-group-dark.png"
-  alt="Example showing a series of selectable cards."
-  border
-/>
+<LivePreview componentName="patterns/selectable-card" exampleName="SingleSelection" />
 
 ## When to use
 
@@ -55,14 +49,14 @@ The following elements are used in a selectable card:
 
 ### Card layout
 
-- Use a stack layout to display the card’s content in a column.
+- Use a stack layout to display the card’s content in a column, with `gap={1}` (`--salt-spacing-100`) between the title and the selection indicator.
 - We recommend using radio buttons or checkboxes for single or multiple selection accordingly.
 - Update the padding if you need a small or a large card. Refer to [`Card`](/salt/components/card) documentation for more guidance on custom padding.
 
 <Diagram
   src="/img/patterns/selectable-card/selectable-card-spacing.png"
   srcDark="/img/patterns/selectable-card/selectable-card-spacing-dark.png"
-  alt="Showing spacing tokens applied to a regular size selectable card."
+  alt="A selectable card whose title row and radio button row are in a stack layout with gap 1 (--salt-spacing-100)."
   border
 />
 
@@ -77,27 +71,17 @@ The following elements are used in a selectable card:
 
 Use radio buttons in selectable cards when your users need to make a single selection from a mutually exclusive set of options. Radio buttons ensure that users can only select one option at a time, preventing conflicting selections.
 
-<Diagram
-  src="/img/patterns/selectable-card/selectable-card-radio-button.png"
-  srcDark="/img/patterns/selectable-card/selectable-card-radio-button-dark.png"
-  alt="Selectable cards with radio buttons."
-  border
-/>
+<LivePreview componentName="patterns/selectable-card" exampleName="SingleSelection" />
 
 ## Multiple selection
 
 Use selectable cards with checkboxes when your users need to select multiple options from a list—checkboxes signal that multi-select is available.
 
-<Diagram
-  src="/img/patterns/selectable-card/selectable-card-checkbox.png"
-  srcDark="/img/patterns/selectable-card/selectable-card-checkbox-dark.png"
-  alt="Multiple selection."
-  border
-/>
-
 <Callout status="success" title="Best practices">
 Selectable cards must include a non-color selection indicator for selected vs. unselected states. Don’t rely on border/stroke or color alone (e.g., in grayscale the selected card may be indistinguishable). Use a radio button (single-select) or check box (multi-select).
 </Callout>
+
+<LivePreview componentName="patterns/selectable-card" exampleName="MultipleSelection" />
 
 ## States
 Selectable cards support the following states: 
