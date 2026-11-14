@@ -1,4 +1,5 @@
 import {
+  mergeAriaIds,
   ownerWindow,
   useControlled,
   useDensity,
@@ -670,8 +671,7 @@ export function useTokenizedInputNext<Item>(
       focused,
       "aria-labelledby": clsx(ariaLabelledBy, ariaLabelledByProp) || undefined,
       "aria-label": ariaLabel,
-      "aria-describedby":
-        clsx(ariaDescribedBy, ariaDescribedByProp) || undefined,
+      "aria-describedby": mergeAriaIds(ariaDescribedBy, ariaDescribedByProp),
       ...state,
       ...restProps,
       ...(disabled ? {} : eventHandlers),

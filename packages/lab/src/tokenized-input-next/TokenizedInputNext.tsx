@@ -3,6 +3,7 @@ import {
   Button,
   type ButtonProps,
   makePrefixer,
+  mergeAriaIds,
   type NecessityType,
   StatusAdornment,
   useForkRef,
@@ -304,9 +305,7 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
           aria-labelledby={
             clsx(inputAriaLabelledBy, textAreaLabelledBy) || undefined
           }
-          aria-describedby={
-            clsx(ariaDescribedBy, textAreaDescribedBy) || undefined
-          }
+          aria-describedby={mergeAriaIds(ariaDescribedBy, textAreaDescribedBy)}
           aria-label={clsx(ariaLabel, getItemsAriaLabel(selectedItems.length))}
           aria-activedescendant={
             highlightedIndex && highlightedIndex >= 0

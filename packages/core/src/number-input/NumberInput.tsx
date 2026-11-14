@@ -30,6 +30,7 @@ import { StatusAdornment } from "../status-adornment";
 import {
   capitalize,
   makePrefixer,
+  mergeAriaIds,
   useControlled,
   useForkRef,
   useId,
@@ -610,10 +611,11 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         )}
         {/* biome-ignore lint/a11y/useAriaPropsSupportedByRole: Biome can't detect the role is determined by variable, aria-valuemax is only used when the role is appropriate. */}
         <input
-          aria-describedby={
-            clsx(formFieldDescribedBy, inputDescribedBy, ariaDescribedBy) ||
-            undefined
-          }
+          aria-describedby={mergeAriaIds(
+            formFieldDescribedBy,
+            inputDescribedBy,
+            ariaDescribedBy,
+          )}
           aria-labelledby={
             clsx(formFieldLabelledBy, inputLabelledBy, ariaLabelledBy) ||
             undefined

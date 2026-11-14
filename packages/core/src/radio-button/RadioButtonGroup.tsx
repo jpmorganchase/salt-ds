@@ -7,7 +7,7 @@ import {
   forwardRef,
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
-import { makePrefixer, useControlled, useId } from "../utils";
+import { makePrefixer, mergeAriaIds, useControlled, useId } from "../utils";
 import { RadioGroupContext } from "./internal/RadioGroupContext";
 import radioButtonGroupCss from "./RadioButtonGroup.css";
 
@@ -113,9 +113,10 @@ export const RadioButtonGroup = forwardRef<
       aria-labelledby={
         clsx(a11yProps?.["aria-labelledby"], ariaLabelledBy) || undefined
       }
-      aria-describedby={
-        clsx(a11yProps?.["aria-describedby"], ariaDescribedBy) || undefined
-      }
+      aria-describedby={mergeAriaIds(
+        a11yProps?.["aria-describedby"],
+        ariaDescribedBy,
+      )}
       className={clsx(
         withBaseName(),
         withBaseName(direction),

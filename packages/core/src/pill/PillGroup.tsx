@@ -9,7 +9,7 @@ import {
   useMemo,
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
-import { makePrefixer, useControlled } from "../utils";
+import { makePrefixer, mergeAriaIds, useControlled } from "../utils";
 import pillGroupCss from "./PillGroup.css";
 import { PillGroupContext } from "./PillGroupContext";
 
@@ -121,10 +121,10 @@ export const PillGroup = forwardRef<HTMLFieldSetElement, PillGroupProps>(
             clsx(formFieldA11yProps?.["aria-labelledby"], ariaLabelledBy) ||
             undefined
           }
-          aria-describedby={
-            clsx(formFieldA11yProps?.["aria-describedby"], ariaDescribedBy) ||
-            undefined
-          }
+          aria-describedby={mergeAriaIds(
+            formFieldA11yProps?.["aria-describedby"],
+            ariaDescribedBy,
+          )}
           className={clsx(withBaseName(), className)}
           ref={ref}
           {...rest}

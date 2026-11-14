@@ -15,6 +15,7 @@ import type { AdornmentValidationStatus } from "../status-adornment";
 import type { DataAttributes } from "../types";
 import {
   makePrefixer,
+  mergeAriaIds,
   useControlled,
   useForkRef,
   useIsomorphicLayoutEffect,
@@ -205,15 +206,13 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
         <input
           aria-label={ariaLabel}
           aria-readonly={readOnly || undefined}
-          aria-describedby={
-            clsx(
-              checkboxGroup === undefined
-                ? formFieldA11yProps?.["aria-describedby"]
-                : undefined,
-              inputDescribedBy,
-              ariaDescribedBy,
-            ) || undefined
-          }
+          aria-describedby={mergeAriaIds(
+            checkboxGroup === undefined
+              ? formFieldA11yProps?.["aria-describedby"]
+              : undefined,
+            inputDescribedBy,
+            ariaDescribedBy,
+          )}
           aria-labelledby={
             clsx(
               checkboxGroup === undefined

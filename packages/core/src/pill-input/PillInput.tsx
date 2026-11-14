@@ -24,7 +24,13 @@ import { Pill } from "../pill";
 import { useIcon } from "../semantic-icon-provider";
 import { StatusAdornment } from "../status-adornment";
 import type { DataAttributes } from "../types";
-import { makePrefixer, useControlled, useForkRef, useId } from "../utils";
+import {
+  makePrefixer,
+  mergeAriaIds,
+  useControlled,
+  useForkRef,
+  useId,
+} from "../utils";
 import pillInputCss from "./PillInput.css";
 import { useTruncatePills } from "./useTruncatePills";
 
@@ -374,10 +380,11 @@ export const PillInput = forwardRef(function PillInput(
           )}
         </div>
         <input
-          aria-describedby={
-            clsx(formFieldDescribedBy, inputDescribedBy, ariaDescribedBy) ||
-            undefined
-          }
+          aria-describedby={mergeAriaIds(
+            formFieldDescribedBy,
+            inputDescribedBy,
+            ariaDescribedBy,
+          )}
           aria-labelledby={
             clsx(formFieldLabelledBy, inputLabelledBy, ariaLabelledBy) ||
             undefined

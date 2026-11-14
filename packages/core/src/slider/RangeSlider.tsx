@@ -6,7 +6,7 @@ import {
   useRef,
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
-import { useControlled } from "../utils";
+import { mergeAriaIds, useControlled } from "../utils";
 import { SliderThumb } from "./internal/SliderThumb";
 import { SliderTrack } from "./internal/SliderTrack";
 import { useRangeSliderThumb } from "./internal/useRangeSliderThumb";
@@ -226,8 +226,7 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     });
 
     const thumbProps = {
-      "aria-describedby":
-        clsx(formFieldDescribedBy, ariaDescribedBy) || undefined,
+      "aria-describedby": mergeAriaIds(formFieldDescribedBy, ariaDescribedBy),
       "aria-label": ariaLabel,
       "aria-labelledby": clsx(formFieldLabelledBy, ariaLabelledBy) || undefined,
       "aria-valuemax": max,

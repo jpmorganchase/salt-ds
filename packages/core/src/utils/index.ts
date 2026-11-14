@@ -6,6 +6,7 @@ export * from "./getRefFromChildren";
 export * from "./inferElementType";
 export * from "./makePrefixer";
 export * from "./marginMiddleware";
+export * from "./mergeAriaIds";
 export * from "./mergeProps";
 export * from "./ownerDocument";
 export * from "./ownerWindow";

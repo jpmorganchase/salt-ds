@@ -101,6 +101,37 @@ describe("GIVEN an Input", () => {
       );
   });
 
+  it("SHOULD describe the input once when FormField and input props share description IDs", async () => {
+    await renderWithSalt(
+      <>
+        <span id="input-description">Input description</span>
+        <span id="root-description">Root description</span>
+        <FormField id="shared-description">
+          <FormFieldLabel>Field label</FormFieldLabel>
+          <Input
+            aria-describedby=" helperText-shared-description  root-description "
+            inputProps={{
+              "aria-describedby":
+                "helperText-shared-description\tinput-description",
+            }}
+          />
+          <FormFieldHelperText>Helper text</FormFieldHelperText>
+        </FormField>
+      </>,
+    );
+    await expect
+      .element(textbox())
+      .toHaveAttribute(
+        "aria-describedby",
+        "helperText-shared-description input-description root-description",
+      );
+    await expect
+      .element(textbox())
+      .toHaveAccessibleDescription(
+        "Helper text Input description Root description",
+      );
+  });
+
   describe("WHEN rendered as an uncontrolled component", () => {
     it("THEN it should render with the specified defaultValue", async () => {
       await renderWithSalt(<Input defaultValue="The default value" />);
