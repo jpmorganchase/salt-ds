@@ -7,7 +7,6 @@ import { Text, type TextProps } from "../text";
 import { makePrefixer } from "../utils";
 
 import formFieldHelperTextCss from "./FormFieldHelperText.css";
-import { useFormFieldHelperTextId } from "./internal/FormFieldInternalContext";
 
 const withBaseName = makePrefixer("saltFormFieldHelperText");
 
@@ -26,8 +25,8 @@ export const FormFieldHelperText = ({
     window: targetWindow,
   });
 
-  const { disabled, readOnly, validationStatus } = useFormFieldProps();
-  const id = useFormFieldHelperTextId();
+  const { a11yProps, disabled, readOnly, validationStatus } =
+    useFormFieldProps();
 
   return (
     <div
@@ -45,7 +44,7 @@ export const FormFieldHelperText = ({
       )}
       <Text
         disabled={disabled}
-        id={id}
+        id={a11yProps?.["aria-describedby"]}
         styleAs="label"
         color={validationStatus ?? "secondary"}
         {...restProps}

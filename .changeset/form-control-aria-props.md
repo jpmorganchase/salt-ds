@@ -11,3 +11,4 @@ Fixed `aria-label`, `aria-labelledby` and `aria-describedby` being applied to th
 
 - If `aria-label` is set both on the component and in `inputProps` or `textAreaProps`, the one in `inputProps` or `textAreaProps` takes precedence.
 - `aria-labelledby` and `aria-describedby` are merged with the IDs from `FormField` and from `inputProps` or `textAreaProps`, in that order.
+- `Tooltip` helper text inside a `FormField` is described once when these props are forwarded to the control. Native triggers and explicit trigger descriptions continue to work.

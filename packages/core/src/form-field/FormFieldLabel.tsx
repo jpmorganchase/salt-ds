@@ -1,6 +1,7 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
+import { computeAccessibleName, isInaccessible } from "dom-accessibility-api";
 import { type MouseEvent, useEffect, useRef } from "react";
 
 import { useFormFieldProps } from "../form-field-context";
@@ -8,7 +9,6 @@ import { Label, type TextProps } from "../text";
 import { capitalize, makePrefixer } from "../utils";
 
 import formFieldLabelCss from "./FormFieldLabel.css";
-import { useFormFieldLabelId } from "./internal/FormFieldInternalContext";
 
 const withBaseName = makePrefixer("saltFormFieldLabel");
 
@@ -29,17 +29,20 @@ function getControlsWithIgnoredAriaLabel(
       .split(/\s+/)
       .filter(Boolean);
     // A control that references itself keeps its aria-label in the name.
+    // Generated fallback labels deliberately yield to a FormFieldLabel.
     if (
       !ariaLabel ||
       !labelledByIds.includes(labelId) ||
-      labelledByIds.includes(control.id)
+      labelledByIds.includes(control.id) ||
+      control.hasAttribute("data-salt-aria-label-fallback") ||
+      isInaccessible(control)
     ) {
       return false;
     }
 
-    const name = labelledByIds
-      .map((id) => control.ownerDocument.getElementById(id)?.textContent ?? "")
-      .join(" ");
+    // Text alternatives such as aria-label and image alt, and hidden content,
+    // can make the accessible name different from the label's textContent.
+    const name = computeAccessibleName(control);
     return !containsWords(name, ariaLabel);
   });
 }
@@ -90,7 +93,7 @@ export const FormFieldLabel = ({
   onClick,
   ...restProps
 }: FormFieldLabelProps) => {
-  const { disabled, necessity, formFieldRef } = useFormFieldProps();
+  const { a11yProps, disabled, necessity, formFieldRef } = useFormFieldProps();
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-form-field-label",
@@ -98,36 +101,47 @@ export const FormFieldLabel = ({
     window: targetWindow,
   });
 
-  const id = useFormFieldLabelId();
+  const id = a11yProps?.["aria-labelledby"];
 
   const warnedRef = useRef(new WeakSet<Element>());
   useEffect(() => {
     if (process.env.NODE_ENV !== "production") {
-      const formField = formFieldRef?.current;
-      const label = id ? formField?.ownerDocument.getElementById(id) : null;
-      if (!formField || !id || !label) {
-        return;
-      }
-
-      // Group by text, so a control that puts one aria-label on several elements warns once.
-      const controlsByAriaLabel = new Map<string, Element[]>();
-      for (const control of getControlsWithIgnoredAriaLabel(formField, id)) {
-        if (warnedRef.current.has(control)) {
-          continue;
+      let cancelled = false;
+      // Some controls settle their label references in a layout effect. Inspect
+      // the committed result after those updates, without observing later DOM mutations.
+      queueMicrotask(() => {
+        if (cancelled) {
+          return;
         }
-        warnedRef.current.add(control);
-        const ariaLabel = control.getAttribute("aria-label")?.trim() ?? "";
-        controlsByAriaLabel.set(ariaLabel, [
-          ...(controlsByAriaLabel.get(ariaLabel) ?? []),
-          control,
-        ]);
-      }
-      for (const [ariaLabel, controls] of controlsByAriaLabel) {
-        console.warn(
-          `Salt: aria-label "${ariaLabel}" is ignored because FormFieldLabel "${label.textContent?.trim()}" provides the accessible name. Use aria-labelledby to add to the name, or aria-describedby to add a description.`,
-          ...controls,
-        );
-      }
+        const formField = formFieldRef?.current;
+        const label = id ? formField?.ownerDocument.getElementById(id) : null;
+        if (!formField || !id || !label) {
+          return;
+        }
+
+        // Group by text, so a control that puts one aria-label on several elements warns once.
+        const controlsByAriaLabel = new Map<string, Element[]>();
+        for (const control of getControlsWithIgnoredAriaLabel(formField, id)) {
+          if (warnedRef.current.has(control)) {
+            continue;
+          }
+          warnedRef.current.add(control);
+          const ariaLabel = control.getAttribute("aria-label")?.trim() ?? "";
+          controlsByAriaLabel.set(ariaLabel, [
+            ...(controlsByAriaLabel.get(ariaLabel) ?? []),
+            control,
+          ]);
+        }
+        for (const [ariaLabel, controls] of controlsByAriaLabel) {
+          console.warn(
+            `Salt: aria-label "${ariaLabel}" is ignored because FormFieldLabel "${label.textContent?.trim()}" provides the accessible name. Use aria-labelledby to add to the name, or aria-describedby to add a description.`,
+            ...controls,
+          );
+        }
+      });
+      return () => {
+        cancelled = true;
+      };
     }
   });
 

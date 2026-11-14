@@ -94,6 +94,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     } = finalProps;
 
     const {
+      a11yProps: { "aria-describedby": formFieldDescribedBy } = {},
       disabled: formFieldDisabled,
       validationStatus: formFieldValidationStatus,
     } = useFormFieldProps();
@@ -125,12 +126,18 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
     const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
     const hasContent = content != null && content !== "";
+    const triggerProps = getTriggerProps();
+    // Form controls already reference the helper span inside the tooltip.
+    // Reuse that target so forwarding the trigger props doesn't describe it twice.
+    if (formFieldDescribedBy && triggerProps["aria-describedby"]) {
+      triggerProps["aria-describedby"] = formFieldDescribedBy;
+    }
 
     return (
       <>
         {isValidElement<{ ref?: Ref<unknown> }>(children) &&
           cloneElement(children, {
-            ...mergeProps(getTriggerProps(), children.props),
+            ...mergeProps(triggerProps, children.props),
             ref: triggerRef,
           })}
 

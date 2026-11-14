@@ -9,7 +9,7 @@ import {
   useEffect,
   useState,
 } from "react";
-import { makePrefixer, useId } from "../../utils";
+import { makePrefixer, mergeAriaIds, useId } from "../../utils";
 import sliderThumbCss from "./SliderThumb.css";
 import { SliderTooltip } from "./SliderTooltip";
 
@@ -144,7 +144,7 @@ export const SliderThumb = ({
           aria-valuenow={value}
           aria-valuetext={ariaValueText || format?.(value).toString()}
           aria-label={ariaLabel}
-          aria-describedby={clsx(accessibleTextId, ariaDescribedBy)}
+          aria-describedby={mergeAriaIds(accessibleTextId, ariaDescribedBy)}
           min={min}
           max={max}
           step={step}

@@ -20,6 +20,7 @@ import { es as dateFnsEs } from "date-fns/locale";
 import MockDate from "mockdate";
 import {
   type ChangeEvent,
+  memo,
   type ReactNode,
   type SyntheticEvent,
   useState,
@@ -342,6 +343,66 @@ function registerAdapterTests(
       await expect
         .element(inputs.nth(1))
         .toHaveAccessibleName("End date Period");
+    });
+
+    it("SHOULD keep the top-level aria-label when a field label reference does not resolve", async () => {
+      await render(
+        <DateInputRange aria-label="Period" aria-labelledby="missing-label" />,
+      );
+      const inputs = page.getByRole("textbox");
+      await expect
+        .element(inputs.nth(0))
+        .toHaveAccessibleName("Start date Period");
+      await expect
+        .element(inputs.nth(1))
+        .toHaveAccessibleName("End date Period");
+    });
+
+    it("SHOULD follow external label insertion, removal and ID changes without re-rendering the input", async () => {
+      const StableDateInput = memo(() => (
+        <DateInputRange aria-label="Period" aria-labelledby="external-label" />
+      ));
+      function Example() {
+        const [showLabel, setShowLabel] = useState(false);
+        const [matchingId, setMatchingId] = useState(true);
+        return (
+          <>
+            <button type="button" onClick={() => setShowLabel(!showLabel)}>
+              Toggle label
+            </button>
+            <button type="button" onClick={() => setMatchingId(!matchingId)}>
+              Change label ID
+            </button>
+            {showLabel && (
+              <span id={matchingId ? "external-label" : "other-label"}>
+                Booking period
+              </span>
+            )}
+            <StableDateInput />
+          </>
+        );
+      }
+
+      await render(<Example />);
+      const inputs = page.getByRole("textbox");
+      const expectNames = async (fieldName: string) => {
+        await expect
+          .element(inputs.nth(0))
+          .toHaveAccessibleName(`Start date ${fieldName}`);
+        await expect
+          .element(inputs.nth(1))
+          .toHaveAccessibleName(`End date ${fieldName}`);
+      };
+
+      await expectNames("Period");
+      await page.getByRole("button", { name: "Toggle label" }).click();
+      await expectNames("Booking period");
+      await page.getByRole("button", { name: "Change label ID" }).click();
+      await expectNames("Period");
+      await page.getByRole("button", { name: "Change label ID" }).click();
+      await expectNames("Booking period");
+      await page.getByRole("button", { name: "Toggle label" }).click();
+      await expectNames("Period");
     });
 
     it("SHOULD replace the top-level aria-label when a FormFieldLabel is added later", async () => {

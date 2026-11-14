@@ -48,6 +48,7 @@ import { StatusAdornment } from "../status-adornment";
 import type { DataAttributes } from "../types";
 import {
   makePrefixer,
+  mergeAriaIds,
   type UseFloatingUIProps,
   useFloatingUI,
   useForkRef,
@@ -478,9 +479,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         aria-expanded={openState}
         aria-activedescendant={activeState?.id}
         aria-labelledby={clsx(formFieldLabelledBy, ariaLabelledBy) || undefined}
-        aria-describedby={
-          clsx(formFieldDescribedBy, ariaDescribedBy) || undefined
-        }
+        aria-describedby={mergeAriaIds(formFieldDescribedBy, ariaDescribedBy)}
         aria-controls={openState ? listId : undefined}
         {...getReferenceProps({
           onKeyDown: handleKeyDown,

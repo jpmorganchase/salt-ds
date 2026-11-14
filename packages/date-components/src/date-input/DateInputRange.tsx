@@ -1,6 +1,7 @@
 import {
   type InputProps,
   makePrefixer,
+  mergeAriaIds,
   StatusAdornment,
   useControlled,
   useForkRef,
@@ -37,6 +38,7 @@ import {
 import type { DateRangeSelection } from "../calendar";
 import { useLocalization } from "../localization-provider";
 import dateInputCss from "./DateInput.css";
+import { useHasResolvedLabel } from "./useHasResolvedLabel";
 
 const withBaseName = makePrefixer("saltDateInput");
 
@@ -419,13 +421,23 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       startInputPropsAriaLabel !== undefined || ariaLabel !== undefined;
     const hasEndExplicitAriaLabel =
       endInputPropsAriaLabel !== undefined || ariaLabel !== undefined;
-    // A FormFieldLabel or top-level aria-labelledby names the whole field, so
-    // it replaces a top-level aria-label. A per-input aria-labelledby only adds
-    // to that input's name.
-    const hasFieldLabel = Boolean(formFieldLabelledBy || restAriaLabelledBy);
+    const fieldLabelledBy =
+      clsx(formFieldLabelledBy, restAriaLabelledBy) || undefined;
+    // Forward references even before their targets exist. Only discard the
+    // top-level fallback once a field label is actually rendered.
+    const hasFieldLabelReference = Boolean(fieldLabelledBy);
+    const hasFieldLabel = useHasResolvedLabel(
+      startInputRef,
+      fieldLabelledBy,
+      Boolean(ariaLabel) &&
+        (startInputPropsAriaLabel === undefined ||
+          endInputPropsAriaLabel === undefined),
+    );
 
     const startAriaLabelledBy =
-      hasStartExplicitAriaLabel && !hasFieldLabel && !startInputPropsLabelledBy
+      hasStartExplicitAriaLabel &&
+      !hasFieldLabelReference &&
+      !startInputPropsLabelledBy
         ? undefined
         : clsx(
             formFieldLabelledBy,
@@ -434,7 +446,9 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
             restAriaLabelledBy,
           ) || undefined;
     const endAriaLabelledBy =
-      hasEndExplicitAriaLabel && !hasFieldLabel && !endInputPropsLabelledBy
+      hasEndExplicitAriaLabel &&
+      !hasFieldLabelReference &&
+      !endInputPropsLabelledBy
         ? undefined
         : clsx(
             formFieldLabelledBy,
@@ -442,18 +456,16 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
             endInputPropsLabelledBy,
             restAriaLabelledBy,
           ) || undefined;
-    const startAriaDescribedBy =
-      clsx(
-        formFieldDescribedBy,
-        startInputPropsDescribedBy,
-        restAriaDescribedBy,
-      ) || undefined;
-    const endAriaDescribedBy =
-      clsx(
-        formFieldDescribedBy,
-        endInputPropsDescribedBy,
-        restAriaDescribedBy,
-      ) || undefined;
+    const startAriaDescribedBy = mergeAriaIds(
+      formFieldDescribedBy,
+      startInputPropsDescribedBy,
+      restAriaDescribedBy,
+    );
+    const endAriaDescribedBy = mergeAriaIds(
+      formFieldDescribedBy,
+      endInputPropsDescribedBy,
+      restAriaDescribedBy,
+    );
 
     // An external field label replaces a top-level aria-label, so keep the
     // consumer's own text, which FormFieldLabel's warning quotes.

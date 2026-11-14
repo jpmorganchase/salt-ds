@@ -236,7 +236,7 @@ describe("GIVEN a FormField", () => {
       await expect
         .element(input)
         .toHaveAttribute("aria-labelledby", "label-test-id");
-      await expect.element(input).not.toHaveAttribute("aria-describedby");
+      await expect.element(input).toHaveAccessibleDescription("");
     });
 
     it("THEN the control is described by helper text added and removed later", async () => {
@@ -247,7 +247,7 @@ describe("GIVEN a FormField", () => {
         </FormField>,
       );
       const input = page.getByRole("textbox");
-      await expect.element(input).not.toHaveAttribute("aria-describedby");
+      await expect.element(input).toHaveAccessibleDescription("");
 
       await rerender(
         <FormField id="test-id">
@@ -267,7 +267,7 @@ describe("GIVEN a FormField", () => {
           <Input />
         </FormField>,
       );
-      await expect.element(input).not.toHaveAttribute("aria-describedby");
+      await expect.element(input).toHaveAccessibleDescription("");
     });
 
     it("THEN the control isn't labelled by a missing label, until one is added", async () => {
@@ -277,7 +277,6 @@ describe("GIVEN a FormField", () => {
         </FormField>,
       );
       const input = page.getByRole("textbox");
-      await expect.element(input).not.toHaveAttribute("aria-labelledby");
       await expect.element(input).toHaveAccessibleName("Input label");
 
       const consoleSpy = vi
@@ -319,8 +318,60 @@ describe("GIVEN a FormField", () => {
           <Input />
         </FormField>,
       );
-      await expect.element(input).not.toHaveAttribute("aria-labelledby");
-      await expect.element(input).not.toHaveAttribute("aria-describedby");
+      await expect.element(input).toHaveAccessibleName("");
+      await expect.element(input).toHaveAccessibleDescription("");
+    });
+  });
+
+  describe("WHEN custom labels and helper text use the public context", () => {
+    function CustomLabelAndHelperText() {
+      const { a11yProps } = useFormFieldProps();
+      return (
+        <>
+          <span id={a11yProps?.["aria-labelledby"]}>Email address</span>
+          <p id={a11yProps?.["aria-describedby"]}>Use your work email.</p>
+        </>
+      );
+    }
+
+    it("THEN their associations are preserved after mount", async () => {
+      await renderWithSalt(
+        <FormField id="custom-field">
+          <CustomLabelAndHelperText />
+          <Input />
+        </FormField>,
+      );
+      const input = page.getByRole("textbox");
+      await expect.element(input).toHaveAccessibleName("Email address");
+      await expect
+        .element(input)
+        .toHaveAccessibleDescription("Use your work email.");
+    });
+
+    it("THEN they can be added, removed and added again", async () => {
+      const { rerender } = await renderWithSalt(
+        <FormField id="custom-field">
+          <Input />
+        </FormField>,
+      );
+      const input = page.getByRole("textbox");
+      await expect.element(input).toHaveAccessibleName("");
+      await expect.element(input).toHaveAccessibleDescription("");
+
+      for (const showLabel of [true, false, true]) {
+        await rerender(
+          <FormField id="custom-field">
+            {showLabel && <CustomLabelAndHelperText />}
+            <Input />
+          </FormField>,
+        );
+        await expect
+          .element(input)
+          .toHaveAccessibleName(showLabel ? "Email address" : "");
+        await expect
+          .element(input)
+          .toHaveAccessibleDescription(showLabel ? "Use your work email." : "");
+      }
     });
   });
 
@@ -698,7 +749,7 @@ describe("GIVEN a FormField", () => {
       it("THEN the input is described by the tooltip while it's shown", async () => {
         await renderWithSalt(tooltipForm({ id: "test-id" }));
         const input = page.getByRole("textbox");
-        await expect.element(input).not.toHaveAttribute("aria-describedby");
+        await expect.element(input).toHaveAccessibleDescription("");
         await input.hover();
         await expect.element(page.getByRole("tooltip")).toBeVisible();
         await expect
@@ -707,6 +758,7 @@ describe("GIVEN a FormField", () => {
             "aria-describedby",
             expect.stringMatching(/(^| )helperText-test-id( |$)/),
           );
+        await expect.element(input).toHaveAccessibleDescription("Helper text");
       });
 
       it("THEN should have the corresponding id", async () => {

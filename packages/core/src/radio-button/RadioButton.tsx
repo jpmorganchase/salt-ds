@@ -13,7 +13,7 @@ import {
 import { useFormFieldProps } from "../form-field-context";
 import type { AdornmentValidationStatus } from "../status-adornment";
 import type { DataAttributes } from "../types";
-import { makePrefixer, useControlled } from "../utils";
+import { makePrefixer, mergeAriaIds, useControlled } from "../utils";
 import { useRadioGroup } from "./internal/useRadioGroup";
 import radioButtonCss from "./RadioButton.css";
 import { RadioButtonIcon } from "./RadioButtonIcon";
@@ -179,15 +179,13 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
       >
         <input
           aria-label={ariaLabel}
-          aria-describedby={
-            clsx(
-              radioGroup === undefined
-                ? formFieldA11yProps?.["aria-describedby"]
-                : undefined,
-              inputDescribedBy,
-              ariaDescribedBy,
-            ) || undefined
-          }
+          aria-describedby={mergeAriaIds(
+            radioGroup === undefined
+              ? formFieldA11yProps?.["aria-describedby"]
+              : undefined,
+            inputDescribedBy,
+            ariaDescribedBy,
+          )}
           aria-labelledby={
             clsx(
               radioGroup === undefined

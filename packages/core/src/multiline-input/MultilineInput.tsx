@@ -21,6 +21,7 @@ import { StatusAdornment } from "../status-adornment";
 import type { DataAttributes } from "../types";
 import {
   makePrefixer,
+  mergeAriaIds,
   useControlled,
   useForkRef,
   useIsomorphicLayoutEffect,
@@ -248,13 +249,11 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
         )}
         <div className={withBaseName("wrapper")}>
           <textarea
-            aria-describedby={
-              clsx(
-                formFieldDescribedBy,
-                textAreaDescribedBy,
-                ariaDescribedBy,
-              ) || undefined
-            }
+            aria-describedby={mergeAriaIds(
+              formFieldDescribedBy,
+              textAreaDescribedBy,
+              ariaDescribedBy,
+            )}
             aria-labelledby={
               clsx(formFieldLabelledBy, textAreaLabelledBy, ariaLabelledBy) ||
               undefined

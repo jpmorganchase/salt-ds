@@ -11,7 +11,7 @@ import {
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
 import type { DataAttributes } from "../types";
-import { makePrefixer, useControlled } from "../utils";
+import { makePrefixer, mergeAriaIds, useControlled } from "../utils";
 
 import switchCss from "./Switch.css";
 
@@ -150,13 +150,11 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(
         <input
           aria-label={ariaLabel}
           aria-readonly={readOnly || undefined}
-          aria-describedby={
-            clsx(
-              formFieldA11yProps?.["aria-describedby"],
-              inputDescribedBy,
-              ariaDescribedBy,
-            ) || undefined
-          }
+          aria-describedby={mergeAriaIds(
+            formFieldA11yProps?.["aria-describedby"],
+            inputDescribedBy,
+            ariaDescribedBy,
+          )}
           aria-labelledby={
             clsx(
               formFieldA11yProps?.["aria-labelledby"],

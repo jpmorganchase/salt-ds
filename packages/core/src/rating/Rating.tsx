@@ -9,7 +9,13 @@ import {
   useState,
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
-import { capitalize, makePrefixer, useControlled, useId } from "../utils";
+import {
+  capitalize,
+  makePrefixer,
+  mergeAriaIds,
+  useControlled,
+  useId,
+} from "../utils";
 import ratingCss from "./Rating.css";
 import { RatingItem } from "./RatingItem";
 
@@ -146,9 +152,7 @@ export const Rating = forwardRef<HTMLDivElement, RatingProps>(function Rating(
         aria-readonly={readOnly || undefined}
         aria-label={ariaLabel}
         aria-labelledby={clsx(formFieldLabelledBy, ariaLabelledBy) || undefined}
-        aria-describedby={
-          clsx(formFieldDescribedBy, ariaDescribedBy) || undefined
-        }
+        aria-describedby={mergeAriaIds(formFieldDescribedBy, ariaDescribedBy)}
         onMouseLeave={() => setHoveredValue(0)}
       >
         {Array.from({ length: max }, (_, index) => {
