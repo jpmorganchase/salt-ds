@@ -1,6 +1,7 @@
 import {
   type InputProps,
   makePrefixer,
+  mergeAriaIds,
   StatusAdornment,
   useControlled,
   useForkRef,
@@ -37,6 +38,7 @@ import {
 import type { DateRangeSelection } from "../calendar";
 import { useLocalization } from "../localization-provider";
 import dateInputCss from "./DateInput.css";
+import { useHasResolvedLabel } from "./useHasResolvedLabel";
 
 const withBaseName = makePrefixer("saltDateInput");
 
@@ -419,43 +421,78 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       startInputPropsAriaLabel !== undefined || ariaLabel !== undefined;
     const hasEndExplicitAriaLabel =
       endInputPropsAriaLabel !== undefined || ariaLabel !== undefined;
+    const fieldLabelledBy =
+      clsx(formFieldLabelledBy, restAriaLabelledBy) || undefined;
+    // Forward references even before their targets exist. Only discard the
+    // top-level fallback once a field label is actually rendered.
+    const hasFieldLabelReference = Boolean(fieldLabelledBy);
+    const hasFieldLabel = useHasResolvedLabel(
+      startInputRef,
+      fieldLabelledBy,
+      Boolean(ariaLabel) &&
+        (startInputPropsAriaLabel === undefined ||
+          endInputPropsAriaLabel === undefined),
+    );
 
-    const startAriaLabelledBy = hasStartExplicitAriaLabel
-      ? undefined
-      : clsx(
-          formFieldLabelledBy,
-          startDateLabelId,
-          startInputPropsLabelledBy,
-          restAriaLabelledBy,
-        ) || undefined;
-    const endAriaLabelledBy = hasEndExplicitAriaLabel
-      ? undefined
-      : clsx(
-          formFieldLabelledBy,
-          endDateLabelId,
-          endInputPropsLabelledBy,
-          restAriaLabelledBy,
-        ) || undefined;
-    const startAriaDescribedBy =
-      clsx(
-        formFieldDescribedBy,
-        startInputPropsDescribedBy,
-        restAriaDescribedBy,
-      ) || undefined;
-    const endAriaDescribedBy =
-      clsx(
-        formFieldDescribedBy,
-        endInputPropsDescribedBy,
-        restAriaDescribedBy,
-      ) || undefined;
+    const startAriaLabelledBy =
+      hasStartExplicitAriaLabel &&
+      !hasFieldLabelReference &&
+      !startInputPropsLabelledBy
+        ? undefined
+        : clsx(
+            formFieldLabelledBy,
+            startDateLabelId,
+            startInputPropsLabelledBy,
+            restAriaLabelledBy,
+          ) || undefined;
+    const endAriaLabelledBy =
+      hasEndExplicitAriaLabel &&
+      !hasFieldLabelReference &&
+      !endInputPropsLabelledBy
+        ? undefined
+        : clsx(
+            formFieldLabelledBy,
+            endDateLabelId,
+            endInputPropsLabelledBy,
+            restAriaLabelledBy,
+          ) || undefined;
+    const startAriaDescribedBy = mergeAriaIds(
+      formFieldDescribedBy,
+      startInputPropsDescribedBy,
+      restAriaDescribedBy,
+    );
+    const endAriaDescribedBy = mergeAriaIds(
+      formFieldDescribedBy,
+      endInputPropsDescribedBy,
+      restAriaDescribedBy,
+    );
 
+    // An external field label replaces a top-level aria-label, so keep the
+    // consumer's own text, which FormFieldLabel's warning quotes.
     const startAriaLabel =
       startInputPropsAriaLabel ??
-      (ariaLabel ? `Start date ${ariaLabel}` : "Start date");
+      (ariaLabel
+        ? hasFieldLabel
+          ? ariaLabel
+          : `Start date ${ariaLabel}`
+        : "Start date");
 
     const endAriaLabel =
       endInputPropsAriaLabel ??
-      (ariaLabel ? `End date ${ariaLabel}` : "End date");
+      (ariaLabel
+        ? hasFieldLabel
+          ? ariaLabel
+          : `End date ${ariaLabel}`
+        : "End date");
+
+    // The hidden labels hold each input's own label, plus the top-level
+    // aria-label when no field label replaces it.
+    const startInputLabel = hasFieldLabel
+      ? (startInputPropsAriaLabel ?? "Start date")
+      : startAriaLabel;
+    const endInputLabel = hasFieldLabel
+      ? (endInputPropsAriaLabel ?? "End date")
+      : endAriaLabel;
 
     const endInputIsRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)
@@ -670,10 +707,10 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         </div>
         <div className={withBaseName("activationIndicator")} />
         <span id={startDateLabelId} className={withBaseName("visuallyHidden")}>
-          Start date
+          {startInputLabel}
         </span>
         <span id={endDateLabelId} className={withBaseName("visuallyHidden")}>
-          End date
+          {endInputLabel}
         </span>
       </div>
     );

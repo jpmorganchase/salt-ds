@@ -387,9 +387,7 @@ export const WithInput: StoryFn<RangeSliderProps> = () => {
           textAlign="center"
           min={bounds[0]}
           max={bounds[1]}
-          inputProps={{
-            "aria-labelledby": minimumInputLabel,
-          }}
+          aria-labelledby={minimumInputLabel}
         />
         <RangeSlider
           min={bounds[0]}
@@ -414,9 +412,7 @@ export const WithInput: StoryFn<RangeSliderProps> = () => {
           textAlign="center"
           min={bounds[0]}
           max={bounds[1]}
-          inputProps={{
-            "aria-labelledby": maximumInputLabel,
-          }}
+          aria-labelledby={maximumInputLabel}
         />
       </FlexLayout>
     </FormField>
@@ -465,9 +461,7 @@ export const WithInputAndInlineLabels: StoryFn<RangeSliderProps> = () => {
           textAlign="center"
           min={bounds[0]}
           max={bounds[1]}
-          inputProps={{
-            "aria-labelledby": minimumInputLabel,
-          }}
+          aria-labelledby={minimumInputLabel}
         />
         <RangeSlider
           min={bounds[0]}
@@ -494,9 +488,7 @@ export const WithInputAndInlineLabels: StoryFn<RangeSliderProps> = () => {
           textAlign="center"
           min={bounds[0]}
           max={bounds[1]}
-          inputProps={{
-            "aria-labelledby": maximumInputLabel,
-          }}
+          aria-labelledby={maximumInputLabel}
         />
       </FlexLayout>
     </FormField>
@@ -542,9 +534,7 @@ export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
           textAlign="center"
           min={bounds[0]}
           max={bounds[1]}
-          inputProps={{
-            "aria-labelledby": minimumInputLabel,
-          }}
+          aria-labelledby={minimumInputLabel}
           onChange={(event, newInputValue) =>
             handleInputChange(event, newInputValue, "min")
           }
@@ -584,9 +574,7 @@ export const WithInputAndMarksAndTicks: StoryFn<RangeSliderProps> = () => {
           textAlign="center"
           min={bounds[0]}
           max={bounds[1]}
-          inputProps={{
-            "aria-labelledby": maximumInputLabel,
-          }}
+          aria-labelledby={maximumInputLabel}
           onChange={(event, newInputValue) =>
             handleInputChange(event, newInputValue, "max")
           }

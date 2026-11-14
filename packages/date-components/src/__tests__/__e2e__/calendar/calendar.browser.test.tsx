@@ -1,3 +1,4 @@
+import { FormField, FormFieldLabel } from "@salt-ds/core";
 import type { SaltDateAdapter } from "@salt-ds/date-adapters";
 import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
 import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
@@ -279,6 +280,24 @@ function registerAdapterTests(
       await expect
         .element(month)
         .toHaveTextContent(adapter.format(nextQuarter, "MMM"));
+    });
+
+    it("SHOULD keep the month and year dropdown names inside a FormField", async () => {
+      await render(
+        <FormField>
+          <FormFieldLabel>Trade date</FormFieldLabel>
+          <Calendar selectionVariant="single" defaultVisibleMonth={testDate}>
+            <CalendarNavigation />
+            <CalendarGrid />
+          </Calendar>
+        </FormField>,
+      );
+      await expect
+        .element(page.getByRole("combobox", { name: "Month Dropdown" }))
+        .toBeInTheDocument();
+      await expect
+        .element(page.getByRole("combobox", { name: "Year Dropdown" }))
+        .toBeInTheDocument();
     });
 
     it("SHOULD render custom headers", async () => {

@@ -1,3 +1,5 @@
+import { FormField, FormFieldHelperText, FormFieldLabel } from "@salt-ds/core";
+import { TokenizedInputNext } from "@salt-ds/lab";
 import { composeStories } from "@storybook/react-vite";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
@@ -21,6 +23,27 @@ describe("GIVEN a Tokenized Input", () => {
     const inputs = page.getByRole("textbox");
     if ((await inputs.elements()).length > 0) await inputs.first().hover();
     return result;
+  });
+
+  it("SHOULD merge FormField and root aria-labelledby/aria-describedby on the textarea", async () => {
+    await renderWithSalt(
+      <>
+        <span id="extra-label">Extra label</span>
+        <span id="extra-description">Extra description</span>
+        <FormField>
+          <FormFieldLabel>Cities</FormFieldLabel>
+          <TokenizedInputNext
+            aria-labelledby="extra-label"
+            aria-describedby="extra-description"
+          />
+          <FormFieldHelperText>Helper text</FormFieldHelperText>
+        </FormField>
+      </>,
+    );
+    await expect.element(textbox()).toHaveAccessibleName(/^Cities Extra label/);
+    await expect
+      .element(textbox())
+      .toHaveAccessibleDescription("Helper text Extra description");
   });
 
   it("SHOULD mount as disabled", async () => {

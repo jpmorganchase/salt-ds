@@ -104,9 +104,7 @@ const RangeWithInput = () => {
           textAlign="center"
           min={bounds[0]}
           max={bounds[1]}
-          inputProps={{
-            "aria-labelledby": minimumInputLabel,
-          }}
+          aria-labelledby={minimumInputLabel}
           onChange={handleMinInputChange}
           validationStatus={validationStatus}
         />
@@ -129,9 +127,7 @@ const RangeWithInput = () => {
           textAlign="center"
           min={bounds[0]}
           max={bounds[1]}
-          inputProps={{
-            "aria-labelledby": maximumInputLabel,
-          }}
+          aria-labelledby={maximumInputLabel}
           onChange={handleMaxInputChange}
           validationStatus={validationStatus}
         />

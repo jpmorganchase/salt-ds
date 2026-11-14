@@ -6,7 +6,7 @@ import {
   useRef,
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
-import { useControlled } from "../utils";
+import { mergeAriaIds, useControlled } from "../utils";
 import { SliderThumb } from "./internal/SliderThumb";
 import { SliderTrack } from "./internal/SliderTrack";
 import { useRangeSliderThumb } from "./internal/useRangeSliderThumb";
@@ -119,6 +119,7 @@ export interface RangeSliderProps
 export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
   function RangeSlider(
     {
+      "aria-describedby": ariaDescribedBy,
       "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledBy,
       "aria-valuetext": ariaValueText,
@@ -155,7 +156,10 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     const lastValueRef = useRef<[number, number]>(valueState);
 
     const {
-      a11yProps: { "aria-labelledby": formFieldLabelledBy } = {},
+      a11yProps: {
+        "aria-describedby": formFieldDescribedBy,
+        "aria-labelledby": formFieldLabelledBy,
+      } = {},
       disabled: formFieldDisabled,
     } = useFormFieldProps();
 
@@ -222,8 +226,9 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
     });
 
     const thumbProps = {
+      "aria-describedby": mergeAriaIds(formFieldDescribedBy, ariaDescribedBy),
       "aria-label": ariaLabel,
-      "aria-labelledby": clsx(formFieldLabelledBy, ariaLabelledBy),
+      "aria-labelledby": clsx(formFieldLabelledBy, ariaLabelledBy) || undefined,
       "aria-valuemax": max,
       "aria-valuemin": min,
       "aria-valuetext": ariaValueText,

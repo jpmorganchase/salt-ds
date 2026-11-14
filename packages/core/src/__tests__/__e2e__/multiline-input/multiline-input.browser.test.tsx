@@ -1,3 +1,4 @@
+import { MultilineInput } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
 import type { ChangeEvent } from "react";
 import { describe, expect, it, vi } from "vitest";
@@ -23,6 +24,44 @@ describe("GIVEN an MultilineInput", () => {
       />,
     );
     await expect.element(page.getByTestId("customInput")).toHaveValue("value");
+  });
+
+  it("SHOULD apply aria-label to the textarea element", async () => {
+    await renderWithSalt(<MultilineInput aria-label="Comments" />);
+    await expect.element(textbox()).toHaveAccessibleName("Comments");
+    expect(
+      document.querySelector(".saltMultilineInput")?.hasAttribute("aria-label"),
+    ).toBe(false);
+  });
+
+  it("SHOULD prefer aria-label from textAreaProps over aria-label", async () => {
+    await renderWithSalt(
+      <MultilineInput
+        aria-label="Outer"
+        textAreaProps={{ "aria-label": "Inner" }}
+      />,
+    );
+    await expect.element(textbox()).toHaveAccessibleName("Inner");
+  });
+
+  it("SHOULD apply aria-labelledby and aria-describedby to the textarea element", async () => {
+    await renderWithSalt(
+      <>
+        <span id="external-label">Comments</span>
+        <span id="external-description">Maximum 200 characters</span>
+        <MultilineInput
+          aria-labelledby="external-label"
+          aria-describedby="external-description"
+        />
+      </>,
+    );
+    await expect.element(textbox()).toHaveAccessibleName("Comments");
+    await expect
+      .element(textbox())
+      .toHaveAccessibleDescription("Maximum 200 characters");
+    const root = document.querySelector(".saltMultilineInput");
+    expect(root?.hasAttribute("aria-labelledby")).toBe(false);
+    expect(root?.hasAttribute("aria-describedby")).toBe(false);
   });
 
   it("should allow a default value to be set", async () => {

@@ -13,7 +13,7 @@ import {
 import { useFormFieldProps } from "../form-field-context";
 import type { AdornmentValidationStatus } from "../status-adornment";
 import type { DataAttributes } from "../types";
-import { makePrefixer, useControlled } from "../utils";
+import { makePrefixer, mergeAriaIds, useControlled } from "../utils";
 import { useRadioGroup } from "./internal/useRadioGroup";
 import radioButtonCss from "./RadioButton.css";
 import { RadioButtonIcon } from "./RadioButtonIcon";
@@ -87,6 +87,9 @@ export interface RadioButtonProps
 export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
   function RadioButton(props, ref) {
     const {
+      "aria-describedby": ariaDescribedBy,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
       checked: checkedProp,
       className,
       disabled: disabledProp,
@@ -175,20 +178,21 @@ export const RadioButton = forwardRef<HTMLLabelElement, RadioButtonProps>(
         {...rest}
       >
         <input
-          aria-describedby={
-            clsx(
-              radioGroup === undefined
-                ? formFieldA11yProps?.["aria-describedby"]
-                : undefined,
-              inputDescribedBy,
-            ) || undefined
-          }
+          aria-label={ariaLabel}
+          aria-describedby={mergeAriaIds(
+            radioGroup === undefined
+              ? formFieldA11yProps?.["aria-describedby"]
+              : undefined,
+            inputDescribedBy,
+            ariaDescribedBy,
+          )}
           aria-labelledby={
             clsx(
               radioGroup === undefined
                 ? formFieldA11yProps?.["aria-labelledby"]
                 : undefined,
               inputLabelledBy,
+              ariaLabelledBy,
             ) || undefined
           }
           className={clsx(withBaseName("input"), inputClassName)}

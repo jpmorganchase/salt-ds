@@ -16,6 +16,47 @@ describe("GIVEN a RadioButton component", () => {
     ).toBe("value");
   });
 
+  it("applies aria-label to the input element", async () => {
+    await renderWithSalt(<RadioButton aria-label="Spot" value="spot" />);
+    await expect.element(page.getByRole("radio")).toHaveAccessibleName("Spot");
+    expect(
+      document.querySelector(".saltRadioButton")?.hasAttribute("aria-label"),
+    ).toBe(false);
+  });
+
+  it("prefers aria-label from inputProps over aria-label", async () => {
+    await renderWithSalt(
+      <RadioButton
+        aria-label="Outer"
+        inputProps={{ "aria-label": "Inner" }}
+        value="spot"
+      />,
+    );
+    await expect.element(page.getByRole("radio")).toHaveAccessibleName("Inner");
+  });
+
+  it("applies aria-labelledby and aria-describedby to the input element", async () => {
+    await renderWithSalt(
+      <>
+        <span id="external-label">Spot</span>
+        <span id="external-description">Settles in two days</span>
+        <RadioButton
+          aria-labelledby="external-label"
+          aria-describedby="external-description"
+          value="spot"
+        />
+      </>,
+    );
+    const radio = page.getByRole("radio");
+    await expect.element(radio).toHaveAccessibleName("Spot");
+    await expect
+      .element(radio)
+      .toHaveAccessibleDescription("Settles in two days");
+    const root = document.querySelector(".saltRadioButton");
+    expect(root?.hasAttribute("aria-labelledby")).toBe(false);
+    expect(root?.hasAttribute("aria-describedby")).toBe(false);
+  });
+
   it("renders a specified value", async () => {
     await renderWithSalt(<RadioButton value="some value" />);
     expect((page.getByRole("radio").element() as HTMLInputElement).value).toBe(

@@ -1,5 +1,6 @@
 import {
   makePrefixer,
+  mergeAriaIds,
   StatusAdornment,
   useControlled,
   useForkRef,
@@ -276,16 +277,16 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       ...restDateInputProps
     } = inputProps;
 
-    const hasExplicitAriaLabel =
-      dateInputAriaLabel !== undefined || ariaLabel !== undefined;
-
-    const inputAriaLabelledBy = hasExplicitAriaLabel
-      ? undefined
-      : clsx(formFieldLabelledBy, dateInputLabelledBy, restAriaLabelledBy) ||
-        undefined;
-    const inputAriaDescribedBy =
-      clsx(formFieldDescribedBy, dateInputDescribedBy, restAriaDescribedBy) ||
+    const inputAriaLabelledBy =
+      clsx(formFieldLabelledBy, dateInputLabelledBy, restAriaLabelledBy) ||
       undefined;
+    const inputAriaDescribedBy = mergeAriaIds(
+      formFieldDescribedBy,
+      dateInputDescribedBy,
+      restAriaDescribedBy,
+    );
+    const hasConsumerAriaLabel =
+      dateInputAriaLabel !== undefined || ariaLabel !== undefined;
     const inputAriaLabel = dateInputAriaLabel ?? ariaLabel ?? "date input";
 
     const isRequired = formFieldRequired
@@ -387,6 +388,9 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
             (!isReadOnly && validationStatus === "error") || undefined
           }
           aria-label={inputAriaLabel}
+          data-salt-aria-label-fallback={
+            hasConsumerAriaLabel ? undefined : true
+          }
           id={inputId}
           className={withBaseName("input")}
           disabled={isDisabled}

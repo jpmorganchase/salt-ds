@@ -62,7 +62,6 @@ export const PositioningItems = (): ReactElement => {
           <FormFieldLabel>Vertical alignment</FormFieldLabel>
           <RadioButtonGroup
             direction={"horizontal"}
-            aria-label="Vertical alignment Controls"
             name="verticalAlignment"
             onChange={handleVerticalChange}
             value={verticalAlignment}
@@ -83,7 +82,6 @@ export const PositioningItems = (): ReactElement => {
           <FormFieldLabel>Horizontal alignment</FormFieldLabel>
           <RadioButtonGroup
             direction={"horizontal"}
-            aria-label="Horizontal alignment Controls"
             name="horizontalAlignment"
             onChange={handleHorizontalChange}
             value={horizontalAlignment}

@@ -68,6 +68,41 @@ describe("GIVEN a Switch", () => {
     await expect.element(page.getByTestId("customInput")).toBeChecked();
   });
 
+  it("SHOULD apply aria-label to the input element", async () => {
+    await renderWithSalt(<Default aria-label="Notifications" />);
+    await expect.element(control()).toHaveAccessibleName("Notifications");
+    expect(
+      document.querySelector(".saltSwitch")?.hasAttribute("aria-label"),
+    ).toBe(false);
+  });
+
+  it("SHOULD prefer aria-label from inputProps over aria-label", async () => {
+    await renderWithSalt(
+      <Default aria-label="Outer" inputProps={{ "aria-label": "Inner" }} />,
+    );
+    await expect.element(control()).toHaveAccessibleName("Inner");
+  });
+
+  it("SHOULD apply aria-labelledby and aria-describedby to the input element", async () => {
+    await renderWithSalt(
+      <>
+        <span id="external-label">Notifications</span>
+        <span id="external-description">Email me about updates</span>
+        <Default
+          aria-labelledby="external-label"
+          aria-describedby="external-description"
+        />
+      </>,
+    );
+    await expect.element(control()).toHaveAccessibleName("Notifications");
+    await expect
+      .element(control())
+      .toHaveAccessibleDescription("Email me about updates");
+    const root = document.querySelector(".saltSwitch");
+    expect(root?.hasAttribute("aria-labelledby")).toBe(false);
+    expect(root?.hasAttribute("aria-describedby")).toBe(false);
+  });
+
   describe("WHEN mounted as an uncontrolled component", () => {
     it("THEN should be checked if defaultChecked is true", async () => {
       await renderWithSalt(<Default defaultChecked />);

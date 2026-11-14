@@ -11,7 +11,7 @@ import {
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
 import type { DataAttributes } from "../types";
-import { makePrefixer, useControlled } from "../utils";
+import { makePrefixer, mergeAriaIds, useControlled } from "../utils";
 
 import switchCss from "./Switch.css";
 
@@ -72,6 +72,9 @@ const withBaseName = makePrefixer("saltSwitch");
 export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(
   function Switch(props, ref) {
     const {
+      "aria-describedby": ariaDescribedBy,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
       checked: checkedProp,
       className,
       defaultChecked,
@@ -145,14 +148,19 @@ export const Switch = forwardRef<HTMLLabelElement, SwitchProps>(
         {...rest}
       >
         <input
+          aria-label={ariaLabel}
           aria-readonly={readOnly || undefined}
-          aria-describedby={
-            clsx(formFieldA11yProps?.["aria-describedby"], inputDescribedBy) ||
-            undefined
-          }
+          aria-describedby={mergeAriaIds(
+            formFieldA11yProps?.["aria-describedby"],
+            inputDescribedBy,
+            ariaDescribedBy,
+          )}
           aria-labelledby={
-            clsx(formFieldA11yProps?.["aria-labelledby"], inputLabelledBy) ||
-            undefined
+            clsx(
+              formFieldA11yProps?.["aria-labelledby"],
+              inputLabelledBy,
+              ariaLabelledBy,
+            ) || undefined
           }
           name={name}
           value={value}
