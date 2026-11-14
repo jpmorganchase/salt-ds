@@ -1,5 +1,11 @@
 div[class*="ag-theme-salt"] {
-  /* Row height includes the 1px row border, so cell content matches the header row height */
+  /*
+    AG Grid reads the row and header heights from these variables. Client-side grids
+    without auto-height columns follow CSS density changes from v33; v36.3 also updates
+    auto-height rows while preserving measured content. See the usage guide for other
+    row models and older-version limitations.
+    A row's height includes its bottom border, so rows are a border taller than the header.
+  */
   --ag-row-height: calc(var(--salt-size-base) + var(--salt-spacing-100) + var(--salt-size-fixed-100));
   --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   --ag-background-color: var(--salt-container-primary-background);
@@ -84,6 +90,7 @@ div[class*="ag-theme-salt"] {
   --ag-pinned-row-border: none;
 }
 
+/* HD Compact is intended for high density; the class remains an explicit opt-in. */
 div[class*="ag-theme-salt-compact"] {
   /*
     Ensures icon / country symbol renders correct height.
@@ -94,8 +101,10 @@ div[class*="ag-theme-salt-compact"] {
   --salt-size-selectable: 12px;
 }
 
+.ag-theme-salt .ag-root-wrapper,
 .ag-theme-salt-light .ag-root-wrapper,
 .ag-theme-salt-dark .ag-root-wrapper,
+.ag-theme-salt-compact .ag-root-wrapper,
 .ag-theme-salt-compact-light .ag-root-wrapper,
 .ag-theme-salt-compact-dark .ag-root-wrapper {
   border: none;

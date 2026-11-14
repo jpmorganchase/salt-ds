@@ -1,15 +1,11 @@
 import type { ColDef, ColGroupDef } from "ag-grid-community";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const ColumnGroup = (props: AgGridReactProps) => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         {...props}
         rowSelection="multiple"
         rowData={dataGridExampleData}

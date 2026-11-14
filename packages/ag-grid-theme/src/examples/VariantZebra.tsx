@@ -1,20 +1,14 @@
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
-import { clsx } from "clsx";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const VariantZebra = (props: AgGridReactProps) => {
-  const { agGridProps, containerProps } = useAgGridHelpers({});
-  const { className } = containerProps;
-
   return (
     <div
-      {...containerProps}
-      className={clsx(className, "ag-theme-salt-variant-zebra")}
+      className="ag-theme-salt ag-theme-salt-variant-zebra"
+      style={{ height: 500, width: 800 }}
     >
       <AgGridReact
-        {...agGridProps}
         {...props}
         rowData={dataGridExampleData}
         columnDefs={dataGridExampleColumns}

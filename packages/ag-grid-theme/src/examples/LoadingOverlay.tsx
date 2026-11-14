@@ -1,7 +1,6 @@
 import { Card, Spinner, StackLayout, Text } from "@salt-ds/core";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const CustomOverlay = () => (
   <Card>
@@ -15,14 +14,15 @@ const CustomOverlay = () => (
 );
 
 const LoadingOverlay = (props: AgGridReactProps) => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
     <StackLayout gap={4}>
       <div style={{ position: "relative" }}>
-        <div {...containerProps} tabIndex={-1}>
+        <div
+          className="ag-theme-salt"
+          style={{ height: 500, width: 800 }}
+          tabIndex={-1}
+        >
           <AgGridReact
-            {...agGridProps}
             {...props}
             columnDefs={dataGridExampleColumns}
             loadingOverlayComponent={CustomOverlay}

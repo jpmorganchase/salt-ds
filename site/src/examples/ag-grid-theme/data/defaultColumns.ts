@@ -31,7 +31,7 @@ export const defaultColumns: ColDef[] = [
   {
     headerName: "Capital",
     field: "capital",
-    filter: "agSetColumnFilter",
+    filter: "agTextColumnFilter",
   },
   {
     headerName: "Population",

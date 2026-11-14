@@ -9,7 +9,6 @@ import { clsx } from "clsx";
 import { type SyntheticEvent, useState } from "react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 type HeaderVariant = "primary" | "secondary" | "tertiary";
 
@@ -22,8 +21,6 @@ const HeaderVariants = ({
   ...props
 }: HeaderVariantsProps) => {
   const [variant, setVariant] = useState<HeaderVariant>("secondary");
-
-  const { agGridProps, containerProps } = useAgGridHelpers();
 
   const onVariantChange = (event: SyntheticEvent<HTMLButtonElement>) => {
     setVariant(event.currentTarget.value as HeaderVariant);
@@ -44,15 +41,14 @@ const HeaderVariants = ({
         </ToggleButtonGroup>
       </StackLayout>
       <div
-        {...containerProps}
         className={clsx(
-          containerProps.className,
+          "ag-theme-salt",
           containerClassName,
           `ag-theme-salt-header-${variant}`,
         )}
+        style={{ height: 500, width: 800 }}
       >
         <AgGridReact
-          {...agGridProps}
           {...props}
           columnDefs={dataGridExampleColumns}
           rowData={dataGridExampleData}

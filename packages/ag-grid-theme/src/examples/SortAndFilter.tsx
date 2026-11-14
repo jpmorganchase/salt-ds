@@ -1,7 +1,6 @@
+import type { GridReadyEvent } from "ag-grid-community";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
-import { useEffect } from "react";
 import rowData from "../dependencies/dataGridExampleData";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const colDef = [
   {
@@ -26,36 +25,27 @@ const colDef = [
   },
 ];
 
+const onGridReady = async ({ api }: GridReadyEvent) => {
+  // set filter model and update
+  await api.setColumnFilterModel("name", {
+    values: ["Alabama", "Alaska", "Arizona"],
+  });
+  await api.setColumnFilterModel("rating", {
+    type: "lessThan",
+    filter: 50,
+  });
+
+  // refresh rows based on the filter (not automatic to allow for batching multiple filters)
+  api.onFilterChanged();
+};
+
 const SortAndFilter = (props: AgGridReactProps) => {
-  const { agGridProps, containerProps, isGridReady, api } = useAgGridHelpers();
-
-  useEffect(() => {
-    async function setFilter() {
-      if (isGridReady) {
-        // set filter model and update
-
-        await api?.setColumnFilterModel("name", {
-          values: ["Alabama", "Alaska", "Arizona"],
-        });
-        await api?.setColumnFilterModel("rating", {
-          type: "lessThan",
-          filter: 50,
-        });
-
-        // refresh rows based on the filter (not automatic to allow for batching multiple filters)
-        api?.onFilterChanged();
-      }
-    }
-
-    void setFilter();
-  }, [isGridReady, api]);
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
         columnDefs={colDef}
         rowData={rowData}
-        {...agGridProps}
+        onGridReady={onGridReady}
         {...props}
       />
     </div>

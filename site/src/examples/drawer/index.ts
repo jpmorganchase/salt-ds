@@ -1,3 +1,6 @@
+// The Placement example renders an AG Grid.
+import "../ag-grid-theme/registerModules";
+
 export * from "./Default";
 export * from "./DeprecatedCloseButton";
 export * from "./DisableAccent";

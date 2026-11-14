@@ -24,7 +24,6 @@ import {
 } from "react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const PAGE_SIZES = [20, 50, 100] as const;
 
@@ -45,7 +44,6 @@ const formatCount = (value: number) => value.toLocaleString("en-US");
 
 const PaginationExample = (props: AgGridReactProps) => {
   const { onPaginationChanged: onPaginationChangedProp } = props;
-  const { agGridProps, containerProps } = useAgGridHelpers();
   const gridApiRef = useRef<GridApi | undefined>(undefined);
   const rowData = useMemo(() => generateData(dataGridExampleData), []);
 
@@ -97,10 +95,9 @@ const PaginationExample = (props: AgGridReactProps) => {
   const isOnLastPage = pageCount === 0 || page >= pageCount;
 
   return (
-    <StackLayout gap={0} style={{ width: containerProps.style?.width }}>
-      <div {...containerProps}>
+    <StackLayout gap={0} style={{ width: 800 }}>
+      <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
         <AgGridReact
-          {...agGridProps}
           {...props}
           columnDefs={dataGridExampleColumns}
           pagination

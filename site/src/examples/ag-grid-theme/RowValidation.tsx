@@ -10,7 +10,6 @@ import {
   validationRowClassRules,
   validationRowExampleColumns,
 } from "./data";
-import { useAgGridHelpers } from "./useAgGridHelpers";
 
 const supportedStatuses = ["success", "error", "warning"] as const;
 const StatusRenderer = (
@@ -28,14 +27,12 @@ const StatusRenderer = (
 };
 
 export const RowValidation = (props: AgGridReactProps) => {
-  // We've created a local custom hook to set the rows and column sizes.
-  // refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts
-  const { containerProps, agGridProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: "100%" }}>
       <AgGridReact
-        {...agGridProps}
+        theme="legacy"
+        autoSizeStrategy={{ type: "fitGridWidth" }}
+        defaultColDef={{ filter: true }}
         {...props}
         rowData={validationExampleData}
         columnDefs={validationRowExampleColumns}

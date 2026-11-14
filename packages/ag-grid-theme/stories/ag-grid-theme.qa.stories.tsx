@@ -1,5 +1,6 @@
 /** biome-ignore-all lint/style/noNonNullAssertion: Non-Null assertion make tests easier. */
 /** biome-ignore-all lint/suspicious/noNonNullAssertedOptionalChain: Non-Null assertion make tests easier. */
+import { Button, type Density, SaltProvider, useDensity } from "@salt-ds/core";
 import type { StoryObj } from "@storybook/react-vite";
 import type { ColDef } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
@@ -8,7 +9,6 @@ import { expect, userEvent, waitFor, within } from "storybook/test";
 import dataGridExampleColumns from "../src/dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../src/dependencies/dataGridExampleData";
 import { shortColorData } from "../src/dependencies/dataGridExampleDataCellEditors";
-import { useAgGridHelpers } from "../src/dependencies/useAgGridHelpers";
 import { validationCellExampleColumns } from "../src/dependencies/validationExampleColumns";
 import { validationExampleData } from "../src/dependencies/validationExampleData";
 import {
@@ -16,7 +16,9 @@ import {
   ContextMenu as ContextMenuGrid,
   CustomFilter,
   Default,
+  HDCompact,
   HeaderVariants as HeaderVariantsGrid,
+  InfiniteScroll,
   ProvidedCellEditors,
   ToolPanel,
   VariantZebra,
@@ -25,6 +27,7 @@ import {
 
 import "ag-grid-community/styles/ag-grid.css";
 import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
+import "../src/dependencies/setupAgGrid";
 
 export default {
   title: "Ag Grid/Ag Grid Theme/Ag Grid Theme QA",
@@ -522,16 +525,11 @@ const richSelectHitTestingColumns: ColDef[] = [
 ];
 
 const RichSelectHitTestingGrid = () => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
   const [rowData] = useState(() => [{ color: "Black" }]);
 
   return (
-    <div {...containerProps}>
-      <AgGridReact
-        {...agGridProps}
-        rowData={rowData}
-        columnDefs={richSelectHitTestingColumns}
-      />
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
+      <AgGridReact rowData={rowData} columnDefs={richSelectHitTestingColumns} />
     </div>
   );
 };
@@ -698,12 +696,9 @@ WrappedHeaderRowSelection.play = async ({ canvasElement }) => {
 export const CellValidationInRangeSelection: StoryObj<
   typeof AgGridReact
 > = () => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         rowData={validationExampleData}
         columnDefs={validationCellExampleColumns}
         cellSelection
@@ -778,12 +773,9 @@ const cellGapColumns: ColDef[] = [
 
 // Every cell leaves a 1px gap after it, matching the Figma column separator slot, and the pinned column separator fills the gap.
 export const CellGaps: StoryObj<typeof AgGridReact> = () => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         rowData={validationExampleData}
         columnDefs={cellGapColumns}
       />
@@ -810,12 +802,9 @@ CellGaps.play = async ({ canvasElement }) => {
 
 // The range selection background covers the gaps, so the range reads as one area.
 export const CellGapsInRangeSelection: StoryObj<typeof AgGridReact> = () => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         rowData={validationExampleData}
         columnDefs={cellGapColumns}
         cellSelection
@@ -850,12 +839,9 @@ CellGapsInRangeSelection.play = async ({ canvasElement }) => {
 export const CellGapsInRightPinnedRangeSelection: StoryObj<
   typeof AgGridReact
 > = () => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         rowData={validationExampleData}
         columnDefs={cellGapColumns.map((column) => ({
           ...column,
@@ -904,12 +890,9 @@ CellGapsInRightPinnedRangeSelection.play = async ({ canvasElement }) => {
 export const CellGapsInBlurredRangeSelection: StoryObj<
   typeof AgGridReact
 > = () => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         rowData={dataGridExampleData}
         columnDefs={dataGridExampleColumns}
         cellSelection
@@ -944,12 +927,9 @@ CellGapsInBlurredRangeSelection.play = async ({ canvasElement }) => {
 
 // AG Grid's own pagination panel. The Pagination example uses Salt components instead, so this covers the theme's paging panel styles.
 export const NativePagination = () => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         rowData={dataGridExampleData}
         columnDefs={dataGridExampleColumns}
         pagination
@@ -973,12 +953,9 @@ const columnDropChipsSideBar = {
 };
 
 const ColumnDropChipsGrid = ({ pivotMode = false }) => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         rowData={dataGridExampleData}
         columnDefs={columnDropChipColumns}
         pivotMode={pivotMode}
@@ -1052,5 +1029,112 @@ ColumnDropChipsInPivotMode.play = async ({ canvasElement }) => {
       lastDropZone.getBoundingClientRect().bottom,
     ).toBeLessThanOrEqual(panel.getBoundingClientRect().bottom);
     panel.scrollTop = 0;
+  }
+};
+
+async function expectFirstRowHeight(container: HTMLElement, height: number) {
+  await waitFor(() => {
+    const row = container.querySelector<HTMLElement>(".ag-row[row-index='0']")!;
+    expect(row).toBeInTheDocument();
+    expect(row.getBoundingClientRect().height).toBe(height);
+    expect(getComputedStyle(row.querySelector(".ag-cell")!).lineHeight).toBe(
+      `${height - 1}px`,
+    );
+  });
+}
+
+const InfiniteScrollDensityGrid = () => {
+  const [density, setDensity] = useState<Density>("high");
+
+  return (
+    <div data-testid="infinite-density-grid">
+      <Button onClick={() => setDensity("touch")}>Touch density</Button>
+      <SaltProvider density={density}>
+        <InfiniteScroll />
+      </SaltProvider>
+    </div>
+  );
+};
+
+export const InfiniteScrollDensityChange: StoryObj<typeof AgGridReact> = {
+  render: () => <InfiniteScrollDensityGrid />,
+};
+InfiniteScrollDensityChange.play = async ({ canvasElement }) => {
+  for (const container of await within(canvasElement).findAllByTestId(
+    "infinite-density-grid",
+  )) {
+    await within(container).findAllByText("AL");
+    await expectFirstRowHeight(container, 25);
+    const gridRoot = container.querySelector(".ag-root-wrapper");
+
+    await userEvent.click(
+      within(container).getByRole("button", { name: "Touch density" }),
+    );
+
+    await expectFirstRowHeight(container, 61);
+    // Changing density must resize the existing grid rather than discard its state.
+    expect(container.querySelector(".ag-root-wrapper")).toBe(gridRoot);
+  }
+};
+
+const CompactDensityGrid = () => {
+  const density = useDensity();
+  return (
+    <div
+      className={density === "high" ? "ag-theme-salt-compact" : "ag-theme-salt"}
+      style={{ height: 500, width: 800 }}
+    >
+      <AgGridReact
+        columnDefs={[{ field: "name" }]}
+        rowData={[{ name: "Density row" }]}
+      />
+    </div>
+  );
+};
+
+const NestedCompactDensityGrid = () => {
+  const [density, setDensity] = useState<Density>("medium");
+  return (
+    <div data-testid="nested-compact-density-grid">
+      <SaltProvider density="high">
+        <Button onClick={() => setDensity("high")}>High density</Button>
+        <SaltProvider density={density}>
+          <CompactDensityGrid />
+        </SaltProvider>
+      </SaltProvider>
+    </div>
+  );
+};
+
+export const CompactUsesNearestDensity: StoryObj<typeof AgGridReact> = {
+  render: () => <NestedCompactDensityGrid />,
+};
+CompactUsesNearestDensity.play = async ({ canvasElement }) => {
+  for (const container of await within(canvasElement).findAllByTestId(
+    "nested-compact-density-grid",
+  )) {
+    await expectFirstRowHeight(container, 37);
+    await userEvent.click(
+      within(container).getByRole("button", { name: "High density" }),
+    );
+    await expectFirstRowHeight(container, 21);
+  }
+};
+
+export const CompactExampleOverridesOuterDensity: StoryObj<typeof AgGridReact> =
+  {
+    render: () => (
+      <div data-testid="compact-example-density-grid">
+        <SaltProvider density="medium">
+          <HDCompact />
+        </SaltProvider>
+      </div>
+    ),
+  };
+CompactExampleOverridesOuterDensity.play = async ({ canvasElement }) => {
+  for (const container of await within(canvasElement).findAllByTestId(
+    "compact-example-density-grid",
+  )) {
+    await expectFirstRowHeight(container, 21);
   }
 };

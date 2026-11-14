@@ -7,12 +7,9 @@ import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import mac from "../dependencies/mac.png";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 import windows from "../dependencies/windows.png";
 
 const ContextMenu = (props: AgGridReactProps) => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   // [VERSION DIVERGENCE]: AG Grid v36 narrows built-in menu item strings; the callback type preserves their literal types.
   const getContextMenuItems: GetContextMenuItems = (params) => {
     const result = [
@@ -143,9 +140,8 @@ const ContextMenu = (props: AgGridReactProps) => {
   };
 
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         {...props}
         allowContextMenuWithControlKey
         getContextMenuItems={getContextMenuItems}
