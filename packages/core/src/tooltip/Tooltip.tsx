@@ -7,6 +7,7 @@ import {
   isValidElement,
   type ReactNode,
   type Ref,
+  useState,
 } from "react";
 import {
   type FormFieldValidationStatus,
@@ -20,11 +21,68 @@ import {
   type UseFloatingUIProps,
   useFloatingComponent,
   useForkRef,
+  useIsomorphicLayoutEffect,
 } from "../utils";
 import { TooltipBase } from "./TooltipBase";
 import { type UseTooltipProps, useTooltip } from "./useTooltip";
 
 const withBaseName = makePrefixer("saltTooltip");
+
+function useOwnedHelperTextId(
+  helperTextId: string | undefined,
+  open: boolean,
+  referenceElement: Element | null,
+  floatingElement: HTMLElement | null,
+) {
+  const [ownedHelperTextId, setOwnedHelperTextId] = useState<string>();
+
+  useIsomorphicLayoutEffect(() => {
+    if (!open || !helperTextId || !referenceElement || !floatingElement) {
+      setOwnedHelperTextId(undefined);
+      return;
+    }
+
+    // ID references resolve in the trigger's document or shadow root. A real
+    // FormFieldHelperText or another tooltip can own the same helper ID.
+    const root = referenceElement.getRootNode() as Document | ShadowRoot;
+    if (typeof root.getElementById !== "function") {
+      setOwnedHelperTextId(undefined);
+      return;
+    }
+    const updateHelperTextId = () => {
+      const helper = root.getElementById(helperTextId);
+      const content = floatingElement.querySelector(
+        `.${withBaseName("content")}`,
+      );
+      setOwnedHelperTextId(
+        helper && helper === content ? helperTextId : undefined,
+      );
+    };
+    updateHelperTextId();
+
+    const mutationObserverCtor = (
+      referenceElement.ownerDocument.defaultView as
+        | (Window & { MutationObserver?: typeof MutationObserver })
+        | null
+    )?.MutationObserver;
+    const observer = mutationObserverCtor
+      ? new mutationObserverCtor(updateHelperTextId)
+      : undefined;
+    // An open tooltip may remain mounted while a sibling helper or another
+    // tooltip is added, removed or given a different ID.
+    observer?.observe(root, {
+      childList: true,
+      subtree: true,
+      attributes: true,
+      attributeFilter: ["id"],
+    });
+    return () => observer?.disconnect();
+  }, [helperTextId, open, referenceElement, floatingElement]);
+
+  return open && ownedHelperTextId === helperTextId
+    ? ownedHelperTextId
+    : undefined;
+}
 
 export interface TooltipProps
   extends Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement">,
@@ -126,11 +184,18 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
 
     const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
     const hasContent = content != null && content !== "";
+    const isOpen = open && !disabled && hasContent;
+    const ownedHelperTextId = useOwnedHelperTextId(
+      formFieldDescribedBy,
+      isOpen,
+      arrowProps.context.elements.domReference,
+      arrowProps.context.elements.floating,
+    );
     const triggerProps = getTriggerProps();
-    // Form controls already reference the helper span inside the tooltip.
-    // Reuse that target so forwarding the trigger props doesn't describe it twice.
-    if (formFieldDescribedBy && triggerProps["aria-describedby"]) {
-      triggerProps["aria-describedby"] = formFieldDescribedBy;
+    // Reuse the FormField reference only when it resolves to this tooltip's
+    // helper span; otherwise preserve the tooltip's own generated reference.
+    if (ownedHelperTextId && triggerProps["aria-describedby"]) {
+      triggerProps["aria-describedby"] = ownedHelperTextId;
     }
 
     return (
@@ -147,7 +212,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
             { [withBaseName(status ?? "")]: status },
             className,
           )}
-          open={open && !disabled && hasContent}
+          open={isOpen}
           {...getTooltipProps()}
           ref={floatingRef}
           {...getTooltipPosition()}
