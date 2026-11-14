@@ -17,10 +17,32 @@ const require = createRequire(import.meta.url);
  * sources: <...source definitions>
  */
 
+const SEARCH_INDEX_PLUGIN = "@jpmorganchase/mosaic-plugins/SearchIndexPlugin";
+
+/**
+ * Mosaic's default SearchIndexPlugin runs after `$ref`s are resolved, so
+ * tab pages get their component's title. Component pages list their other
+ * names in `data.alsoKnownAs`, so a search for "Select" finds Dropdown.
+ */
+const searchIndexOptions = {
+  maxLineLength: 240,
+  maxLineCount: 240,
+  records: {
+    fields: {
+      description: ["description", "data.description"],
+      keywords: ["keywords", "data.alsoKnownAs"],
+    },
+  },
+};
+
 const saltConfig = {
   ...fsConfig,
   plugins: [
-    ...fsConfig.plugins,
+    ...fsConfig.plugins.map((plugin) =>
+      plugin.modulePath === SEARCH_INDEX_PLUGIN
+        ? { ...plugin, options: searchIndexOptions }
+        : plugin,
+    ),
     {
       modulePath: require.resolve("./src/mosaic-plugins/SidebarPlugin.mjs"),
       priority: 2,
@@ -28,16 +50,6 @@ const saltConfig = {
     },
     {
       modulePath: "@jpmorganchase/mosaic-plugins/BreadcrumbsPlugin",
-    },
-    {
-      modulePath: "@jpmorganchase/mosaic-plugins/SearchIndexPlugin",
-      previewDisabled: true,
-      options: {
-        maxLineLength: 240,
-        maxLineCount: 240,
-        keys: ["keywords", "content"],
-      },
-      priority: Number.NEGATIVE_INFINITY,
     },
     {
       modulePath: "@jpmorganchase/mosaic-plugins/SiteMapPlugin",
@@ -52,7 +64,7 @@ const saltConfig = {
       priority: Number.NEGATIVE_INFINITY,
       options: {
         outputDir: "./public",
-        assets: ["sitemap.xml", "search-data.json"],
+        assets: ["sitemap.xml", "search-records.json"],
       },
     },
     {
