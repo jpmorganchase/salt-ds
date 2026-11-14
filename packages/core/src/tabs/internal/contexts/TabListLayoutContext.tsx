@@ -4,6 +4,7 @@ import { createContext } from "../../../utils";
 export type TabSlotLocation = "hidden" | "main" | "overflow";
 
 export interface TabListLayoutContextValue {
+  exitOverflowMenu: () => void;
   getLocation: (value: string) => TabSlotLocation;
   overflowActiveValue: string | null;
   setOverflowActiveValue: (value: string | null) => void;

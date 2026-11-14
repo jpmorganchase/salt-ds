@@ -53,7 +53,10 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
       activeColor = "primary",
       children,
       className,
+      onBlurCapture,
+      onFocusCapture,
       onKeyDown,
+      onPointerDownCapture,
       ...rest
     } = props;
     const targetWindow = useWindow();
@@ -81,6 +84,7 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
       setMenuOpen,
       sortItems,
       getRemovedItems,
+      peekRemovedItems,
       getRenderedTab,
       renderedTabs,
       removalVersion,
@@ -92,10 +96,64 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
     const removalRecoveryRafRef = useRef<number | null>(null);
     const pendingRemovalRecoveryRef = useRef(false);
     const pendingRemovalRecoveryRetriesRef = useRef(0);
+    const focusWithinRef = useRef(false);
+    const removalFocusRecoveryAllowedRef = useRef(true);
+    const observedFocusRemovalsRef = useRef(new WeakSet<object>());
     const [slotVersion, setSlotVersion] = useState(0);
 
     const handleRef = useForkRef(tabstripRef, ref);
     const overflowButtonRef = useRef<HTMLButtonElement>(null);
+
+    useEffect(() => {
+      const doc = targetWindow?.document;
+      if (!doc) return;
+
+      const clearOutsideFocusOwnership = (event: Event) => {
+        const target = event.target as Node | null;
+        if (
+          !tabstripRef.current?.contains(target) &&
+          !overflowListRef.current?.contains(target)
+        ) {
+          focusWithinRef.current = false;
+        }
+      };
+      // Also clear pointer ownership in browsers that don't focus buttons.
+      doc.addEventListener("focusin", clearOutsideFocusOwnership, true);
+      doc.addEventListener("pointerdown", clearOutsideFocusOwnership, true);
+      return () => {
+        doc.removeEventListener("focusin", clearOutsideFocusOwnership, true);
+        doc.removeEventListener(
+          "pointerdown",
+          clearOutsideFocusOwnership,
+          true,
+        );
+      };
+    }, [targetWindow]);
+
+    const canRecoverRemovalFocus = useCallback(() => {
+      let hasNewRemoval = false;
+      for (const removed of peekRemovedItems().values()) {
+        if (observedFocusRemovalsRef.current.has(removed)) continue;
+        observedFocusRemovalsRef.current.add(removed);
+        hasNewRemoval = true;
+      }
+      if (hasNewRemoval) {
+        const doc = targetWindow?.document;
+        const activeElement = doc?.activeElement;
+        // Capture once per removal, including from the selection layout
+        // effect. A controlled parent can remove and select in one commit,
+        // before removal recovery runs. Keep this through dialog-close retries.
+        removalFocusRecoveryAllowedRef.current =
+          focusWithinRef.current ||
+          Boolean(
+            activeElement &&
+              activeElement !== doc?.body &&
+              activeElement !== doc?.documentElement &&
+              activeElement.isConnected,
+          );
+      }
+      return removalFocusRecoveryAllowedRef.current;
+    }, [peekRemovedItems, targetWindow]);
 
     const { announce } = useAriaAnnouncer();
     const overflowMenuOpen = renderMode === "portal" ? menuOpen : false;
@@ -119,8 +177,21 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
       setBootstrapOverflowReady,
     ]);
 
+    const exitOverflowMenu = useCallback(() => {
+      setMenuOpen(false);
+
+      const focusOverflowButton = () =>
+        overflowButtonRef.current?.focus({ preventScroll: true });
+      if (targetWindow?.requestAnimationFrame) {
+        targetWindow.requestAnimationFrame(focusOverflowButton);
+      } else {
+        queueMicrotask(focusOverflowButton);
+      }
+    }, [setMenuOpen, targetWindow]);
+
     const { resolvedOverflowActiveValue, tabListLayoutContext } =
       useOverflowLayoutState({
+        exitOverflowMenu,
         hiddenValues,
         menuOpen,
         overflowMenuOpen,
@@ -224,6 +295,7 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
     });
     useTabSelectionFocus({
       announce,
+      canRecoverRemovalFocus,
       focusElementWithRetry,
       getRenderedTab,
       getSelectedTabElement,
@@ -236,6 +308,7 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
 
     const handleTabRemoval = useTabRemovalHandler({
       activeTab,
+      canRecoverRemovalFocus,
       focusElementWithRetry,
       getFirst,
       getIndex,
@@ -249,6 +322,7 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
       menuOpen,
       overflowButtonRef,
       overflowListRef,
+      peekRemovedItems,
       pendingRemovalRecoveryRef,
       pendingRemovalRecoveryRetriesRef,
       removalRecoveryRafRef,
@@ -282,7 +356,28 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
           renderMode === "portal" && isMeasuring ? true : undefined
         }
         ref={handleRef}
+        onBlurCapture={(event) => {
+          // Window blur leaves the active element in place. An explicit blur
+          // to the body, unlike removing the focused tab, clears ownership.
+          if (
+            event.target !== event.currentTarget.ownerDocument.activeElement
+          ) {
+            focusWithinRef.current = false;
+          }
+          onBlurCapture?.(event);
+        }}
+        onFocusCapture={(event) => {
+          // React focus events include the portaled overflow menu.
+          focusWithinRef.current = true;
+          onFocusCapture?.(event);
+        }}
         onKeyDown={handleKeyDown}
+        onPointerDownCapture={(event) => {
+          // Safari doesn't focus buttons on click, but dismissing a tab with
+          // the pointer still gives the tabs ownership of focus recovery.
+          focusWithinRef.current = true;
+          onPointerDownCapture?.(event);
+        }}
         {...rest}
       >
         {renderMode === "inline" ? (

@@ -3,6 +3,7 @@ import {
   type RefObject,
   useCallback,
   useEffect,
+  useRef,
 } from "react";
 import { useEventCallback } from "../../../utils/useEventCallback";
 import type { Item, TabsContextValue } from "../contexts/TabsContext";
@@ -16,6 +17,7 @@ interface RemovedItem {
 
 interface UseTabRemovalHandlerArgs {
   activeTab: MutableRefObject<Pick<Item, "id" | "value"> | undefined>;
+  canRecoverRemovalFocus: () => boolean;
   focusElementWithRetry: (
     getElement: () => HTMLElement | null | undefined,
   ) => void;
@@ -31,6 +33,7 @@ interface UseTabRemovalHandlerArgs {
   menuOpen: boolean;
   overflowButtonRef: RefObject<HTMLButtonElement | null>;
   overflowListRef: RefObject<HTMLDivElement | null>;
+  peekRemovedItems: () => Map<string, RemovedItem>;
   pendingRemovalRecoveryRef: MutableRefObject<boolean>;
   pendingRemovalRecoveryRetriesRef: MutableRefObject<number>;
   removalRecoveryRafRef: MutableRefObject<number | null>;
@@ -50,31 +53,9 @@ function hasLostDocumentFocus(doc: Document) {
   );
 }
 
-function getVisibleSelectedTab(
-  tabstrip: HTMLDivElement | null,
-  excludedId?: string,
-) {
-  if (!tabstrip) {
-    return null;
-  }
-
-  const tabs = tabstrip.querySelectorAll<HTMLElement>(
-    ':scope > [data-tabslot] [role="tab"][aria-selected="true"]',
-  );
-
-  return (
-    Array.from(tabs).find((tab) => {
-      if (excludedId && tab.id === excludedId) {
-        return false;
-      }
-
-      return tab.isConnected;
-    }) ?? null
-  );
-}
-
 export function useTabRemovalHandler({
   activeTab,
+  canRecoverRemovalFocus,
   focusElementWithRetry,
   getFirst,
   getIndex,
@@ -88,6 +69,7 @@ export function useTabRemovalHandler({
   menuOpen,
   overflowButtonRef,
   overflowListRef,
+  peekRemovedItems,
   pendingRemovalRecoveryRef,
   pendingRemovalRecoveryRetriesRef,
   removalRecoveryRafRef,
@@ -96,14 +78,96 @@ export function useTabRemovalHandler({
   tabstripRef,
   targetWindow,
 }: UseTabRemovalHandlerArgs) {
+  // Ends a recovery cycle. Each run considers new removal records for
+  // selection replacement before it can get here, and focus recovery doesn't
+  // look at records once the cycle ends, so drop any that are left rather
+  // than holding on to removed elements.
   const clearPendingRemovalRecovery = useCallback(() => {
     pendingRemovalRecoveryRef.current = false;
     pendingRemovalRecoveryRetriesRef.current = 0;
-  }, [pendingRemovalRecoveryRef, pendingRemovalRecoveryRetriesRef]);
+    getRemovedItems();
+  }, [
+    getRemovedItems,
+    pendingRemovalRecoveryRef,
+    pendingRemovalRecoveryRetriesRef,
+  ]);
+
+  // A removal record can be seen by several runs (retries and focus-out
+  // recovery). Each record is only considered by the first run that sees it.
+  // Restoring and removing a tab creates a new record, even when its explicit
+  // id is reused.
+  const seenRemovalsRef = useRef(new WeakSet<RemovedItem>());
+
+  const getReplacementTab = (baseIndex: number) => {
+    let nextTab =
+      (baseIndex >= 0 ? itemAt(baseIndex) : null) ??
+      (baseIndex > 0 ? itemAt(baseIndex - 1) : null) ??
+      getLast() ??
+      getFirst();
+
+    if (nextTab?.element === overflowButtonRef.current) {
+      const overflowIndex = getIndex(nextTab.id);
+      nextTab =
+        (overflowIndex > 0 ? itemAt(overflowIndex - 1) : null) ??
+        (baseIndex > 0 ? itemAt(baseIndex - 1) : null) ??
+        getFirst();
+    }
+
+    return nextTab?.element ? nextTab : null;
+  };
+
+  const afterLayout = (callback: () => void) => {
+    if (!targetWindow?.requestAnimationFrame) {
+      callback();
+      return;
+    }
+
+    targetWindow.requestAnimationFrame(() => {
+      targetWindow.requestAnimationFrame(callback);
+    });
+  };
+
+  const replaceRemovedSelection = useEventCallback(
+    (removedSelected: RemovedItem) => {
+      if (selected !== removedSelected.value || getRenderedTab(selected)) {
+        return;
+      }
+
+      const nextTab = getReplacementTab(removedSelected.staleIndex ?? -1);
+      if (!nextTab) return;
+
+      setSelected(null, nextTab.value, "removal");
+    },
+  );
 
   const handleTabRemoval = useEventCallback(() => {
     const doc = targetWindow?.document;
     if (!doc) return;
+
+    // Selection follows a removed selected tab wherever focus is, e.g. when
+    // the tab is removed by a control outside the tabs or while the overflow
+    // menu is open.
+    const selectedIsRemoved =
+      selected !== undefined && !getRenderedTab(selected);
+    let removedSelected: RemovedItem | undefined;
+    for (const removed of peekRemovedItems().values()) {
+      if (seenRemovalsRef.current.has(removed)) continue;
+
+      seenRemovalsRef.current.add(removed);
+      if (selectedIsRemoved && removed.value === selected) {
+        removedSelected = removed;
+      }
+    }
+
+    if (removedSelected) {
+      const target = removedSelected;
+      afterLayout(() => replaceRemovedSelection(target));
+    }
+
+    if (!canRecoverRemovalFocus()) {
+      clearPendingRemovalRecovery();
+      return;
+    }
 
     const activeTabWasSelected = activeTab.current?.value === selected;
 
@@ -205,49 +269,28 @@ export function useTabRemovalHandler({
         return;
       }
 
-      let nextTab =
-        (baseIndex >= 0 ? itemAt(baseIndex) : null) ??
-        (baseIndex > 0 ? itemAt(baseIndex - 1) : null) ??
-        getLast() ??
-        getFirst();
+      const nextTab = getReplacementTab(baseIndex);
+      if (!nextTab) return;
 
-      if (nextTab?.element === overflowButtonRef.current) {
-        const overflowIndex = getIndex(nextTab.id);
-        nextTab =
-          (overflowIndex > 0 ? itemAt(overflowIndex - 1) : null) ??
-          (baseIndex > 0 ? itemAt(baseIndex - 1) : null) ??
-          getFirst();
-      }
-
-      if (!nextTab?.element) return;
-
-      if (
-        removedWasSelected &&
-        !menuOpen &&
-        !getVisibleSelectedTab(tabstripRef.current, removedId)
-      ) {
-        activeTab.current = { id: nextTab.id, value: nextTab.value };
-        setSelected(null, nextTab.value);
-      }
-
+      // activeTab isn't updated here; focusing the tab updates it through
+      // the tab's focus handlers.
       focusElementWithRetry(() => {
         if (removedWasSelected) {
-          return getSelectedTabElement() ?? nextTab?.element;
+          return getSelectedTabElement() ?? nextTab.element;
         }
 
-        return nextTab?.element;
+        return nextTab.element;
       });
     };
 
-    if (!targetWindow?.requestAnimationFrame) {
-      restoreFocus();
-      return;
-    }
-
-    targetWindow.requestAnimationFrame(() => {
-      targetWindow.requestAnimationFrame(() => {
+    afterLayout(() => {
+      if (removedSelected) {
+        // The replacement callback can update a controlled parent. Let that
+        // commit before focus falls back to the adjacent tab.
+        afterLayout(restoreFocus);
+      } else {
         restoreFocus();
-      });
+      }
     });
   });
 

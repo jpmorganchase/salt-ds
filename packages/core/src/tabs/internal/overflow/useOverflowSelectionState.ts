@@ -26,7 +26,7 @@ interface UseOverflowSelectionStateResult {
   setSelected: (
     event: SyntheticEvent | null,
     value: string,
-    source?: "main" | "overflow",
+    source?: "main" | "overflow" | "removal",
   ) => void;
 }
 
@@ -46,7 +46,7 @@ export function useOverflowSelectionState({
     (
       event: SyntheticEvent | null,
       value: string,
-      source: "main" | "overflow" = "main",
+      source: "main" | "overflow" | "removal" = "main",
     ) => {
       const selectedFromOverflow = source === "overflow";
       selectionFromOverflowValueRef.current = selectedFromOverflow
@@ -61,7 +61,11 @@ export function useOverflowSelectionState({
       }
 
       pendingOverflowSelectionRef.current = null;
-      setMenuOpen(false);
+      // Replacing a removed selected tab leaves an open overflow menu, and
+      // the focus inside it, alone.
+      if (source !== "removal") {
+        setMenuOpen(false);
+      }
       commitSelection(event, value);
     },
     [commitSelection, setMenuOpen],
