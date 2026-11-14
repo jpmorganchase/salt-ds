@@ -20,6 +20,18 @@ Improve accessibility by customizing the `aria-label` prop to provide additional
 </Stepper>
 ```
 
+`CompactStepper` renders a `group`, so customize its `aria-label` prop in the same way:
+
+```jsx
+<CompactStepper aria-label="Onboarding Process steps">
+  <Step label="Step 1" stage="completed" />
+  <Step label="Step 2" stage="active" />
+  <Step label="Step 3" stage="pending" />
+</CompactStepper>
+```
+
+Only the current step is visible in `CompactStepper`, so it shows the step number and the total number of steps as text, for example "Step 2 of 3: Step 2". Screen readers read this text followed by the state of the step, such as "active", "locked", "completed", "error" or "warning". The track is hidden from assistive technology, and the icon is decorative.
+
 ## Keyboard interactions
 
 Keyboard interactions apply to only Steppers with steps with nested substeps.
@@ -46,3 +58,5 @@ for expanding or collapsing the substeps.
 
 </KeyboardControl>
 </KeyboardControls>
+
+`CompactStepper` has no keyboard interactions because it contains no focusable elements.

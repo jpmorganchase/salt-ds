@@ -14,11 +14,13 @@ data:
 
 - When there are separate steps within a process, such as a wizard or a multi-step form.
 - When you want to split a process into distinct, bite-sized sections that are less daunting than lengthy forms.
+- When space is very limited, such as mobile-first designs or layouts primarily 0–599px wide, and a condensed overview of progress is enough. For these cases, use `CompactStepper`.
 
 ### When not to use
 
 - When there are fewer than three steps in a process.
 - As navigation; users cannot interact with the steps.
+- When steps need descriptions or nested substeps. `CompactStepper` shows only the current step, so use `Stepper` instead.
 
 ## Content
 
@@ -32,6 +34,12 @@ To import `Stepper` and `Step` from the core Salt package, use:
 import { Stepper, Step } from "@salt-ds/core";
 ```
 
+To import `CompactStepper` from the lab Salt package, use:
+
+```js
+import { CompactStepper } from "@salt-ds/lab";
+```
+
 ## Props
 
 ### `Stepper`
@@ -41,3 +49,7 @@ import { Stepper, Step } from "@salt-ds/core";
 ### `Step`
 
 <PropsTable packageName="core" componentName="Step" />
+
+### `CompactStepper`
+
+<PropsTable packageName="lab" componentName="CompactStepper" />
