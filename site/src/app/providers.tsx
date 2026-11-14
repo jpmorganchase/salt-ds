@@ -24,10 +24,7 @@ import * as saltLayouts from "../layouts";
 import { LayoutProvider } from "../layouts/LayoutProvider";
 import { ThemeProvider } from "../ThemeProvider";
 
-export type NamespaceData = Pick<
-  SiteState,
-  "sharedConfig" | "searchIndex" | "searchConfig"
->;
+export type NamespaceData = Pick<SiteState, "sharedConfig">;
 
 export const NamespaceDataContext = createContext<NamespaceData | undefined>(
   undefined,

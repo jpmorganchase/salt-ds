@@ -54,12 +54,6 @@ export function NamespaceFrame({
   );
   const frame = useMemo(() => ({ store, data }), [store, data]);
 
-  useLayoutEffect(() => {
-    store.setState({
-      searchIndex: data.searchIndex,
-      searchConfig: data.searchConfig,
-    });
-  }, [store, data]);
   useEffect(() => {
     registerStore(store);
     return () => disposeStore(store);

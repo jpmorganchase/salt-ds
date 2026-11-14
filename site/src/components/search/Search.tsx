@@ -1,4 +1,10 @@
-import { type SearchIndex, useSearchIndex } from "@jpmorganchase/mosaic-store";
+import {
+  createSearchIndex,
+  highlight,
+  type MosaicSearchIndex,
+  type SearchRecord,
+  type SearchResult,
+} from "@jpmorganchase/mosaic-site-middleware/search";
 import {
   Button,
   ComboBox,
@@ -14,117 +20,122 @@ import {
   type ComponentPropsWithoutRef,
   type SyntheticEvent,
   useDeferredValue,
-  useEffect,
   useMemo,
   useState,
 } from "react";
 import useSWR from "swr";
 import styles from "./Search.module.css";
-import { performSearch } from "./searchUtils";
 
-function SearchResult({
-  result,
-}: {
-  result: { title: string; content: string; route: string };
-}) {
+/** Written by Mosaic's SearchIndexPlugin and copied to `public/`. */
+export const SEARCH_RECORDS_URL = "/search-records.json";
+
+// A component's tabs are one result, linking to the tab that matched best.
+const COMPONENT_TAB = /\/(index|usage|examples|accessibility)$/;
+const RESULTS_PER_CATEGORY = 5;
+
+async function loadSearchIndex(url: string): Promise<MosaicSearchIndex> {
+  const response = await fetch(url);
+  if (!response.ok) {
+    throw new Error(`Failed to load ${url}: ${response.status}`);
+  }
+  const { records } = (await response.json()) as { records: SearchRecord[] };
+  return createSearchIndex(
+    // The GitHub release pages aren't part of site search.
+    records.filter((record) => record.route.startsWith("/salt/")),
+    {
+      groupBy: (record) => record.route.replace(COMPONENT_TAB, ""),
+      pageRank: (record) => {
+        if (record.route.endsWith("/index")) return 0;
+        return record.route.endsWith("/usage") ? 1 : 2;
+      },
+      // The docs use US spelling.
+      synonyms: [["colour", "color"]],
+    },
+  );
+}
+
+/** "components", "foundations" and so on, from `/salt/<category>/...`. */
+const categoryOf = (route: string) =>
+  capitalize(route.split("/")[2]?.split("-").join(" ") ?? "");
+
+function SearchResultOption({ result }: { result: SearchResult }) {
+  const heading = result.headings[result.headings.length - 1];
   return (
-    <Option className={styles.result} value={result.route}>
-      <Text>{result.title}</Text>
-      {result.content && (
+    <Option className={styles.result} value={result.href}>
+      <Text>
+        {result.title}
+        {heading && ` › ${heading}`}
+      </Text>
+      {result.snippet && (
         <Text
           styleAs="label"
           color="secondary"
           className={styles.resultDescription}
         >
-          {/* biome-ignore lint/security/noDangerouslySetInnerHtml: result.content is HTML we want to show */}
-          <span dangerouslySetInnerHTML={{ __html: result.content }} />
+          {highlight(result.snippet, result.terms).map((segment, index) =>
+            segment.match ? (
+              // biome-ignore lint/suspicious/noArrayIndexKey: segments are split from fixed text and never reorder
+              <strong key={index}>{segment.text}</strong>
+            ) : (
+              segment.text
+            ),
+          )}
         </Text>
       )}
     </Option>
   );
 }
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
-function useSearchData() {
-  const { searchIndex: fallbackIndex, searchConfig } = useSearchIndex();
-
-  const {
-    data,
-    error,
-    isLoading: searchIsLoading,
-  } = useSWR<SearchIndex, Error>("/search-data.json", fetcher);
-
-  const searchIndex = searchIsLoading || error ? fallbackIndex : data;
-
-  return { searchIndex, searchConfig };
-}
-
 export function Search(props: ComponentPropsWithoutRef<"search">) {
   const router = useRouter();
-  const { searchIndex, searchConfig } = useSearchData();
   const [value, setValue] = useState("");
-  const query = useDeferredValue(value);
+  const query = useDeferredValue(value).trim();
+  // Download the records the first time the reader focuses search.
+  const [wantsIndex, setWantsIndex] = useState(false);
+  const { data: searchIndex, error } = useSWR(
+    wantsIndex ? SEARCH_RECORDS_URL : null,
+    loadSearchIndex,
+    { revalidateOnFocus: false, revalidateOnReconnect: false },
+  );
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const value = event.target.value;
-    setValue(value);
+    setWantsIndex(true);
+    setValue(event.target.value);
   };
 
-  const handleSelectionChange = (_event: SyntheticEvent, route: string[]) => {
+  const handleSelectionChange = (_event: SyntheticEvent, href: string[]) => {
     setValue("");
-    router.push(route[0]);
+    router.push(href[0]);
   };
-
-  const [data, setData] = useState<
-    { content: string; route: string; title: string }[]
-  >([]);
-
-  useEffect(() => {
-    if (searchIndex) {
-      performSearch(searchIndex, query, {
-        ...searchConfig,
-        minMatchCharLength: 3,
-        threshold: 0,
-        keys: [
-          { name: "title", weight: 5 },
-          { name: "keywords", weight: 4 },
-          "content",
-          "route",
-        ],
-      }).then((newData) => setData(newData));
-    }
-  }, [searchIndex, query, searchConfig]);
 
   const results = useMemo(() => {
-    return data.reduce(
-      (acc, option) => {
-        // Route can be something like below, added by mosaic-github-transformer.mjs
-        // {title: '@salt-ds/core@1.41.0', content: '', route: 'salt-github/@salt-ds-core@1.41.0'}
-        const category = capitalize(
-          option.route.split("/")?.[2]?.split("-").join(" ") || "",
-        );
-        if (!category) {
-          return acc;
-        }
-        if (
-          !(
-            option.route.endsWith("accessibility") ||
-            option.route.endsWith("examples") ||
-            option.route.endsWith("usage")
-          )
-        ) {
-          if (!acc[category]) {
-            acc[category] = [];
-          }
+    const byCategory: Record<string, SearchResult[]> = {};
+    if (!searchIndex || query === "") {
+      return byCategory;
+    }
+    for (const result of searchIndex.search(query, {
+      limit: 20,
+      sectionsPerResult: 0,
+    })) {
+      const category = categoryOf(result.route);
+      if (category) {
+        byCategory[category] ??= [];
+        byCategory[category].push(result);
+      }
+    }
+    return byCategory;
+  }, [searchIndex, query]);
 
-          acc[category].push(option);
-        }
-        return acc;
-      },
-      {} as Record<string, typeof data>,
-    );
-  }, [data]);
+  const status =
+    query === ""
+      ? undefined
+      : error
+        ? "Search is unavailable"
+        : !searchIndex
+          ? "Loading search…"
+          : Object.keys(results).length === 0 && query.length > 2
+            ? `No results found for "${query}"`
+            : undefined;
 
   return (
     <search {...props}>
@@ -133,6 +144,7 @@ export function Search(props: ComponentPropsWithoutRef<"search">) {
           "aria-label": "Site Search",
         }}
         onChange={handleChange}
+        onFocus={() => setWantsIndex(true)}
         onSelectionChange={handleSelectionChange}
         startAdornment={<SearchIcon aria-hidden />}
         bordered
@@ -150,22 +162,19 @@ export function Search(props: ComponentPropsWithoutRef<"search">) {
         value={value}
         placeholder="Search"
       >
-        {Object.entries(results).length === 0 && query.length > 2 ? (
+        {status ? (
           <div
             className={styles.statusOption}
             role="option"
             aria-selected="false"
           >
-            No results found for &quot;{query}&quot;
+            {status}
           </div>
         ) : (
-          Object.entries(results).map(([category, results]) => (
+          Object.entries(results).map(([category, categoryResults]) => (
             <OptionGroup label={category} key={category}>
-              {results.slice(0, 5).map((result) => (
-                <SearchResult
-                  result={result}
-                  key={result.title + result.route}
-                />
+              {categoryResults.slice(0, RESULTS_PER_CATEGORY).map((result) => (
+                <SearchResultOption result={result} key={result.id} />
               ))}
             </OptionGroup>
           ))
