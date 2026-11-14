@@ -4,11 +4,12 @@
   cursor: var(--salt-cursor-grab);
   display: flex;
   height: var(--salt-size-selectable);
+  /* Keeps the thumb within the track at the min and max values */
+  left: calc(var(--slider-thumbPosition) * (100% - var(--slider-thumb-width)));
   outline: none;
   position: absolute;
   top: calc(((var(--salt-size-selectable) - var(--salt-size-bar)) / 2) * -1);
-  transform: translateX(-50%);
-  width: var(--salt-size-fixed-200);
+  width: var(--slider-thumb-width);
   touch-action: none;
 }
 
@@ -34,7 +35,7 @@
   appearance: none;
   cursor: var(--salt-cursor-grab);
   height: var(--salt-size-base);
-  left: var(--slider-progressPercentage);
+  left: 50%;
   margin: 0;
   opacity: 0.0001;
   overflow: hidden;

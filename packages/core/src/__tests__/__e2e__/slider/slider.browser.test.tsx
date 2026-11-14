@@ -77,6 +77,60 @@ describe("Given a Slider", () => {
     expect(onChangeEnd.mock.lastCall?.[1]).toBe(7);
   });
 
+  it.each([
+    ["mouse", 0],
+    ["mouse", 100],
+    ["touch", 0],
+    ["touch", 100],
+  ] as const)(
+    "keeps endpoint %s/%i unchanged when dragging vertically",
+    async (pointerType, value) => {
+      const onChange = vi.fn();
+      const onChangeEnd = vi.fn();
+      await renderWithSalt(
+        <Default
+          min={0}
+          max={100}
+          defaultValue={value}
+          style={{ width: 100 }}
+          onChange={onChange}
+          onChangeEnd={onChangeEnd}
+        />,
+      );
+      const target = thumb();
+      const rect = target.element().getBoundingClientRect();
+      const clientX = rect.left + rect.width / 2;
+      const clientY = rect.top + rect.height / 2;
+
+      await dispatchPointer(
+        target.element(),
+        "pointerdown",
+        pointerType,
+        clientX,
+        clientY,
+      );
+      await nextFrame();
+      await dispatchPointer(
+        window,
+        "pointermove",
+        pointerType,
+        clientX,
+        clientY + 2,
+      );
+      await dispatchPointer(
+        window,
+        "pointerup",
+        pointerType,
+        clientX,
+        clientY + 2,
+      );
+
+      await expect.element(slider()).toHaveValue(String(value));
+      expect(onChange).not.toHaveBeenCalled();
+      expect(onChangeEnd.mock.lastCall?.[1]).toBe(value);
+    },
+  );
+
   it.each(["mouse", "touch"] as const)(
     "drags with a %s pointer, stops on release, and restores keyboard focus styling",
     async (pointerType) => {
@@ -140,6 +194,33 @@ describe("Given a Slider", () => {
         .toHaveValue(String(Number(valueAfterRelease) + 1));
     },
   );
+
+  it("maps a rendered tick position to its fractional step value", async () => {
+    const onChange = vi.fn();
+    await renderWithSalt(
+      <Default
+        min={-10}
+        max={10}
+        step={0.1}
+        defaultValue={0}
+        marks={[{ value: 5, label: "Five" }]}
+        showTicks
+        style={{ width: 100 }}
+        onChange={onChange}
+      />,
+    );
+    const tick = document.querySelector(".saltSliderTrack-tick");
+    if (!tick) throw new Error("Slider tick missing");
+    const rect = tick.getBoundingClientRect();
+    const clientX = rect.left + rect.width / 2;
+    const clientY = rect.top + rect.height / 2;
+    await dispatchPointer(rail(), "pointerdown", "mouse", clientX, clientY);
+    await nextFrame();
+    await dispatchPointer(window, "pointerup", "mouse", clientX, clientY);
+
+    await expect.element(slider()).toHaveValue("5");
+    expect(onChange.mock.lastCall?.[1]).toBe(5);
+  });
 
   it("updates through all supported keyboard controls", async () => {
     const onChange = vi.fn();
