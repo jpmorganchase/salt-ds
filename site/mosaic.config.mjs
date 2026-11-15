@@ -31,11 +31,6 @@ const saltConfig = {
             priority: 2,
             options: { ...plugin.options, rootDirGlob: "*/*" },
           };
-        case "@jpmorganchase/mosaic-plugins/SearchIndexPlugin":
-          return {
-            ...plugin,
-            options: { ...plugin.options, keys: ["keywords", "content"] },
-          };
         case "@jpmorganchase/mosaic-plugins/TableOfContentsPlugin":
           return {
             ...plugin,
@@ -73,7 +68,7 @@ const saltConfig = {
       priority: Number.NEGATIVE_INFINITY,
       options: {
         outputDir: "./public",
-        assets: ["sitemap.xml", "search-data.json"],
+        assets: ["sitemap.xml", "search-records.json"],
       },
     },
     {

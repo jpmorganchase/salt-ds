@@ -1,5 +1,4 @@
 import {
-  getSearchData,
   getSharedConfig,
   resolveMosaicMode,
 } from "@jpmorganchase/mosaic-site-middleware";
@@ -16,15 +15,16 @@ export default async function NamespaceLayout({
 }) {
   const { namespace } = await params;
   const { mode, contentUrl } = resolveMosaicMode();
-  const [sharedConfig, search] = await Promise.all([
-    getSharedConfig(`/${namespace}/index`, mode, contentUrl),
-    getSearchData(mode, contentUrl),
-  ]);
+  const sharedConfig = await getSharedConfig(
+    `/${namespace}/index`,
+    mode,
+    contentUrl,
+  );
 
   return (
     <NamespaceFrame
       namespace={namespace}
-      data={{ sharedConfig, ...search } as NamespaceData}
+      data={{ sharedConfig } as NamespaceData}
     >
       {children}
     </NamespaceFrame>

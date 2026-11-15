@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import { mutate } from "swr";
+import { SEARCH_RECORDS_URL } from "../components/search/Search";
 
 /** Refresh server-rendered MDX when the local Mosaic source changes. */
 export function LiveReload() {
@@ -12,8 +13,8 @@ export function LiveReload() {
     const source = new EventSource("/api/content/live");
     const refresh = () => {
       router.refresh();
-      // Salt loads the full text index lazily; refresh that client cache too.
-      void mutate("/search-data.json");
+      // Search loads its records lazily; refresh that client cache too.
+      void mutate(SEARCH_RECORDS_URL);
     };
     source.addEventListener("content-changed", refresh);
     return () => {

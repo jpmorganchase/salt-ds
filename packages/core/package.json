@@ -19,6 +19,7 @@
   ],
   "devDependencies": {
     "@types/react-window": "^1.8.2",
+    "@types/use-sync-external-store": "^0.0.6",
     "react-window": "^1.8.11"
   },
   "dependencies": {

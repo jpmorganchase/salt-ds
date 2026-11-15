@@ -7,10 +7,10 @@ documentation application's runtime.
 
 ## Mosaic integration snapshot
 
-The documentation site pins Mosaic to `0.0.0-snapshot-20261115162827`, published
-from commit `062d3d5dde778129d98b2b3309703c81dfa7cc2e`.
+The documentation site pins Mosaic to `0.0.0-snapshot-20261115213905`, published
+from commit `3f16c888bf54d64833132cdf26a2248010dfd76a`.
 [Mosaic #931](https://github.com/jpmorganchase/mosaic/pull/931),
-[snapshot release run](https://github.com/jpmorganchase/mosaic/actions/runs/43735579233).
+[snapshot release run](https://github.com/jpmorganchase/mosaic/actions/runs/43764783187).
 
 For testing future local candidates in a separate verification branch, use the
 tarballs produced by the Mosaic snapshot workflow:
@@ -72,11 +72,11 @@ routes from Mosaic's sitemap and includes the snapshot in its server file
 trace. Existing `/components`, `/getting-started` and
 `/support-and-contributions` aliases continue to resolve to the Salt namespace.
 
-Production disables Mosaic's persistent loader cache because its keys do not
-include a snapshot revision. Next's data cache can survive builds and deployments,
-which otherwise lets regenerated files render with an older shared configuration
-or document. React's request memoization and Next's prerendered pages remain
-enabled. Keep this setting until Mosaic versions its snapshot cache keys.
+Mosaic keys its persistent loader cache by snapshot directory and generation.
+Regenerating the content writes a new `mosaic-snapshot.json` identity, so Next's
+data cache can survive builds without reusing an older document or shared
+configuration. Keep the identity file with the snapshot; the existing server
+file trace includes it.
 
 ## Integration boundaries
 
@@ -95,6 +95,19 @@ enabled. Keep this setting until Mosaic versions its snapshot cache keys.
 
 After generating the component and CSS data, run the site's type check with
 `yarn workspace @salt-ds/site typecheck`.
+
+## Search
+
+Mosaic generates `search-records.json`, which is copied into `public/`. Salt
+downloads it when search first receives focus and uses Mosaic's browser search
+engine with the existing ComboBox UI. Search records are independent of page
+stores and are not serialized into each page's payload. The release feed is
+excluded during record generation.
+
+Salt groups component tabs into one result, prefers the component's overview,
+and supports the `colour`/`color` synonym. Matching sections link directly to
+their heading. Live authoring refreshes an already loaded index when content
+changes.
 
 ## Markdown documentation
 
