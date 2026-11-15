@@ -72,6 +72,12 @@ routes from Mosaic's sitemap and includes the snapshot in its server file
 trace. Existing `/components`, `/getting-started` and
 `/support-and-contributions` aliases continue to resolve to the Salt namespace.
 
+Production disables Mosaic's persistent loader cache because its keys do not
+include a snapshot revision. Next's data cache can survive builds and deployments,
+which otherwise lets regenerated files render with an older shared configuration
+or document. React's request memoization and Next's prerendered pages remain
+enabled. Keep this setting until Mosaic versions its snapshot cache keys.
+
 ## Integration boundaries
 
 - `src/lib/content.ts` calls Mosaic's shared route resolver. Aliases use the

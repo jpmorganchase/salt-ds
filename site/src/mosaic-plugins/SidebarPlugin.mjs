@@ -355,14 +355,17 @@ const SidebarPlugin = {
         ),
       )[0];
 
-      await mutableFilesystem.promises
-        .readFile(indexPath)
-        .then((serializedContent) => {
-          return serialiser.deserialise(indexPath, serializedContent);
-        })
-        .then((page) => {
-          page.sharedConfig.sidebar = sidebar;
-        });
+      const page = await serialiser.deserialise(
+        indexPath,
+        await mutableFilesystem.promises.readFile(indexPath),
+      );
+      page.sharedConfig = { ...page.sharedConfig, sidebar };
+      // Deserialised metadata is detached from the filesystem. Persist it
+      // before Mosaic resolves the generated shared-config references.
+      await mutableFilesystem.promises.writeFile(
+        indexPath,
+        await serialiser.serialise(indexPath, page),
+      );
 
       await mutableFilesystem.promises.writeFile(
         path.posix.join("/", namespace, filename),
