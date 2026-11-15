@@ -38,19 +38,46 @@ const searchIndexOptions = {
 const saltConfig = {
   ...fsConfig,
   plugins: [
-    ...fsConfig.plugins.map((plugin) =>
-      plugin.modulePath === SEARCH_INDEX_PLUGIN
-        ? { ...plugin, options: searchIndexOptions }
-        : plugin,
-    ),
-    {
-      modulePath: require.resolve("./src/mosaic-plugins/SidebarPlugin.mjs"),
-      priority: 2,
-      options: { rootDirGlob: "*/*" },
-    },
-    {
-      modulePath: "@jpmorganchase/mosaic-plugins/BreadcrumbsPlugin",
-    },
+    ...fsConfig.plugins.map((plugin) => {
+      switch (plugin.modulePath) {
+        case "@jpmorganchase/mosaic-plugins/SidebarPlugin":
+          return {
+            ...plugin,
+            modulePath: require.resolve(
+              "./src/mosaic-plugins/SidebarPlugin.mjs",
+            ),
+            priority: 2,
+            options: { ...plugin.options, rootDirGlob: "*/*" },
+          };
+        case SEARCH_INDEX_PLUGIN:
+          return {
+            ...plugin,
+            options: { ...plugin.options, ...searchIndexOptions },
+          };
+        case "@jpmorganchase/mosaic-plugins/TableOfContentsPlugin":
+          return {
+            ...plugin,
+            options: { ...plugin.options, minRank: 2, maxRank: 2 },
+          };
+        case "@jpmorganchase/mosaic-plugins/LlmsTxtPlugin":
+          return {
+            ...plugin,
+            options: {
+              ...plugin.options,
+              title: "Salt Design System",
+              description:
+                "Salt is an accessible React design system for building enterprise applications. Explore component usage, examples, API references, patterns and theming guidance.",
+              siteUrl: process.env.SITE_URL,
+              exclude: ["**/salt-github/**"],
+              componentsModulePath: require.resolve(
+                "./src/mosaic-plugins/markdownComponents.mjs",
+              ),
+            },
+          };
+        default:
+          return plugin;
+      }
+    }),
     {
       modulePath: "@jpmorganchase/mosaic-plugins/SiteMapPlugin",
       options: {
@@ -65,17 +92,6 @@ const saltConfig = {
       options: {
         outputDir: "./public",
         assets: ["sitemap.xml", "search-records.json"],
-      },
-    },
-    {
-      modulePath: "@jpmorganchase/mosaic-plugins/FragmentPlugin",
-      options: {},
-    },
-    {
-      modulePath: "@jpmorganchase/mosaic-plugins/TableOfContentsPlugin",
-      options: {
-        minRank: 2,
-        maxRank: 2,
       },
     },
     {

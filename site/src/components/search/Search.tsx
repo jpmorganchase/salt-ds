@@ -104,6 +104,7 @@ export function Search(props: ComponentPropsWithoutRef<"search">) {
   };
 
   const handleSelectionChange = (_event: SyntheticEvent, href: string[]) => {
+    if (!href[0]) return;
     setValue("");
     router.push(href[0]);
   };
@@ -146,6 +147,7 @@ export function Search(props: ComponentPropsWithoutRef<"search">) {
         onChange={handleChange}
         onFocus={() => setWantsIndex(true)}
         onSelectionChange={handleSelectionChange}
+        selected={[]}
         startAdornment={<SearchIcon aria-hidden />}
         bordered
         endAdornment={

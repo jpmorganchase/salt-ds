@@ -26,13 +26,19 @@ export async function generateStaticParams() {
   )
     return [];
   const routes = await loadSitemap();
-  return routes.flatMap((path) => {
+  const pages = routes.flatMap((path) => {
     const [namespace, ...route] = path.split("/").filter(Boolean);
     // The release-note feed supplies landing cards, not document pages.
     return namespace === "salt" && route.length > 0
       ? [{ namespace, route }]
       : [];
   });
+  if (pages.length === 0) {
+    throw new Error(
+      "The Mosaic snapshot has no Salt documentation routes. Run yarn workspace @salt-ds/site gen:snapshot before building the site.",
+    );
+  }
+  return pages;
 }
 
 export async function generateMetadata({

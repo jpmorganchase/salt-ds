@@ -7,10 +7,10 @@ documentation application's runtime.
 
 ## Mosaic integration snapshot
 
-The documentation site pins Mosaic to `0.0.0-snapshot-20261109102658`, published
-from commit `d2b7ced5fe82323b892b0dccf0fad3201cfe4d43`.
-[Mosaic #893](https://github.com/jpmorganchase/mosaic/pull/893),
-[snapshot release run](https://github.com/jpmorganchase/mosaic/actions/runs/42600848142).
+The documentation site pins Mosaic to `0.0.0-snapshot-20261115162827`, published
+from commit `062d3d5dde778129d98b2b3309703c81dfa7cc2e`.
+[Mosaic #931](https://github.com/jpmorganchase/mosaic/pull/931),
+[snapshot release run](https://github.com/jpmorganchase/mosaic/actions/runs/43735579233).
 
 For testing future local candidates in a separate verification branch, use the
 tarballs produced by the Mosaic snapshot workflow:
@@ -27,7 +27,8 @@ commit, generated snapshot commit and archive SHA-256 hashes in
 
 ## Local authoring
 
-From the repository root, install dependencies with `yarn`, then run:
+Use Node.js 24 or newer, as required by the Mosaic CLI. From the repository
+root, install dependencies with `yarn`, then run:
 
 ```sh
 yarn workspace @salt-ds/site gen:snapshot
@@ -88,3 +89,28 @@ trace. Existing `/components`, `/getting-started` and
 
 After generating the component and CSS data, run the site's type check with
 `yarn workspace @salt-ds/site typecheck`.
+
+## Markdown documentation
+
+The same content pipeline produces `/llms.txt` (an index), `/llms-full.txt`
+(all documentation) and a Markdown version of each page. Append `.md` to a
+documentation URL, for example `/salt/components/button/examples.md`, or
+request the ordinary URL with `Accept: text/markdown`. Legacy documentation
+paths such as `/components/button/examples.md` work too. Ordinary browser
+requests continue to receive HTML.
+
+`src/mosaic-plugins/markdownComponents.mjs` includes the actual TSX source for
+each `LivePreview` and the generated component props for each `PropsTable`.
+Examples link to their source folder for supporting styles and modules. Run
+`gen:props` before generating the content; `gen:snapshot` already does this.
+The Markdown describes the examples rather than running them, and custom
+visual components without a converter retain only their text children.
+
+The handler reads Mosaic's generated files from the current snapshot or the
+local content server. No separate copies of Markdown files are kept in
+`public/`. The internal release feed is excluded from these documentation
+exports, as it is from the public sitemap and search.
+
+`gen:snapshot` verifies that every public sitemap route has generated Markdown
+and that both LLM files exist. This check fails the command if a Mosaic plugin
+leaves partial output, even when the content CLI itself exits successfully.

@@ -16,6 +16,21 @@ const config: StorybookConfig = {
   staticDirs: ["../docs/public"],
   typescript: {
     reactDocgen: "react-docgen-typescript",
+    reactDocgenTypescriptOptions: {
+      // project-service is much slower for one-off builds of this repo.
+      docgenMode: "legacy",
+      // Setting these options replaces Storybook's defaults, so repeat them.
+      shouldExtractLiteralValuesFromEnum: true,
+      shouldRemoveUndefinedFromOptional: true,
+      propFilter: (prop) =>
+        prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
+      // Generated icons and countries share their base component's props.
+      exclude: [
+        "**/*.stories.tsx",
+        "packages/icons/src/components/**",
+        "packages/countries/src/components/**",
+      ],
+    },
   },
   features: {
     backgrounds: false,

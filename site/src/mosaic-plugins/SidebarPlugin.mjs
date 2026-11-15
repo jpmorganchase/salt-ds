@@ -78,10 +78,11 @@ function createFileGlob(patterns, pageExtensions) {
   if (Array.isArray(patterns)) {
     return patterns.map((pattern) => createFileGlob(pattern, pageExtensions));
   }
+  const base = patterns.endsWith("**") ? `${patterns}/*` : patterns;
   if (pageExtensions.length === 1) {
-    return `${patterns}${pageExtensions[0]}`;
+    return `${base}${pageExtensions[0]}`;
   }
-  return `${patterns}{${pageExtensions.join(",")}}`;
+  return `${base}{${pageExtensions.join(",")}}`;
 }
 function getPageLevel(page) {
   return page.route.split("/").length - 2;
