@@ -25,8 +25,6 @@ const SEARCH_INDEX_PLUGIN = "@jpmorganchase/mosaic-plugins/SearchIndexPlugin";
  * names in `data.alsoKnownAs`, so a search for "Select" finds Dropdown.
  */
 const searchIndexOptions = {
-  maxLineLength: 240,
-  maxLineCount: 240,
   records: {
     fields: {
       description: ["description", "data.description"],

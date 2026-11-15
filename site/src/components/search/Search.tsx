@@ -39,19 +39,15 @@ async function loadSearchIndex(url: string): Promise<MosaicSearchIndex> {
     throw new Error(`Failed to load ${url}: ${response.status}`);
   }
   const { records } = (await response.json()) as { records: SearchRecord[] };
-  return createSearchIndex(
-    // The GitHub release pages aren't part of site search.
-    records.filter((record) => record.route.startsWith("/salt/")),
-    {
-      groupBy: (record) => record.route.replace(COMPONENT_TAB, ""),
-      pageRank: (record) => {
-        if (record.route.endsWith("/index")) return 0;
-        return record.route.endsWith("/usage") ? 1 : 2;
-      },
-      // The docs use US spelling.
-      synonyms: [["colour", "color"]],
+  return createSearchIndex(records, {
+    groupBy: (record) => record.route.replace(COMPONENT_TAB, ""),
+    pageRank: (record) => {
+      if (record.route.endsWith("/index")) return 0;
+      return record.route.endsWith("/usage") ? 1 : 2;
     },
-  );
+    // The docs use US spelling.
+    synonyms: [["colour", "color"]],
+  });
 }
 
 /** "components", "foundations" and so on, from `/salt/<category>/...`. */
