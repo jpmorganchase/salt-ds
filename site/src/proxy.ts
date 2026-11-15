@@ -13,10 +13,7 @@ export async function proxy(request: NextRequest) {
 
   try {
     const pathname = decodeURIComponent(request.nextUrl.pathname);
-    const markdownRoute = getMarkdownRoute(
-      pathname,
-      request.headers.get("accept"),
-    );
+    const markdownRoute = getMarkdownRoute(pathname);
     if (markdownRoute) {
       const destination = request.nextUrl.clone();
       destination.pathname = `/api/llms${markdownRoute}`;
@@ -26,7 +23,7 @@ export async function proxy(request: NextRequest) {
     const [, section, page] = pathname.split("/");
     const legacy = legacyDocumentationRoutes.includes(section);
     if (!page && !legacy) {
-      return NextResponse.next({ headers: { Vary: "Accept" } });
+      return NextResponse.next();
     }
 
     // Proxy runs before the legacy rewrites in next.config.js.
@@ -41,13 +38,12 @@ export async function proxy(request: NextRequest) {
       // notFound(). The built-in 404 route already has server-rendered HTML.
       return NextResponse.rewrite(new URL("/_not-found", request.url), {
         status: 404,
-        headers: { Vary: "Accept" },
       });
     }
   } catch {
     // Let the page handle malformed URLs and content service failures.
   }
-  return NextResponse.next({ headers: { Vary: "Accept" } });
+  return NextResponse.next();
 }
 
 export const config = {

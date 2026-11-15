@@ -94,10 +94,11 @@ After generating the component and CSS data, run the site's type check with
 
 The same content pipeline produces `/llms.txt` (an index), `/llms-full.txt`
 (all documentation) and a Markdown version of each page. Append `.md` to a
-documentation URL, for example `/salt/components/button/examples.md`, or
-request the ordinary URL with `Accept: text/markdown`. Legacy documentation
-paths such as `/components/button/examples.md` work too. Ordinary browser
-requests continue to receive HTML.
+documentation URL, for example `/salt/components/button/examples.md`. Legacy
+documentation paths such as `/components/button/examples.md` work too.
+Ordinary documentation URLs always serve HTML, including when a request sends
+`Accept: text/markdown`; distinct Markdown URLs preserve Next's HTML and RSC
+cache behavior.
 
 `src/mosaic-plugins/markdownComponents.mjs` includes the actual TSX source for
 each `LivePreview` and the generated component props for each `PropsTable`.

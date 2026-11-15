@@ -121,41 +121,23 @@ describe("Mosaic Markdown exports", () => {
 
 describe("Markdown URL handling", () => {
   it("serves explicit Markdown paths, the indexes and legacy documentation aliases", () => {
-    expect(getMarkdownRoute("/llms.txt", null)).toBe("/llms.txt");
-    expect(getMarkdownRoute("/llms-full.txt", null)).toBe("/llms-full.txt");
-    expect(getMarkdownRoute("/salt/components/button/examples.md", null)).toBe(
+    expect(getMarkdownRoute("/llms.txt")).toBe("/llms.txt");
+    expect(getMarkdownRoute("/llms-full.txt")).toBe("/llms-full.txt");
+    expect(getMarkdownRoute("/salt/components/button/examples.md")).toBe(
       "/salt/components/button/examples",
     );
-    expect(getMarkdownRoute("/components/button/examples.md", null)).toBe(
+    expect(getMarkdownRoute("/components/button/examples.md")).toBe(
       "/salt/components/button/examples",
     );
-    expect(getMarkdownRoute("/getting-started.md", null)).toBe(
+    expect(getMarkdownRoute("/getting-started.md")).toBe(
       "/salt/getting-started",
     );
   });
 
-  it("negotiates explicitly preferred Markdown without changing browser or asset requests", () => {
-    expect(getMarkdownRoute("/components/button", "text/markdown")).toBe(
-      "/salt/components/button",
-    );
-    expect(getMarkdownRoute("/salt", "text/markdown")).toBe("/salt/index");
-    expect(
-      getMarkdownRoute(
-        "/salt/index",
-        "text/html,application/xhtml+xml,*/*;q=0.8",
-      ),
-    ).toBeUndefined();
-    expect(
-      getMarkdownRoute("/salt/index", "text/html,text/markdown;q=0.5"),
-    ).toBeUndefined();
-    expect(
-      getMarkdownRoute("/salt/index", "text/markdown;q=0"),
-    ).toBeUndefined();
-    expect(
-      getMarkdownRoute("/salt/index", "text/markdown;q=0.5,*/*;q=1"),
-    ).toBeUndefined();
-    expect(
-      getMarkdownRoute("/search-records.json", "text/markdown"),
-    ).toBeUndefined();
+  it("leaves ordinary documentation and asset URLs unchanged", () => {
+    expect(getMarkdownRoute("/components/button")).toBeUndefined();
+    expect(getMarkdownRoute("/salt")).toBeUndefined();
+    expect(getMarkdownRoute("/salt/index")).toBeUndefined();
+    expect(getMarkdownRoute("/search-records.json")).toBeUndefined();
   });
 });
