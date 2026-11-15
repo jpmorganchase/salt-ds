@@ -20,25 +20,46 @@ const require = createRequire(import.meta.url);
 const saltConfig = {
   ...fsConfig,
   plugins: [
-    ...fsConfig.plugins,
-    {
-      modulePath: require.resolve("./src/mosaic-plugins/SidebarPlugin.mjs"),
-      priority: 2,
-      options: { rootDirGlob: "*/*" },
-    },
-    {
-      modulePath: "@jpmorganchase/mosaic-plugins/BreadcrumbsPlugin",
-    },
-    {
-      modulePath: "@jpmorganchase/mosaic-plugins/SearchIndexPlugin",
-      previewDisabled: true,
-      options: {
-        maxLineLength: 240,
-        maxLineCount: 240,
-        keys: ["keywords", "content"],
-      },
-      priority: Number.NEGATIVE_INFINITY,
-    },
+    ...fsConfig.plugins.map((plugin) => {
+      switch (plugin.modulePath) {
+        case "@jpmorganchase/mosaic-plugins/SidebarPlugin":
+          return {
+            ...plugin,
+            modulePath: require.resolve(
+              "./src/mosaic-plugins/SidebarPlugin.mjs",
+            ),
+            priority: 2,
+            options: { ...plugin.options, rootDirGlob: "*/*" },
+          };
+        case "@jpmorganchase/mosaic-plugins/SearchIndexPlugin":
+          return {
+            ...plugin,
+            options: { ...plugin.options, keys: ["keywords", "content"] },
+          };
+        case "@jpmorganchase/mosaic-plugins/TableOfContentsPlugin":
+          return {
+            ...plugin,
+            options: { ...plugin.options, minRank: 2, maxRank: 2 },
+          };
+        case "@jpmorganchase/mosaic-plugins/LlmsTxtPlugin":
+          return {
+            ...plugin,
+            options: {
+              ...plugin.options,
+              title: "Salt Design System",
+              description:
+                "Salt is an accessible React design system for building enterprise applications. Explore component usage, examples, API references, patterns and theming guidance.",
+              siteUrl: process.env.SITE_URL,
+              exclude: ["**/salt-github/**"],
+              componentsModulePath: require.resolve(
+                "./src/mosaic-plugins/markdownComponents.mjs",
+              ),
+            },
+          };
+        default:
+          return plugin;
+      }
+    }),
     {
       modulePath: "@jpmorganchase/mosaic-plugins/SiteMapPlugin",
       options: {
@@ -53,17 +74,6 @@ const saltConfig = {
       options: {
         outputDir: "./public",
         assets: ["sitemap.xml", "search-data.json"],
-      },
-    },
-    {
-      modulePath: "@jpmorganchase/mosaic-plugins/FragmentPlugin",
-      options: {},
-    },
-    {
-      modulePath: "@jpmorganchase/mosaic-plugins/TableOfContentsPlugin",
-      options: {
-        minRank: 2,
-        maxRank: 2,
       },
     },
     {
