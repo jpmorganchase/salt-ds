@@ -4,7 +4,6 @@ import { GithubIcon, MenuIcon } from "@salt-ds/icons";
 import dynamic from "next/dynamic";
 import { useContext, useEffect, useState } from "react";
 import { LayoutContext } from "../../layouts/LayoutContext";
-import { useIsMobileView } from "../../utils/useIsMobileView";
 import { CTALink } from "../cta-link/CTALink";
 import { LinkBase } from "../link/Link";
 import { Logo } from "../logo/Logo";
@@ -16,7 +15,6 @@ const Search = dynamic<ComboBoxProps>(() =>
 );
 
 export const AppHeader = () => {
-  const isMobileOrTablet = useIsMobileView();
   const layoutContext = useContext(LayoutContext);
   const appHeader = useAppHeader();
   const homeLink = appHeader?.homeLink;
@@ -31,19 +29,18 @@ export const AppHeader = () => {
 
   return (
     <header className={styles.root}>
-      {isMobileOrTablet && (
-        <Button
-          aria-label="Open menu"
-          disabled={!drawerReady}
-          appearance="transparent"
-          sentiment="neutral"
-          onClick={() => layoutContext.setDrawerOpen(true)}
-        >
-          <MenuIcon aria-hidden />
-        </Button>
-      )}
+      <Button
+        aria-label="Open menu"
+        className={styles.menuButton}
+        disabled={!drawerReady}
+        appearance="transparent"
+        sentiment="neutral"
+        onClick={() => layoutContext.setDrawerOpen(true)}
+      >
+        <MenuIcon aria-hidden />
+      </Button>
       <div className={styles.content}>
-        {homeLink && !isMobileOrTablet && (
+        {homeLink && (
           <LinkBase
             aria-label="Salt Design System Homepage"
             className={styles.logoLink}
@@ -54,22 +51,22 @@ export const AppHeader = () => {
         )}
         <div className={styles.actions}>
           <Search className={styles.search} />
-          {!isMobileOrTablet && (
-            <Tooltip
-              aria-hidden="true"
-              content="GitHub repository"
-              placement="bottom"
+          <Tooltip
+            aria-hidden="true"
+            className={styles.githubTooltip}
+            content="GitHub repository"
+            placement="bottom"
+          >
+            <CTALink
+              className={styles.githubLink}
+              href="https://github.com/jpmorganchase/salt-ds"
+              aria-label="GitHub repository"
+              sentiment="neutral"
+              target="_blank"
             >
-              <CTALink
-                href="https://github.com/jpmorganchase/salt-ds"
-                aria-label="GitHub repository"
-                sentiment="neutral"
-                target="_blank"
-              >
-                <GithubIcon aria-hidden />
-              </CTALink>
-            </Tooltip>
-          )}
+              <GithubIcon aria-hidden />
+            </CTALink>
+          </Tooltip>
           <ModeToggle appearance="transparent" />
         </div>
       </div>

@@ -27,7 +27,24 @@
   width: 100%;
 }
 
+/* Select the viewport layout before hydration without changing the header tree.
+   Scope these selectors to override Salt's control display styles. */
+.root .menuButton {
+  display: none;
+}
+
 @media not screen and (min-width: 960px) {
+  .root .menuButton {
+    display: inline-flex;
+  }
+
+  .root .logoLink,
+  .root .githubLink,
+  /* The tooltip is portalled outside the header. */
+  .githubTooltip {
+    display: none;
+  }
+
   .root {
     padding-inline: var(--salt-spacing-100);
   }
