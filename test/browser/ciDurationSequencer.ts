@@ -170,13 +170,16 @@ const estimatedSecondsByFile: Record<string, number> = {
   "packages/styles/src/__tests__/__e2e__/use-style-inject.browser.test.tsx": 0.95,
   "packages/window/src/__tests__/__e2e__/window-provider/window-provider.browser.test.tsx": 0.23,
   "test/browser/integration.browser.test.tsx": 0.73,
-  "test/browser/render.browser.test.tsx": 0.19
+  "test/browser/render.browser.test.tsx": 0.19,
 };
 
 export default class CiDurationSequencer extends BaseSequencer {
   private getFilePath(file: TestSpecification): string {
     return path
-      .relative(this.ctx.config.root, path.resolve(this.ctx.config.root, file.moduleId))
+      .relative(
+        this.ctx.config.root,
+        path.resolve(this.ctx.config.root, file.moduleId),
+      )
       .replaceAll("\\", "/");
   }
 
