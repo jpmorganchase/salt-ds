@@ -12,7 +12,12 @@ import {
   useState,
 } from "react";
 import { Button } from "../button";
-import { makePrefixer, useForkRef, useIsomorphicLayoutEffect } from "../utils";
+import {
+  makePrefixer,
+  useEventCallback,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "../utils";
 import toolbarCss from "./Toolbar.css";
 import type { ToolbarContentProps } from "./ToolbarContent";
 import {
@@ -117,7 +122,6 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
     // dispatches blur events for reparented controls in its layout effects,
     // which run before Toolbar's.
     const focusWithinBeforeOverflowUpdateRef = useRef(false);
-    const restoreFocusFrameRef = useRef<number | null>(null);
 
     const handleBeforeOverflowUpdate = useCallback(() => {
       const doc = targetWindow?.document;
@@ -208,7 +212,11 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       () => Array.from(overflowedIds).sort().join("\0"),
       [overflowedIds],
     );
-    const previousOverflowedIdsKeyRef = useRef(overflowedIdsKey);
+    // getEntryFocusable changes identity whenever items or overflowedIds
+    // change, so it isn't a dependency of the focus restore effect.
+    const getEntryFocusable = useEventCallback(
+      keyboardNavigation.getEntryFocusable,
+    );
 
     const getItemHostRef = useCallback(
       (id: string, kind: ToolbarItemHostKind) => {
@@ -260,22 +268,11 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       });
     }, [allItems, itemHostNodes, overflowedIds]);
 
+    // Re-runs only when the overflow changes, so the cleanup cancels a restore
+    // that a newer overflow change has made out of date.
+    // biome-ignore lint/correctness/useExhaustiveDependencies: overflowedIdsKey triggers a restore check on each overflow change.
     useIsomorphicLayoutEffect(() => {
-      const overflowChanged =
-        previousOverflowedIdsKeyRef.current !== overflowedIdsKey;
-      previousOverflowedIdsKeyRef.current = overflowedIdsKey;
-
-      if (!overflowChanged || !targetWindow) {
-        return;
-      }
-
-      // A restore scheduled for an earlier overflow change is out of date.
-      if (restoreFocusFrameRef.current != null) {
-        targetWindow.cancelAnimationFrame(restoreFocusFrameRef.current);
-        restoreFocusFrameRef.current = null;
-      }
-
-      if (!focusWithinBeforeOverflowUpdateRef.current) {
+      if (!targetWindow || !focusWithinBeforeOverflowUpdateRef.current) {
         return;
       }
 
@@ -284,25 +281,16 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       // Items move to their new hosts in the commits after an overflow change,
       // so resolve the target once they've settled. By then, focus may also
       // have moved somewhere else.
-      restoreFocusFrameRef.current = targetWindow.requestAnimationFrame(() => {
-        restoreFocusFrameRef.current = null;
-
+      const frame = targetWindow.requestAnimationFrame(() => {
         if (hasLostFocus(doc)) {
-          keyboardNavigation
-            .getEntryFocusable()
-            ?.focus({ preventScroll: true });
+          getEntryFocusable()?.focus({ preventScroll: true });
         }
       });
-    }, [keyboardNavigation.getEntryFocusable, overflowedIdsKey, targetWindow]);
 
-    useEffect(() => {
       return () => {
-        if (restoreFocusFrameRef.current != null) {
-          targetWindow?.cancelAnimationFrame(restoreFocusFrameRef.current);
-          restoreFocusFrameRef.current = null;
-        }
+        targetWindow.cancelAnimationFrame(frame);
       };
-    }, [targetWindow]);
+    }, [getEntryFocusable, overflowedIdsKey, targetWindow]);
 
     useEffect(() => {
       if (process.env.NODE_ENV !== "production") {

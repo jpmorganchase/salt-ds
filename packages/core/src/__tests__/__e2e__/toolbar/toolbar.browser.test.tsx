@@ -2458,6 +2458,30 @@ describe("Toolbar overflow focus restoration", () => {
       expect(focusedButtonName()).toBe("body");
     },
   );
+
+  it("doesn't move focus into the toolbar when it re-renders after the focused control is removed", async () => {
+    await renderWithSalt(
+      <NamedOverflowFocusMemoryTestCase dismissible="parent" />,
+    );
+    const dismiss = page.getByRole("button", { name: "Dismiss" });
+    await expectButton("Columns", false);
+    await nextAnimationFrames(2);
+    page.getByTestId("toolbar-before").element().focus();
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowLeft}{ArrowLeft}{ArrowLeft}");
+    await expect.element(dismiss).toHaveFocus();
+
+    // Dismiss doesn't overflow, so it keeps focus through this overflow change.
+    setFixtureWidth(900);
+    await expectButton("Columns", true);
+    await nextAnimationFrames(2);
+    await expect.element(dismiss).toHaveFocus();
+
+    await userEvent.keyboard("{Enter}");
+    await expect.element(dismiss).not.toBeInTheDocument();
+    await nextAnimationFrames(2);
+    expect(focusedButtonName()).toBe("body");
+  });
 });
 
 describe("Toolbar overflow menu focus", () => {
