@@ -6,6 +6,7 @@ import {
   useRef,
 } from "react";
 import { useEventCallback } from "../../../utils/useEventCallback";
+import { useIsomorphicLayoutEffect } from "../../../utils/useIsomorphicLayoutEffect";
 import type { Item, TabsContextValue } from "../contexts/TabsContext";
 import { isHTMLElement } from "../utils/domUtils";
 
@@ -27,6 +28,7 @@ interface UseTabRemovalHandlerArgs {
   getRemovedItems: () => Map<string, RemovedItem>;
   getRenderedTab: TabsContextValue["getRenderedTab"];
   getSelectedTabElement: () => HTMLElement | null | undefined;
+  isMeasuring: boolean;
   item: TabsContextValue["item"];
   itemAt: TabsContextValue["itemAt"];
   maxRetryAttempts: number;
@@ -37,6 +39,7 @@ interface UseTabRemovalHandlerArgs {
   pendingRemovalRecoveryRef: MutableRefObject<boolean>;
   pendingRemovalRecoveryRetriesRef: MutableRefObject<number>;
   removalRecoveryRafRef: MutableRefObject<number | null>;
+  removalVersion: number;
   selected?: string;
   setSelected: TabsContextValue["setSelected"];
   tabstripRef: RefObject<HTMLDivElement | null>;
@@ -63,6 +66,7 @@ export function useTabRemovalHandler({
   getRemovedItems,
   getRenderedTab,
   getSelectedTabElement,
+  isMeasuring,
   item,
   itemAt,
   maxRetryAttempts,
@@ -73,15 +77,16 @@ export function useTabRemovalHandler({
   pendingRemovalRecoveryRef,
   pendingRemovalRecoveryRetriesRef,
   removalRecoveryRafRef,
+  removalVersion,
   selected,
   setSelected,
   tabstripRef,
   targetWindow,
 }: UseTabRemovalHandlerArgs) {
-  // Ends a recovery cycle. Each run considers new removal records for
-  // selection replacement before it can get here, and focus recovery doesn't
-  // look at records once the cycle ends, so drop any that are left rather
-  // than holding on to removed elements.
+  // Ends a recovery cycle. Selection replacement has already considered each
+  // removal record, and focus recovery doesn't look at records once the cycle
+  // ends, so drop any that are left rather than holding on to removed
+  // elements.
   const clearPendingRemovalRecovery = useCallback(() => {
     pendingRemovalRecoveryRef.current = false;
     pendingRemovalRecoveryRetriesRef.current = 0;
@@ -92,11 +97,16 @@ export function useTabRemovalHandler({
     pendingRemovalRecoveryRetriesRef,
   ]);
 
-  // A removal record can be seen by several runs (retries and focus-out
-  // recovery). Each record is only considered by the first run that sees it.
-  // Restoring and removing a tab creates a new record, even when its explicit
-  // id is reused.
+  // Records are kept until a recovery cycle ends, so a record can be seen by
+  // several removal updates. Each is only considered for selection
+  // replacement once. Restoring and removing a tab creates a new record, even
+  // when its explicit id is reused.
   const seenRemovalsRef = useRef(new WeakSet<RemovedItem>());
+  // The removal record whose selection was replaced. Focus recovery runs
+  // later, once selected is already the replacement.
+  const replacedRemovalRef = useRef<RemovedItem | null>(null);
+  const replacementPendingRef = useRef(false);
+  const remeasureStartedRef = useRef(false);
 
   const getReplacementTab = (baseIndex: number) => {
     let nextTab =
@@ -127,26 +137,11 @@ export function useTabRemovalHandler({
     });
   };
 
-  const replaceRemovedSelection = useEventCallback(
-    (removedSelected: RemovedItem) => {
-      if (selected !== removedSelected.value || getRenderedTab(selected)) {
-        return;
-      }
-
-      const nextTab = getReplacementTab(removedSelected.staleIndex ?? -1);
-      if (!nextTab) return;
-
-      setSelected(null, nextTab.value, "removal");
-    },
-  );
-
-  const handleTabRemoval = useEventCallback(() => {
-    const doc = targetWindow?.document;
-    if (!doc) return;
-
-    // Selection follows a removed selected tab wherever focus is, e.g. when
-    // the tab is removed by a control outside the tabs or while the overflow
-    // menu is open.
+  // Selection follows a removed selected tab wherever focus is, e.g. when the
+  // tab is removed by a control outside the tabs or while the overflow menu is
+  // open.
+  const replaceRemovedSelection = useEventCallback(() => {
+    replacementPendingRef.current = false;
     const selectedIsRemoved =
       selected !== undefined && !getRenderedTab(selected);
     let removedSelected: RemovedItem | undefined;
@@ -158,10 +153,56 @@ export function useTabRemovalHandler({
         removedSelected = removed;
       }
     }
+    if (!removedSelected) return;
 
-    if (removedSelected) {
-      const target = removedSelected;
-      afterLayout(() => replaceRemovedSelection(target));
+    const nextTab = getReplacementTab(removedSelected.staleIndex ?? -1);
+    if (!nextTab) return;
+
+    replacedRemovalRef.current = removedSelected;
+    setSelected(null, nextTab.value, "removal");
+  });
+
+  // The neighbor is chosen from the tabs that are visible once the overflow
+  // layout has been measured again after the removal. Measuring happens in
+  // layout effects, so the selection is normally replaced before the browser
+  // paints and there's no frame without a selected tab. The layout doesn't
+  // change while the overflow menu is open.
+  useIsomorphicLayoutEffect(() => {
+    if (removalVersion > 0) {
+      replacementPendingRef.current = true;
+      remeasureStartedRef.current = false;
+    }
+  }, [removalVersion]);
+
+  useIsomorphicLayoutEffect(() => {
+    if (!replacementPendingRef.current) return;
+
+    if (isMeasuring && !menuOpen) {
+      remeasureStartedRef.current = true;
+      return;
+    }
+
+    if (remeasureStartedRef.current || menuOpen) {
+      replaceRemovedSelection();
+    }
+  });
+
+  const wasSelected = (
+    value: string | undefined,
+    removed: RemovedItem | undefined,
+  ) =>
+    value !== undefined &&
+    (value === selected ||
+      (removed !== undefined && removed === replacedRemovalRef.current));
+
+  const handleTabRemoval = useEventCallback(() => {
+    const doc = targetWindow?.document;
+    if (!doc) return;
+
+    // Falls back to replacing the selection here if the overflow layout
+    // wasn't measured again, e.g. when the tabs are hidden.
+    if (replacementPendingRef.current) {
+      replaceRemovedSelection();
     }
 
     if (!canRecoverRemovalFocus()) {
@@ -169,7 +210,12 @@ export function useTabRemovalHandler({
       return;
     }
 
-    const activeTabWasSelected = activeTab.current?.value === selected;
+    const activeTabWasSelected = wasSelected(
+      activeTab.current?.value,
+      activeTab.current
+        ? peekRemovedItems().get(activeTab.current.id)
+        : undefined,
+    );
 
     const shouldRecoverFocus = () => {
       if (hasLostDocumentFocus(doc)) return true;
@@ -241,7 +287,7 @@ export function useTabRemovalHandler({
     }
 
     clearPendingRemovalRecovery();
-    const removedWasSelected = removed.value === selected;
+    const removedWasSelected = wasSelected(removed.value, removed);
     const baseIndex = removed.staleIndex ?? -1;
     const removedId = removed.id;
 
@@ -283,15 +329,7 @@ export function useTabRemovalHandler({
       });
     };
 
-    afterLayout(() => {
-      if (removedSelected) {
-        // The replacement callback can update a controlled parent. Let that
-        // commit before focus falls back to the adjacent tab.
-        afterLayout(restoreFocus);
-      } else {
-        restoreFocus();
-      }
-    });
+    afterLayout(restoreFocus);
   });
 
   useEffect(() => {

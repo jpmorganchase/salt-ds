@@ -15,6 +15,7 @@ import {
   useEffect,
   useState,
 } from "react";
+import { flushSync } from "react-dom";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
@@ -610,6 +611,10 @@ async function expectSelected(name: string | RegExp) {
 
 const dismissButton = (name: string) =>
   page.getByRole("button", { name: `${name} Dismiss tab` });
+
+// Reads the DOM directly, so it works for hidden tabs and doesn't wait.
+const selectedTabLabel = () =>
+  document.querySelector('[role="tab"][aria-selected="true"]')?.textContent;
 
 // Focus recovery after removal is scheduled across several animation frames,
 // so negative assertions wait for those frames to flush first.
@@ -1248,6 +1253,31 @@ describe("Given Tabs with removable tabs", () => {
     await expectSelected("Home");
   });
 
+  it("selects the next tab in the same update that removes the selected tab", async () => {
+    await mountTabs(<RemovableTabs />);
+    await tab("Loans").click();
+    await expectSelected("Loans");
+    // Selection is replaced before the browser paints, so there's no frame
+    // without a selected tab.
+    flushSync(() => {
+      (window as OverflowTestWindow).__removeTab?.("Loans");
+    });
+    expect(selectedTabLabel()).toBe("Checks");
+  });
+
+  it("selects the next tab when the selected tab is removed while the tabs are hidden", async () => {
+    // A hidden tab list can't be measured, so the overflow layout doesn't
+    // update for the removal.
+    await mountTabs(
+      <div style={{ display: "none" }}>
+        <RemovableTabs />
+      </div>,
+    );
+    await expect.poll(selectedTabLabel).toBe("Home");
+    (window as OverflowTestWindow).__removeTab?.("Home");
+    await expect.poll(selectedTabLabel).toBe("Tx");
+  });
+
   it("selects the next tab without moving focus when the selected tab is removed externally", async () => {
     const onChange = vi.fn();
     await mountTabs(<RemovableTabs onChange={onChange} />);
@@ -1481,7 +1511,12 @@ describe("Given Tabs with removable tabs", () => {
     await mountTabs(<RemovableTabs fillTabList onChange={onChange} />);
     await openOverflow();
     await expect.poll(focusedOverflowTab).toBe("Liquidity");
-    (window as OverflowTestWindow).__removeTab?.("Home");
+    flushSync(() => {
+      (window as OverflowTestWindow).__removeTab?.("Home");
+    });
+    // The overflow layout doesn't change while the menu is open, so the
+    // selection is replaced in the same update.
+    expect(selectedTabLabel()).toBe("Tx");
     await expect.element(tab("Home")).not.toBeInTheDocument();
     await expectSelected("Tx");
     expect(onChange.mock.calls).toEqual([[null, "Tx"]]);
