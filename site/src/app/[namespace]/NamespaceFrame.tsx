@@ -21,6 +21,8 @@ import {
 import { AppHeader } from "../../components/app-header";
 import { SkipToMainContent } from "../../layouts/Base/SkipToMainContent";
 import { LayoutContext, MAIN_CONTENT_ID } from "../../layouts/LayoutContext";
+import { createSearchNavigation } from "../../utils/searchNavigation";
+import { SearchNavigationContext } from "../../utils/searchNavigationContext";
 import { type NamespaceData, NamespaceDataContext } from "../providers";
 
 const FRAME = { header: true };
@@ -43,6 +45,7 @@ export function NamespaceFrame({
   children: ReactNode;
 }) {
   const pathname = usePathname();
+  const [searchNavigation] = useState(createSearchNavigation);
   const [store] = useState(() =>
     initializeStore({ ...data, route: `/${namespace}/index` }),
   );
@@ -61,6 +64,7 @@ export function NamespaceFrame({
   useEffect(() => {
     if (pathname) setDrawerOpen(false);
   }, [pathname]);
+  useEffect(() => () => searchNavigation.cancel(), [searchNavigation]);
 
   // Salt's landing page has its own hero and search, and deliberately has no
   // fixed app header. This is known from the URL before the first client paint.
@@ -69,19 +73,21 @@ export function NamespaceFrame({
 
   return (
     <NamespaceDataContext.Provider value={data}>
-      <FrameContext.Provider value={frame}>
-        <LayoutContext.Provider value={controls}>
-          <StoreProvider value={store}>
-            {!landing && (
-              <>
-                <SkipToMainContent targetId={MAIN_CONTENT_ID} />
-                <AppHeader />
-              </>
-            )}
-            <FrameProvider value={FRAME}>{children}</FrameProvider>
-          </StoreProvider>
-        </LayoutContext.Provider>
-      </FrameContext.Provider>
+      <SearchNavigationContext.Provider value={searchNavigation}>
+        <FrameContext.Provider value={frame}>
+          <LayoutContext.Provider value={controls}>
+            <StoreProvider value={store}>
+              {!landing && (
+                <>
+                  <SkipToMainContent targetId={MAIN_CONTENT_ID} />
+                  <AppHeader />
+                </>
+              )}
+              <FrameProvider value={FRAME}>{children}</FrameProvider>
+            </StoreProvider>
+          </LayoutContext.Provider>
+        </FrameContext.Provider>
+      </SearchNavigationContext.Provider>
     </NamespaceDataContext.Provider>
   );
 }
@@ -97,6 +103,7 @@ export function FrameSync({
   preserveSharedConfig?: boolean;
 }) {
   const frame = useContext(FrameContext);
+  const searchNavigation = useContext(SearchNavigationContext);
   useLayoutEffect(() => {
     frame?.store.setState({
       ...(!preserveSharedConfig && {
@@ -104,6 +111,7 @@ export function FrameSync({
       }),
       route,
     });
-  }, [frame, route, sharedConfig, preserveSharedConfig]);
+    searchNavigation?.commitRoute(route);
+  }, [frame, route, sharedConfig, preserveSharedConfig, searchNavigation]);
   return null;
 }
