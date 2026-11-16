@@ -19,11 +19,13 @@ import {
   type ChangeEvent,
   type ComponentPropsWithoutRef,
   type SyntheticEvent,
+  useContext,
   useDeferredValue,
   useMemo,
   useState,
 } from "react";
 import useSWR from "swr";
+import { SearchNavigationContext } from "../../utils/searchNavigationContext";
 import styles from "./Search.module.css";
 
 /** Written by Mosaic's SearchIndexPlugin and copied to `public/`. */
@@ -84,6 +86,7 @@ function SearchResultOption({ result }: { result: SearchResult }) {
 
 export function Search(props: ComponentPropsWithoutRef<"search">) {
   const router = useRouter();
+  const searchNavigation = useContext(SearchNavigationContext);
   const [value, setValue] = useState("");
   const query = useDeferredValue(value).trim();
   // Download the records the first time the reader focuses search.
@@ -102,7 +105,8 @@ export function Search(props: ComponentPropsWithoutRef<"search">) {
   const handleSelectionChange = (_event: SyntheticEvent, href: string[]) => {
     if (!href[0]) return;
     setValue("");
-    router.push(href[0]);
+    const anchor = searchNavigation?.requestAnchor(href[0]) ?? false;
+    router.push(href[0], { scroll: !anchor });
   };
 
   const results = useMemo(() => {
