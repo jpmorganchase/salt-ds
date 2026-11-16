@@ -134,16 +134,12 @@ jobs:
             test/browser/screenshots
           if-no-files-found: ignore
 
-  # Preserve the existing required-check names. All four completion checks
-  # require the full shard matrix to pass; individual jobs identify failures.
+  # One stable required check gates the entire React x shard matrix.
+  # Require "Browser Tests (React matrix)" in the main branch ruleset.
   browser-tests:
-    name: Browser Tests (React ${{ matrix.react }})
+    name: Browser Tests (React matrix)
     needs: browser-test-shards
     if: always()
-    strategy:
-      fail-fast: false
-      matrix:
-        react: [16, 17, 18, 19]
     runs-on: ubuntu-latest
     timeout-minutes: 2
     steps:
