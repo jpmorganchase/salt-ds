@@ -4,13 +4,13 @@ import { availableParallelism } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react";
-import CiDurationSequencer from "./test/browser/ciDurationSequencer";
 import { playwright } from "@vitest/browser-playwright";
 import { isCI } from "ci-info";
 import { cssInline } from "css-inline-plugin";
 import type { Plugin } from "vite";
 import { defineConfig } from "vitest/config";
 import type { BrowserCommand } from "vitest/node";
+import CiDurationSequencer from "./test/browser/ciDurationSequencer";
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);

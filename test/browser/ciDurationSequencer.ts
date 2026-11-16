@@ -194,7 +194,9 @@ export default class CiDurationSequencer extends BaseSequencer {
     );
   }
 
-  override async shard(files: TestSpecification[]): Promise<TestSpecification[]> {
+  override async shard(
+    files: TestSpecification[],
+  ): Promise<TestSpecification[]> {
     const shard = this.ctx.config.shard;
     if (!shard) return super.shard(files);
 
@@ -221,7 +223,9 @@ export default class CiDurationSequencer extends BaseSequencer {
     return selected.files;
   }
 
-  override async sort(files: TestSpecification[]): Promise<TestSpecification[]> {
+  override async sort(
+    files: TestSpecification[],
+  ): Promise<TestSpecification[]> {
     // Start historically expensive files first so they don't become the tail.
     return [...files].sort((a, b) => this.byDuration(a, b));
   }
