@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - perf/ci-bench-balanced-20261116
   workflow_dispatch:
   pull_request:
 
