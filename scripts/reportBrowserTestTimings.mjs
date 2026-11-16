@@ -66,8 +66,9 @@ export function toMarkdown(files) {
     "| --- | ---: | ---: |",
   ];
   for (const file of timed.slice(0, 10)) {
+    const seconds = (file.durationMs / 1000).toFixed(2);
     lines.push(
-      `| \`${file.file.replaceAll("|", "\\|")}\` | ${(file.durationMs / 1000).toFixed(2)}s | ${file.tests} |`,
+      `| \`${file.file.replaceAll("|", "\\|")}\` | ${seconds}s | ${file.tests} |`,
     );
   }
   if (timed.length === 0) {
@@ -87,8 +88,13 @@ if (
   path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)
 ) {
   const reportPath = process.argv[2] ?? ".vitest/browser-test-results.json";
-  const files = extractFileTimings(JSON.parse(readFileSync(reportPath, "utf8")));
-  const csvPath = path.join(path.dirname(reportPath), "browser-file-timings.csv");
+  const files = extractFileTimings(
+    JSON.parse(readFileSync(reportPath, "utf8")),
+  );
+  const csvPath = path.join(
+    path.dirname(reportPath),
+    "browser-file-timings.csv",
+  );
   writeFileSync(csvPath, toCsv(files));
 
   const summary = toMarkdown(files);
