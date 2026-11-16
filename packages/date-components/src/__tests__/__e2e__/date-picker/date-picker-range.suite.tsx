@@ -153,10 +153,6 @@ export function registerInteractionTests(
 
     const render = (children: ReactNode) =>
       renderWithSalt(children, { dateAdapter: adapter });
-    const initialRangeDateValue = {
-      startDate: "05 Jan 2025",
-      endDate: "06 Jan 2025",
-    };
     const initialRangeDate = {
       startDate: adapter.parse("05/01/2025", "DD/MM/YYYY").date,
       endDate: adapter.parse("06/01/2025", "DD/MM/YYYY").date,
@@ -536,7 +532,6 @@ export function registerInteractionTests(
         );
       });
     }
-
   });
 }
 
