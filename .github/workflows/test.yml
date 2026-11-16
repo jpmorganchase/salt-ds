@@ -3,6 +3,7 @@ on:
   push:
     branches:
       - main
+      - perf/ci-bench-two-shards-20261116
   workflow_dispatch:
   pull_request:
 
