@@ -143,7 +143,7 @@ function isWeekend(adapter: SaltDateAdapter<any>, day: DateFrameworkType) {
     : dayOfWeek === 0 || dayOfWeek === 6;
 }
 
-export function registerAdapterTests(
+export function registerInteractionTests(
   // biome-ignore lint/suspicious/noExplicitAny: shared behavior across adapter date types
   adapter: SaltDateAdapter<any>,
 ) {
@@ -536,6 +536,28 @@ export function registerAdapterTests(
         );
       });
     }
+
+  });
+}
+
+export function registerValueTests(
+  // biome-ignore lint/suspicious/noExplicitAny: shared behavior across adapter date types
+  adapter: SaltDateAdapter<any>,
+) {
+  describe(`Tests with ${adapter.lib}`, () => {
+    beforeEach(() => MockDate.set(new Date(2024, 4, 6)));
+    afterEach(() => MockDate.reset());
+
+    const render = (children: ReactNode) =>
+      renderWithSalt(children, { dateAdapter: adapter });
+    const initialRangeDateValue = {
+      startDate: "05 Jan 2025",
+      endDate: "06 Jan 2025",
+    };
+    const initialRangeDate = {
+      startDate: adapter.parse("05/01/2025", "DD/MM/YYYY").date,
+      endDate: adapter.parse("06/01/2025", "DD/MM/YYYY").date,
+    };
 
     it("SHOULD support validation", async () => {
       const selectionChange = vi.fn();
