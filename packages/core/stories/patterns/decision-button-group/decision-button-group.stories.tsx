@@ -6,7 +6,7 @@ import {
   ThumbsUpIcon,
 } from "@salt-ds/icons";
 import type { Meta } from "@storybook/react-vite";
-import { type KeyboardEvent, useState } from "react";
+import { useState } from "react";
 
 export default {
   title: "Patterns/Decision Button Group",
@@ -34,49 +34,25 @@ export const Default = () => {
 
 type Decision = "reject" | "approve";
 
-const arrowSteps: Record<string, number> = {
-  ArrowRight: 1,
-  ArrowDown: 1,
-  ArrowLeft: -1,
-  ArrowUp: -1,
-};
-
 export const Selectable = () => {
-  const [decision, setDecision] = useState<Decision>("reject");
+  const [decision, setDecision] = useState<Decision | undefined>();
 
-  // Radio behaviour: arrows move focus and select, wrapping at the ends.
-  const handleKeyDown = (event: KeyboardEvent<HTMLElement>) => {
-    const step = arrowSteps[event.key];
-    if (!step || event.altKey || event.ctrlKey || event.metaKey) return;
-    event.preventDefault();
-    const radios = Array.from(
-      event.currentTarget.querySelectorAll<HTMLButtonElement>('[role="radio"]'),
-    );
-    const current = radios.indexOf(event.target as HTMLButtonElement);
-    const next = radios[(current + step + radios.length) % radios.length];
-    next.focus();
-    setDecision(next.value as Decision);
-  };
+  const toggle = (value: Decision) =>
+    setDecision((current) => (current === value ? undefined : value));
 
   return (
     <StackLayout
       direction={{ xs: "column", sm: "row" }}
       gap={1}
-      role="radiogroup"
+      role="group"
       aria-label="Expense request decision"
-      onKeyDown={handleKeyDown}
     >
       <ToggleButton
         appearance="bordered"
         sentiment="negative"
         value="reject"
-        role="radio"
-        aria-checked={decision === "reject"}
-        // biome-ignore lint/a11y/useValidAriaValues: undefined removes the aria-pressed ToggleButton sets, which radios must not have.
-        aria-pressed={undefined}
-        tabIndex={decision === "reject" ? 0 : -1}
         selected={decision === "reject"}
-        onChange={() => setDecision("reject")}
+        onChange={() => toggle("reject")}
       >
         <CloseIcon aria-hidden />
         Reject
@@ -85,13 +61,8 @@ export const Selectable = () => {
         appearance="bordered"
         sentiment="positive"
         value="approve"
-        role="radio"
-        aria-checked={decision === "approve"}
-        // biome-ignore lint/a11y/useValidAriaValues: undefined removes the aria-pressed ToggleButton sets, which radios must not have.
-        aria-pressed={undefined}
-        tabIndex={decision === "approve" ? 0 : -1}
         selected={decision === "approve"}
-        onChange={() => setDecision("approve")}
+        onChange={() => toggle("approve")}
       >
         <CheckmarkIcon aria-hidden />
         Approve
@@ -102,7 +73,7 @@ export const Selectable = () => {
 
 type Rating = "like" | "dislike";
 
-export const OptionalSelection = () => {
+export const WithTooltip = () => {
   const [rating, setRating] = useState<Rating | undefined>();
 
   const toggle = (value: Rating) =>
@@ -113,7 +84,7 @@ export const OptionalSelection = () => {
       direction={{ xs: "column", sm: "row" }}
       gap={1}
       role="group"
-      aria-label="Rate this response"
+      aria-label="Rate the response"
     >
       <Tooltip content="Dislike" placement="top">
         <ToggleButton
