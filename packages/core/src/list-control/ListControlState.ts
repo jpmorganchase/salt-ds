@@ -204,17 +204,20 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
 
   const select = useEventCallback(
     (event: SyntheticEvent, option: OptionValue<Item>) => {
-      if (option.disabled || readOnly || disabled) {
+      const currentOption = registry.findById(option.id)?.data;
+      if (!currentOption || currentOption.disabled || readOnly || disabled) {
         return;
       }
 
-      let newSelected = [option.value];
+      let newSelected = [currentOption.value];
 
       if (multiselect) {
-        if (selectedState.includes(option.value)) {
-          newSelected = selectedState.filter((item) => item !== option.value);
+        if (selectedState.includes(currentOption.value)) {
+          newSelected = selectedState.filter(
+            (item) => item !== currentOption.value,
+          );
         } else {
-          newSelected = selectedState.concat([option.value]);
+          newSelected = selectedState.concat([currentOption.value]);
         }
       }
 
@@ -271,13 +274,21 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   );
 
   useEffect(() => {
-    if (!listElement) return;
+    if (!listElement) {
+      setActive(undefined);
+      return;
+    }
     const rebuild = () => {
       // Registration can queue this job before MutationObserver delivery.
       // The current DOM includes those mutations, so consume them here to
       // avoid rebuilding the same collection again from the observer.
       mutationObserver.takeRecords();
       registry.rebuild(listElement);
+      // Reconcile once per collection update, after registration and cleanup
+      // have settled. Preserve identity on reorder and refresh changed metadata.
+      setActive((active) =>
+        active ? registry.findById(active.id)?.data : undefined,
+      );
     };
     const coalescedRebuild = createCoalescedRebuild(rebuild);
     scheduleRebuildRef.current = coalescedRebuild.schedule;
@@ -311,6 +322,11 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
       mutationObserver.disconnect();
     };
   }, [listElement, registry]);
+
+  const getOptionById = useCallback(
+    (id: string) => registry.findById(id),
+    [registry],
+  );
 
   const getOptionAtIndex = useCallback(
     (
@@ -464,6 +480,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     setListRef,
     listRef,
     register,
+    getOptionById,
     getOptionAtIndex,
     getIndexOfOption,
     getOptionsMatching,

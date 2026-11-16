@@ -53,22 +53,27 @@ export function useComboBox<Item>(props: UseComboBoxProps<Item>) {
 
   const select = useEventCallback(
     (event: SyntheticEvent, option: OptionValue<Item>) => {
-      if (option.disabled || disabled || readOnly) {
+      const currentOption = listControl.getOptionById(option.id)?.data;
+      if (!currentOption || currentOption.disabled || disabled || readOnly) {
         return;
       }
 
-      let newSelected = [option.value];
+      let newSelected = [currentOption.value];
 
       if (multiselect) {
-        if (selectedState.includes(option.value)) {
-          newSelected = selectedState.filter((item) => item !== option.value);
+        if (selectedState.includes(currentOption.value)) {
+          newSelected = selectedState.filter(
+            (item) => item !== currentOption.value,
+          );
         } else {
-          newSelected = selectedState.concat([option.value]);
+          newSelected = selectedState.concat([currentOption.value]);
         }
       }
 
       setSelectedState(newSelected);
-      setValueState(multiselect ? "" : listControl.valueToString(option.value));
+      setValueState(
+        multiselect ? "" : listControl.valueToString(currentOption.value),
+      );
       onSelectionChange?.(event, newSelected);
 
       if (!multiselect) {

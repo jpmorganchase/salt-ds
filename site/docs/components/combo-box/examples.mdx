@@ -15,6 +15,7 @@ By default, a single item can be selected from the combo box options. The select
 ### Best practices
 
 - You can wrap `ComboBox` in a `FormField` when it’s displayed within a form context. This provides functionality built into Form Field for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
+- When you filter suggestions as the user types, set `inputProps={{ "aria-autocomplete": "list" }}`. Use `"none"` when the available options do not depend on the typed text. `ComboBox` leaves filtering to the application, so it cannot determine this mode automatically.
 
 <LivePreview componentName="combo-box" exampleName="Default" />
 
@@ -87,7 +88,7 @@ Wrap options in a `OptionGroup` component to group them together. Use the `label
 
 ## Empty message
 
-To display a message when there are no options available, pass your message as a child element with `role="option"`.
+Display an empty-results message outside the options list. Keep a `role="status"` element mounted and update its text so assistive technology can announce the change without moving focus. The listbox contains the actual choices, including disabled options when appropriate.
 
 <LivePreview componentName="combo-box" exampleName="EmptyMessage" />
 
@@ -124,6 +125,8 @@ Due to its flexible API, you can customize the filtering logic `ComboBox` uses t
 
 You can use `ComboBox` to display data from a server. In this example, a list of states is fetched from a JSON file and filtered on the client side.
 
+Loading, error and result-count messages use a separate status region. The listbox contains only the available options.
+
 Note that the data fetching in this example has been made intentionally slow to highlight the loading states.
 
 <LivePreview componentName="combo-box" exampleName="ServerSideData" />
@@ -143,7 +146,9 @@ Use the `truncate` prop when you are limited on space and want to prevent the mu
 
 ## Select on Tab
 
-Use the `selectOnTab` prop to select the active option from the list on Tab key press.
+Use the `selectOnTab` prop to select the active option from the list when pressing Tab or Shift+Tab. It defaults to `true` for single-select and `false` for multi-select combo boxes.
+
+Set `selectOnTab={false}` when selection navigates to a page or section. This lets users leave the search field with Tab or Shift+Tab and activate a result explicitly with Enter or a pointer. The application is responsible for moving focus to the destination after navigation.
 
 <LivePreview componentName="combo-box" exampleName="SelectOnTab" />
 

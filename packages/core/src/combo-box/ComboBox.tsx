@@ -185,10 +185,11 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
   const hasValidChildren =
     Children.toArray(children).filter(Boolean).length > 0;
+  const popupOpen = openState && !readOnly && hasValidChildren;
 
   const { x, y, strategy, elements, floating, reference, context } =
     useFloatingUI({
-      open: openState && !readOnly && hasValidChildren,
+      open: popupOpen,
       onOpenChange: handleOpenChange,
       placement: "bottom-start",
       strategy: "fixed",
@@ -430,8 +431,8 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     <Button
       aria-labelledby={clsx(buttonId, formFieldLabelledBy)}
       aria-label="Show options"
-      aria-expanded={openState}
-      aria-controls={openState ? listId : undefined}
+      aria-expanded={popupOpen}
+      aria-controls={popupOpen ? listId : undefined}
       aria-haspopup="listbox"
       disabled={disabled}
       appearance="transparent"
@@ -439,7 +440,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       onFocus={handleButtonFocus}
       tabIndex={-1}
     >
-      {openState ? <CollapseIcon aria-hidden /> : <ExpandIcon aria-hidden />}
+      {popupOpen ? <CollapseIcon aria-hidden /> : <ExpandIcon aria-hidden />}
     </Button>
   );
 
@@ -475,12 +476,12 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         readOnly={readOnly}
         inputProps={{
           "aria-readonly": readOnly ? "true" : undefined,
-          "aria-expanded": !readOnly ? openState : undefined,
-          "aria-controls": openState && !readOnly ? listId : undefined,
+          "aria-expanded": !readOnly ? popupOpen : undefined,
+          "aria-controls": popupOpen ? listId : undefined,
           onKeyDown: handleKeyDown,
           ...inputPropsProp,
         }}
-        aria-activedescendant={activeState?.id}
+        aria-activedescendant={popupOpen ? activeState?.id : undefined}
         variant={variant}
         inputRef={handleInputRef}
         value={valueState}

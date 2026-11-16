@@ -1,9 +1,0 @@
-.statusOption {
-  display: flex;
-  align-items: center;
-  font-style: var(--salt-typography-fontStyle-italic);
-  color: var(--salt-content-secondary-foreground);
-  min-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
-  padding-left: var(--salt-spacing-100);
-  padding-right: var(--salt-spacing-100);
-}
