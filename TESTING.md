@@ -6,13 +6,18 @@ user-visible contract, not the component's internal implementation.
 
 ## Choose the right test
 
-| Test | Use it for | Run it with |
-| --- | --- | --- |
-| Unit (`*.spec.*`) | Pure logic, transformations, and utilities that do not need a browser | `yarn test` |
-| Browser (`*.browser.test.tsx`) | Rendering, keyboard/pointer interactions, focus, ARIA, forms and callbacks in a real browser | `yarn test:components` |
-| Accessibility | Automated axe checks of representative, composed stories using `checkAccessibility`; keyboard and focus behavior still needs browser tests | `yarn test:components` |
-| Visual regression | Appearance, layout, themes and meaningful visual states, using focused Chromatic/QA stories | Chromatic on a labelled PR |
-| Types and compatibility | Public TypeScript API, package imports and supported React versions | `yarn typecheck`, `yarn typecheck:react19`, `yarn typecheck:consumer` after a build |
+| Test                           | Use it for                                           | Run it with            |
+| ------------------------------ | ---------------------------------------------------- | ---------------------- |
+| Unit (`*.spec.*`)              | Pure logic and utilities without a browser           | `yarn test`            |
+| Browser (`*.browser.test.tsx`) | DOM, keyboard/pointer, focus, ARIA, forms, callbacks | `yarn test:components` |
+| Accessibility                  | axe checks of composed stories                       | `yarn test:components` |
+| Visual regression              | Appearance, layout, themes and visual states         | Chromatic on a PR      |
+| Types and compatibility        | Public API, package imports, supported React types   | Typecheck commands     |
+
+For types, run `yarn typecheck`, `yarn typecheck:react19` and
+`yarn typecheck:consumer` (the last one after `yarn build`). Accessibility
+scans should use `checkAccessibility`; keyboard and focus behavior still need
+dedicated browser tests.
 
 Choose the lowest-cost level that can prove the behavior reliably. Do not
 duplicate every behavior across test types. An axe scan is not a substitute for
