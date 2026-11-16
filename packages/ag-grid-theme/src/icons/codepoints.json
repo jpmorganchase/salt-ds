@@ -66,5 +66,10 @@
   "document": 59712,
   "edit": 59713,
   "pdf": 59714,
-  "settings": 59715
+  "settings": 59715,
+  "column-arrow": 59716,
+  "filter-add": 59717,
+  "pinned-bottom": 59718,
+  "pinned-top": 59719,
+  "values-as": 59720
 }
