@@ -20,7 +20,8 @@ import {
 } from "../form-field-context";
 import { StatusAdornment } from "../status-adornment";
 import type { DataAttributes } from "../types";
-import { makePrefixer, mergeAriaIds, useControlled } from "../utils";
+import { makePrefixer, useControlled } from "../utils";
+import { mergeAriaIds } from "../utils/mergeAriaIds";
 
 import inputCss from "./Input.css";
 
@@ -237,10 +238,11 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
             inputDescribedBy,
             ariaDescribedBy,
           )}
-          aria-labelledby={
-            clsx(formFieldLabelledBy, inputLabelledBy, ariaLabelledBy) ||
-            undefined
-          }
+          aria-labelledby={mergeAriaIds(
+            formFieldLabelledBy,
+            inputLabelledBy,
+            ariaLabelledBy,
+          )}
           className={clsx(withBaseName("input"), inputProps?.className)}
           disabled={isDisabled}
           id={id}

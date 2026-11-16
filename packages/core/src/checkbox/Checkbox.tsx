@@ -15,11 +15,11 @@ import type { AdornmentValidationStatus } from "../status-adornment";
 import type { DataAttributes } from "../types";
 import {
   makePrefixer,
-  mergeAriaIds,
   useControlled,
   useForkRef,
   useIsomorphicLayoutEffect,
 } from "../utils";
+import { mergeAriaIds } from "../utils/mergeAriaIds";
 import checkboxCss from "./Checkbox.css";
 import { CheckboxIcon } from "./CheckboxIcon";
 import { useCheckboxGroup } from "./internal/useCheckboxGroup";
@@ -213,15 +213,13 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
             inputDescribedBy,
             ariaDescribedBy,
           )}
-          aria-labelledby={
-            clsx(
-              checkboxGroup === undefined
-                ? formFieldA11yProps?.["aria-labelledby"]
-                : undefined,
-              inputLabelledBy,
-              ariaLabelledBy,
-            ) || undefined
-          }
+          aria-labelledby={mergeAriaIds(
+            checkboxGroup === undefined
+              ? formFieldA11yProps?.["aria-labelledby"]
+              : undefined,
+            inputLabelledBy,
+            ariaLabelledBy,
+          )}
           name={name}
           value={value}
           checked={checked}

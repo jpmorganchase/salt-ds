@@ -9,7 +9,8 @@ import {
   useEffect,
   useState,
 } from "react";
-import { makePrefixer, mergeAriaIds, useId } from "../../utils";
+import { makePrefixer, useId } from "../../utils";
+import { mergeAriaIds } from "../../utils/mergeAriaIds";
 import sliderThumbCss from "./SliderThumb.css";
 import { SliderTooltip } from "./SliderTooltip";
 

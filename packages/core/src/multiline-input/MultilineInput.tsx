@@ -21,11 +21,11 @@ import { StatusAdornment } from "../status-adornment";
 import type { DataAttributes } from "../types";
 import {
   makePrefixer,
-  mergeAriaIds,
   useControlled,
   useForkRef,
   useIsomorphicLayoutEffect,
 } from "../utils";
+import { mergeAriaIds } from "../utils/mergeAriaIds";
 
 import multilineInputCss from "./MultilineInput.css";
 
@@ -254,10 +254,11 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
               textAreaDescribedBy,
               ariaDescribedBy,
             )}
-            aria-labelledby={
-              clsx(formFieldLabelledBy, textAreaLabelledBy, ariaLabelledBy) ||
-              undefined
-            }
+            aria-labelledby={mergeAriaIds(
+              formFieldLabelledBy,
+              textAreaLabelledBy,
+              ariaLabelledBy,
+            )}
             className={clsx(withBaseName("textarea"), textAreaProps?.className)}
             disabled={isDisabled}
             id={id}

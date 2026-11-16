@@ -1,7 +1,6 @@
 import {
   type InputProps,
   makePrefixer,
-  mergeAriaIds,
   StatusAdornment,
   useControlled,
   useForkRef,
@@ -38,6 +37,7 @@ import {
 import type { DateRangeSelection } from "../calendar";
 import { useLocalization } from "../localization-provider";
 import dateInputCss from "./DateInput.css";
+import { mergeAriaIds } from "./mergeAriaIds";
 import { useHasResolvedLabel } from "./useHasResolvedLabel";
 
 const withBaseName = makePrefixer("saltDateInput");
@@ -421,8 +421,10 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       startInputPropsAriaLabel !== undefined || ariaLabel !== undefined;
     const hasEndExplicitAriaLabel =
       endInputPropsAriaLabel !== undefined || ariaLabel !== undefined;
-    const fieldLabelledBy =
-      clsx(formFieldLabelledBy, restAriaLabelledBy) || undefined;
+    const fieldLabelledBy = mergeAriaIds(
+      formFieldLabelledBy,
+      restAriaLabelledBy,
+    );
     // Forward references even before their targets exist. Only discard the
     // top-level fallback once a field label is actually rendered.
     const hasFieldLabelReference = Boolean(fieldLabelledBy);
@@ -439,23 +441,23 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       !hasFieldLabelReference &&
       !startInputPropsLabelledBy
         ? undefined
-        : clsx(
+        : mergeAriaIds(
             formFieldLabelledBy,
             startDateLabelId,
             startInputPropsLabelledBy,
             restAriaLabelledBy,
-          ) || undefined;
+          );
     const endAriaLabelledBy =
       hasEndExplicitAriaLabel &&
       !hasFieldLabelReference &&
       !endInputPropsLabelledBy
         ? undefined
-        : clsx(
+        : mergeAriaIds(
             formFieldLabelledBy,
             endDateLabelId,
             endInputPropsLabelledBy,
             restAriaLabelledBy,
-          ) || undefined;
+          );
     const startAriaDescribedBy = mergeAriaIds(
       formFieldDescribedBy,
       startInputPropsDescribedBy,

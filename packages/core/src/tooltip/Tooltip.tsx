@@ -185,18 +185,22 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
     const floatingRef = useForkRef<HTMLDivElement>(floating, ref);
     const hasContent = content != null && content !== "";
     const isOpen = open && !disabled && hasContent;
+    // useTooltip exposes the floating context through arrowProps.
+    const { domReference, floating: floatingElement } =
+      arrowProps.context.elements;
     const ownedHelperTextId = useOwnedHelperTextId(
       formFieldDescribedBy,
       isOpen,
-      arrowProps.context.elements.domReference,
-      arrowProps.context.elements.floating,
+      domReference,
+      floatingElement,
     );
-    const triggerProps = getTriggerProps();
+    const generatedTriggerProps = getTriggerProps();
     // Reuse the FormField reference only when it resolves to this tooltip's
     // helper span; otherwise preserve the tooltip's own generated reference.
-    if (ownedHelperTextId && triggerProps["aria-describedby"]) {
-      triggerProps["aria-describedby"] = ownedHelperTextId;
-    }
+    const triggerProps =
+      ownedHelperTextId && generatedTriggerProps["aria-describedby"]
+        ? { ...generatedTriggerProps, "aria-describedby": ownedHelperTextId }
+        : generatedTriggerProps;
 
     return (
       <>

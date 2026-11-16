@@ -25,25 +25,35 @@ describe("GIVEN a Tokenized Input", () => {
     return result;
   });
 
-  it("SHOULD merge FormField and root aria-labelledby/aria-describedby on the textarea", async () => {
+  it("SHOULD merge FormField, textAreaProps and root aria-labelledby/aria-describedby on the textarea, in that order", async () => {
     await renderWithSalt(
       <>
         <span id="extra-label">Extra label</span>
         <span id="extra-description">Extra description</span>
+        <span id="textarea-label">Textarea label</span>
+        <span id="textarea-description">Textarea description</span>
         <FormField>
           <FormFieldLabel>Cities</FormFieldLabel>
           <TokenizedInputNext
             aria-labelledby="extra-label"
             aria-describedby="extra-description"
+            textAreaProps={{
+              "aria-labelledby": "textarea-label",
+              "aria-describedby": "textarea-description",
+            }}
           />
           <FormFieldHelperText>Helper text</FormFieldHelperText>
         </FormField>
       </>,
     );
-    await expect.element(textbox()).toHaveAccessibleName(/^Cities Extra label/);
     await expect
       .element(textbox())
-      .toHaveAccessibleDescription("Helper text Extra description");
+      .toHaveAccessibleName(/^Cities Textarea label Extra label/);
+    await expect
+      .element(textbox())
+      .toHaveAccessibleDescription(
+        "Helper text Textarea description Extra description",
+      );
   });
 
   it("SHOULD mount as disabled", async () => {

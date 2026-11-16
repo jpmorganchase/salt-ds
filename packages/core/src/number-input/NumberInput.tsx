@@ -30,11 +30,11 @@ import { StatusAdornment } from "../status-adornment";
 import {
   capitalize,
   makePrefixer,
-  mergeAriaIds,
   useControlled,
   useForkRef,
   useId,
 } from "../utils";
+import { mergeAriaIds } from "../utils/mergeAriaIds";
 import { useLongPressPointerAction } from "./internal/useLongPressPointerAction";
 import numberInputCss from "./NumberInput.css";
 
@@ -616,10 +616,11 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
             inputDescribedBy,
             ariaDescribedBy,
           )}
-          aria-labelledby={
-            clsx(formFieldLabelledBy, inputLabelledBy, ariaLabelledBy) ||
-            undefined
-          }
+          aria-labelledby={mergeAriaIds(
+            formFieldLabelledBy,
+            inputLabelledBy,
+            ariaLabelledBy,
+          )}
           aria-invalid={
             !isReadOnly && renderedValue.length
               ? isOutOfRange(floatValue, min, max) ||

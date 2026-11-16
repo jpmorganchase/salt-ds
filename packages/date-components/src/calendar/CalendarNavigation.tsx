@@ -81,6 +81,9 @@ interface OptionWithTooltipProps extends OptionProps {
 
 const withBaseName = makePrefixer("saltCalendarNavigation");
 
+// Matches the default context, so the dropdowns behave as if outside a FormField.
+const noFormFieldContext = {} as FormFieldContextValue;
+
 const ConditionalTooltip: React.FC<TooltipProps> = ({
   children,
   disabled = true,
@@ -398,7 +401,7 @@ export const CalendarNavigation = forwardRef<
         </Button>
       </ConditionalTooltip>
       {/* Keep a surrounding FormField's label off the month and year dropdowns. */}
-      <FormFieldContext.Provider value={{} as FormFieldContextValue}>
+      <FormFieldContext.Provider value={noFormFieldContext}>
         <div
           className={clsx({ [withBaseName("dropdowns")]: !hideYearDropdown })}
         >

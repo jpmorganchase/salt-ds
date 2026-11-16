@@ -9,7 +9,8 @@ import {
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
 import type { AdornmentValidationStatus } from "../status-adornment";
-import { makePrefixer, mergeAriaIds, useControlled } from "../utils";
+import { makePrefixer, useControlled } from "../utils";
+import { mergeAriaIds } from "../utils/mergeAriaIds";
 import checkboxGroupCss from "./CheckboxGroup.css";
 import { CheckboxGroupContext } from "./internal/CheckboxGroupContext";
 
@@ -118,9 +119,10 @@ export const CheckboxGroup = forwardRef<
 
   return (
     <fieldset
-      aria-labelledby={
-        clsx(a11yProps?.["aria-labelledby"], ariaLabelledBy) || undefined
-      }
+      aria-labelledby={mergeAriaIds(
+        a11yProps?.["aria-labelledby"],
+        ariaLabelledBy,
+      )}
       aria-describedby={mergeAriaIds(
         a11yProps?.["aria-describedby"],
         ariaDescribedBy,

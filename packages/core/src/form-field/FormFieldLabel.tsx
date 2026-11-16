@@ -12,14 +12,31 @@ import formFieldLabelCss from "./FormFieldLabel.css";
 
 const withBaseName = makePrefixer("saltFormFieldLabel");
 
+type IdRoot = Document | ShadowRoot;
+
+// ID references resolve within the element's document or shadow root.
+function getIdRoot(node: Node): IdRoot {
+  const root = node.getRootNode();
+  return typeof (root as IdRoot).getElementById === "function"
+    ? (root as IdRoot)
+    : (node.ownerDocument as Document);
+}
+
 /**
  * Returns the controls labelled by `labelId` whose `aria-label` is dropped from
  * the accessible name, because `aria-labelledby` takes precedence.
+ *
+ * Computing an accessible name is expensive, so `checked` records what each
+ * check was based on: the control's aria-label and the ID references and text
+ * of its aria-labelledby. A control is only checked again when one of those
+ * changes. Reported controls are recorded as `true` and aren't checked again.
  */
 function getControlsWithIgnoredAriaLabel(
   formField: HTMLElement,
   labelId: string,
+  checked: WeakMap<Element, string | true>,
 ) {
+  const root = getIdRoot(formField);
   // Match ids in JS rather than in the selector, so ids needing CSS escaping can't throw.
   return Array.from(
     formField.querySelectorAll("[aria-label][aria-labelledby]"),
@@ -34,11 +51,26 @@ function getControlsWithIgnoredAriaLabel(
       !ariaLabel ||
       !labelledByIds.includes(labelId) ||
       labelledByIds.includes(control.id) ||
-      control.hasAttribute("data-salt-aria-label-fallback") ||
-      isInaccessible(control)
+      control.hasAttribute("data-salt-aria-label-fallback")
     ) {
       return false;
     }
+
+    const previous = checked.get(control);
+    const basis = [
+      ariaLabel,
+      ...labelledByIds.map(
+        (id) => `${id}:${root.getElementById(id)?.textContent ?? ""}`,
+      ),
+    ].join("\n");
+    if (previous === true || previous === basis) {
+      return false;
+    }
+    // Hidden controls aren't recorded, so they're checked once they're shown.
+    if (isInaccessible(control)) {
+      return false;
+    }
+    checked.set(control, basis);
 
     // Text alternatives such as aria-label and image alt, and hidden content,
     // can make the accessible name different from the label's textContent.
@@ -103,7 +135,9 @@ export const FormFieldLabel = ({
 
   const id = a11yProps?.["aria-labelledby"];
 
-  const warnedRef = useRef(new WeakSet<Element>());
+  // Records each control's last check. Created on first use, so production
+  // builds don't allocate it.
+  const checkedRef = useRef<WeakMap<Element, string | true> | null>(null);
   useEffect(() => {
     if (process.env.NODE_ENV !== "production") {
       let cancelled = false;
@@ -114,18 +148,26 @@ export const FormFieldLabel = ({
           return;
         }
         const formField = formFieldRef?.current;
-        const label = id ? formField?.ownerDocument.getElementById(id) : null;
-        if (!formField || !id || !label) {
+        if (!formField || !id) {
+          return;
+        }
+        const label = getIdRoot(formField).getElementById(id);
+        if (!label) {
           return;
         }
 
+        if (!checkedRef.current) {
+          checkedRef.current = new WeakMap();
+        }
+        const checked = checkedRef.current;
         // Group by text, so a control that puts one aria-label on several elements warns once.
         const controlsByAriaLabel = new Map<string, Element[]>();
-        for (const control of getControlsWithIgnoredAriaLabel(formField, id)) {
-          if (warnedRef.current.has(control)) {
-            continue;
-          }
-          warnedRef.current.add(control);
+        for (const control of getControlsWithIgnoredAriaLabel(
+          formField,
+          id,
+          checked,
+        )) {
+          checked.set(control, true);
           const ariaLabel = control.getAttribute("aria-label")?.trim() ?? "";
           controlsByAriaLabel.set(ariaLabel, [
             ...(controlsByAriaLabel.get(ariaLabel) ?? []),

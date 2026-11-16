@@ -24,13 +24,8 @@ import { Pill } from "../pill";
 import { useIcon } from "../semantic-icon-provider";
 import { StatusAdornment } from "../status-adornment";
 import type { DataAttributes } from "../types";
-import {
-  makePrefixer,
-  mergeAriaIds,
-  useControlled,
-  useForkRef,
-  useId,
-} from "../utils";
+import { makePrefixer, useControlled, useForkRef, useId } from "../utils";
+import { mergeAriaIds } from "../utils/mergeAriaIds";
 import pillInputCss from "./PillInput.css";
 import { useTruncatePills } from "./useTruncatePills";
 
@@ -385,10 +380,11 @@ export const PillInput = forwardRef(function PillInput(
             inputDescribedBy,
             ariaDescribedBy,
           )}
-          aria-labelledby={
-            clsx(formFieldLabelledBy, inputLabelledBy, ariaLabelledBy) ||
-            undefined
-          }
+          aria-labelledby={mergeAriaIds(
+            formFieldLabelledBy,
+            inputLabelledBy,
+            ariaLabelledBy,
+          )}
           autoComplete="off"
           className={clsx(withBaseName("input"), inputProps?.className)}
           disabled={isDisabled}

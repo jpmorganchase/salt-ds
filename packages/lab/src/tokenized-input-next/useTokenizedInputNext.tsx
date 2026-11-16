@@ -1,5 +1,4 @@
 import {
-  mergeAriaIds,
   ownerWindow,
   useControlled,
   useDensity,
@@ -9,7 +8,6 @@ import {
   useIsomorphicLayoutEffect,
 } from "@salt-ds/core";
 import copy from "clipboard-copy";
-import { clsx } from "clsx";
 import {
   type ChangeEvent,
   type FocusEvent,
@@ -29,6 +27,7 @@ import { escapeRegExp } from "../utils";
 import { calcFirstHiddenIndex } from "./internal/calcFirstHiddenIndex";
 import { useResizeObserver } from "./internal/useResizeObserver";
 import { getPadding, useWidth } from "./internal/useWidth";
+import { mergeAriaIds } from "./mergeAriaIds";
 import type { TokenizedInputNextProps } from "./TokenizedInputNext";
 
 export interface TokenizedInputNextState<Item> {
@@ -669,7 +668,7 @@ export function useTokenizedInputNext<Item>(
       readOnly: readOnly ?? readOnlyProp,
       necessity: necessity,
       focused,
-      "aria-labelledby": clsx(ariaLabelledBy, ariaLabelledByProp) || undefined,
+      "aria-labelledby": mergeAriaIds(ariaLabelledBy, ariaLabelledByProp),
       "aria-label": ariaLabel,
       "aria-describedby": mergeAriaIds(ariaDescribedBy, ariaDescribedByProp),
       ...state,

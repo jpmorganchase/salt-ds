@@ -1,6 +1,5 @@
 import {
   makePrefixer,
-  mergeAriaIds,
   StatusAdornment,
   useControlled,
   useForkRef,
@@ -36,6 +35,7 @@ import {
 import type { SingleDateSelection } from "../calendar";
 import { useLocalization } from "../localization-provider";
 import dateInputCss from "./DateInput.css";
+import { mergeAriaIds } from "./mergeAriaIds";
 
 const withBaseName = makePrefixer("saltDateInput");
 
@@ -277,9 +277,11 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       ...restDateInputProps
     } = inputProps;
 
-    const inputAriaLabelledBy =
-      clsx(formFieldLabelledBy, dateInputLabelledBy, restAriaLabelledBy) ||
-      undefined;
+    const inputAriaLabelledBy = mergeAriaIds(
+      formFieldLabelledBy,
+      dateInputLabelledBy,
+      restAriaLabelledBy,
+    );
     const inputAriaDescribedBy = mergeAriaIds(
       formFieldDescribedBy,
       dateInputDescribedBy,
@@ -287,6 +289,9 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
     );
     const hasConsumerAriaLabel =
       dateInputAriaLabel !== undefined || ariaLabel !== undefined;
+    // The fallback names the input only when its label references don't
+    // resolve. data-salt-aria-label-fallback stops FormFieldLabel's development
+    // warning from reporting it as an ignored consumer aria-label.
     const inputAriaLabel = dateInputAriaLabel ?? ariaLabel ?? "date input";
 
     const isRequired = formFieldRequired
