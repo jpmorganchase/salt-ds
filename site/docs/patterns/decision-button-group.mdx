@@ -32,7 +32,7 @@ Use a decision button group when:
 
 - One action is clearly primary and the others are secondary; use a [button bar](/salt/patterns/button-bar) instead.
 - The actions are unrelated or do not benefit from being grouped visually.
-- The group is being used as a page-level action bar, toolbar, or command surface.
+- The group is being used as a page-level action bar or toolbar. 
 
 ## How to build
 
@@ -40,8 +40,8 @@ Use a decision button group when:
 
 A decision button group typically contains two or more buttons placed together with consistent spacing:
 
-1. **Buttons:** Each button performs an action and activating one button does not select it. Buttons return to their resting state after activation.
-2. **Standalone toggle buttons:** The buttons represent a choice and the selected option needs to remain visible. If the choice is optional, selecting the currently selected option may clear the selection.
+1. **Buttons:** Each button performs an action and activating one button does not select it. Buttons return to their default state after activation.
+2. **Toggle buttons:** The buttons represent a choice and the selected option needs to remain visible. If the choice is optional, selecting the currently selected option may clear the selection.
 
 <Diagram
   src="/img/patterns/decision-button-group/decision-button-group-2.png"
@@ -64,10 +64,10 @@ A decision button group typically contains two or more buttons placed together w
 
 <GuidanceCallout type="positive" customPillText="Best practices">
   Use spacing-100 between buttons. For more information, read Salt guidance on
-  horizontal spacing.
+  [horizontal spacing](/salt/foundations/spacing#horizontal-spacing).
 </GuidanceCallout>
 
-## Selectable button group
+## Selectable decision button group
 
 A decision button group can support two different interaction models. Choose the model based on what the user is doing. Use a selectable decision button group when each button represents a choice, rating, or decision. The user is choosing something, and the selected button remains visible as the current value. For example, Like/Dislike or Thumbs up/Thumbs down.
 
