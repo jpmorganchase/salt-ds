@@ -1,4 +1,4 @@
-.result {
+.result.result {
   overflow: hidden;
   padding: var(--salt-spacing-100);
   display: flex;
