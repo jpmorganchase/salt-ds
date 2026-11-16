@@ -21,14 +21,14 @@
   overflow: auto;
 }
 
-.iconCard {
+.root .iconCard {
   padding-block: var(--salt-spacing-200);
   height: calc(var(--salt-size-base) * 3);
   aspect-ratio: 1.05;
 }
 
 @media not screen and (min-width: 960px) {
-  .iconCard {
+  .root .iconCard {
     padding-block: var(--salt-spacing-100);
     height: calc(var(--salt-size-base) * 2.5);
   }
