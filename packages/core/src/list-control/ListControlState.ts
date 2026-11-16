@@ -203,10 +203,13 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   });
 
   const select = useEventCallback(
-    (event: SyntheticEvent, option: OptionValue<Item>) => {
+    (
+      event: SyntheticEvent,
+      option: OptionValue<Item>,
+    ): OptionValue<Item> | undefined => {
       const currentOption = registry.findById(option.id)?.data;
       if (!currentOption || currentOption.disabled || readOnly || disabled) {
-        return;
+        return undefined;
       }
 
       let newSelected = [currentOption.value];
@@ -227,6 +230,8 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
       if (!multiselect) {
         setOpen(false);
       }
+
+      return currentOption;
     },
   );
 
@@ -322,11 +327,6 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
       mutationObserver.disconnect();
     };
   }, [listElement, registry]);
-
-  const getOptionById = useCallback(
-    (id: string) => registry.findById(id),
-    [registry],
-  );
 
   const getOptionAtIndex = useCallback(
     (
@@ -445,22 +445,19 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     [getLastOption, getOptionAfter, registry],
   );
 
+  // Key on the id: refreshing an option's metadata replaces the active
+  // object, and that shouldn't scroll the list back to it.
+  const activeId = activeState?.id;
   useEffect(() => {
-    if (listRef.current) {
-      const activeElement = activeState
-        ? registry.findByData(activeState)?.element
-        : undefined;
-
-      if (!activeElement) {
-        return;
-      }
-
-      activeElement.scrollIntoView({
-        block: "nearest",
-        inline: "nearest",
-      });
+    if (!listRef.current || activeId === undefined) {
+      return;
     }
-  }, [activeState, registry]);
+
+    registry.findById(activeId)?.element.scrollIntoView({
+      block: "nearest",
+      inline: "nearest",
+    });
+  }, [activeId, registry]);
 
   return {
     multiselect: Boolean(multiselect),
@@ -480,7 +477,6 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     setListRef,
     listRef,
     register,
-    getOptionById,
     getOptionAtIndex,
     getIndexOfOption,
     getOptionsMatching,

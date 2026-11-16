@@ -72,8 +72,8 @@ export function getListControlNavigationTarget<Item>(
 
   switch (key) {
     case "ArrowDown":
-      // An option removed during filtering has no active successor yet. Start
-      // at the first option rather than treating it as already active.
+      // With no active option, either none yet or it was removed, start at the
+      // first option rather than skipping past it.
       return activeOption
         ? (getters.getOptionAfter(activeOption) ?? getters.getLastOption())
         : getters.getFirstOption();

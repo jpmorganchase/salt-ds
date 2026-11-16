@@ -121,6 +121,46 @@ describe("List control registry invalidation", () => {
     },
   );
 
+  it("keeps the scroll position when the active option's metadata is refreshed", async () => {
+    let rerenderParent = () => {};
+    function Fixture() {
+      const [, setRenderCount] = useState(0);
+      rerenderParent = () => setRenderCount((count) => count + 1);
+      return (
+        <ListBox
+          style={{ height: 100 }}
+          valueToString={(item: { name: string }) => item.name}
+        >
+          {Array.from({ length: 20 }, (_, index) => `Item ${index}`).map(
+            (name) => (
+              <Option key={name} id={name} value={{ name }} />
+            ),
+          )}
+        </ListBox>
+      );
+    }
+    await renderWithSalt(<Fixture />);
+    listbox().element().focus();
+    await expect
+      .element(listbox())
+      .toHaveAttribute("aria-activedescendant", "Item 0");
+
+    const list = listbox().element();
+    list.scrollTop = list.scrollHeight;
+    await settle();
+    const scrolledTo = list.scrollTop;
+    expect(scrolledTo).toBeGreaterThan(0);
+
+    await act(rerenderParent);
+    await settle();
+    await settle();
+
+    expect(list.scrollTop).toBe(scrolledTo);
+    await expect
+      .element(listbox())
+      .toHaveAttribute("aria-activedescendant", "Item 0");
+  });
+
   it("does not scan the option collection when multiselect checkmarks change", async () => {
     const { rerender } = await renderWithSalt(
       <ListBox multiselect>
