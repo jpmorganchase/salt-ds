@@ -1286,6 +1286,48 @@ describe("Given Tabs with removable tabs", () => {
     },
   );
 
+  it("focuses the new selection when the selected tab is dismissed by a pointer press that doesn't move focus", async () => {
+    // Safari doesn't focus buttons on click, so focus stays on the body.
+    await mountTabs(<RemovableTabs preventFocusOnDismiss />);
+    expect(document.activeElement).toBe(document.body);
+    await dismissButton("Home").click();
+    await expect.element(tab("Home")).not.toBeInTheDocument();
+    await expectSelected("Tx");
+    await expect.element(tab("Tx")).toHaveFocus();
+  });
+
+  it.each(["pointer press", "focus"] as const)(
+    "keeps focus on the body when the selected tab is removed externally after a %s outside the tabs",
+    async (outside) => {
+      await mountTabs(
+        <RemovableTabs labels={["Home", "Tx", "Loans"]} fillTabList />,
+      );
+      // Pressing an empty part of the tab list doesn't move focus.
+      const tabList = page.getByRole("tablist");
+      const { width } = tabList.element().getBoundingClientRect();
+      await tabList.click({ position: { x: width - 4, y: 4 } });
+      expect(document.activeElement).toBe(document.body);
+      if (outside === "pointer press") {
+        await page
+          .elementLocator(document.body)
+          .click({ position: { x: 2, y: 2 } });
+      } else {
+        const removeLoans = page
+          .getByRole("button", { name: "Remove Loans" })
+          .element() as HTMLElement;
+        removeLoans.focus();
+        removeLoans.blur();
+      }
+      expect(document.activeElement).toBe(document.body);
+
+      (window as OverflowTestWindow).__removeTab?.("Home");
+      await expect.element(tab("Home")).not.toBeInTheDocument();
+      await expectSelected("Tx");
+      await waitForFrames();
+      expect(document.activeElement).toBe(document.body);
+    },
+  );
+
   it.each([false, true])(
     "follows a controlled parent's alternate replacement while preserving focus ownership (focused: %s)",
     async (focused) => {

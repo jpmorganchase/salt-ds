@@ -96,6 +96,12 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
     const removalRecoveryRafRef = useRef<number | null>(null);
     const pendingRemovalRecoveryRef = useRef(false);
     const pendingRemovalRecoveryRetriesRef = useRef(0);
+    // Whether the tabs own focus, so removing the focused tab can recover it.
+    // The tab list's React capture handlers set and clear it, not document
+    // listeners: Chrome fires a native focusout while removing the focused
+    // tab, which looks like an explicit blur, but React doesn't dispatch it
+    // for an unmounting tab. Document listeners only clear it when focus or a
+    // pointer press moves outside the tabs.
     const focusWithinRef = useRef(false);
     const removalFocusRecoveryAllowedRef = useRef(true);
     const observedFocusRemovalsRef = useRef(new WeakSet<object>());
