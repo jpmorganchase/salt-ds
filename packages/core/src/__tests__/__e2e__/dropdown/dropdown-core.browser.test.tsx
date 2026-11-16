@@ -433,6 +433,8 @@ describe("Given a core Dropdown", () => {
     await expect
       .element(combobox())
       .toHaveAttribute("aria-controls", listbox().element().id);
+    combobox().element().focus();
+    await userEvent.keyboard("{Home}");
     await expectActive("Alabama");
 
     await rerender(

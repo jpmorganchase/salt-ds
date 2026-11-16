@@ -49,6 +49,7 @@ describe.each(["ListBox", "Dropdown"] as const)(
         control === "ListBox" ? "listbox" : "combobox",
       );
       trigger.element().focus();
+      await userEvent.keyboard("{Home}");
       await expect
         .element(trigger)
         .toHaveAttribute("aria-activedescendant", "a");
