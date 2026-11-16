@@ -78,4 +78,9 @@
   --ag-icon-font-code-edit: "\e941";
   --ag-icon-font-code-pdf: "\e942";
   --ag-icon-font-code-settings: "\e943";
+  --ag-icon-font-code-column-arrow: "\e944";
+  --ag-icon-font-code-filter-add: "\e945";
+  --ag-icon-font-code-pinned-bottom: "\e946";
+  --ag-icon-font-code-pinned-top: "\e947";
+  --ag-icon-font-code-values-as: "\e948";
 }

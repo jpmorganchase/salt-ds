@@ -21,6 +21,7 @@ const providedIcons = [
   "chevron-right",
   "chevron-up",
   "color-picker",
+  "column-arrow",
   "columns",
   "contracted",
   "copy",
@@ -37,6 +38,7 @@ const providedIcons = [
   "eye-slash",
   "eye",
   "filter",
+  "filter-add",
   "first",
   "grip",
   "group",
@@ -55,6 +57,8 @@ const providedIcons = [
   "paste",
   "pdf",
   "pin",
+  "pinned-bottom",
+  "pinned-top",
   "pivot",
   "plus",
   "previous",
@@ -74,6 +78,7 @@ const providedIcons = [
   "tree-open",
   "unlinked",
   "up",
+  "values-as",
 ];
 
 const Icons = () => {
