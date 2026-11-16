@@ -8,6 +8,18 @@ Follow below instructions to contribute to Salt.
 4. Run `cd site && yarn serve` to run a local instance of the [documentation](https://www.saltdesignsystem.com/) site.
 5. Optionally, run `git config blame.ignoreRevsFile .git-blame-ignore-revs` so that `git blame` skips the bulk formatting commits listed in `.git-blame-ignore-revs`. GitHub's blame view already skips them.
 
+## Build tooling
+
+Package JavaScript is built with tsdown (using Rolldown) into `dist-cjs` and `dist-es`. Component CSS is imported as text so Salt's style injection continues to control nonces and target windows. CSS and generated country components are explicit entries to preserve their existing CommonJS default exports when imported directly. The separate CSS bundles and themes use esbuild.
+
+TypeScript 7 generates `dist-types` declarations with full type inference and runs `yarn typecheck`. The native compiler is installed as `@typescript/native` and invoked through `scripts/typescript.mjs` to avoid relying on the shared `tsc` executable. TypeScript 6 remains installed as `typescript` for tools that use its JavaScript API, including Storybook's prop documentation.
+
+Run `node scripts/checkPackages.mjs` after `yarn build` to validate package outputs, dependency boundaries and that every relative import resolves inside the packed archive.
+
+`yarn build` uses Yarn workspaces to build independent packages in parallel and dependencies before their consumers. Each JavaScript package builds both module formats alongside its declarations. Package build commands also work individually. Each package that generates declarations needs its own `tsconfig.json`.
+
+Every build clears package outputs and regenerates assets, with no build cache. Generated files are formatted in batches with the native Biome CLI. The CSS jobs share one process while preserving stylesheet import order. Pass package names to rebuild specific CSS bundles, for example `yarn bundle:css core lab`.
+
 ## Packages
 
 The repo contains below packages under `/packages`
