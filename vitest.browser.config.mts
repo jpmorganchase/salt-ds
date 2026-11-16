@@ -4,6 +4,7 @@ import { availableParallelism } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import react from "@vitejs/plugin-react";
+import CiDurationSequencer from "./test/browser/ciDurationSequencer";
 import { playwright } from "@vitest/browser-playwright";
 import { isCI } from "ci-info";
 import { cssInline } from "css-inline-plugin";
@@ -200,6 +201,7 @@ export default defineConfig({
     ],
   },
   test: {
+    sequence: { sequencer: CiDurationSequencer },
     expect: {
       // Allow enough time for animations to settle when several browser files
       // are competing for CPU.
