@@ -1,8 +1,10 @@
 import {
-  loadSitemap,
+  generateMosaicStaticParams,
   resolveMosaicMode,
   serializeMdxForClient,
 } from "@jpmorganchase/mosaic-site-middleware";
+import { CanonicalizeUrl } from "@jpmorganchase/mosaic-site-middleware/client";
+import { buildMosaicMetadata } from "@jpmorganchase/mosaic-site-middleware/metadata";
 import type { Metadata } from "next";
 import { notFound, redirect } from "next/navigation";
 import { Body } from "../../../Body/Body";
@@ -25,20 +27,15 @@ export async function generateStaticParams() {
     resolveMosaicMode().mode !== "snapshot-file"
   )
     return [];
-  const routes = await loadSitemap();
-  const pages = routes.flatMap((path) => {
-    const [namespace, ...route] = path.split("/").filter(Boolean);
-    // The release-note feed supplies landing cards, not document pages.
-    return namespace === "salt" && route.length > 0
-      ? [{ namespace, route }]
-      : [];
+  // The route inventory is independent of the SEO sitemap's exclusions.
+  return generateMosaicStaticParams({
+    pageExtensions: [".mdx"],
+    // The inventory also lists folder and .mdx aliases; prerender each page
+    // once at its extensionless canonical document URL.
+    include: (route) =>
+      route.pathname.startsWith("/salt/") &&
+      route.pathname === route.sourcePathname.slice(0, -".mdx".length),
   });
-  if (pages.length === 0) {
-    throw new Error(
-      "The Mosaic snapshot has no Salt documentation routes. Run yarn workspace @salt-ds/site gen:snapshot before building the site.",
-    );
-  }
-  return pages;
 }
 
 export async function generateMetadata({
@@ -48,19 +45,12 @@ export async function generateMetadata({
   const result = await resolveContent(pathname(routeParams));
   if (result.kind !== "mdx") return {};
 
-  const { title, description, breadcrumbs } = result.mdx.frontmatter;
+  const { title } = result.mdx.frontmatter;
   return {
+    ...buildMosaicMetadata(result),
     title:
       typeof title === "string"
         ? `${routeParams.namespace} | ${title}`
-        : undefined,
-    description: typeof description === "string" ? description : undefined,
-    alternates: {
-      canonical: result.pathname,
-    },
-    other:
-      Array.isArray(breadcrumbs) && breadcrumbs.length > 0
-        ? { breadcrumbs: JSON.stringify(breadcrumbs) }
         : undefined,
   };
 }
@@ -71,15 +61,7 @@ export default async function DocumentationPage({ params }: PageProps) {
   if (result.kind === "not-found") notFound();
 
   const { mdx, pathname: route } = result;
-  let { sharedConfig } = result;
-  const authored = mdx.frontmatter.sharedConfig;
-  if (authored && typeof authored === "object" && !Array.isArray(authored)) {
-    // Page-specific header/footer settings override the folder defaults.
-    // Capabilities still describe the source, so only Mosaic supplies them.
-    const { sourceCapabilities: _authoredCapabilities, ...overrides } =
-      authored as Record<string, unknown>;
-    sharedConfig = { ...sharedConfig, ...overrides };
-  }
+  const { sharedConfig } = result;
   const source = await serializeMdxForClient(mdx.raw);
   if ("error" in source) throw source.error;
 
@@ -88,6 +70,7 @@ export default async function DocumentationPage({ params }: PageProps) {
       key={route}
       storeProps={{ ...mdx.frontmatter, sharedConfig, route }}
     >
+      <CanonicalizeUrl canonical={route} />
       <FrameSync sharedConfig={sharedConfig} route={route} />
       <Body source={source} />
     </StoreShell>
