@@ -1,10 +1,4 @@
-import {
-  ComboBox,
-  FormField,
-  FormFieldHelperText,
-  FormFieldLabel,
-  Option,
-} from "@salt-ds/core";
+import { ComboBox, Option } from "@salt-ds/core";
 import {
   type ChangeEvent,
   type ReactElement,
@@ -12,6 +6,7 @@ import {
   useState,
 } from "react";
 import { shortColorData } from "./exampleData";
+import styles from "./index.module.css";
 
 export const EmptyMessage = (): ReactElement => {
   const [value, setValue] = useState("Yelloww"); // cspell:disable-line
@@ -37,24 +32,24 @@ export const EmptyMessage = (): ReactElement => {
   );
 
   return (
-    <FormField style={{ width: "266px" }}>
-      <FormFieldLabel>Color</FormFieldLabel>
-      <ComboBox
-        onChange={handleChange}
-        onSelectionChange={handleSelectionChange}
-        value={value}
-        inputProps={{ "aria-autocomplete": "list" }}
-        OverlayProps={{ "aria-label": "Colors" }}
-      >
-        {filteredOptions.map((color) => (
-          <Option value={color} key={color} />
-        ))}
-      </ComboBox>
-      <FormFieldHelperText role="status">
-        {filteredOptions.length === 0
-          ? `No results found for "${value}"`
-          : `${filteredOptions.length} ${filteredOptions.length === 1 ? "color" : "colors"} available`}
-      </FormFieldHelperText>
-    </FormField>
+    <ComboBox
+      onChange={handleChange}
+      inputProps={{ "aria-autocomplete": "list" }}
+      onSelectionChange={handleSelectionChange}
+      value={value}
+      style={{ width: "266px" }}
+    >
+      {filteredOptions.length > 0 ? (
+        filteredOptions.map((state) => <Option value={state} key={state} />)
+      ) : (
+        <div
+          className={styles.statusOption}
+          role="option"
+          aria-selected="false"
+        >
+          No results found for &quot;{value}&quot;
+        </div>
+      )}
+    </ComboBox>
   );
 };

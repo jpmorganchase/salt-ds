@@ -88,7 +88,7 @@ Wrap options in a `OptionGroup` component to group them together. Use the `label
 
 ## Empty message
 
-Display an empty-results message outside the options list. Keep a `role="status"` element mounted and update its text so assistive technology can announce the change without moving focus. The listbox contains the actual choices, including disabled options when appropriate.
+To display a message when there are no options available, pass your message as a child element with `role="option"`.
 
 <LivePreview componentName="combo-box" exampleName="EmptyMessage" />
 
@@ -124,8 +124,6 @@ Due to its flexible API, you can customize the filtering logic `ComboBox` uses t
 ## Server side data
 
 You can use `ComboBox` to display data from a server. In this example, a list of states is fetched from a JSON file and filtered on the client side.
-
-Loading, error and result-count messages use a separate status region. The listbox contains only the available options.
 
 Note that the data fetching in this example has been made intentionally slow to highlight the loading states.
 

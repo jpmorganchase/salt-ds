@@ -637,26 +637,18 @@ export const EmptyMessage: StoryFn<ComboBoxProps> = (args) => {
   );
 
   return (
-    <FormField>
-      <FormFieldLabel>State</FormFieldLabel>
-      <ComboBox
-        {...args}
-        onChange={handleChange}
-        onSelectionChange={handleSelectionChange}
-        value={value}
-        inputProps={{ "aria-autocomplete": "list", ...args.inputProps }}
-        OverlayProps={{ "aria-label": "States", ...args.OverlayProps }}
-      >
-        {filteredOptions.map((state) => (
-          <Option value={state} key={state} />
-        ))}
-      </ComboBox>
-      <FormFieldHelperText role="status">
-        {filteredOptions.length === 0
-          ? `No results found for "${value}"`
-          : `${filteredOptions.length} ${filteredOptions.length === 1 ? "state" : "states"} available`}
-      </FormFieldHelperText>
-    </FormField>
+    <ComboBox
+      {...args}
+      onChange={handleChange}
+      onSelectionChange={handleSelectionChange}
+      value={value}
+    >
+      {filteredOptions.length > 0 ? (
+        filteredOptions.map((state) => <Option value={state} key={state} />)
+      ) : (
+        <Option value="">No results found for &quot;{value}&quot;</Option>
+      )}
+    </ComboBox>
   );
 };
 

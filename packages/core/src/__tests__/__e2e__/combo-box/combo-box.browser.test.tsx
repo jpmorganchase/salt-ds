@@ -422,10 +422,8 @@ describe("Given a ComboBox", () => {
     await renderWithSalt(<EmptyMessage />);
     await input().click();
     await expect
-      .element(page.getByRole("status"))
+      .element(page.getByRole("option"))
       .toHaveTextContent('No results found for "Yelloww"');
-    await expect.element(page.getByRole("option")).not.toBeInTheDocument();
-    await expect.element(listbox()).not.toBeInTheDocument();
   });
 
   it.each([
