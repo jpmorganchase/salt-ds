@@ -32,11 +32,6 @@ jobs:
         run: yarn biome ci --reporter=github
       - name: Prettier
         run: yarn run prettier:ci
-      - name: Debug testing guide formatting
-        if: failure()
-        run: |
-          yarn exec prettier --write TESTING.md
-          git --no-pager diff -- TESTING.md
       - name: Stylelint
         run: yarn run lint:style
       - name: Spellcheck

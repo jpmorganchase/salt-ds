@@ -61,7 +61,9 @@ it("activates a Button with Enter", async () => {
   await renderWithSalt(<Button onClick={onClick}>Save</Button>);
 
   await userEvent.tab();
-  await expect.element(page.getByRole("button", { name: "Save" })).toHaveFocus();
+  await expect
+    .element(page.getByRole("button", { name: "Save" }))
+    .toHaveFocus();
   await userEvent.keyboard("{Enter}");
 
   expect(onClick).toHaveBeenCalledOnce();
