@@ -124,7 +124,30 @@ jobs:
       - name: Build packages
         run: yarn run build
       - name: Test Components
-        run: yarn run test:components --shard=${{ matrix.shard }}/3
+        run: |
+          yarn run test:components \
+            --shard=${{ matrix.shard }}/3 \
+            --reporter=default \
+            --reporter=github-actions \
+            --reporter=json \
+            --outputFile.json=.vitest/browser-test-results.json
+      # Timing data is diagnostic and must not turn a passing test run red.
+      - name: Summarize browser test timings
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        run: node scripts/reportBrowserTestTimings.mjs .vitest/browser-test-results.json
+      - name: Upload browser test timings
+        if: ${{ !cancelled() }}
+        continue-on-error: true
+        uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        with:
+          name: browser-test-timings-react${{ matrix.react }}-shard${{ matrix.shard }}
+          path: |
+            .vitest/browser-test-results.json
+            .vitest/browser-file-timings.csv
+          include-hidden-files: true
+          if-no-files-found: warn
+          retention-days: 14
       - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
         if: failure()
         with:
