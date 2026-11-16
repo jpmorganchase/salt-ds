@@ -156,3 +156,5 @@ jobs:
             echo "::error::Browser test shards finished with $BROWSER_TEST_RESULT."
             exit 1
           fi
+
+# Benchmark repeat: same test inputs and shard configuration.
