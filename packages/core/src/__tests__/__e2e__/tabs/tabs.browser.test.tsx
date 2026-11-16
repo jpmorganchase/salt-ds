@@ -1432,7 +1432,7 @@ describe("Given Tabs with removable tabs", () => {
     expect(onChange).not.toHaveBeenCalled();
   });
 
-  it("selects a neighbour and keeps the overflow menu open when the selected tab is removed while the menu is open", async () => {
+  it("selects a neighbor and keeps the overflow menu open when the selected tab is removed while the menu is open", async () => {
     const onChange = vi.fn();
     // A tab list that fills its container keeps its width when a tab is
     // removed, so the overflow menu stays open.
