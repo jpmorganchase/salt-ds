@@ -19,4 +19,3 @@ export function registerAdapterTests<TDate extends DateFrameworkType, TLocale>(
     );
   });
 }
-
