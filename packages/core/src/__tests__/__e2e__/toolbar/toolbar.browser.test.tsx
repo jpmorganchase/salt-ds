@@ -2434,6 +2434,12 @@ describe("Toolbar overflow focus restoration", () => {
         <NamedOverflowFocusMemoryTestCase dismissible={dismissible} />,
       );
       const dismiss = page.getByRole("button", { name: "Dismiss" });
+      // Dismiss makes Columns overflow once the toolbar is measured. Wait for
+      // that overflow change and its focus restore frame before moving focus
+      // into the toolbar. Otherwise the frame can run just after Dismiss is
+      // removed and move focus into the toolbar.
+      await expectButton("Columns", false);
+      await nextAnimationFrames(2);
       page.getByTestId("toolbar-before").element().focus();
       await userEvent.tab();
       await userEvent.keyboard("{ArrowLeft}{ArrowLeft}{ArrowLeft}");
