@@ -35,7 +35,6 @@ export const SystemStatus = forwardRef<HTMLDivElement, SystemStatusProps>(
       <div
         className={clsx(withBaseName(), withBaseName(status), className)}
         ref={ref}
-        role="status"
         {...rest}
       >
         <StatusIndicator
