@@ -103,8 +103,6 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
     // for an unmounting tab. Document listeners only clear it when focus or a
     // pointer press moves outside the tabs.
     const focusWithinRef = useRef(false);
-    const removalFocusRecoveryAllowedRef = useRef(true);
-    const observedFocusRemovalsRef = useRef(new WeakSet<object>());
     const [slotVersion, setSlotVersion] = useState(0);
 
     const handleRef = useForkRef(tabstripRef, ref);
@@ -136,41 +134,17 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
       };
     }, [targetWindow]);
 
-    const canRecoverRemovalFocus = useCallback(() => {
-      let hasNewRemoval = false;
-      for (const removed of peekRemovedItems().values()) {
-        if (observedFocusRemovalsRef.current.has(removed)) continue;
-        observedFocusRemovalsRef.current.add(removed);
-        hasNewRemoval = true;
-      }
-      if (hasNewRemoval) {
-        const doc = targetWindow?.document;
-        const activeElement = doc?.activeElement;
-        // Capture once per removal, including from the selection layout
-        // effect. A controlled parent can remove and select in one commit,
-        // before removal recovery runs. Keep this through dialog-close retries.
-        removalFocusRecoveryAllowedRef.current =
-          focusWithinRef.current ||
-          Boolean(
-            activeElement &&
-              activeElement !== doc?.body &&
-              activeElement !== doc?.documentElement &&
-              activeElement.isConnected,
-          );
-      }
-      return removalFocusRecoveryAllowedRef.current;
-    }, [peekRemovedItems, targetWindow]);
-
     const { announce } = useAriaAnnouncer();
     const overflowMenuOpen = renderMode === "portal" ? menuOpen : false;
 
-    const [visibleValues, hiddenValues, isMeasuring] = useOverflow({
-      container: tabstripRef,
-      menuOpen: overflowMenuOpen,
-      selected,
-      tabs: renderedTabs,
-      overflowButton: overflowButtonRef,
-    });
+    const [visibleValues, hiddenValues, isMeasuring, isLayoutSettled] =
+      useOverflow({
+        container: tabstripRef,
+        menuOpen: overflowMenuOpen,
+        selected,
+        tabs: renderedTabs,
+        overflowButton: overflowButtonRef,
+      });
 
     useEffect(() => {
       setBootstrapOverflowReady(
@@ -301,8 +275,8 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
     });
     useTabSelectionFocus({
       announce,
-      canRecoverRemovalFocus,
       focusElementWithRetry,
+      focusWithinRef,
       getRenderedTab,
       getSelectedTabElement,
       menuOpen,
@@ -314,15 +288,15 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
 
     const handleTabRemoval = useTabRemovalHandler({
       activeTab,
-      canRecoverRemovalFocus,
       focusElementWithRetry,
+      focusWithinRef,
       getFirst,
       getIndex,
       getLast,
       getRemovedItems,
       getRenderedTab,
       getSelectedTabElement,
-      isMeasuring,
+      isLayoutSettled,
       item,
       itemAt,
       maxRetryAttempts: MAX_FOCUS_RETRY_ATTEMPTS,

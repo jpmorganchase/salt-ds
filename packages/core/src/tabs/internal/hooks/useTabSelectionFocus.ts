@@ -24,10 +24,10 @@ function getTabAccessibleName(element: HTMLElement) {
 
 interface UseTabSelectionFocusArgs {
   announce: (message: string, timeout?: number) => void;
-  canRecoverRemovalFocus: () => boolean;
   focusElementWithRetry: (
     getElement: () => HTMLElement | null | undefined,
   ) => void;
+  focusWithinRef: MutableRefObject<boolean>;
   getRenderedTab: TabsContextValue["getRenderedTab"];
   getSelectedTabElement: () => HTMLElement | null | undefined;
   menuOpen: boolean;
@@ -39,8 +39,8 @@ interface UseTabSelectionFocusArgs {
 
 export function useTabSelectionFocus({
   announce,
-  canRecoverRemovalFocus,
   focusElementWithRetry,
+  focusWithinRef,
   getRenderedTab,
   getSelectedTabElement,
   menuOpen,
@@ -97,15 +97,15 @@ export function useTabSelectionFocus({
     // removed tabs alone when focus was already on the body.
     if (
       !getRenderedTrigger(previousSelected)?.isConnected &&
-      !canRecoverRemovalFocus()
+      !focusWithinRef.current
     ) {
       return;
     }
 
     focusSelectedTab();
   }, [
-    canRecoverRemovalFocus,
     focusSelectedTab,
+    focusWithinRef,
     getRenderedTrigger,
     previousSelected,
     selected,

@@ -18,17 +18,17 @@ interface RemovedItem {
 
 interface UseTabRemovalHandlerArgs {
   activeTab: MutableRefObject<Pick<Item, "id" | "value"> | undefined>;
-  canRecoverRemovalFocus: () => boolean;
   focusElementWithRetry: (
     getElement: () => HTMLElement | null | undefined,
   ) => void;
+  focusWithinRef: MutableRefObject<boolean>;
   getFirst: TabsContextValue["getFirst"];
   getIndex: TabsContextValue["getIndex"];
   getLast: TabsContextValue["getLast"];
   getRemovedItems: () => Map<string, RemovedItem>;
   getRenderedTab: TabsContextValue["getRenderedTab"];
   getSelectedTabElement: () => HTMLElement | null | undefined;
-  isMeasuring: boolean;
+  isLayoutSettled: boolean;
   item: TabsContextValue["item"];
   itemAt: TabsContextValue["itemAt"];
   maxRetryAttempts: number;
@@ -58,15 +58,15 @@ function hasLostDocumentFocus(doc: Document) {
 
 export function useTabRemovalHandler({
   activeTab,
-  canRecoverRemovalFocus,
   focusElementWithRetry,
+  focusWithinRef,
   getFirst,
   getIndex,
   getLast,
   getRemovedItems,
   getRenderedTab,
   getSelectedTabElement,
-  isMeasuring,
+  isLayoutSettled,
   item,
   itemAt,
   maxRetryAttempts,
@@ -105,8 +105,10 @@ export function useTabRemovalHandler({
   // The removal record whose selection was replaced. Focus recovery runs
   // later, once selected is already the replacement.
   const replacedRemovalRef = useRef<RemovedItem | null>(null);
-  const replacementPendingRef = useRef(false);
-  const remeasureStartedRef = useRef(false);
+  // Whether focus recovery may move focus, taken when a tab is removed: the
+  // tabs owned focus, or focus was on another element, such as a
+  // confirmation dialog, rather than the body.
+  const focusRecoveryAllowedRef = useRef(true);
 
   const getReplacementTab = (baseIndex: number) => {
     let nextTab =
@@ -141,7 +143,6 @@ export function useTabRemovalHandler({
   // tab is removed by a control outside the tabs or while the overflow menu is
   // open.
   const replaceRemovedSelection = useEventCallback(() => {
-    replacementPendingRef.current = false;
     const selectedIsRemoved =
       selected !== undefined && !getRenderedTab(selected);
     let removedSelected: RemovedItem | undefined;
@@ -162,30 +163,23 @@ export function useTabRemovalHandler({
     setSelected(null, nextTab.value, "removal");
   });
 
-  // The neighbor is chosen from the tabs that are visible once the overflow
-  // layout has been measured again after the removal. Measuring happens in
-  // layout effects, so the selection is normally replaced before the browser
-  // paints and there's no frame without a selected tab. The layout doesn't
-  // change while the overflow menu is open.
   useIsomorphicLayoutEffect(() => {
-    if (removalVersion > 0) {
-      replacementPendingRef.current = true;
-      remeasureStartedRef.current = false;
+    const doc = targetWindow?.document;
+    if (removalVersion > 0 && doc) {
+      focusRecoveryAllowedRef.current =
+        focusWithinRef.current || !hasLostDocumentFocus(doc);
     }
-  }, [removalVersion]);
+  }, [focusWithinRef, removalVersion, targetWindow]);
 
+  // The neighbor is chosen from the visible tabs once the overflow layout is
+  // measured for the remaining tabs, which is before the browser paints, so
+  // there's no frame without a selected tab. The layout doesn't change while
+  // the overflow menu is open.
   useIsomorphicLayoutEffect(() => {
-    if (!replacementPendingRef.current) return;
-
-    if (isMeasuring && !menuOpen) {
-      remeasureStartedRef.current = true;
-      return;
-    }
-
-    if (remeasureStartedRef.current || menuOpen) {
+    if (removalVersion > 0 && (isLayoutSettled || menuOpen)) {
       replaceRemovedSelection();
     }
-  });
+  }, [isLayoutSettled, menuOpen, removalVersion, replaceRemovedSelection]);
 
   const wasSelected = (
     value: string | undefined,
@@ -201,11 +195,9 @@ export function useTabRemovalHandler({
 
     // Falls back to replacing the selection here if the overflow layout
     // wasn't measured again, e.g. when the tabs are hidden.
-    if (replacementPendingRef.current) {
-      replaceRemovedSelection();
-    }
+    replaceRemovedSelection();
 
-    if (!canRecoverRemovalFocus()) {
+    if (!focusRecoveryAllowedRef.current) {
       clearPendingRemovalRecovery();
       return;
     }
