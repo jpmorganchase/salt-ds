@@ -287,11 +287,7 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       dateInputDescribedBy,
       restAriaDescribedBy,
     );
-    const hasConsumerAriaLabel =
-      dateInputAriaLabel !== undefined || ariaLabel !== undefined;
-    // The fallback names the input only when its label references don't
-    // resolve. data-salt-aria-label-fallback stops FormFieldLabel's development
-    // warning from reporting it as an ignored consumer aria-label.
+    // Used only when none of the aria-labelledby references resolve.
     const inputAriaLabel = dateInputAriaLabel ?? ariaLabel ?? "date input";
 
     const isRequired = formFieldRequired
@@ -393,9 +389,6 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
             (!isReadOnly && validationStatus === "error") || undefined
           }
           aria-label={inputAriaLabel}
-          data-salt-aria-label-fallback={
-            hasConsumerAriaLabel ? undefined : true
-          }
           id={inputId}
           className={withBaseName("input")}
           disabled={isDisabled}

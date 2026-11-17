@@ -38,7 +38,6 @@ import type { DateRangeSelection } from "../calendar";
 import { useLocalization } from "../localization-provider";
 import dateInputCss from "./DateInput.css";
 import { mergeAriaIds } from "./mergeAriaIds";
-import { useHasResolvedLabel } from "./useHasResolvedLabel";
 
 const withBaseName = makePrefixer("saltDateInput");
 
@@ -421,21 +420,12 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       startInputPropsAriaLabel !== undefined || ariaLabel !== undefined;
     const hasEndExplicitAriaLabel =
       endInputPropsAriaLabel !== undefined || ariaLabel !== undefined;
-    const fieldLabelledBy = mergeAriaIds(
-      formFieldLabelledBy,
-      restAriaLabelledBy,
-    );
-    // Forward references even before their targets exist. Only discard the
-    // top-level fallback once a field label is actually rendered.
-    const hasFieldLabelReference = Boolean(fieldLabelledBy);
-    const hasFieldLabel = useHasResolvedLabel(
-      startInputRef,
-      fieldLabelledBy,
-      Boolean(ariaLabel) &&
-        (startInputPropsAriaLabel === undefined ||
-          endInputPropsAriaLabel === undefined),
+    const hasFieldLabelReference = Boolean(
+      formFieldLabelledBy || restAriaLabelledBy,
     );
 
+    // With other label references, each input also refers to its own hidden
+    // label, so it keeps its name whether or not those labels are rendered.
     const startAriaLabelledBy =
       hasStartExplicitAriaLabel &&
       !hasFieldLabelReference &&
@@ -469,32 +459,13 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       restAriaDescribedBy,
     );
 
-    // An external field label replaces a top-level aria-label, so keep the
-    // consumer's own text, which FormFieldLabel's warning quotes.
     const startAriaLabel =
       startInputPropsAriaLabel ??
-      (ariaLabel
-        ? hasFieldLabel
-          ? ariaLabel
-          : `Start date ${ariaLabel}`
-        : "Start date");
+      (ariaLabel ? `Start date ${ariaLabel}` : "Start date");
 
     const endAriaLabel =
       endInputPropsAriaLabel ??
-      (ariaLabel
-        ? hasFieldLabel
-          ? ariaLabel
-          : `End date ${ariaLabel}`
-        : "End date");
-
-    // The hidden labels hold each input's own label, plus the top-level
-    // aria-label when no field label replaces it.
-    const startInputLabel = hasFieldLabel
-      ? (startInputPropsAriaLabel ?? "Start date")
-      : startAriaLabel;
-    const endInputLabel = hasFieldLabel
-      ? (endInputPropsAriaLabel ?? "End date")
-      : endAriaLabel;
+      (ariaLabel ? `End date ${ariaLabel}` : "End date");
 
     const endInputIsRequired = formFieldRequired
       ? ["required", "asterisk"].includes(formFieldRequired)
@@ -709,10 +680,10 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         </div>
         <div className={withBaseName("activationIndicator")} />
         <span id={startDateLabelId} className={withBaseName("visuallyHidden")}>
-          {startInputLabel}
+          {startAriaLabel}
         </span>
         <span id={endDateLabelId} className={withBaseName("visuallyHidden")}>
-          {endInputLabel}
+          {endAriaLabel}
         </span>
       </div>
     );

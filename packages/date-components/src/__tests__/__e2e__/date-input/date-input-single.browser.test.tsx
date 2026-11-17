@@ -171,9 +171,6 @@ function registerAdapterTests(adapter: SaltDateAdapter<any>) {
     });
 
     it("SHOULD keep the FormField label when aria-label is set", async () => {
-      const consoleSpy = vi
-        .spyOn(console, "warn")
-        .mockImplementation(() => undefined);
       await render(
         <FormField>
           <FormFieldLabel>Trade date</FormFieldLabel>
@@ -183,32 +180,6 @@ function registerAdapterTests(adapter: SaltDateAdapter<any>) {
       await expect
         .element(page.getByRole("textbox"))
         .toHaveAccessibleName("Trade date");
-      expect(consoleSpy).toHaveBeenCalledWith(
-        'Salt: aria-label "Custom label" is ignored because FormFieldLabel "Trade date" provides the accessible name. Use aria-labelledby to add to the name, or aria-describedby to add a description.',
-        expect.any(HTMLElement),
-      );
-      consoleSpy.mockRestore();
-    });
-
-    it("SHOULD not warn about the default aria-label in a FormField", async () => {
-      const consoleSpy = vi
-        .spyOn(console, "warn")
-        .mockImplementation(() => undefined);
-      await render(
-        <FormField>
-          <FormFieldLabel>Trade date</FormFieldLabel>
-          <DateInputSingle />
-        </FormField>,
-      );
-      await expect
-        .element(page.getByRole("textbox"))
-        .toHaveAccessibleName("Trade date");
-      expect(
-        consoleSpy.mock.calls.filter(([message]) =>
-          String(message).includes("is ignored because FormFieldLabel"),
-        ),
-      ).toHaveLength(0);
-      consoleSpy.mockRestore();
     });
 
     it("SHOULD keep aria-labelledby when aria-label is set", async () => {
