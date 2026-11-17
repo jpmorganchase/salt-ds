@@ -12,7 +12,7 @@ export default {
   title: "Patterns/Decision Button Group",
 } as Meta;
 
-export const Default = () => {
+export const Actions = () => {
   return (
     <StackLayout
       direction={{ xs: "column", sm: "row" }}
@@ -73,7 +73,7 @@ export const Selectable = () => {
 
 type Rating = "like" | "dislike";
 
-export const WithTooltip = () => {
+export const IconOnly = () => {
   const [rating, setRating] = useState<Rating | undefined>();
 
   const toggle = (value: Rating) =>
