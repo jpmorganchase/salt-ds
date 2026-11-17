@@ -47,6 +47,7 @@ import {
   useId,
   useIsomorphicLayoutEffect,
 } from "../utils";
+import { mergeAriaIds } from "../utils/mergeAriaIds";
 import { type UseComboBoxProps, useComboBox } from "./useComboBox";
 
 export interface ComboBoxProps<Item = string>
@@ -428,7 +429,8 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
   const showOptionsButton = (
     <Button
-      aria-labelledby={clsx(buttonId, formFieldLabelledBy)}
+      id={buttonId}
+      aria-labelledby={mergeAriaIds(buttonId, formFieldLabelledBy)}
       aria-label="Show options"
       aria-expanded={openState}
       aria-controls={openState ? listId : undefined}

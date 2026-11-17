@@ -35,6 +35,7 @@ import {
 import type { SingleDateSelection } from "../calendar";
 import { useLocalization } from "../localization-provider";
 import dateInputCss from "./DateInput.css";
+import { mergeAriaIds } from "./mergeAriaIds";
 
 const withBaseName = makePrefixer("saltDateInput");
 
@@ -276,16 +277,17 @@ export const DateInputSingle = forwardRef<HTMLDivElement, DateInputSingleProps>(
       ...restDateInputProps
     } = inputProps;
 
-    const hasExplicitAriaLabel =
-      dateInputAriaLabel !== undefined || ariaLabel !== undefined;
-
-    const inputAriaLabelledBy = hasExplicitAriaLabel
-      ? undefined
-      : clsx(formFieldLabelledBy, dateInputLabelledBy, restAriaLabelledBy) ||
-        undefined;
-    const inputAriaDescribedBy =
-      clsx(formFieldDescribedBy, dateInputDescribedBy, restAriaDescribedBy) ||
-      undefined;
+    const inputAriaLabelledBy = mergeAriaIds(
+      formFieldLabelledBy,
+      dateInputLabelledBy,
+      restAriaLabelledBy,
+    );
+    const inputAriaDescribedBy = mergeAriaIds(
+      formFieldDescribedBy,
+      dateInputDescribedBy,
+      restAriaDescribedBy,
+    );
+    // Used only when none of the aria-labelledby references resolve.
     const inputAriaLabel = dateInputAriaLabel ?? ariaLabel ?? "date input";
 
     const isRequired = formFieldRequired

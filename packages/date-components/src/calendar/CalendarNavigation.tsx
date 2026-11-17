@@ -3,6 +3,8 @@ import {
   type ButtonProps,
   Dropdown,
   type DropdownProps,
+  FormFieldContext,
+  type FormFieldContextValue,
   makePrefixer,
   Option,
   type OptionProps,
@@ -78,6 +80,9 @@ interface OptionWithTooltipProps extends OptionProps {
 }
 
 const withBaseName = makePrefixer("saltCalendarNavigation");
+
+// Matches the default context, so the dropdowns behave as if outside a FormField.
+const noFormFieldContext = {} as FormFieldContextValue;
 
 const ConditionalTooltip: React.FC<TooltipProps> = ({
   children,
@@ -395,46 +400,51 @@ export const CalendarNavigation = forwardRef<
           <PreviousIcon aria-hidden />
         </Button>
       </ConditionalTooltip>
-      <div className={clsx({ [withBaseName("dropdowns")]: !hideYearDropdown })}>
-        <Dropdown
-          aria-label="Month Dropdown"
-          selected={selectedMonth ? [selectedMonth] : []}
-          value={formatMonth(selectedMonth)}
-          onSelectionChange={handleMonthSelect}
-          {...MonthDropdownProps}
+      {/* Keep a surrounding FormField's label off the month and year dropdowns. */}
+      <FormFieldContext.Provider value={noFormFieldContext}>
+        <div
+          className={clsx({ [withBaseName("dropdowns")]: !hideYearDropdown })}
         >
-          {months.map((month) => (
-            <OptionWithTooltip
-              key={formatMonth(month)}
-              value={month}
-              aria-label={formatMonth(month, "MMMM")}
-              disabled={isOutsideAllowedMonths(month)}
-              tooltipContent="This month is out of range"
-            >
-              {formatMonth(month)}
-            </OptionWithTooltip>
-          ))}
-        </Dropdown>
-        {!hideYearDropdown ? (
           <Dropdown
-            aria-label="Year Dropdown"
-            selected={selectedYear ? [selectedYear] : []}
-            value={formatYear(selectedYear)}
-            onSelectionChange={handleYearSelect}
-            {...YearDropdownProps}
-            className={clsx(
-              withBaseName("yearDropdown"),
-              YearDropdownProps?.className,
-            )}
+            aria-label="Month Dropdown"
+            selected={selectedMonth ? [selectedMonth] : []}
+            value={formatMonth(selectedMonth)}
+            onSelectionChange={handleMonthSelect}
+            {...MonthDropdownProps}
           >
-            {years.map((year) => (
-              <OptionWithTooltip key={formatYear(year)} value={year}>
-                {formatYear(year)}
+            {months.map((month) => (
+              <OptionWithTooltip
+                key={formatMonth(month)}
+                value={month}
+                aria-label={formatMonth(month, "MMMM")}
+                disabled={isOutsideAllowedMonths(month)}
+                tooltipContent="This month is out of range"
+              >
+                {formatMonth(month)}
               </OptionWithTooltip>
             ))}
           </Dropdown>
-        ) : null}
-      </div>
+          {!hideYearDropdown ? (
+            <Dropdown
+              aria-label="Year Dropdown"
+              selected={selectedYear ? [selectedYear] : []}
+              value={formatYear(selectedYear)}
+              onSelectionChange={handleYearSelect}
+              {...YearDropdownProps}
+              className={clsx(
+                withBaseName("yearDropdown"),
+                YearDropdownProps?.className,
+              )}
+            >
+              {years.map((year) => (
+                <OptionWithTooltip key={formatYear(year)} value={year}>
+                  {formatYear(year)}
+                </OptionWithTooltip>
+              ))}
+            </Dropdown>
+          ) : null}
+        </div>
+      </FormFieldContext.Provider>
       <ConditionalTooltip
         placement="top"
         disabled={!isNextMonthDisabled}

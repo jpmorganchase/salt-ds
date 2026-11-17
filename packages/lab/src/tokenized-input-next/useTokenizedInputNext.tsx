@@ -27,6 +27,7 @@ import { escapeRegExp } from "../utils";
 import { calcFirstHiddenIndex } from "./internal/calcFirstHiddenIndex";
 import { useResizeObserver } from "./internal/useResizeObserver";
 import { getPadding, useWidth } from "./internal/useWidth";
+import { mergeAriaIds } from "./mergeAriaIds";
 import type { TokenizedInputNextProps } from "./TokenizedInputNext";
 
 export interface TokenizedInputNextState<Item> {
@@ -143,6 +144,7 @@ export function useTokenizedInputNext<Item>(
     selectedItems: selectedItemsProp,
     "aria-label": ariaLabel,
     "aria-describedby": ariaDescribedByProp,
+    "aria-labelledby": ariaLabelledByProp,
     expandButtonRef: expandButtonRefProp,
     ...restProps
   } = props;
@@ -666,9 +668,9 @@ export function useTokenizedInputNext<Item>(
       readOnly: readOnly ?? readOnlyProp,
       necessity: necessity,
       focused,
-      "aria-labelledby": ariaLabelledBy,
+      "aria-labelledby": mergeAriaIds(ariaLabelledBy, ariaLabelledByProp),
       "aria-label": ariaLabel,
-      "aria-describedby": ariaDescribedBy ?? ariaDescribedByProp,
+      "aria-describedby": mergeAriaIds(ariaDescribedBy, ariaDescribedByProp),
       ...state,
       ...restProps,
       ...(disabled ? {} : eventHandlers),

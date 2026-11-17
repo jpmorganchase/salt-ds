@@ -2855,7 +2855,6 @@ export const SingleWithTimezone: StoryFn<DatePickerSingleProps> = ({
         <FormField>
           <FormFieldLabel>Select a timezone</FormFieldLabel>
           <Dropdown
-            aria-label="timezone dropdown"
             selected={[selectedTimezone]}
             onSelectionChange={handleTimezoneSelect}
           >
@@ -3115,7 +3114,6 @@ export const RangeWithTimezone: StoryFn<DatePickerRangeProps> = ({
         <FormField>
           <FormFieldLabel>Select a timezone</FormFieldLabel>
           <Dropdown
-            aria-label="timezone dropdown"
             selected={[selectedTimezone]}
             onSelectionChange={handleTimezoneSelect}
           >

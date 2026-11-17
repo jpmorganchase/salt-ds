@@ -21,6 +21,7 @@ import {
 import { StatusAdornment } from "../status-adornment";
 import type { DataAttributes } from "../types";
 import { makePrefixer, useControlled } from "../utils";
+import { mergeAriaIds } from "../utils/mergeAriaIds";
 
 import inputCss from "./Input.css";
 
@@ -96,7 +97,10 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
     );
     const {
       "aria-activedescendant": ariaActiveDescendant,
+      "aria-describedby": ariaDescribedBy,
       "aria-expanded": ariaExpanded,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
       "aria-owns": ariaOwns,
       disabled,
       emptyReadOnlyMarker = "—",
@@ -140,6 +144,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
     const restA11yProps = {
       "aria-activedescendant": ariaActiveDescendant,
       "aria-expanded": ariaExpanded,
+      "aria-label": ariaLabel,
       "aria-owns": ariaOwns,
     };
 
@@ -228,12 +233,16 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
           </div>
         )}
         <input
-          aria-describedby={
-            clsx(formFieldDescribedBy, inputDescribedBy) || undefined
-          }
-          aria-labelledby={
-            clsx(formFieldLabelledBy, inputLabelledBy) || undefined
-          }
+          aria-describedby={mergeAriaIds(
+            formFieldDescribedBy,
+            inputDescribedBy,
+            ariaDescribedBy,
+          )}
+          aria-labelledby={mergeAriaIds(
+            formFieldLabelledBy,
+            inputLabelledBy,
+            ariaLabelledBy,
+          )}
           className={clsx(withBaseName("input"), inputProps?.className)}
           disabled={isDisabled}
           id={id}

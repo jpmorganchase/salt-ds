@@ -19,6 +19,7 @@ import {
   useForkRef,
   useIsomorphicLayoutEffect,
 } from "../utils";
+import { mergeAriaIds } from "../utils/mergeAriaIds";
 import checkboxCss from "./Checkbox.css";
 import { CheckboxIcon } from "./CheckboxIcon";
 import { useCheckboxGroup } from "./internal/useCheckboxGroup";
@@ -95,6 +96,9 @@ export interface CheckboxProps
 export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
   function Checkbox(
     {
+      "aria-describedby": ariaDescribedBy,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
       checked: checkedProp,
       className,
       defaultChecked,
@@ -200,23 +204,22 @@ export const Checkbox = forwardRef<HTMLLabelElement, CheckboxProps>(
         {...rest}
       >
         <input
+          aria-label={ariaLabel}
           aria-readonly={readOnly || undefined}
-          aria-describedby={
-            clsx(
-              checkboxGroup === undefined
-                ? formFieldA11yProps?.["aria-describedby"]
-                : undefined,
-              inputDescribedBy,
-            ) || undefined
-          }
-          aria-labelledby={
-            clsx(
-              checkboxGroup === undefined
-                ? formFieldA11yProps?.["aria-labelledby"]
-                : undefined,
-              inputLabelledBy,
-            ) || undefined
-          }
+          aria-describedby={mergeAriaIds(
+            checkboxGroup === undefined
+              ? formFieldA11yProps?.["aria-describedby"]
+              : undefined,
+            inputDescribedBy,
+            ariaDescribedBy,
+          )}
+          aria-labelledby={mergeAriaIds(
+            checkboxGroup === undefined
+              ? formFieldA11yProps?.["aria-labelledby"]
+              : undefined,
+            inputLabelledBy,
+            ariaLabelledBy,
+          )}
           name={name}
           value={value}
           checked={checked}

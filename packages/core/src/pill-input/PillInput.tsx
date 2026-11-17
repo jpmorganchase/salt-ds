@@ -25,6 +25,7 @@ import { useIcon } from "../semantic-icon-provider";
 import { StatusAdornment } from "../status-adornment";
 import type { DataAttributes } from "../types";
 import { makePrefixer, useControlled, useForkRef, useId } from "../utils";
+import { mergeAriaIds } from "../utils/mergeAriaIds";
 import pillInputCss from "./PillInput.css";
 import { useTruncatePills } from "./useTruncatePills";
 
@@ -102,7 +103,10 @@ function isEmptyReadOnlyValue(
 export const PillInput = forwardRef(function PillInput(
   {
     "aria-activedescendant": ariaActiveDescendant,
+    "aria-describedby": ariaDescribedBy,
     "aria-expanded": ariaExpanded,
+    "aria-label": ariaLabel,
+    "aria-labelledby": ariaLabelledBy,
     "aria-owns": ariaOwns,
     className: classNameProp,
     disabled,
@@ -153,6 +157,7 @@ export const PillInput = forwardRef(function PillInput(
   const restA11yProps = {
     "aria-activedescendant": ariaActiveDescendant,
     "aria-expanded": ariaExpanded,
+    "aria-label": ariaLabel,
     "aria-owns": ariaOwns,
   };
 
@@ -370,12 +375,16 @@ export const PillInput = forwardRef(function PillInput(
           )}
         </div>
         <input
-          aria-describedby={
-            clsx(formFieldDescribedBy, inputDescribedBy) || undefined
-          }
-          aria-labelledby={
-            clsx(formFieldLabelledBy, inputLabelledBy) || undefined
-          }
+          aria-describedby={mergeAriaIds(
+            formFieldDescribedBy,
+            inputDescribedBy,
+            ariaDescribedBy,
+          )}
+          aria-labelledby={mergeAriaIds(
+            formFieldLabelledBy,
+            inputLabelledBy,
+            ariaLabelledBy,
+          )}
           autoComplete="off"
           className={clsx(withBaseName("input"), inputProps?.className)}
           disabled={isDisabled}

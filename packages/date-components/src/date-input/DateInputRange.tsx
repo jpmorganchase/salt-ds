@@ -37,6 +37,7 @@ import {
 import type { DateRangeSelection } from "../calendar";
 import { useLocalization } from "../localization-provider";
 import dateInputCss from "./DateInput.css";
+import { mergeAriaIds } from "./mergeAriaIds";
 
 const withBaseName = makePrefixer("saltDateInput");
 
@@ -419,35 +420,44 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
       startInputPropsAriaLabel !== undefined || ariaLabel !== undefined;
     const hasEndExplicitAriaLabel =
       endInputPropsAriaLabel !== undefined || ariaLabel !== undefined;
+    const hasFieldLabelReference = Boolean(
+      formFieldLabelledBy || restAriaLabelledBy,
+    );
 
-    const startAriaLabelledBy = hasStartExplicitAriaLabel
-      ? undefined
-      : clsx(
-          formFieldLabelledBy,
-          startDateLabelId,
-          startInputPropsLabelledBy,
-          restAriaLabelledBy,
-        ) || undefined;
-    const endAriaLabelledBy = hasEndExplicitAriaLabel
-      ? undefined
-      : clsx(
-          formFieldLabelledBy,
-          endDateLabelId,
-          endInputPropsLabelledBy,
-          restAriaLabelledBy,
-        ) || undefined;
-    const startAriaDescribedBy =
-      clsx(
-        formFieldDescribedBy,
-        startInputPropsDescribedBy,
-        restAriaDescribedBy,
-      ) || undefined;
-    const endAriaDescribedBy =
-      clsx(
-        formFieldDescribedBy,
-        endInputPropsDescribedBy,
-        restAriaDescribedBy,
-      ) || undefined;
+    // With other label references, each input also refers to its own hidden
+    // label, so it keeps its name whether or not those labels are rendered.
+    const startAriaLabelledBy =
+      hasStartExplicitAriaLabel &&
+      !hasFieldLabelReference &&
+      !startInputPropsLabelledBy
+        ? undefined
+        : mergeAriaIds(
+            formFieldLabelledBy,
+            startDateLabelId,
+            startInputPropsLabelledBy,
+            restAriaLabelledBy,
+          );
+    const endAriaLabelledBy =
+      hasEndExplicitAriaLabel &&
+      !hasFieldLabelReference &&
+      !endInputPropsLabelledBy
+        ? undefined
+        : mergeAriaIds(
+            formFieldLabelledBy,
+            endDateLabelId,
+            endInputPropsLabelledBy,
+            restAriaLabelledBy,
+          );
+    const startAriaDescribedBy = mergeAriaIds(
+      formFieldDescribedBy,
+      startInputPropsDescribedBy,
+      restAriaDescribedBy,
+    );
+    const endAriaDescribedBy = mergeAriaIds(
+      formFieldDescribedBy,
+      endInputPropsDescribedBy,
+      restAriaDescribedBy,
+    );
 
     const startAriaLabel =
       startInputPropsAriaLabel ??
@@ -670,10 +680,10 @@ export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
         </div>
         <div className={withBaseName("activationIndicator")} />
         <span id={startDateLabelId} className={withBaseName("visuallyHidden")}>
-          Start date
+          {startAriaLabel}
         </span>
         <span id={endDateLabelId} className={withBaseName("visuallyHidden")}>
-          End date
+          {endAriaLabel}
         </span>
       </div>
     );

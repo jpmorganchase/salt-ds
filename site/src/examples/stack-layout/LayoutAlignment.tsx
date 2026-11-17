@@ -38,7 +38,6 @@ export const LayoutAlignment = (): ReactElement => {
         <FormFieldLabel>Align</FormFieldLabel>
         <RadioButtonGroup
           direction={"horizontal"}
-          aria-label="Align Controls"
           name="align"
           onChange={handleChange}
           value={align}

@@ -265,7 +265,7 @@ const KeyboardShortcuts: FC = () => {
                     startAdornment={
                       <FilterIcon color="secondary" aria-hidden="true" />
                     }
-                    inputProps={{ "aria-label": "Filter actions" }}
+                    aria-label="Filter actions"
                   />
                   {filteredShortcuts.length ? (
                     <StackLayout className="keyboardShortcuts-tableScroll">
@@ -471,7 +471,7 @@ const ShortcutPanel: FC = () => {
               startAdornment={
                 <FilterIcon color="secondary" aria-hidden="true" />
               }
-              inputProps={{ "aria-label": "Filter actions" }}
+              aria-label="Filter actions"
             />
             {filteredShortcuts.length ? (
               <StackLayout className="keyboardShortcuts-tableScroll">

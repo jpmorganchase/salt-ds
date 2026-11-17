@@ -4,7 +4,7 @@ import { page, userEvent } from "vitest/browser";
 import { act, renderWithSalt } from "~browser-test-utils/render";
 import * as sliderStories from "~stories/slider/slider.stories";
 
-const { Default } = composeStories(sliderStories);
+const { Default, WithHelperText } = composeStories(sliderStories);
 
 const slider = () => page.getByRole("slider");
 const thumb = () => page.getByTestId("sliderThumb");
@@ -52,6 +52,27 @@ describe("Given a Slider", () => {
   it("renders with the default props", async () => {
     await renderWithSalt(<Default />);
     await expect.element(slider()).toHaveValue("50");
+  });
+
+  it("applies aria-describedby to the thumb input", async () => {
+    await renderWithSalt(
+      <>
+        <span id="external-description">Adjusts the volume</span>
+        <Default aria-describedby="external-description" />
+      </>,
+    );
+    const described = document.querySelectorAll(
+      '[aria-describedby~="external-description"]',
+    );
+    expect(described).toHaveLength(1);
+    expect(described[0]).toBe(slider().element());
+  });
+
+  it("describes the thumb input with FormField helper text", async () => {
+    await renderWithSalt(<WithHelperText />);
+    await expect
+      .element(slider())
+      .toHaveAccessibleDescription(/Set the default playback volume/);
   });
 
   it("reports pointer changes and the final track value", async () => {

@@ -170,6 +170,33 @@ function registerAdapterTests(adapter: SaltDateAdapter<any>) {
       await expect.element(input).not.toHaveAttribute("aria-labelledby");
     });
 
+    it("SHOULD keep the FormField label when aria-label is set", async () => {
+      await render(
+        <FormField>
+          <FormFieldLabel>Trade date</FormFieldLabel>
+          <DateInputSingle aria-label="Custom label" />
+        </FormField>,
+      );
+      await expect
+        .element(page.getByRole("textbox"))
+        .toHaveAccessibleName("Trade date");
+    });
+
+    it("SHOULD keep aria-labelledby when aria-label is set", async () => {
+      await render(
+        <>
+          <span id="external-label">Settlement date</span>
+          <DateInputSingle
+            aria-label="Custom label"
+            aria-labelledby="external-label"
+          />
+        </>,
+      );
+      await expect
+        .element(page.getByRole("textbox"))
+        .toHaveAccessibleName("Settlement date");
+    });
+
     it("SHOULD call onDateChange only if value changes", async () => {
       const onDateChange = vi.fn();
       const onDateValueChange = vi.fn();
@@ -302,9 +329,9 @@ function registerAdapterTests(adapter: SaltDateAdapter<any>) {
       for (const { timezone, expectedResult } of timezones) {
         it(`SHOULD render date in the ${timezone} timezone`, async () => {
           await render(<SingleWithTimezone />);
-          const timezoneDropdown = document.querySelector<HTMLButtonElement>(
-            'button[aria-label="timezone dropdown"]',
-          );
+          const timezoneDropdown = page
+            .getByRole("combobox", { name: /(select|enter) a timezone/i })
+            .query();
           if (!timezoneDropdown) {
             throw new Error("Timezone dropdown was not rendered");
           }
@@ -455,10 +482,8 @@ function registerAdapterTests(adapter: SaltDateAdapter<any>) {
           </FormField>,
         );
         const input = page.getByRole("textbox");
-        const labelledBy = input.element().getAttribute("aria-labelledby");
-        const label = input.element().getAttribute("aria-label");
-        expect(labelledBy).toBeTruthy();
-        expect(label).toBeTruthy();
+        expect(input.element().getAttribute("aria-labelledby")).toBeTruthy();
+        await expect.element(input).toHaveAccessibleName("Date");
       });
     });
   });

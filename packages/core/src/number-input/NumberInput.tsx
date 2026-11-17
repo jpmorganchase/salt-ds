@@ -34,6 +34,7 @@ import {
   useForkRef,
   useId,
 } from "../utils";
+import { mergeAriaIds } from "../utils/mergeAriaIds";
 import { useLongPressPointerAction } from "./internal/useLongPressPointerAction";
 import numberInputCss from "./NumberInput.css";
 
@@ -284,6 +285,9 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       props,
     );
     const {
+      "aria-describedby": ariaDescribedBy,
+      "aria-label": ariaLabel,
+      "aria-labelledby": ariaLabelledBy,
       "aria-valuetext": ariaValueTextProp,
       bordered,
       clamp,
@@ -607,18 +611,23 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         )}
         {/* biome-ignore lint/a11y/useAriaPropsSupportedByRole: Biome can't detect the role is determined by variable, aria-valuemax is only used when the role is appropriate. */}
         <input
-          aria-describedby={
-            clsx(formFieldDescribedBy, inputDescribedBy) || undefined
-          }
-          aria-labelledby={
-            clsx(formFieldLabelledBy, inputLabelledBy) || undefined
-          }
+          aria-describedby={mergeAriaIds(
+            formFieldDescribedBy,
+            inputDescribedBy,
+            ariaDescribedBy,
+          )}
+          aria-labelledby={mergeAriaIds(
+            formFieldLabelledBy,
+            inputLabelledBy,
+            ariaLabelledBy,
+          )}
           aria-invalid={
             !isReadOnly && renderedValue.length
               ? isOutOfRange(floatValue, min, max) ||
                 validationStatus === "error"
               : undefined
           }
+          aria-label={ariaLabel}
           className={clsx(
             withBaseName("input"),
             withBaseName(`inputTextAlign${capitalize(textAlign)}`),

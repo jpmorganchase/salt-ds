@@ -29,6 +29,7 @@ import {
   useRef,
 } from "react";
 import { InputPill } from "./internal/InputPill";
+import { mergeAriaIds } from "./mergeAriaIds";
 import tokenizedInputCss from "./TokenizedInputNext.css";
 import {
   type TokenizedInputNextHelpers,
@@ -109,6 +110,8 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
     textAreaRef: textAreaRefProp,
     textAreaProps = {},
     variant = "primary",
+    "aria-describedby": ariaDescribedByProp,
+    "aria-labelledby": ariaLabelledByProp,
     ...rest
   }: TokenizedInputNextProps<Item>,
   ref: ForwardedRef<HTMLDivElement>,
@@ -163,8 +166,8 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
     onKeyUp,
     id: idProp,
     "aria-label": ariaLabel,
-    "aria-labelledby": ariaLabelledBy,
-    "aria-describedby": ariaDescribedBy,
+    "aria-labelledby": formFieldLabelledBy,
+    "aria-describedby": formFieldDescribedBy,
     ...restProps
   } = inputProps;
   const { OverflowIcon, CloseIcon } = useIcon();
@@ -241,9 +244,16 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
     (_, index) => `${id}-pill-${index}`,
   );
 
-  const inputAriaLabelledBy = disabled
-    ? [ariaLabelledBy, inputId, ...selectedItemIds]
-    : [ariaLabelledBy, inputId];
+  // The root ARIA props aren't passed to the hook, so ID references can be
+  // merged in the same order as other form controls: FormField, textAreaProps,
+  // then root.
+  const inputAriaLabelledBy = mergeAriaIds(
+    formFieldLabelledBy,
+    textAreaLabelledBy,
+    ariaLabelledByProp,
+    inputId,
+    ...(disabled ? selectedItemIds : []),
+  );
 
   const expandedWithItems =
     expanded && !showExpandButton && selectedItems.length > 0;
@@ -301,12 +311,12 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
             );
           })}
         <textarea
-          aria-labelledby={
-            clsx(inputAriaLabelledBy, textAreaLabelledBy) || undefined
-          }
-          aria-describedby={
-            clsx(ariaDescribedBy, textAreaDescribedBy) || undefined
-          }
+          aria-labelledby={inputAriaLabelledBy}
+          aria-describedby={mergeAriaIds(
+            formFieldDescribedBy,
+            textAreaDescribedBy,
+            ariaDescribedByProp,
+          )}
           aria-label={clsx(ariaLabel, getItemsAriaLabel(selectedItems.length))}
           aria-activedescendant={
             highlightedIndex && highlightedIndex >= 0
@@ -356,7 +366,12 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
             <Button
               className={withBaseName("endAdornment")}
               aria-label={expandButtonAccessibleText}
-              aria-labelledby={clsx(ariaLabelledBy, inputId, expandButtonId)}
+              aria-labelledby={mergeAriaIds(
+                formFieldLabelledBy,
+                ariaLabelledByProp,
+                inputId,
+                expandButtonId,
+              )}
               disabled={disabled}
               id={expandButtonId}
               onBlur={onBlur}

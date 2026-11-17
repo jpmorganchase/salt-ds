@@ -194,6 +194,26 @@ describe("GIVEN a FormField", () => {
     });
   });
 
+  describe("WHEN a form control has an aria-label", () => {
+    it("THEN the aria-label names the control until a FormFieldLabel is rendered", async () => {
+      const { rerender } = await renderWithSalt(
+        <FormField id="test-id">
+          <Input aria-label="Input label" />
+        </FormField>,
+      );
+      const input = page.getByRole("textbox");
+      await expect.element(input).toHaveAccessibleName("Input label");
+
+      await rerender(
+        <FormField id="test-id">
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Input aria-label="Input label" />
+        </FormField>,
+      );
+      await expect.element(input).toHaveAccessibleName("Label");
+    });
+  });
+
   describe("WITH a nested Input", () => {
     it("SHOULD have no a11y violations on load", async () => {
       const { container } = await renderWithSalt(
@@ -265,6 +285,21 @@ describe("GIVEN a FormField", () => {
         await renderWithSalt(tooltipForm({}));
         await page.getByLabelText("Label").hover();
         await expect.element(page.getByRole("tooltip")).toBeVisible();
+      });
+
+      it("THEN the input is described by the tooltip while it's shown", async () => {
+        await renderWithSalt(tooltipForm({ id: "test-id" }));
+        const input = page.getByRole("textbox");
+        await expect.element(input).toHaveAccessibleDescription("");
+        await input.hover();
+        await expect.element(page.getByRole("tooltip")).toBeVisible();
+        await expect
+          .element(input)
+          .toHaveAttribute(
+            "aria-describedby",
+            expect.stringMatching(/(^| )helperText-test-id( |$)/),
+          );
+        await expect.element(input).toHaveAccessibleDescription("Helper text");
       });
 
       it("THEN should have the corresponding id", async () => {

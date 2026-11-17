@@ -10,6 +10,7 @@ import {
 } from "react";
 import { useFormFieldProps } from "../form-field-context";
 import { makePrefixer, useControlled } from "../utils";
+import { mergeAriaIds } from "../utils/mergeAriaIds";
 import pillGroupCss from "./PillGroup.css";
 import { PillGroupContext } from "./PillGroupContext";
 
@@ -117,14 +118,14 @@ export const PillGroup = forwardRef<HTMLFieldSetElement, PillGroupProps>(
     return (
       <PillGroupContext.Provider value={context}>
         <fieldset
-          aria-labelledby={
-            clsx(formFieldA11yProps?.["aria-labelledby"], ariaLabelledBy) ||
-            undefined
-          }
-          aria-describedby={
-            clsx(formFieldA11yProps?.["aria-describedby"], ariaDescribedBy) ||
-            undefined
-          }
+          aria-labelledby={mergeAriaIds(
+            formFieldA11yProps?.["aria-labelledby"],
+            ariaLabelledBy,
+          )}
+          aria-describedby={mergeAriaIds(
+            formFieldA11yProps?.["aria-describedby"],
+            ariaDescribedBy,
+          )}
           className={clsx(withBaseName(), className)}
           ref={ref}
           {...rest}
