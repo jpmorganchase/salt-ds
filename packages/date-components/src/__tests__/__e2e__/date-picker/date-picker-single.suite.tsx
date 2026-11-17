@@ -1,9 +1,5 @@
 import { FormField, FormFieldLabel } from "@salt-ds/core";
 import { DateDetailError, type SaltDateAdapter } from "@salt-ds/date-adapters";
-import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
-import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
-import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
-import { AdapterMoment } from "@salt-ds/date-adapters/moment";
 import {
   DatePicker,
   DatePickerActions,
@@ -122,7 +118,7 @@ async function chooseTimezone(timezone: string) {
   await option.click();
 }
 
-function registerAdapterTests(
+export function registerAdapterTests(
   // biome-ignore lint/suspicious/noExplicitAny: shared behavior across adapter date types
   adapter: SaltDateAdapter<any>,
 ) {
@@ -781,10 +777,3 @@ function registerAdapterTests(
     });
   });
 }
-
-describe("GIVEN a DatePicker where selectionVariant is single", () => {
-  registerAdapterTests(new AdapterDateFnsTZ());
-  registerAdapterTests(new AdapterDayjs());
-  registerAdapterTests(new AdapterLuxon());
-  registerAdapterTests(new AdapterMoment());
-});
