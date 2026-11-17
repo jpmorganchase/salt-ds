@@ -69,7 +69,6 @@ jobs:
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: "26"
-          package-manager-cache: false
       - name: Install dependencies
         run: yarn install
       - name: Select Changesets mode
@@ -94,7 +93,6 @@ jobs:
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: "26"
-          package-manager-cache: false
       - name: Install dependencies
         run: yarn install
       - name: Version packages
@@ -120,7 +118,6 @@ jobs:
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: "26"
-          package-manager-cache: false
           registry-url: "https://registry.npmjs.org"
       - name: Install dependencies
         run: yarn install
@@ -199,7 +196,6 @@ jobs:
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: "26"
-          package-manager-cache: false
       - name: Install dependencies
         run: yarn install
       - name: Run Storybook build
@@ -220,6 +216,11 @@ jobs:
     timeout-minutes: 15
     # Downloading an artifact from the same run needs no token permissions.
     permissions: {}
+    # The Cloudflare secrets live in the `storybook` environment, which only
+    # the default branch can use.
+    environment:
+      name: storybook
+      deployment: false
     steps:
       - name: Download Storybook build
         uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
@@ -300,7 +301,6 @@ jobs:
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: ${{ steps.release.outputs.node_version }}
-          package-manager-cache: false
       - name: Enable Corepack
         run: corepack enable
       - name: Install historical dependencies
@@ -351,7 +351,6 @@ jobs:
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: "26"
-          package-manager-cache: false
           registry-url: "https://registry.npmjs.org"
       - name: Install npm with trusted publishing support
         run: npm install --global npm@11.11.0 --ignore-scripts
@@ -444,7 +443,6 @@ jobs:
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: "26"
-          package-manager-cache: false
       - name: Install dependencies
         run: yarn install
       - name: Create snapshot versions
@@ -503,7 +501,6 @@ jobs:
         uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
         with:
           node-version: "26"
-          package-manager-cache: false
       - name: Install npm with trusted publishing support
         run: npm install --global npm@11.11.0 --ignore-scripts
       - name: Download tarballs
