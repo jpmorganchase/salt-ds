@@ -1,7 +1,4 @@
 import type { SaltDateAdapter } from "@salt-ds/date-adapters";
-import { AdapterDateFnsTZ } from "@salt-ds/date-adapters/date-fns-tz";
-import { AdapterDayjs } from "@salt-ds/date-adapters/dayjs";
-import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { AdapterMoment } from "@salt-ds/date-adapters/moment";
 import {
   Calendar,
@@ -16,7 +13,7 @@ import * as calendarStories from "~stories/calendar/calendar.stories";
 import "moment/dist/locale/es";
 import { renderWithSalt } from "~browser-test-utils/render";
 
-const adapterMoment = new AdapterMoment();
+export const adapterMoment = new AdapterMoment();
 adapterMoment.moment.updateLocale("es", {
   monthsShort: [
     "ene",
@@ -75,7 +72,7 @@ async function expectTooltipContent(
     .toBe(content);
 }
 
-function registerAdapterTests(
+export function registerAdapterTests(
   // biome-ignore lint/suspicious/noExplicitAny: shared behavior across adapter date types
   adapter: SaltDateAdapter<any>,
 ) {
@@ -517,10 +514,3 @@ function registerAdapterTests(
     });
   });
 }
-
-describe("GIVEN a Calendar", () => {
-  registerAdapterTests(new AdapterDateFnsTZ());
-  registerAdapterTests(new AdapterDayjs());
-  registerAdapterTests(new AdapterLuxon());
-  registerAdapterTests(adapterMoment);
-});
