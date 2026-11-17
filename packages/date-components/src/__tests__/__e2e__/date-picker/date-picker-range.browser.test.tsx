@@ -22,10 +22,29 @@ import type { DateTime } from "luxon";
 import MockDate from "mockdate";
 import type { Moment } from "moment/moment";
 import type { ReactNode } from "react";
-import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import {
+  afterEach,
+  beforeEach,
+  describe,
+  expect,
+  it,
+  onTestFinished,
+  vi,
+} from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as datePickerStories from "~stories/date-picker/date-picker.stories";
+
+// A trailing focusable lets Tab leave the picker; Firefox keeps focus on the
+// last element in the test frame. Appended to the DOM so portable story
+// localization still applies to the rendered story.
+function appendFocusableAfter() {
+  const after = document.body.appendChild(document.createElement("button"));
+  after.type = "button";
+  after.textContent = "After";
+  onTestFinished(() => after.remove());
+  return page.elementLocator(after);
+}
 
 const {
   Range,
@@ -223,6 +242,7 @@ function registerAdapterTests(
 
     it("SHOULD be able to tab between all elements", async () => {
       await render(<Range defaultSelectedDate={initialRangeDate} />);
+      const after = appendFocusableAfter();
       const startMonthLabel = adapter.format(
         initialRangeDate.startDate,
         "MMMM YYYY",
@@ -291,7 +311,7 @@ function registerAdapterTests(
       await userEvent.tab();
       await expect.element(calendarTrigger()).toHaveFocus();
       await userEvent.tab();
-      await expect.element(calendarTrigger()).not.toHaveFocus();
+      await expect.element(after).toHaveFocus();
     });
 
     it("SHOULD only be able to select a date between min/max", async () => {

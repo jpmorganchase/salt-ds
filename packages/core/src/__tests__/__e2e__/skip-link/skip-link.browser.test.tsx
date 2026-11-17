@@ -9,6 +9,11 @@ const composedStories = composeStories(skipLinkStories);
 const { Default } = composedStories;
 const instructions = "Click here and press the Tab key to see the Skip Link";
 const skipLink = () => page.getByRole("link", { name: "Skip to main content" });
+const focusInstructions = async () => {
+  const startingPoint = page.getByText(instructions);
+  await startingPoint.click();
+  await expect.element(startingPoint).toHaveFocus();
+};
 const expectSkipLinkOpacity = async (opacity: "0" | "1") => {
   await expect
     .poll(() => getComputedStyle(skipLink().element()).opacity)
@@ -20,11 +25,11 @@ describe("GIVEN a SkipLink", () => {
 
   it("moves focus to the target when clicked", async () => {
     await renderWithSalt(<Default />);
-    await page.getByText(instructions).click();
+    await focusInstructions();
     await expectSkipLinkOpacity("0");
     await userEvent.tab();
-    await expectSkipLinkOpacity("1");
     await expect.element(skipLink()).toHaveFocus();
+    await expectSkipLinkOpacity("1");
     await skipLink().click();
 
     const target = document.querySelector("#main");
@@ -35,11 +40,11 @@ describe("GIVEN a SkipLink", () => {
 
   it("moves focus to the target with keyboard navigation", async () => {
     await renderWithSalt(<Default />);
-    await page.getByText(instructions).click();
+    await focusInstructions();
     await expectSkipLinkOpacity("0");
     await userEvent.tab();
-    await expectSkipLinkOpacity("1");
     await expect.element(skipLink()).toHaveFocus();
+    await expectSkipLinkOpacity("1");
     await userEvent.keyboard(" ");
 
     const target = document.querySelector("#main");
@@ -50,8 +55,11 @@ describe("GIVEN a SkipLink", () => {
 
   it("hides the skip link when its target is broken", async () => {
     await renderWithSalt(<Default targetId="" />);
-    await page.getByText(instructions).click();
+    await focusInstructions();
     await userEvent.tab();
+    await expect
+      .element(page.getByRole("link", { name: "Home" }))
+      .toHaveFocus();
     await expect.element(skipLink()).not.toBeInTheDocument();
   });
 });

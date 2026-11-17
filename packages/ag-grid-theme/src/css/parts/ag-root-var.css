@@ -1,5 +1,6 @@
 div[class*="ag-theme-salt"] {
-  --ag-row-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
+  /* Row height includes the 1px row border, so cell content matches the header row height */
+  --ag-row-height: calc(var(--salt-size-base) + var(--salt-spacing-100) + var(--salt-size-fixed-100));
   --ag-header-height: calc(var(--salt-size-base) + var(--salt-spacing-100));
   --ag-background-color: var(--salt-container-primary-background);
   --ag-menu-background-color: var(--salt-container-primary-background);
@@ -14,7 +15,7 @@ div[class*="ag-theme-salt"] {
   --ag-pinned-row-border: none;
   --ag-card-radius: var(--salt-palette-corner);
   --ag-cell-horizontal-padding: var(--salt-spacing-100);
-  --ag-checkbox-border-radius: 0;
+  --ag-checkbox-border-radius: var(--salt-palette-corner-weaker, 0);
   --ag-checkbox-checked-color: var(--salt-selectable-foreground-selected);
   --ag-checkbox-indeterminate-color: var(--salt-selectable-foreground);
   --ag-checkbox-unchecked-color: var(--salt-selectable-borderColor);
@@ -30,7 +31,7 @@ div[class*="ag-theme-salt"] {
   --ag-header-cell-hover-background-color: var(--ag-header-background-color);
   --ag-header-column-separator-color: var(--salt-separable-tertiary-borderColor);
   --ag-header-column-separator-display: block;
-  --ag-header-column-separator-height: calc(var(--salt-size-base) / 2 - 2 * var(--salt-size-fixed-100));
+  --ag-header-column-separator-height: calc(var(--salt-size-base) - 2 * var(--salt-spacing-50));
   --ag-header-column-separator-width: var(--salt-size-fixed-100);
   --ag-header-foreground-color: var(--salt-content-secondary-foreground);
   /* Replicating min size 12px from Icon.css */
@@ -46,7 +47,7 @@ div[class*="ag-theme-salt"] {
   --ag-range-selection-background-color: var(--salt-overlayable-background-rangeSelection);
   --ag-range-selection-border-style: none;
   --ag-range-selection-highlight-color: var(--salt-overlayable-background-highlight);
-  --ag-row-group-indent-size: calc(var(--ag-icon-size) + var(--ag-cell-widget-spacing));
+  --ag-row-group-indent-size: calc(var(--ag-icon-size) + 2 * var(--salt-spacing-100));
   --ag-row-hover-color: var(--salt-selectable-background-hover);
   --ag-secondary-border-color: var(--salt-separable-tertiary-borderColor);
   --ag-secondary-foreground-color: var(--salt-content-primary-foreground);

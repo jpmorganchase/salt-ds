@@ -1,0 +1,51 @@
+name: Snapshot Release Request
+
+# Turns a `/snapshot-release` comment on a pull request into a snapshot
+# release run of release.yml. `/snapshot-release --dry-run` checks everything,
+# including npm trusted publishing, without publishing.
+#
+# npm refuses trusted-publishing token exchanges for `issue_comment` runs, so
+# this workflow can't publish anything itself and has no publish credential.
+# It checks that the commenter has write access and that the pull request is
+# an open, same-repository one, then starts release.yml with
+# `workflow_dispatch`, pinned to the pull request's current head commit.
+# It only checks out the default branch, never pull request code.
+
+on:
+  issue_comment:
+    types:
+      - created
+
+permissions: {}
+
+cache-mode: none
+
+jobs:
+  request:
+    name: Request Snapshot Release
+    if: |
+      github.repository == 'jpmorganchase/salt-ds' &&
+      github.event.issue.pull_request &&
+      (startsWith(github.event.comment.body, '/snapshot-release') ||
+        startsWith(github.event.comment.body, '/release-pr'))
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      actions: write # Start release.yml with workflow_dispatch.
+      contents: read # Check out the default branch for the request script.
+      issues: write # Comment on the pull request's timeline.
+      pull-requests: write # React to the request comment and read the pull request.
+    steps:
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - name: Check and dispatch the request
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9
+        with:
+          script: |
+            const { pathToFileURL } = require('node:url');
+            const { requestSnapshotRelease } = await import(
+              pathToFileURL(`${process.env.GITHUB_WORKSPACE}/scripts/snapshot/request.mjs`).href
+            );
+            await requestSnapshotRelease({ github, context, core });

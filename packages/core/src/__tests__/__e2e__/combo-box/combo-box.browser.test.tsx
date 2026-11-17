@@ -54,21 +54,19 @@ async function typeFilter(value: string) {
   await userEvent.keyboard(value);
 }
 
+async function isActive(nameOrIndex: string | number) {
+  const activeId = input().element().getAttribute("aria-activedescendant");
+  const options = await (typeof nameOrIndex === "number"
+    ? page.getByRole("option")
+    : page.getByRole("option", { name: nameOrIndex })
+  ).elements();
+  const option =
+    typeof nameOrIndex === "number" ? options.at(nameOrIndex) : options.at(0);
+  return option?.id === activeId;
+}
+
 async function expectActive(nameOrIndex: string | number) {
-  await expect
-    .poll(async () => {
-      const activeId = input().element().getAttribute("aria-activedescendant");
-      const options = await (typeof nameOrIndex === "number"
-        ? page.getByRole("option")
-        : page.getByRole("option", { name: nameOrIndex })
-      ).elements();
-      const option =
-        typeof nameOrIndex === "number"
-          ? options.at(nameOrIndex)
-          : options.at(0);
-      return option?.id === activeId;
-    })
-    .toBe(true);
+  await expect.poll(() => isActive(nameOrIndex)).toBe(true);
 }
 
 describe("Given a ComboBox", () => {
@@ -78,13 +76,19 @@ describe("Given a ComboBox", () => {
       const onSelectionChange = vi.fn();
       await renderWithSalt(<Default onSelectionChange={onSelectionChange} />);
       await typeFilter("Ala");
+      await expectActive("Alabama");
       if (interaction === "mouse") {
         const alaska = page.getByRole("option", { name: "Alaska" });
-        await alaska.hover();
-        await expectActive("Alaska");
+        // In Firefox CI the pointer has ended up over Alabama after hovering
+        // Alaska, so hover again until Alaska is active.
+        await expect
+          .poll(async () => {
+            await alaska.hover();
+            return isActive("Alaska");
+          })
+          .toBe(true);
         await alaska.click();
       } else {
-        await expectActive("Alabama");
         await userEvent.keyboard("{ArrowDown}{Enter}");
       }
       await expect.element(input()).toHaveValue("Alaska");
@@ -710,6 +714,11 @@ describe("Given a ComboBox", () => {
     await renderWithSalt(<Virtualized />);
     await input().click();
     for (const name of ["a", "b", "c", "d", "e", "f", "g"]) {
+      // react-window renders the next row after its scroll event, which WebKit
+      // dispatches a frame later, so wait for the row before moving to it.
+      await expect
+        .element(page.getByRole("option", { name, exact: true }))
+        .toBeInTheDocument();
       await userEvent.keyboard("{ArrowDown}");
       await expectActive(name);
     }
@@ -895,7 +904,7 @@ describe("given a multiselect ComboBox with pills", () => {
     // Shift-tabbing back past the input enters the pill list at its start,
     // rather than treating each pill as its own tab stop and landing on the
     // last one.
-    await userEvent.click(page.getByRole("button", { name: "After" }));
+    page.getByRole("button", { name: "After" }).element().focus();
     await userEvent.tab({ shift: true });
     await expect.element(input()).toHaveFocus();
     await userEvent.tab({ shift: true });
@@ -936,7 +945,7 @@ describe("given a multiselect ComboBox with pills", () => {
     );
 
     // Reach the last pill with the keyboard, then remove it with the mouse.
-    await userEvent.click(page.getByRole("button", { name: "After" }));
+    page.getByRole("button", { name: "After" }).element().focus();
     await userEvent.tab({ shift: true });
     await userEvent.tab({ shift: true });
     await userEvent.keyboard("{ArrowRight}{ArrowRight}");
@@ -948,7 +957,7 @@ describe("given a multiselect ComboBox with pills", () => {
 
     // The list remembered a pill that no longer exists. It must still offer a
     // tab stop, otherwise the remaining pills can never be reached again.
-    await userEvent.click(page.getByRole("button", { name: "After" }));
+    page.getByRole("button", { name: "After" }).element().focus();
     await userEvent.tab({ shift: true });
     await userEvent.tab({ shift: true });
     await expect

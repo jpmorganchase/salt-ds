@@ -8,11 +8,8 @@ import {
   DialogHeader,
   type DialogProps,
   FloatingComponentProvider,
-  SaltProvider,
-  SaltProviderNext,
   StackLayout,
   Text,
-  useTheme,
   VALIDATION_NAMED_STATUS,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
@@ -20,6 +17,8 @@ import {
   InlineFloatingComponent,
   QAContainer,
   type QAContainerProps,
+  QADensities,
+  QADensityProvider,
 } from "docs/components";
 import "./dialog.stories.css";
 import { CloseIcon } from "@salt-ds/icons";
@@ -105,28 +104,25 @@ DeprecatedClosedButton.parameters = {
 };
 
 export const StatusVariants: StoryFn = () => {
-  const DensityValues = ["high", "medium", "low", "touch"] as const;
-  const { themeNext } = useTheme();
-  const ChosenProvider = themeNext ? SaltProviderNext : SaltProvider;
   return (
     <StackLayout gap={1}>
-      {DensityValues.map((density) => {
+      {QADensities.map((density) => {
         return (
           <Fragment key={density}>
-            <ChosenProvider density={density}>
+            <QADensityProvider density={density}>
               <DialogTemplate />
-            </ChosenProvider>
-            <ChosenProvider density={density} mode="dark">
+            </QADensityProvider>
+            <QADensityProvider density={density} mode="dark">
               <DialogTemplate />
-            </ChosenProvider>
+            </QADensityProvider>
             {VALIDATION_NAMED_STATUS.map((status) => (
               <Fragment key={status}>
-                <ChosenProvider density={density}>
+                <QADensityProvider density={density}>
                   <DialogTemplate status={status} />
-                </ChosenProvider>
-                <ChosenProvider density={density} mode="dark">
+                </QADensityProvider>
+                <QADensityProvider density={density} mode="dark">
                   <DialogTemplate status={status} />
-                </ChosenProvider>
+                </QADensityProvider>
               </Fragment>
             ))}
           </Fragment>
@@ -143,10 +139,6 @@ StatusVariants.parameters = {
 };
 
 export const ContentVariants: StoryFn = () => {
-  const { themeNext } = useTheme();
-  const ChosenProvider = themeNext ? SaltProviderNext : SaltProvider;
-
-  const DensityValues = ["high", "medium", "low", "touch"] as const;
   const longContent = (
     <StackLayout gap={1} style={{ maxHeight: 180 }}>
       <Text as="p">
@@ -196,20 +188,20 @@ export const ContentVariants: StoryFn = () => {
   );
   return (
     <StackLayout style={{ width: 1200, height: 380 }} gap={1}>
-      {DensityValues.map((density) => (
+      {QADensities.map((density) => (
         <Fragment key={density}>
-          <ChosenProvider density={density}>
+          <QADensityProvider density={density}>
             <DialogTemplate content={longContent} maxHeight={500} />
-          </ChosenProvider>
-          <ChosenProvider density={density} mode="dark">
+          </QADensityProvider>
+          <QADensityProvider density={density} mode="dark">
             <DialogTemplate content={longContent} maxHeight={500} />
-          </ChosenProvider>
-          <ChosenProvider density={density}>
+          </QADensityProvider>
+          <QADensityProvider density={density}>
             <DialogTemplate longDialog maxHeight={500} />
-          </ChosenProvider>
-          <ChosenProvider density={density} mode="dark">
+          </QADensityProvider>
+          <QADensityProvider density={density} mode="dark">
             <DialogTemplate longDialog maxHeight={500} />
-          </ChosenProvider>
+          </QADensityProvider>
         </Fragment>
       ))}
     </StackLayout>

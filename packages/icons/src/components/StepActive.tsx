@@ -6,6 +6,7 @@ import { Icon, type IconProps } from "../icon";
 
 export type StepActiveIconProps = IconProps;
 
+/** @deprecated since 1.20.0. Use `ProgressActiveIcon` instead. */
 export const StepActiveIcon = forwardRef<SVGSVGElement, StepActiveIconProps>(
   function StepActiveIcon(props: StepActiveIconProps, ref) {
     return (

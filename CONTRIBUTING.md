@@ -8,6 +8,18 @@ Follow below instructions to contribute to Salt.
 4. Run `cd site && yarn serve` to run a local instance of the [documentation](https://www.saltdesignsystem.com/) site.
 5. Optionally, run `git config blame.ignoreRevsFile .git-blame-ignore-revs` so that `git blame` skips the bulk formatting commits listed in `.git-blame-ignore-revs`. GitHub's blame view already skips them.
 
+## Build tooling
+
+Package JavaScript is built with tsdown (using Rolldown) into `dist-cjs` and `dist-es`. Component CSS is imported as text so Salt's style injection continues to control nonces and target windows. CSS and generated country components are explicit entries to preserve their existing CommonJS default exports when imported directly. The separate CSS bundles and themes use esbuild.
+
+TypeScript 7 generates `dist-types` declarations with full type inference and runs `yarn typecheck`. The native compiler is installed as `@typescript/native` and invoked through `scripts/typescript.mjs` to avoid relying on the shared `tsc` executable. TypeScript 6 remains installed as `typescript` for tools that use its JavaScript API, including Storybook's prop documentation.
+
+Run `node scripts/checkPackages.mjs` after `yarn build` to validate package outputs, dependency boundaries and that every relative import resolves inside the packed archive.
+
+`yarn build` uses Yarn workspaces to build independent packages in parallel and dependencies before their consumers. Each JavaScript package builds both module formats alongside its declarations. Package build commands also work individually. Each package that generates declarations needs its own `tsconfig.json`.
+
+Every build clears package outputs and regenerates assets, with no build cache. Generated files are formatted in batches with the native Biome CLI. The CSS jobs share one process while preserving stylesheet import order. Pass package names to rebuild specific CSS bundles, for example `yarn bundle:css core lab`.
+
 ## Packages
 
 The repo contains below packages under `/packages`
@@ -25,15 +37,32 @@ The repo contains below packages under `/packages`
 
 ### How to add a new icon
 
-1. Add the icon to the `packages/icons/src/SVG` folder. The icon should be named using kebab casing e.g. `icon-name.svg`.
-2. Navigate to `packages/icons` e.g. `cd packages/icons`.
-3. Run `yarn build:icons` to build the icons.
-4. Write a changeset using `yarn changeset`, this should have the format:
+1. Export the icon from the Salt DS Assets Figma file as SVG and add it to the `packages/icons/src/SVG` folder.
+   - Name it using kebab casing e.g. `icon-name.svg`. Solid variants use the `_solid` suffix e.g. `icon-name_solid.svg`.
+   - Remove everything except the icon paths (Figma frames, background rects, wrapping groups) and remove `fill` attributes so the icon inherits its color.
+   - Keep the `width="12" height="12" viewBox="0 0 12 12"` attributes. See existing SVGs in the folder for reference.
+2. If the icon replaces an existing one, add an entry to `DEPRECATED_ICONS` in `packages/icons/scripts/generateIcons.mjs`, e.g. `{ componentName: "OldName", replacement: "NewName", since: "1.20.0" }`. Keep the deprecated icon's SVG and exports for compatibility.
+3. Update the icon synonyms used by the site's icon search:
+
+   1. Add a row for the new icon and remove rows for any deprecated icons from the Icons Synonym List spreadsheet.
+   2. Copy the spreadsheet to `scripts/Icons Synonym List.xlsx`.
+   3. From the repository root, run `node scripts/makeSynonym.mjs`. This regenerates `site/src/components/icon-preview/salt-icon-synonym.json` from the spreadsheet.
+   4. Review the diff. The script regenerates the whole file, so if the spreadsheet is out of date it can revert changes made directly to the JSON. Keep only the intended changes and update the spreadsheet to match.
+   5. Delete `scripts/Icons Synonym List.xlsx`. Do not commit it.
+
+   Remove the entire JSON entry for each deprecated icon. An empty synonym array or an explicit `deprecated` category is not sufficient. The missing entry places the icon in the site's Deprecated group and keeps it searchable by component name only.
+
+4. Navigate to `packages/icons` e.g. `cd packages/icons`.
+5. Run `yarn build:icons` to build the icons. This first checks that deprecated icons have no matching synonym entries, including shared entries for solid variants. The check also runs in CI through `yarn build`. Generation then updates `src/components`, `src/components/index.ts`, `saltIcons.css`, `stories/icon.all.ts` and `site/src/components/icon-preview/allIconsList.ts`.
+6. From the repository root, run `yarn test:components packages/icons` to verify the icons.
+7. Write a changeset using `yarn changeset`, this should have the format:
 
 ```md
-Added:
+---
+"@salt-ds/icons": minor
+---
 
-- IconName
+Added `IconNameIcon`.
 ```
 
 ### Prop deprecation

@@ -45,6 +45,29 @@ if (!testBrowsers.includes(testBrowser as (typeof testBrowsers)[number])) {
 const parkPointer: BrowserCommand<[]> = async ({ page }) => {
   await page.mouse.move(4, 4);
 };
+
+// Real mouse input for test/browser/pointer.ts. Coordinates are in the
+// top-level page.
+type MouseButton = "left" | "right";
+const mouseMove: BrowserCommand<[x: number, y: number]> = async (
+  { page },
+  x,
+  y,
+) => {
+  await page.mouse.move(x, y);
+};
+const mouseDown: BrowserCommand<[button: MouseButton]> = async (
+  { page },
+  button,
+) => {
+  await page.mouse.down({ button });
+};
+const mouseUp: BrowserCommand<[button: MouseButton]> = async (
+  { page },
+  button,
+) => {
+  await page.mouse.up({ button });
+};
 const browserDependencies = [
   "@floating-ui/dom",
   "clipboard-copy",
@@ -200,7 +223,7 @@ export default defineConfig({
           ? { launchOptions: { channel: "chrome" } }
           : undefined,
       ),
-      commands: { parkPointer },
+      commands: { parkPointer, mouseMove, mouseDown, mouseUp },
       instances: [{ browser: testBrowser as (typeof testBrowsers)[number] }],
       viewport: { width: 1280, height: 1024 },
       screenshotDirectory: "test/browser/screenshots",

@@ -18,14 +18,34 @@ The current breadcrumb carries `aria-current="page"` so assistive technologies c
 
 `aria-current="page"` is derived from the `current` prop or the final item. Activating a link does not move it; update the trail from your route or page state after navigation.
 
-In collapsed trails, hidden levels without an `href` are skipped by disclosure focus movement, while the current page stays visible in the trail.
+In collapsed trails, hidden levels without an `href` are skipped by disclosure focus movement, while the current page stays visible in the trail. The disclosure closes when focus moves outside the trigger and the revealed links.
 
 ## Keyboard interactions
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-Tab moves focus to each linked breadcrumb and any collapse trigger in document order. If the disclosure is open, Tab moves focus from the trigger into the revealed breadcrumb links.
+Tab moves focus to each linked breadcrumb and any collapse trigger in document order. If the disclosure is open, Tab moves focus from the trigger into the revealed breadcrumb links. Tab from the last revealed link, or Shift + Tab from the first, closes the disclosure and returns focus to the trigger.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Right arrow / Down arrow">
+
+When the disclosure is open, this action moves focus from the trigger to the first revealed link, or from a revealed link to the next one. Focus stops at the last link.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Left arrow / Up arrow">
+
+When the disclosure is open, this action moves focus from the trigger to the last revealed link, or from a revealed link to the previous one. Focus stops at the first link.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="Home">
+
+When focus is on a revealed link, Home moves focus to the first revealed link.
+
+</KeyboardControl>
+<KeyboardControl keyOrCombos="End">
+
+When focus is on a revealed link, End moves focus to the last revealed link.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter">
@@ -35,7 +55,7 @@ When focus is on a linked breadcrumb, Enter navigates to that breadcrumb's desti
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter / Space">
 
-When focus is on a collapsed disclosure trigger, this action toggles the disclosure and focus remains on the trigger. Use Tab to move into the revealed breadcrumb links.
+When focus is on a collapsed disclosure trigger, this action toggles the disclosure and focus remains on the trigger. Use Tab or an arrow key to move into the revealed breadcrumb links.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Escape">
