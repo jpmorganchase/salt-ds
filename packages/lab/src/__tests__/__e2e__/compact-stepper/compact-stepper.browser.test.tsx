@@ -19,10 +19,10 @@ function getText() {
 describe("GIVEN a CompactStepper", () => {
   checkAccessibility(composedStories);
 
-  it("THEN shows the position and label of the active step", async () => {
+  it("THEN shows the position and label of the active step without reading its state", async () => {
     await renderWithSalt(<Default />);
 
-    expect(getText()).toBe("Step 2 of 4: Payment details, active");
+    expect(getText()).toBe("Step 2 of 4: Payment details");
   });
 
   it("THEN renders a group named by aria-label", async () => {
@@ -44,6 +44,7 @@ describe("GIVEN a CompactStepper", () => {
   it.each<[StepStage, StepStatus | undefined, string]>([
     ["active", "error", "Step 2 of 3: Two, error"],
     ["active", "warning", "Step 2 of 3: Two, warning"],
+    ["inprogress", undefined, "Step 2 of 3: Two, in progress"],
     ["locked", undefined, "Step 2 of 3: Two, locked"],
     ["locked", "error", "Step 2 of 3: Two, error"],
   ])(
@@ -96,7 +97,7 @@ describe("GIVEN a CompactStepper", () => {
     },
   );
 
-  it("THEN renders no text or bar WHEN no step is active or locked and not every step is completed", async () => {
+  it("THEN renders no text or bar WHEN no step is current and not every step is completed", async () => {
     await renderWithSalt(
       <CompactStepper>
         <Step label="One" stage="completed" />

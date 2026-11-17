@@ -30,6 +30,17 @@ describe("getCompactStepperState", () => {
       25,
     ],
     [
+      "the in progress step",
+      [
+        step({ label: "One", stage: "completed" }),
+        step({ label: "Two", stage: "inprogress" }),
+        step({ label: "Three" }),
+        step({ label: "Four" }),
+      ],
+      "Two",
+      25,
+    ],
+    [
       "the last active step",
       [
         step({ label: "One", stage: "completed" }),
@@ -81,14 +92,29 @@ describe("getCompactStepperState", () => {
     expect(state.progress).toBe(0);
   });
 
-  test("should use the first active or locked step and count them WHEN there are several", () => {
+  test("should use the first current step and count them WHEN there are several", () => {
     const state = getCompactStepperState([
       step({ label: "One", stage: "locked" }),
       step({ label: "Two", stage: "active" }),
+      step({ label: "Three", stage: "inprogress" }),
     ]);
 
     expect(state.current?.label).toBe("One");
-    expect(state.currentCount).toBe(2);
+    expect(state.currentCount).toBe(3);
+  });
+
+  test("should flag steps with nested steps", () => {
+    const state = getCompactStepperState([
+      step({
+        label: "One",
+        stage: "active",
+        children: step({ label: "One.One" }),
+      }),
+      step({ label: "Two" }),
+    ]);
+
+    expect(state.hasNestedSteps).toBe(true);
+    expect(state.steps).toHaveLength(2);
   });
 
   test.each<[string, ReactNode]>([

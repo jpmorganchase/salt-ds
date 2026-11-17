@@ -21,7 +21,7 @@ export interface CompactStepperStep {
 export interface CompactStepperState {
   steps: CompactStepperStep[];
   /**
-   * The first active or locked step, or the last step when every step is completed.
+   * The first active, in progress or locked step, or the last step when every step is completed.
    * -1 otherwise.
    */
   currentIndex: number;
@@ -31,14 +31,19 @@ export interface CompactStepperState {
    */
   progress: number;
   /**
-   * Number of steps that are active or locked.
+   * Number of steps that are active, in progress or locked.
    */
   currentCount: number;
   hasNonStepChild: boolean;
+  hasNestedSteps: boolean;
 }
 
 function isCurrentStep(step: CompactStepperStep) {
-  return step.stage === "active" || step.stage === "locked";
+  return (
+    step.stage === "active" ||
+    step.stage === "inprogress" ||
+    step.stage === "locked"
+  );
 }
 
 function isFinishedProcess(steps: CompactStepperStep[]) {
@@ -111,5 +116,7 @@ export function getCompactStepperState(
         : (currentIndex / steps.length) * 100,
     currentCount: steps.filter(isCurrentStep).length,
     hasNonStepChild: flattened.length > elements.length,
+    // As in Step, any children count as nested steps.
+    hasNestedSteps: elements.some((element) => !!element.props.children),
   };
 }
