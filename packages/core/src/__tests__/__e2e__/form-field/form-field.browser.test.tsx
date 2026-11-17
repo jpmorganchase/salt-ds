@@ -9,7 +9,7 @@ import {
   Tooltip,
 } from "@salt-ds/core";
 import { Fragment } from "react";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { page } from "vitest/browser";
 import { runAxeScan } from "~browser-test-utils/accessibility";
 import { renderWithSalt } from "~browser-test-utils/render";
@@ -196,6 +196,9 @@ describe("GIVEN a FormField", () => {
 
   describe("WHEN a form control has an aria-label", () => {
     it("THEN the aria-label names the control until a FormFieldLabel is rendered", async () => {
+      const consoleSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
       const { rerender } = await renderWithSalt(
         <FormField id="test-id">
           <Input aria-label="Input label" />
@@ -211,6 +214,16 @@ describe("GIVEN a FormField", () => {
         </FormField>,
       );
       await expect.element(input).toHaveAccessibleName("Label");
+      await expect
+        .poll(() =>
+          consoleSpy.mock.calls.filter(([message]) =>
+            String(message).startsWith(
+              'Salt: aria-label "Input label" is ignored',
+            ),
+          ),
+        )
+        .toHaveLength(1);
+      consoleSpy.mockRestore();
     });
   });
 

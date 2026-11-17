@@ -278,7 +278,10 @@ function registerAdapterTests(
         .toHaveAccessibleName("Trade period Settlement date");
     });
 
-    it("SHOULD add the top-level aria-label after the FormField label", async () => {
+    it("SHOULD add the top-level aria-label after the FormField label, without warning", async () => {
+      const consoleSpy = vi
+        .spyOn(console, "warn")
+        .mockImplementation(() => undefined);
       await render(
         <FormField>
           <FormFieldLabel>Trade period</FormFieldLabel>
@@ -292,6 +295,13 @@ function registerAdapterTests(
       await expect
         .element(inputs.nth(1))
         .toHaveAccessibleName("Trade period End date Period");
+      await new Promise((resolve) => setTimeout(resolve));
+      expect(
+        consoleSpy.mock.calls.filter(([message]) =>
+          String(message).includes("is ignored because FormFieldLabel"),
+        ),
+      ).toHaveLength(0);
+      consoleSpy.mockRestore();
     });
 
     it("SHOULD keep the top-level aria-label in a FormField without a FormFieldLabel", async () => {
