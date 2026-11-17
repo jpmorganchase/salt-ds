@@ -1,5 +1,32 @@
 # @salt-ds/core
 
+## 1.75.0
+
+### Minor Changes
+
+- eccdb99: Updated `Stepper` styling so the current step and completed progress are easier to pick out:
+
+  - Pending and active steps use `ProgressDraftIcon` and `ProgressActiveIcon`, matching the in-progress icon. These are the default `PendingIcon` and `ActiveIcon` in `SemanticIconProvider`, so `useIcon()` returns them too. To keep the previous icons, pass `iconMap={{ PendingIcon: StepDefaultIcon, ActiveIcon: StepActiveIcon }}`.
+  - Only the active step's label uses the bolder font weight. When the active step is hidden inside a collapsed step, the collapsed step's label uses it instead.
+  - The track after completed and in-progress steps uses the accent color.
+  - Descriptions use the label text style and the secondary text color, so they read as supporting text. Descriptions of steps with a `status` keep their status color.
+  - In a vertical `Stepper`, labels are centered with their icons, and steps are evenly spaced whether or not they have a description.
+
+### Patch Changes
+
+- aa3ce52: Updated `Dialog` border color to use `--salt-container-borderColor` instead of `--salt-separable-tertiary-borderColor`, to align with design.
+
+  The visible change is limited to the Legacy theme. In JPM Brand (Salt Next) and Salt (Interim) both tokens resolve to the same value, so there is no visual difference. In the Legacy theme, the `Dialog` border now uses the solid container border color used by `Card`, instead of the translucent separable border color.
+
+- f68dcb2: Fixed `InteractableCard` not respecting a provided `tabIndex`.
+- 57304f5: Fixed `MegaMenu` returning focus to the trigger in Safari when tabbing out of the last item in the panel. Focus now moves to the next element after the trigger.
+- 57304f5: Fixed `MegaMenu` briefly moving focus to the trigger when tabbing out of the last item in the panel. Focus now moves straight to the next element.
+- 40fb09b: Fixed a disabled tertiary `ComboBox` having a transparent background. It now uses `--salt-editable-tertiary-background-disabled`, like `Input` and `Dropdown`.
+- 57304f5: Fixed leaf `TreeNode`s not being selected when the empty space reserved for the expansion icon is clicked.
+- Updated dependencies [2c3cf5d]
+- Updated dependencies [2c3cf5d]
+  - @salt-ds/icons@1.19.0
+
 ## 1.74.0
 
 ### Minor Changes

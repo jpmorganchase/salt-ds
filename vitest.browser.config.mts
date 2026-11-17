@@ -9,6 +9,7 @@ import { isCI } from "ci-info";
 import { cssInline } from "css-inline-plugin";
 import type { Plugin } from "vite";
 import { defineConfig } from "vitest/config";
+import type { BrowserCommand } from "vitest/node";
 
 const rootDir = path.dirname(fileURLToPath(import.meta.url));
 const require = createRequire(import.meta.url);
@@ -29,6 +30,44 @@ const reactMajorVersion = Number.parseInt(
   (require("react/package.json") as { version: string }).version,
   10,
 );
+const testBrowsers = ["chromium", "firefox", "webkit"] as const;
+const testBrowser = process.env.TEST_BROWSER ?? "chromium";
+if (!testBrowsers.includes(testBrowser as (typeof testBrowsers)[number])) {
+  throw new Error(
+    `TEST_BROWSER must be one of ${testBrowsers.join(", ")}, received ${testBrowser}`,
+  );
+}
+
+// Vitest's unhover parks the pointer in the middle of the body, where Salt's
+// centered test content can mount underneath it and inherit hover state. Move
+// the real pointer to the corner without adding a DOM target that focus/inert
+// logic can interfere with.
+const parkPointer: BrowserCommand<[]> = async ({ page }) => {
+  await page.mouse.move(4, 4);
+};
+
+// Real mouse input for test/browser/pointer.ts. Coordinates are in the
+// top-level page.
+type MouseButton = "left" | "right";
+const mouseMove: BrowserCommand<[x: number, y: number]> = async (
+  { page },
+  x,
+  y,
+) => {
+  await page.mouse.move(x, y);
+};
+const mouseDown: BrowserCommand<[button: MouseButton]> = async (
+  { page },
+  button,
+) => {
+  await page.mouse.down({ button });
+};
+const mouseUp: BrowserCommand<[button: MouseButton]> = async (
+  { page },
+  button,
+) => {
+  await page.mouse.up({ button });
+};
 const browserDependencies = [
   "@floating-ui/dom",
   "clipboard-copy",
@@ -179,12 +218,13 @@ export default defineConfig({
     setupFiles: ["./test/browser/setup.ts"],
     browser: {
       enabled: true,
-      provider: playwright({
-        launchOptions: {
-          channel: "chrome",
-        },
-      }),
-      instances: [{ browser: "chromium" }],
+      provider: playwright(
+        testBrowser === "chromium"
+          ? { launchOptions: { channel: "chrome" } }
+          : undefined,
+      ),
+      commands: { parkPointer, mouseMove, mouseDown, mouseUp },
+      instances: [{ browser: testBrowser as (typeof testBrowsers)[number] }],
       viewport: { width: 1280, height: 1024 },
       screenshotDirectory: "test/browser/screenshots",
       screenshotFailures: true,

@@ -1,13 +1,29 @@
-/* Toggle Button */
+/* Toggle Button, matching Salt's Switch */
+[class*="ag-theme-salt"] .ag-toggle-button-input-wrapper {
+  --ag-toggle-button-height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  --ag-toggle-button-width: calc((var(--salt-size-selectable) + var(--salt-spacing-25) + var(--salt-size-fixed-100)) * 2);
+
+  border-radius: var(--salt-palette-corner-weak, 0);
+}
+
 [class*="ag-theme-salt"] .ag-toggle-button-input-wrapper::before {
-  top: calc(1px - var(--ag-toggle-button-border-width));
-  left: calc(1px - var(--ag-toggle-button-border-width));
-  height: calc(var(--ag-toggle-button-height) - 2 * var(--ag-toggle-button-border-width));
-  width: calc(var(--ag-toggle-button-height) - 2 * var(--ag-toggle-button-border-width));
+  top: var(--salt-spacing-25);
+  left: var(--salt-spacing-25);
+  height: var(--salt-size-selectable);
+  width: var(--salt-size-selectable);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor);
+  border-radius: var(--salt-palette-corner-weaker, 0);
+  background-color: var(--salt-selectable-foreground);
 }
 
 [class*="ag-theme-salt"] .ag-toggle-button-input-wrapper.ag-checked::before {
-  --ag-toggle-button-switch-background-color: var(--salt-selectable-borderColor-selected);
-  border-color: var(--ag-toggle-button-switch-border-color);
-  left: calc(100% - var(--ag-toggle-button-height) + 2 * var(--ag-toggle-button-border-width));
+  left: calc(100% - var(--salt-size-selectable) - var(--salt-spacing-25));
+  border-color: var(--salt-selectable-borderColor-selected);
+  background-color: var(--salt-selectable-foreground-selected);
+}
+
+[class*="ag-theme-salt"] .ag-toggle-button-input-wrapper:focus-within {
+  box-shadow: none;
+  outline: var(--salt-focused-outline);
+  outline-offset: var(--salt-focused-outlineOffset);
 }

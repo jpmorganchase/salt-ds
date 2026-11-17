@@ -1,5 +1,5 @@
 import { composeStories } from "@storybook/react-vite";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { type Locator, page, userEvent } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as megaMenuStories from "~stories/mega-menu/mega-menu.stories";
@@ -253,6 +253,18 @@ describe("Given a MegaMenu", () => {
       await expectPanel(false);
     });
 
+    it("does not pass focus through the trigger when tabbing to the next trigger", async () => {
+      await openSolutions();
+      await press("{Tab}{Tab}{Tab}{Tab}");
+      await expectFocus(link("Telemedicine"));
+      const onTriggerFocus = vi.fn();
+      trigger().element().addEventListener("focus", onTriggerFocus);
+      await press("{Tab}");
+      await expectFocus(trigger("Services"));
+      await expectPanel(false);
+      expect(onTriggerFocus).not.toHaveBeenCalled();
+    });
+
     it("closes on Escape when focus is still on the trigger", async () => {
       await openSolutions();
       await press("{Escape}");
@@ -345,6 +357,18 @@ describe("Given a MegaMenu", () => {
       await press("{Tab}");
       await expectPanel(false);
       await expectFocus(button("After Nav"));
+    });
+
+    it("does not pass focus through the trigger when tabbing out after the last trigger", async () => {
+      await openSolutions(WithAside);
+      await press("{Tab}{Tab}{Tab}{Tab}");
+      await expectFocus(button("Contact sales"));
+      const onTriggerFocus = vi.fn();
+      trigger().element().addEventListener("focus", onTriggerFocus);
+      await press("{Tab}");
+      await expectPanel(false);
+      await expectFocus(button("After Nav"));
+      expect(onTriggerFocus).not.toHaveBeenCalled();
     });
 
     it("walks Shift+Tab backwards through region elements without losing focus", async () => {

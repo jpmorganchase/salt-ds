@@ -1,5 +1,22 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.108
+
+### Patch Changes
+
+- 57304f5: Fixed `InputLegacy` ignoring `cursorPositionOnFocus` and `highlightOnFocus` in Firefox and Safari.
+- Updated dependencies [aa3ce52]
+- Updated dependencies [f68dcb2]
+- Updated dependencies [57304f5]
+- Updated dependencies [57304f5]
+- Updated dependencies [40fb09b]
+- Updated dependencies [2c3cf5d]
+- Updated dependencies [2c3cf5d]
+- Updated dependencies [eccdb99]
+- Updated dependencies [57304f5]
+  - @salt-ds/core@1.75.0
+  - @salt-ds/icons@1.19.0
+
 ## 1.0.0-alpha.107
 
 ### Patch Changes

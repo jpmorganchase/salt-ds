@@ -1,34 +1,66 @@
 /* Column Drop List */
-[class*="ag-theme-salt"] .ag-column-drop-cell-drag-handle {
-  margin-left: 0;
-}
 
+/*
+  Column chips match the Figma "Drag column" item: a raised chip on the secondary container background, with a
+  transparent remove button. Chips in the horizontal row group panel are --salt-size-base tall to fit the panel.
+*/
 [class*="ag-theme-salt"] .ag-column-drop-cell {
-  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
-  padding: 0 var(--salt-spacing-50);
-}
+  --ag-secondary-foreground-color: var(--salt-content-primary-foreground);
+  --ag-icon-font-color: var(--salt-content-primary-foreground);
+  --ag-chip-background-color: var(--salt-container-secondary-background);
+  --ag-chip-border-color: var(--salt-container-borderColor);
 
-[class*="ag-theme-salt"] .ag-column-drop-cell-button {
-  min-width: unset;
-}
-
-div[class*="ag-theme-salt"] .ag-column-drop-cell {
-  --ag-secondary-foreground-color: var(--salt-actionable-bold-foreground);
-  --ag-icon-font-color: var(--salt-actionable-bold-foreground);
-  --ag-chip-background-color: var(--salt-actionable-bold-background);
-
+  box-sizing: border-box;
+  height: var(--salt-size-base);
+  gap: var(--salt-spacing-100);
+  padding: 0 var(--salt-spacing-100);
+  border-radius: var(--salt-palette-corner-weak, 0);
+  box-shadow: var(--salt-overlayable-shadow);
   color: var(--ag-secondary-foreground-color);
 }
 
-div[class*="ag-theme-salt"] .ag-column-drop-cell:hover {
-  --ag-secondary-foreground-color: var(--salt-actionable-bold-foreground-hover);
-  --ag-icon-font-color: var(--salt-actionable-bold-foreground-hover);
-  --ag-chip-background-color: var(--salt-actionable-bold-background-hover);
+[class*="ag-theme-salt"] .ag-column-drop-vertical-cell {
+  height: calc(var(--salt-size-base) + 2 * var(--salt-spacing-50));
 }
 
-div[class*="ag-theme-salt"] .ag-column-drop-cell:active,
-div[class*="ag-theme-salt"] .ag-column-drop-cell[aria-expanded="true"] {
-  --ag-secondary-foreground-color: var(--salt-actionable-bold-foreground-active);
-  --ag-icon-font-color: var(--salt-actionable-bold-foreground-active);
-  --ag-chip-background-color: var(--salt-actionable-bold-background-active);
+[class*="ag-theme-salt"] .ag-column-drop-cell-drag-handle,
+[class*="ag-theme-salt"] .ag-column-drop-cell-text {
+  margin: 0;
+}
+
+[class*="ag-theme-salt"] .ag-column-drop-cell-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  min-width: unset;
+  /* Transparent button (Figma "Neutral button"), --salt-spacing-50 inside the chip */
+  height: calc(var(--salt-size-base) - var(--salt-spacing-100));
+  aspect-ratio: 1;
+  margin: 0;
+  border-radius: var(--salt-palette-corner-weak, 0);
+}
+
+[class*="ag-theme-salt"] .ag-column-drop-vertical-cell .ag-column-drop-cell-button {
+  height: var(--salt-size-base);
+}
+
+[class*="ag-theme-salt"] .ag-column-drop-cell-button:hover {
+  background-color: var(--salt-actionable-subtle-background-hover);
+  --ag-icon-font-color: var(--salt-actionable-subtle-foreground-hover);
+}
+
+/* Keyboard focus uses the Salt focus ring instead of the AG Grid focus box */
+[class*="ag-theme-salt"] .ag-column-drop-cell:focus-visible {
+  outline: var(--salt-focused-outline);
+}
+
+[class*="ag-theme-salt"] .ag-column-drop-cell:focus-visible::after {
+  content: none;
+}
+
+/* The arrow between grouped columns in the row group panel uses the Salt chevron */
+[class*="ag-theme-salt"] .ag-column-drop-horizontal {
+  --ag-icon-font-code-small-right: var(--ag-icon-font-code-next);
+  --ag-icon-font-code-small-left: var(--ag-icon-font-code-previous);
 }

@@ -126,6 +126,7 @@
 /* Class applied if `variant="tertiary"` */
 .saltPillInput-tertiary {
   --pillInput-background: var(--salt-editable-tertiary-background);
+  --pillInput-background-disabled: var(--salt-editable-tertiary-background-disabled);
   --pillInput-background-readonly: var(--salt-editable-background-readonly);
   --pillInput-borderColor: var(--salt-editable-borderColor);
   --pillInput-borderColor-active: var(--salt-editable-borderColor-active);

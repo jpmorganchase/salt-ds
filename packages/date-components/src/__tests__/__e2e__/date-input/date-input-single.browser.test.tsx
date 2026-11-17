@@ -96,8 +96,16 @@ function registerAdapterTests(adapter: SaltDateAdapter<any>) {
       MockDate.reset();
     });
 
+    // A trailing focusable lets Tab leave the input; Firefox keeps focus on
+    // the last element in the test frame.
     const render = (children: React.ReactNode, locale?: unknown) =>
-      renderWithSalt(children, { dateAdapter: adapter, dateLocale: locale });
+      renderWithSalt(
+        <>
+          {children}
+          <button type="button">After</button>
+        </>,
+        { dateAdapter: adapter, dateLocale: locale },
+      );
 
     it("SHOULD apply the name prop to the input", async () => {
       await render(<DateInputSingle name="start-date" />);

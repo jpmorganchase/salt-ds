@@ -13,6 +13,10 @@ import {
   THead,
   TR,
 } from "@salt-ds/core";
+import {
+  type PreviewDensity,
+  previewDensities,
+} from "../components/previewDensity";
 import { ThemeSettingsOverlay } from "../components/ThemeSettingsOverlay";
 import { CopyToClipboard } from "../copy-to-clipboard";
 import styles from "./AllTokens.module.css";
@@ -20,7 +24,7 @@ import { getTokenGroupDescription } from "./descriptions";
 import { TokenPreview } from "./TokenPreview";
 import type { TokenGroups } from "./tokenData";
 
-export type Density = "high" | "medium" | "low" | "touch" | "mobile";
+export type Density = PreviewDensity;
 export type DensityOverrides = Partial<
   Record<string, Partial<Record<Density, string>>>
 >;
@@ -43,13 +47,7 @@ export const themes: Array<{ displayName: string; value: ThemeType }> = [
   },
 ];
 
-export const densities: Density[] = [
-  "high",
-  "medium",
-  "low",
-  "touch",
-  "mobile",
-];
+export const densities = previewDensities;
 
 const themeOptions = themes.map(({ displayName, value }) => ({
   value,
@@ -166,7 +164,8 @@ export function TokenTable({
               <TBody>
                 {rows.map(([name, value]) => {
                   const resolvedValue =
-                    densityOverrides?.[name]?.[density] ?? value;
+                    getDensityOverride(densityOverrides, name, density) ??
+                    value;
 
                   return (
                     <TR key={name}>
@@ -222,6 +221,21 @@ function TokenTableSettings({
       onReset={controls.onReset}
     />
   );
+}
+
+function getDensityOverride(
+  densityOverrides: DensityOverrides | undefined,
+  name: string,
+  density: Density,
+) {
+  const overrides = densityOverrides?.[name];
+
+  // Mobile (Interim) only overrides some mobile density tokens
+  if (density === "mobile-interim") {
+    return overrides?.["mobile-interim"] ?? overrides?.mobile;
+  }
+
+  return overrides?.[density];
 }
 
 function getSectionHeadingId(tier: TokenTier) {

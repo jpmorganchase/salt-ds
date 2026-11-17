@@ -95,7 +95,7 @@ export const TreeNodeTrigger = forwardRef<
     onClick?.(event);
     if (disabled) return;
     const target = event.target as HTMLElement;
-    if (target.closest(".saltTreeNodeExpansionIcon")) return;
+    if (hasChildren && target.closest(".saltTreeNodeExpansionIcon")) return;
     const nestedTreeItem = target.closest('[role="treeitem"]');
     if (nestedTreeItem && nestedTreeItem !== nodeRef.current) {
       return;

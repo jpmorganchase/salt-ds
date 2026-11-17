@@ -205,6 +205,7 @@ export const VerticalNesting: StoryFn<QAContainerProps> = (props) => {
               <Step label="Step 1.2.2" stage="pending" />
             </Step>
           </Step>
+          <Step label="Step 2" stage="pending" />
         </Stepper>
       </StackLayout>
     </QAContainer>

@@ -9,6 +9,7 @@ const __dirname = path.dirname(__filename);
 
 const themeFolder = "../packages/theme/src/css";
 const densities = ["high", "medium", "low", "touch", "mobile"];
+const mobileInterimFile = "experimental/mobile-interim.css";
 
 function getTokensFromCssFile(cssFilePath) {
   const ast = parse(fs.readFileSync(cssFilePath, { encoding: "utf-8" }));
@@ -55,6 +56,23 @@ function getDensityTokensFromCssFile(cssFilePath) {
 
     return acc;
   }, {});
+}
+
+const mobileInterimTokens = getTokensFromCssFile(
+  path.join(themeFolder, mobileInterimFile),
+);
+
+/* Mobile (Interim) is theme agnostic, so its values are added to every theme for the tokens that theme defines */
+function addMobileInterimDensity(densityTokens, themeTokens) {
+  const result = { ...densityTokens };
+
+  for (const [property, value] of Object.entries(mobileInterimTokens)) {
+    if (property in themeTokens) {
+      result[property] = { ...result[property], "mobile-interim": value };
+    }
+  }
+
+  return result;
 }
 
 function writeObjectToFile(object, outputFile) {
@@ -107,7 +125,10 @@ for (const [themeName, tokens] of Object.entries(characteristicSets)) {
 }
 
 for (const [themeName, tokens] of Object.entries(characteristicDensitySets)) {
-  writeObjectToFile(tokens, `cssCharacteristicsDensity-${themeName}.json`);
+  writeObjectToFile(
+    addMobileInterimDensity(tokens, characteristicSets[themeName]),
+    `cssCharacteristicsDensity-${themeName}.json`,
+  );
 }
 
 /* Generate CSS Foundations JSON */
@@ -171,7 +192,10 @@ for (const [themeName, tokens] of Object.entries(foundationSets)) {
 
 for (const [themeName, tokens] of Object.entries(foundationDensitySets)) {
   writeObjectToFile(
-    { ...sharedFoundationDensity, ...tokens },
+    addMobileInterimDensity(
+      { ...sharedFoundationDensity, ...tokens },
+      { ...sharedFoundations, ...foundationSets[themeName] },
+    ),
     `cssFoundationsDensity-${themeName}.json`,
   );
 }
