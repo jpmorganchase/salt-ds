@@ -27,6 +27,7 @@ Use a decision button group when:
 
 - The group represents one compact decision point in a flow.
 - The actions have equal or near-equal priority.
+- The user can only select/activate one button at a time. 
 
 ### When not to use
 
@@ -40,8 +41,8 @@ Use a decision button group when:
 
 A decision button group typically contains two or more buttons placed together with consistent spacing:
 
-1. **Buttons:** Each button performs an action and activating one button does not select it. Buttons return to their default state after activation.
-2. **Toggle buttons:** The buttons represent a choice and the selected option needs to remain visible. If the choice is optional, selecting the currently selected option may clear the selection.
+1. **Buttons:** Contains label and icon. 
+2. **Toggle buttons:** Contains label and icon. 
 
 <Diagram
   src="/img/patterns/decision-button-group/decision-button-group-2.png"
@@ -63,17 +64,21 @@ A decision button group typically contains two or more buttons placed together w
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  Use spacing-100 between buttons. For more information, read Salt guidance on
+- Use spacing-100 between buttons. For more information, read Salt guidance on
   [horizontal spacing](/salt/foundations/spacing#horizontal-spacing).
+- Don't mix button types in the same group. 
 </GuidanceCallout>
 
-## Selectable decision button group
+## Interaction models
 
-A decision button group can support two different interaction models. Choose the model based on what the user is doing. Use a selectable decision button group when each button represents a choice, rating, or decision. The user is choosing something, and the selected button remains visible as the current value. For example, Like/Dislike or Thumbs up/Thumbs down.
+A decision button group can support two different interaction models. Choose the model based on what the user is doing. 
 
-## Deselection
+1. Use a decision button group when each button performs an action and return to their default state after activation. 
+2. Use a selectable decision button group when each button represents a choice, rating, or decision. The user is choosing something, and the selected button remains visible as the current value. For example, Like/Dislike or Thumbs up/Thumbs down.
 
-Use deselection behavior on a selectable decision button group when it represents a single choice from a small set of related options. When a user selects an option, any previously selected option in the group is deselected. This prevents conflicting selections.
+### Deselection
+
+Use deselection behavior on selectable decision button group when it represents a single choice from a small set of related options. When a user selects an option, any previously selected option in the group is deselected. This prevents conflicting selections.
 
 For optional choices, selecting the currently selected option may clear the selection and return the group to its initial unselected state. Use this only when “no choice” is a valid outcome, such as a feedback rating that can be removed.
 
