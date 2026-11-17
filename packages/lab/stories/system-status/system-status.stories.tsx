@@ -1,6 +1,7 @@
 import {
   Banner,
   BannerContent,
+  Button,
   H1,
   Link,
   OnSolidButton,
@@ -15,6 +16,7 @@ import {
   SystemStatusContent,
 } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
+import { useRef, useState } from "react";
 
 export default {
   title: "Lab/System Status",
@@ -29,7 +31,10 @@ const messages: { status: ValidationStatus; message: string }[] = [
     message:
       "The system will be down for scheduled maintenance starting Friday, June 21 from 11:00PM EST – 1:00AM EST Saturday, June 22",
   },
-  { status: "error", message: "System failure. Please try again." },
+  {
+    status: "error",
+    message: "Some services are unavailable. Refresh the page to try again.",
+  },
 ];
 
 const titledMessages: {
@@ -121,24 +126,66 @@ export const WithActions: StoryFn<typeof SystemStatus> = () => (
         <Text color="inherit">New feature updates are available</Text>
       </SystemStatusContent>
       <SystemStatusActions>
-        <OnSolidButton aria-label="Dismiss">
+        <OnSolidButton aria-label="Dismiss system status">
           <CloseIcon aria-hidden />
         </OnSolidButton>
       </SystemStatusActions>
     </SystemStatus>
     <SystemStatus status="error">
       <SystemStatusContent>
-        <Text color="inherit">System failure. Please try again.</Text>
+        <Text color="inherit">
+          Some services are unavailable. Refresh the page to try again.
+        </Text>
       </SystemStatusContent>
       <SystemStatusActions>
         <OnSolidButton>Try again</OnSolidButton>
-        <OnSolidButton aria-label="Dismiss">
+        <OnSolidButton aria-label="Dismiss system status">
           <CloseIcon aria-hidden />
         </OnSolidButton>
       </SystemStatusActions>
     </SystemStatus>
   </StackLayout>
 );
+
+export const Announced: StoryFn<typeof SystemStatus> = () => {
+  const [open, setOpen] = useState(false);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+
+  const handleDismiss = () => {
+    setOpen(false);
+    triggerRef.current?.focus();
+  };
+
+  return (
+    <StackLayout gap={3} align="center" style={{ width: 600 }}>
+      {/* Always mounted so screen readers announce content added to it. */}
+      <div role="status" style={{ width: "100%" }}>
+        {open && (
+          <SystemStatus>
+            <SystemStatusContent>
+              <Text color="inherit">
+                Scheduled maintenance is planned for Saturday from 08:00 to
+                10:00 UTC. Some services may be unavailable.
+              </Text>
+            </SystemStatusContent>
+            <SystemStatusActions>
+              <OnSolidButton>View status</OnSolidButton>
+              <OnSolidButton
+                aria-label="Dismiss system status"
+                onClick={handleDismiss}
+              >
+                <CloseIcon aria-hidden />
+              </OnSolidButton>
+            </SystemStatusActions>
+          </SystemStatus>
+        )}
+      </div>
+      <Button ref={triggerRef} onClick={() => setOpen(true)}>
+        Show system status
+      </Button>
+    </StackLayout>
+  );
+};
 
 export const LongContent: StoryFn<typeof SystemStatus> = (args) => (
   <div style={{ width: 600 }}>
@@ -159,7 +206,7 @@ export const LongContent: StoryFn<typeof SystemStatus> = (args) => (
       </SystemStatusContent>
       <SystemStatusActions>
         <OnSolidButton>View details</OnSolidButton>
-        <OnSolidButton aria-label="Dismiss">
+        <OnSolidButton aria-label="Dismiss system status">
           <CloseIcon aria-hidden />
         </OnSolidButton>
       </SystemStatusActions>
@@ -174,7 +221,7 @@ export const Placement: StoryFn<typeof SystemStatus> = (args) => (
         <Text color="inherit">New feature updates are available.</Text>
       </SystemStatusContent>
       <SystemStatusActions>
-        <OnSolidButton aria-label="Dismiss">
+        <OnSolidButton aria-label="Dismiss system status">
           <CloseIcon aria-hidden />
         </OnSolidButton>
       </SystemStatusActions>

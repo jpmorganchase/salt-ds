@@ -58,6 +58,8 @@ Buttons can be nested inside `TabBar` to provide related actions e.g. adding a n
 
 `TabAction`s can be used to add actions to tabs e.g. dismissing a tab. When dismissing a tab, a warning dialog may be used when dismissing a tab will result in data loss.
 
+When the selected tab is removed, a neighboring tab is selected and `onChange` is called with a `null` event and the new value.
+
 ### Best practices
 
 - Don't use dismissible tabs for tabs that are essential to the user's workflow.
