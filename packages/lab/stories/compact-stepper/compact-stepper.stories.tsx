@@ -6,6 +6,9 @@ export default {
   title: "Lab/Compact Stepper",
   component: CompactStepper,
   subcomponents: { Step },
+  args: {
+    "aria-label": "Checkout progress",
+  },
   decorators: [
     (Story) => (
       <div style={{ width: 640 }}>

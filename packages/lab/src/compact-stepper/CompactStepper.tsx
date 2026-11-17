@@ -21,7 +21,7 @@ import { getCompactStepperState } from "./internal/getCompactStepperState";
 
 export interface CompactStepperProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Steps of the process.
+   * Steps of the process. Only `Step` elements are read; components that wrap `Step` are ignored.
    */
   children?: ReactNode;
 }
@@ -58,12 +58,20 @@ export const CompactStepper = forwardRef<HTMLDivElement, CompactStepperProps>(
       progress,
       currentCount,
       hasNonStepChild,
+      hasNestedSteps,
     } = getCompactStepperState(children);
     const totalSteps = steps.length;
 
     // Status takes precedence over stage, as in Stepper.
     const state = current?.status ?? current?.stage;
     const Icon = useCompactStepperIcon(state);
+    // As in Step, "active" isn't announced; the step count already marks the current step.
+    const stateText =
+      state === "inprogress"
+        ? "in progress"
+        : state !== "active"
+          ? state
+          : undefined;
 
     useEffect(() => {
       if (process.env.NODE_ENV !== "production") {
@@ -74,7 +82,7 @@ export const CompactStepper = forwardRef<HTMLDivElement, CompactStepperProps>(
         }
         if (currentCount > 1) {
           console.warn(
-            '<CompactStepper /> should contain only one <Step stage="active" /> or <Step stage="locked" />. Using the first one.',
+            '<CompactStepper /> should contain only one <Step stage="active" />, <Step stage="inprogress" /> or <Step stage="locked" />. Using the first one.',
           );
         }
         if (hasNonStepChild) {
@@ -82,8 +90,11 @@ export const CompactStepper = forwardRef<HTMLDivElement, CompactStepperProps>(
             "<CompactStepper /> children should be <Step /> elements.",
           );
         }
+        if (hasNestedSteps) {
+          console.warn("<CompactStepper /> does not support nested steps!");
+        }
       }
-    }, [totalSteps, currentCount, hasNonStepChild]);
+    }, [totalSteps, currentCount, hasNonStepChild, hasNestedSteps]);
 
     return (
       <div
@@ -124,13 +135,8 @@ export const CompactStepper = forwardRef<HTMLDivElement, CompactStepperProps>(
             >
               {current.label}
             </Text>
-            {state && (
-              <span
-                className={clsx(
-                  withBaseName("screenReaderOnly"),
-                  withBaseName("state"),
-                )}
-              >{`, ${state}`}</span>
+            {stateText && (
+              <span className="salt-visuallyHidden">{`, ${stateText}`}</span>
             )}
           </Text>
         )}
