@@ -5,12 +5,11 @@ the layouts, navigation, search UI, MDX component registry and live examples.
 The public Salt packages retain their existing React support; React 19 is the
 documentation application's runtime.
 
-## Mosaic integration snapshot
+## Mosaic App Router integration
 
-The documentation site pins Mosaic to `0.0.0-snapshot-20261115213905`, published
-from commit `3f16c888bf54d64833132cdf26a2248010dfd76a`.
-[Mosaic #931](https://github.com/jpmorganchase/mosaic/pull/931),
-[snapshot release run](https://github.com/jpmorganchase/mosaic/actions/runs/43764783187).
+The documentation site pins Mosaic to the published `1.0.0-beta.99` release,
+which includes the App Router integration merged in
+[Mosaic #931](https://github.com/jpmorganchase/mosaic/pull/931).
 
 For testing future local candidates in a separate verification branch, use the
 tarballs produced by the Mosaic snapshot workflow:
