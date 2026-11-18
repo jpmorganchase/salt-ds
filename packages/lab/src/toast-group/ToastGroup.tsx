@@ -10,7 +10,8 @@ const withBaseName = makePrefixer("saltToastGroup");
 
 export interface ToastGroupProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The corner of the viewport the group is fixed to. Defaults to "bottom-right".
+   * The corner of the viewport the group is fixed to.
+   * @default "bottom-right"
    */
   placement?: "top-right" | "bottom-right";
 }

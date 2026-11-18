@@ -9,7 +9,7 @@ import checkboxIconCss from "./CheckboxIcon.css";
 
 export interface CheckboxIconProps {
   /**
-   * If `true`, the icon shows a checkmark. Defaults to `false`.
+   * If `true`, the icon shows a checkmark.
    */
   checked?: boolean;
   /**
@@ -33,7 +33,7 @@ export interface CheckboxIconProps {
    */
   readOnly?: boolean;
   /**
-   * The validation status to style the icon with: "error", "warning" or "success".
+   * The validation status to style the icon with: `"error"`, `"warning"` or `"success"`.
    */
   validationStatus?: AdornmentValidationStatus;
 }

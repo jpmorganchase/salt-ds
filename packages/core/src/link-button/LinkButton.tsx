@@ -39,7 +39,7 @@ export interface LinkButtonProps extends ComponentPropsWithoutRef<"a"> {
    * Either "default" or "never".
    * Determines when underline should be applied to the link button.
    *
-   * @default "default".
+   * @default "default"
    */
   underline?: "default" | "never";
 }

@@ -9,7 +9,9 @@ import bannerCss from "./Banner.css";
 
 export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Emphasize the styling by applying a background color: defaults to false
+   * The styling variant. `"secondary"` fills the banner with the background
+   * color of its `status`.
+   * @default "primary"
    */
   variant?: "primary" | "secondary";
   /**

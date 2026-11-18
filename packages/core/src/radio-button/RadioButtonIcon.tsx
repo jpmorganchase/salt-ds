@@ -26,7 +26,7 @@ export interface RadioButtonIconProps extends ComponentPropsWithoutRef<"div"> {
    */
   readOnly?: boolean;
   /**
-   * The validation status to style the icon with: "error", "warning" or "success".
+   * The validation status to style the icon with: `"error"`, `"warning"` or `"success"`.
    */
   validationStatus?: AdornmentValidationStatus;
 }

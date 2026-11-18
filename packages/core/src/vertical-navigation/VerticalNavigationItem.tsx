@@ -16,7 +16,7 @@ export interface VerticalNavigationItemProps
   extends ComponentPropsWithoutRef<"li"> {
   /**
    * If `true`, marks the item as the current page: its trigger gets
-   * `aria-current="page"` and the item shows the active styling. Defaults to `false`.
+   * `aria-current="page"` and the item shows the active styling.
    */
   active?: boolean;
 }

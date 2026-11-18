@@ -34,14 +34,12 @@ export interface TooltipProps
    */
   children: ReactNode;
   /**
-   * Whether to hide the Tooltip arrow.
-   * @default false
+   * If `true`, the Tooltip arrow is hidden.
    */
   hideArrow?: boolean;
   /**
-   * Whether to hide the status icon within the Tooltip.
+   * If `true`, the status icon within the Tooltip is hidden.
    * If no status is provided, icon will also be hidden.
-   * @default false
    */
   hideIcon?: boolean;
   /**
@@ -63,8 +61,8 @@ export interface TooltipProps
    */
   leaveDelay?: number;
   /**
-   * Option to not display the Tooltip. Can be used in conditional situations like text truncation.
-   * @default false
+   * If `true`, the Tooltip isn't shown, for example when its trigger's text
+   * isn't truncated.
    */
   disabled?: boolean;
   /**
@@ -76,13 +74,13 @@ export interface TooltipProps
    */
   disableFocusListener?: boolean;
   /**
-   * Whether the Tooltip is shown. When set, it's controlled: use
-   * `onOpenChange` to update it. Leave it unset for the Tooltip to show and
-   * hide itself as its trigger is hovered or focused.
+   * If `true`, the Tooltip is shown. Use with `onOpenChange` to control it.
+   * Leave it unset for the Tooltip to show and hide itself when its trigger is
+   * hovered or focused.
    */
   open?: UseFloatingUIProps["open"];
   /**
-   * Where to place the Tooltip relative to its trigger.
+   * The placement of the Tooltip relative to its trigger.
    * @default "right"
    */
   placement?: UseFloatingUIProps["placement"];

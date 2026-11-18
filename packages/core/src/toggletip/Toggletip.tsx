@@ -20,7 +20,8 @@ export interface ToggletipProps {
    */
   onOpenChange?: (open: boolean) => void;
   /**
-   * Set the placement of the Toggletip component relative to the trigger element. Defaults to `top`.
+   * The placement of the Toggletip relative to its trigger.
+   * @default "top"
    */
   placement?: "top" | "bottom" | "left" | "right";
 }
