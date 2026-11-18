@@ -794,7 +794,7 @@ const ResizablePanel = ({ style }: { style?: CSSProperties }) => {
   );
 };
 
-const ResizableExample: StoryFn = () => {
+const ResizableExample = () => {
   const {
     panelRef,
     expanded,
