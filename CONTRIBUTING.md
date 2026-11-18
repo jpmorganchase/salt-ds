@@ -81,7 +81,7 @@ Document every prop in a component's props interface with JSDoc. Editors show th
 #### Content
 
 - Describe what the prop does for someone using the component. Keep guidance on when to use it on the site.
-- Don't repeat the type, which the props tables already show. Only list the values of a union to explain what each one does.
+- Don't repeat the type, which the props tables already show. Only list the values of a union to explain what each one does, or when the type is an alias such as `FormFieldLabelPlacement`, which the props tables show by name.
 - Give units, for example "Delay in milliseconds before the Tooltip is shown."
 - Say when a prop only applies with other props, for example "Only applies when `direction` is `"horizontal"`."
 - Describe props that you redeclare from an extended interface. Descriptions from other libraries might not fit Salt's component. For example, Floating UI documents `open` with `@default false`, but Salt's `Tooltip` opens and closes itself when `open` isn't set.
