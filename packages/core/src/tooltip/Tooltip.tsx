@@ -62,7 +62,8 @@ export interface TooltipProps
   leaveDelay?: number;
   /**
    * If `true`, the Tooltip isn't shown, for example when its trigger's text
-   * isn't truncated.
+   * isn't truncated. The Tooltip also isn't shown when the surrounding
+   * `FormField` is disabled.
    */
   disabled?: boolean;
   /**
