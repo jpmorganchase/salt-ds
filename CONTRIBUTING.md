@@ -104,8 +104,13 @@ Document a callback's arguments with `@param name - Description.` when they aren
 - Document a default with `@default` instead of in the description, so that the props tables show it. The props tables only find a default without the tag when the component destructures the prop in its parameters.
 - Write the value as it is in code, for example `@default "top"`, `@default 300` or `@default true`. Don't use backticks or single quotes, and don't end the value with a period.
 - Don't document a default of `false` or `undefined`, because an unset prop already behaves that way.
-- When the default depends on other props or is calculated, describe it in the description instead.
 - When you change a default in code, update the JSDoc too.
+
+Some defaults change with other props, come from a parent component or are calculated. Use `@default` for the value that the prop has when nothing else affects it, and explain the rest in the description:
+
+- **Another prop or a parent changes the default.** Use `@default` for the default on its own, and say what changes it. For example, `Text`'s `color` has `@default "primary"` and "When `styleAs` is `"inherit"`, it defaults to `"inherit"`." `ToggleButton`'s `sentiment` has `@default "neutral"` and "Inside a `ToggleButtonGroup`, it defaults to the group's `sentiment`."
+- **A parent can also turn it on.** Some components combine a prop with a parent's value, so setting the prop to `false` doesn't override the parent. Say so. For example: "The input is also disabled when the surrounding `FormField` is disabled."
+- **There's no fixed value.** When the default is calculated or generated, don't use `@default`. Describe how it's worked out instead, for example "Defaults to the number of decimal places in `value` or `step`, whichever is greater." or "When not set, an ID is generated."
 
 #### Example
 
