@@ -13,6 +13,40 @@ highchartsMore(Highcharts);
 patternFill(Highcharts);
 accessibility(Highcharts);
 
+const assetGroups = [
+  {
+    name: "Equity",
+    points: [
+      { name: "Stocks", x: 6.5, y: 10, z: 45 },
+      { name: "Tech", x: 7.5, y: 12.5, z: 18 },
+      { name: "Small", x: 8, y: 9, z: 3 },
+      { name: "Mid", x: 5.5, y: 11.5, z: 5 },
+      { name: "Intl", x: 7, y: 8, z: 4 },
+    ],
+  },
+  {
+    name: "Fixed Income",
+    points: [
+      { name: "Bonds", x: 2, y: 8, z: 25 },
+      { name: "Cash", x: 1, y: 6.4, z: 12 },
+      { name: "Tips", x: 2.5, y: 5, z: 3 },
+      { name: "Muni", x: 1.5, y: 4, z: 4 },
+      { name: "Short", x: 0.7, y: 3, z: 6 },
+    ],
+  },
+  {
+    name: "Alternative",
+    points: [
+      { name: "Crypto", x: 8.5, y: 14, z: 2 },
+      { name: "RE", x: 4, y: 5, z: 8 },
+      { name: "Goods", x: 4.7, y: 8.5, z: 8 },
+      { name: "Gold", x: 3.2, y: 6, z: 3 },
+      { name: "PE", x: 6, y: 13, z: 4 },
+      { name: "VC", x: 9.4, y: 13, z: 1 },
+    ],
+  },
+];
+
 const bubbleChartOptions: Options = {
   chart: {
     type: "bubble",
@@ -64,42 +98,11 @@ const bubbleChartOptions: Options = {
       '<span>Return: </span><span class="value">{point.y}%</span><br/>' +
       '<span>Market cap: </span><span class="value">&#36;{point.z}T</span>',
   },
-  series: [
-    {
-      type: "bubble",
-      name: "Equity",
-      data: [
-        { name: "Stocks", x: 6.5, y: 10, z: 45 },
-        { name: "Tech", x: 7.5, y: 12.5, z: 18 },
-        { name: "Small", x: 8, y: 9, z: 3 },
-        { name: "Mid", x: 5.5, y: 11.5, z: 5 },
-        { name: "Intl", x: 7, y: 8, z: 4 },
-      ],
-    },
-    {
-      type: "bubble",
-      name: "Fixed Income",
-      data: [
-        { name: "Bonds", x: 2, y: 8, z: 25 },
-        { name: "Cash", x: 1, y: 6.4, z: 12 },
-        { name: "Tips", x: 2.5, y: 5, z: 3 },
-        { name: "Muni", x: 1.5, y: 4, z: 4 },
-        { name: "Short", x: 0.7, y: 3, z: 6 },
-      ],
-    },
-    {
-      type: "bubble",
-      name: "Alternative",
-      data: [
-        { name: "Crypto", x: 8.5, y: 14, z: 2 },
-        { name: "RE", x: 4, y: 5, z: 8 },
-        { name: "Goods", x: 4.7, y: 8.5, z: 8 },
-        { name: "Gold", x: 3.2, y: 6, z: 3 },
-        { name: "PE", x: 6, y: 13, z: 4 },
-        { name: "VC", x: 9.4, y: 13, z: 1 },
-      ],
-    },
-  ],
+  series: assetGroups.map(({ name, points }) => ({
+    type: "bubble" as const,
+    name,
+    data: points,
+  })),
 };
 
 export const BubbleChart = () => {
@@ -125,11 +128,14 @@ export const BubbleChart = () => {
         options={chartOptions}
         ref={chartRef}
       />
-      <p className={styles.chartSummary}>
-        Asset class groups: <strong>Equity</strong> (Stocks, Tech, Small, Mid,
-        Intl); <strong>Fixed Income</strong> (Bonds, Cash, Tips, Muni, Short);{" "}
-        <strong>Alternative</strong> (Crypto, RE, Goods, Gold, PE, VC).
-      </p>
+      <ul className={styles.chartGroupKey} aria-label="Asset class groups">
+        {assetGroups.map(({ name, points }) => (
+          <li key={name}>
+            <strong>{name}</strong>
+            <span>{points.map((point) => point.name).join(", ")}</span>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

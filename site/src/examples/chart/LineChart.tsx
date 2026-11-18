@@ -13,6 +13,7 @@ accessibility(Highcharts);
 const lineChartOptions: Options = {
   chart: {
     type: "line",
+    spacingRight: 52,
   },
   accessibility: {
     description:
@@ -79,25 +80,25 @@ const lineChartOptions: Options = {
       name: "MXN",
       data: [4, 5, 6, 6.5, 6.3, 7, 6, 5, 4, 3],
       type: "line",
-      marker: { enabled: true, symbol: "circle" },
+      marker: { enabled: true, radius: 3, symbol: "circle" },
     },
     {
       name: "KRW",
       data: [5, 6, 5, 4, 5, 6, 5, 4, 5, 6],
       type: "line",
-      marker: { enabled: true, symbol: "diamond" },
+      marker: { enabled: true, radius: 3, symbol: "diamond" },
     },
     {
       name: "TRY",
       data: [3, 5, 7, 5, 3, 5, 7, 5, 3, 5],
       type: "line",
-      marker: { enabled: true, symbol: "square" },
+      marker: { enabled: true, radius: 3, symbol: "square" },
     },
     {
       name: "PLN",
       data: [4, 4.5, 5, 5.5, 6, 5.5, 5, 4.5, 4, 4.5],
       type: "line",
-      marker: { enabled: true, symbol: "triangle" },
+      marker: { enabled: true, radius: 3, symbol: "triangle" },
     },
   ],
 };

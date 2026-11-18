@@ -17,9 +17,6 @@ const stackedBarChartOptions: Options = {
   title: {
     text: "Regional revenue by product",
   },
-  subtitle: {
-    text: "Segments run left to right: FX, Fixed Income (FI), Equities (EQ)",
-  },
   accessibility: {
     description:
       "A stacked bar chart showing revenue by product across regions. This demonstrates how categories stack to a total per region.",
@@ -46,6 +43,7 @@ const stackedBarChartOptions: Options = {
       dataLabels: {
         enabled: true,
         inside: true,
+        style: { color: "contrast" },
       },
     },
   },
@@ -99,6 +97,9 @@ export const StackedBarChart = () => {
         options={chartOptions}
         ref={chartRef}
       />
+      <p className={styles.chartCaption}>
+        Left to right within each bar: FX, Fixed Income (FI), Equities (EQ).
+      </p>
     </div>
   );
 };

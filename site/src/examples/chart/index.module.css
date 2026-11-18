@@ -15,9 +15,28 @@
   width: 100%;
 }
 
-.chartSummary {
+.chartCaption,
+.chartGroupKey {
   color: var(--salt-content-secondary-foreground);
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
   margin: 0;
+}
+
+.chartGroupKey {
+  display: grid;
+  gap: var(--salt-spacing-200);
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  list-style: none;
+  padding: 0;
+}
+
+.chartGroupKey li {
+  display: flex;
+  flex-direction: column;
+  gap: var(--salt-spacing-100);
+}
+
+.chartGroupKey strong {
+  color: var(--salt-content-primary-foreground);
 }

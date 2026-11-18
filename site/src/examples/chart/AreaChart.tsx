@@ -48,11 +48,20 @@ const areaChartOptions: Options = {
       dataLabels: {
         enabled: true,
         align: "left",
+        backgroundColor: "var(--salt-container-primary-background)",
+        borderRadius: 2,
+        padding: 4,
         x: 6,
         y: -4,
+        style: {
+          color: "var(--salt-content-primary-foreground)",
+          textOutline: "none",
+        },
         formatter() {
-          // Label the well-separated peaks rather than 73 individual points.
-          return this.point.x === 1961 ? this.series.name : undefined;
+          // Label the peak of each series instead of every point.
+          return this.point.y === this.series.dataMax
+            ? this.series.name
+            : undefined;
         },
       },
       marker: {

@@ -21,7 +21,7 @@ const candlestickChartOptions: Options = {
   },
   accessibility: {
     description:
-      "A candlestick chart showing stock price movements over time. Each candlestick represents the open, high, low, and close prices for a trading period.",
+      "A candlestick chart showing stock price movements over time. Each candlestick represents the open, high, low, and close prices for a trading period. A closing price above the opening price is represented as an up candle; a closing price below the opening price is a down candle.",
     point: {
       valuePrefix: "$",
     },
@@ -87,13 +87,7 @@ const candlestickChartOptions: Options = {
 // demonstration keeps Salt's patterned sentiment fills instead.
 const hollowCandlestickOptions: Options = {
   ...candlestickChartOptions,
-  subtitle: { text: "Hollow = rising; filled = falling" },
   plotOptions: { candlestick: { upColor: "transparent" } },
-};
-
-const patternedCandlestickOptions: Options = {
-  ...candlestickChartOptions,
-  subtitle: { text: "Striped = rising; dotted = falling" },
 };
 
 export const CandlestickChart = () => {
@@ -102,7 +96,7 @@ export const CandlestickChart = () => {
 
   const chartOptions = useChart(
     chartRef,
-    patterns ? patternedCandlestickOptions : hollowCandlestickOptions,
+    patterns ? candlestickChartOptions : hollowCandlestickOptions,
     { fillPatterns: patterns },
   );
 
@@ -121,6 +115,11 @@ export const CandlestickChart = () => {
         options={chartOptions}
         ref={chartRef}
       />
+      <p className={styles.chartCaption}>
+        {patterns
+          ? "Striped body: close above open. Dotted body: close below open."
+          : "Hollow body: close above open. Filled body: close below open."}
+      </p>
     </div>
   );
 };
