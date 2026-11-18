@@ -30,7 +30,7 @@ describe("getCompactStepperState", () => {
       25,
     ],
     [
-      "the in progress step",
+      "the in progress step as active",
       [
         step({ label: "One", stage: "completed" }),
         step({ label: "Two", stage: "inprogress" }),
@@ -101,6 +101,27 @@ describe("getCompactStepperState", () => {
 
     expect(state.current?.label).toBe("One");
     expect(state.currentCount).toBe(3);
+  });
+
+  test.each<[string, ReactNode[], boolean]>([
+    [
+      "an in progress step",
+      [
+        step({ label: "One", stage: "completed" }),
+        step({ label: "Two", stage: "inprogress" }),
+      ],
+      true,
+    ],
+    [
+      "no in progress step",
+      [
+        step({ label: "One", stage: "completed" }),
+        step({ label: "Two", stage: "active" }),
+      ],
+      false,
+    ],
+  ])("should flag WHEN there is %s", (_, children, expected) => {
+    expect(getCompactStepperState(children).hasInProgressStep).toBe(expected);
   });
 
   test("should flag steps with nested steps", () => {

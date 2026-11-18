@@ -57,6 +57,7 @@ export const CompactStepper = forwardRef<HTMLDivElement, CompactStepperProps>(
       current,
       progress,
       currentCount,
+      hasInProgressStep,
       hasNonStepChild,
       hasNestedSteps,
     } = getCompactStepperState(children);
@@ -66,12 +67,9 @@ export const CompactStepper = forwardRef<HTMLDivElement, CompactStepperProps>(
     const state = current?.status ?? current?.stage;
     const Icon = useCompactStepperIcon(state);
     // As in Step, "active" isn't announced; the step count already marks the current step.
+    // "inprogress" isn't supported and is treated as "active".
     const stateText =
-      state === "inprogress"
-        ? "in progress"
-        : state !== "active"
-          ? state
-          : undefined;
+      state !== "active" && state !== "inprogress" ? state : undefined;
 
     useEffect(() => {
       if (process.env.NODE_ENV !== "production") {
@@ -82,7 +80,12 @@ export const CompactStepper = forwardRef<HTMLDivElement, CompactStepperProps>(
         }
         if (currentCount > 1) {
           console.warn(
-            '<CompactStepper /> should contain only one <Step stage="active" />, <Step stage="inprogress" /> or <Step stage="locked" />. Using the first one.',
+            '<CompactStepper /> should contain only one <Step stage="active" /> or <Step stage="locked" />. Using the first one.',
+          );
+        }
+        if (hasInProgressStep) {
+          console.warn(
+            '<CompactStepper /> does not support <Step stage="inprogress" />. Use <Step stage="active" /> instead.',
           );
         }
         if (hasNonStepChild) {
@@ -94,7 +97,13 @@ export const CompactStepper = forwardRef<HTMLDivElement, CompactStepperProps>(
           console.warn("<CompactStepper /> does not support nested steps!");
         }
       }
-    }, [totalSteps, currentCount, hasNonStepChild, hasNestedSteps]);
+    }, [
+      totalSteps,
+      currentCount,
+      hasInProgressStep,
+      hasNonStepChild,
+      hasNestedSteps,
+    ]);
 
     return (
       <div
