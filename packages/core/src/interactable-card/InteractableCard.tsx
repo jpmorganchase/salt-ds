@@ -52,6 +52,13 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
    */
   onChange?: (event: SyntheticEvent<HTMLDivElement>) => void;
   /**
+   * Callback fired when the card is clicked, or when Enter or Space is pressed
+   * on it. It isn't fired when the card is disabled.
+   * @param event - The click event. When the card is activated with Enter or
+   * Space, it's the keyboard event.
+   */
+  onClick?: ComponentPropsWithoutRef<"div">["onClick"];
+  /**
    * Styling variant.
    * @default "primary"
    */

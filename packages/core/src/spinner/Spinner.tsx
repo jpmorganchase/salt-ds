@@ -42,10 +42,6 @@ export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
    */
   announcerTimeout?: number;
   /**
-   * The className(s) of the component.
-   */
-  className?: string;
-  /**
    * Determines the message to be announced by the component when it unmounts. Set to null if not needed.
    */
   completionAnnouncement?: string | null;
@@ -54,7 +50,8 @@ export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
    */
   disableAnnouncer?: boolean;
   /**
-   * The prop for the role attribute of the component.
+   * The role of the spinner's root element.
+   * @default "img"
    */
   role?: string;
   /**
@@ -62,7 +59,9 @@ export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
    */
   size?: SpinnerSize;
   /**
-   * The ids of the SvgSpinner components.
+   * The ID of the spinner's SVG element. It's also used as a prefix for the IDs
+   * inside the SVG, and isn't applied to the root element. When not set, an ID
+   * is generated.
    */
   id?: string;
 }
