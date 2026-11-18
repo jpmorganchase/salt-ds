@@ -11,7 +11,7 @@ import {
   useSidePanel,
 } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
-import { useRef, useState } from "react";
+import { version as reactVersion, useRef, useState } from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { checkAccessibility } from "~browser-test-utils/accessibility";
@@ -133,6 +133,20 @@ function ControlledPanel({
 
 describe("GIVEN a SidePanel component", () => {
   checkAccessibility(composedStories);
+
+  it("shows a supported resizable example for the React version", async () => {
+    await renderWithSalt(<composedStories.Resizable />);
+
+    if (Number.parseInt(reactVersion, 10) >= 18) {
+      await expect
+        .element(page.getByRole("button", { name: "Open right panel" }))
+        .toBeVisible();
+    } else {
+      await expect
+        .element(page.getByText(/This example requires React 18 or later/))
+        .toBeVisible();
+    }
+  });
 
   it.each([
     [Left, "Open left panel", "left"],

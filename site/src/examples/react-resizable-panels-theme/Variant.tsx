@@ -20,6 +20,7 @@ export function Variant() {
             <Text>Left</Text>
           </Panel>
           <Separator
+            aria-label="Resize left and center panels"
             className={clsx(
               "resize-handle-salt-border-right",
               "resize-handle-salt-variant-secondary",
@@ -29,6 +30,7 @@ export function Variant() {
             <Text>Center</Text>
           </Panel>
           <Separator
+            aria-label="Resize center and right panels"
             className={clsx(
               "resize-handle-salt-border-left",
               "resize-handle-salt-variant-tertiary",

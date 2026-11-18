@@ -96,23 +96,35 @@ export function MultiOrientational() {
               <Panel className="center">
                 <Text>Top Left</Text>
               </Panel>
-              <Separator className="resize-handle-salt-border-top resize-handle-salt-border-bottom" />
+              <Separator
+                aria-label="Resize top-left and middle-left panels"
+                className="resize-handle-salt-border-top resize-handle-salt-border-bottom"
+              />
               <Panel className="center">
                 <Text>Middle Left</Text>
               </Panel>
-              <Separator className="resize-handle-salt-border-top resize-handle-salt-border-bottom" />
+              <Separator
+                aria-label="Resize middle-left and bottom-left panels"
+                className="resize-handle-salt-border-top resize-handle-salt-border-bottom"
+              />
               <Panel className="center">
                 <Text>Bottom Left</Text>
               </Panel>
             </Group>
           </Panel>
-          <Separator className="resize-handle-salt-border-right resize-handle-salt-border-left" />
+          <Separator
+            aria-label="Resize left and right panels"
+            className="resize-handle-salt-border-right resize-handle-salt-border-left"
+          />
           <Panel>
             <Group orientation="vertical">
               <Panel className="center">
                 <Text>Top Right</Text>
               </Panel>
-              <Separator className="resize-handle-salt-border-top resize-handle-salt-border-bottom" />
+              <Separator
+                aria-label="Resize top-right and bottom-right panels"
+                className="resize-handle-salt-border-top resize-handle-salt-border-bottom"
+              />
               <Panel className="center">
                 <Text>Bottom Right</Text>
               </Panel>
@@ -134,23 +146,23 @@ export function Transparent() {
               <Panel className="center">
                 <Text>Top Left</Text>
               </Panel>
-              <Separator />
+              <Separator aria-label="Resize top-left and middle-left panels" />
               <Panel className="center">
                 <Text>Middle Left</Text>
               </Panel>
-              <Separator />
+              <Separator aria-label="Resize middle-left and bottom-left panels" />
               <Panel className="center">
                 <Text>Bottom Left</Text>
               </Panel>
             </Group>
           </Panel>
-          <Separator />
+          <Separator aria-label="Resize left and right panels" />
           <Panel>
             <Group orientation="vertical">
               <Panel className="center">
                 <Text>Top Right</Text>
               </Panel>
-              <Separator />
+              <Separator aria-label="Resize top-right and bottom-right panels" />
               <Panel className="center">
                 <Text>Bottom Right</Text>
               </Panel>
@@ -170,11 +182,17 @@ export function Border() {
           <Panel id="left" minSize="0%" defaultSize="25%" className="center">
             <Text>Left</Text>
           </Panel>
-          <Separator className="resize-handle-salt-border-right" />
+          <Separator
+            aria-label="Resize left and center panels"
+            className="resize-handle-salt-border-right"
+          />
           <Panel minSize="50%" className="center">
             <Text>Center</Text>
           </Panel>
-          <Separator className="resize-handle-salt-border-left" />
+          <Separator
+            aria-label="Resize center and right panels"
+            className="resize-handle-salt-border-left"
+          />
           <Panel minSize="0%" defaultSize="25%" className="center">
             <Text>Right</Text>
           </Panel>
@@ -196,11 +214,17 @@ export function Variant() {
           >
             <Text>Left</Text>
           </Panel>
-          <Separator className="resize-handle-salt-border-right resize-handle-salt-variant-secondary" />
+          <Separator
+            aria-label="Resize left and center panels"
+            className="resize-handle-salt-border-right resize-handle-salt-variant-secondary"
+          />
           <Panel minSize="50%" className="center">
             <Text>Center</Text>
           </Panel>
-          <Separator className="resize-handle-salt-border-left resize-handle-salt-variant-tertiary" />
+          <Separator
+            aria-label="Resize center and right panels"
+            className="resize-handle-salt-border-left resize-handle-salt-variant-tertiary"
+          />
           <Panel
             minSize="0%"
             defaultSize="25%"
@@ -222,11 +246,17 @@ export function Size() {
           <Panel minSize="20%" className="center">
             <Text>Left [20%, X]</Text>
           </Panel>
-          <Separator className="resize-handle-salt-border-left resize-handle-salt-border-right" />
+          <Separator
+            aria-label="Resize left and center panels"
+            className="resize-handle-salt-border-left resize-handle-salt-border-right"
+          />
           <Panel id="middle" minSize="40%" maxSize="60%" className="center">
             <Text>Middle [30%, 60%]</Text>
           </Panel>
-          <Separator className="resize-handle-salt-border-left resize-handle-salt-border-right" />
+          <Separator
+            aria-label="Resize center and right panels"
+            className="resize-handle-salt-border-left resize-handle-salt-border-right"
+          />
           <Panel minSize="20%" className="center">
             <Text>Right [20%, X]</Text>
           </Panel>
@@ -250,7 +280,10 @@ export function CollapsibleSetSize() {
           >
             <Text>Left [15%, 30%]</Text>
           </Panel>
-          <Separator className="resize-handle-salt-border-left resize-handle-salt-border-right" />
+          <Separator
+            aria-label="Resize left and right panels"
+            className="resize-handle-salt-border-left resize-handle-salt-border-right"
+          />
           <Panel className="center">
             <Text>Right</Text>
           </Panel>
@@ -289,7 +322,10 @@ export function CollapsibleContainerQuery() {
               </ToggleButton>
             </ToggleButtonGroup>
           </Panel>
-          <Separator className="resize-handle-salt-border-left resize-handle-salt-border-right" />
+          <Separator
+            aria-label="Resize navigation and content panels"
+            className="resize-handle-salt-border-left resize-handle-salt-border-right"
+          />
           <Panel className="center">
             <Text>Content</Text>
           </Panel>
@@ -331,6 +367,7 @@ export function CollapsibleTo0() {
             className="center"
           />
           <Separator
+            aria-label="Resize left and right panels"
             disableDoubleClick
             onDoubleClick={toggle}
             className="resize-handle-salt-border-left resize-handle-salt-border-right"
@@ -383,7 +420,10 @@ export function ProgrammableResize() {
               <Panel panelRef={ref} className="center">
                 <Text>Left</Text>
               </Panel>
-              <Separator className="resize-handle-salt-border-left resize-handle-salt-border-right" />
+              <Separator
+                aria-label="Resize left and right panels"
+                className="resize-handle-salt-border-left resize-handle-salt-border-right"
+              />
               <Panel className="center">
                 <Text>Right</Text>
               </Panel>

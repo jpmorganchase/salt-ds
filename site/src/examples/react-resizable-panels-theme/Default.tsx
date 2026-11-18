@@ -19,7 +19,7 @@ export function Default() {
               >
                 <Text>Top Left</Text>
               </Panel>
-              <Separator className="" />
+              <Separator aria-label="Resize top-left and middle-left panels" />
               <Panel
                 className={clsx(
                   styles.center,
@@ -28,7 +28,7 @@ export function Default() {
               >
                 <Text>Middle Left</Text>
               </Panel>
-              <Separator className="" />
+              <Separator aria-label="Resize middle-left and bottom-left panels" />
               <Panel
                 className={clsx(
                   styles.center,
@@ -39,7 +39,7 @@ export function Default() {
               </Panel>
             </Group>
           </Panel>
-          <Separator />
+          <Separator aria-label="Resize left and right panels" />
           <Panel>
             <Group orientation="vertical">
               <Panel
@@ -50,7 +50,7 @@ export function Default() {
               >
                 <Text>Top Right</Text>
               </Panel>
-              <Separator className="" />
+              <Separator aria-label="Resize top-right and bottom-right panels" />
               <Panel
                 className={clsx(
                   styles.center,

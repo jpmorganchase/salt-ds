@@ -130,6 +130,7 @@
     "execa": "^10.0.0",
     "get-tsconfig": "^4.7.5",
     "playwright": "1.63.0",
+    "react-resizable-panels-v3": "npm:react-resizable-panels@^3.0.0",
     "rollup": "^4.24.2",
     "rollup-plugin-esbuild": "^6.1.1",
     "rollup-plugin-postcss": "^4.0.2",

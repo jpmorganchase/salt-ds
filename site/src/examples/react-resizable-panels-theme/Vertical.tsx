@@ -11,11 +11,17 @@ export function Vertical() {
           <Panel className={styles.center}>
             <Text>Top</Text>
           </Panel>
-          <Separator className="resize-handle-salt-border-top" />
+          <Separator
+            aria-label="Resize top and center panels"
+            className="resize-handle-salt-border-top"
+          />
           <Panel className={styles.center}>
             <Text>Center</Text>
           </Panel>
-          <Separator className="resize-handle-salt-border-bottom" />
+          <Separator
+            aria-label="Resize center and bottom panels"
+            className="resize-handle-salt-border-bottom"
+          />
           <Panel className={styles.center}>
             <Text>Bottom</Text>
           </Panel>
