@@ -876,7 +876,8 @@ describe("GIVEN a Combo box with no options to show", () => {
       const keyDown = trackNativeEvents();
       await renderWithSalt(<FilteredComboBox onKeyDown={keyDown.handler} />);
       await typeFilter("z");
-      await expect.element(input()).toHaveAttribute("aria-expanded", "true");
+      await expect.element(input()).toHaveAttribute("aria-expanded", "false");
+      await expect.element(input()).not.toHaveAttribute("aria-controls");
       await expect.element(listbox()).not.toBeInTheDocument();
 
       await userEvent.keyboard(key);

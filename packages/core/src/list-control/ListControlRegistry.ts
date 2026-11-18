@@ -150,6 +150,10 @@ export class ListControlRegistry<Item> {
     return entry?.data === option ? entry : undefined;
   }
 
+  findById(id: string): RegisteredOption<Item> | undefined {
+    return this.#entries.get(id);
+  }
+
   matching(
     predicate: (option: OptionValue<Item>) => boolean,
   ): RegisteredOption<Item>[] {

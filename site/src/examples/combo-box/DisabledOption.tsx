@@ -29,6 +29,7 @@ export const DisabledOption = (): ReactElement => {
   return (
     <ComboBox
       onChange={handleChange}
+      inputProps={{ "aria-autocomplete": "list" }}
       onSelectionChange={handleSelectionChange}
       value={value}
       style={{ width: "266px" }}
