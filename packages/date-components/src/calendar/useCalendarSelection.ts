@@ -121,7 +121,13 @@ export interface UseCalendarSelectionBaseProps<Selection> {
 
 export type UseCalendarSelectionSingleProps =
   UseCalendarSelectionBaseProps<SingleDateSelection<DateFrameworkType> | null> & {
+    /**
+     * The selection variant. `"single"` selects a single date.
+     */
     selectionVariant: "single";
+    /**
+     * If `true`, multiple dates can be selected. Leave unset to select one date.
+     */
     multiselect?: false;
   };
 
@@ -129,14 +135,26 @@ export type UseCalendarSelectionMultiselectSingleProps =
   UseCalendarSelectionBaseProps<
     Array<SingleDateSelection<DateFrameworkType>>
   > & {
+    /**
+     * The selection variant. `"single"` selects single dates.
+     */
     selectionVariant: "single";
+    /**
+     * If `true`, multiple dates can be selected.
+     */
     multiselect: true;
   };
 
 export type UseCalendarSelectionRangeProps = UseCalendarSelectionBaseProps<
   DateRangeSelection<DateFrameworkType>
 > & {
+  /**
+   * The selection variant. `"range"` selects a date range from a start date and an end date.
+   */
   selectionVariant: "range";
+  /**
+   * If `true`, multiple date ranges can be selected. Leave unset to select one date range.
+   */
   multiselect?: false;
 };
 
@@ -144,14 +162,26 @@ export type UseCalendarSelectionMultiselectRangeProps =
   UseCalendarSelectionBaseProps<
     Array<DateRangeSelection<DateFrameworkType>>
   > & {
+    /**
+     * The selection variant. `"range"` selects date ranges from a start date and an end date.
+     */
     selectionVariant: "range";
+    /**
+     * If `true`, multiple date ranges can be selected.
+     */
     multiselect: true;
   };
 
 export type UseCalendarSelectionOffsetProps = UseCalendarSelectionBaseProps<
   DateRangeSelection<DateFrameworkType>
 > & {
+  /**
+   * The selection variant. `"offset"` selects a date range that's offset from the selected date.
+   */
   selectionVariant: "offset";
+  /**
+   * If `true`, multiple date ranges can be selected. Leave unset to select one date range.
+   */
   multiselect?: false;
 };
 
@@ -159,7 +189,13 @@ export type UseCalendarSelectionMultiselectOffsetProps =
   UseCalendarSelectionBaseProps<
     Array<DateRangeSelection<DateFrameworkType>>
   > & {
+    /**
+     * The selection variant. `"offset"` selects date ranges that are offset from the selected dates.
+     */
     selectionVariant: "offset";
+    /**
+     * If `true`, multiple date ranges can be selected.
+     */
     multiselect: true;
   };
 

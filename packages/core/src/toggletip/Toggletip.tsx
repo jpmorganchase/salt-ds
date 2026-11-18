@@ -10,6 +10,9 @@ import { useControlled } from "../utils";
 import { ToggletipContext } from "./ToggletipContext";
 
 export interface ToggletipProps {
+  /**
+   * The content of the Toggletip, usually a `ToggletipTrigger` and a `ToggletipPanel`.
+   */
   children?: ReactNode;
   /**
    * If `true`, the Toggletip is open. Use with `onOpenChange` to control it.

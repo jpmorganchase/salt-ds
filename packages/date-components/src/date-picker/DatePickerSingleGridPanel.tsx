@@ -113,10 +113,16 @@ export interface DatePickerPanelBaseProps
 const withBaseName = makePrefixer("saltDatePickerPanel");
 
 export type DatePickerSingleGridPanelProps = DatePickerPanelBaseProps & {
+  /**
+   * Callback fired when the user selects a date in the panel.
+   */
   onSelectionChange?: (
     event: SyntheticEvent,
     selectedDate?: DateFrameworkType | null,
   ) => void;
+  /**
+   * Props applied to the `Calendar` component.
+   */
   CalendarProps?: Partial<
     Omit<
       CalendarSingleProps,

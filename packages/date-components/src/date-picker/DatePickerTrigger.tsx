@@ -9,7 +9,13 @@ const withBaseName = makePrefixer("saltDatePickerTrigger");
  * Props for the DatePickerTrigger component.
  */
 export interface DatePickerTriggerProps {
+  /**
+   * The class name applied to the root element.
+   */
   className?: string;
+  /**
+   * The content of the trigger, usually a `DatePickerSingleInput` or a `DatePickerRangeInput`.
+   */
   children?: ReactNode;
 }
 

@@ -2,7 +2,13 @@ import { type RefObject, useEffect } from "react";
 import { ownerWindow } from "./ownerWindow";
 
 export interface UseResizeObserverProps {
+  /**
+   * The ref of the element to observe.
+   */
   ref: RefObject<HTMLElement | null>;
+  /**
+   * Callback fired when the element is resized.
+   */
   onResize: () => void;
 }
 

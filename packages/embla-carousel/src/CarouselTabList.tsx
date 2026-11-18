@@ -33,6 +33,11 @@ export interface CarouselTabListProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 export interface CarouselTabRendererProps extends CarouselTabProps {
+  /**
+   * Render prop to customize the tab. Pass an element to merge the tab's props
+   * into it, or a function that receives the tab's props and returns an
+   * element. When not set, a `CarouselTab` is rendered.
+   */
   render?: CarouselTabListProps["render"];
 }
 

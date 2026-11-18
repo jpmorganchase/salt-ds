@@ -7,10 +7,26 @@ import {
 } from "react";
 
 export interface CardHookProps<T extends Element> {
+  /**
+   * If `true`, the card is disabled. The returned `cardProps` set `aria-disabled`, don't make the card focusable, and don't call `onClick` on click or when `Enter` or `Space` is pressed.
+   */
   disabled?: boolean;
+  /**
+   * Callback fired when a key is released on the card.
+   */
   onKeyUp?: (event: KeyboardEvent<T>) => void;
+  /**
+   * Callback fired when a key is pressed on the card.
+   */
   onKeyDown?: (event: KeyboardEvent<T>) => void;
+  /**
+   * Callback fired when the card is clicked, or when `Enter` or `Space` is pressed on it. It isn't fired when the card is disabled.
+   * @param event - The click event. When the card is activated with `Enter` or `Space`, it's the keyboard event.
+   */
   onClick?: (event: MouseEvent<T>) => void;
+  /**
+   * Callback fired when the card loses focus.
+   */
   onBlur?: (event: FocusEvent<T>) => void;
 }
 

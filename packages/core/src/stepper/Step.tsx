@@ -72,12 +72,34 @@ export type StepDepth = number;
 
 export interface StepProps
   extends Omit<ComponentPropsWithoutRef<"li">, "onToggle"> {
+  /**
+   * The label of the step.
+   */
   label?: ReactNode;
+  /**
+   * Description text is displayed just below the label.
+   */
   description?: ReactNode;
+  /**
+   * Optional string to determine the status of the step.
+   */
   status?: StepStatus;
+  /**
+   * The stage of the step.
+   */
   stage?: StepStage;
+  /**
+   * If `true`, the step is expanded. Use with `onToggle` to control it.
+   */
   expanded?: boolean;
+  /**
+   * If `true`, the step is expanded initially. Use when the component is
+   * uncontrolled.
+   */
   defaultExpanded?: boolean;
+  /**
+   * Callback fired when the step is toggled.
+   */
   onToggle?: ButtonProps["onClick"];
 }
 

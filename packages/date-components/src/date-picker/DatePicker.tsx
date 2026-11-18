@@ -39,7 +39,13 @@ function hasDatePickerActions(children: ReactNode): boolean {
  * Base props for DatePicker.
  */
 export interface DatePickerBaseProps {
+  /**
+   * The class name applied to the root element.
+   */
   className?: string;
+  /**
+   * The content of the date picker, usually a `DatePickerTrigger` and a `DatePickerOverlay`.
+   */
   children?: ReactNode;
   /**
    * If `true`, enables apply mode where selections are not committed until explicitly applied.
@@ -85,6 +91,9 @@ export interface DatePickerBaseProps {
 export interface DatePickerSingleProps
   extends DatePickerBaseProps,
     UseDatePickerSingleProps {
+  /**
+   * The selection variant. Use `"single"` to select one date, or `"range"` to select a date range.
+   */
   selectionVariant: "single";
 }
 
@@ -94,6 +103,9 @@ export interface DatePickerSingleProps
 export interface DatePickerRangeProps
   extends DatePickerBaseProps,
     UseDatePickerRangeProps {
+  /**
+   * The selection variant. Use `"single"` to select one date, or `"range"` to select a date range.
+   */
   selectionVariant: "range";
 }
 

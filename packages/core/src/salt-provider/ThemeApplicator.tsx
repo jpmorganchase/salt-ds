@@ -69,6 +69,9 @@ export interface ThemeApplicatorProps {
    * @default "Open Sans"
    */
   actionFont?: ActionFont;
+  /**
+   * The content that the theme applies to. When `applyClassesTo` is `"child"`, it must be a single element, which the theme classes and attributes are added to.
+   */
   children?: ReactNode;
 }
 
