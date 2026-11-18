@@ -8,7 +8,7 @@ import { capitalize, makePrefixer } from "../utils";
 import statusIndicatorCss from "./StatusIndicator.css";
 import type { ValidationStatus } from "./ValidationStatus";
 
-export interface StatusIndicatorProps extends IconProps {
+export interface StatusIndicatorProps extends Omit<IconProps, "color"> {
   /**
    * Status indicator to be displayed.
    */
