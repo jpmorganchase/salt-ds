@@ -1,7 +1,7 @@
 import { Step, type StepStage, type StepStatus } from "@salt-ds/core";
 import { CompactStepper } from "@salt-ds/lab";
 import { composeStories } from "@storybook/react-vite";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import { page } from "vitest/browser";
 import { checkAccessibility } from "~browser-test-utils/accessibility";
 import { renderWithSalt } from "~browser-test-utils/render";
@@ -44,7 +44,6 @@ describe("GIVEN a CompactStepper", () => {
   it.each<[StepStage, StepStatus | undefined, string]>([
     ["active", "error", "Step 2 of 3: Two, error"],
     ["active", "warning", "Step 2 of 3: Two, warning"],
-    ["inprogress", undefined, "Step 2 of 3: Two, in progress"],
     ["locked", undefined, "Step 2 of 3: Two, locked"],
     ["locked", "error", "Step 2 of 3: Two, error"],
   ])(
@@ -61,6 +60,27 @@ describe("GIVEN a CompactStepper", () => {
       expect(getText()).toBe(expected);
     },
   );
+
+  it("THEN shows an in progress step as active and warns that it isn't supported", async () => {
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    try {
+      await renderWithSalt(
+        <CompactStepper>
+          <Step label="One" stage="completed" />
+          <Step label="Two" stage="inprogress" />
+          <Step label="Three" />
+        </CompactStepper>,
+      );
+
+      expect(getText()).toBe("Step 2 of 3: Two");
+      expect(warnSpy).toHaveBeenCalledWith(
+        expect.stringContaining('does not support <Step stage="inprogress" />'),
+      );
+    } finally {
+      warnSpy.mockRestore();
+    }
+  });
 
   it("THEN fills the whole bar WHEN every step is completed", async () => {
     await renderWithSalt(
