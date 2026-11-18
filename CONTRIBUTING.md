@@ -76,34 +76,36 @@ Document every prop in a component's props interface with JSDoc. Editors show th
 - Start each description with a capital letter and end each sentence with a period.
 - Put the description first and tags after it, with `@deprecated` last. Text after a tag becomes part of that tag.
 - Use American English, as the site does, for example "color", "customize" and "behavior".
-- Wrap code in backticks. This includes the names of props, components and types, CSS variables, HTML elements and attributes, and values written as they are in code, such as `` `true` ``, `` `300` `` and `` `"top"` ``.
+- Wrap code in backticks. This includes the names of props, components and types, CSS variables, HTML elements and attributes, and values written as they are in code, such as `` `true` ``, `` `300` `` and `` `"top"` ``. When you describe what the prop's own component shows, you can name it without backticks, such as "the Tooltip arrow".
 
 #### Content
 
-- Describe what the prop does for someone using the component. Keep guidance on when to use it on the site.
+- Describe what the prop does for someone using the component. A short example of what it's for can help, but keep guidance on when to use it on the site.
 - Don't repeat the type, which the props tables already show. Only list the values of a union to explain what each one does, or when the type is an alias such as `FormFieldLabelPlacement`, which the props tables show by name.
 - Give units, for example "Delay in milliseconds before the Tooltip is shown."
 - Say when a prop only applies with other props, for example "Only applies when `direction` is `"horizontal"`."
+- Say when a prop is needed for accessibility, for example when it gives the component its accessible name.
 - Describe props that you redeclare from an extended interface. Descriptions from other libraries might not fit Salt's component. For example, Floating UI documents `open` with `@default false`, but Salt's `Tooltip` opens and closes itself when `open` isn't set.
 - Don't extend an interface that has props the component doesn't support. Remove them with `Omit` so that they don't appear in editors or the props tables.
 
 #### Phrasing
 
-| Prop                                  | Pattern                                               | Example                                                     |
-| ------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------------- |
-| Boolean                               | If `true`, …                                          | If `true`, the Tooltip arrow is hidden.                     |
-| Callback                              | Callback fired when …                                 | Callback fired when the open state changes.                 |
-| Controlled, such as `value` or `open` | … Use with its change callback to control it.         | The value of the slider. Use with `onChange` to control it. |
-| Uncontrolled, such as `defaultValue`  | The initial … Use when the component is uncontrolled. | The initial value. Use when the component is uncontrolled.  |
-| Anything else                         | A noun phrase, usually starting with "The"            | The placement of the Toggletip relative to its trigger.     |
+| Prop                                       | Pattern                                               | Example                                                     |
+| ------------------------------------------ | ----------------------------------------------------- | ----------------------------------------------------------- |
+| Boolean                                    | If `true`, …                                          | If `true`, the Tooltip arrow is hidden.                     |
+| Event callback, such as `onChange`         | Callback fired when …                                 | Callback fired when the open state changes.                 |
+| Controlled, such as `value` or `open`      | … Use with its change callback to control it.         | The value of the slider. Use with `onChange` to control it. |
+| Uncontrolled, such as `defaultValue`       | The initial … Use when the component is uncontrolled. | The initial value. Use when the component is uncontrolled.  |
+| Props for an element, such as `inputProps` | Props applied to …                                    | Props applied to the `input` element.                       |
+| Anything else, including other functions   | A noun phrase, usually starting with "The"            | The function that formats the value.                        |
 
 Document a callback's arguments with `@param name - Description.` when they aren't obvious, for example when `event` can be `null`.
 
 #### Defaults
 
-- Document a default with `@default` instead of in the description, so that the props tables show it. The props tables only find a default without the tag when the component destructures the prop in its parameters.
+- Document a default with `@default` instead of in the description. Editors show the tag, and the props tables can't always find a default in the code.
 - Write the value as it is in code, for example `@default "top"`, `@default 300` or `@default true`. Don't use backticks or single quotes, and don't end the value with a period.
-- Don't document a default of `false` or `undefined`, because an unset prop already behaves that way.
+- Don't document a default of `false` or `undefined`. An unset prop is already `undefined`, which a boolean treats as `false`.
 - When you change a default in code, update the JSDoc too.
 
 Some defaults change with other props, come from a parent component or are calculated. Use `@default` for the value that the prop has when nothing else affects it, and explain the rest in the description:
@@ -157,7 +159,7 @@ To deprecate a prop, you should:
 
 1. Add a `@deprecated` tag to the prop's JSDoc, after its description. Say which version deprecated the prop and what to use instead, for example ``@deprecated since 1.71.0. Use `InteractableCard` instead.`` Don't write "Deprecated" in the description instead of using the tag, because editors only strike through props that have the tag.
 2. Update the component's documentation to reflect the deprecation, including the reason for deprecation and the recommended alternative.
-3. Add a changeset with the deprecation information, including the prop name, the reason for deprecation, and the recommended alternative. The changeset should show contain a diff code block.
+3. Add a changeset with the deprecation information, including the prop name, the reason for deprecation, and the recommended alternative. The changeset should contain a diff code block.
 
 ### Supporting React 16 to 19
 
