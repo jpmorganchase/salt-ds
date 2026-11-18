@@ -143,9 +143,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
       handleTypeahead(event);
     }
 
-    const activeOption = activeState ?? getFirstOption()?.data;
-
-    if (activeOption === undefined) {
+    if (!activeState && !getFirstOption()) {
       return;
     }
 
@@ -155,7 +153,7 @@ export const ListBox = forwardRef(function ListBox<Item>(
     }
 
     const newActive: OptionAndElement<Item> | undefined = isNavigationKey
-      ? getListControlNavigationTarget(event.key, activeOption, {
+      ? getListControlNavigationTarget(event.key, activeState, {
           getFirstOption,
           getLastOption,
           getOptionAfter,

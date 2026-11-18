@@ -39,6 +39,7 @@ export const ClearSelection = (): ReactElement => {
       multiselect
       selected={selected}
       onChange={handleChange}
+      inputProps={{ "aria-autocomplete": "list" }}
       onSelectionChange={handleSelectionChange}
       value={value}
       style={{ width: "266px" }}

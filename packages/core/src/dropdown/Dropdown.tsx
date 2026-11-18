@@ -237,9 +237,13 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     setOpen(newOpen);
   };
 
+  const hasValidChildren =
+    Children.toArray(children).filter(Boolean).length > 0;
+  const popupOpen = openState && !readOnly && hasValidChildren;
+
   const { x, y, strategy, elements, floating, reference, context } =
     useFloatingUI({
-      open: openState && !readOnly && Children.count(children) > 0,
+      open: popupOpen,
       onOpenChange: handleOpenChange,
       placement: "bottom-start",
       middleware: [
@@ -330,9 +334,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
       handleTypeahead(event);
     }
 
-    const activeOption = activeState ?? getFirstOption()?.data;
-
-    if (activeOption === undefined) {
+    if (!activeState && !getFirstOption()) {
       return;
     }
 
@@ -342,7 +344,7 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     }
 
     const newActive: OptionAndElement<Item> | undefined = isNavigationKey
-      ? getListControlNavigationTarget(event.key, activeOption, {
+      ? getListControlNavigationTarget(event.key, activeState, {
           getFirstOption,
           getLastOption,
           getOptionAfter,
@@ -475,13 +477,13 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         disabled={disabled}
         aria-readonly={readOnly ? "true" : undefined}
         aria-required={required ? "true" : undefined}
-        aria-expanded={openState}
-        aria-activedescendant={activeState?.id}
+        aria-expanded={popupOpen}
+        aria-activedescendant={popupOpen ? activeState?.id : undefined}
         aria-labelledby={clsx(formFieldLabelledBy, ariaLabelledBy) || undefined}
         aria-describedby={
           clsx(formFieldDescribedBy, ariaDescribedBy) || undefined
         }
-        aria-controls={openState ? listId : undefined}
+        aria-controls={popupOpen ? listId : undefined}
         {...getReferenceProps({
           onKeyDown: handleKeyDown,
           onFocus: handleFocus,
@@ -504,16 +506,12 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
         {!disabled && validationStatus && (
           <StatusAdornment status={validationStatus} />
         )}
-        {!readOnly && <ExpandIcon open={openState} />}
+        {!readOnly && <ExpandIcon open={popupOpen} />}
         <div className={withBaseName("activationIndicator")} />
       </button>
       <OptionList
         aria-multiselectable={multiselect}
-        open={
-          (openState || focusedState) &&
-          !readOnly &&
-          Children.count(children) > 0
-        }
+        open={(openState || focusedState) && !readOnly && hasValidChildren}
         {...getFloatingProps({
           onMouseOver: handleListMouseOver,
           onFocus: handleFocusButton,
