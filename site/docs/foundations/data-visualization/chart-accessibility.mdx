@@ -14,7 +14,7 @@ Charts rely on visual elements to make complex data easier to understand, so it�
 
 ## Color contrast
 
-Color contrast is essential for the readability of charts, especially for people with low vision or color deficiencies. The use of custom colors or hex codes is discouraged, as they may not meet WCAG non-text contrast requirements. Salt tokens should be used to ensure compliance with WCAG, as they are designed to achieve at least a 3:1 contrast ratio between the background and non-text chart elements such as bars, lines, segments, and icons.
+Color contrast is essential for the readability of charts, especially for people with low vision or color deficiencies. The use of custom colors or hex codes is discouraged, as they may not meet WCAG non-text contrast requirements. Salt tokens are designed to achieve at least a 3:1 contrast ratio between the background and non-text chart elements such as bars, lines, segments, and icons. This does not mean categorical colors are distinguishable from each other: a separate visual cue may still be needed to identify series.
 
 <Diagram
   src="/img/foundations/dataviz-hex.png"
@@ -26,17 +26,21 @@ Color contrast is essential for the readability of charts, especially for people
 
 ## Visual affordances
 
-Using color alone to convey meaning makes charts difficult to understand to users with visual disabilities. You can enhance your chart’s accessibility by adopting additional visual strategies, such as:
+Under [WCAG 1.4.1 Use of Color](https://www.w3.org/WAI/WCAG22/Understanding/use-of-color), color cannot be the only visual way to distinguish information. A color-coded legend alone does not solve this if users must still distinguish hues to match the legend to the chart. Choose a visible alternative appropriate to the data:
 
-- Line and Pattern fills to distinguish different categories
-- Marker symbols for distinctive data points
-- Direct labelling of segments
+- Direct labels on lines, areas, segments, or points
+- Distinct marker shapes or line styles, with matching legend keys
+- A fixed series position or order, explicitly described in text
+- Different shapes or fills, such as hollow and solid candlesticks
+- Line or fill patterns when the other cues are unsuitable
 
-Try to also use borders with at least a 3:1 contrast ratio against the background to distinguish between segments to help distinguish them from each other.
+Use borders with at least a 3:1 contrast ratio against adjacent fills when boundaries are needed to understand the chart. Borders can separate segments but may not identify which series each segment represents.
+
+Screen reader descriptions, keyboard navigation, and tooltips remain important, but do not replace the visible alternatives required by WCAG 1.4.1. For dense charts, consider an additional visible summary or data table.
 
 ## Line patterns
 
-Use line patterns to differentiate multiple line series.
+Use line patterns to differentiate multiple line series when direct labels and distinct marker shapes are not sufficient.
 
 Learn more about the available line patterns in the [Color and pattern page.](/salt/foundations/data-visualization/color-and-pattern)
 
@@ -50,7 +54,7 @@ Learn more about the available line patterns in the [Color and pattern page.](/s
 
 ## Pattern fills
 
-Use pattern fills for two-dimensional shapes, such as bars and slices. Pattern fills should always be black as they are applied over solid categorical colors in charts. They are especially helpful when there is only one visual distinction between data points, ensuring that all users can easily differentiate between chart elements.
+Use pattern fills for two-dimensional shapes, such as bars and slices, when their meaning would otherwise depend on color. Pattern fills should always be black as they are applied over solid categorical colors in charts. They are particularly useful for dense or stacked charts where visible labels would become crowded, but are not mandatory when another visual cue communicates the same information.
 
 Learn more about the available pattern fills in the [Color and pattern page.](/salt/foundations/data-visualization/color-and-pattern)
 
@@ -84,7 +88,7 @@ Salt uses predefined symbols in the following order:
 
 ## Text formats
 
-Assistive technology users typically navigate charts using screen readers or keyboards—and may not always be unable to perceive visual elements in a complex chart or navigate the chart easily. Consider if the complexity of your chart warrants a text description or an equivalent format.
+Assistive technology users typically navigate charts using screen readers or keyboards—and may not be able to perceive every visual element or navigate a complex chart easily. Consider whether the complexity of your chart warrants a text description or an equivalent format.
 
 There are several things you could add to aid the understanding of your chart:
 

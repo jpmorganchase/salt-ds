@@ -14,3 +14,10 @@
 .chart {
   width: 100%;
 }
+
+.chartSummary {
+  color: var(--salt-content-secondary-foreground);
+  font-size: var(--salt-text-label-fontSize);
+  line-height: var(--salt-text-label-lineHeight);
+  margin: 0;
+}

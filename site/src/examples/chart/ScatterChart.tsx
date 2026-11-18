@@ -53,6 +53,7 @@ const scatterChartOptions: Options = {
     {
       type: "scatter",
       name: "Portfolio A",
+      marker: { symbol: "circle" },
       data: [
         [6.5, 5.2],
         [8.1, 6.3],
@@ -65,6 +66,7 @@ const scatterChartOptions: Options = {
     {
       type: "scatter",
       name: "Portfolio B",
+      marker: { symbol: "diamond" },
       data: [
         [5.0, 4.0],
         [7.3, 5.4],
@@ -77,6 +79,7 @@ const scatterChartOptions: Options = {
     {
       type: "scatter",
       name: "Benchmark",
+      marker: { symbol: "square" },
       data: [
         [4.0, 3.5],
         [6.0, 4.3],

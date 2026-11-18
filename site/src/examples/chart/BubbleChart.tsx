@@ -125,6 +125,11 @@ export const BubbleChart = () => {
         options={chartOptions}
         ref={chartRef}
       />
+      <p className={styles.chartSummary}>
+        Asset class groups: <strong>Equity</strong> (Stocks, Tech, Small, Mid,
+        Intl); <strong>Fixed Income</strong> (Bonds, Cash, Tips, Muni, Short);{" "}
+        <strong>Alternative</strong> (Crypto, RE, Goods, Gold, PE, VC).
+      </p>
     </div>
   );
 };

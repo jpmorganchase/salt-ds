@@ -83,13 +83,28 @@ const candlestickChartOptions: Options = {
   ],
 };
 
+// An unfilled body is a non-color cue for a rising candle. The pattern
+// demonstration keeps Salt's patterned sentiment fills instead.
+const hollowCandlestickOptions: Options = {
+  ...candlestickChartOptions,
+  subtitle: { text: "Hollow = rising; filled = falling" },
+  plotOptions: { candlestick: { upColor: "transparent" } },
+};
+
+const patternedCandlestickOptions: Options = {
+  ...candlestickChartOptions,
+  subtitle: { text: "Striped = rising; dotted = falling" },
+};
+
 export const CandlestickChart = () => {
   const chartRef = useRef<HighchartsReact.RefObject>(null);
   const [patterns, setPatterns] = useState(false);
 
-  const chartOptions = useChart(chartRef, candlestickChartOptions, {
-    fillPatterns: patterns,
-  });
+  const chartOptions = useChart(
+    chartRef,
+    patterns ? patternedCandlestickOptions : hollowCandlestickOptions,
+    { fillPatterns: patterns },
+  );
 
   return (
     <div className={styles.chartContainer}>

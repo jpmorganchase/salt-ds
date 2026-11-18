@@ -58,26 +58,46 @@ const lineChartOptions: Options = {
   legend: {
     symbolWidth: 32,
   },
+  plotOptions: {
+    line: {
+      dataLabels: {
+        enabled: true,
+        align: "left",
+        x: 6,
+        crop: false,
+        overflow: "allow",
+        formatter() {
+          return this.point.index === this.series.points.length - 1
+            ? this.series.name
+            : undefined;
+        },
+      },
+    },
+  },
   series: [
     {
       name: "MXN",
       data: [4, 5, 6, 6.5, 6.3, 7, 6, 5, 4, 3],
       type: "line",
+      marker: { enabled: true, symbol: "circle" },
     },
     {
       name: "KRW",
       data: [5, 6, 5, 4, 5, 6, 5, 4, 5, 6],
       type: "line",
+      marker: { enabled: true, symbol: "diamond" },
     },
     {
       name: "TRY",
       data: [3, 5, 7, 5, 3, 5, 7, 5, 3, 5],
       type: "line",
+      marker: { enabled: true, symbol: "square" },
     },
     {
       name: "PLN",
       data: [4, 4.5, 5, 5.5, 6, 5.5, 5, 4.5, 4, 4.5],
       type: "line",
+      marker: { enabled: true, symbol: "triangle" },
     },
   ],
 };

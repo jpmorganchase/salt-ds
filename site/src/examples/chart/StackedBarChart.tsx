@@ -17,6 +17,9 @@ const stackedBarChartOptions: Options = {
   title: {
     text: "Regional revenue by product",
   },
+  subtitle: {
+    text: "Segments run left to right: FX, Fixed Income (FI), Equities (EQ)",
+  },
   accessibility: {
     description:
       "A stacked bar chart showing revenue by product across regions. This demonstrates how categories stack to a total per region.",
@@ -40,6 +43,10 @@ const stackedBarChartOptions: Options = {
   plotOptions: {
     series: {
       stacking: "normal",
+      dataLabels: {
+        enabled: true,
+        inside: true,
+      },
     },
   },
   tooltip: {
@@ -52,16 +59,19 @@ const stackedBarChartOptions: Options = {
       name: "Equities",
       type: "bar",
       data: [5, 3, 4, 7],
+      dataLabels: { format: "EQ {point.y}" },
     },
     {
       name: "Fixed Income",
       type: "bar",
       data: [2, 2, 3, 2],
+      dataLabels: { format: "FI {point.y}" },
     },
     {
       name: "FX",
       type: "bar",
       data: [3, 4, 4, 2],
+      dataLabels: { format: "FX {point.y}" },
     },
   ],
 };

@@ -45,6 +45,16 @@ const areaChartOptions: Options = {
   plotOptions: {
     area: {
       pointStart: 1940,
+      dataLabels: {
+        enabled: true,
+        align: "left",
+        x: 6,
+        y: -4,
+        formatter() {
+          // Label the well-separated peaks rather than 73 individual points.
+          return this.point.x === 1961 ? this.series.name : undefined;
+        },
+      },
       marker: {
         enabled: false,
         states: { hover: { enabled: true } },

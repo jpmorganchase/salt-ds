@@ -20,9 +20,12 @@ const boxPlotChartOptions: Options = {
   title: {
     text: "Quarterly sales distribution by region",
   },
+  subtitle: {
+    text: "Within each quarter: North America on the left, Europe on the right",
+  },
   accessibility: {
     description:
-      "Box plot chart showing quarterly sales distribution across four regions. Each box shows minimum, first quartile, median, third quartile, and maximum sales values in thousands of dollars.",
+      "Box plot chart showing quarterly sales distribution across two regions. Within each quarter, North America is on the left and Europe is on the right. Each box shows minimum, first quartile, median, third quartile, and maximum sales values in thousands of dollars.",
     point: {
       valuePrefix: "$",
       valueSuffix: "K",

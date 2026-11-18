@@ -11,11 +11,11 @@ data:
 <Callout title="Note">
   <ul>
     <li>
-      To ensure the presentation is accessible, line or fill patterns can be
-      applied to the chart. See [Module loading](./usage#module-loading) for
-      version-specific Highcharts module setup and [Patterns and
-      Fills](./usage#patterns-and-fills) for details. Use the "Show patterns"
-      switch to toggle patterns.
+      Charts must not rely on color alone to identify series or convey meaning.
+      The examples use labels, markers, fixed positioning, or different fills
+      where appropriate. Patterns are another option, not a requirement for
+      every chart. Use the "Show patterns" switch to compare presentations, and
+      see [Patterns and Fills](./usage#patterns-and-fills) for setup.
     </li>
   </ul>
 </Callout>
@@ -23,6 +23,8 @@ data:
 ## Line chart
 
 Use a line chart to show changes in data over time.
+
+The distinct point markers and labels at the end of each series identify the lines without relying on color.
 
 <LivePreview componentName="chart" exampleName="LineChart" />
 
@@ -62,6 +64,8 @@ Use a stacked bar chart to compare part-to-whole relationships across categories
 
 A stacked bar chart is a variation of the bar chart, with the `plotOptions.series.stacking` set to `normal` within the `Options` object.
 
+The abbreviated labels inside each segment and the explicit left-to-right series order provide a non-color way to identify the stacks.
+
 <LivePreview componentName="chart" exampleName="StackedBarChart" />
 
 ## Waterfall chart
@@ -78,6 +82,8 @@ Use a waterfall chart to show the cumulative effect of sequential positive and n
 ## Candlestick chart
 
 Use a candlestick chart to display price movements over time, showing open, high, low, and close values for each period. This chart type is commonly used for financial data visualization.
+
+In the default example, rising candles have hollow bodies and falling candles have filled bodies. Pattern fills offer another way to distinguish them.
 
 <Callout title="Note">
   To use the candlestick chart, import the Highcharts `stock` module and use it
@@ -105,6 +111,8 @@ Use a box plot chart to show the distribution of data across different categorie
 
 A `pointWidth` value of `40px` is recommended for a good default visual balance.
 
+The example also identifies the fixed left-to-right order of the two regions within each quarter.
+
 <Callout title="Note">
   To use the box plot chart, ensure you import the Highcharts `highcharts-more`
   module and use it to wrap the `Highcharts` object as shown in the example
@@ -117,11 +125,15 @@ A `pointWidth` value of `40px` is recommended for a good default visual balance.
 
 Use an area chart to show trends over time and the contribution of categories to a total.
 
+Labels placed at separated points identify the series without relying on their fill colors.
+
 <LivePreview componentName="chart" exampleName="AreaChart" />
 
 ## Scatter chart
 
 Use a scatter chart to show the relationship between two numerical variables.
+
+Each portfolio uses a different marker shape, which also appears in the legend.
 
 <LivePreview componentName="chart" exampleName="ScatterChart" />
 
@@ -129,6 +141,8 @@ Use a scatter chart to show the relationship between two numerical variables.
 
 Use a bubble chart to show the relationship between two variables, with a third variable represented by the size of each bubble.
 To ensure accessible presentation, data labels have text borders when pattern fills are enabled.
+
+The visible asset-class group summary identifies the category of each labelled bubble without requiring users to match its color to the legend.
 
 <Callout title="Note">
   To use the bubble chart, import the Highcharts `highcharts-more` module and
