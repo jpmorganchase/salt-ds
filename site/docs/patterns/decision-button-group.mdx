@@ -74,14 +74,12 @@ A decision button group typically contains two or more buttons placed together w
 
 A decision button group can support two different interaction models. Choose the model based on what the user is doing. 
 
-1. Use a decision button group when each button performs an action and return to their default state after activation. 
-2. Use a selectable decision button group when each button represents a choice, rating, or decision. The user is choosing something, and the selected button remains visible as the current value. For example, Like/Dislike or Thumbs up/Thumbs down.
+1. Use a button within a decision button group when each button performs an action and return to their default state after activation
+2. Use a toggle button within a decision button group when each button represents a choice, rating, or decision. The user is choosing something, and the selected button remains visible as the current value. For example, Like/Dislike or Thumbs up/Thumbs down. 
 
 ### Deselection
 
-Use deselection behavior on selectable decision button group when it represents a single choice from a small set of related options. When a user selects an option, any previously selected option in the group is deselected. This prevents conflicting selections.
-
-For optional choices, selecting the currently selected option may clear the selection and return the group to its initial unselected state. Use this only when “no choice” is a valid outcome, such as a feedback rating that can be removed.
+Deselection behavior is built into toggle buttons in a selectable decision button group. When a user selects an option, any previously selected option in the group is deselected. This prevents conflicting selections.
 
 <Diagram
   src="/img/patterns/decision-button-group/decision-button-group-4.png"
