@@ -26,11 +26,11 @@ export interface RadioButtonProps
     "onChange" | "onBlur" | "onFocus"
   > {
   /**
-   * Set the default selected radio button in the group
+   * Set the default selected radio button in the group.
    */
   checked?: boolean;
   /**
-   * Set the disabled state
+   * Set the disabled state.
    */
   disabled?: boolean;
   /**
@@ -39,7 +39,7 @@ export interface RadioButtonProps
    */
   error?: boolean;
   /**
-   * Props to be passed to the radio input
+   * Props to be passed to the radio input.
    */
   inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>> & DataAttributes;
   /**
@@ -47,23 +47,23 @@ export interface RadioButtonProps
    */
   inputRef?: Ref<HTMLInputElement>;
   /**
-   * The label to be shown next to the radio icon
+   * The label to be shown next to the radio icon.
    */
   label?: ReactNode;
   /**
-   * Name of the radio group
+   * Name of the radio group.
    */
   name?: string;
   /**
-   * Callback for blur event
+   * Callback for blur event.
    */
   onBlur?: FocusEventHandler<HTMLInputElement>;
   /**
-   * Callback for change event
+   * Callback for change event.
    */
   onChange?: ChangeEventHandler<HTMLInputElement>;
   /**
-   * Callback for focus event
+   * Callback for focus event.
    */
   onFocus?: FocusEventHandler<HTMLInputElement>;
   /**
@@ -72,7 +72,7 @@ export interface RadioButtonProps
    */
   readOnly?: boolean;
   /**
-   * Value of radio button
+   * Value of radio button.
    */
   value?: string;
   /**

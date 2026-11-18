@@ -40,7 +40,7 @@ export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
    */
   focusedDateRef?: React.MutableRefObject<HTMLElement | null>;
   /**
-   * Number of visible months, maximum 12, defaults to 1
+   * Number of visible months, maximum 12, defaults to 1.
    */
   numberOfVisibleMonths?: ResponsiveProp<
     1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
@@ -79,7 +79,7 @@ export interface CalendarMultiselectSingleProps
    */
   selectionVariant: "single";
   /**
-   * Multiple selection
+   * Multiple selection.
    */
   multiselect: true;
 }
@@ -107,7 +107,7 @@ export interface CalendarMultiselectRangeProps
    */
   selectionVariant: "range";
   /**
-   * Multiple selection
+   * Multiple selection.
    */
   multiselect: true;
 }
@@ -135,7 +135,7 @@ export interface CalendarMultiselectOffsetProps
    */
   selectionVariant: "offset";
   /**
-   * Multiple selection
+   * Multiple selection.
    */
   multiselect: true;
 }

@@ -47,12 +47,16 @@ export interface DatePickerBaseProps {
    * When enabled, date selections remain pending until the user explicitly applies them.
    */
   enableApply?: boolean;
-  /** the open/close state of the overlay. The open/close state will be controlled when this prop is provided. */
+  /**
+   * The open/close state of the overlay. The open/close state will be controlled when this prop is provided.
+   */
   open?: boolean;
-  /** When `open` is uncontrolled, set this to `true` to open on click */
+  /**
+   * When `open` is uncontrolled, set this to `true` to open on click.
+   */
   openOnClick?: boolean;
   /**
-   * Handler for when open state changes
+   * Handler for when open state changes.
    * @param newOpen - true when opened
    * @param reason - reason for the the state change
    */
@@ -61,7 +65,7 @@ export interface DatePickerBaseProps {
     reason?: DatePickerOpenChangeReason,
   ) => void;
   /**
-   * the initial open/close state of the overlay, when the open/close state is un-controlled.
+   * The initial open/close state of the overlay, when the open/close state is un-controlled.
    */
   defaultOpen?: DatePickerBaseProps["open"];
   /**

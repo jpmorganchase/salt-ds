@@ -54,7 +54,7 @@ export interface DatePickerPanelBaseProps
    */
   helperText?: string;
   /**
-   * The visible month for the first visible calendar
+   * The visible month for the first visible calendar.
    */
   visibleMonth?: DateFrameworkType;
   /**
@@ -62,7 +62,7 @@ export interface DatePickerPanelBaseProps
    */
   columns?: ResponsiveProp<number | string>;
   /**
-   * Number of visible months, maximum 12, defaults to 1
+   * Number of visible months, maximum 12, defaults to 1.
    */
   numberOfVisibleMonths?: ResponsiveProp<
     1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12

@@ -28,7 +28,7 @@ export interface RangeSliderProps
    */
   constrainLabelPosition?: boolean;
   /**
-   * The number of allowed decimal places
+   * The number of allowed decimal places.
    * @default 2
    */
   decimalPlaces?: number;

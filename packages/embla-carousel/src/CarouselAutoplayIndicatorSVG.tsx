@@ -11,7 +11,7 @@ export interface CarouselAutoplayIndicatorSVGProps
    */
   className?: string;
   /**
-   * Ref to attach to progress indicator element
+   * Ref to attach to progress indicator element.
    */
   barRef: Ref<SVGCircleElement>;
   /**

@@ -12,11 +12,11 @@ import calendarMonthHeaderCss from "./CalendarMonthHeader.css";
  */
 export interface CalendarMonthHeaderProps extends ComponentPropsWithRef<"div"> {
   /**
-   * Month value
+   * Month value.
    */
   month: DateFrameworkType;
   /**
-   * Format the month value
+   * Format the month value.
    * @param date
    */
   format?: string;

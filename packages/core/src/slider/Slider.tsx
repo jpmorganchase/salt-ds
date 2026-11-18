@@ -25,11 +25,10 @@ export interface SliderProps
   /**
    * When minimum and maximum labels are defined, ensure
    * they are confined within the boundary of the slider.
-   * @default false
    */
   constrainLabelPosition?: boolean;
   /**
-   * The number of allowed decimal places
+   * The number of allowed decimal places.
    * @default 2
    */
   decimalPlaces?: number;

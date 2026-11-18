@@ -29,7 +29,6 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
   /**
    * Disable the panel's own open/close animation.
    * Set to `true` when the parent controls sizing and animation (e.g. inside a splitter).
-   * @default false
    */
   disableAnimation?: boolean;
   /**

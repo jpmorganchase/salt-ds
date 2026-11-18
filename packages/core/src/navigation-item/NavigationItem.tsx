@@ -39,7 +39,7 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
    */
   parent?: boolean;
   /**
-   * Render prop to enable customisation of navigation item element.
+   * Render prop to enable customization of navigation item element.
    */
   render?: RenderPropsType["render"];
   /**

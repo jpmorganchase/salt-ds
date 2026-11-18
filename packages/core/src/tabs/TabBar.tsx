@@ -7,11 +7,11 @@ import tabBarCss from "./TabBar.css";
 
 export interface TabBarProps extends ComponentPropsWithRef<"div"> {
   /**
-   * Styling variant with a bottom separator. Defaults to false
+   * Styling variant with a bottom separator. Defaults to false.
    */
   divider?: boolean;
   /**
-   * Styling variant with left and right padding. Defaults to false
+   * Styling variant with left and right padding. Defaults to false.
    */
   inset?: boolean;
 }

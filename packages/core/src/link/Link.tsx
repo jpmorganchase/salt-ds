@@ -30,7 +30,7 @@ export interface LinkProps
    */
   IconComponent?: ComponentType<IconProps> | null;
   /**
-   * Render prop to enable customisation of anchor element.
+   * Render prop to enable customization of anchor element.
    */
   render?: RenderPropsType["render"];
   /**

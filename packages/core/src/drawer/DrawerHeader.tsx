@@ -19,19 +19,19 @@ export interface DrawerHeaderProps extends ComponentPropsWithoutRef<"div"> {
    */
   disableAccent?: boolean;
   /**
-   * Displays the header at the top of the Drawer
+   * Displays the header at the top of the Drawer.
    */
   header?: ReactNode;
   /**
-   * Displays the preheader just above the header
-   **/
+   * Displays the preheader just above the header.
+   */
   preheader?: ReactNode;
   /**
-   * Description text is displayed just below the header
-   **/
+   * Description text is displayed just below the header.
+   */
   description?: ReactNode;
   /**
-   * Actions to be displayed in header
+   * Actions to be displayed in header.
    */
   actions?: ReactNode;
 }

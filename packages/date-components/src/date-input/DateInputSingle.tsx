@@ -79,7 +79,7 @@ export interface DateInputSingleProps
    */
   readOnly?: boolean;
   /**
-   * Start adornment component
+   * Start adornment component.
    */
   startAdornment?: ReactNode;
   /**
@@ -99,7 +99,7 @@ export interface DateInputSingleProps
    */
   inputRef?: Ref<HTMLInputElement>;
   /**
-   * Parser callback, if not using the adapter's parser
+   * Parser callback, if not using the adapter's parser.
    * @param value - date string to parse
    * @param format - format required
    */

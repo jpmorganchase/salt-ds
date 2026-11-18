@@ -35,7 +35,7 @@ export interface OverlayProps {
    */
   placement?: UseFloatingUIProps["placement"];
   /**
-   * When `true`, the arrow indicator is hidden
+   * When `true`, the arrow indicator is hidden.
    */
   hideArrow?: boolean;
 }

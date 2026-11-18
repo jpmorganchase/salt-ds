@@ -51,25 +51,25 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
    */
   onOpenChange?: (open: boolean) => void;
   /**
-   * The status of the Dialog
-   * */
+   * The status of the Dialog.
+   */
   status?: ValidationStatus;
   /**
    * Which element to initially focus. Can be either a number (tabbable index as specified by the order) or a ref.
    * Default value is 0 (first tabbable element).
-   * */
+   */
   initialFocus?: ComponentProps<typeof FloatingFocusManager>["initialFocus"];
   /**
-   * Size of the Dialog
-   * */
+   * Size of the Dialog.
+   */
   size?: "small" | "medium" | "large";
   /**
-   * Prevent the dialog closing on click away
-   * */
+   * Prevent the dialog closing on click away.
+   */
   disableDismiss?: boolean;
   /**
-   * Prevent Scrim from rendering
-   * */
+   * Prevent Scrim from rendering.
+   */
   disableScrim?: boolean;
   /**
    * Optional id prop.

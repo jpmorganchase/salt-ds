@@ -21,7 +21,7 @@ const withBaseName = makePrefixer("saltDialogContent");
 
 export interface DialogContentProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * The content of Dialog Content
+   * The content of Dialog Content.
    */
   children?: ReactNode;
 }

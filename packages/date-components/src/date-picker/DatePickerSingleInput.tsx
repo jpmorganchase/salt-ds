@@ -34,7 +34,7 @@ const withBaseName = makePrefixer("saltDatePickerSingleInput");
  */
 export interface DatePickerSingleInputProps extends DateInputSingleProps {
   /**
-   * Function to validate the entered date
+   * Function to validate the entered date.
    * @param date - The selected date
    * @param details - The details of date selection, either a valid date or error
    * @returns updated DateInputSingleDetails details

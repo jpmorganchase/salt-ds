@@ -29,11 +29,11 @@ export interface FloatingComponentProps
   /**
    * Whether the floating component is open (used for determining whether to show the component)
    * We pass this as a prop rather than not rendering the component to allow more advanced use-cases e.g.
-   * for caching windows and reusing them, rather than always spawning a new one
+   * for caching windows and reusing them, rather than always spawning a new one.
    */
   open: boolean;
   /**
-   * Use this prop when `FloatingFocusManager` is needed for floating component
+   * Use this prop when `FloatingFocusManager` is needed for floating component.
    */
   focusManagerProps?: Omit<FloatingFocusManagerProps, "children">;
   /**
@@ -146,7 +146,7 @@ export interface UseFloatingUIProps
     | "rootContext"
   > {
   /**
-   * Function to update the default middleware used to extend or replace it
+   * Function to update the default middleware used to extend or replace it.
    */
   middleware?: Middleware[];
 }

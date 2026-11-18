@@ -30,19 +30,19 @@ export type BorderItemProps<T extends ElementType> =
     T,
     {
       /**
-       * Aligns a grid item inside a cell along the inline (row) axis. Defaults to "stretch"
+       * Aligns a grid item inside a cell along the inline (row) axis. Defaults to "stretch".
        */
       horizontalAlignment?: GridItemProps<T>["horizontalAlignment"];
       /**
-       * Aligns a grid item inside a cell along the block (column) axis. Defaults to "stretch"
+       * Aligns a grid item inside a cell along the block (column) axis. Defaults to "stretch".
        */
       verticalAlignment?: GridItemProps<T>["verticalAlignment"];
       /**
-       * Position in the Border Layout
+       * Position in the Border Layout.
        */
       position: BorderPosition;
       /**
-       * Defines if the item should stick to the edges of its container. Defaults to "false"
+       * Defines if the item should stick to the edges of its container. Defaults to "false".
        */
       sticky?: boolean;
       /**

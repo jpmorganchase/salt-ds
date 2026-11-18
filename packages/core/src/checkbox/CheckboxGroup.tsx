@@ -28,7 +28,7 @@ export interface CheckboxGroupProps
    */
   direction?: "horizontal" | "vertical";
   /**
-   * Disable the Checkbox group
+   * Disable the Checkbox group.
    */
   disabled?: boolean;
   /**

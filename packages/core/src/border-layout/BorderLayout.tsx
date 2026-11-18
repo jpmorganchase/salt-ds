@@ -23,15 +23,15 @@ export type BorderLayoutProps<T extends ElementType> =
     T,
     {
       /**
-       * Defines the size of the gutter between the columns and the rows by setting a density multiplier. Defaults to 0
+       * Defines the size of the gutter between the columns and the rows by setting a density multiplier. Defaults to 0.
        */
       gap?: GridLayoutProps<T>["gap"];
       /**
-       * Defines the size of the gutter between the columns by setting a density multiplier. Defaults to 0
+       * Defines the size of the gutter between the columns by setting a density multiplier. Defaults to 0.
        */
       columnGap?: GridLayoutProps<T>["columnGap"];
       /**
-       * Defines the size of the gutter between the rows by setting a density multiplier. Defaults to 0
+       * Defines the size of the gutter between the rows by setting a density multiplier. Defaults to 0.
        */
       rowGap?: GridLayoutProps<T>["rowGap"];
       /**

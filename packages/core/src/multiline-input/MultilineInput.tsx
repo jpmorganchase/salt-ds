@@ -37,11 +37,11 @@ export interface MultilineInputProps
       "disabled" | "value" | "defaultValue" | "placeholder"
     > {
   /**
-   * Styling variant with full border. Defaults to false
+   * Styling variant with full border. Defaults to false.
    */
   bordered?: boolean;
   /**
-   * End adornment component
+   * End adornment component.
    */
   endAdornment?: ReactNode;
   /**
@@ -53,11 +53,11 @@ export interface MultilineInputProps
    */
   readOnly?: boolean;
   /**
-   * The default minimum number of rows. Defaults to 3
+   * The default minimum number of rows. Defaults to 3.
    */
   rows?: number;
   /**
-   * Start adornment component
+   * Start adornment component.
    */
   startAdornment?: ReactNode;
   /**
@@ -66,7 +66,7 @@ export interface MultilineInputProps
   textAreaProps?: Partial<TextareaHTMLAttributes<HTMLTextAreaElement>> &
     DataAttributes;
   /**
-   * Optional ref for the textarea component
+   * Optional ref for the textarea component.
    */
   textAreaRef?: Ref<HTMLTextAreaElement>;
   /**

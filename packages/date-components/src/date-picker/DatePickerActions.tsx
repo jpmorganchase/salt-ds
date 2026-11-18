@@ -31,7 +31,7 @@ export interface DatePickerActionsBaseProps
    */
   onCancel?: (_event: SyntheticEvent) => void;
   /**
-   * Ref to apply button
+   * Ref to apply button.
    */
   applyButtonRef?: Ref<HTMLButtonElement>;
   /**
@@ -43,7 +43,7 @@ export interface DatePickerActionsBaseProps
    */
   CancelButtonProps?: ButtonProps;
   /**
-   * Ref to cancel button
+   * Ref to cancel button.
    */
   cancelButtonRef?: Ref<HTMLButtonElement>;
 }

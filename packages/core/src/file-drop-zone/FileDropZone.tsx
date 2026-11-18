@@ -25,7 +25,7 @@ export interface FileDropZoneProps
    */
   status?: Exclude<ValidationStatus, "info" | "warning">;
   /**
-   * Callback for on drop event
+   * Callback for on drop event.
    */
   onDrop?: (event: DragEvent<HTMLDivElement>, files: File[]) => void;
 }

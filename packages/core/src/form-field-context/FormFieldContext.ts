@@ -3,11 +3,11 @@ import type { ValidationStatuses } from "../status-indicator";
 import { createContext } from "../utils";
 export interface A11yValueProps {
   /**
-   * id for FormFieldHelperText
+   * ID for `FormFieldHelperText`.
    */
   helperTextId?: string;
   /**
-   * id for FormFieldLabel
+   * ID for `FormFieldLabel`.
    */
   labelId?: string;
 }

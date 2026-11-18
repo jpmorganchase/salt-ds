@@ -38,7 +38,7 @@ export interface InputProps
    */
   emptyReadOnlyMarker?: string;
   /**
-   * End adornment component
+   * End adornment component.
    */
   endAdornment?: ReactNode;
   /**
@@ -46,7 +46,7 @@ export interface InputProps
    */
   inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>> & DataAttributes;
   /**
-   * Optional ref for the input component
+   * Optional ref for the input component.
    */
   inputRef?: Ref<HTMLInputElement>;
   /**
@@ -58,11 +58,11 @@ export interface InputProps
    */
   readOnly?: boolean;
   /**
-   * Start adornment component
+   * Start adornment component.
    */
   startAdornment?: ReactNode;
   /**
-   * Alignment of text within container. Defaults to "left"
+   * Alignment of text within container. Defaults to "left".
    */
   textAlign?: "left" | "center" | "right";
   /**
@@ -73,7 +73,8 @@ export interface InputProps
    * Styling variant. Defaults to "primary".
    */
   variant?: "primary" | "secondary" | "tertiary";
-  /** Styling variant with full border. Defaults to false
+  /**
+   * Styling variant with full border. Defaults to false.
    */
   bordered?: boolean;
 }

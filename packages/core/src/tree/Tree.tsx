@@ -17,35 +17,35 @@ import { useTree } from "./useTree";
 
 export interface TreeProps extends ComponentPropsWithoutRef<"ul"> {
   /**
-   * Default expanded nodes (uncontrolled)
+   * Default expanded nodes (uncontrolled).
    */
   defaultExpanded?: string[];
   /**
-   * Expanded nodes (controlled)
+   * Expanded nodes (controlled).
    */
   expanded?: string[];
   /**
-   * Callback on expanded nodes change
+   * Callback on expanded nodes change.
    */
   onExpandedChange?: (event: SyntheticEvent, expanded: string[]) => void;
   /**
-   * Default selected nodes (uncontrolled)
+   * Default selected nodes (uncontrolled).
    */
   defaultSelected?: string[];
   /**
-   * Selected nodes
+   * Selected nodes.
    */
   selected?: string[];
   /**
-   * Callback on selected nodes change
+   * Callback on selected nodes change.
    */
   onSelectionChange?: (event: SyntheticEvent, selected: string[]) => void;
   /**
-   * Sets multiselect mode with checkboxes and allows for multiple node selection
+   * Sets multiselect mode with checkboxes and allows for multiple node selection.
    */
   multiselect?: boolean;
   /**
-   * Sets tree to disabled state, preventing all interaction
+   * Sets tree to disabled state, preventing all interaction.
    */
   disabled?: boolean;
 }

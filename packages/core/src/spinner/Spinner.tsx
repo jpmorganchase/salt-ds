@@ -32,15 +32,15 @@ const withBaseName = makePrefixer("saltSpinner");
 
 export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Determines the interval on which the component will continue to announce the aria-label. Defaults to 5000ms (5s)
+   * Determines the interval on which the component will continue to announce the aria-label. Defaults to 5000ms (5s).
    */
   announcerInterval?: number;
   /**
-   *  * Determines the interval after which the component will stop announcing the aria-label. Defaults to 20000ms (20s)
+   * Determines the interval after which the component will stop announcing the aria-label. Defaults to 20000ms (20s).
    */
   announcerTimeout?: number;
   /**
-   * The className(s) of the component
+   * The className(s) of the component.
    */
   className?: string;
   /**
@@ -48,11 +48,11 @@ export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
    */
   completionAnnouncement?: string | null;
   /**
-   * If true, built in aria announcer will be inactive
+   * If true, built in aria announcer will be inactive.
    */
   disableAnnouncer?: boolean;
   /**
-   * The prop for the role attribute of the component
+   * The prop for the role attribute of the component.
    */
   role?: string;
   /**
@@ -60,7 +60,7 @@ export interface SpinnerProps extends HTMLAttributes<HTMLDivElement> {
    */
   size?: SpinnerSize;
   /**
-   * The ids of the SvgSpinner components
+   * The ids of the SvgSpinner components.
    */
   id?: string;
 }

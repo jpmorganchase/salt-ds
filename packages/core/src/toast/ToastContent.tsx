@@ -15,7 +15,7 @@ const withBaseName = makePrefixer("saltToastContent");
 
 export interface ToastContentProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The content of Toast Content
+   * The content of Toast Content.
    */
   children?: ReactNode;
 }

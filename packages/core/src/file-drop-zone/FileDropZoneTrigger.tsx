@@ -30,7 +30,7 @@ export interface FileDropZoneTriggerProps
    */
   name?: string;
   /**
-   * Callback for input change event
+   * Callback for input change event.
    */
   onChange?: (event: ChangeEvent<HTMLInputElement>, files: File[]) => void;
   /**
