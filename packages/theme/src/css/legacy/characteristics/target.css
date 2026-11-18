@@ -1,4 +1,5 @@
 .salt-theme {
   --salt-target-background-hover: var(--salt-palette-interact-background-hover);
+  --salt-target-borderColor: var(--salt-palette-interact-border);
   --salt-target-borderColor-hover: var(--salt-palette-interact-border-hover);
 }
