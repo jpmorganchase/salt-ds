@@ -25,7 +25,7 @@ export interface FileDropZoneProps
    */
   status?: Exclude<ValidationStatus, "info" | "warning">;
   /**
-   * Callback for on drop event.
+   * Callback fired when files are dropped on the file drop zone. It isn't called when the file drop zone is disabled.
    */
   onDrop?: (event: DragEvent<HTMLDivElement>, files: File[]) => void;
 }

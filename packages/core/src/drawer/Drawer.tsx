@@ -45,15 +45,17 @@ const ConditionalScrimWrapper = ({
 
 export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Defines the drawer position within the screen. Defaults to `left`.
+   * Defines the Drawer's position on the screen.
+   * @default "left"
    */
   position?: "left" | "top" | "right" | "bottom";
   /**
-   * Display or hide the component.
+   * If `true`, the Drawer is shown. Use with `onOpenChange` to control it.
    */
   open?: boolean;
   /**
-   * Callback function triggered when open state changes.
+   * Callback fired when the open state changes, for example when the user
+   * presses the Escape key or clicks outside the Drawer.
    */
   onOpenChange?: (newOpen: boolean) => void;
   /**
@@ -61,15 +63,15 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    */
   variant?: "primary" | "secondary" | "tertiary";
   /**
-   * Prevent the drawer closing on click away.
+   * If `true`, the Drawer doesn't close when the user clicks outside it.
    */
   disableDismiss?: boolean;
   /**
-   * Prevent Scrim from rendering.
+   * If `true`, the `Scrim` isn't rendered.
    */
   disableScrim?: boolean;
   /**
-   * Allow the user to resize the drawer. Set size limits with the `--saltDrawer-minResize`/`--saltDrawer-maxResize`
+   * If `true`, the user can resize the Drawer. Set size limits with the `--saltDrawer-minResize`/`--saltDrawer-maxResize`
    * variables, which apply to the width of `left` and `right` drawers and the height of `top` and `bottom` drawers.
    * The drawer never shrinks below `--salt-size-base`, unless `min-width`/`min-height` is set directly.
    */

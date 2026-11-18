@@ -19,7 +19,8 @@ export interface TableProps extends ComponentPropsWithoutRef<"table"> {
    */
   divider?: "primary" | "secondary" | "tertiary" | "none";
   /**
-   * Zebra styling. Applies a different fill to every other row.
+   * If `true`, the table has zebra styling, which applies a different fill to
+   * every other row.
    */
   zebra?: boolean;
 }

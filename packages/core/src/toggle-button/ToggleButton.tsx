@@ -43,12 +43,13 @@ export interface ToggleButtonProps
    */
   sentiment?: ButtonSentiment;
   /**
-   * Whether the toggle button is in a selected state.
+   * If `true`, the toggle button is selected. Use with `onChange` to control it.
+   * Inside a `ToggleButtonGroup`, the group's `value` decides whether it's selected instead.
    */
   selected?: boolean;
   /**
-   * Whether the toggle button is selected by default.
-   * This will be disregarded if `selected` is already set.
+   * If `true`, the toggle button is selected initially. Use when the component is uncontrolled.
+   * This is ignored if `selected` is set.
    */
   defaultSelected?: boolean;
   /**

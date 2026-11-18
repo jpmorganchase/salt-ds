@@ -34,8 +34,8 @@ export interface CheckboxProps
    */
   checked?: boolean;
   /**
-   * Whether the checkbox component is checked by default
-   * This will be disregarded if checked is already set.
+   * If `true`, the checkbox is checked initially. Use when the component is
+   * uncontrolled. It's ignored when `checked` is set.
    */
   defaultChecked?: boolean;
   /**
@@ -48,11 +48,12 @@ export interface CheckboxProps
    */
   error?: boolean;
   /**
-   * If true, the checkbox appears indeterminate. A data-indeterminate attribute is set on the input.
+   * If `true`, the checkbox appears indeterminate. A `data-indeterminate`
+   * attribute is set on the `input` element.
    */
   indeterminate?: boolean;
   /**
-   * Properties applied to the input element.
+   * Props applied to the `input` element.
    */
   inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>> & DataAttributes;
   /**
@@ -68,15 +69,15 @@ export interface CheckboxProps
    */
   name?: string;
   /**
-   * Callback when checkbox loses focus.
+   * Callback fired when the checkbox loses focus.
    */
   onBlur?: FocusEventHandler<HTMLInputElement>;
   /**
-   * Callback when checked state is changed.
+   * Callback fired when the checked state changes.
    */
   onChange?: ChangeEventHandler<HTMLInputElement>;
   /**
-   * Callback when checkbox gains focus.
+   * Callback fired when the checkbox gains focus.
    */
   onFocus?: FocusEventHandler<HTMLInputElement>;
   /**

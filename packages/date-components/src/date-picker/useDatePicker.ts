@@ -93,7 +93,7 @@ export interface UseDatePickerSingleProps extends UseDatePickerBaseProps {
    */
   defaultSelectedDate?: SingleDateSelection | null;
   /**
-   * Handler called when the selected date changes.
+   * Callback fired when the selected date changes.
    * @param event - The synthetic event.
    * @param date - The selected date or null.
    * @param details - The selected date details.
@@ -104,7 +104,7 @@ export interface UseDatePickerSingleProps extends UseDatePickerBaseProps {
     details?: DateInputSingleDetails,
   ) => void;
   /**
-   * Handler called when the selected date is confirmed/applied.
+   * Callback fired when the selected date is applied. When `enableApply` isn't `true`, this happens as soon as a valid date is selected.
    * @param event - The synthetic event.
    * @param date - The selected date or null.
    */
@@ -128,7 +128,7 @@ export interface UseDatePickerRangeProps extends UseDatePickerBaseProps {
    */
   defaultSelectedDate?: DateRangeSelection | null;
   /**
-   * Handler called when the selected date range changes.
+   * Callback fired when the selected date range changes.
    * @param event - The synthetic event.
    * @param date - The selected date range or null.
    * @param details - The selected date range details.
@@ -139,7 +139,7 @@ export interface UseDatePickerRangeProps extends UseDatePickerBaseProps {
     details?: DateInputRangeDetails,
   ) => void;
   /**
-   * Handler called when the selected date range is confirmed/applied.
+   * Callback fired when the selected date range is applied. When `enableApply` isn't `true`, this happens as soon as a valid date range is selected.
    * @param event - The synthetic event.
    * @param date - The selected date range.
    */

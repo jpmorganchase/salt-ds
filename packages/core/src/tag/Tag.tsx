@@ -9,15 +9,17 @@ const withBaseName = makePrefixer("saltTag");
 
 export interface TagProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Styling variant with full border. Defaults to false.
+   * If `true`, the tag has a full border.
    */
   bordered?: boolean;
   /**
-   * Emphasize the styling by applying a background color. Defaults to primary.
+   * Emphasizes the styling by applying a background color.
+   * @default "primary"
    */
   variant?: "primary" | "secondary";
   /**
-   * The tag category, needs to be within range of 1-20. Defaults to 1.
+   * The tag category, from `1` to `20`.
+   * @default 1
    */
   category?: number;
 }

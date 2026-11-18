@@ -37,7 +37,7 @@ export interface MultilineInputProps
       "disabled" | "value" | "defaultValue" | "placeholder"
     > {
   /**
-   * Styling variant with full border. Defaults to false.
+   * If `true`, the multiline input has a full border.
    */
   bordered?: boolean;
   /**
@@ -53,7 +53,8 @@ export interface MultilineInputProps
    */
   readOnly?: boolean;
   /**
-   * The default minimum number of rows. Defaults to 3.
+   * The minimum number of rows.
+   * @default 3
    */
   rows?: number;
   /**
@@ -61,7 +62,7 @@ export interface MultilineInputProps
    */
   startAdornment?: ReactNode;
   /**
-   * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#Attributes) applied to the `textarea` element.
+   * Props applied to the `textarea` element, such as its [attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/textarea#Attributes).
    */
   textAreaProps?: Partial<TextareaHTMLAttributes<HTMLTextAreaElement>> &
     DataAttributes;
@@ -74,7 +75,8 @@ export interface MultilineInputProps
    */
   validationStatus?: FormFieldValidationStatus;
   /**
-   * Styling variant. Defaults to "primary".
+   * Styling variant.
+   * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
 }

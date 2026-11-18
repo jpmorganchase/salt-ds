@@ -8,7 +8,8 @@ import tableCss from "./Table.css";
 
 export interface TFootProps extends ComponentPropsWithoutRef<"tfoot"> {
   /**
-   * If footer is positioned with sticky styling.
+   * If `true`, the footer is positioned with sticky styling, so it stays at
+   * the bottom when the table scrolls.
    */
   sticky?: boolean;
   /**

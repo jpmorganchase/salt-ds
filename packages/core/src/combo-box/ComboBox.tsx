@@ -62,11 +62,13 @@ export interface ComboBoxProps<Item = string>
    */
   truncate?: boolean;
   /**
-   * If true, options will be selected when the tab key is pressed.
+   * If `true`, the active option is selected when the Tab key is pressed. When
+   * `multiselect` is `true`, it defaults to `false`.
+   * @default true
    */
   selectOnTab?: boolean;
   /**
-   * Props to pass to ComboBox's overlay.
+   * Props applied to the overlay that contains the options.
    */
   OverlayProps?: Omit<ComponentPropsWithoutRef<"div">, "children" | "id"> &
     DataAttributes;

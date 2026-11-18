@@ -37,19 +37,19 @@ import { generateMonthsForYear, monthDiff } from "./internal/utils";
  */
 export interface CalendarNavigationProps extends ComponentPropsWithRef<"div"> {
   /**
-   * Props for the month dropdown component.
+   * Props applied to the month `Dropdown` component.
    */
   MonthDropdownProps?: DropdownProps<DateFrameworkType>;
   /**
-   * Props for the year dropdown component.
+   * Props applied to the year `Dropdown` component.
    */
   YearDropdownProps?: DropdownProps<DateFrameworkType>;
   /**
-   * Additional props for Previous button.
+   * Props applied to the previous month `Button` component.
    */
   PreviousButtonProps?: ButtonProps;
   /**
-   * Additional props for Next button.
+   * Props applied to the next month `Button` component.
    */
   NextButtonProps?: ButtonProps;
   /**
@@ -57,7 +57,8 @@ export interface CalendarNavigationProps extends ComponentPropsWithRef<"div"> {
    */
   hideYearDropdown?: boolean;
   /**
-   * The step value for navigation. Defaults to 1.
+   * The number of months to move by when navigating with the previous and next buttons.
+   * @default 1
    */
   step?: number;
   /**

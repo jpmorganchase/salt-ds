@@ -33,27 +33,33 @@ export type GridItemProps<T extends ElementType> =
     T,
     {
       /**
-       * The item will span across the provided number of grid columns. Defaults to "auto".
+       * The item will span across the provided number of grid columns.
+       * @default "auto"
        */
       colSpan?: ResponsiveProp<GridProperty>;
       /**
-       * The item will span across the provided number of grid rows. Defaults to "auto".
+       * The item will span across the provided number of grid rows.
+       * @default "auto"
        */
       rowSpan?: ResponsiveProp<GridProperty>;
       /**
-       * Aligns a grid item inside a cell along the inline (row) axis. Defaults to "stretch".
+       * Aligns a grid item inside a cell along the inline (row) axis.
+       * @default "stretch"
        */
       horizontalAlignment?: GridAlignment;
       /**
-       * Aligns a grid item inside a cell along the block (column) axis. Defaults to "stretch".
+       * Aligns a grid item inside a cell along the block (column) axis.
+       * @default "stretch"
        */
       verticalAlignment?: GridAlignment;
       /**
-       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value. Default is `0`.
+       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value.
+       * @default 0
        */
       margin?: ResponsiveProp<number | string>;
       /**
-       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value. Default is `0`.
+       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value.
+       * @default 0
        */
       padding?: ResponsiveProp<number | string>;
     }

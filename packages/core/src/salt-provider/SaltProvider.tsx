@@ -47,7 +47,7 @@ export interface ThemeContextProps {
   mode: Mode;
   window?: WindowContextType;
   /**
-   * Only available when using SaltProviderNext.
+   * If `true`, the closest provider is a `SaltProviderNext` and the next theme is applied.
    */
   themeNext: boolean;
   corner: Corner;

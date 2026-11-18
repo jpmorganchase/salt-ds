@@ -48,7 +48,7 @@ export interface CarouselProps extends ComponentPropsWithoutRef<"section"> {
    */
   getEmblaApi?: (embla: CarouselEmblaApiType) => void;
   /**
-   * Disable screenreader announcing slide updates, defaults to false.
+   * If `true`, screen readers don't announce slide updates.
    */
   disableSlideAnnouncements?: boolean;
 }

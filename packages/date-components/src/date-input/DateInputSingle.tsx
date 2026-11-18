@@ -53,7 +53,7 @@ export interface DateInputSingleProps
       "disabled" | "value" | "defaultValue" | "placeholder"
     > {
   /**
-   * Styling variant with full border. Defaults to false.
+   * If `true`, the date input has a full border.
    */
   bordered?: boolean;
   /**
@@ -66,7 +66,7 @@ export interface DateInputSingleProps
    */
   endAdornment?: ReactNode;
   /**
-   * Attributes applied to the `input` element.
+   * Props applied to the `input` element.
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dateInput#Attributes
    */
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
@@ -87,7 +87,8 @@ export interface DateInputSingleProps
    */
   validationStatus?: "error" | "warning" | "success";
   /**
-   * Styling variant. Defaults to "primary".
+   * Styling variant.
+   * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
   /**
@@ -132,8 +133,8 @@ export interface DateInputSingleProps
     details: DateInputSingleDetails,
   ) => void;
   /**
-   * Called when input value changes, either due to user interaction or programmatic formatting of valid dates.
-   * @param event - The synthetic event or null if a programmatic change.
+   * Callback fired when the input value changes, either through user interaction or programmatic formatting of valid dates.
+   * @param event - The synthetic event, or `null` if it's a programmatic change.
    * @param newValue - The new date input value.
    */
   onDateValueChange?: (event: SyntheticEvent | null, newValue: string) => void;

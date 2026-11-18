@@ -24,7 +24,7 @@ export interface CircularProgressProps extends ComponentPropsWithoutRef<"div"> {
    */
   bufferValue?: number;
   /**
-   * Whether to hide the text label within the progress. Defaults to `false`.
+   * If `true`, the text label within the progress is hidden.
    */
   hideLabel?: boolean;
   /**

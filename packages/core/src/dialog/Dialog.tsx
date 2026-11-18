@@ -43,11 +43,12 @@ export const ConditionalScrimWrapper = ({
 
 export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Display or hide the component.
+   * If `true`, the Dialog is shown. Use with `onOpenChange` to control it.
    */
   open?: boolean;
   /**
-   * Callback function triggered when open state changes.
+   * Callback fired when the open state changes, for example when the user
+   * presses the Escape key or clicks outside the Dialog.
    */
   onOpenChange?: (open: boolean) => void;
   /**
@@ -64,11 +65,11 @@ export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
    */
   size?: "small" | "medium" | "large";
   /**
-   * Prevent the dialog closing on click away.
+   * If `true`, the Dialog doesn't close when the user clicks outside it.
    */
   disableDismiss?: boolean;
   /**
-   * Prevent Scrim from rendering.
+   * If `true`, the `Scrim` isn't rendered.
    */
   disableScrim?: boolean;
   /**

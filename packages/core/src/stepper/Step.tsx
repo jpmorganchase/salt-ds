@@ -43,11 +43,12 @@ export interface StepProps
    */
   stage?: StepStage;
   /**
-   * Whether the step item is expanded.
+   * If `true`, the step is expanded. Use with `onToggle` to control it.
    */
   expanded?: boolean;
   /**
-   * Initial expanded state of the step.
+   * If `true`, the step is expanded initially. Use when the component is
+   * uncontrolled.
    */
   defaultExpanded?: boolean;
   /**

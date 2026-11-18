@@ -27,8 +27,8 @@ const withBaseName = makePrefixer("saltSidePanel");
 
 export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
   /**
-   * Disable the panel's own open/close animation.
-   * Set to `true` when the parent controls sizing and animation (e.g. inside a splitter).
+   * If `true`, the panel's own open and close animation is disabled.
+   * Set to `true` when the parent controls sizing and animation, for example inside a splitter.
    */
   disableAnimation?: boolean;
   /**

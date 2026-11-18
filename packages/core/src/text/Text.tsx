@@ -19,7 +19,7 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
   T,
   {
     /**
-     * Applies disabled styling when true.
+     * If `true`, disabled styling is applied.
      */
     disabled?: boolean;
     /**

@@ -35,11 +35,11 @@ export interface DatePickerActionsBaseProps
    */
   applyButtonRef?: Ref<HTMLButtonElement>;
   /**
-   * Props for the apply button.
+   * Props applied to the apply `Button` component.
    */
   ApplyButtonProps?: ButtonProps;
   /**
-   * Props for the cancel button.
+   * Props applied to the cancel `Button` component.
    */
   CancelButtonProps?: ButtonProps;
   /**

@@ -62,7 +62,9 @@ export interface DatePickerPanelBaseProps
    */
   columns?: ResponsiveProp<number | string>;
   /**
-   * Number of visible months, maximum 12, defaults to 1.
+   * Number of visible months, maximum 12.
+   * In `DatePickerRangeGridPanel`, it defaults to `2`.
+   * @default 1
    */
   numberOfVisibleMonths?: ResponsiveProp<
     1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
@@ -99,11 +101,11 @@ export interface DatePickerPanelBaseProps
     hoveredDate?: DateFrameworkType | null,
   ) => void;
   /**
-   * Props to be passed to the CalendarNavigation component.
+   * Props applied to the `CalendarNavigation` component.
    */
   CalendarNavigationProps?: Partial<CalendarNavigationPropsType>;
   /**
-   * Props to be passed to the CalendarGrid component.
+   * Props applied to the `CalendarGrid` component.
    */
   CalendarGridProps?: Partial<CalendarGridProps>;
 }

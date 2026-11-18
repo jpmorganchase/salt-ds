@@ -43,19 +43,23 @@ export type FlexLayoutProps<T extends ElementType> =
     T,
     {
       /**
-       * Defines the default behavior for how flex items are laid out along the cross axis on the current line, default is "stretch".
+       * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
+       * @default "stretch"
        */
       align?: FlexAlignment | "stretch" | "baseline";
       /**
-       * Establishes the main-axis, defining the direction children are placed. Default is "row".
+       * Establishes the main axis, defining the direction children are placed.
+       * @default "row"
        */
       direction?: ResponsiveProp<LayoutDirection>;
       /**
-       * Controls the space between items, default is 3.
+       * Controls the space between items.
+       * @default 3
        */
       gap?: ResponsiveProp<number | string>;
       /**
-       * Defines the alignment along the main axis, default is "start".
+       * Defines the alignment along the main axis.
+       * @default "start"
        */
       justify?: FlexContentAlignment;
       /**
@@ -64,15 +68,17 @@ export type FlexLayoutProps<T extends ElementType> =
        */
       separators?: LayoutSeparator | true;
       /**
-       * Allow the items to wrap as needed, default is false.
+       * Allows the items to wrap as needed.
        */
       wrap?: ResponsiveProp<boolean>;
       /**
-       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value. Default is `0`.
+       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value.
+       * @default 0
        */
       margin?: ResponsiveProp<number | string>;
       /**
-       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value. Default is `0`.
+       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value.
+       * @default 0
        */
       padding?: ResponsiveProp<number | string>;
     }

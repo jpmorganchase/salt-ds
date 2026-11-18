@@ -48,17 +48,17 @@ export interface DatePickerBaseProps {
    */
   enableApply?: boolean;
   /**
-   * The open/close state of the overlay. The open/close state will be controlled when this prop is provided.
+   * If `true`, the overlay is open. Use with `onOpenChange` to control it.
    */
   open?: boolean;
   /**
-   * When `open` is uncontrolled, set this to `true` to open on click.
+   * If `true`, the overlay opens when the user clicks the `DatePickerTrigger`. Use when `open` is uncontrolled.
    */
   openOnClick?: boolean;
   /**
-   * Handler for when open state changes.
-   * @param newOpen - true when opened
-   * @param reason - reason for the the state change
+   * Callback fired when the open state changes.
+   * @param newOpen - `true` when opened.
+   * @param reason - The reason for the state change.
    */
   onOpenChange?: (
     newOpen: boolean,

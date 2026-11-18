@@ -45,11 +45,11 @@ export interface NumberInputProps
     "onChange" | "defaultValue" | "value"
   > {
   /**
-   * Styling variant with full border.
+   * If `true`, the NumberInput has a full border.
    */
   bordered?: boolean;
   /**
-   * A boolean that, when true, ensures the input value is clamped within the specified min and max range upon losing focus.
+   * If `true`, the value is clamped within the `min` and `max` range when the input loses focus.
    */
   clamp?: boolean;
   /**
@@ -70,7 +70,7 @@ export interface NumberInputProps
    */
   defaultValue?: number | string;
   /**
-   * Disable the `NumberInput`.
+   * If `true`, the NumberInput is disabled. The NumberInput is also disabled when the surrounding `FormField` is disabled.
    */
   disabled?: boolean;
   /**
@@ -88,7 +88,7 @@ export interface NumberInputProps
    */
   format?: (value: string) => string;
   /**
-   * Hide the number buttons.
+   * If `true`, the increment and decrement buttons are hidden.
    */
   hideButtons?: boolean;
   /**
@@ -99,7 +99,7 @@ export interface NumberInputProps
    */
   increment?: (value: string, step: number, stepMultiplier: number) => string;
   /**
-   * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
+   * Props applied to the `input` element, such as its [attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes).
    */
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
   /**
@@ -125,17 +125,17 @@ export interface NumberInputProps
    */
   name?: string;
   /**
-   * Callback function that is triggered when the value changes via user input or increment/decrement.
-   * Use `onNumberChange` if you want stable number, after blur or through increment/decrement.
-   * @param event - The event that triggers the value change, can be null if called by long-press of increment/decrement
-   * @param value - value as string
+   * Callback fired when the value changes through user input or when it's incremented or decremented.
+   * Use `onNumberChange` for a complete number, after blur or when the value is incremented or decremented.
+   * @param event - The event that triggered the change. It's `null` when the change comes from a long press of the increment or decrement button.
+   * @param value - The value as a string.
    */
   onChange?: (event: SyntheticEvent | null, value: string) => void;
   /**
-   * Callback function that is triggered when the value changes via increment/decrement or on blur.
+   * Callback fired when the value changes through increment or decrement, or on blur.
    *
-   * @param event - The event that triggers the change, can be null if called by long-press of increment/decrement
-   * @param value - The committed, parsed number value or null if an empty value
+   * @param event - The event that triggered the change. It's `null` when the change comes from a long press of the increment or decrement button.
+   * @param value - The committed, parsed number value, or `null` if the value is empty.
    */
   onNumberChange?: (event: SyntheticEvent | null, value: number | null) => void;
   /**
@@ -148,9 +148,7 @@ export interface NumberInputProps
    */
   placeholder?: string;
   /**
-   * A boolean property that controls the read-only state of the `NumberInput`.
-   * - When set to `true`, the `NumberInput` becomes read-only, preventing user edits.
-   * - When set to `false` or omitted, the `NumberInput` is editable by the user.
+   * If `true`, the NumberInput is read-only, preventing user edits. The NumberInput is also read-only when the surrounding `FormField` is read-only.
    */
   readOnly?: boolean;
   /**

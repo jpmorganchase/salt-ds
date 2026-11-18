@@ -128,12 +128,12 @@ export interface DatePickerRangePanelProps
   ) => void;
 
   /**
-   * Props to be passed to the start date CalendarNavigation component.
+   * Props applied to the start date `CalendarNavigation` component.
    */
   StartCalendarNavigationProps?: CalendarNavigationProps;
 
   /**
-   * Props to be passed to the start date calendar component.
+   * Props applied to the start date `Calendar` component.
    */
   StartCalendarProps?: Partial<
     Omit<
@@ -148,12 +148,12 @@ export interface DatePickerRangePanelProps
     >
   >;
   /**
-   * Props to be passed to the start date CalendarGrid component.
+   * Props applied to the start date `CalendarGrid` component.
    */
   StartCalendarGridProps?: CalendarGridProps;
 
   /**
-   * Props to be passed to the end date CalendarNavigation component.
+   * Props applied to the end date `Calendar` component.
    */
   EndCalendarProps?: Partial<
     Omit<
@@ -169,11 +169,11 @@ export interface DatePickerRangePanelProps
   >;
 
   /**
-   * Props to be passed to the end date CalendarNavigation component.
+   * Props applied to the end date `CalendarNavigation` component.
    */
   EndCalendarNavigationProps?: CalendarNavigationProps;
   /**
-   * Props to be passed to the end date CalendarGrid component.
+   * Props applied to the end date `CalendarGrid` component.
    */
   EndCalendarGridProps?: CalendarGridProps;
 }

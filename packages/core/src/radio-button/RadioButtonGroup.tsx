@@ -24,7 +24,7 @@ export interface RadioButtonGroupProps
    */
   direction?: "horizontal" | "vertical";
   /**
-   * Disable the RadioButton group.
+   * If `true`, the radio button group is disabled. The group is also disabled when the surrounding `FormField` is disabled.
    */
   disabled?: boolean;
   /**
@@ -39,11 +39,11 @@ export interface RadioButtonGroupProps
    */
   name?: string;
   /**
-   * Callback for change event.
+   * Callback fired when the selected radio button changes.
    */
   onChange?: ChangeEventHandler<HTMLInputElement>;
   /**
-   * Set the RadioButton group to read only.
+   * If `true`, the radio button group is read-only. The group is also read-only when the surrounding `FormField` is read-only.
    */
   readOnly?: boolean;
   /**

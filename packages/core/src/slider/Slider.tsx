@@ -23,8 +23,8 @@ export interface SliderProps
    */
   accessibleMinText?: string;
   /**
-   * When minimum and maximum labels are defined, ensure
-   * they are confined within the boundary of the slider.
+   * If `true`, the labels of the first and last marks are kept within the
+   * boundary of the slider.
    */
   constrainLabelPosition?: boolean;
   /**
@@ -38,7 +38,8 @@ export interface SliderProps
    */
   defaultValue?: number;
   /**
-   * Disable the slider.
+   * If `true`, the slider is disabled. The slider is also disabled when the
+   * surrounding `FormField` is disabled.
    */
   disabled?: boolean;
   /**
@@ -73,26 +74,28 @@ export interface SliderProps
    */
   name?: string;
   /**
-   * Callback called when slider value is changed.
+   * Callback fired when the value of the slider changes.
    * It provides a generic event and the current value of the slider.
    */
   onChange?: (event: Event, value: number) => void;
   /**
-   * Callback called when the slider is stopped from being dragged or
-   * its value is changed from the keyboard. It provides a generic
-   * event and the current value of the slider.
+   * Callback fired when the user stops dragging the slider or changes its
+   * value from the keyboard. It provides a generic event and the current
+   * value of the slider.
    */
   onChangeEnd?: (event: Event, value: number) => void;
   /**
-   * Restrict slider value to marks only. The step will be ignored.
+   * If `true`, the slider value is restricted to the marks, and `step` is
+   * ignored.
    */
   restrictToMarks?: boolean;
   /**
-   * Show visual ticks above the marks.
+   * If `true`, visual ticks are shown above the marks.
    */
   showTicks?: boolean;
   /**
-   * Show the slider value in a tooltip when the thumb is hovered.
+   * If `true`, the slider value is shown in a tooltip when the thumb is
+   * hovered.
    * @default true
    */
   showTooltip?: boolean;

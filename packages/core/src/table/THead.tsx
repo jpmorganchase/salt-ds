@@ -8,7 +8,8 @@ import tableCss from "./Table.css";
 
 export interface THeadProps extends ComponentPropsWithoutRef<"thead"> {
   /**
-   * If header is positioned with sticky styling.
+   * If `true`, the header is positioned with sticky styling, so it stays at
+   * the top when the table scrolls.
    */
   sticky?: boolean;
   /**

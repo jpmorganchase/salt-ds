@@ -85,7 +85,7 @@ export interface DateInputRangeProps
       "defaultValue" | "inputRef" | "name" | "value" | "onChange"
     > {
   /**
-   * Styling variant with full border. Defaults to false.
+   * If `true`, the date input has a full border.
    */
   bordered?: boolean;
   /**
@@ -98,7 +98,7 @@ export interface DateInputRangeProps
    */
   endAdornment?: ReactNode;
   /**
-   * Attributes applied to the start `input` element.
+   * Props applied to the start `input` element.
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dateInput#Attributes
    */
   startInputProps?: InputHTMLAttributes<HTMLInputElement>;
@@ -107,7 +107,7 @@ export interface DateInputRangeProps
    */
   startName?: string;
   /**
-   * Attributes applied to the end `input` element.
+   * Props applied to the end `input` element.
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dateInput#Attributes
    */
   endInputProps?: InputHTMLAttributes<HTMLInputElement>;
@@ -124,7 +124,8 @@ export interface DateInputRangeProps
    */
   validationStatus?: "error" | "warning" | "success";
   /**
-   * Styling variant. Defaults to "primary".
+   * Styling variant.
+   * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
   /**
@@ -184,8 +185,8 @@ export interface DateInputRangeProps
     details: DateInputRangeDetails,
   ) => void;
   /**
-   * Called when input values change, either due to user interaction or programmatic formatting of valid dates.
-   * @param event - The synthetic event or null if a programmatic change.
+   * Callback fired when the input values change, either through user interaction or programmatic formatting of valid dates.
+   * @param event - The synthetic event, or `null` if it's a programmatic change.
    * @param newValue - The new date input range value.
    */
   onDateValueChange?: (

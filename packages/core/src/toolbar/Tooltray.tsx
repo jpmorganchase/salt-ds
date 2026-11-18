@@ -26,8 +26,7 @@ export interface TooltrayProps
   overflowMode?: "none" | "independent" | "grouped";
   /**
    * Higher numbers overflow before lower numbers.
-   *
-   * Defaults to `0`.
+   * @default 0
    */
   overflowPriority?: number;
   /**

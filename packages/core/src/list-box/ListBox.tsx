@@ -34,7 +34,7 @@ export type ListBoxProps<Item = string> = {
    */
   disabled?: boolean;
   /**
-   * If `false`, the list box will have not a border.
+   * If `true`, the list box has a border.
    */
   bordered?: boolean;
   /**

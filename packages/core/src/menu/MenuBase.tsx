@@ -39,15 +39,15 @@ import {
 export interface MenuBaseProps {
   children?: ReactNode;
   /**
-   * Display or hide the component.
+   * If `true`, the menu is open. Use with `onOpenChange` to control it.
    */
   open?: boolean;
   /**
-   * If true, the menu will be open by default.
+   * If `true`, the menu is open initially. Use when the component is uncontrolled.
    */
   defaultOpen?: boolean;
   /**
-   * Callback function triggered when open state changes.
+   * Callback fired when the open state changes.
    */
   onOpenChange?: (newOpen: boolean) => void;
   /**

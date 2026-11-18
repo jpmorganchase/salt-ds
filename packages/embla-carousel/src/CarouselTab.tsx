@@ -71,7 +71,7 @@ export const useCarouselTab = (
  */
 export interface CarouselTabProps extends ComponentPropsWithRef<"button"> {
   /**
-   * Is the selected slide.
+   * If `true`, the tab represents the selected slide.
    */
   selected?: boolean;
 }

@@ -42,7 +42,7 @@ export interface InputProps
    */
   endAdornment?: ReactNode;
   /**
-   * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
+   * Props applied to the `input` element, such as its [attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes).
    */
   inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>> & DataAttributes;
   /**
@@ -62,7 +62,8 @@ export interface InputProps
    */
   startAdornment?: ReactNode;
   /**
-   * Alignment of text within container. Defaults to "left".
+   * Alignment of text within the container.
+   * @default "left"
    */
   textAlign?: "left" | "center" | "right";
   /**
@@ -70,11 +71,12 @@ export interface InputProps
    */
   validationStatus?: FormFieldValidationStatus;
   /**
-   * Styling variant. Defaults to "primary".
+   * Styling variant.
+   * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
   /**
-   * Styling variant with full border. Defaults to false.
+   * If `true`, the input has a full border.
    */
   bordered?: boolean;
 }

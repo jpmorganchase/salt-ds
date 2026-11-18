@@ -23,19 +23,19 @@ export type OpenChangeReason = "input" | "manual";
 
 export type ListControlProps<Item> = {
   /**
-   * If true, the control will be disabled.
+   * If `true`, the control is disabled.
    */
   disabled?: boolean;
   /**
-   * If true, the control will be read-only.
+   * If `true`, the control is read-only.
    */
   readOnly?: boolean;
   /**
-   * If true, the list will be open by default.
+   * If `true`, the list is open initially. Use when the component is uncontrolled.
    */
   defaultOpen?: boolean;
   /**
-   * If true, the list will be open. Useful for controlling the component.
+   * If `true`, the list is open. Use with `onOpenChange` to control it.
    */
   open?: boolean;
   /**
@@ -55,7 +55,7 @@ export type ListControlProps<Item> = {
    */
   onSelectionChange?: (event: SyntheticEvent, newSelected: Item[]) => void;
   /**
-   * If true, multiple options can be selected.
+   * If `true`, multiple options can be selected.
    */
   multiselect?: boolean;
   /**

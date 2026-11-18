@@ -18,11 +18,11 @@ export interface FileDropZoneTriggerProps
    */
   accept?: string;
   /**
-   * Disable all trigger elements.
+   * If `true`, the trigger button and its hidden file input are disabled.
    */
   disabled?: boolean;
   /**
-   * Allows multiple files to be uploaded.
+   * If `true`, multiple files can be selected for upload.
    */
   multiple?: boolean;
   /**
@@ -30,7 +30,7 @@ export interface FileDropZoneTriggerProps
    */
   name?: string;
   /**
-   * Callback for input change event.
+   * Callback fired when the user selects files in the file dialog.
    */
   onChange?: (event: ChangeEvent<HTMLInputElement>, files: File[]) => void;
   /**

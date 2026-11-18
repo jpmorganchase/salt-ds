@@ -9,7 +9,8 @@ import verticalNavigationCss from "./VerticalNavigation.css";
 export interface VerticalNavigationProps
   extends ComponentPropsWithoutRef<"nav"> {
   /**
-   * The appearance of the tabs. Defaults to "bordered".
+   * The appearance of the tabs.
+   * @default "bordered"
    */
   appearance?: "indicator" | "bordered";
 }

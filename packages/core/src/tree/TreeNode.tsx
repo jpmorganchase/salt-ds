@@ -33,7 +33,8 @@ export interface TreeNodeProps {
    */
   icon?: ComponentType<IconProps>;
   /**
-   * Whether the node is disabled.
+   * If `true`, the node is disabled. The node is also disabled when the `Tree`
+   * or its parent node is disabled.
    */
   disabled?: boolean;
   /**

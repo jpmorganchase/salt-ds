@@ -92,7 +92,8 @@ export interface DropdownProps<Item = string>
    */
   startAdornment?: ReactNode;
   /**
-   * Styling variant. Defaults to "primary".
+   * Styling variant.
+   * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
   /**
@@ -104,11 +105,11 @@ export interface DropdownProps<Item = string>
    */
   validationStatus?: FormFieldValidationStatus;
   /**
-   * Styling variant with a full border. Defaults to false.
+   * If `true`, the dropdown has a full border.
    */
   bordered?: boolean;
   /**
-   *  Props to pass to Dropdown's overlay.
+   * Props applied to the Dropdown's overlay, which contains the options.
    */
   OverlayProps?: Omit<ComponentPropsWithoutRef<"div">, "children" | "id"> &
     DataAttributes;

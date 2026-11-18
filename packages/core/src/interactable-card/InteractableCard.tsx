@@ -52,7 +52,8 @@ export interface InteractableCardProps extends ComponentPropsWithoutRef<"div"> {
    */
   onChange?: (event: SyntheticEvent<HTMLDivElement>) => void;
   /**
-   * Styling variant; defaults to "primary".
+   * Styling variant.
+   * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
   /**
