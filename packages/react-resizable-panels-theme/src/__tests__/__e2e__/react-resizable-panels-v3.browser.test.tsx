@@ -31,6 +31,7 @@ function LegacyPanels({
   useComponentCssInjection({
     css: resizablePanelsCss,
     testId: "salt-resizable-panels-theme",
+    window,
   });
 
   const borderClass =
@@ -86,6 +87,7 @@ it("styles a react-resizable-panels v3 separator when hovered and dragged", asyn
     separator,
     "--splitHandle-background-active",
   );
+  expect(hoverBackground).not.toBe(getComputedStyle(separator).backgroundColor);
 
   await mouse.move(point);
   await expect
