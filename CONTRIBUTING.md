@@ -88,6 +88,15 @@ Document every prop in a component's props interface with JSDoc. Editors show th
 - Describe props that you redeclare from an extended interface. Descriptions from other libraries might not fit Salt's component. For example, Floating UI documents `open` with `@default false`, but Salt's `Tooltip` opens and closes itself when `open` isn't set.
 - Don't extend an interface that has props the component doesn't support. Remove them with `Omit` so that they don't appear in editors or the props tables.
 
+#### Native props
+
+Components inherit HTML attributes and event handlers from the element they render, for example `onClick` from `button`. React's types don't describe these props, and the props tables leave them out, so editors and the site treat them as standard HTML.
+
+- Don't redeclare a native prop only to describe it. It would show in the props table while the component's other native props don't.
+- Redeclare a native prop when Salt changes it: its type, the element it's applied to, when it's called, or a parent that also sets it. Describe what's different, using the phrasing below. For example: "Callback fired when the button is clicked. It isn't fired when the button is disabled or loading."
+- Redeclare `children` when the component expects particular content, and say what it is, for example "The content of the Toggletip, usually a `ToggletipTrigger` and a `ToggletipPanel`."
+- Hooks and other interfaces that don't extend an element's props declare and describe every prop, including ones named like native props.
+
 #### Phrasing
 
 | Prop                                       | Pattern                                               | Example                                                     |
