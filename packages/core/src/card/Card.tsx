@@ -29,7 +29,7 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
    */
   disabled?: boolean;
   /**
-   * @deprecated since 1.71.0. Use `LinkCard` or `InteractableCard` when the entire card is interactive.
+   * @deprecated since 1.71.0. Remove this prop from `Card`. Use `LinkCard` or `InteractableCard` when the entire card is interactive.
    *
    * If `true` the card will have hover styling.
    */

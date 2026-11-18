@@ -8,15 +8,33 @@ import { makePrefixer } from "../utils";
 import checkboxIconCss from "./CheckboxIcon.css";
 
 export interface CheckboxIconProps {
+  /**
+   * If `true`, the icon shows a checkmark. Defaults to `false`.
+   */
   checked?: boolean;
+  /**
+   * Class name applied to the icon's root element.
+   */
   className?: string;
+  /**
+   * If `true`, the icon uses the disabled styling.
+   */
   disabled?: boolean;
   /**
    * @deprecated since 1.8.0-rc.2. Use `validationStatus` instead.
    */
   error?: boolean;
+  /**
+   * If `true`, the icon shows the indeterminate state instead of a checkmark.
+   */
   indeterminate?: boolean;
+  /**
+   * If `true`, the icon uses the read-only styling.
+   */
   readOnly?: boolean;
+  /**
+   * The validation status to style the icon with: "error", "warning" or "success".
+   */
   validationStatus?: AdornmentValidationStatus;
 }
 

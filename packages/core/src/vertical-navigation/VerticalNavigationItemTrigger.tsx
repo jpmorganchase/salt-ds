@@ -22,6 +22,11 @@ const ItemAction = forwardRef<
 
 export interface VerticalNavigationItemTriggerProps
   extends ComponentPropsWithoutRef<"a"> {
+  /**
+   * Replaces the element the trigger renders, for example with a router's link
+   * component. By default, the trigger renders an `a` when it has an `href`, and a
+   * `button` otherwise.
+   */
   render?: RenderPropsType["render"];
 }
 
