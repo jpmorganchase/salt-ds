@@ -65,11 +65,92 @@ The repo contains below packages under `/packages`
 Added `IconNameIcon`.
 ```
 
+### Documenting props
+
+Document every prop in a component's props interface with JSDoc. Editors show the JSDoc in tooltips, and `site/propsGen.js` uses `react-docgen-typescript` to build the props tables on the site. The tables render the description as Markdown and show the default in a code cell.
+
+#### Format
+
+- Use a `/** */` block directly above the prop. Editors and the props tables ignore `/* */` and `//` comments.
+- Put `/**` and `*/` on their own lines, and start each line between them with `*`. Don't close with `**/` or put text on the closing line.
+- Start each description with a capital letter and end each sentence with a period.
+- Put the description first and tags after it, with `@deprecated` last. Text after a tag becomes part of that tag.
+- Use American English, as the site does, for example "color", "customize" and "behavior".
+- Wrap code in backticks. This includes the names of props, components and types, CSS variables, HTML elements and attributes, and values written as they are in code, such as `` `true` ``, `` `300` `` and `` `"top"` ``.
+
+#### Content
+
+- Describe what the prop does for someone using the component. Keep guidance on when to use it on the site.
+- Don't repeat the type, which the props tables already show. Only list the values of a union to explain what each one does.
+- Give units, for example "Delay in milliseconds before the Tooltip is shown."
+- Say when a prop only applies with other props, for example "Only applies when `direction` is `"horizontal"`."
+- Describe props that you redeclare from an extended interface. Descriptions from other libraries might not fit Salt's component. For example, Floating UI documents `open` with `@default false`, but Salt's `Tooltip` opens and closes itself when `open` isn't set.
+- Don't extend an interface that has props the component doesn't support. Remove them with `Omit` so that they don't appear in editors or the props tables.
+
+#### Phrasing
+
+| Prop                                  | Pattern                                               | Example                                                     |
+| ------------------------------------- | ----------------------------------------------------- | ----------------------------------------------------------- |
+| Boolean                               | If `true`, …                                          | If `true`, the Tooltip arrow is hidden.                     |
+| Callback                              | Callback fired when …                                 | Callback fired when the open state changes.                 |
+| Controlled, such as `value` or `open` | … Use with its change callback to control it.         | The value of the slider. Use with `onChange` to control it. |
+| Uncontrolled, such as `defaultValue`  | The initial … Use when the component is uncontrolled. | The initial value. Use when the component is uncontrolled.  |
+| Anything else                         | A noun phrase, usually starting with "The"            | The placement of the Toggletip relative to its trigger.     |
+
+Document a callback's arguments with `@param name - Description.` when they aren't obvious, for example when `event` can be `null`.
+
+#### Defaults
+
+- Document a default with `@default` instead of in the description, so that the props tables show it. The props tables only find a default without the tag when the component destructures the prop in its parameters.
+- Write the value as it is in code, for example `@default "top"`, `@default 300` or `@default true`. Don't use backticks or single quotes, and don't end the value with a period.
+- Don't document a default of `false` or `undefined`, because an unset prop already behaves that way.
+- When the default depends on other props or is calculated, describe it in the description instead.
+- When you change a default in code, update the JSDoc too.
+
+#### Example
+
+```tsx
+export interface ExampleProps {
+  /**
+   * If `true`, the arrow is hidden.
+   */
+  hideArrow?: boolean;
+  /**
+   * If `true`, the items wrap onto the next line.
+   * @default true
+   */
+  wrap?: boolean;
+  /**
+   * Delay in milliseconds before the popup is shown.
+   * @default 300
+   */
+  enterDelay?: number;
+  /**
+   * The placement of the popup relative to its trigger.
+   * @default "right"
+   */
+  placement?: "top" | "right" | "bottom" | "left";
+  /**
+   * Callback fired when the open state changes.
+   */
+  onOpenChange?: (open: boolean) => void;
+  /**
+   * If `true`, the example has hover styling.
+   * @deprecated since 1.71.0. Use `InteractableExample` instead.
+   */
+  hoverable?: boolean;
+}
+```
+
+Components don't need their own JSDoc. Add it when a component isn't meant to be used directly or is easy to misuse.
+
+These standards apply to new and changed props. Bring a lab component's props up to them before moving it to core.
+
 ### Prop deprecation
 
 To deprecate a prop, you should:
 
-1. Add a comment above the prop in the component's `.tsx` file, indicating that it is deprecated and providing information on what to use instead. This should use the @deprecated JSDoc tag.
+1. Add a `@deprecated` tag to the prop's JSDoc, after its description. Say which version deprecated the prop and what to use instead, for example ``@deprecated since 1.71.0. Use `InteractableCard` instead.`` Don't write "Deprecated" in the description instead of using the tag, because editors only strike through props that have the tag.
 2. Update the component's documentation to reflect the deprecation, including the reason for deprecation and the recommended alternative.
 3. Add a changeset with the deprecation information, including the prop name, the reason for deprecation, and the recommended alternative. The changeset should show contain a diff code block.
 
