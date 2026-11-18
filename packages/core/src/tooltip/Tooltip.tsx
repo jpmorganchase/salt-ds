@@ -34,12 +34,14 @@ export interface TooltipProps
    */
   children: ReactNode;
   /**
-   * Whether to hide the Tooltip arrow. Defaults to `false`.
+   * Whether to hide the Tooltip arrow.
+   * @default false
    */
   hideArrow?: boolean;
   /**
-   * Whether to hide the status icon within the Tooltip. Defaults to `false`.
+   * Whether to hide the status icon within the Tooltip.
    * If no status is provided, icon will also be hidden.
+   * @default false
    */
   hideIcon?: boolean;
   /**
@@ -56,11 +58,13 @@ export interface TooltipProps
    */
   enterDelay?: number;
   /**
-   * Delay in milliseconds before the Tooltip is hidden. Defaults to 0.
+   * Delay in milliseconds before the Tooltip is hidden.
+   * @default 0
    */
   leaveDelay?: number;
   /**
-   * Option to not display the Tooltip. Can be used in conditional situations like text truncation. Defaults to `false`.
+   * Option to not display the Tooltip. Can be used in conditional situations like text truncation.
+   * @default false
    */
   disabled?: boolean;
   /**
