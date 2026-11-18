@@ -23,7 +23,7 @@ export interface DialogHeaderProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * If `true`, the accent bar in the Dialog header is hidden. The accent bar is
    * also hidden when the header has a status, set by `status` or by the
-   * Dialog's `status`.
+   * `Dialog`'s `status`.
    */
   disableAccent?: boolean;
   /**
