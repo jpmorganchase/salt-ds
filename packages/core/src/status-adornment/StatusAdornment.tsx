@@ -11,7 +11,7 @@ import statusAdornmentCss from "./StatusAdornment.css";
 
 export type AdornmentValidationStatus = Exclude<ValidationStatus, "info">;
 
-export interface StatusAdornmentProps extends IconProps {
+export interface StatusAdornmentProps extends Omit<IconProps, "color"> {
   /**
    * Status adornment to be displayed.
    */
