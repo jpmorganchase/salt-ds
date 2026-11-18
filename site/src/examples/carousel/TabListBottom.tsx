@@ -20,9 +20,7 @@ export const TabListBottom = (): ReactElement => {
       aria-labelledby={`${carouselId}-title`}
       className={styles.carousel}
     >
-      <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
-        Tablist bottom aligned example
-      </H2>
+      <H2 id={`${carouselId}-title`}>Tablist bottom aligned example</H2>
       <StackLayout gap={1} direction="column-reverse">
         <FlexLayout gap={1} wrap={true}>
           <CarouselPreviousButton tabIndex={-1} />

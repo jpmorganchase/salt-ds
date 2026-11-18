@@ -62,6 +62,7 @@ const allAllowedKeys = [
   "spacing",
   "layout",
   "typography-textDecoration",
+  "typography-fontStyle",
   // icon size
   "icon-size",
   "zIndex",

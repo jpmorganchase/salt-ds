@@ -2,7 +2,7 @@
   --link-color: "inherit";
   --link-color-hover: "inherit";
   --link-color-active: "inherit";
-  --link-color-visited: var(--salt-content-foreground-visited);
+  --link-color-visited: var(--salt-content-foreground-visited, var(--link-color));
   --link-color-focus: "inherit";
   --link-focus-outlineColor: currentColor;
 
@@ -40,7 +40,7 @@
   --link-color-active: var(--salt-content-primary-foreground);
   --link-color-focus: var(--salt-content-primary-foreground);
   --link-focus-outlineColor: var(--salt-focused-outlineColor);
-  --link-color-visited: var(--salt-content-foreground-visited);
+  --link-color-visited: var(--salt-content-foreground-visited, var(--link-color));
 }
 
 /* Secondary variant */
@@ -50,7 +50,7 @@
   --link-color-active: var(--salt-content-secondary-foreground);
   --link-color-focus: var(--salt-content-secondary-foreground);
   --link-focus-outlineColor: var(--salt-focused-outlineColor);
-  --link-color-visited: var(--salt-content-foreground-visited);
+  --link-color-visited: var(--salt-content-foreground-visited, var(--link-color));
 }
 
 .saltLink-accent {
@@ -59,7 +59,7 @@
   --link-color-active: var(--salt-content-accent-foreground);
   --link-color-focus: var(--salt-content-accent-foreground);
   --link-focus-outlineColor: var(--salt-focused-outlineColor);
-  --link-color-visited: var(--salt-content-foreground-visited);
+  --link-color-visited: var(--salt-content-foreground-visited, var(--link-color));
 }
 
 /* External link's icon */

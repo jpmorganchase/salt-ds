@@ -2,16 +2,12 @@
   --salt-selectable-borderColor: var(--salt-palette-interact-border);
   --salt-selectable-borderColor-hover: var(--salt-palette-interact-border-hover);
   --salt-selectable-borderColor-selected: var(--salt-palette-interact-border-active);
-  --salt-selectable-borderColor-selectedDisabled: var(--salt-palette-interact-border-activeDisabled);
   --salt-selectable-borderColor-readonly: var(--salt-palette-interact-border);
 
   --salt-selectable-foreground: var(--salt-palette-interact-foreground);
   --salt-selectable-foreground-hover: var(--salt-palette-interact-foreground-hover);
   --salt-selectable-foreground-selected: var(--salt-palette-interact-foreground-active);
-  --salt-selectable-foreground-selectedDisabled: var(--salt-palette-interact-foreground-activeDisabled);
   --salt-selectable-background: var(--salt-color-transparent);
   --salt-selectable-background-hover: var(--salt-palette-interact-background-hover);
   --salt-selectable-background-selected: var(--salt-palette-interact-background-active);
-  --salt-selectable-background-disabled: var(--salt-color-transparent);
-  --salt-selectable-background-selectedDisabled: var(--salt-palette-interact-background-activeDisabled);
 }

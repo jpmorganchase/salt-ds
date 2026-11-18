@@ -353,7 +353,9 @@ export const FileUploadExample = () => {
       </StackLayout>
       <FileDropZone onDrop={handleFiles}>
         <FileDropZoneIcon />
-        <strong>Drop files here or</strong>
+        <Text styleAs="inherit" fontWeight="bolder">
+          Drop files here or
+        </Text>
         <FileDropZoneTrigger accept=".pdf" onChange={handleFiles} />
         <Text>Files must be in .PDF format. 100KB file size limit.</Text>
       </FileDropZone>

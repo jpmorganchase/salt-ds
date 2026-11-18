@@ -59,6 +59,10 @@
   color: var(--salt-content-primary-foreground);
 }
 
+.saltTreeNode-selected.saltTreeNode-disabled > .saltTreeNodeTrigger {
+  background: var(--salt-selectable-background-selected);
+}
+
 .saltTreeNodeTrigger > .saltTreeNode-checkbox {
   margin-top: var(--saltTreeNodeTrigger-checkboxOffsetY);
   margin-bottom: 0;

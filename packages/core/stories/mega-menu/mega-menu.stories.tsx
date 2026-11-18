@@ -21,20 +21,20 @@ import {
   Text,
 } from "@salt-ds/core";
 import { DatasetManagerIcon, DevicesIcon } from "@salt-ds/icons";
-import type { StoryFn } from "@storybook/react-vite";
+import type { Meta, StoryFn } from "@storybook/react-vite";
 import "./mega-menu.stories.css";
 
 export default {
   title: "Core/Mega Menu",
   component: MegaMenu,
   decorators: [
-    (Story: StoryFn) => (
+    (Story) => (
       <div className="mega-menu-story">
         <Story />
       </div>
     ),
   ],
-};
+} as Meta<typeof MegaMenu>;
 
 // Prevent default navigation so activating an item in a test doesn't change the page.
 const preventNav = (event: { preventDefault: () => void }) =>
@@ -746,7 +746,7 @@ export const StaticContent: StoryFn = () => (
               </MegaMenuActions>
             </MegaMenuContent>
             <MegaMenuAside>
-              <p>Static promotional text with no links.</p>
+              <Text as="p">Static promotional text with no links.</Text>
             </MegaMenuAside>
           </MegaMenuPanel>
         </MegaMenu>

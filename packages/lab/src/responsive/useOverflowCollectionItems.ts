@@ -11,8 +11,6 @@ import {
 
 import {
   type OverflowAction,
-  type OverflowReducer,
-  type OverflowReducerInitialisationProps,
   overflowReducer,
   reducerInitialiser,
 } from "./OverflowReducer";
@@ -90,10 +88,7 @@ export const useOverflowCollectionItems: OverflowCollectionHook = ({
     );
   }
 
-  const [data, dispatch] = useReducer<
-    OverflowReducer,
-    OverflowReducerInitialisationProps
-  >(
+  const [data, dispatch] = useReducer(
     overflowReducer,
     {
       children,
@@ -152,7 +147,9 @@ export const useOverflowCollectionItems: OverflowCollectionHook = ({
     }
 
     measure().catch((err) => {
-      console.warn("error occurred measuring Overflow Items", err);
+      if (process.env.NODE_ENV !== "production") {
+        console.warn("error occurred measuring Overflow Items", err);
+      }
     });
   }, [measureManagedItems]);
 

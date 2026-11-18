@@ -4,7 +4,7 @@ import {
   type ListControlProps,
   useListControl,
 } from "../list-control/ListControlState";
-import { useControlled } from "../utils";
+import { useControlled, useEventCallback } from "../utils";
 
 export type UseComboBoxProps<Item> = ListControlProps<Item> &
   Pick<ComponentPropsWithoutRef<"input">, "value" | "defaultValue">;
@@ -38,8 +38,7 @@ export function useComboBox<Item>(props: UseComboBoxProps<Item>) {
     valueToString,
   });
 
-  const { selectedState, getOptionsMatching, setSelectedState, setOpen } =
-    listControl;
+  const { selectedState, setSelectedState } = listControl;
 
   const [valueState, setValueState] = useControlled({
     controlled: value,
@@ -52,32 +51,16 @@ export function useComboBox<Item>(props: UseComboBoxProps<Item>) {
     state: "value",
   });
 
-  const select = (event: SyntheticEvent, option: OptionValue<Item>) => {
-    if (option.disabled || disabled || readOnly) {
-      return;
-    }
-
-    let newSelected = [option.value];
-
-    if (multiselect) {
-      if (selectedState.includes(option.value)) {
-        newSelected = selectedState.filter((item) => item !== option.value);
-      } else {
-        newSelected = selectedState.concat([option.value]);
+  const select = useEventCallback(
+    (event: SyntheticEvent, option: OptionValue<Item>) => {
+      const selectedOption = listControl.select(event, option);
+      if (selectedOption) {
+        setValueState(
+          multiselect ? "" : listControl.valueToString(selectedOption.value),
+        );
       }
-    }
-
-    setSelectedState(newSelected);
-    const newValue = getOptionsMatching((option) =>
-      newSelected.includes(option.value),
-    ).map((option) => listControl.valueToString(option.data.value));
-    setValueState(multiselect ? "" : newValue[0]);
-    onSelectionChange?.(event, newSelected);
-
-    if (!multiselect) {
-      setOpen(false);
-    }
-  };
+    },
+  );
 
   const removePill = (event: SyntheticEvent, itemToRemove: Item) => {
     if (!multiselect || disabled || readOnly) {

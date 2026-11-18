@@ -45,8 +45,8 @@ const getItemTop = (
 };
 
 export interface ViewportTrackingProps<Item> {
-  containerRef: RefObject<HTMLElement>;
-  contentRef?: RefObject<HTMLElement>;
+  containerRef: RefObject<HTMLElement | null>;
+  contentRef?: RefObject<HTMLElement | null>;
   highlightedIdx?: number;
   indexPositions: CollectionItem<Item>[];
   stickyHeaders?: boolean;

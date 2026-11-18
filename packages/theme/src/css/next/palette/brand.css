@@ -1,0 +1,6 @@
+.salt-theme.salt-theme-next[data-mode="light"] {
+  --salt-palette-brand-strong: var(--salt-color-jpmBrown);
+}
+.salt-theme.salt-theme-next[data-mode="dark"] {
+  --salt-palette-brand-strong: var(--salt-color-brown-400);
+}

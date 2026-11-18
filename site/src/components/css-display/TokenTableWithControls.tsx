@@ -17,12 +17,16 @@ function loadThemeTokenTables() {
     import("./cssFoundations-legacy.json"),
     import("./cssCharacteristics-next.json"),
     import("./cssCharacteristics-legacy.json"),
+    import("./cssFoundations-salt-interim.json"),
+    import("./cssCharacteristics-salt-interim.json"),
   ]).then(
     ([
       nextFoundations,
       legacyFoundations,
       nextCharacteristics,
       legacyCharacteristics,
+      interimFoundations,
+      interimCharacteristics,
     ]) => ({
       next: {
         characteristics: nextCharacteristics.default as CssVariableData,
@@ -32,15 +36,31 @@ function loadThemeTokenTables() {
         characteristics: legacyCharacteristics.default as CssVariableData,
         foundations: legacyFoundations.default as CssVariableData,
       },
+      "salt-interim": {
+        characteristics: interimCharacteristics.default as CssVariableData,
+        foundations: interimFoundations.default as CssVariableData,
+      },
     }),
   );
 
   return themeTokenTablesPromise;
 }
 
-export const TokenTableWithControls = ({ tokens }: { tokens: string[] }) => {
-  const [theme, setTheme] = useState<ThemeType>("next");
-  const [mode, setMode] = useState<Mode>("system");
+const defaultTheme: ThemeType = "next";
+const defaultMode: Mode = "system";
+
+export const TokenTableWithControls = ({
+  tokens,
+  contextLabel,
+}: {
+  tokens: string[];
+  /**
+   * Names the section the table belongs to, usually its heading.
+   */
+  contextLabel?: string;
+}) => {
+  const [theme, setTheme] = useState<ThemeType>(defaultTheme);
+  const [mode, setMode] = useState<Mode>(defaultMode);
   const [themeTables, setThemeTables] = useState<ThemeTokenTables | null>(null);
 
   useEffect(() => {
@@ -89,8 +109,13 @@ export const TokenTableWithControls = ({ tokens }: { tokens: string[] }) => {
       mode={mode}
       theme={theme}
       controls={{
+        contextLabel,
         onModeChange: setMode,
         onThemeChange: setTheme,
+        onReset: () => {
+          setTheme(defaultTheme);
+          setMode(defaultMode);
+        },
       }}
       showGroupDescriptions={false}
       showGroupHeadings={false}

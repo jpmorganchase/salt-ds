@@ -146,7 +146,6 @@ export const useCombobox = <
   const highlightSelectedItem = useCallback(
     (selected: selectedCollectionType = selectedRef.current) => {
       if (Array.isArray(selected)) {
-        console.log("TODO multi selection");
       } else if (selected == null) {
         setHighlightedIndexRef.current?.(-1);
       } else {
@@ -169,7 +168,6 @@ export const useCombobox = <
     (selected: selectedCollectionType = selectedRef.current) => {
       let value = "";
       if (Array.isArray(selected)) {
-        console.log("TODO multi selection");
       } else if (selected != null && selected.value !== null) {
         value = itemToString(selected.value);
       }
@@ -309,7 +307,6 @@ export const useCombobox = <
       //TODO use ref
       document.getElementById(`${id}-input`)?.focus();
       // const inputEl = inputRef.current;
-      console.log("handle list click");
       listHandlersOnClick?.(evt);
       // if (inputEl != null) {
       //   inputEl.focus();
@@ -395,7 +392,6 @@ export const useCombobox = <
         } else if (stringToItem) {
           const item = stringToItem(text);
           if (item) {
-            console.log("we have a new item");
           }
         }
         // How do we check if string is Item

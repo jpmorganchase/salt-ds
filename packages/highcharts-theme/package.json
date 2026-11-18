@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/highcharts-theme",
-  "version": "1.0.4",
+  "version": "1.0.7",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -10,7 +10,7 @@
   "bugs": "https://github.com/jpmorganchase/salt-ds/issues",
   "sideEffects": false,
   "scripts": {
-    "build": "yarn node ../../scripts/build.mjs"
+    "build": "node ../../scripts/build.mjs"
   },
   "main": "src/index.ts",
   "typings": "dist-types/index.d.ts",

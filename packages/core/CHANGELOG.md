@@ -1,5 +1,292 @@
 # @salt-ds/core
 
+## 1.75.0
+
+### Minor Changes
+
+- eccdb99: Updated `Stepper` styling so the current step and completed progress are easier to pick out:
+
+  - Pending and active steps use `ProgressDraftIcon` and `ProgressActiveIcon`, matching the in-progress icon. These are the default `PendingIcon` and `ActiveIcon` in `SemanticIconProvider`, so `useIcon()` returns them too. To keep the previous icons, pass `iconMap={{ PendingIcon: StepDefaultIcon, ActiveIcon: StepActiveIcon }}`.
+  - Only the active step's label uses the bolder font weight. When the active step is hidden inside a collapsed step, the collapsed step's label uses it instead.
+  - The track after completed and in-progress steps uses the accent color.
+  - Descriptions use the label text style and the secondary text color, so they read as supporting text. Descriptions of steps with a `status` keep their status color.
+  - In a vertical `Stepper`, labels are centered with their icons, and steps are evenly spaced whether or not they have a description.
+
+### Patch Changes
+
+- aa3ce52: Updated `Dialog` border color to use `--salt-container-borderColor` instead of `--salt-separable-tertiary-borderColor`, to align with design.
+
+  The visible change is limited to the Legacy theme. In JPM Brand (Salt Next) and Salt (Interim) both tokens resolve to the same value, so there is no visual difference. In the Legacy theme, the `Dialog` border now uses the solid container border color used by `Card`, instead of the translucent separable border color.
+
+- f68dcb2: Fixed `InteractableCard` not respecting a provided `tabIndex`.
+- 57304f5: Fixed `MegaMenu` returning focus to the trigger in Safari when tabbing out of the last item in the panel. Focus now moves to the next element after the trigger.
+- 57304f5: Fixed `MegaMenu` briefly moving focus to the trigger when tabbing out of the last item in the panel. Focus now moves straight to the next element.
+- 40fb09b: Fixed a disabled tertiary `ComboBox` having a transparent background. It now uses `--salt-editable-tertiary-background-disabled`, like `Input` and `Dropdown`.
+- 57304f5: Fixed leaf `TreeNode`s not being selected when the empty space reserved for the expansion icon is clicked.
+- Updated dependencies [2c3cf5d]
+- Updated dependencies [2c3cf5d]
+  - @salt-ds/icons@1.19.0
+
+## 1.74.0
+
+### Minor Changes
+
+- 3a74bce: Updated `MenuItem` so labels align within a `MenuGroup`. If any item in a group has a leading icon, or a radio or checkbox indicator from a selectable `MenuGroup`, the other items in that group reserve the same space. Items outside a group align with each other, and each submenu aligns its own items.
+
+  When a menu contains a radio or checkbox, leading icons in groups without one sit in a column as wide as a radio or checkbox. Labels after an icon then line up with labels after a radio or checkbox that has no icon beside it.
+
+  Existing menus that mix items with and without icons will now show the labels of items without icons indented to line up with the others in the same group.
+
+- 20db4be: Added resizing to `Drawer`. With `resizable`, users can drag the drawer's edge, click the edge and then click its new position, or use the arrow keys to adjust its size. Set size limits with the `--saltDrawer-minResize` and `--saltDrawer-maxResize` CSS variables, which apply to the width of left and right drawers and the height of top and bottom drawers.
+
+  ```tsx
+  <Drawer resizable style={{ width: 320 }}>
+    <DrawerHeader header="Resizable drawer" />
+    <DrawerContent>Content</DrawerContent>
+  </Drawer>
+  ```
+
+- 3a74bce: Added selection to `Menu`. Set `selectionVariant` on `MenuGroup` to "single" or "multiple" to render its items as radio or checkbox menu items, give each `MenuItem` a `value`, and control the selection with `selected` and `onSelectionChange`. The menu's content unmounts when it closes, so keep the selection in state.
+
+  Clicking a selectable item keeps the menu open. Enter selects the item and closes the menu, and Space selects it and keeps the menu open.
+
+  ```tsx
+  const [sortBy, setSortBy] = useState(["name"]);
+
+  <MenuGroup
+    label="Sort by"
+    selectionVariant="single"
+    selected={sortBy}
+    onSelectionChange={(_event, newSelected) => setSortBy(newSelected)}
+  >
+    <MenuItem value="name">Name</MenuItem>
+    <MenuItem value="size">Size</MenuItem>
+  </MenuGroup>;
+  ```
+
+  Disabled `MenuItem` components can now be focused with the arrow keys so they can be discovered, but they still can't be activated.
+
+  - Fixed a submenu staying open when hovering another item in the parent menu if the submenu's last item was disabled.
+  - Fixed holding Enter on a menu trigger activating the first item once the menu opened.
+
+### Patch Changes
+
+- 20db4be: Fixed `DrawerFooter` clipping its actions when they don't fit on one line. They now wrap onto a new line.
+- 0ac88c9: Fixed `LinkButton` rendering 2px taller than `Button`. It now uses `box-sizing: border-box`, so its border is included in its `--salt-size-base` height.
+- 20db4be: Fixed `DrawerHeader` adding extra space above the header when it has no actions or has a preheader.
+- cdae245: Fixed bordered `ToggleButton` hover and pressed styling. A bordered toggle button now uses the actionable hover border and the actionable active background, border and foreground when pressed, so pressing it shows visible feedback.
+
+  A selected standalone `ToggleButton` now uses the actionable bold hover foreground on hover, and a selected positive solid `ToggleButton` now uses the positive hover background instead of the accented one.
+
+- cdae245: Fixed disabled Tree nodes not matching the design:
+
+  - A disabled selected node now keeps its selected background.
+  - In a multiselect Tree, the checkbox of a disabled node is no longer dimmed twice.
+
+## 1.73.0
+
+### Minor Changes
+
+- fd5ae98: Added a `render` element prop to `CollapsiblePanel` for customizing its root element.
+
+  `CollapsiblePanel` animations now respect reduced motion preferences, and changes to the panel's top and bottom padding now animate.
+
+- 75f2d7d: Deprecated `setRef`. Use `useForkRef` to merge refs instead, which also runs the cleanup functions that callback refs can return from React 19.
+- 602ddb5: Added `OnSolidButton`, a button for low-emphasis actions on solid backgrounds.
+
+  ```tsx
+  import { OnSolidButton } from "@salt-ds/core";
+
+  <OnSolidButton>Dismiss</OnSolidButton>;
+  ```
+
+- 825f63d: Added a `fontWeight` prop to `Text` and the components built on it, so you can make text `lighter` or `bolder` without using `<small>` or `<strong>`, which carry meaning for assistive technologies.
+
+  ```tsx
+  <H2 fontWeight="lighter">Lighter heading</H2>
+  ```
+
+  To change the weight of part of the text, nest a `Text` with the new `styleAs="inherit"` value, which keeps the parent's style, or use `<b>`, which now has the same weight as `<strong>`.
+
+  ```tsx
+  <H2>
+    Quarterly results{" "}
+    <Text as="span" styleAs="inherit" fontWeight="lighter">
+      (unaudited)
+    </Text>
+  </H2>
+  ```
+
+  `<strong>`, `<b>` and `<small>` now use the weights of the closest `Text`-based component, so a `<strong>` in a body `Text` nested in a heading uses the body weight rather than the heading weight.
+
+  `Button` and `OnSolidButton` now give `<b>` the same weight as `<strong>`, and a nested `Text` with `styleAs="inherit"` uses their action text weights.
+
+  Deprecated the lighter weight styling of `<small>` in `Text`, `Button` and `OnSolidButton`. It still works but will be removed in a future major version.
+
+  ```diff
+  - <Text><small>Lighter text</small></Text>
+  + <Text fontWeight="lighter">Lighter text</Text>
+  ```
+
+  See [font weight](https://www.saltdesignsystem.com/salt/components/text/examples#font-weight) for more examples.
+
+- 825f63d: Added editorial, eyebrow, Body 2 and Label 2 text styles for expressive content such as mastheads and hero banners.
+
+  - `Editorial1` to `Editorial6` components, and `editorial1` to `editorial6` `styleAs` values, for large headlines. `Editorial5` and `Editorial6` use the font sizes of `Display1` and `Display2`.
+  - `Eyebrow` component and `eyebrow` `styleAs` value, for a short line of text that introduces a heading.
+  - `body2` and `label2` `styleAs` values, for introductory paragraphs and larger labels.
+
+  The new styles work with the `fontWeight` prop and nested `<b>` and `<strong>` elements. Eyebrow text can be lighter but not bolder, and editorial text always uses a light weight in the J.P. Morgan theme.
+
+  ```tsx
+  <Eyebrow>Market insights</Eyebrow>
+  <H1 styleAs="editorial4">The year ahead</H1>
+  <Text styleAs="body2">Introductory paragraph.</Text>
+  <Label styleAs="label2">Account name</Label>
+  ```
+
+  See [editorial content](https://www.saltdesignsystem.com/salt/components/text/examples#editorial-content) for how to use them together.
+
+### Patch Changes
+
+- 4f1b504: Fixed references to undeclared dependencies, which could fail to resolve under strict package managers such as Yarn PnP, or pnpm with hoisting disabled.
+
+  - `@salt-ds/styles` now depends on `clsx`.
+  - `@salt-ds/embla-carousel` now depends on `@salt-ds/styles` and `@salt-ds/window`, and takes Embla's types from `embla-carousel-react` instead of importing the undeclared `embla-carousel`, so `embla-carousel` no longer needs to be installed for its types.
+  - `@salt-ds/core` types now only reference `@floating-ui/react`, instead of its transitive dependencies `@floating-ui/core`, `@floating-ui/dom`, `@floating-ui/react-dom` and `@floating-ui/utils`. `margin` takes its `Middleware` type from `@floating-ui/react`, `useTooltip` has an explicit return type, and `DEFAULT_FLOATING_UI_MIDDLEWARE` is typed as `Middleware[]`.
+
+- 61228a7: `SaltProvider` warnings about multiple root providers and `applyClassesToChild` are now only logged in development.
+- f8925a2: Fixed `Stepper`'s injected style id to use lowercase `salt-stepper`, matching the other components.
+- 825f63d: Renamed the `small` and `strong` font weight tokens to `lighter` and `bolder`, to match the new `fontWeight` prop on `Text`. The old tokens still work as aliases but are deprecated and will be removed in a future major version. Salt components now use the new tokens, so if you override an old token, override the new one instead.
+
+  ```diff
+  - font-weight: var(--salt-text-fontWeight-strong);
+  + font-weight: var(--salt-text-fontWeight-bolder);
+  ```
+
+  | Deprecated token                         | Use instead                               |
+  | ---------------------------------------- | ----------------------------------------- |
+  | `--salt-text-fontWeight-small`           | `--salt-text-fontWeight-lighter`          |
+  | `--salt-text-fontWeight-strong`          | `--salt-text-fontWeight-bolder`           |
+  | `--salt-text-action-fontWeight-small`    | `--salt-text-action-fontWeight-lighter`   |
+  | `--salt-text-action-fontWeight-strong`   | `--salt-text-action-fontWeight-bolder`    |
+  | `--salt-text-display-fontWeight-small`   | `--salt-text-display-fontWeight-lighter`  |
+  | `--salt-text-display-fontWeight-strong`  | `--salt-text-display-fontWeight-bolder`   |
+  | `--salt-text-heading-fontWeight-small`   | `--salt-text-heading-fontWeight-lighter`  |
+  | `--salt-text-heading-fontWeight-strong`  | `--salt-text-heading-fontWeight-bolder`   |
+  | `--salt-text-label-fontWeight-small`     | `--salt-text-label-fontWeight-lighter`    |
+  | `--salt-text-label-fontWeight-strong`    | `--salt-text-label-fontWeight-bolder`     |
+  | `--salt-text-notation-fontWeight-small`  | `--salt-text-notation-fontWeight-lighter` |
+  | `--salt-text-notation-fontWeight-strong` | `--salt-text-notation-fontWeight-bolder`  |
+
+  The deprecated `--salt-text-h{1-4}-fontWeight-small`, `--salt-text-h{1-4}-fontWeight-strong`, `--salt-text-display{1-4}-fontWeight-small` and `--salt-text-display{1-4}-fontWeight-strong` tokens now alias the new tokens.
+
+  The `small` and `strong` font weight tokens have been removed from the experimental Salt (Interim) theme without aliases. If you use the interim theme and reference them, switch to the matching `lighter` and `bolder` tokens in the table above.
+
+  See [font weight](https://www.saltdesignsystem.com/salt/foundations/typography#font-weight) for how each text style uses these weights.
+
+- 4aa4585: Fixed `MegaMenuListItem` showing the hover background while pressed. A pressed item now shows the active styling.
+- 55f27de: `Code` and `OverlayPanelCloseButton` now show their own names in React DevTools instead of `TextAction` and `OverlayPanelButton`, and `CollapsiblePanel` and `FormField` are no longer anonymous.
+- fd1bf44: Fixed the checkbox in multiselect `Option` being misaligned with the option's text, impacting `ComboBox`, `Dropdown` and `ListBox`.
+- 75f2d7d: Fixed cleanup functions returned from callback refs, which are supported from React 19, not being called when the ref is passed to a Salt component. The cleanup function now runs when the element is removed, instead of the ref being called with `null`. `useForkRef` supports these cleanup functions in the same way.
+- 7182ee8: Fixed types when using Salt with version 19 of `@types/react`:
+
+  - APIs that take a ref object, such as `useResizeObserver`, accept refs created with `useRef(null)`. Version 19 types these as `RefObject<T | null>`, which caused a type error.
+  - Types no longer use the global `JSX` namespace, which version 19 removed. Types that used it, such as the return types of `ComboBox`, `Dropdown` and `ListBox`, resolved to `any`, or caused errors in Salt's declaration files when `skipLibCheck` is disabled. `ToggleButtonProps` also caused an error when `skipLibCheck` is disabled.
+
+- 7182ee8: Fixed cleanup functions returned from callback refs, which are supported from React 19, not being called when the ref is passed to `getTriggerProps` from `useSidePanel`. The cleanup function now runs when the element is removed, instead of the ref being called with `null`.
+- 825f63d: Added `--salt-text-code-fontWeight` to all themes, to match the code text style in Figma. It's a regular weight in every theme.
+
+  `Code`, `Text` and `styleAs="code"` now use it. Code text has a single weight, so the `fontWeight` prop and nested `<b>` and `<strong>` elements no longer change its weight. Previously they used the body text weights, which made the browser draw a synthetic bold because PT Mono only has a regular weight.
+
+- 825f63d: Fixed `TextNotation` and `Text` with `styleAs="notation"` using the body text font weight instead of `--salt-text-notation-fontWeight`. Notation text now has a semibold weight by default, matching the design and other components that use notation text, such as `Avatar` and `Badge`.
+- cb2e335: Fixed `Toolbar` moving items that fit into its overflow menu, and not restoring focus to the previously focused control, when rendered in React Strict Mode.
+- Updated dependencies [4f1b504]
+  - @salt-ds/styles@0.4.2
+  - @salt-ds/icons@1.18.4
+
+## 1.72.0
+
+### Minor Changes
+
+- 24b5b04: Expand `Overlay` placement options to include all FloatingUI placement type options (-start and -end on top, bottom, left and right).
+- 83d7f9c: Add `OverlayFooter`, a composable layout section for an overlay panel. Use it as a direct child of `OverlayPanel` with `OverlayHeader` and `OverlayPanelContent` to create structured layouts.
+
+  `OverlayHeader` and `OverlayFooter` own their padding on all sides. `OverlayPanelContent` drops its top padding after an `OverlayHeader` and its bottom padding before an `OverlayFooter`, so adjacent sections share a single gap.
+
+  Add the `--saltOverlay-header-padding` and `--saltOverlay-footer-padding` CSS variables to `OverlayHeader` and `OverlayFooter`.
+
+- f9f5198: - `OverlayHeader` names `OverlayPanel` with its `header` and `preheader`, and describes it with its `description`, so `aria-labelledby` and `aria-describedby` no longer need to be set manually. The accessible name no longer includes the labels of controls passed to `actions`, such as a close button.
+
+  Remove the `id` on `OverlayHeader` and the matching `aria-labelledby` on `OverlayPanel`. Any `aria-labelledby` passed to `OverlayPanel` is combined with the header, so leaving this wiring in place repeats the title in the accessible name.
+
+  - `OverlayHeader` no longer renders an empty heading when neither `header` nor `preheader` is set.
+  - Fixed `aria-label` on `OverlayPanel` not naming the overlay.
+
+### Patch Changes
+
+- ff312fb: Fixed `ListBox` and `Dropdown` unexpectedly scrolling the page during keyboard navigation, including when navigation reaches the first or last option.
+
+  `ComboBox` now prevents PageUp and PageDown from scrolling the page when navigation cannot move beyond the first or last option.
+
+  `ListBox`, `Dropdown`, and `ComboBox` now leave navigation keys pressed with Ctrl or Meta, and Home, End, PageUp, and PageDown pressed with Alt, to the browser, so shortcuts such as Ctrl+End, Cmd+ArrowDown, and Ctrl+PageDown keep working. Alt+ArrowDown still opens the list.
+
+  `Dropdown` now opens the list when Home or End is pressed while it is closed, and moves focus to the first or last option.
+
+  Fixed `Dropdown` moving focus away from the first option when it re-rendered while the list was open, or when a typed character matched the first option while opening the list.
+
+  While no list is shown, `Dropdown` and `ComboBox` leave PageUp and PageDown to the browser, and `ComboBox` also leaves Home and End, so these keys scroll the page or move the text cursor as normal instead of highlighting a hidden option.
+
+- d578674: Applied typography letter spacing tokens consistently to text-owning components and inherited typography roots, and applied the display text transform token to display text.
+- 394af0d: Fixed `OverlayHeader` adding extra space above the header when `actions` isn't provided.
+- d578674: Deprecated `--salt-text-label-fontFamily`. Use `--salt-text-fontFamily` instead. The deprecated token remains available as an alias of `--salt-text-fontFamily` for compatibility but may be removed in a future major version.
+- d578674: Deprecated `--salt-text-notation-fontFamily`. Use `--salt-text-fontFamily` instead. The deprecated token remains available as an alias of `--salt-text-fontFamily` for compatibility but may be removed in a future major version.
+- 8e59c5d: Added `--salt-typography-fontStyle-normal` and `--salt-typography-fontStyle-italic` foundation tokens.
+
+  Deprecated `--salt-typography-textDecoration-italic`. Use `--salt-typography-fontStyle-italic` instead, since italic is a `font-style` value rather than a `text-decoration` value. The deprecated token remains available as an alias of `--salt-typography-fontStyle-italic` for compatibility but may be removed in a future major version.
+
+- cf3afb3: Fixed disabled `InteractableCard` components responding to pointer or keyboard interactions and displaying hover or pressed styles. Disabled cards retain their selected border.
+
+  Disabled `InteractableCard` components can no longer receive focus and no longer render the `disabled` attribute, which is not valid on a `div`. Use `aria-disabled="true"` or the `saltInteractableCard-disabled` class to target disabled cards in styles or tests.
+
+  Improved single-select `InteractableCardGroup` keyboard navigation. Arrow keys skip disabled cards and no longer scroll the page, arrow keys pressed with Alt, Ctrl, or Meta are left to the browser, and Tab moves focus to the first enabled card when no enabled card is selected.
+
+  Fixed an `InteractableCardGroup` becoming unreachable with Tab after it is re-enabled.
+
+- 0b65f84: Improved Dropdown, ComboBox, and ListBox performance for large, non-virtualized option lists. Fixed active/highlighted styling to track the active Option by id instead of value, so Options that share the same value no longer all appear active together; selection is unaffected and remains value-based.
+- 8e59c5d: Fixed `FormFieldLabel` with `intent="sentence"` not showing disabled styling when its `FormField` is disabled.
+
+  Fixed `FormFieldLabel` with `intent="sentence"` using the label line height instead of the body text line height that matches its font size.
+
+- 8e59c5d: Fixed label text in `Text` using the body text font weight tokens instead of `--salt-text-label-fontWeight` and `--salt-text-label-fontWeight-small`.
+
+  Fixed `FormFieldLabel` with `intent="label"` using the body text font weight tokens instead of `--salt-text-label-fontWeight-strong` and `--salt-text-label-fontWeight`.
+
+- b434b9e: Fixed `ToggleButtonGroup` keyboard navigation so arrow keys no longer scroll the page. Arrow keys pressed with Alt, Ctrl or Meta are left to the browser, so shortcuts such as history navigation still work.
+
+  Fixed selection in uncontrolled `ToggleButtonGroup` components whose `ToggleButton` components use numeric or array `value` props. The selected button is now correctly conveyed to assistive technologies, and selecting it again no longer triggers `onChange`.
+
+  Fixed a `ToggleButtonGroup` having no tab stop when its selected or focused button is disabled or removed, or when its value matches no button. When no enabled button is selected, the group now has a single tab stop on the first enabled button. A value of `0` no longer makes every button in the group a tab stop.
+
+  `ToggleButton` no longer adds an unsupported `readOnly` attribute to its underlying button.
+
+- e75a32d: Fixed `NumberInput` increment and decrement buttons remaining enabled inside a disabled `FormField`. The buttons now inherit the disabled state from the field.
+
+  Fixed keyboard navigation in a multiselect `ComboBox` so its selected pills form a single tab stop. Use the arrow keys to move between pills and Tab to leave the pill list.
+
+- 59a14d2: Fixed disabled `Checkbox` and `RadioButton` controls changing appearance when hovered, which could make them seem interactive. Disabled controls now retain their correct colors, including checked radio buttons.
+- e990c46: Simplified the disabled appearance of `Accordion`, `Breadcrumbs`, and `MenuItem` for a more consistent look across Salt components.
+- 550c4c1: Simplified typography tokens so all heading levels share `--salt-text-heading-fontFamily` and `--salt-text-heading-fontWeight` tokens, while all display levels share `--salt-text-display-fontFamily` and `--salt-text-display-fontWeight` tokens. The `small` and `strong` variants follow the same shared naming.
+
+  The level-specific font family and weight tokens are deprecated. They remain available as aliases for compatibility but may be removed in a future major version.
+
+- 8e59c5d: Applied the `--salt-text-display-fontStyle` token to display text in `Text`.
+- Updated dependencies [fbe1e48]
+- Updated dependencies [2a5cb0d]
+  - @salt-ds/styles@0.4.1
+  - @salt-ds/window@0.1.2
+  - @salt-ds/icons@1.18.3
+
 ## 1.71.0
 
 ### Minor Changes

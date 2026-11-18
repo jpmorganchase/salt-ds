@@ -60,9 +60,7 @@ export const useCollapsibleGroups = <Item>({
   });
 
   const handleClick = useEventCallback((evt: MouseEvent<HTMLElement>) => {
-    console.log(`useCollapsibleGroups idx=${highlightedIdx}`);
     const item = collectionHook.data[highlightedIdx];
-    console.log(evt.target, evt.currentTarget);
     if (
       item &&
       canToggleItem(item) &&

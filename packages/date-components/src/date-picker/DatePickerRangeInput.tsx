@@ -156,7 +156,7 @@ export function defaultRangeValidator(
 export const DatePickerRangeInput = forwardRef<
   HTMLDivElement,
   DatePickerRangeInputProps
->((props: DatePickerRangeInputProps, ref: React.Ref<HTMLDivElement>) => {
+>(function DatePickerRangeInput(props, ref) {
   const { dateAdapter } = useLocalization();
   const {
     className,
@@ -192,7 +192,7 @@ export const DatePickerRangeInput = forwardRef<
     helpers: { setOpen },
   } = useDatePickerOverlay();
 
-  const previousValue = useRef<typeof valueProp>();
+  const previousValue = useRef<typeof valueProp>(undefined);
 
   const [value, setValue] = useControlled({
     controlled: valueProp,

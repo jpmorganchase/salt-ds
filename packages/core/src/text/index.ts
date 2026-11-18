@@ -1,5 +1,7 @@
 export * from "./Code";
 export * from "./Display";
+export * from "./Editorial";
+export * from "./Eyebrow";
 export * from "./Headings";
 export * from "./Label";
 export * from "./Text";

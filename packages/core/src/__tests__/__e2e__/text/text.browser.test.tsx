@@ -3,6 +3,13 @@ import {
   Display2,
   Display3,
   Display4,
+  Editorial1,
+  Editorial2,
+  Editorial3,
+  Editorial4,
+  Editorial5,
+  Editorial6,
+  Eyebrow,
   H1,
   H2,
   H3,
@@ -24,6 +31,13 @@ const components = [
   { component: Display2, name: "Display2", tag: "span" },
   { component: Display3, name: "Display3", tag: "span" },
   { component: Display4, name: "Display4", tag: "span" },
+  { component: Editorial1, name: "Editorial1", tag: "span" },
+  { component: Editorial2, name: "Editorial2", tag: "span" },
+  { component: Editorial3, name: "Editorial3", tag: "span" },
+  { component: Editorial4, name: "Editorial4", tag: "span" },
+  { component: Editorial5, name: "Editorial5", tag: "span" },
+  { component: Editorial6, name: "Editorial6", tag: "span" },
+  { component: Eyebrow, name: "Eyebrow", tag: "span" },
   { component: H1, name: "H1", tag: "h1" },
   { component: H2, name: "H2", tag: "h2" },
   { component: H3, name: "H3", tag: "h3" },
@@ -115,6 +129,36 @@ describe("GIVEN a Text component", () => {
       },
     );
   }
+
+  for (const fontWeight of ["lighter", "bolder"] as const) {
+    it.each(components)(
+      `$name supports the ${fontWeight} font weight`,
+      async ({ component: Component }) => {
+        const { container } = await renderWithSalt(
+          <Component fontWeight={fontWeight}>{textExample}</Component>,
+        );
+        expect(container.querySelector(".saltText")).toHaveClass(
+          `saltText-${fontWeight}`,
+        );
+      },
+    );
+  }
+
+  it("does not add a font weight class when fontWeight is omitted", async () => {
+    const { container } = await renderWithSalt(<Text>{textExample}</Text>);
+    const text = container.querySelector(".saltText");
+    expect(text).not.toHaveClass("saltText-lighter");
+    expect(text).not.toHaveClass("saltText-bolder");
+  });
+
+  it("adds an inherit style class and inherits color with styleAs=inherit", async () => {
+    const { container } = await renderWithSalt(
+      <Text styleAs="inherit">{textExample}</Text>,
+    );
+    const text = container.querySelector(".saltText");
+    expect(text).toHaveClass("saltText-inheritStyle");
+    expect(text).not.toHaveClass("saltText-primary");
+  });
 
   it("does not add an inherit color class", async () => {
     const { container } = await renderWithSalt(
@@ -217,6 +261,79 @@ describe("GIVEN styleAs=action", () => {
     });
   }
 });
+
+const emphasisContent = (label: string) => (
+  <>
+    {label} <strong>strong</strong> <b>b</b>
+  </>
+);
+
+const fontTokenCases = [
+  {
+    name: "editorial",
+    baselineName: "display",
+    subject: (
+      <Editorial1 data-testid="subject">
+        {emphasisContent("Editorial")}
+      </Editorial1>
+    ),
+    baselineTokens: {
+      "--salt-text-display-fontFamily": "Courier",
+      "--salt-text-display-fontWeight": "100",
+      "--salt-text-display-fontWeight-bolder": "100",
+      "--salt-text-display-fontStyle": "normal",
+      "--salt-text-display-textTransform": "lowercase",
+    },
+  },
+  {
+    name: "eyebrow",
+    baselineName: "body",
+    subject: (
+      <Eyebrow data-testid="subject">{emphasisContent("Eyebrow")}</Eyebrow>
+    ),
+    baselineTokens: {
+      "--salt-text-fontFamily": "Courier",
+      "--salt-text-fontWeight": "100",
+      "--salt-text-fontWeight-bolder": "100",
+    },
+  },
+] as const;
+
+it.each(fontTokenCases)(
+  "uses the $name tokens instead of the $baselineName tokens",
+  async ({ name, subject, baselineTokens }) => {
+    const { container } = await renderWithSalt(
+      <div
+        style={
+          {
+            ...baselineTokens,
+            [`--salt-text-${name}-fontFamily`]: "Lato",
+            [`--salt-text-${name}-fontWeight`]: "900",
+            [`--salt-text-${name}-fontWeight-bolder`]: "800",
+            [`--salt-text-${name}-fontStyle`]: "italic",
+            [`--salt-text-${name}-textTransform`]: "uppercase",
+          } as CSSProperties
+        }
+      >
+        {subject}
+      </div>,
+    );
+    const subjectElement = container.querySelector<HTMLElement>(
+      '[data-testid="subject"]',
+    ) as HTMLElement;
+    const style = getComputedStyle(subjectElement);
+    expect(style.fontFamily).toBe("Lato");
+    expect(style.fontWeight).toBe("900");
+    expect(style.fontStyle).toBe("italic");
+    expect(style.textTransform).toBe("uppercase");
+    for (const tag of ["strong", "b"]) {
+      expect(
+        getComputedStyle(subjectElement.querySelector(tag) as HTMLElement)
+          .fontWeight,
+      ).toBe("800");
+    }
+  },
+);
 
 it("inherits a custom font family CSS variable", async () => {
   const { container } = await renderWithSalt(

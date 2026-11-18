@@ -2,7 +2,7 @@ import { Button, makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import type { ChangeEvent } from "react";
+import type { ChangeEvent, ReactElement } from "react";
 import { type ColorResult, SketchPicker } from "react-color";
 import { Color, type RGBAValue } from "./Color";
 import { hexValueWithoutAlpha } from "./ColorHelpers";
@@ -30,7 +30,7 @@ export const ColorPicker = ({
   color,
   onChange,
   onDialogClosed,
-}: ColorPickerProps): JSX.Element => {
+}: ColorPickerProps): ReactElement => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-color-picker",

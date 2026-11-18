@@ -2,7 +2,7 @@ import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { type RefObject, useCallback, useState } from "react";
 
 export interface ListAutosizerProps {
-  containerRef: RefObject<Element>;
+  containerRef: RefObject<Element | null>;
   responsive: boolean;
   height?: number | string;
   width?: number | string;

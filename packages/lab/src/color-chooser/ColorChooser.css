@@ -20,7 +20,7 @@
   font-weight: var(--salt-text-fontWeight);
   font-family: var(--saltButton-fontFamily, var(--salt-text-fontFamily));
   font-size: var(--salt-text-fontSize);
-  letter-spacing: normal;
+  letter-spacing: var(--salt-text-letterSpacing);
 }
 
 .saltColorChooser-overlayButton {

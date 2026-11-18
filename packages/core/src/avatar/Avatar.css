@@ -37,8 +37,9 @@
   background: var(--saltAvatar-background, var(--avatar-background));
   font-size: var(--avatar-fontSize);
   line-height: var(--saltAvatar-lineHeight, var(--salt-text-notation-lineHeight));
-  font-family: var(--salt-text-notation-fontFamily);
+  font-family: var(--salt-text-fontFamily);
   font-weight: var(--salt-text-notation-fontWeight);
+  letter-spacing: var(--salt-text-letterSpacing);
   width: var(--avatar-container-size);
   min-width: var(--avatar-container-size);
   height: var(--avatar-container-size);

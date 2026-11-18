@@ -1,5 +1,28 @@
 # @salt-ds/icons
 
+## 1.19.0
+
+### Minor Changes
+
+- 2c3cf5d: Added `ProgressActiveIcon`.
+- 2c3cf5d: Added `RotateLeftIcon`.
+
+## 1.18.4
+
+### Patch Changes
+
+- Updated dependencies [4f1b504]
+  - @salt-ds/styles@0.4.2
+
+## 1.18.3
+
+### Patch Changes
+
+- Updated dependencies [fbe1e48]
+- Updated dependencies [2a5cb0d]
+  - @salt-ds/styles@0.4.1
+  - @salt-ds/window@0.1.2
+
 ## 1.18.2
 
 ### Patch Changes

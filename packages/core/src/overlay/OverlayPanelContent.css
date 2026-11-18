@@ -3,6 +3,22 @@
   position: relative;
   overflow: hidden;
   padding: var(--saltOverlay-content-padding, var(--salt-spacing-100));
+  flex: 1 1 auto;
+  min-height: 0;
+  display: flex;
+}
+
+.saltOverlayHeader ~ .saltOverlayPanelContent {
+  padding-top: 0;
+}
+
+.saltOverlayPanelContent:not(:last-child) {
+  padding-bottom: 0;
+}
+
+.saltOverlayPanelContent-container {
+  flex: 1;
+  min-width: 0;
 }
 
 .saltOverlayPanelContent-overflow {
@@ -12,5 +28,9 @@
   overflow-y: auto;
 }
 .saltOverlayPanelContent-overflow.saltOverlayPanelContent-scroll-top {
-  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-tertiary-borderColor);
+  border-top-color: var(--salt-separable-tertiary-borderColor);
+}
+
+.saltOverlayPanelContent-overflow.saltOverlayPanelContent-scroll-bottom {
+  border-bottom-color: var(--salt-separable-tertiary-borderColor);
 }

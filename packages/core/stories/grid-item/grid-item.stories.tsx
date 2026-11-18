@@ -1,4 +1,4 @@
-import { GridItem, GridLayout } from "@salt-ds/core";
+import { GridItem, GridLayout, Text } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import "../layout/layout.stories.css";
 export default {
@@ -15,7 +15,7 @@ export default {
 
 const renderGridContent = (
   <div>
-    <p>Item</p>
+    <Text as="p">Item</Text>
   </div>
 );
 const GridItemStory: StoryFn<typeof GridItem> = (args) => {
@@ -26,14 +26,14 @@ const GridItemStory: StoryFn<typeof GridItem> = (args) => {
       className="layout-container"
     >
       <GridItem className="layout-active-content" {...args}>
-        <p>Item</p>
+        <Text as="p">Item</Text>
       </GridItem>
       {renderGridContent}
       {renderGridContent}
       {renderGridContent}
       {renderGridContent}
       <GridItem colSpan={{ xs: 2, md: 4 }}>
-        <p>Item spanning 4 columns</p>
+        <Text as="p">Item spanning 4 columns</Text>
       </GridItem>
     </GridLayout>
   );

@@ -1,0 +1,19 @@
+language js
+
+// A package must import its own code relatively, never through its own
+// entry point. The package is taken from the file's path, so every package
+// under packages/ is covered without per-package configuration; either path
+// separator is accepted because Biome reports Windows paths with `\`. Module
+// augmentation (`declare module "@salt-ds/..."`) has to use the package name.
+or {
+  JsModuleSource() as $source,
+  `import($source)`,
+  `require($source)`,
+  TsImportType(arguments=TsImportTypeArguments(argument=$source))
+} where {
+  $source <: not within TsExternalModuleDeclaration() ,
+  $filename <: r"(?:.*[/\\])?packages[/\\]([^/\\]+)[/\\]src[/\\].*"($package),
+  $source <: r"^[\"'`]@salt-ds/([^/\"'`]+)[\"'`]$"($imported),
+  $imported <: $package,
+  register_diagnostic(span=$source, message="Use a relative import instead of importing from the package itself.")
+}

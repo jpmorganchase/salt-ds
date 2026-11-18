@@ -91,7 +91,7 @@ export interface TreeNodeContextValue {
   /** Node id for the li element */
   id: string;
   /** Ref for the li element rendered by TreeNodeTrigger */
-  nodeRef: RefObject<HTMLLIElement>;
+  nodeRef: RefObject<HTMLLIElement | null>;
   /** Callback ref that connects TreeNode's forwarded ref to the li element */
   setNodeRef: Ref<HTMLLIElement> | null;
   /** Whether node is selected */

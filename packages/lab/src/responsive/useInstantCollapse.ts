@@ -175,7 +175,6 @@ export const useInstantCollapse = ({
     const [collapsedItem] = managedItems.filter(
       (item) => item.collapsible === "instant" && item.collapsed,
     );
-    console.log(`measureCollapsedItem ${collapsedItem.index}`);
     if (collapsedItem.fullSize === null) {
       const target = getElementForItem(ref, collapsedItem);
       if (target) {
@@ -185,7 +184,6 @@ export const useInstantCollapse = ({
         const renderedSize = managedItems.reduce(addAll, 0) - diff;
         const updates = [];
         if (renderedSize > innerContainerSize && managedItem) {
-          console.log(`next item to collapse ${managedItem.index}`);
           updates.push(
             {
               ...collapsedItem,

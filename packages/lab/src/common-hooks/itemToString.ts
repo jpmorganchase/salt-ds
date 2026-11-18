@@ -15,12 +15,14 @@ export function itemToString(item: unknown): string {
     return String((item as { label?: string }).label);
   }
 
-  console.warn(
-    [
-      "itemToString: you've likely forgotten to set the label prop on the item object.",
-      "You can also provide your own `itemToString` implementation.",
-    ].join("\n"),
-  );
+  if (process.env.NODE_ENV !== "production") {
+    console.warn(
+      [
+        "itemToString: you've likely forgotten to set the label prop on the item object.",
+        "You can also provide your own `itemToString` implementation.",
+      ].join("\n"),
+    );
+  }
 
   return "";
 }

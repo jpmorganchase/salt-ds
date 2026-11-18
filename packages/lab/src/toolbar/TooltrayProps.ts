@@ -1,4 +1,4 @@
-import type { HTMLAttributes } from "react";
+import type { HTMLAttributes, ReactElement } from "react";
 
 import type { OrientationShape, ToolbarAlignmentProps } from "./ToolbarProps";
 
@@ -15,7 +15,7 @@ export interface TooltrayProps
   "data-collapsible"?: collapsibleType;
   "data-collapsed"?: booleanAttribute;
   isInsidePanel?: boolean;
-  overflowButtonIcon?: JSX.Element;
+  overflowButtonIcon?: ReactElement;
   overflowButtonLabel?: string;
   orientation?: OrientationShape;
 }

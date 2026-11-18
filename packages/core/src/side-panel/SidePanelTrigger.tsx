@@ -4,6 +4,7 @@ import {
   forwardRef,
   isValidElement,
   type MouseEvent,
+  type Ref,
 } from "react";
 import { getRefFromChildren, mergeProps, useForkRef } from "../utils";
 import { useSidePanelContext } from "./internal";
@@ -25,7 +26,7 @@ export const SidePanelTrigger = forwardRef<
     setOpen(!openState);
   };
 
-  if (!children || !isValidElement(children)) {
+  if (!children || !isValidElement<{ ref?: Ref<unknown> }>(children)) {
     return <>{children}</>;
   }
 

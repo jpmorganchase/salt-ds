@@ -22,6 +22,11 @@
   color: var(--salt-selectable-foreground-hover);
 }
 
+.saltRadioButton-disabled:hover .saltRadioButtonIcon {
+  border-color: var(--salt-selectable-borderColor);
+  color: var(--salt-selectable-foreground);
+}
+
 .saltRadioButtonIcon-checked,
 .saltRadioButton:hover .saltRadioButtonIcon-checked {
   border-color: var(--salt-selectable-borderColor-selected);

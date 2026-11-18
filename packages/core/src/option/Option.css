@@ -46,6 +46,11 @@
     0 calc(var(--salt-size-fixed-100) * -1) 0 var(--salt-selectable-borderColor-selected);
 }
 
+/* Align the checkbox with the first line of text */
+.saltOption-checkbox {
+  margin: calc((var(--salt-text-lineHeight) - var(--salt-size-selectable)) / 2) 0;
+}
+
 /* TODO: Find a better way of doing this */
 .saltOption .saltIcon:not(.saltCheckboxIcon-icon) {
   min-height: var(--salt-text-lineHeight);

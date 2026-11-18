@@ -164,10 +164,18 @@ describe("GIVEN an MultilineInput", () => {
       .height;
     await input.click();
     await userEvent.keyboard("{Enter}{Enter}{Enter}");
-    await page.getByRole("button").click();
     await expect
       .poll(async () => (await input.element()).getBoundingClientRect().height)
-      .toBe(defaultHeight);
+      .toBeGreaterThan(defaultHeight);
+    await page.getByRole("button").click();
+    // Firefox measures Open Sans text 1px taller than an empty textarea, so the
+    // cleared input can be up to 1px shorter than its initial "Value" height.
+    await expect
+      .poll(async () => (await input.element()).getBoundingClientRect().height)
+      .toBeLessThanOrEqual(defaultHeight);
+    expect(
+      (await input.element()).getBoundingClientRect().height,
+    ).toBeGreaterThanOrEqual(defaultHeight - 1);
   });
 
   it("should not have empty aria-describedby or aria-labelledby attributes if used outside a formfield", async () => {

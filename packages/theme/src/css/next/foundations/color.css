@@ -78,7 +78,7 @@
   --salt-color-background-jet-rgb: 16, 24, 32;
   --salt-color-background-granite-rgb: 26, 34, 41;
   --salt-color-background-leather-rgb: 38, 41, 43;
-  --salt-color-logo-brown-rgb: 58, 34, 6;
+  --salt-color-jpmBrown-rgb: 58, 34, 6;
   --salt-color-gray-100: rgb(var(--salt-color-gray-100-rgb));
   --salt-color-gray-200: rgb(var(--salt-color-gray-200-rgb));
   --salt-color-gray-300: rgb(var(--salt-color-gray-300-rgb));
@@ -158,7 +158,7 @@
   --salt-color-background-jet: rgb(var(--salt-color-background-jet-rgb));
   --salt-color-background-granite: rgb(var(--salt-color-background-granite-rgb));
   --salt-color-background-leather: rgb(var(--salt-color-background-leather-rgb));
-  --salt-color-logo-brown: rgb(var(--salt-color-logo-brown-rgb));
+  --salt-color-jpmBrown: rgb(var(--salt-color-jpmBrown-rgb));
 
   /* Categorical palette */
   --salt-color-cobalt-100: rgb(237, 244, 255);

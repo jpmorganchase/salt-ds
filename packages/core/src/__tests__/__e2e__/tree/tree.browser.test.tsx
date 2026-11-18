@@ -438,6 +438,14 @@ describe("Given a Tree", () => {
         .not.toHaveAttribute("aria-selected", "true");
     });
 
+    it("selects a leaf when its expansion icon placeholder is clicked", async () => {
+      await renderWithSalt(<FlatTree />);
+      await expansionIcon("Node 1").click();
+      await expect
+        .element(treeItem("Node 1"))
+        .toHaveAttribute("aria-selected", "true");
+    });
+
     it.each(["default", "controlled"] as const)(
       "clamps %s selection to its first value",
       async (_name) => {
@@ -923,7 +931,7 @@ describe("Given a Tree", () => {
       );
       const after = page.getByRole("button", { name: "After" });
       const expectReentryFocus = async (label: string) => {
-        await after.click();
+        after.element().focus();
         await userEvent.keyboard("{Shift>}{Tab}{/Shift}");
         await expect.element(treeItem(label)).toHaveFocus();
       };

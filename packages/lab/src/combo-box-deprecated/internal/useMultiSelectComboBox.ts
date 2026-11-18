@@ -28,6 +28,7 @@ import {
 import { defaultItemToString } from "../../tokenized-input/internal/defaultItemToString";
 
 import { getDefaultFilter, getDefaultFilterRegex } from "../filterHelpers";
+import type { ComboBoxReturnValue } from "./ComboBoxReturnValue";
 import type { MultiSelectComboBoxProps } from "./MultiSelectComboBox";
 import { isToggleList, usePopperStatus } from "./usePopperStatus";
 
@@ -36,7 +37,7 @@ const REQUIRE_PREV_HIGHLIGHT = ["ArrowUp", "ArrowDown", "PageUp", "PageDown"];
 export type UseMultiSelectComboBoxProps<Item> = Omit<
   MultiSelectComboBoxProps<Item>,
   "inputRef" | "listContext" | "inputHelpers" | "inputProps" | "listProps"
-> & { expandButtonRef: RefObject<HTMLElement> };
+> & { expandButtonRef: RefObject<HTMLElement | null> };
 
 export const useMultiSelectComboBox = <Item>(
   props: Omit<UseMultiSelectComboBoxProps<Item>, "rootRef" | "classes">,
@@ -397,7 +398,8 @@ export const useMultiSelectComboBox = <Item>(
     clearTimeout(
       inputBlurTimeout.current == null ? undefined : inputBlurTimeout.current,
     );
-    const inputEl = inputRef && (inputRef as RefObject<HTMLElement>).current;
+    const inputEl =
+      inputRef && (inputRef as RefObject<HTMLElement | null>).current;
     if (inputEl) {
       inputEl.focus();
     }
@@ -431,7 +433,7 @@ export const useMultiSelectComboBox = <Item>(
       .join(" "),
   } as ExpandButtonProps;
 
-  return {
+  const result = {
     inputHelpers,
     inputRef: handleInputRef,
     listContext: {
@@ -457,4 +459,10 @@ export const useMultiSelectComboBox = <Item>(
       isListOpen: isListOpen && Boolean(source.length),
     },
   };
+  // TS7 otherwise narrows optional properties inferred from these spreads.
+  const returnValue: ComboBoxReturnValue<
+    typeof result,
+    "inputProps" | "listProps"
+  > = result;
+  return returnValue;
 };

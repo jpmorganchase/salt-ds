@@ -183,11 +183,13 @@ const validateProps = <Item>(props: IndexedListItemProps<Item>) => {
 
   /* eslint-disable react-hooks/rules-of-hooks */
   useEffect(() => {
-    if (item === undefined) {
-      console.warn("useListItem needs `item`.");
-    }
-    if (index === undefined) {
-      console.warn("useListItem needs to know item's index.");
+    if (process.env.NODE_ENV !== "production") {
+      if (item === undefined) {
+        console.warn("useListItem needs `item`.");
+      }
+      if (index === undefined) {
+        console.warn("useListItem needs to know item's index.");
+      }
     }
   }, [index, item]);
   /* eslint-enable react-hooks/rules-of-hooks */

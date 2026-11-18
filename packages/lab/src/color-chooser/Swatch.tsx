@@ -2,7 +2,7 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import type { ChangeEvent, KeyboardEvent } from "react";
+import type { ChangeEvent, KeyboardEvent, ReactElement } from "react";
 
 import { Color } from "./Color";
 import { isTransparent } from "./color-utils";
@@ -31,7 +31,7 @@ export const Swatch = ({
   alpha,
   onDialogClosed,
   transparent = false,
-}: SwatchProps): JSX.Element => {
+}: SwatchProps): ReactElement => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-swatch",

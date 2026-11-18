@@ -11,7 +11,7 @@ import formFieldHelperTextCss from "./FormFieldHelperText.css";
 const withBaseName = makePrefixer("saltFormFieldHelperText");
 
 export interface FormFieldHelperTextProps
-  extends Omit<TextProps<"label">, "variant" | "styleAs"> {}
+  extends Omit<TextProps<"label">, "variant" | "styleAs" | "fontWeight"> {}
 
 export const FormFieldHelperText = ({
   className,

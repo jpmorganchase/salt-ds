@@ -6,6 +6,19 @@ Follow below instructions to contribute to Salt.
 2. Run `yarn build` to build all packages across the repo. This is required to run Storybook or the site.
 3. Run `yarn storybook` to run a local instance of [storybook](https://storybook.js.org/docs/get-started/install#start-storybook) for development
 4. Run `cd site && yarn serve` to run a local instance of the [documentation](https://www.saltdesignsystem.com/) site.
+5. Optionally, run `git config blame.ignoreRevsFile .git-blame-ignore-revs` so that `git blame` skips the bulk formatting commits listed in `.git-blame-ignore-revs`. GitHub's blame view already skips them.
+
+## Build tooling
+
+Package JavaScript is built with tsdown (using Rolldown) into `dist-cjs` and `dist-es`. Component CSS is imported as text so Salt's style injection continues to control nonces and target windows. CSS and generated country components are explicit entries to preserve their existing CommonJS default exports when imported directly. The separate CSS bundles and themes use esbuild.
+
+TypeScript 7 generates `dist-types` declarations with full type inference and runs `yarn typecheck`. The native compiler is installed as `@typescript/native` and invoked through `scripts/typescript.mjs` to avoid relying on the shared `tsc` executable. TypeScript 6 remains installed as `typescript` for tools that use its JavaScript API, including Storybook's prop documentation.
+
+Run `node scripts/checkPackages.mjs` after `yarn build` to validate package outputs, dependency boundaries and that every relative import resolves inside the packed archive.
+
+`yarn build` uses Yarn workspaces to build independent packages in parallel and dependencies before their consumers. Each JavaScript package builds both module formats alongside its declarations. Package build commands also work individually. Each package that generates declarations needs its own `tsconfig.json`.
+
+Every build clears package outputs and regenerates assets, with no build cache. Generated files are formatted in batches with the native Biome CLI. The CSS jobs share one process while preserving stylesheet import order. Pass package names to rebuild specific CSS bundles, for example `yarn bundle:css core lab`.
 
 ## Packages
 
@@ -24,15 +37,32 @@ The repo contains below packages under `/packages`
 
 ### How to add a new icon
 
-1. Add the icon to the `packages/icons/src/SVG` folder. The icon should be named using kebab casing e.g. `icon-name.svg`.
-2. Navigate to `packages/icons` e.g. `cd packages/icons`.
-3. Run `yarn build:icons` to build the icons.
-4. Write a changeset using `yarn changeset`, this should have the format:
+1. Export the icon from the Salt DS Assets Figma file as SVG and add it to the `packages/icons/src/SVG` folder.
+   - Name it using kebab casing e.g. `icon-name.svg`. Solid variants use the `_solid` suffix e.g. `icon-name_solid.svg`.
+   - Remove everything except the icon paths (Figma frames, background rects, wrapping groups) and remove `fill` attributes so the icon inherits its color.
+   - Keep the `width="12" height="12" viewBox="0 0 12 12"` attributes. See existing SVGs in the folder for reference.
+2. If the icon replaces an existing one, add an entry to `DEPRECATED_ICONS` in `packages/icons/scripts/generateIcons.mjs`, e.g. `{ componentName: "OldName", replacement: "NewName", since: "1.20.0" }`. Keep the deprecated icon's SVG and exports for compatibility.
+3. Update the icon synonyms used by the site's icon search:
+
+   1. Add a row for the new icon and remove rows for any deprecated icons from the Icons Synonym List spreadsheet.
+   2. Copy the spreadsheet to `scripts/Icons Synonym List.xlsx`.
+   3. From the repository root, run `node scripts/makeSynonym.mjs`. This regenerates `site/src/components/icon-preview/salt-icon-synonym.json` from the spreadsheet.
+   4. Review the diff. The script regenerates the whole file, so if the spreadsheet is out of date it can revert changes made directly to the JSON. Keep only the intended changes and update the spreadsheet to match.
+   5. Delete `scripts/Icons Synonym List.xlsx`. Do not commit it.
+
+   Remove the entire JSON entry for each deprecated icon. An empty synonym array or an explicit `deprecated` category is not sufficient. The missing entry places the icon in the site's Deprecated group and keeps it searchable by component name only.
+
+4. Navigate to `packages/icons` e.g. `cd packages/icons`.
+5. Run `yarn build:icons` to build the icons. This first checks that deprecated icons have no matching synonym entries, including shared entries for solid variants. The check also runs in CI through `yarn build`. Generation then updates `src/components`, `src/components/index.ts`, `saltIcons.css`, `stories/icon.all.ts` and `site/src/components/icon-preview/allIconsList.ts`.
+6. From the repository root, run `yarn test:components packages/icons` to verify the icons.
+7. Write a changeset using `yarn changeset`, this should have the format:
 
 ```md
-Added:
+---
+"@salt-ds/icons": minor
+---
 
-- IconName
+Added `IconNameIcon`.
 ```
 
 ### Prop deprecation
@@ -42,6 +72,21 @@ To deprecate a prop, you should:
 1. Add a comment above the prop in the component's `.tsx` file, indicating that it is deprecated and providing information on what to use instead. This should use the @deprecated JSDoc tag.
 2. Update the component's documentation to reflect the deprecation, including the reason for deprecation and the recommended alternative.
 3. Add a changeset with the deprecation information, including the prop name, the reason for deprecation, and the recommended alternative. The changeset should show contain a diff code block.
+
+### Supporting React 16 to 19
+
+Salt supports React 16.14 and later, so components can only use APIs that are available in React 16, or feature-detect newer ones, as `useId` does. In particular:
+
+- Keep using `forwardRef` and `Context.Provider`, and don't use React 19 APIs such as `use`, `useActionState` or `ref` as a prop.
+- Use `ReactElement` instead of the global `JSX` namespace, which was removed from the React 19 types.
+- Type ref objects for DOM elements as `RefObject<HTMLElement | null>` when they are only read, as `Ref<HTMLElement>` when they are only passed to a `ref` prop, and as `MutableRefObject<HTMLElement | null>` when they are both, so they work with refs created with `useRef(null)` in every version of the React types.
+- Merge refs with `useForkRef`, which supports the cleanup functions that React 19 callback refs can return. In props getters, which can't call hooks, use the internal `forkRef` instead.
+- Don't spread a props object that contains `key` into JSX, and don't use `defaultProps` on function components.
+
+To check types, run:
+
+- `yarn typecheck` and `yarn typecheck:react19` to type check the source with the React 18 and 19 types.
+- `yarn typecheck:consumer` after `yarn build` to type check an application that uses the built packages with the React 16 to 19 types.
 
 ### Render prop support
 
@@ -111,6 +156,8 @@ In `theme/src/css/deprecated/characteristics.css`, add these 3 tokens:
 - Most pull requests should have a related issue. This helps us track the changes, agree scope and ensures that the pull request is addressing a specific problem or feature.
 - Small pull requests are preferred, as they are easier to review and test. If you have a large change, consider breaking it down into smaller pull requests.
 - Pull requests should include tests for any new functionality or changes to existing functionality. These can either be behavioral tests using Vitest browser mode or visual tests using Chromatic.
+- Browser tests run with React 16, 17, 18 and 19 in CI, using Strict Mode from React 18, and fail if React logs a warning about an API that is deprecated or behaves differently in other versions.
+- Browser tests run in Chrome by default. They also run nightly in Firefox and WebKit. To run them locally in another browser, install it with `yarn playwright install <browser>` and set `TEST_BROWSER`, e.g. `TEST_BROWSER=webkit yarn test:components`.
 - Pull request titles and commits should be written in the present tense, e.g. "Add new icon" or "Fix bug in component".
 - Each user-facing change should be documented in a changeset. The changeset should be written in past tense, e.g. "Added new icon" or "Fixed bug in component".
 - To help efficiency, please self-review your pull request before submitting it.

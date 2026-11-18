@@ -153,9 +153,7 @@ export const Autoplay = () => {
       onBlur={handleBlur}
       onFocus={handleFocus}
     >
-      <H2 id={`${carouselId}-title`} className={styles.carouselHeading}>
-        Autoplay example
-      </H2>
+      <H2 id={`${carouselId}-title`}>Autoplay example</H2>
       <StackLayout gap={1} direction="column-reverse">
         <FlexLayout justify="start" direction="row" gap={1}>
           <Button

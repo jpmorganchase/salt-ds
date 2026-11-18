@@ -2,7 +2,12 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import type { ChangeEvent, FocusEvent, KeyboardEvent } from "react";
+import type {
+  ChangeEvent,
+  FocusEvent,
+  KeyboardEvent,
+  ReactElement,
+} from "react";
 import { useEffect, useState } from "react";
 import { InputLegacy as Input } from "../input-legacy";
 import { isValidHex } from "./ColorHelpers";
@@ -21,7 +26,7 @@ export const HexInput = ({
   hexValue,
   disableAlphaChooser,
   onSubmit,
-}: HexInputProps): JSX.Element => {
+}: HexInputProps): ReactElement => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-hex-input",

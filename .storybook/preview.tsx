@@ -11,8 +11,15 @@ import "@fontsource/open-sans/700.css";
 import "@fontsource/open-sans/800-italic.css";
 import "@fontsource/open-sans/800.css";
 import "@fontsource/pt-mono";
+import "@fontsource/roboto/300-italic.css";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400-italic.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/600-italic.css";
+import "@fontsource/roboto/600.css";
 import "@salt-ds/theme/css/baseline.css";
 import "@salt-ds/theme/css/theme-next.css";
+import "@salt-ds/theme/css/experimental/salt-interim.css";
 import "@salt-ds/theme/index.css";
 import "./styles.css";
 
@@ -43,8 +50,9 @@ const preview: Preview = {
       toolbar: {
         dynamicTitle: true,
         items: [
-          { value: "brand", title: "Brand" },
-          { value: "legacy", title: "Legacy" },
+          { value: "brand", title: "J.P. Morgan" },
+          { value: "legacy", title: "Legacy (UITK)" },
+          { value: "salt-interim", title: "J.P. Morgan (Interim)" },
         ],
         title: "Theme",
       },
@@ -75,7 +83,7 @@ const preview: Preview = {
         // Storybook built in icons here - https://www.chromatic.com/component?appId=5a375b97f4b14f0020b0cda3&name=Basics%2FIcon&buildNumber=20654
         icon: "graphbar",
         // array of plain string values or MenuItem shape (see below)
-        items: ["mobile", "touch", "low", "medium", "high"],
+        items: ["mobile", "mobile-interim", "touch", "low", "medium", "high"],
       },
     },
     responsive: {

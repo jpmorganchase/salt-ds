@@ -4,6 +4,7 @@ import {
   type ChangeEvent,
   type FocusEvent,
   type KeyboardEvent,
+  type ReactElement,
   useEffect,
   useState,
 } from "react";
@@ -22,7 +23,7 @@ export const HexInput = ({
   hexValue,
   disableAlphaChooser,
   onSubmit,
-}: HexInputProps): JSX.Element => {
+}: HexInputProps): ReactElement => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-color-picker",

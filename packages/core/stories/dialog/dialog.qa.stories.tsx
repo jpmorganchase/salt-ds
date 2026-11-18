@@ -5,17 +5,21 @@ import {
   DialogCloseButton,
   DialogContent,
   type DialogContentProps,
-  DialogContext,
   DialogHeader,
   type DialogProps,
-  SaltProvider,
-  SaltProviderNext,
+  FloatingComponentProvider,
   StackLayout,
-  useTheme,
+  Text,
   VALIDATION_NAMED_STATUS,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { QAContainer, type QAContainerProps } from "docs/components";
+import {
+  InlineFloatingComponent,
+  QAContainer,
+  type QAContainerProps,
+  QADensities,
+  QADensityProvider,
+} from "docs/components";
 import "./dialog.stories.css";
 import { CloseIcon } from "@salt-ds/icons";
 import { Fragment } from "react";
@@ -25,54 +29,49 @@ export default {
   component: Dialog,
 } as Meta<typeof Dialog>;
 
-function FakeDialog({ children, status, id }: DialogProps) {
-  return (
-    <DialogContext.Provider
-      value={{
-        status,
-        id,
-      }}
-    >
-      <div className="fakeDialogWindow">{children}</div>
-    </DialogContext.Provider>
-  );
-}
+type TemplateProps = Omit<DialogProps, "content"> & {
+  header?: string;
+  preheader?: string;
+  content?: DialogContentProps["children"];
+  longDialog?: boolean;
+  maxHeight?: number;
+};
 
-const DialogTemplate: StoryFn<
-  Omit<DialogProps, "content"> & {
-    header?: string;
-    preheader?: string;
-    content?: DialogContentProps["children"];
-    longDialog?: boolean;
-    maxHeight?: number;
-  }
-> = ({ status, header, content, longDialog, maxHeight = 420 }) => {
+const DialogTemplate = ({
+  status,
+  header,
+  content,
+  longDialog,
+  maxHeight = 420,
+}: TemplateProps) => {
   const defaultHeader = "Congratulations! You have created a Dialog.";
   const defaultContent =
     "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.";
   return (
     <div style={{ width: 1000, maxHeight: maxHeight, padding: "0 200px" }}>
-      <FakeDialog status={status} open>
-        <DialogHeader header={header ?? defaultHeader} />
-        <DialogContent className={longDialog ? "longDialog" : ""}>
-          {content ?? defaultContent}
-        </DialogContent>
-        <DialogActions>
-          <Button
-            style={{ marginRight: "auto" }}
-            sentiment="accented"
-            appearance="transparent"
-          >
-            Cancel
-          </Button>
-          <Button sentiment="accented" appearance="bordered">
-            Previous
-          </Button>
-          <Button sentiment="accented" appearance="solid">
-            Next
-          </Button>
-        </DialogActions>
-      </FakeDialog>
+      <FloatingComponentProvider Component={InlineFloatingComponent}>
+        <Dialog className="inlineDialog" status={status} open disableScrim>
+          <DialogHeader header={header ?? defaultHeader} />
+          <DialogContent className={longDialog ? "longDialog" : ""}>
+            {content ?? defaultContent}
+          </DialogContent>
+          <DialogActions>
+            <Button
+              style={{ marginRight: "auto" }}
+              sentiment="accented"
+              appearance="transparent"
+            >
+              Cancel
+            </Button>
+            <Button sentiment="accented" appearance="bordered">
+              Previous
+            </Button>
+            <Button sentiment="accented" appearance="solid">
+              Next
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </FloatingComponentProvider>
     </div>
   );
 };
@@ -105,28 +104,25 @@ DeprecatedClosedButton.parameters = {
 };
 
 export const StatusVariants: StoryFn = () => {
-  const DensityValues = ["high", "medium", "low", "touch"] as const;
-  const { themeNext } = useTheme();
-  const ChosenProvider = themeNext ? SaltProviderNext : SaltProvider;
   return (
     <StackLayout gap={1}>
-      {DensityValues.map((density) => {
+      {QADensities.map((density) => {
         return (
           <Fragment key={density}>
-            <ChosenProvider density={density}>
+            <QADensityProvider density={density}>
               <DialogTemplate />
-            </ChosenProvider>
-            <ChosenProvider density={density} mode="dark">
+            </QADensityProvider>
+            <QADensityProvider density={density} mode="dark">
               <DialogTemplate />
-            </ChosenProvider>
+            </QADensityProvider>
             {VALIDATION_NAMED_STATUS.map((status) => (
               <Fragment key={status}>
-                <ChosenProvider density={density}>
+                <QADensityProvider density={density}>
                   <DialogTemplate status={status} />
-                </ChosenProvider>
-                <ChosenProvider density={density} mode="dark">
+                </QADensityProvider>
+                <QADensityProvider density={density} mode="dark">
                   <DialogTemplate status={status} />
-                </ChosenProvider>
+                </QADensityProvider>
               </Fragment>
             ))}
           </Fragment>
@@ -143,40 +139,36 @@ StatusVariants.parameters = {
 };
 
 export const ContentVariants: StoryFn = () => {
-  const { themeNext } = useTheme();
-  const ChosenProvider = themeNext ? SaltProviderNext : SaltProvider;
-
-  const DensityValues = ["high", "medium", "low", "touch"] as const;
   const longContent = (
-    <StackLayout style={{ maxHeight: 180 }}>
-      <div>
+    <StackLayout gap={1} style={{ maxHeight: 180 }}>
+      <Text as="p">
         Lorem Ipsum is simply dummy text of the printing and typesetting
         industry. Lorem Ipsum has been the industry's standard dummy text ever
         since the 1500s, when an unknown printer took a galley of type and
         scrambled it to make a type specimen book.
-      </div>
-      <div>
+      </Text>
+      <Text as="p">
         It has survived not only five centuries, but also the leap into
         electronic typesetting, remaining essentially unchanged. It was
         popularised in the 1960s with the release of Letraset sheets containing
         Lorem Ipsum passages, and more recently with desktop publishing software
         like Aldus PageMaker including versions of Lorem Ipsum.
-      </div>
-      <div>
+      </Text>
+      <Text as="p">
         It is a long established fact that a reader will be distracted by the
         readable content of a page when looking at its layout. The point of
         using Lorem Ipsum is that it has a more-or-less normal distribution of
         letters, as opposed to using 'Content here, content here', making it
         look like readable English.
-      </div>
-      <div>
+      </Text>
+      <Text as="p">
         Many desktop publishing packages and web page editors now use Lorem
         Ipsum as their default model text, and a search for 'lorem ipsum' will
         uncover many web sites still in their infancy. Various versions have
         evolved over the years, sometimes by accident, sometimes on purpose
         (injected humour and the like).
-      </div>
-      <div>
+      </Text>
+      <Text as="p">
         Contrary to popular belief, Lorem Ipsum is not simply random text. It
         has roots in a piece of classical Latin literature from 45 BC, making it
         over 2000 years old. Richard McClintock, a Latin professor at
@@ -184,32 +176,32 @@ export const ContentVariants: StoryFn = () => {
         Latin words, consectetur, from a Lorem Ipsum passage, and going through
         the cites of the word in classical literature, discovered the
         undoubtable source.
-      </div>
-      <div>
+      </Text>
+      <Text as="p">
         Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus
         Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written
         in 45 BC. This book is a treatise on the theory of ethics, very popular
         during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum
         dolor sit amet..", comes from a line in section 1.10.32.
-      </div>
+      </Text>
     </StackLayout>
   );
   return (
     <StackLayout style={{ width: 1200, height: 380 }} gap={1}>
-      {DensityValues.map((density) => (
+      {QADensities.map((density) => (
         <Fragment key={density}>
-          <ChosenProvider density={density}>
+          <QADensityProvider density={density}>
             <DialogTemplate content={longContent} maxHeight={500} />
-          </ChosenProvider>
-          <ChosenProvider density={density} mode="dark">
+          </QADensityProvider>
+          <QADensityProvider density={density} mode="dark">
             <DialogTemplate content={longContent} maxHeight={500} />
-          </ChosenProvider>
-          <ChosenProvider density={density}>
+          </QADensityProvider>
+          <QADensityProvider density={density}>
             <DialogTemplate longDialog maxHeight={500} />
-          </ChosenProvider>
-          <ChosenProvider density={density} mode="dark">
+          </QADensityProvider>
+          <QADensityProvider density={density} mode="dark">
             <DialogTemplate longDialog maxHeight={500} />
-          </ChosenProvider>
+          </QADensityProvider>
         </Fragment>
       ))}
     </StackLayout>

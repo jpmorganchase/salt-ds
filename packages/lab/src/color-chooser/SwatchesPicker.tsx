@@ -1,6 +1,6 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import type { ChangeEvent } from "react";
+import type { ChangeEvent, ReactElement } from "react";
 import type { Color } from "./Color";
 import { convertColorMapValueToHex } from "./ColorHelpers";
 import { isTransparent } from "./color-utils";
@@ -38,7 +38,7 @@ const SwatchesGroup = ({
   onDialogClosed,
   selectedColor,
   alpha,
-}: SwatchesGroupProps): JSX.Element => {
+}: SwatchesGroupProps): ReactElement => {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-swatches",
@@ -91,7 +91,7 @@ export const SwatchesPicker = ({
   alpha = 1,
   onChange,
   onDialogClosed,
-}: SwatchesPickerProps): JSX.Element => {
+}: SwatchesPickerProps): ReactElement => {
   return (
     <div
       data-testid="swatches-picker"

@@ -40,12 +40,20 @@
   },
   "include": [
     "packages",
-    "integration/toolkit",
     ".storybook/decorators",
     "docs",
     "tooling",
     "test/browser",
     "vitest.browser.config.mts",
     "./declarations.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "bower_components",
+    "jspm_packages",
+    "packages/*/dist-cjs/**",
+    "packages/*/dist-es/**",
+    "packages/*/dist-types/**",
+    "packages/*/build/**"
   ]
 }

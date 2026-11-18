@@ -42,16 +42,14 @@ let missingBreadcrumbContentWarningShown = false;
 
 function warnIfMissingBreadcrumbContent() {
   if (
-    process.env.NODE_ENV === "production" ||
-    missingBreadcrumbContentWarningShown
+    process.env.NODE_ENV !== "production" &&
+    !missingBreadcrumbContentWarningShown
   ) {
-    return;
+    missingBreadcrumbContentWarningShown = true;
+    console.warn(
+      "Breadcrumb requires children to render a named breadcrumb item. Use text children for simple items or BreadcrumbTrigger with BreadcrumbLabel for composed items.",
+    );
   }
-
-  missingBreadcrumbContentWarningShown = true;
-  console.warn(
-    "Breadcrumb requires children to render a named breadcrumb item. Use text children for simple items or BreadcrumbTrigger with BreadcrumbLabel for composed items.",
-  );
 }
 
 export interface BreadcrumbProps

@@ -25,7 +25,7 @@ export interface ListControlContextValue<Item> {
   focusVisibleState: boolean;
   valueToString: (item: Item) => string;
   disabled?: boolean;
-  listRef?: RefObject<HTMLDivElement>;
+  listRef?: RefObject<HTMLDivElement | null>;
 }
 
 // biome-ignore lint/suspicious/noExplicitAny: Need to use any here as a wider type but it gets narrowed when using the useListControl hook.

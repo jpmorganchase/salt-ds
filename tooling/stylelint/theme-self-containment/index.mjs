@@ -9,10 +9,16 @@ const {
   utils: { report, ruleMessages },
 } = stylelint;
 
+// Keys are entry paths relative to the theme CSS root.
 const themeEntries = {
+  "experimental/salt-interim.css": new Set(["foundations", "salt-interim"]),
   "theme-next.css": new Set(["deprecated", "foundations", "next"]),
   "theme.css": new Set(["deprecated", "foundations", "legacy"]),
 };
+
+const themeEntryNames = Object.keys(themeEntries).sort(
+  (first, second) => second.length - first.length,
+);
 
 const ruleName = "salt/theme-self-containment";
 
@@ -30,6 +36,28 @@ const meta = {
 };
 
 const normalizePath = (filePath) => filePath.split(path.sep).join("/");
+
+function findThemeEntry(sourcePath) {
+  const normalizedSourcePath = normalizePath(sourcePath);
+  const entryName = themeEntryNames.find((name) =>
+    normalizedSourcePath.endsWith(`/${name}`),
+  );
+
+  if (!entryName) {
+    return undefined;
+  }
+
+  const depth = entryName.split("/").length - 1;
+
+  return {
+    allowedDirectories: themeEntries[entryName],
+    entryName,
+    themeRoot: path.resolve(
+      path.dirname(sourcePath),
+      ...Array(depth).fill(".."),
+    ),
+  };
+}
 
 function importPath(params) {
   const firstNode = valueParser(params).nodes.find(
@@ -58,9 +86,11 @@ function importPath(params) {
   return valueParser.stringify(urlNodes).trim();
 }
 
-function analyzeTheme(entryPath, entryRoot, allowedDirectories) {
-  const entryName = path.basename(entryPath);
-  const themeRoot = path.dirname(entryPath);
+function analyzeTheme(
+  entryPath,
+  entryRoot,
+  { allowedDirectories, entryName, themeRoot },
+) {
   const definitions = new Set();
   const dependencyIssues = new Set();
   const references = new Map();
@@ -176,9 +206,15 @@ const ruleFunction = (primaryOption, secondaryOptionObject) => {
     }
 
     const sourcePath = root.source?.input.file ?? result.opts.from;
-    const allowedDirectories = themeEntries[path.basename(sourcePath ?? "")];
 
-    if (!sourcePath || !allowedDirectories) {
+    if (!sourcePath) {
+      return;
+    }
+
+    const entryPath = path.resolve(sourcePath);
+    const themeEntry = findThemeEntry(entryPath);
+
+    if (!themeEntry) {
       return;
     }
 
@@ -187,7 +223,7 @@ const ruleFunction = (primaryOption, secondaryOptionObject) => {
       entryName,
       missingCustomProperties,
       unreadableDependencies,
-    } = analyzeTheme(path.resolve(sourcePath), root, allowedDirectories);
+    } = analyzeTheme(entryPath, root, themeEntry);
     const node = root.first ?? root;
     const severity = secondaryOptionObject?.severity ?? "error";
 

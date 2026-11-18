@@ -43,51 +43,51 @@ import {
   SaltShakerIcon,
   SaltShakerSolidIcon,
 } from "@salt-ds/icons";
-import { useState } from "react";
+import { type FunctionComponent, useState } from "react";
 import AgGridThemeDefault from "../../../ag-grid-theme/src/examples/Default";
 import AgGridThemeHDCompact from "../../../ag-grid-theme/src/examples/HDCompact";
 import AgGridThemeZebra from "../../../ag-grid-theme/src/examples/VariantZebra";
 import {
-  DefaultGroup as AccordionDefault,
-  Status as AccordionStatus,
+  DefaultGroup as AccordionDefaultStory,
+  Status as AccordionStatusStory,
 } from "../../../core/stories/accordion/accordion.stories";
-import { Fallback as AvatarFallback } from "../../../core/stories/avatar/avatar.stories";
+import { Fallback as AvatarFallbackStory } from "../../../core/stories/avatar/avatar.stories";
 import {
-  StatusesPrimary as BannerStatusesPrimary,
-  StatusesSecondary as BannerStatusesSecondary,
+  StatusesPrimary as BannerStatusesPrimaryStory,
+  StatusesSecondary as BannerStatusesSecondaryStory,
 } from "../../../core/stories/banner/banner.stories";
-import { WithIcon as ButtonExamples } from "../../../core/stories/button/button.stories";
-import { Default as CardDefault } from "../../../core/stories/card/card.stories";
+import { WithIcon as ButtonExamplesStory } from "../../../core/stories/button/button.stories";
+import { Default as CardDefaultStory } from "../../../core/stories/card/card.stories";
 import {
-  Error as CheckboxError,
-  HorizontalGroup as CheckboxHorizontalGroup,
-  Readonly as CheckboxReadonly,
+  Error as CheckboxErrorStory,
+  HorizontalGroup as CheckboxHorizontalGroupStory,
+  Readonly as CheckboxReadonlyStory,
 } from "../../../core/stories/checkbox/checkbox.stories";
 import {
-  HelperText as FormFieldHelperText,
-  Readonly as FormFieldReadonly,
-  WithValidation as FormFieldValidation,
-  WithMultilineInputAsQuestion,
+  HelperText as FormFieldHelperTextStory,
+  Readonly as FormFieldReadonlyStory,
+  WithValidation as FormFieldValidationStory,
+  WithMultilineInputAsQuestion as WithMultilineInputAsQuestionStory,
 } from "../../../core/stories/form-field/form-field.stories";
-import { Default as InteractableCardStory } from "../../../core/stories/interactable-card/interactable-card.stories";
-import { Default as OverlayDefault } from "../../../core/stories/overlay/overlay.stories";
+import { Default as InteractableCardDefaultStory } from "../../../core/stories/interactable-card/interactable-card.stories";
+import { Default as OverlayDefaultStory } from "../../../core/stories/overlay/overlay.stories";
 import {
-  Closable as PillClosable,
-  Default as PillDefault,
-  Disabled as PillDisabled,
-  Icon as PillIcon,
+  Closable as PillClosableStory,
+  Default as PillDefaultStory,
+  Disabled as PillDisabledStory,
+  Icon as PillIconStory,
 } from "../../../core/stories/pill/pill.stories";
-import { Default as SegmentedButtonGroupDefault } from "../../../core/stories/segmented-button-group/segmented-button-group.stories";
-import { Default as SwitchDefault } from "../../../core/stories/switch/switch.stories";
+import { Default as SegmentedButtonGroupDefaultStory } from "../../../core/stories/segmented-button-group/segmented-button-group.stories";
+import { Default as SwitchDefaultStory } from "../../../core/stories/switch/switch.stories";
 import {
-  Default as ToastDefault,
-  Error as ToastError,
-  Warning as ToastWarning,
+  Default as ToastDefaultStory,
+  Error as ToastErrorStory,
+  Warning as ToastWarningStory,
 } from "../../../core/stories/toast/toast.stories";
 import {
-  Horizontal as ToggleButtonGroupHorizontal,
-  HorizontalIconOnly as ToggleButtonGroupHorizontalIon,
-  HorizontalTextOnly as ToggleButtonGroupHorizontalText,
+  HorizontalIconOnly as ToggleButtonGroupHorizontalIonStory,
+  Horizontal as ToggleButtonGroupHorizontalStory,
+  HorizontalTextOnly as ToggleButtonGroupHorizontalTextStory,
 } from "../../../core/stories/toggle-button-group/toggle-button-group.stories";
 
 import "ag-grid-community/styles/ag-grid.css";
@@ -96,6 +96,53 @@ import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
 export default {
   title: "Experimental/Kitchen Sink",
 };
+
+// A story function also takes the story context, so React 19's types don't
+// accept it as a JSX component. None of these stories use the context.
+function asComponent<TArgs>(
+  story: (args: TArgs, context: never) => unknown,
+): FunctionComponent<Partial<TArgs>> {
+  return story as FunctionComponent<Partial<TArgs>>;
+}
+
+const AccordionDefault = asComponent(AccordionDefaultStory);
+const AccordionStatus = asComponent(AccordionStatusStory);
+const AvatarFallback = asComponent(AvatarFallbackStory);
+const BannerStatusesPrimary = asComponent(BannerStatusesPrimaryStory);
+const BannerStatusesSecondary = asComponent(BannerStatusesSecondaryStory);
+const ButtonExamples = asComponent(ButtonExamplesStory);
+const CardDefault = asComponent(CardDefaultStory);
+const CheckboxError = asComponent(CheckboxErrorStory);
+const CheckboxHorizontalGroup = asComponent(CheckboxHorizontalGroupStory);
+const CheckboxReadonly = asComponent(CheckboxReadonlyStory);
+const FormFieldHelperText = asComponent(FormFieldHelperTextStory);
+const FormFieldReadonly = asComponent(FormFieldReadonlyStory);
+const FormFieldValidation = asComponent(FormFieldValidationStory);
+const InteractableCardStory = asComponent(InteractableCardDefaultStory);
+const OverlayDefault = asComponent(OverlayDefaultStory);
+const PillClosable = asComponent(PillClosableStory);
+const PillDefault = asComponent(PillDefaultStory);
+const PillDisabled = asComponent(PillDisabledStory);
+const PillIcon = asComponent(PillIconStory);
+const SegmentedButtonGroupDefault = asComponent(
+  SegmentedButtonGroupDefaultStory,
+);
+const SwitchDefault = asComponent(SwitchDefaultStory);
+const ToastDefault = asComponent(ToastDefaultStory);
+const ToastError = asComponent(ToastErrorStory);
+const ToastWarning = asComponent(ToastWarningStory);
+const ToggleButtonGroupHorizontal = asComponent(
+  ToggleButtonGroupHorizontalStory,
+);
+const ToggleButtonGroupHorizontalIon = asComponent(
+  ToggleButtonGroupHorizontalIonStory,
+);
+const ToggleButtonGroupHorizontalText = asComponent(
+  ToggleButtonGroupHorizontalTextStory,
+);
+const WithMultilineInputAsQuestion = asComponent(
+  WithMultilineInputAsQuestionStory,
+);
 
 const LaunchStatusDialog = () => {
   const [status, setStatus] = useState<ValidationStatus>("info");
@@ -162,68 +209,92 @@ export const Components = () => {
     <StackLayout>
       <StackLayout direction="row">
         <Card variant="primary">
-          <Display1>Masthead</Display1>
-          <H1>H1 Header</H1>
-          <H2>H2 Subheader</H2>
-          <Text color="primary">Primary body copy</Text>
-          <Text color="secondary">Secondary body copy</Text>
-          <Text color="error">Error body copy</Text>
-          <Text color="warning">Warning body copy</Text>
-          <Text color="success">Success body copy</Text>
-          <Text color="info">Info body copy</Text>
-          <Link href="#">Default link text</Link>
-          <Text>
-            <code>Code example 123</code>
-          </Text>
+          <StackLayout gap={1}>
+            <Display1>Masthead</Display1>
+            <H1>H1 Header</H1>
+            <H2>H2 Subheader</H2>
+            <StackLayout gap={0}>
+              <Text color="primary">Primary body copy</Text>
+              <Text color="secondary">Secondary body copy</Text>
+              <Text color="error">Error body copy</Text>
+              <Text color="warning">Warning body copy</Text>
+              <Text color="success">Success body copy</Text>
+              <Text color="info">Info body copy</Text>
+              <Link href="#">Default link text</Link>
+              <Text>
+                <code>Code example 123</code>
+              </Text>
+            </StackLayout>
+          </StackLayout>
         </Card>
         <Card variant="secondary">
-          <Display1>Masthead</Display1>
-          <H1>H1 Header</H1>
-          <H2>H2 Subheader</H2>
-          <Text color="primary">Primary body copy</Text>
-          <Text color="secondary">Secondary body copy</Text>
-          <Text color="error">Error body copy</Text>
-          <Text color="warning">Warning body copy</Text>
-          <Text color="success">Success body copy</Text>
-          <Text color="info">Info body copy</Text>
-          <Link href="#">Default link text</Link>
-          <Text>
-            <code>Code example 123</code>
-          </Text>
+          <StackLayout gap={1}>
+            <Display1>Masthead</Display1>
+            <H1>H1 Header</H1>
+            <H2>H2 Subheader</H2>
+            <StackLayout gap={0}>
+              <Text color="primary">Primary body copy</Text>
+              <Text color="secondary">Secondary body copy</Text>
+              <Text color="error">Error body copy</Text>
+              <Text color="warning">Warning body copy</Text>
+              <Text color="success">Success body copy</Text>
+              <Text color="info">Info body copy</Text>
+              <Link href="#">Default link text</Link>
+              <Text>
+                <code>Code example 123</code>
+              </Text>
+            </StackLayout>
+          </StackLayout>
         </Card>
         <Card variant="primary">
-          <Display1>Masthead</Display1>
-          <H1>H1 Header</H1>
-          <Card variant="secondary">
-            <H2>H2 Subheader</H2>
-            <Text color="primary">Primary body copy</Text>
-            <Text color="secondary">Secondary body copy</Text>
-            <Text color="error">Error body copy</Text>
-            <Text color="warning">Warning body copy</Text>
-            <Text color="success">Success body copy</Text>
-            <Text color="info">Info body copy</Text>
-          </Card>
-          <Link href="#">Default link text</Link>
-          <Text>
-            <code>Code example 123</code>
-          </Text>
+          <StackLayout gap={1}>
+            <Display1>Masthead</Display1>
+            <H1>H1 Header</H1>
+            <StackLayout gap={0}>
+              <Card variant="secondary">
+                <StackLayout gap={1}>
+                  <H2>H2 Subheader</H2>
+                  <StackLayout gap={0}>
+                    <Text color="primary">Primary body copy</Text>
+                    <Text color="secondary">Secondary body copy</Text>
+                    <Text color="error">Error body copy</Text>
+                    <Text color="warning">Warning body copy</Text>
+                    <Text color="success">Success body copy</Text>
+                    <Text color="info">Info body copy</Text>
+                  </StackLayout>
+                </StackLayout>
+              </Card>
+              <Link href="#">Default link text</Link>
+              <Text>
+                <code>Code example 123</code>
+              </Text>
+            </StackLayout>
+          </StackLayout>
         </Card>
         <Card variant="secondary">
-          <Display1>Masthead</Display1>
-          <H1>H1 Header</H1>
-          <Card variant="primary">
-            <H2>H2 Subheader</H2>
-            <Text color="primary">Primary body copy</Text>
-            <Text color="secondary">Secondary body copy</Text>
-            <Text color="error">Error body copy</Text>
-            <Text color="warning">Warning body copy</Text>
-            <Text color="success">Success body copy</Text>
-            <Text color="info">Info body copy</Text>
-          </Card>
-          <Link href="#">Default link text</Link>
-          <Text>
-            <code>Code example 123</code>
-          </Text>
+          <StackLayout gap={1}>
+            <Display1>Masthead</Display1>
+            <H1>H1 Header</H1>
+            <StackLayout gap={0}>
+              <Card variant="primary">
+                <StackLayout gap={1}>
+                  <H2>H2 Subheader</H2>
+                  <StackLayout gap={0}>
+                    <Text color="primary">Primary body copy</Text>
+                    <Text color="secondary">Secondary body copy</Text>
+                    <Text color="error">Error body copy</Text>
+                    <Text color="warning">Warning body copy</Text>
+                    <Text color="success">Success body copy</Text>
+                    <Text color="info">Info body copy</Text>
+                  </StackLayout>
+                </StackLayout>
+              </Card>
+              <Link href="#">Default link text</Link>
+              <Text>
+                <code>Code example 123</code>
+              </Text>
+            </StackLayout>
+          </StackLayout>
         </Card>
       </StackLayout>
       <StackLayout direction="row">

@@ -52,7 +52,7 @@ export interface MenuItemProps extends ListItemProps<MenuDescriptor> {
 }
 
 export const DefaultMenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
-  (props, ref) => {
+  function DefaultMenuItem(props, ref) {
     const {
       blurSelected,
       className,

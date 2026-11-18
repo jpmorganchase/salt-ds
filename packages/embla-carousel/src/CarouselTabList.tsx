@@ -39,7 +39,7 @@ export interface CarouselTabRendererProps extends CarouselTabProps {
 const CarouselTabRenderer = forwardRef<
   HTMLButtonElement,
   CarouselTabRendererProps
->((props, ref) => {
+>(function CarouselTabRenderer(props, ref) {
   return renderProps(CarouselTab, { ...props, ref });
 });
 

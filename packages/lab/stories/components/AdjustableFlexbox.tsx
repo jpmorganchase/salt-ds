@@ -1,4 +1,4 @@
-import { Button } from "@salt-ds/core";
+import { Button, FlexLayout, StackLayout, Text } from "@salt-ds/core";
 import { Input, type InputProps } from "@salt-ds/lab";
 import {
   type CSSProperties,
@@ -32,8 +32,8 @@ export const AdjustableFlexbox = ({
   const widthRef = useRef(widthProp);
   const [, forceUpdate] = useReducer((x: number) => x + 1, 0);
   const [width, setWidth] = useState(widthProp);
-  const handleWidthChange: InputProps["onChange"] = (e, value) => {
-    const newValue = Number.parseInt(value);
+  const handleWidthChange: InputProps["onChange"] = (_e, value) => {
+    const newValue = Number.parseInt(value, 10);
     widthRef.current = Number.isNaN(newValue) ? 0 : newValue;
     forceUpdate();
   };
@@ -56,20 +56,19 @@ export const AdjustableFlexbox = ({
   };
 
   return (
-    <>
-      <div style={{ minWidth: containerWidth }}>
+    <StackLayout gap={2}>
+      <FlexLayout gap={1} align="center" style={{ minWidth: containerWidth }}>
         <Input
           value={`${widthRef.current}`}
           onChange={handleWidthChange}
           onKeyDown={handleKeyDown}
         />
         <Button onClick={applyWidth}>Apply</Button>
-        <span style={{ marginLeft: 12 }}>
+        <Text as="span">
           Use Up/Down arrow keys to nudge width by 1px&nbsp;&nbsp;&nbsp;(+ SHIFT
           10px)
-        </span>
-      </div>
-      <br />
+        </Text>
+      </FlexLayout>
       <div
         className="Flexbox"
         style={{
@@ -81,6 +80,6 @@ export const AdjustableFlexbox = ({
       >
         {children}
       </div>
-    </>
+    </StackLayout>
   );
 };

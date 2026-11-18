@@ -345,4 +345,10 @@
   --salt-container-secondary-borderColor-disabled: var(--salt-palette-neutral-border-disabled); /* Use --salt-container-bold-borderColor-disabled */
   --salt-container-tertiary-borderColor: var(--salt-palette-neutral-border); /* Use --salt-container-bold-borderColor */
   --salt-container-tertiary-borderColor-disabled: var(--salt-palette-neutral-border-disabled); /* Use --salt-container-bold-borderColor-disabled */
+  --salt-content-bold-foreground-disabled: var(--salt-palette-interact-cta-foreground-disabled);
+  --salt-selectable-borderColor-selectedDisabled: var(--salt-palette-interact-border-activeDisabled);
+  --salt-selectable-foreground-selectedDisabled: var(--salt-palette-interact-foreground-activeDisabled);
+  --salt-selectable-background-disabled: var(--salt-color-transparent);
+  --salt-selectable-background-selectedDisabled: var(--salt-palette-interact-background-activeDisabled);
+  --salt-sentiment-accent-background-disabled: var(--salt-palette-accent-disabled);
 }

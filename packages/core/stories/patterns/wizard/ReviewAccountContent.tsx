@@ -12,7 +12,7 @@ import {
   RadioButtonGroup,
   StackLayout,
   Text,
-} from "../../../src";
+} from "@salt-ds/core";
 import { accountTypeOptions } from "./AccountTypeContent";
 import type { AccountFormData } from "./wizard.stories";
 

@@ -6,6 +6,11 @@ import {
   type ReactNode,
 } from "react";
 import { makePrefixer, useFloatingComponent, useForkRef } from "../utils";
+import {
+  MenuAlignmentContext,
+  useMenuAlignmentScope,
+  useSlotRegistry,
+} from "./MenuAlignmentContext";
 import { useMenuContext } from "./MenuContext";
 import { MenuPanelBase } from "./MenuPanelBase";
 import { MenuPanelContext } from "./MenuPanelContext";
@@ -39,34 +44,46 @@ export const MenuPanel = forwardRef<HTMLDivElement, MenuPanelProps>(
 
     const handleRef = useForkRef<HTMLDivElement>(ref, refs?.setFloating);
 
+    const [hasSelectionIcon, registerPanelSelectionIcon] = useSlotRegistry();
+    // Items outside a MenuGroup align with each other.
+    const alignment = useMenuAlignmentScope();
+
     return (
       <MenuPanelContext.Provider
-        value={{ activeIndex, getItemProps, setFocusInside }}
+        value={{
+          activeIndex,
+          getItemProps,
+          setFocusInside,
+          hasSelectionIcon,
+          registerPanelSelectionIcon,
+        }}
       >
-        <FloatingList elementsRef={elementsRef}>
-          <FloatingComponent
-            open={openState}
-            role="menu"
-            {...getFloatingProps()}
-            {...getPanelPosition()}
-            className={clsx(withBaseName(), className)}
-            focusManagerProps={
-              context
-                ? {
-                    context,
-                    initialFocus: isNested ? -1 : 0,
-                    returnFocus: !isNested,
-                    modal: false,
-                  }
-                : undefined
-            }
-            tabIndex={-1}
-            ref={handleRef}
-            {...rest}
-          >
-            <MenuPanelBase>{children}</MenuPanelBase>
-          </FloatingComponent>
-        </FloatingList>
+        <MenuAlignmentContext.Provider value={alignment}>
+          <FloatingList elementsRef={elementsRef}>
+            <FloatingComponent
+              open={openState}
+              role="menu"
+              {...getFloatingProps()}
+              {...getPanelPosition()}
+              className={clsx(withBaseName(), className)}
+              focusManagerProps={
+                context
+                  ? {
+                      context,
+                      initialFocus: isNested ? -1 : 0,
+                      returnFocus: !isNested,
+                      modal: false,
+                    }
+                  : undefined
+              }
+              tabIndex={-1}
+              ref={handleRef}
+              {...rest}
+            >
+              <MenuPanelBase>{children}</MenuPanelBase>
+            </FloatingComponent>
+          </FloatingList>
+        </MenuAlignmentContext.Provider>
       </MenuPanelContext.Provider>
     );
   },

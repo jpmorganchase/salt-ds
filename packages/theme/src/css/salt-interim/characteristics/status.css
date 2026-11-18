@@ -1,0 +1,30 @@
+.salt-theme.salt-interim {
+  --salt-status-info-foreground-decorative: var(--salt-palette-info-medium);
+  --salt-status-success-foreground-decorative: var(--salt-palette-positive-medium);
+  --salt-status-warning-foreground-decorative: var(--salt-palette-warning-medium);
+  --salt-status-error-foreground-decorative: var(--salt-palette-negative-medium);
+
+  --salt-status-info-foreground-informative: var(--salt-palette-info-mediumHigh);
+  --salt-status-success-foreground-informative: var(--salt-palette-positive-mediumHigh);
+  --salt-status-warning-foreground-informative: var(--salt-palette-warning-mediumHigh);
+  --salt-status-error-foreground-informative: var(--salt-palette-negative-mediumHigh);
+
+  --salt-status-info-borderColor: var(--salt-palette-info-medium);
+  --salt-status-success-borderColor: var(--salt-palette-positive-medium);
+  --salt-status-warning-borderColor: var(--salt-palette-warning-medium);
+  --salt-status-error-borderColor: var(--salt-palette-negative-medium);
+
+  --salt-status-info-background: var(--salt-palette-info-lowest);
+  --salt-status-success-background: var(--salt-palette-positive-lowest);
+  --salt-status-warning-background: var(--salt-palette-warning-lowest);
+  --salt-status-error-background: var(--salt-palette-negative-lowest);
+
+  --salt-status-info-bold-background: var(--salt-palette-info-medium);
+  --salt-status-error-bold-background: var(--salt-palette-negative-medium);
+  --salt-status-warning-bold-background: var(--salt-palette-warning-medium);
+  --salt-status-success-bold-background: var(--salt-palette-positive-medium);
+
+  --salt-status-success-background-selected: var(--salt-palette-positive-lower);
+  --salt-status-warning-background-selected: var(--salt-palette-warning-lower);
+  --salt-status-error-background-selected: var(--salt-palette-negative-lower);
+}

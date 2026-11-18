@@ -2,6 +2,7 @@ import { useColorMode } from "@jpmorganchase/mosaic-store";
 import { SaltProvider, SaltProviderNext, Switch, useId } from "@salt-ds/core";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { LocalizationProvider } from "@salt-ds/date-components";
+import { clsx } from "clsx";
 import {
   type ChangeEvent,
   type ElementType,
@@ -12,6 +13,7 @@ import {
 import { Pre } from "../mdx/pre";
 import styles from "./LivePreview.module.css";
 import { useLivePreviewControls } from "./LivePreviewProvider";
+import { usePreviewDensity } from "./previewDensity";
 
 type LivePreviewProps = {
   componentName: string;
@@ -46,7 +48,13 @@ export const LivePreview: FC<LivePreviewProps> = ({
     prepare();
   }, [exampleName, componentName]);
 
-  const { density, mode: exampleMode, theme } = useLivePreviewControls();
+  const {
+    density: previewDensity,
+    mode: exampleMode,
+    theme,
+  } = useLivePreviewControls();
+  const { density, themeClassName: densityThemeClassName } =
+    usePreviewDensity(previewDensity);
   const mode = (exampleMode === "system" ? siteMode : exampleMode) ?? siteMode;
   const handleShowCodeToggle = (event: ChangeEvent<HTMLInputElement>) => {
     const newShowCode = event.target.checked;
@@ -72,10 +80,13 @@ export const LivePreview: FC<LivePreviewProps> = ({
               applyClassesTo="scope"
             >
               <div className={styles.example}>
-                {/* Blank theme is needed here to prevent the site theme being inherited */}
+                {/* An explicit theme is needed here to prevent the site theme being inherited */}
                 <ChosenSaltProvider
                   applyClassesTo="scope"
-                  theme=""
+                  theme={clsx(
+                    theme === "salt-interim" && "salt-interim",
+                    densityThemeClassName,
+                  )}
                   density={density}
                   mode={mode}
                 >

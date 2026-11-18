@@ -13,14 +13,14 @@ const withBaseName = makePrefixer("saltAppHeader");
 export type AppHeaderProps = HTMLAttributes<HTMLDivElement>;
 
 export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
-  (
+  function AppHeader(
     {
       children,
       className,
       // ...rest
     },
     ref,
-  ) => {
+  ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-app-header",

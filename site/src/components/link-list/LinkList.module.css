@@ -30,7 +30,7 @@
 }
 
 .subheader {
-  font-style: var(--salt-typography-textDecoration-italic);
+  font-style: var(--salt-typography-fontStyle-italic);
   margin-top: var(--salt-spacing-100);
   margin-bottom: var(--salt-spacing-200);
 }

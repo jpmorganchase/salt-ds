@@ -578,8 +578,8 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       );
     }
 
-    const disableDecrement = disabled || floatValue - step < min;
-    const disableIncrement = disabled || floatValue + step > max;
+    const disableDecrement = isDisabled || floatValue - step < min;
+    const disableIncrement = isDisabled || floatValue + step > max;
     return (
       <div
         className={clsx(

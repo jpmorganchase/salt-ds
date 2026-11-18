@@ -16,7 +16,9 @@ export const CustomTriggerText = (): ReactElement => (
     onDrop={(event, files) => validate(event, files)}
   >
     <FileDropZoneIcon />
-    <strong>Drop files here or</strong>
+    <Text styleAs="inherit" fontWeight="bolder">
+      Drop files here or
+    </Text>
     <FileDropZoneTrigger accept=".png" onChange={validate}>
       Select from device
     </FileDropZoneTrigger>

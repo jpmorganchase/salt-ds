@@ -56,10 +56,10 @@ export function createSingleSelectionAnnouncement(
       }
       if (multiselect && Array.isArray(selectedDate)) {
         const lastSelectedDate = selectedDate[selectedDate.length - 1];
-        return `${dateAdapter.format(lastSelectedDate, "dddd D MMMM YYYY")}, selected, ${selectedDate.length} dates in selection`;
+        return `${dateAdapter.format(lastSelectedDate, "dddd DD MMMM YYYY")}, selected, ${selectedDate.length} dates in selection`;
       }
       if (!multiselect && selectedDate) {
-        return `${dateAdapter.format(selectedDate as DateFrameworkType, "dddd D MMMM YYYY")}, selected`;
+        return `${dateAdapter.format(selectedDate as DateFrameworkType, "dddd DD MMMM YYYY")}, selected`;
       }
       break;
     }
@@ -127,7 +127,7 @@ export function createRangeSelectionAnnouncement(
           multiselect && Array.isArray(selectedDate)
             ? `, ${selectedDate.length > 1 ? `${selectedDate.length} date ranges in selection` : ""}`
             : "";
-        return `Date range ${dateAdapter.format(startDate, "dddd D MMMM YYYY")} to ${dateAdapter.format(endDate, "dddd D MMMM YYYY")}, selected${multiselectSuffix}`;
+        return `Date range ${dateAdapter.format(startDate, "dddd DD MMMM YYYY")} to ${dateAdapter.format(endDate, "dddd DD MMMM YYYY")}, selected${multiselectSuffix}`;
       }
       break;
     }

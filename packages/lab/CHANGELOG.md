@@ -1,5 +1,152 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.108
+
+### Patch Changes
+
+- 57304f5: Fixed `InputLegacy` ignoring `cursorPositionOnFocus` and `highlightOnFocus` in Firefox and Safari.
+- Updated dependencies [aa3ce52]
+- Updated dependencies [f68dcb2]
+- Updated dependencies [57304f5]
+- Updated dependencies [57304f5]
+- Updated dependencies [40fb09b]
+- Updated dependencies [2c3cf5d]
+- Updated dependencies [2c3cf5d]
+- Updated dependencies [eccdb99]
+- Updated dependencies [57304f5]
+  - @salt-ds/core@1.75.0
+  - @salt-ds/icons@1.19.0
+
+## 1.0.0-alpha.107
+
+### Patch Changes
+
+- 4cacf5b: Updated `SystemStatus` to match the design, sizing the status icon to the line height of the content, increasing the gap between the icon and the content, and removing the border. This removes the `--saltSystemStatus-borderColor`, `--saltSystemStatus-borderWidth` and `--saltSystemStatus-borderStyle` CSS variables.
+
+  Fixed the status indicator in `SystemStatus` being visible to screen readers, matching `Banner`.
+
+- Updated dependencies [20db4be]
+- Updated dependencies [0ac88c9]
+- Updated dependencies [20db4be]
+- Updated dependencies [3a74bce]
+- Updated dependencies [20db4be]
+- Updated dependencies [cdae245]
+- Updated dependencies [cdae245]
+- Updated dependencies [3a74bce]
+  - @salt-ds/core@1.74.0
+
+## 1.0.0-alpha.106
+
+### Minor Changes
+
+- 602ddb5: Promoted `OnSolidButton` from lab to core. Import it from `@salt-ds/core` instead.
+
+### Patch Changes
+
+- 825f63d: Renamed the `small` and `strong` font weight tokens to `lighter` and `bolder`, to match the new `fontWeight` prop on `Text`. The old tokens still work as aliases but are deprecated and will be removed in a future major version. Salt components now use the new tokens, so if you override an old token, override the new one instead.
+
+  ```diff
+  - font-weight: var(--salt-text-fontWeight-strong);
+  + font-weight: var(--salt-text-fontWeight-bolder);
+  ```
+
+  | Deprecated token                         | Use instead                               |
+  | ---------------------------------------- | ----------------------------------------- |
+  | `--salt-text-fontWeight-small`           | `--salt-text-fontWeight-lighter`          |
+  | `--salt-text-fontWeight-strong`          | `--salt-text-fontWeight-bolder`           |
+  | `--salt-text-action-fontWeight-small`    | `--salt-text-action-fontWeight-lighter`   |
+  | `--salt-text-action-fontWeight-strong`   | `--salt-text-action-fontWeight-bolder`    |
+  | `--salt-text-display-fontWeight-small`   | `--salt-text-display-fontWeight-lighter`  |
+  | `--salt-text-display-fontWeight-strong`  | `--salt-text-display-fontWeight-bolder`   |
+  | `--salt-text-heading-fontWeight-small`   | `--salt-text-heading-fontWeight-lighter`  |
+  | `--salt-text-heading-fontWeight-strong`  | `--salt-text-heading-fontWeight-bolder`   |
+  | `--salt-text-label-fontWeight-small`     | `--salt-text-label-fontWeight-lighter`    |
+  | `--salt-text-label-fontWeight-strong`    | `--salt-text-label-fontWeight-bolder`     |
+  | `--salt-text-notation-fontWeight-small`  | `--salt-text-notation-fontWeight-lighter` |
+  | `--salt-text-notation-fontWeight-strong` | `--salt-text-notation-fontWeight-bolder`  |
+
+  The deprecated `--salt-text-h{1-4}-fontWeight-small`, `--salt-text-h{1-4}-fontWeight-strong`, `--salt-text-display{1-4}-fontWeight-small` and `--salt-text-display{1-4}-fontWeight-strong` tokens now alias the new tokens.
+
+  The `small` and `strong` font weight tokens have been removed from the experimental Salt (Interim) theme without aliases. If you use the interim theme and reference them, switch to the matching `lighter` and `bolder` tokens in the table above.
+
+  See [font weight](https://www.saltdesignsystem.com/salt/foundations/typography#font-weight) for how each text style uses these weights.
+
+- 79abeeb: Fixed `CascadingMenu` not opening with React 19 when its trigger element has its own ref.
+
+  Fixed React warnings about a `key` prop being spread into JSX in `List`, `Tabs` and `Toolbar`, and removed `defaultProps` from `OverflowSeparator`, which React 19 doesn't support on function components.
+
+  Updated `react-window` to `^1.8.11`, which supports React 18 and 19.
+
+- 55f27de: `ComboBoxDeprecated`, `DropdownBase`, `InputLegacy` and `OverflowPanel` now show their own names in React DevTools instead of `ComboBox`, `Dropdown`, `Input` and `DropdownPanel`, and `AppHeader`, `ContactActions`, `ContactAvatar` and `FormFieldLegacy` are no longer anonymous.
+- 7182ee8: Fixed types when using Salt with version 19 of `@types/react`:
+
+  - APIs that take a ref object, such as `useResizeObserver`, accept refs created with `useRef(null)`. Version 19 types these as `RefObject<T | null>`, which caused a type error.
+  - Types no longer use the global `JSX` namespace, which version 19 removed. Types that used it, such as the return types of `ComboBox`, `Dropdown` and `ListBox`, resolved to `any`, or caused errors in Salt's declaration files when `skipLibCheck` is disabled. `ToggleButtonProps` also caused an error when `skipLibCheck` is disabled.
+
+- 61228a7: Removed leftover debug logging from `ComboBox`, `ComboBoxDeprecated`, `ListDeprecated`, `ContactDetails`, `Tabstrip` and the responsive and collapsible-group hooks, and made lab's remaining console warnings and errors development-only.
+- Updated dependencies [fd5ae98]
+- Updated dependencies [4f1b504]
+- Updated dependencies [75f2d7d]
+- Updated dependencies [61228a7]
+- Updated dependencies [f8925a2]
+- Updated dependencies [825f63d]
+- Updated dependencies [4aa4585]
+- Updated dependencies [55f27de]
+- Updated dependencies [602ddb5]
+- Updated dependencies [fd1bf44]
+- Updated dependencies [75f2d7d]
+- Updated dependencies [7182ee8]
+- Updated dependencies [7182ee8]
+- Updated dependencies [825f63d]
+- Updated dependencies [825f63d]
+- Updated dependencies [825f63d]
+- Updated dependencies [825f63d]
+- Updated dependencies [cb2e335]
+  - @salt-ds/core@1.73.0
+  - @salt-ds/styles@0.4.2
+  - @salt-ds/icons@1.18.4
+
+## 1.0.0-alpha.105
+
+### Patch Changes
+
+- d578674: Applied typography letter spacing tokens consistently to text-owning components and inherited typography roots, and applied the display text transform token to display text.
+- d578674: Deprecated `--salt-text-notation-fontFamily`. Use `--salt-text-fontFamily` instead. The deprecated token remains available as an alias of `--salt-text-fontFamily` for compatibility but may be removed in a future major version.
+- 8e59c5d: Added `--salt-typography-fontStyle-normal` and `--salt-typography-fontStyle-italic` foundation tokens.
+
+  Deprecated `--salt-typography-textDecoration-italic`. Use `--salt-typography-fontStyle-italic` instead, since italic is a `font-style` value rather than a `text-decoration` value. The deprecated token remains available as an alias of `--salt-typography-fontStyle-italic` for compatibility but may be removed in a future major version.
+
+- e990c46: Simplified the disabled appearance of `List` and `ListNext` items for a more consistent look across Salt components.
+- 550c4c1: Simplified typography tokens so all heading levels share `--salt-text-heading-fontFamily` and `--salt-text-heading-fontWeight` tokens, while all display levels share `--salt-text-display-fontFamily` and `--salt-text-display-fontWeight` tokens. The `small` and `strong` variants follow the same shared naming.
+
+  The level-specific font family and weight tokens are deprecated. They remain available as aliases for compatibility but may be removed in a future major version.
+
+- Updated dependencies [ff312fb]
+- Updated dependencies [d578674]
+- Updated dependencies [24b5b04]
+- Updated dependencies [83d7f9c]
+- Updated dependencies [f9f5198]
+- Updated dependencies [fbe1e48]
+- Updated dependencies [394af0d]
+- Updated dependencies [d578674]
+- Updated dependencies [d578674]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [cf3afb3]
+- Updated dependencies [0b65f84]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [b434b9e]
+- Updated dependencies [e75a32d]
+- Updated dependencies [59a14d2]
+- Updated dependencies [e990c46]
+- Updated dependencies [550c4c1]
+- Updated dependencies [8e59c5d]
+- Updated dependencies [2a5cb0d]
+  - @salt-ds/core@1.72.0
+  - @salt-ds/styles@0.4.1
+  - @salt-ds/window@0.1.2
+  - @salt-ds/icons@1.18.3
+
 ## 1.0.0-alpha.104
 
 ### Minor Changes

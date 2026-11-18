@@ -124,14 +124,14 @@ WithCustomSvg.args = {
 export const RenderElement = Template.bind({});
 RenderElement.args = {
   name: "Alex Brailescu",
-  render: <CustomAvatarButton aria-label="Alex Brailescu profile" />,
+  render: <CustomAvatarButton aria-label="AB, Alex Brailescu profile" />,
 };
 
 export const RenderProp = Template.bind({});
 RenderProp.args = {
   name: "Alex Brailescu",
   render: (props) => (
-    <CustomAvatarButton {...props} aria-label="Alex Brailescu profile" />
+    <CustomAvatarButton {...props} aria-label="AB, Alex Brailescu profile" />
   ),
 };
 

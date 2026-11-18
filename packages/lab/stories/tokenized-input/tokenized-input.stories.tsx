@@ -288,7 +288,7 @@ export const WithCustomizedDelimiter: StoryFn<typeof TokenizedInput> = () => {
         >
           {isLocked ? (
             <div style={{ color: "grey" }}>
-              Using delimiter &quot;<strong>{delimiter}</strong>&quot;
+              Using delimiter &quot;<b>{delimiter}</b>&quot;
             </div>
           ) : (
             <Input

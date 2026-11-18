@@ -74,7 +74,7 @@ function hasFormFieldControls(children: ReactNode): boolean {
 }
 
 export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
-  (
+  function FormField(
     {
       children,
       className,
@@ -87,7 +87,7 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
       ...restProps
     },
     ref,
-  ) => {
+  ) {
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-form-field",

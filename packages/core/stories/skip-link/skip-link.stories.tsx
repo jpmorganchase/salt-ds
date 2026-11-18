@@ -58,6 +58,10 @@ const DefaultStory: StoryFn<typeof SkipLink> = (args) => {
 
   return (
     <BorderLayout>
+      {/* Keep the starting focus before the link so Tab does not need to wrap. */}
+      <Text className="help-text" tabIndex={-1}>
+        Click here and press the Tab key to see the Skip Link
+      </Text>
       <BorderItem position="north" sticky className="app-header" as="header">
         <SkipLink {...args}>Skip to main content</SkipLink>
         <FlexLayout className="navbar" justify="space-between" gap={3}>
@@ -133,9 +137,6 @@ const DefaultStory: StoryFn<typeof SkipLink> = (args) => {
             endItem={<Button appearance="bordered">See all themes</Button>}
           />
         </StackLayout>
-        <Text className="help-text">
-          Click here and press the Tab key to see the Skip Link
-        </Text>
       </BorderItem>
     </BorderLayout>
   );

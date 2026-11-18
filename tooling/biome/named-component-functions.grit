@@ -1,0 +1,35 @@
+language js
+
+// Components wrapped in forwardRef or memo must use a function expression named
+// after the variable, so React DevTools and error stacks show the component's
+// name. Arrow and anonymous functions show up as "ForwardRef" or "Anonymous",
+// and a mismatched name hides the real component. A forwardRef nested in memo
+// is checked too.
+JsVariableDeclarator(id=$name, initializer=JsInitializerClause(expression=$call)) where {
+  $call <: JsCallExpression(callee=$callee, arguments=JsCallArguments(args=[
+    $arg, ...
+  ])),
+  $callee <: or {
+    `forwardRef`,
+    `memo`,
+    `React.forwardRef`,
+    `React.memo`
+  },
+  if ($arg <: JsCallExpression(callee=$innerCallee, arguments=JsCallArguments(args=[
+    $innerArg, ...
+  ]))) {
+    $innerCallee <: or {
+      `forwardRef`,
+      `React.forwardRef`
+    },
+    $fn = $innerArg
+  } else { $fn = $arg },
+  or {
+    $fn <: JsArrowFunctionExpression(),
+    and {
+      $fn <: JsFunctionExpression(),
+      $fn <: not JsFunctionExpression(id=$name)
+    }
+  },
+  register_diagnostic(span=$name, message="Pass forwardRef and memo a function expression with the same name as the variable it is assigned to, so React DevTools shows the component's name.")
+}

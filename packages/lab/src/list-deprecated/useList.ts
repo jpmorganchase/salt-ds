@@ -299,7 +299,6 @@ export function useList<Item, Variant extends ListSelectionVariant>(
         event.ctrlKey ||
         event.metaKey
       ) {
-        console.log("handleMulti");
         handleMultiSelect(event, index, item);
       } else {
         nextItems = [item] as Item[];
@@ -333,7 +332,6 @@ export function useList<Item, Variant extends ListSelectionVariant>(
       }
 
       if (onSelect) {
-        console.log("onSelect");
         onSelect(event, item);
       }
 

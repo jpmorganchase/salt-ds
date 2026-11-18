@@ -169,4 +169,12 @@
   --salt-container-secondary-borderColor-disabled: var(--salt-palette-alpha-contrast-lower); /* Use --salt-container-bold-borderColor-disabled */
   --salt-container-tertiary-borderColor: var(--salt-palette-alpha-contrast-medium); /* Use --salt-container-bold-borderColor */
   --salt-container-tertiary-borderColor-disabled: var(--salt-palette-alpha-contrast-lower); /* Use --salt-container-bold-borderColor-disabled */
+  --salt-content-bold-foreground-disabled: var(--salt-palette-foreground-primary-alt-disabled);
+  --salt-selectable-borderColor-selectedDisabled: var(--salt-palette-accent-disabled);
+  --salt-selectable-foreground-selectedDisabled: var(--salt-palette-accent-disabled);
+  --salt-selectable-background-disabled: var(--salt-color-transparent);
+  --salt-selectable-background-selectedDisabled: var(--salt-palette-accent-weaker-disabled);
+}
+.salt-theme-next.salt-theme {
+  --salt-sentiment-accent-background-disabled: var(--salt-palette-accent-disabled);
 }

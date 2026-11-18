@@ -77,15 +77,11 @@ function StoryExample({
 }: StoryExampleProps) {
   return (
     <StackLayout gap={1.5} style={{ maxWidth: 960 }}>
-      <Text>
-        <strong>{title}</strong>
-      </Text>
+      <Text fontWeight="bolder">{title}</Text>
       {children}
       <div style={noteStyle}>
         <StackLayout gap={1}>
-          <Text>
-            <strong>Expected behavior</strong>
-          </Text>
+          <Text fontWeight="bolder">Expected behavior</Text>
           <ul style={listStyle}>
             {expectedBehavior.map((item) => (
               <li key={item}>
@@ -93,9 +89,7 @@ function StoryExample({
               </li>
             ))}
           </ul>
-          <Text>
-            <strong>How this relates to the code</strong>
-          </Text>
+          <Text fontWeight="bolder">How this relates to the code</Text>
           <ul style={listStyle}>
             {codeRelation.map((item) => (
               <li key={item}>
@@ -110,11 +104,7 @@ function StoryExample({
 }
 
 function ComparisonLabel({ children }: { children: ReactNode }) {
-  return (
-    <Text>
-      <strong>{children}</strong>
-    </Text>
-  );
+  return <Text fontWeight="bolder">{children}</Text>;
 }
 
 function SingleTrayToolbar({
@@ -300,9 +290,7 @@ function PriorityOrderingCard({
   return (
     <div style={comparisonCardStyle}>
       <StackLayout gap={1}>
-        <Text>
-          <strong>{title}</strong>
-        </Text>
+        <Text fontWeight="bolder">{title}</Text>
         <Text>
           Views {priorities.views}, Status {priorities.status}, Columns{" "}
           {priorities.columns}

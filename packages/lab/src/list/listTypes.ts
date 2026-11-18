@@ -6,6 +6,7 @@ import type {
   KeyboardEventHandler,
   MouseEventHandler,
   PropsWithChildren,
+  ReactElement,
   ReactNode,
   Ref,
   RefObject,
@@ -27,7 +28,7 @@ import type {
 
 export type ComponentType<T = unknown> = (
   props: PropsWithChildren<T>,
-) => JSX.Element;
+) => ReactElement;
 
 export type ListItemType<T = unknown> = ComponentType<
   ListItemProps<T> & { ref?: Ref<HTMLDivElement> }
@@ -209,8 +210,8 @@ export interface ListHookProps<Item, Selection extends SelectionStrategy>
   > {
   collapsibleHeaders?: boolean;
   collectionHook: CollectionHookResult<Item>;
-  containerRef: RefObject<HTMLElement>;
-  contentRef?: RefObject<HTMLElement>;
+  containerRef: RefObject<HTMLElement | null>;
+  contentRef?: RefObject<HTMLElement | null>;
   defaultHighlightedIndex?: number;
   disabled?: boolean;
   disableAriaActiveDescendant?: boolean;

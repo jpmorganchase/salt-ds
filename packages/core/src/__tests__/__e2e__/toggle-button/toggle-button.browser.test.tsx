@@ -82,6 +82,7 @@ describe("GIVEN a ToggleButton", () => {
     const button = page.getByRole("button");
 
     await expect.element(button).toHaveAttribute("aria-readonly");
+    await expect.element(button).not.toHaveAttribute("readonly");
     await button.click({ force: true });
     expect(onChange).not.toHaveBeenCalled();
   });

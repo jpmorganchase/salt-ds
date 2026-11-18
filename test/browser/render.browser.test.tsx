@@ -113,7 +113,11 @@ describe("renderWithSalt", () => {
 
     await expect.element(probe).toHaveAttribute("data-density", "medium");
     await expect.element(probe).toHaveAttribute("data-mode", "light");
-    expect(onMount).toHaveBeenCalledOnce();
+    // Strict Mode mounts components an extra time in development, so compare
+    // against the calls made by the initial render.
+    const mounts = onMount.mock.calls.length;
+    const unmounts = onUnmount.mock.calls.length;
+    expect(mounts - unmounts).toBe(1);
 
     await rerender(
       <SaltLifecycleProbe
@@ -126,8 +130,8 @@ describe("renderWithSalt", () => {
     await expect.element(probe).toHaveTextContent("after");
     await expect.element(probe).toHaveAttribute("data-density", "medium");
     await expect.element(probe).toHaveAttribute("data-mode", "light");
-    expect(onMount).toHaveBeenCalledOnce();
-    expect(onUnmount).not.toHaveBeenCalled();
+    expect(onMount).toHaveBeenCalledTimes(mounts);
+    expect(onUnmount).toHaveBeenCalledTimes(unmounts);
   });
 
   it("preserves date context and child identity across rerender", async () => {
@@ -148,7 +152,9 @@ describe("renderWithSalt", () => {
     await expect
       .element(probe)
       .toHaveAttribute("data-adapter-type-preserved", "true");
-    expect(onMount).toHaveBeenCalledOnce();
+    const mounts = onMount.mock.calls.length;
+    const unmounts = onUnmount.mock.calls.length;
+    expect(mounts - unmounts).toBe(1);
 
     await rerender(
       <DateLifecycleProbe
@@ -163,8 +169,8 @@ describe("renderWithSalt", () => {
     await expect
       .element(probe)
       .toHaveAttribute("data-adapter-type-preserved", "true");
-    expect(onMount).toHaveBeenCalledOnce();
-    expect(onUnmount).not.toHaveBeenCalled();
+    expect(onMount).toHaveBeenCalledTimes(mounts);
+    expect(onUnmount).toHaveBeenCalledTimes(unmounts);
   });
 
   it("preserves exact adapters inside portable story decorators", async () => {
@@ -174,11 +180,12 @@ describe("renderWithSalt", () => {
   });
 
   it("replaces the previous tree on a separate helper call", async () => {
+    const firstMount = vi.fn();
     const firstUnmount = vi.fn();
     await renderWithSalt(
       <SaltLifecycleProbe
         label="first"
-        onMount={vi.fn()}
+        onMount={firstMount}
         onUnmount={firstUnmount}
       />,
     );
@@ -195,6 +202,7 @@ describe("renderWithSalt", () => {
 
     await expect.element(page.getByText("first")).not.toBeInTheDocument();
     await expect.element(page.getByText("second")).toBeInTheDocument();
-    expect(firstUnmount).toHaveBeenCalledOnce();
+    expect(firstMount).toHaveBeenCalled();
+    expect(firstUnmount).toHaveBeenCalledTimes(firstMount.mock.calls.length);
   });
 });

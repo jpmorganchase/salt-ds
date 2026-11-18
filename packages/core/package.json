@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/core",
-  "version": "1.71.0",
+  "version": "1.75.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -19,7 +19,7 @@
   ],
   "devDependencies": {
     "@types/react-window": "^1.8.2",
-    "react-window": "^1.8.6"
+    "react-window": "^1.8.11"
   },
   "dependencies": {
     "@floating-ui/react": "^0.27.19",
@@ -48,8 +48,8 @@
     "provenance": true
   },
   "scripts": {
-    "build": "yarn node ../../scripts/build.mjs",
-    "bundle:css": "yarn node ./scripts/bundleCSS.mjs"
+    "build": "node ../../scripts/build.mjs",
+    "bundle:css": "node ./scripts/bundleCSS.mjs"
   },
   "files": [
     "css",

@@ -10,7 +10,8 @@
   line-height: var(--salt-text-lineHeight);
   font-family: var(--salt-text-fontFamily);
   color: var(--salt-content-primary-foreground);
-  font-weight: var(--salt-text-fontWeight-strong);
+  font-weight: var(--salt-text-fontWeight-bolder);
+  letter-spacing: var(--salt-text-letterSpacing);
   text-align: left;
   cursor: var(--salt-cursor-hover);
   box-sizing: border-box;
@@ -63,6 +64,7 @@
 
 .saltAccordionHeader:disabled {
   background: transparent;
-  color: var(--salt-content-primary-foreground-disabled);
+  opacity: 0.4;
+  color: var(--salt-content-primary-foreground);
   cursor: var(--salt-cursor-disabled);
 }

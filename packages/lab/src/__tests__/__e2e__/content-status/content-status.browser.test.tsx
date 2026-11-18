@@ -102,8 +102,10 @@ describe("GIVEN ContentStatus", () => {
         onActionClick={vi.fn()}
       />,
     );
-    await expect.element(page.getByRole("button")).toBeInTheDocument();
-    expect(buttonRef).toHaveBeenCalledOnce();
+    const button = page.getByRole("button");
+    await expect.element(button).toBeInTheDocument();
+    // From React 19, Strict Mode attaches refs an extra time in development.
+    expect(buttonRef).toHaveBeenLastCalledWith(button.element());
   });
 
   it("announces a new status without a spinner completion message", async () => {

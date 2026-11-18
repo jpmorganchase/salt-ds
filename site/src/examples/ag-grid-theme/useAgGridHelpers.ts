@@ -19,7 +19,7 @@ export function useAgGridHelpers(compact = false): {
   api?: GridApi;
   compact?: boolean;
 } {
-  const apiRef = useRef<{ api: GridApi }>();
+  const apiRef = useRef<{ api: GridApi } | undefined>(undefined);
   const [isGridReady, setGridReady] = useState(false);
   const density = useDensity();
   const { mode } = useTheme();

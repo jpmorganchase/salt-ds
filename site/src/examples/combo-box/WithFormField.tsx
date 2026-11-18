@@ -37,6 +37,7 @@ export const WithFormField = (): ReactElement => {
       <FormFieldLabel>Color</FormFieldLabel>
       <ComboBox
         onChange={handleChange}
+        inputProps={{ "aria-autocomplete": "list" }}
         onSelectionChange={handleSelectionChange}
         value={value}
       >

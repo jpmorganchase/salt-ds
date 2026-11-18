@@ -100,3 +100,85 @@ describe("GIVEN a Checkbox", () => {
       .toHaveAttribute("name", "accept");
   });
 });
+
+function appearanceOf(name: string) {
+  const icon = page
+    .getByRole("checkbox", { name })
+    .element()
+    .closest("label")
+    ?.querySelector(".saltCheckboxIcon");
+  if (!(icon instanceof HTMLElement)) {
+    throw new Error(`Expected the "${name}" checkbox to render an icon`);
+  }
+  const { borderTopColor, color } = getComputedStyle(icon);
+  return { borderTopColor, color };
+}
+
+describe("GIVEN a Checkbox the user cannot change", () => {
+  it("looks interactive on hover when it is enabled", async () => {
+    await renderWithSalt(<Checkbox label="Enabled" />);
+    const resting = appearanceOf("Enabled");
+
+    await userEvent.hover(page.getByText("Enabled"));
+
+    expect(appearanceOf("Enabled")).not.toEqual(resting);
+  });
+
+  it.each([
+    ["unchecked", {}],
+    ["checked", { checked: true }],
+    ["indeterminate", { checked: true, indeterminate: true }],
+  ] as const)(
+    "keeps its resting appearance on hover when disabled and %s",
+    async (_, props) => {
+      await renderWithSalt(<Checkbox label="Disabled" disabled {...props} />);
+      const resting = appearanceOf("Disabled");
+
+      await userEvent.hover(page.getByText("Disabled"));
+
+      expect(appearanceOf("Disabled")).toEqual(resting);
+    },
+  );
+
+  it("still shows which of the disabled checkboxes is checked", async () => {
+    await renderWithSalt(
+      <>
+        <Checkbox label="Checked" checked disabled />
+        <Checkbox label="Unchecked" disabled />
+      </>,
+    );
+
+    expect(appearanceOf("Checked")).not.toEqual(appearanceOf("Unchecked"));
+
+    await userEvent.hover(page.getByText("Checked"));
+
+    expect(appearanceOf("Checked")).not.toEqual(appearanceOf("Unchecked"));
+  });
+
+  it.each(["error", "warning"] as const)(
+    "keeps its %s appearance on hover",
+    async (validationStatus) => {
+      await renderWithSalt(
+        <Checkbox
+          label="Validated"
+          checked
+          validationStatus={validationStatus}
+        />,
+      );
+      const resting = appearanceOf("Validated");
+
+      await userEvent.hover(page.getByText("Validated"));
+
+      expect(appearanceOf("Validated")).toEqual(resting);
+    },
+  );
+
+  it("keeps its read-only appearance on hover", async () => {
+    await renderWithSalt(<Checkbox label="Read only" checked readOnly />);
+    const resting = appearanceOf("Read only");
+
+    await userEvent.hover(page.getByText("Read only"));
+
+    expect(appearanceOf("Read only")).toEqual(resting);
+  });
+});

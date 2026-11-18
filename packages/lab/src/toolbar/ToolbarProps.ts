@@ -1,5 +1,10 @@
 import type { TooltipProps } from "@salt-ds/core";
-import type { ComponentType, HTMLAttributes, ReactNode } from "react";
+import type {
+  ComponentType,
+  HTMLAttributes,
+  ReactElement,
+  ReactNode,
+} from "react";
 
 export type OrientationShape = "vertical" | "horizontal";
 
@@ -29,7 +34,7 @@ export interface ToolbarProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Overflow menu icon
    */
-  overflowButtonIcon?: JSX.Element;
+  overflowButtonIcon?: ReactElement;
   /**
    * Text to display next to overflow menu icon
    */

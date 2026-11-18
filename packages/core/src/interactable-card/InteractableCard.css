@@ -121,7 +121,7 @@
 
 /* Styles applied on hover state to InteractableCard */
 @media (hover: hover) {
-  .saltInteractableCard:not(.saltInteractableCard-disabled):hover {
+  .saltInteractableCard:hover {
     cursor: var(--salt-cursor-hover);
     box-shadow: var(--salt-overlayable-shadow-hover);
     border-color: var(--salt-actionable-accented-borderColor-hover);
@@ -139,14 +139,19 @@
 
 /* Styles applied to InteractableCard if `disabled={true}` */
 .saltInteractableCard-disabled,
-.saltInteractableCard-disabled:focus,
-.saltInteractableCard-disabled:focus-visible,
 .saltInteractableCard-disabled:hover,
 .saltInteractableCard-disabled:active {
+  border-color: var(--saltInteractableCard-borderColor, var(--interactableCard-borderColor));
   box-shadow: none;
   cursor: var(--salt-cursor-disabled);
-  outline: none;
   opacity: 0.4;
+}
+
+/* Preserve selection while suppressing disabled hover and pressed styles. */
+.saltInteractableCard-disabled.saltInteractableCard-selected,
+.saltInteractableCard-disabled.saltInteractableCard-selected:hover,
+.saltInteractableCard-disabled.saltInteractableCard-selected:active {
+  border-color: var(--salt-actionable-accented-borderColor-active);
 }
 
 /* Styles applied to nested divs in InteractableCard if `disabled={true}` */

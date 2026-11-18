@@ -2,7 +2,6 @@ import { makePrefixer, useAriaAnnouncer, useForkRef } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import type { EmblaCarouselType } from "embla-carousel";
 import {
   Children,
   type ComponentPropsWithoutRef,
@@ -12,6 +11,7 @@ import {
   type KeyboardEvent,
   type MouseEventHandler,
   type ReactElement,
+  type Ref,
   useEffect,
   useRef,
   useState,
@@ -22,6 +22,7 @@ import {
 } from "./CarouselContext";
 import carouselSlidesCss from "./CarouselSlides.css";
 import { createCustomSettle } from "./createCustomSettle";
+import type { EmblaCarouselType } from "./emblaTypes";
 import { getVisibleSlideDescription } from "./getVisibleSlideDescription";
 import { getVisibleSlideIndexes } from "./getVisibleSlideIndexes";
 
@@ -293,12 +294,17 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
           id={id ?? `${carouselId}-slides`}
         >
           {Children.map(children, (child, index) => {
-            const childElement = child as ReactElement;
-            const existingId = childElement.props.id;
+            const element = child as ReactElement<{
+              "aria-hidden"?: boolean;
+              id?: string;
+              onFocus?: (event: FocusEvent) => void;
+              ref?: Ref<HTMLDivElement>;
+              tabIndex?: number;
+            }>;
+            const existingId = element.props.id;
             const isFocused = focusedSlideIndex === index;
             const isVisible = visibleSlideIndexes.includes(index + 1);
             const isHidden = !isVisible && !isFocused;
-            const element = child as ReactElement;
             return cloneElement(element, {
               "aria-hidden": isHidden,
               id: existingId ?? `${carouselId}-slide${index + 1}`,

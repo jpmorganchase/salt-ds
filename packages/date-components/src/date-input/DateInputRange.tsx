@@ -59,11 +59,20 @@ export type DateInputRangeDetails = {
 };
 
 /**
- * Enum to identify the field being parsed
+ * Identifies the field being parsed
  */
-export enum DateParserField {
-  START = "start",
-  END = "end",
+export const DateParserField = {
+  START: "start",
+  END: "end",
+} as const;
+
+export type DateParserField =
+  (typeof DateParserField)[keyof typeof DateParserField];
+
+// Keeps `DateParserField.START` and `DateParserField.END` usable as types, as they were with the enum.
+export declare namespace DateParserField {
+  type START = typeof DateParserField.START;
+  type END = typeof DateParserField.END;
 }
 
 /**
@@ -195,7 +204,7 @@ export interface DateInputRangeProps
 }
 
 export const DateInputRange = forwardRef<HTMLDivElement, DateInputRangeProps>(
-  (props: DateInputRangeProps, ref: React.Ref<HTMLDivElement>) => {
+  function DateInputRange(props, ref) {
     const { dateAdapter } = useLocalization();
     const {
       "aria-label": ariaLabel,

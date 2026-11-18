@@ -34,14 +34,14 @@ export interface DropdownPanelProps extends DropdownBaseProps {
   /**
    * Trigger button icon
    */
-  triggerButtonIcon?: JSX.Element;
+  triggerButtonIcon?: ReactElement;
   /**
    * Trigger button text
    */
   triggerButtonLabel?: string;
 }
 
-export const OverflowPanel = forwardRef(function DropdownPanel(
+export const OverflowPanel = forwardRef(function OverflowPanel(
   {
     children,
     className,
@@ -133,12 +133,14 @@ export const OverflowPanel = forwardRef(function DropdownPanel(
           const formFieldProps = {
             id: item.id,
             inOverflowPanel: true,
-            key: item.id,
             onClick: handleItemClick,
           } as ToolbarFieldProps;
 
           if (type === ToolbarField) {
-            return cloneElement(item.value as ReactElement, formFieldProps);
+            return cloneElement(item.value as ReactElement<ToolbarFieldProps>, {
+              ...formFieldProps,
+              key: item.id,
+            });
           }
           return (
             <ToolbarField {...formFieldProps} key={item.id}>

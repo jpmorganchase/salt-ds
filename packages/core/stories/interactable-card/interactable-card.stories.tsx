@@ -17,8 +17,6 @@ import { BankIcon, CreditCardIcon, DiamondIcon } from "@salt-ds/icons";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { type ChangeEvent, useState } from "react";
 
-import "./interactable-card.stories.css";
-
 export default {
   title: "Core/Interactable Card",
   component: InteractableCard,

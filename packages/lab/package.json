@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/lab",
-  "version": "1.0.0-alpha.104",
+  "version": "1.0.0-alpha.108",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -34,7 +34,7 @@
     "compute-scroll-into-view": "^3.0.0",
     "deepmerge": "^4.2.2",
     "react-color": "^2.19.3",
-    "react-window": "^1.8.6",
+    "react-window": "^1.8.11",
     "rifm": "^0.12.0",
     "tinycolor2": "^1.4.2"
   },
@@ -54,7 +54,7 @@
     "provenance": true
   },
   "scripts": {
-    "build": "yarn node ../../scripts/build.mjs",
-    "bundle:css": "yarn node ./scripts/build.mjs"
+    "build": "node ../../scripts/build.mjs",
+    "bundle:css": "node ./scripts/build.mjs"
   }
 }

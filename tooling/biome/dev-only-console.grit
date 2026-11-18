@@ -1,0 +1,52 @@
+language js
+
+// Console output is for developers, so it has to be inside a development-only
+// branch to be removed from production builds: the consequent of an `if` or
+// ternary, or the right side of `&&`, whose condition checks
+// `process.env.NODE_ENV !== "production"` (or `=== "development"`), alone or
+// as part of an `&&` chain. Early returns and `else` branches of production
+// checks can't be followed, so the check must enclose the call.
+//
+// Grit compares bound nodes by their text, not their position, so the call is
+// checked against the whole guarded branch rather than against other calls.
+// Only an `else` branch that contains an exact copy of the guarded branch
+// can't be told apart from it.
+pattern dev_check() {
+  or {
+    `process.env.NODE_ENV !== "production"`,
+    `process.env.NODE_ENV != "production"`,
+    `"production" !== process.env.NODE_ENV`,
+    `"production" != process.env.NODE_ENV`,
+    `process.env.NODE_ENV === "development"`,
+    `process.env.NODE_ENV == "development"`,
+    `"development" === process.env.NODE_ENV`,
+    `"development" == process.env.NODE_ENV`
+  }
+}
+
+pattern dev_condition() {
+  or {
+    dev_check(),
+    JsParenthesizedExpression(expression=dev_condition()),
+    `$left && $right` where {
+      or { $left <: dev_condition(), $right <: dev_condition() }
+    }
+  }
+}
+
+JsCallExpression(callee=$callee) as $call where {
+  $callee <: `console.$method`,
+  $call <: not within or {
+    JsIfStatement(test=dev_condition(), consequent=$if_branch) where {
+      $call <: within $if_branch
+    },
+    JsConditionalExpression(test=dev_condition(), consequent=$ternary_branch) where {
+      or { $call <: $ternary_branch, $call <: within $ternary_branch }
+    },
+    `$guard && $guarded` where {
+      $guard <: dev_condition(),
+      or { $call <: $guarded, $call <: within $guarded }
+    }
+  } ,
+  register_diagnostic(span=$call, message="Put console calls in a process.env.NODE_ENV !== \"production\" branch so they are removed from production builds.")
+}

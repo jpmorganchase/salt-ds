@@ -12,6 +12,8 @@ data:
 
 Interaction with the content in an overlay is typically constrained, as richer interactions/workflows should occur within a separate UI mechanism (such as a new page, [`Dialog`](/salt/components/dialog) or [`Drawer`](/salt/components/drawer)).
 
+`OverlayHeader` names `OverlayPanel` using its `header` and `preheader`, and describes it using its `description`, so you don't need to set `aria-labelledby` or `aria-describedby` manually.
+
 ### When to use
 
 - To expose interactive and essential elements within a tooltip to carry out in-context tasks.
@@ -25,8 +27,7 @@ Interaction with the content in an overlay is typically constrained, as richer i
 
 ### Best practices
 
-1. To allow screen readers to correctly identify overlay's trigger and its corresponding panel, define an `id` and pass the prop `id="YOUR-OVERLAY-ID"` to `Overlay` component.
-2. To allow screen readers to correctly identify `OverlayPanel`'s content title and description respectively, add the prop `id="YOUR-OVERLAY-ID-header"` to your content header or title, and prop `id="YOUR-OVERLAY-ID-content"` to your content description.
+1. Keep `OverlayHeader`, `OverlayPanelContent` and `OverlayFooter` as direct children of `OverlayPanel` so their spacing and scrolling behavior apply correctly.
 
 ## Import
 
@@ -37,10 +38,12 @@ To import `Overlay` and related components from the core Salt package, use:
 ```js
 import {
   Overlay,
-  OverlayTrigger,
+  OverlayFooter,
+  OverlayHeader,
   OverlayPanel,
-  OverlayPanelContent,
   OverlayPanelCloseButton,
+  OverlayPanelContent,
+  OverlayTrigger,
 } from "@salt-ds/core";
 ```
 
@@ -54,9 +57,17 @@ import {
 
 <PropsTable packageName="core" componentName="OverlayPanel" />
 
+### `OverlayHeader`
+
+<PropsTable packageName="core" componentName="OverlayHeader" />
+
 ### `OverlayPanelContent`
 
 <PropsTable packageName="core" componentName="OverlayPanelContent" />
+
+### `OverlayFooter`
+
+<PropsTable packageName="core" componentName="OverlayFooter" />
 
 ### `OverlayPanelCloseButton`
 

@@ -68,7 +68,9 @@ export const BorderLayout: BorderLayoutComponent = forwardRef(
 
     const borderAreas = Children.map(
       children,
-      (child) => isValidElement(child) && child.props.position,
+      (child) =>
+        isValidElement<{ position?: BorderPosition }>(child) &&
+        child.props.position,
     ) as BorderPosition[];
 
     const hasNorth = borderAreas.includes("north");

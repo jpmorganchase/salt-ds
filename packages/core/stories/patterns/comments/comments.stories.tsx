@@ -396,8 +396,8 @@ export const WithEmptyState = () => {
         >
           <StatusIndicator status="info" size={2} aria-hidden="true" />
           <StackLayout gap={1} align="center" style={{ textAlign: "center" }}>
-            <Text styleAs="h4">
-              <strong>Be the first to comment</strong>
+            <Text styleAs="h4" fontWeight="bolder">
+              Be the first to comment
             </Text>
             <Text>Start the discussion by adding a comment above.</Text>
           </StackLayout>
@@ -630,9 +630,7 @@ export const WithSubmissionError = () => {
           <Banner status="error" variant="secondary">
             <BannerContent>
               <StackLayout gap={1}>
-                <Text>
-                  <strong>Couldn't post your comment</strong>
-                </Text>
+                <Text fontWeight="bolder">Couldn't post your comment</Text>
                 <Text>{submissionErrorMessage}</Text>
               </StackLayout>
             </BannerContent>

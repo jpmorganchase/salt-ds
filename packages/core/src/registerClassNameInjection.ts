@@ -24,6 +24,3 @@ declare module "@salt-ds/styles" {
     saltTooltip: TooltipProps;
   }
 }
-
-// Required to make this file into a module
-export default {};

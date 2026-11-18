@@ -1,6 +1,6 @@
 {
   "name": "@salt-ds/ag-grid-theme",
-  "version": "2.10.0",
+  "version": "2.11.0",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
@@ -17,14 +17,14 @@
     "*.css"
   ],
   "scripts": {
-    "build": "yarn node ./scripts/build.mjs",
-    "build-watch": "yarn node ./scripts/build.mjs --watch"
+    "build": "node ./scripts/build.mjs",
+    "build-watch": "node ./scripts/build.mjs --watch"
   },
   "publishConfig": {
     "provenance": true
   },
   "devDependencies": {
-    "del": "^8.0.0"
+    "del": "^9.0.0"
   },
   "peerDependencies": {
     "@salt-ds/theme": "workspace:^",

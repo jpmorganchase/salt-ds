@@ -40,6 +40,7 @@
   font-size: var(--saltFormFieldLegacy-fontSize, var(--salt-text-fontSize));
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
 }
 
 /* Class applied to the root element on hover */

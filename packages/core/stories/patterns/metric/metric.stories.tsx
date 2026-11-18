@@ -16,9 +16,7 @@ export default {
 export const Metric = () => {
   return (
     <StackLayout gap={0}>
-      <Text>
-        <strong>Performance</strong>
-      </Text>
+      <Text fontWeight="bolder">Performance</Text>
       <Display1>801</Display1>
     </StackLayout>
   );
@@ -26,10 +24,8 @@ export const Metric = () => {
 
 export const HorizontalMetric = () => {
   return (
-    <StackLayout direction="row" gap={1}>
-      <Text style={{ marginTop: "var(--salt-spacing-150)" }}>
-        <strong>Performance</strong>
-      </Text>
+    <StackLayout direction="row" gap={1} align="baseline">
+      <Text fontWeight="bolder">Performance</Text>
       <Display1>801</Display1>
     </StackLayout>
   );
@@ -38,9 +34,7 @@ export const HorizontalMetric = () => {
 export const Subtitle = () => {
   return (
     <StackLayout gap={0}>
-      <Text>
-        <strong>Performance</strong>
-      </Text>
+      <Text fontWeight="bolder">Performance</Text>
       <Text variant="secondary">Interactions</Text>
       <Display1>801</Display1>
     </StackLayout>
@@ -50,9 +44,7 @@ export const Subtitle = () => {
 export const Subvalue = () => {
   return (
     <StackLayout gap={0}>
-      <Text>
-        <strong>Performance</strong>
-      </Text>
+      <Text fontWeight="bolder">Performance</Text>
       <Text variant="secondary">Interactions</Text>
       <Display1>801</Display1>
       <Text
@@ -69,9 +61,7 @@ export const Subvalue = () => {
 export const LinkSubtitle = () => {
   return (
     <StackLayout gap={0}>
-      <Text>
-        <strong>Performance</strong>
-      </Text>
+      <Text fontWeight="bolder">Performance</Text>
       <Link variant="secondary">Interactions</Link>
       <Display1>801</Display1>
       <Text
@@ -89,9 +79,7 @@ export const Indicators = () => {
   return (
     <StackLayout direction={"row"} gap={8}>
       <StackLayout gap={0}>
-        <Text>
-          <strong>Performance</strong>
-        </Text>
+        <Text fontWeight="bolder">Performance</Text>
         <Text variant="secondary">Interactions</Text>
         <Display1>
           801
@@ -111,9 +99,7 @@ export const Indicators = () => {
         </Text>
       </StackLayout>
       <StackLayout gap={0}>
-        <Text>
-          <strong>Performance</strong>
-        </Text>
+        <Text fontWeight="bolder">Performance</Text>
         <Text variant="secondary">Interactions</Text>
         <Display1>
           801
@@ -140,9 +126,7 @@ export const HierarchicalVertical = () => {
   return (
     <StackLayout direction={"row"} gap={8} align="end">
       <StackLayout gap={0}>
-        <Text>
-          <strong>Performance</strong>
-        </Text>
+        <Text fontWeight="bolder">Performance</Text>
         <Text variant="secondary">Interactions</Text>
         <Display3>
           801
@@ -162,9 +146,7 @@ export const HierarchicalVertical = () => {
         </Text>
       </StackLayout>
       <StackLayout gap={0}>
-        <Text>
-          <strong>Performance</strong>
-        </Text>
+        <Text fontWeight="bolder">Performance</Text>
         <Text variant="secondary">Interactions</Text>
         <Display2>
           801
@@ -184,9 +166,7 @@ export const HierarchicalVertical = () => {
         </Text>
       </StackLayout>
       <StackLayout gap={0}>
-        <Text>
-          <strong>Performance</strong>
-        </Text>
+        <Text fontWeight="bolder">Performance</Text>
         <Text variant="secondary">Interactions</Text>
         <Display1>
           801
@@ -212,22 +192,16 @@ export const HierarchicalVertical = () => {
 export const HierarchicalHorizontal = () => {
   return (
     <StackLayout gap={8} align="end">
-      <StackLayout direction="row" gap={1}>
-        <Text style={{ marginTop: "var(--salt-spacing-50)" }}>
-          <strong>Performance</strong>
-        </Text>
+      <StackLayout direction="row" gap={1} align="baseline">
+        <Text fontWeight="bolder">Performance</Text>
         <Display3>801</Display3>
       </StackLayout>
-      <StackLayout direction="row" gap={1}>
-        <Text style={{ marginTop: "var(--salt-spacing-100)" }}>
-          <strong>Performance</strong>
-        </Text>
+      <StackLayout direction="row" gap={1} align="baseline">
+        <Text fontWeight="bolder">Performance</Text>
         <Display2>801</Display2>
       </StackLayout>
-      <StackLayout direction="row" gap={1}>
-        <Text style={{ marginTop: "var(--salt-spacing-150)" }}>
-          <strong>Performance</strong>
-        </Text>
+      <StackLayout direction="row" gap={1} align="baseline">
+        <Text fontWeight="bolder">Performance</Text>
         <Display1>801</Display1>
       </StackLayout>
     </StackLayout>

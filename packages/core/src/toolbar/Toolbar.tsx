@@ -12,7 +12,12 @@ import {
   useState,
 } from "react";
 import { Button } from "../button";
-import { makePrefixer, useForkRef, useIsomorphicLayoutEffect } from "../utils";
+import {
+  makePrefixer,
+  useEventCallback,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "../utils";
 import toolbarCss from "./Toolbar.css";
 import type { ToolbarContentProps } from "./ToolbarContent";
 import {
@@ -64,6 +69,16 @@ function cloneMeasureDecorations(
   });
 }
 
+function hasLostFocus(doc: Document) {
+  const activeElement = doc.activeElement;
+  return (
+    !activeElement ||
+    activeElement === doc.body ||
+    activeElement === doc.documentElement ||
+    !activeElement.isConnected
+  );
+}
+
 export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
   function Toolbar(
     {
@@ -97,6 +112,26 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       [content],
     );
 
+    // Whether focus is in the toolbar, including its portaled overflow panels.
+    // React ignores the blur when a commit removes the focused element, so
+    // this can stay true after focus has fallen back to the document body.
+    const focusWithinRef = useRef(false);
+    // Whether focus was in the toolbar just before the latest overflow update,
+    // i.e. before that update could move the focused control. focusWithinRef
+    // can't be read after the update instead, because ToolbarOverflow
+    // dispatches blur events for reparented controls in its layout effects,
+    // which run before Toolbar's.
+    const focusWithinBeforeOverflowUpdateRef = useRef(false);
+
+    const handleBeforeOverflowUpdate = useCallback(() => {
+      const doc = targetWindow?.document;
+      if (focusWithinRef.current && doc && hasLostFocus(doc)) {
+        // The focused control was removed without a blur.
+        focusWithinRef.current = false;
+      }
+      focusWithinBeforeOverflowUpdateRef.current = focusWithinRef.current;
+    }, [targetWindow]);
+
     const {
       containerRef,
       getBandRef,
@@ -108,7 +143,10 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       overflowGroups,
       overflowTriggerGroups,
       overflowedIds,
-    } = useToolbarOverflow({ content: overflowContent });
+    } = useToolbarOverflow({
+      content: overflowContent,
+      onBeforeOverflowUpdate: handleBeforeOverflowUpdate,
+    });
 
     const handleRef = useForkRef(ref, containerRef);
     const invalidCompositionWarnedRef = useRef(false);
@@ -174,7 +212,11 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       () => Array.from(overflowedIds).sort().join("\0"),
       [overflowedIds],
     );
-    const previousOverflowedIdsKeyRef = useRef(overflowedIdsKey);
+    // getEntryFocusable changes identity whenever items or overflowedIds
+    // change, so it isn't a dependency of the focus restore effect.
+    const getEntryFocusable = useEventCallback(
+      keyboardNavigation.getEntryFocusable,
+    );
 
     const getItemHostRef = useCallback(
       (id: string, kind: ToolbarItemHostKind) => {
@@ -226,59 +268,29 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       });
     }, [allItems, itemHostNodes, overflowedIds]);
 
+    // Re-runs only when the overflow changes, so the cleanup cancels a restore
+    // that a newer overflow change has made out of date.
+    // biome-ignore lint/correctness/useExhaustiveDependencies: overflowedIdsKey triggers a restore check on each overflow change.
     useIsomorphicLayoutEffect(() => {
-      const overflowChanged =
-        previousOverflowedIdsKeyRef.current !== overflowedIdsKey;
-      previousOverflowedIdsKeyRef.current = overflowedIdsKey;
-
-      if (!overflowChanged) {
+      if (!targetWindow || !focusWithinBeforeOverflowUpdateRef.current) {
         return;
       }
 
-      const doc = targetWindow?.document;
-      const rememberedFocus = keyboardNavigation.rememberedFocusRef.current;
+      const doc = targetWindow.document;
 
-      if (!doc || !rememberedFocus) {
-        return;
-      }
-
-      const activeElement = doc.activeElement;
-      const focusWasLost =
-        !activeElement ||
-        activeElement === doc.body ||
-        activeElement === doc.documentElement ||
-        !activeElement.isConnected;
-      const target = keyboardNavigation.getEntryFocusable();
-
-      if (!focusWasLost) {
-        return;
-      }
-
-      if (!target) {
-        return;
-      }
-
-      const focusTarget = () => {
-        if (target.isConnected) {
-          target.focus({ preventScroll: true });
+      // Items move to their new hosts in the commits after an overflow change,
+      // so resolve the target once they've settled. By then, focus may also
+      // have moved somewhere else.
+      const frame = targetWindow.requestAnimationFrame(() => {
+        if (hasLostFocus(doc)) {
+          getEntryFocusable()?.focus({ preventScroll: true });
         }
+      });
+
+      return () => {
+        targetWindow.cancelAnimationFrame(frame);
       };
-
-      if (targetWindow?.requestAnimationFrame) {
-        const frame = targetWindow.requestAnimationFrame(focusTarget);
-
-        return () => {
-          targetWindow.cancelAnimationFrame(frame);
-        };
-      }
-
-      queueMicrotask(focusTarget);
-    }, [
-      keyboardNavigation.getEntryFocusable,
-      keyboardNavigation.rememberedFocusRef,
-      overflowedIdsKey,
-      targetWindow,
-    ]);
+    }, [getEntryFocusable, overflowedIdsKey, targetWindow]);
 
     useEffect(() => {
       if (process.env.NODE_ENV !== "production") {
@@ -313,10 +325,18 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
         {...{ [TOOLBAR_SCOPE_ROOT_ATTR]: "main" }}
         ref={handleRef}
         onBlurCapture={(event) => {
+          // When the window loses focus, the blurred element stays the active
+          // element and gets focus back when the window does.
+          if (
+            event.target !== event.currentTarget.ownerDocument.activeElement
+          ) {
+            focusWithinRef.current = false;
+          }
           keyboardNavigation.handleBlurCapture(event);
           onBlurCapture?.(event);
         }}
         onFocusCapture={(event) => {
+          focusWithinRef.current = true;
           keyboardNavigation.handleFocusCapture(event);
           onFocusCapture?.(event);
         }}

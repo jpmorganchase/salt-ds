@@ -203,13 +203,12 @@ export function IconPreview() {
       <StackLayout className={styles.notFound} gap={3} align="center">
         <StatusIndicator status="info" size={2} />
         <StackLayout gap={1} align="center">
-          <Text styleAs="h4">
-            <strong>No icons found</strong>
+          <Text styleAs="h4" fontWeight="bolder">
+            No icons found
           </Text>
           {deferredSearch && (
             <Text>
-              No icons found for the search term: "
-              <strong>{deferredSearch}</strong>"
+              No icons found for the search term: "<b>{deferredSearch}</b>"
             </Text>
           )}
         </StackLayout>

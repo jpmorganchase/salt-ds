@@ -13,11 +13,17 @@ import {
 } from "react";
 import type { ButtonAppearance, ButtonSentiment } from "../button";
 import { useToggleButtonGroup } from "../toggle-button-group";
-import { makePrefixer, useControlled, useForkRef } from "../utils";
+import {
+  makePrefixer,
+  useControlled,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "../utils";
 
 import toggleButtonCss from "./ToggleButton.css";
 
-export interface ToggleButtonProps extends ComponentPropsWithoutRef<"button"> {
+export interface ToggleButtonProps
+  extends Omit<ComponentPropsWithoutRef<"button">, "onChange"> {
   /**
    * The appearance of the toggle button when `selected` is true.
    * @default solid
@@ -100,6 +106,13 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
     const disabled = toggleButtonGroup?.disabled || disabledProp;
     const readOnly = toggleButtonGroup?.readOnly || readOnlyProp;
 
+    const registerButton = toggleButtonGroup?.registerButton;
+    useIsomorphicLayoutEffect(() => {
+      if (!disabled && buttonRef.current && registerButton) {
+        return registerButton(value, buttonRef.current);
+      }
+    }, [disabled, registerButton, value]);
+
     const [selected, setSelected] = useControlled({
       controlled: toggleButtonGroupSelected,
       default: Boolean(defaultSelected),
@@ -111,7 +124,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       if (disabled || readOnly) {
         return;
       }
-      toggleButtonGroup?.select(event);
+      toggleButtonGroup?.select(event, value);
       setSelected(!selected);
       onChange?.(event);
       onClick?.(event);
@@ -122,7 +135,7 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       onFocus?.(event);
     };
 
-    const toggleButtonProps: ToggleButtonProps = {
+    const toggleButtonProps: ComponentPropsWithoutRef<"button"> = {
       "aria-readonly": readOnlyProp,
       "aria-pressed": !toggleButtonGroup ? selected : undefined,
       "aria-checked": toggleButtonGroup ? selected : undefined,
@@ -141,7 +154,6 @@ export const ToggleButton = forwardRef<HTMLButtonElement, ToggleButtonProps>(
       value: value,
       type: "button",
       disabled: disabled,
-      readOnly: readOnlyProp,
       ...rest,
     };
 

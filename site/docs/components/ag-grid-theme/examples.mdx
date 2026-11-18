@@ -75,7 +75,7 @@ You can also pair chosen editor with provided [column filters types](https://www
 
 ## Coloration
 
-You can apply custom color to cells with `cellStyle` or `cellClass`.
+You can apply custom color to cells with `cellStyle` or `cellClass`. Each cell leaves a 1px gap on its right, so neighboring colored cells stay separate. Set the color with `backgroundColor` rather than the `background` shorthand, which also paints the gap.
 
 <LivePreview componentName="ag-grid-theme" exampleName="Coloration" />
 
@@ -192,7 +192,7 @@ Text in header cells can be wrapped when space is limited.
 
 ## Cell validation
 
-[Editable cells](#cell-editors) can show validation states (warning, success and error) using the class names `.warning-cell`, `.success-cell` and `.error-cell`.
+Cells can show validation states (warning, success and error) using the class names `.warning-cell`, `.success-cell` and `.error-cell`. When combined with [editable cells](#cell-editors), the editable border also reflects the validation state.
 
 <LivePreview componentName="ag-grid-theme" exampleName="CellValidation" />
 

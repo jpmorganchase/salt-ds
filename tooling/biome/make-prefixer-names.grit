@@ -1,0 +1,9 @@
+language js
+
+// Class name prefixes are "salt" followed by the component name in PascalCase,
+// e.g. makePrefixer("saltButton"), so every class Salt renders is namespaced.
+`makePrefixer($prefix)` where {
+  $prefix <: JsStringLiteralExpression(),
+  $prefix <: not r"^[\"']salt[A-Z][A-Za-z0-9]*[\"']$",
+  register_diagnostic(span=$prefix, message="makePrefixer names must be 'salt' followed by the component name in PascalCase, e.g. 'saltButton'.")
+}

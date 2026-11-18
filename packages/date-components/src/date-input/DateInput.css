@@ -118,6 +118,7 @@
 /* Class applied if `variant="tertiary"` */
 .saltDateInput-tertiary {
   --input-background: var(--salt-editable-tertiary-background);
+  --input-background-disabled: var(--salt-editable-tertiary-background-disabled);
   --input-background-readonly: var(--salt-editable-background-readonly);
   --input-borderColor: var(--salt-editable-borderColor);
   --input-borderColor-active: var(--salt-editable-borderColor-active);
@@ -216,7 +217,7 @@
   display: block;
   font: inherit;
   height: 100%;
-  letter-spacing: var(--saltDateInput-letterSpacing, 0);
+  letter-spacing: var(--saltDateInput-letterSpacing, var(--salt-text-letterSpacing));
   margin: 0;
   min-width: 0;
   overflow: hidden;
@@ -238,7 +239,7 @@
 /* Style applied to placeholder text */
 .saltDateInput-input::placeholder {
   color: var(--salt-content-secondary-foreground);
-  font-weight: var(--salt-text-fontWeight-small);
+  font-weight: var(--salt-text-fontWeight-lighter);
 }
 
 /* Style applied to the dash between two inputs in range date input */

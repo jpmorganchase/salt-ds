@@ -2,7 +2,6 @@ import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import type { EmblaCarouselType } from "embla-carousel";
 import {
   type ComponentPropsWithRef,
   forwardRef,
@@ -10,6 +9,7 @@ import {
   useState,
 } from "react";
 import carouselTabCss from "./CarouselTab.css";
+import type { EmblaCarouselType } from "./emblaTypes";
 
 /**
  * Type definition for the UseCarouselTab hook.

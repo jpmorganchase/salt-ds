@@ -76,10 +76,13 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
 
     const overflowMenuItems = overflowedItems.reduce<ReactElement[]>(
       (items, item, i, arr) => {
-        const { element, id } = item;
+        const { id } = item;
+        const element = item.element as ReactElement<Record<string, unknown>>;
         if (element.type === Tooltray) {
           const tooltrayProps = element.props as TooltrayProps;
-          const nestedElements = tooltrayProps.children as ReactElement[];
+          const nestedElements = tooltrayProps.children as ReactElement<
+            Record<string, unknown>
+          >[];
           items.push(
             ...Children.map(nestedElements, (el) =>
               cloneElement(el, {

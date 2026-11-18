@@ -1,3 +1,12 @@
+import {
+  Button,
+  Overlay,
+  OverlayHeader,
+  OverlayPanel,
+  OverlayPanelContent,
+  OverlayTrigger,
+  Text,
+} from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
@@ -7,9 +16,22 @@ import { renderWithSalt } from "~browser-test-utils/render";
 import * as overlayStories from "~stories/overlay/overlay.stories";
 
 const composedStories = composeStories(overlayStories);
-const { Default, Placement, CloseButton, HideArrow, LongContent, WithTooltip } =
-  composedStories;
+const {
+  Default,
+  Placement,
+  CloseButton,
+  HideArrow,
+  LongContent,
+  LongHeader,
+  WithSections,
+  WithTooltip,
+} = composedStories;
 const trigger = () => page.getByRole("button", { name: /Show Overlay/i });
+const rectOf = (root: Element, selector: string) => {
+  const section = root.querySelector(selector);
+  if (!section) throw new Error(`${selector} was not rendered`);
+  return section.getBoundingClientRect();
+};
 
 describe("GIVEN an Overlay", () => {
   checkAccessibility(composedStories);
@@ -69,6 +91,85 @@ describe("GIVEN an Overlay", () => {
       expect(
         (await trigger().element()).closest("[inert]"),
       ).not.toBeInTheDocument();
+    });
+  });
+
+  describe("WHEN an OverlayHeader is used", () => {
+    it("THEN it should name the overlay from the header", async () => {
+      await renderWithSalt(<CloseButton />);
+      await trigger().click();
+
+      const dialog = page.getByRole("dialog");
+      await expect.element(dialog).toHaveAccessibleName("Title");
+      await expect
+        .element(page.getByRole("heading", { level: 2 }))
+        .toBeVisible();
+    });
+
+    it("THEN it should describe the overlay from the description", async () => {
+      await renderWithSalt(<WithSections />);
+      await trigger().click();
+
+      const dialog = page.getByRole("dialog");
+      await expect.element(dialog).toHaveAccessibleName("Review changes");
+      await expect
+        .element(dialog)
+        .toHaveAccessibleDescription("Account updates are pending");
+    });
+
+    it("THEN it should merge a provided aria-labelledby with the header", async () => {
+      await renderWithSalt(
+        <Overlay open>
+          <OverlayTrigger>
+            <Button>Show Overlay</Button>
+          </OverlayTrigger>
+          <OverlayPanel aria-labelledby="overlay-context">
+            <OverlayHeader header="Title" />
+            <OverlayPanelContent>
+              <Text id="overlay-context">Billing</Text>
+            </OverlayPanelContent>
+          </OverlayPanel>
+        </Overlay>,
+      );
+
+      await expect
+        .element(page.getByRole("dialog"))
+        .toHaveAccessibleName("Billing Title");
+    });
+
+    it("THEN it should not label the overlay when the header only has actions", async () => {
+      await renderWithSalt(
+        <Overlay open>
+          <OverlayTrigger>
+            <Button>Show Overlay</Button>
+          </OverlayTrigger>
+          <OverlayPanel aria-label="Notifications">
+            <OverlayHeader actions={<Button>Close</Button>} />
+            <OverlayPanelContent>
+              <Text>Content of Overlay</Text>
+            </OverlayPanelContent>
+          </OverlayPanel>
+        </Overlay>,
+      );
+
+      const dialog = page.getByRole("dialog");
+      await expect.element(dialog).toHaveAccessibleName("Notifications");
+      await expect.element(dialog).not.toHaveAccessibleDescription();
+      await expect.element(page.getByRole("heading")).not.toBeInTheDocument();
+    });
+
+    it("THEN it should keep its name after closing and reopening", async () => {
+      await renderWithSalt(<CloseButton />);
+      await trigger().click();
+      await expect
+        .element(page.getByRole("dialog"))
+        .toHaveAccessibleName("Title");
+      await userEvent.keyboard("{Escape}");
+      await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+      await trigger().click();
+      await expect
+        .element(page.getByRole("dialog"))
+        .toHaveAccessibleName("Title");
     });
   });
 
@@ -141,6 +242,77 @@ describe("GIVEN an Overlay", () => {
         ),
       ).toBeInTheDocument();
     });
+
+    it("THEN it should show dividers at the available scroll boundaries", async () => {
+      await renderWithSalt(<WithSections />);
+      await trigger().click();
+
+      const content = document.querySelector<HTMLElement>(
+        ".saltOverlayPanelContent-container",
+      );
+      if (!content) {
+        throw new Error("Overlay panel content was not rendered");
+      }
+
+      await expect
+        .poll(() =>
+          content.classList.contains("saltOverlayPanelContent-scroll-bottom"),
+        )
+        .toBe(true);
+
+      content.scrollTop = content.scrollHeight;
+      content.dispatchEvent(new Event("scroll", { bubbles: true }));
+
+      await expect
+        .poll(() =>
+          content.classList.contains("saltOverlayPanelContent-scroll-top"),
+        )
+        .toBe(true);
+      await expect
+        .poll(() =>
+          content.classList.contains("saltOverlayPanelContent-scroll-bottom"),
+        )
+        .toBe(false);
+
+      content.style.height = "80px";
+      await expect
+        .poll(() =>
+          content.classList.contains("saltOverlayPanelContent-scroll-bottom"),
+        )
+        .toBe(true);
+    });
+
+    it("THEN it should keep the header and footer in place while the content scrolls", async () => {
+      await renderWithSalt(<WithSections />);
+      await trigger().click();
+
+      const panel = page.getByRole("dialog").element();
+      const content = panel.querySelector<HTMLElement>(
+        ".saltOverlayPanelContent-container",
+      );
+      if (!content) {
+        throw new Error("Overlay panel content was not rendered");
+      }
+
+      await expect
+        .poll(() => content.scrollHeight)
+        .toBeGreaterThan(content.clientHeight);
+
+      const headerTop = rectOf(panel, ".saltOverlayHeader").top;
+      const footerBottom = rectOf(panel, ".saltOverlayFooter").bottom;
+      expect(footerBottom).toBeLessThanOrEqual(
+        panel.getBoundingClientRect().bottom,
+      );
+
+      content.scrollTop = content.scrollHeight;
+      await expect.poll(() => content.scrollTop).toBeGreaterThan(0);
+
+      expect(rectOf(panel, ".saltOverlayHeader").top).toBeCloseTo(headerTop, 1);
+      expect(rectOf(panel, ".saltOverlayFooter").bottom).toBeCloseTo(
+        footerBottom,
+        1,
+      );
+    });
   });
 
   it("should support tooltip on overlay triggers", async () => {
@@ -163,5 +335,39 @@ describe("GIVEN an Overlay", () => {
     await expect.element(page.getByRole("tooltip")).toBeVisible();
     await tooltipTrigger.click();
     await expect.element(page.getByRole("dialog")).toBeInTheDocument();
+  });
+
+  it("keeps reflowed content within the viewport and scrollable", async () => {
+    await page.viewport(320, 200);
+    await renderWithSalt(<LongHeader />);
+    await trigger().click();
+
+    const panel = page.getByRole("dialog").element();
+    const content = panel.querySelector<HTMLElement>(
+      ".saltOverlayPanelContent-container",
+    );
+    if (!content) {
+      throw new Error("Overlay panel content was not rendered");
+    }
+
+    expect(panel.getBoundingClientRect().width).toBeLessThanOrEqual(
+      window.innerWidth,
+    );
+    expect(panel.getBoundingClientRect().height).toBeLessThanOrEqual(
+      window.innerHeight,
+    );
+    await expect
+      .poll(() => content.scrollHeight)
+      .toBeGreaterThan(content.clientHeight);
+
+    const headerTop = rectOf(panel, ".saltOverlayHeader").top;
+    content.scrollTop = content.scrollHeight;
+    await expect.poll(() => content.scrollTop).toBeGreaterThan(0);
+
+    const header = rectOf(panel, ".saltOverlayHeader");
+    expect(header.top).toBeCloseTo(headerTop, 1);
+    expect(header.bottom).toBeLessThanOrEqual(
+      panel.getBoundingClientRect().bottom,
+    );
   });
 });

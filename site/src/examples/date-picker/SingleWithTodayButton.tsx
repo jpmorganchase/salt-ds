@@ -37,7 +37,7 @@ const TodayButton = () => {
   return (
     <div style={{ display: "flex" }}>
       <Button
-        aria-label={`Change Date, ${dateAdapter.format(today, "dddd DD MMMM YYYY")}`}
+        aria-label={`Select Today, ${dateAdapter.format(today, "dddd DD MMMM YYYY")}`}
         style={{ margin: "var(--salt-spacing-50)", flexGrow: 1 }}
         sentiment="accented"
         appearance="solid"

@@ -110,9 +110,10 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
       sortItems,
       removalVersion,
       getRemovedItems,
+      peekRemovedItems,
     } = useCollection({ targetWindow, wrap: true });
 
-    const activeTab = useRef<Pick<Item, "id" | "value">>();
+    const activeTab = useRef<Pick<Item, "id" | "value"> | undefined>(undefined);
 
     const [menuOpen, setMenuOpen] = useState(false);
 
@@ -208,6 +209,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
         sortItems,
         removalVersion,
         getRemovedItems,
+        peekRemovedItems,
       }),
       [
         renderMode,
@@ -237,6 +239,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
         sortItems,
         removalVersion,
         getRemovedItems,
+        peekRemovedItems,
         selectionFromOverflowValueRef,
       ],
     );

@@ -99,7 +99,7 @@
   color: var(--salt-content-primary-foreground);
   background: var(--salt-container-primary-background);
   font-size: var(--salt-text-fontSize);
-  font-weight: var(--salt-text-fontWeight-strong);
+  font-weight: var(--salt-text-fontWeight-bolder);
   display: flex;
   align-items: center;
   padding: 0 var(--salt-spacing-100);

@@ -872,25 +872,24 @@ export const Resizable: StoryFn = () => {
 };
 
 const Nav = () => (
-  <nav
+  <StackLayout
+    as="nav"
+    gap={1}
+    padding={2}
     style={{
-      display: "flex",
-      flexDirection: "column",
-      gap: "var(--salt-spacing-100)",
-      padding: "var(--salt-spacing-200)",
       borderRight:
         "var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor)",
       backgroundColor: "var(--salt-container-secondary-background)",
       whiteSpace: "nowrap",
     }}
   >
-    <Text styleAs="label" style={{ fontWeight: "bold" }}>
+    <Text styleAs="label" fontWeight="bolder">
       Nav
     </Text>
     <Text>Item 1</Text>
     <Text>Item 2</Text>
     <Text>Item 3</Text>
-  </nav>
+  </StackLayout>
 );
 
 export const WithNav: StoryFn = () => {

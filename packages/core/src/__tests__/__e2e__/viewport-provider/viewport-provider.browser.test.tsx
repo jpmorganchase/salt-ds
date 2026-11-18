@@ -6,6 +6,9 @@ import { render } from "vitest-browser-react";
 
 const NativeResizeObserver = globalThis.ResizeObserver;
 let resizeObserverSpy: ReturnType<typeof vi.fn>;
+// Strict Mode runs effects an extra time in development, so count the
+// observers that are still connected rather than the ones created.
+let connectedObservers = 0;
 
 function TestComponent({
   onViewportWidthChange,
@@ -21,10 +24,18 @@ function TestComponent({
 }
 
 beforeEach(() => {
+  connectedObservers = 0;
   resizeObserverSpy = vi.fn(function ResizeObserverSpy(
     callback: ResizeObserverCallback,
   ) {
-    return new NativeResizeObserver(callback);
+    const observer = new NativeResizeObserver(callback);
+    connectedObservers += 1;
+    const disconnect = observer.disconnect.bind(observer);
+    observer.disconnect = () => {
+      connectedObservers -= 1;
+      disconnect();
+    };
+    return observer;
   });
   vi.stubGlobal(
     "ResizeObserver",
@@ -53,7 +64,7 @@ describe("Given a ViewportProvider", () => {
 
   it("creates one ResizeObserver without a parent provider", async () => {
     await render(<ViewportProvider />);
-    expect(resizeObserverSpy).toHaveBeenCalledOnce();
+    expect(connectedObservers).toBe(1);
   });
 
   it("reuses the parent provider ResizeObserver", async () => {
@@ -62,7 +73,7 @@ describe("Given a ViewportProvider", () => {
         <ViewportProvider />
       </ViewportProvider>,
     );
-    expect(resizeObserverSpy).toHaveBeenCalledOnce();
+    expect(connectedObservers).toBe(1);
   });
 
   it.each([100, 0])("does not observe when context is %i", async (value) => {
@@ -80,7 +91,7 @@ describe("Given a ViewportProvider", () => {
         <ViewportProvider />
       </ViewportContext.Provider>,
     );
-    expect(resizeObserverSpy).toHaveBeenCalledOnce();
+    expect(connectedObservers).toBe(1);
   });
 
   it("initializes from the body width", async () => {

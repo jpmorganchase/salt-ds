@@ -95,7 +95,9 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
       children,
     });
 
-    if (linkButton.props.target !== "_blank") {
+    const linkButtonProps = linkButton.props as ComponentPropsWithoutRef<"a">;
+
+    if (linkButtonProps.target !== "_blank") {
       return linkButton;
     }
 
@@ -103,7 +105,7 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
       linkButton,
       undefined,
       <>
-        {linkButton.props.children}
+        {linkButtonProps.children}
         {LinkButtonIconComponent && (
           <LinkButtonIconComponent
             className={withBaseName("icon")}

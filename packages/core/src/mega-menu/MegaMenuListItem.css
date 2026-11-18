@@ -35,6 +35,7 @@
   font-size: var(--salt-text-fontSize);
   font-weight: var(--salt-text-fontWeight);
   line-height: var(--salt-text-lineHeight);
+  letter-spacing: var(--salt-text-letterSpacing);
 }
 
 .saltMegaMenuListItem-wrapper:focus-visible {
@@ -42,7 +43,7 @@
   outline-offset: calc(var(--salt-size-fixed-100) * -2);
 }
 
-.saltMegaMenuListItem-wrapper:hover:not(:focus-visible) {
+.saltMegaMenuListItem-wrapper:hover:not(:focus-visible, :active) {
   outline: none;
   background: var(--salt-overlayable-background-hover);
 }

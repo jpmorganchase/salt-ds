@@ -48,7 +48,7 @@ export const SingleSelection: StoryFn<typeof InteractableCard> = (args) => {
                 } as CSSProperties
               }
             />
-            <H3 style={{ margin: 0 }}>Credit Card</H3>
+            <H3>Credit Card</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
             <RadioButtonIcon checked={selected === "card"} />
@@ -67,7 +67,7 @@ export const SingleSelection: StoryFn<typeof InteractableCard> = (args) => {
                 } as CSSProperties
               }
             />
-            <H3 style={{ margin: 0 }}>Bank wire</H3>
+            <H3>Bank wire</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
             <RadioButtonIcon checked={selected === "wire"} />
@@ -101,7 +101,7 @@ export const MultipleSelection: StoryFn<typeof InteractableCard> = (args) => {
                 } as CSSProperties
               }
             />
-            <H3 style={{ margin: 0 }}>Jane Doe</H3>
+            <H3>Jane Doe</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
             <CheckboxIcon checked={selected?.includes("jane-doe")} />
@@ -121,7 +121,7 @@ export const MultipleSelection: StoryFn<typeof InteractableCard> = (args) => {
                 } as CSSProperties
               }
             />
-            <H3 style={{ margin: 0 }}>Tom Roberts</H3>
+            <H3>Tom Roberts</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
             <CheckboxIcon checked={selected?.includes("tom-roberts")} />
@@ -141,7 +141,7 @@ export const MultipleSelection: StoryFn<typeof InteractableCard> = (args) => {
                 } as CSSProperties
               }
             />
-            <H3 style={{ margin: 0 }}>Ray Smith</H3>
+            <H3>Ray Smith</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
             <CheckboxIcon checked={selected?.includes("ray-smith")} />
@@ -171,7 +171,7 @@ export const Image: StoryFn<typeof InteractableCard> = (args) => {
         />
         <CardContent>
           <StackLayout gap={1}>
-            <H3 style={{ margin: 0 }}>Cryptocurrency</H3>
+            <H3>Cryptocurrency</H3>
             <StackLayout direction="row" gap={1}>
               <RadioButtonIcon aria-hidden checked={selected === "crypto"} />
               <Text>Make a payment by crypto</Text>
@@ -197,7 +197,7 @@ export const Disabled: StoryFn<typeof InteractableCard> = (args) => {
                 } as CSSProperties
               }
             />
-            <H3 style={{ margin: 0 }}>Credit Card</H3>
+            <H3>Credit Card</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
             <RadioButtonIcon aria-hidden checked />
@@ -216,7 +216,7 @@ export const Disabled: StoryFn<typeof InteractableCard> = (args) => {
                 } as CSSProperties
               }
             />
-            <H3 style={{ margin: 0 }}>Bank wire</H3>
+            <H3>Bank wire</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
             <RadioButtonIcon aria-hidden />
@@ -235,7 +235,7 @@ export const Disabled: StoryFn<typeof InteractableCard> = (args) => {
                 } as CSSProperties
               }
             />
-            <H3 style={{ margin: 0 }}>Cryptocurrency</H3>
+            <H3>Cryptocurrency</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
             <RadioButtonIcon aria-hidden />
@@ -274,7 +274,7 @@ export const Validation: StoryFn<typeof InteractableCard> = (args) => {
           </StackLayout>
           <CardContent>
             <StackLayout gap={1}>
-              <H3 style={{ margin: 0 }}>Jane Doe</H3>
+              <H3>Jane Doe</H3>
               <StackLayout direction="row" gap={1}>
                 <CheckboxIcon checked={selected?.includes("jane-doe")} />
                 <Text>Add as business owner</Text>
@@ -291,7 +291,7 @@ export const Validation: StoryFn<typeof InteractableCard> = (args) => {
           </StackLayout>
           <CardContent>
             <StackLayout gap={1}>
-              <H3 style={{ margin: 0 }}>Tom Roberts</H3>
+              <H3>Tom Roberts</H3>
               <StackLayout direction="row" gap={1}>
                 <CheckboxIcon checked={selected?.includes("tom-roberts")} />
                 <Text>Add as business owner</Text>
@@ -308,7 +308,7 @@ export const Validation: StoryFn<typeof InteractableCard> = (args) => {
           </StackLayout>
           <CardContent>
             <StackLayout gap={1}>
-              <H3 style={{ margin: 0 }}>Ray Smith</H3>
+              <H3>Ray Smith</H3>
               <StackLayout direction="row" gap={1}>
                 <CheckboxIcon checked={selected?.includes("ray-smith")} />
                 <Text>Add as business owner</Text>
@@ -341,7 +341,7 @@ export const ReadOnly: StoryFn = () => {
                   } as CSSProperties
                 }
               />
-              <H3 style={{ margin: 0 }}>Jane Doe</H3>
+              <H3>Jane Doe</H3>
             </StackLayout>
             <Checkbox readOnly checked label="Add as business owner" />
           </StackLayout>
@@ -360,7 +360,7 @@ export const ReadOnly: StoryFn = () => {
                   } as CSSProperties
                 }
               />
-              <H3 style={{ margin: 0 }}>Tom Roberts</H3>
+              <H3>Tom Roberts</H3>
             </StackLayout>
             <Checkbox readOnly label="Add as business owner" />
           </StackLayout>

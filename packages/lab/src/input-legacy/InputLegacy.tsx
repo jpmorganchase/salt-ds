@@ -130,7 +130,7 @@ function isEmptyReadOnlyValue(
 }
 
 export const InputLegacy = forwardRef<HTMLInputElement, InputLegacyProps>(
-  function Input(
+  function InputLegacy(
     {
       "aria-activedescendant": ariaActiveDescendant,
       "aria-expanded": ariaExpanded,

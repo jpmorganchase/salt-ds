@@ -2,6 +2,7 @@ import {
   Button,
   Drawer,
   DrawerContent,
+  DrawerFooter,
   DrawerHeader,
   StackLayout,
   Text,
@@ -11,6 +12,10 @@ import { type ReactElement, useState } from "react";
 
 export const DisableAccent = (): ReactElement => {
   const [open, setOpen] = useState(false);
+
+  const handleClose = () => {
+    setOpen(false);
+  };
 
   return (
     <StackLayout>
@@ -28,7 +33,7 @@ export const DisableAccent = (): ReactElement => {
             <Button
               aria-label="Close drawer"
               appearance="transparent"
-              onClick={() => setOpen(false)}
+              onClick={handleClose}
             >
               <CloseIcon aria-hidden />
             </Button>
@@ -37,6 +42,18 @@ export const DisableAccent = (): ReactElement => {
         <DrawerContent>
           <Text>Use disableAccent to hide the accent bar.</Text>
         </DrawerContent>
+        <DrawerFooter>
+          <Button
+            sentiment="accented"
+            appearance="bordered"
+            onClick={handleClose}
+          >
+            Cancel
+          </Button>
+          <Button sentiment="accented" onClick={handleClose}>
+            Save
+          </Button>
+        </DrawerFooter>
       </Drawer>
     </StackLayout>
   );

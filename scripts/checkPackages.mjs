@@ -8,10 +8,12 @@ import {
   rm,
   stat,
 } from "node:fs/promises";
+import { builtinModules } from "node:module";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { promisify } from "node:util";
+import ts from "typescript";
 
 const execFile = promisify(execFileCallback);
 const rootDir = path.resolve(
@@ -19,10 +21,14 @@ const rootDir = path.resolve(
   "..",
 );
 const packagesDir = path.join(rootDir, "packages");
-const yarn = process.platform === "win32" ? "yarn.cmd" : "yarn";
 const dependencyFields = [
   "dependencies",
   "devDependencies",
+  "optionalDependencies",
+  "peerDependencies",
+];
+const publishedDependencyFields = [
+  "dependencies",
   "optionalDependencies",
   "peerDependencies",
 ];
@@ -31,7 +37,19 @@ async function run(command, args) {
   return execFile(command, args, {
     cwd: rootDir,
     maxBuffer: 20 * 1024 * 1024,
+    windowsHide: true,
   });
+}
+
+async function runYarn(args) {
+  // Execute the repository's Yarn release directly; execFile cannot launch .cmd
+  // wrappers on Windows, and packing must use the same Yarn version as builds.
+  const yarnrc = await readFile(path.join(rootDir, ".yarnrc.yml"), "utf8");
+  const yarnPath = yarnrc.match(/^yarnPath:\s*(.+)$/m)?.[1].trim();
+  if (!yarnPath) {
+    throw new Error("Missing yarnPath in .yarnrc.yml");
+  }
+  return run(process.execPath, [path.resolve(rootDir, yarnPath), ...args]);
 }
 
 async function readJson(filePath) {
@@ -45,12 +63,14 @@ async function discoverPackages() {
       .filter((entry) => entry.isDirectory())
       .map(async (entry) => {
         const directory = path.join(packagesDir, entry.name);
-        const manifest = await readJson(path.join(directory, "package.json"));
+        const manifestPath = path.join(directory, "package.json");
+        if (!(await pathExists(manifestPath))) return null;
+        const manifest = await readJson(manifestPath);
         return { directory, manifest };
       }),
   );
 
-  return packages.filter(({ manifest }) => manifest.private !== true);
+  return packages.filter((pkg) => pkg && pkg.manifest.private !== true);
 }
 
 function checkBoundaries(manifest) {
@@ -113,6 +133,98 @@ function findWorkspaceRanges(value, field = "package.json") {
   return [];
 }
 
+function packageNameFromSpecifier(specifier) {
+  if (/^(\.|\/|node:)/.test(specifier)) {
+    return undefined;
+  }
+  const [scopeOrName, name] = specifier.split("/");
+  return scopeOrName.startsWith("@") ? `${scopeOrName}/${name}` : scopeOrName;
+}
+
+async function isFile(filePath) {
+  try {
+    return (await stat(filePath)).isFile();
+  } catch {
+    return false;
+  }
+}
+
+// `yarn pack` silently drops some paths, such as nested node_modules, so a
+// bundled helper could be missing from the archive while the build succeeds.
+async function resolvesInPackage(packageDirectory, file, specifier) {
+  const target = path.resolve(packageDirectory, path.dirname(file), specifier);
+  const relativeTarget = path.relative(packageDirectory, target);
+  if (relativeTarget === ".." || relativeTarget.startsWith(`..${path.sep}`)) {
+    return false;
+  }
+  // Built JavaScript imports exact files; declarations omit extensions.
+  const candidates = /\.d\.[cm]?ts$/.test(file)
+    ? [
+        `${target}.d.ts`,
+        path.join(target, "index.d.ts"),
+        target.replace(/\.js$/, ".d.ts"),
+      ]
+    : [target];
+  for (const candidate of candidates) {
+    if (await isFile(candidate)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+// Biome checks source imports; this catches references added by the build,
+// such as types that tsc inlines from transitive dependencies, and relative
+// imports of files that are missing from the packed archive.
+async function findImportErrors(packageDirectory, manifest) {
+  const declared = new Set([
+    manifest.name,
+    ...builtinModules,
+    ...publishedDependencyFields.flatMap((field) =>
+      Object.keys(manifest[field] ?? {}),
+    ),
+  ]);
+  const undeclared = new Map();
+  const unresolved = [];
+  const files = await readdir(packageDirectory, { recursive: true });
+
+  for (const file of files) {
+    if (!/(\.[cm]?js|\.d\.[cm]?ts)$/.test(file)) {
+      continue;
+    }
+    const source = await readFile(path.join(packageDirectory, file), "utf8");
+    const { importedFiles, typeReferenceDirectives } = ts.preProcessFile(
+      source,
+      true,
+      true,
+    );
+    for (const { fileName: specifier } of [
+      ...importedFiles,
+      ...typeReferenceDirectives,
+    ]) {
+      const name = packageNameFromSpecifier(specifier);
+      if (name && !declared.has(name) && !undeclared.has(name)) {
+        undeclared.set(name, file);
+      }
+    }
+    for (const { fileName: specifier } of importedFiles) {
+      if (
+        specifier.startsWith(".") &&
+        !(await resolvesInPackage(packageDirectory, file, specifier))
+      ) {
+        unresolved.push(`${file} imports missing file ${specifier}`);
+      }
+    }
+  }
+
+  return [
+    ...[...undeclared].map(
+      ([name, file]) => `references undeclared dependency ${name} in ${file}`,
+    ),
+    ...unresolved,
+  ];
+}
+
 async function checkJavaScriptPackage(pkg, temporaryDirectory) {
   const { manifest } = pkg;
   const archiveName = `${manifest.name
@@ -124,7 +236,7 @@ async function checkJavaScriptPackage(pkg, temporaryDirectory) {
     archiveName.replace(/\.tgz$/, ""),
   );
 
-  await run(yarn, ["workspace", manifest.name, "pack", "--out", archivePath]);
+  await runYarn(["workspace", manifest.name, "pack", "--out", archivePath]);
   await mkdir(extractedDirectory);
   await run("tar", ["-xzf", archivePath, "-C", extractedDirectory]);
 
@@ -167,6 +279,8 @@ async function checkJavaScriptPackage(pkg, temporaryDirectory) {
       errors.push(`contains unintended ${directory}/ files`);
     }
   }
+
+  errors.push(...(await findImportErrors(packageDirectory, packedManifest)));
 
   return errors;
 }

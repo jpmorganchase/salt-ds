@@ -7,7 +7,7 @@ const MIN_TRUSTED_RENDERED_TAB_WIDTH = 0.5;
 interface UseRenderedTabWidthProps {
   hostElement: HTMLDivElement | null;
   renderMode: TabsRenderMode;
-  tabRootRef: RefObject<HTMLDivElement>;
+  tabRootRef: RefObject<HTMLDivElement | null>;
   targetWindow: Window | null | undefined;
   updateRenderedTab: TabsContextValue["updateRenderedTab"];
   value: string;

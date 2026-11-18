@@ -12,5 +12,7 @@
 
   --salt-typography-textDecoration-none: none;
   --salt-typography-textDecoration-underline: underline;
-  --salt-typography-textDecoration-italic: italic;
+
+  --salt-typography-fontStyle-normal: normal;
+  --salt-typography-fontStyle-italic: italic;
 }

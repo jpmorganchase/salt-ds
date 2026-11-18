@@ -30,7 +30,7 @@ export interface FormFieldContextValue {
   necessity: NecessityType | undefined;
   readOnly: boolean;
   validationStatus: FormFieldValidationStatus | undefined;
-  formFieldRef?: RefObject<HTMLDivElement>;
+  formFieldRef?: RefObject<HTMLDivElement | null>;
 }
 
 export const FormFieldContext = createContext(

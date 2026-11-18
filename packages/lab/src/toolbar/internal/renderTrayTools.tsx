@@ -1,4 +1,4 @@
-import { cloneElement, type ReactNode } from "react";
+import { cloneElement, type ReactElement, type ReactNode } from "react";
 import type {
   OverflowCollectionHookResult,
   OverflowItem,
@@ -31,7 +31,8 @@ export const renderTrayTools = (
 
   return items.map((item) => {
     index += 1;
-    const props = item.element.props as TooltrayItem;
+    const element = item.element as ReactElement<Record<string, unknown>>;
+    const props = element.props as TooltrayItem;
 
     const overflowed =
       overflowedItems.findIndex((i) => i.index === index) === -1
@@ -45,8 +46,8 @@ export const renderTrayTools = (
       id: item.id,
       orientation,
     };
-    if (item.element.type === ToolbarField) {
-      return cloneElement(item.element, {
+    if (element.type === ToolbarField) {
+      return cloneElement(element, {
         key: index,
         ...toolbarItemProps,
       });
@@ -64,7 +65,7 @@ export const renderTrayTools = (
           data-orientation={orientation}
         >
           {/* We clone here just to remove the responsive props */}
-          {cloneElement(item.element, { ...restProps })}
+          {cloneElement(element, { ...restProps })}
         </ToolbarField>
       );
     }
@@ -77,7 +78,7 @@ export const renderTrayTools = (
         key={index}
         data-orientation={orientation}
       >
-        {cloneElement(item.element, {
+        {cloneElement(element, {
           id: `tooltray-control-${item.id}`,
         })}
       </ToolbarField>

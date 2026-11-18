@@ -1,7 +1,7 @@
 /*TODO: New component; needs complete restyling to use characteristics properly */
 .saltColorChooserSwatches-colorNameTextDiv {
   font-size: var(--salt-text-fontSize);
-  font-weight: var(--salt-text-fontWeight-strong);
+  font-weight: var(--salt-text-fontWeight-bolder);
 }
 
 .saltColorChooserSwatches-colorNameTextDiv,

@@ -8,9 +8,9 @@ data:
   $ref: ./#/data
 ---
 
-## Default overlay
+## Default
 
-The basic overlay component allows the user to expose and interact with supplemental information. The overlay remains persistent until the user dismisses it.
+The `Overlay` component allows the user to expose and interact with supplemental information. The overlay remains persistent until the user dismisses it.
 
 <LivePreview componentName="overlay" exampleName="Default" />
 
@@ -20,15 +20,17 @@ Use the `placement` prop to position overlay content relative to the trigger. Th
 
 <LivePreview componentName="overlay" exampleName="Placement" />
 
-## Header
+## Sections
 
-`OverlayHeader` follows our standardized header for container components and app regions, and it can be added as a child of the `OverlayPanel` component to provide a structured header for overlay. The header includes a title and actions that follows our [Header Block pattern](/salt/patterns/header-block). This approach is recommended over using the `OverlayPanelCloseButton` separately.
+Use `OverlayHeader`, `OverlayPanelContent` and `OverlayFooter` to create distinct padded sections within `OverlayPanel`. Sections need to be direct children of `OverlayPanel` for their spacing rules to apply. When `OverlayPanel` has a constrained height, `OverlayHeader` and `OverlayFooter` stay in place while `OverlayPanelContent` scrolls.
 
-<LivePreview componentName="overlay" exampleName="WithHeader" />
+`OverlayHeader` follows the [Header Block pattern](/salt/patterns/header-block). Pass the title to `header`, and add `preheader` or `description` when needed.
+
+<LivePreview componentName="overlay" exampleName="WithSections" />
 
 ## Long content
 
-When overlay content extends beyond the set height, the content defaults to scroll. The close button remains sticky and accessible at all times.
+When content in `OverlayPanelContent` exceeds the height available to `OverlayPanel`, it scrolls while the header stays in place.
 
 <LivePreview componentName="overlay" exampleName="LongContent" />
 
@@ -38,11 +40,9 @@ With actions, users can decide if interacting with content in the overlay should
 
 <LivePreview componentName="overlay" exampleName="WithActions" />
 
-## Deprecated Close button
+## Close button
 
-`OverlayPanelCloseButton` can be added as a child of the `OverlayPanel` component to render a close button in the top right corner of the OverlayPanel. You can pass the `onClick` prop like with any `Button` component to handle the close button click.
-
-**Note:** `OverlayPanelCloseButton` is deprecated. Use the prop `actions` within `OverlayHeader` instead.
+Pass a close button to the `actions` prop of `OverlayHeader` to keep the control aligned with the title and visible when the overlay content scrolls.
 
 <LivePreview componentName="overlay" exampleName="CloseButton" />
 

@@ -1,10 +1,11 @@
 import { SaltProvider, SaltProviderNext } from "@salt-ds/core";
 import { clsx } from "clsx";
 import { useEffect, useRef, useState } from "react";
+import { usePreviewDensity } from "../components/previewDensity";
 import { Code } from "../mdx/code";
 import styles from "./AllTokens.module.css";
 import { formatTokenValue } from "./formatTokenValue";
-import type { Density } from "./TokenTable";
+import type { Density, ThemeType } from "./TokenTable";
 import { getPreviewType, getSwatchStyle } from "./tokenPreviewUtils";
 
 export function TokenPreview({
@@ -20,12 +21,14 @@ export function TokenPreview({
   density: Density;
   mode: "light" | "dark";
   themeKey: string;
-  theme: "next" | "legacy";
+  theme: ThemeType;
 }) {
   const type = getPreviewType(name, value);
   const [isTransparent, setIsTransparent] = useState(false);
   const swatchRef = useRef<HTMLDivElement | null>(null);
   const ThemeProvider = theme === "next" ? SaltProviderNext : SaltProvider;
+  const { density: saltDensity, themeClassName: densityThemeClassName } =
+    usePreviewDensity(density);
   const swatchVersion = `${themeKey}:${density}:${value}`;
 
   useEffect(() => {
@@ -59,8 +62,11 @@ export function TokenPreview({
   return (
     <div className={styles.swatch}>
       <ThemeProvider
-        theme=""
-        density={density}
+        theme={clsx(
+          theme === "salt-interim" && "salt-interim",
+          densityThemeClassName,
+        )}
+        density={saltDensity}
         mode={mode}
         applyClassesTo="child"
       >

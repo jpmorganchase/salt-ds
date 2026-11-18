@@ -33,8 +33,8 @@ export function useMouseHandlers(
     parentElement,
   } = props;
   const scheduledHighlightedIndexChange = useRef<number | null>(null);
-  const mouseEnterTimer = useRef<number>();
-  const mouseOutTimer = useRef<number>();
+  const mouseEnterTimer = useRef<number | undefined>(undefined);
+  const mouseOutTimer = useRef<number | undefined>(undefined);
 
   useEffect(
     () =>

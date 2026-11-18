@@ -31,7 +31,7 @@ export const DeprecatedCloseButton = (): ReactElement => {
       >
         <DrawerCloseButton onClick={handleClose} />
         <StackLayout>
-          <H2 id={id}>Section title</H2>
+          <H2 id={id}>Drawer title</H2>
           <Text>
             The close button renders in the top right corner of the drawer.
           </Text>

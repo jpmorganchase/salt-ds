@@ -1,4 +1,4 @@
-import { Button } from "@salt-ds/core";
+import { Button, FlowLayout } from "@salt-ds/core";
 import { CallIcon, UserIcon } from "@salt-ds/icons";
 import { CascadingMenu, type MenuDescriptor } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
@@ -528,11 +528,10 @@ export const ControlledSource: StoryFn<typeof CascadingMenu> = () => {
       }}
       source={source}
     >
-      <div>
+      <FlowLayout gap={2}>
         <Button
           data-testid="cascading-menu-trigger"
           onClick={handleButtonClick(sourceA)}
-          style={{ marginRight: "1rem" }}
         >
           Open/Close Cascading Menu A
         </Button>
@@ -542,7 +541,7 @@ export const ControlledSource: StoryFn<typeof CascadingMenu> = () => {
         >
           Open/Close Cascading Menu B
         </Button>
-      </div>
+      </FlowLayout>
     </CascadingMenu>
   );
 };

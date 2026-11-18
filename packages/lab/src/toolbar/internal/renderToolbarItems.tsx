@@ -26,7 +26,7 @@ export const renderToolbarItems = (
   collectionHook: OverflowCollectionHookResult,
   overflowedItems: OverflowItem[],
   orientation: orientationType,
-): JSX.Element[] => {
+): ReactElement[] => {
   let centerAlign = false;
   let rightAlign = false;
 
@@ -36,7 +36,8 @@ export const renderToolbarItems = (
   return items
     .filter((item) => !item.isOverflowIndicator)
     .map((item: OverflowItem, index) => {
-      const props = item.element.props as ToolbarElementProps;
+      const element = item.element as ReactElement<Record<string, unknown>>;
+      const props = element.props as ToolbarElementProps;
       const overflowed =
         overflowedItems.findIndex((item) => item.index === index) === -1
           ? undefined
@@ -71,7 +72,6 @@ export const renderToolbarItems = (
 
       const toolbarItemProps = {
         id: item.id,
-        key: item.id,
         "data-index": index,
         "data-priority": props["data-priority"] ?? 2,
         "data-pad-start": dataPadStart || undefined,
@@ -82,27 +82,38 @@ export const renderToolbarItems = (
         orientation,
       };
 
-      if (item.element.type === Tooltray) {
-        return cloneElement(item.element, toolbarItemProps);
+      if (element.type === Tooltray) {
+        return cloneElement(element, { ...toolbarItemProps, key: item.id });
       }
-      switch (item.element.type) {
+      switch (element.type) {
         case ToolbarField: {
-          const props = item.element.props as ToolbarFieldProps;
-          return cloneElement(item.element, {
-            ...toolbarItemProps,
-            children: cloneElement(props.children as ReactElement, {
-              // Inject an id that nested Control can use to query status via context
-              id: `toolbar-control-${item.id}`,
-            }),
-          } as ToolbarFieldProps);
+          const props = element.props as ToolbarFieldProps;
+          return cloneElement(
+            element as ReactElement<ToolbarFieldProps>,
+            {
+              ...toolbarItemProps,
+              key: item.id,
+              children: cloneElement(
+                props.children as ReactElement<{ id?: string }>,
+                {
+                  // Inject an id that nested Control can use to query status via context
+                  id: `toolbar-control-${item.id}`,
+                },
+              ),
+            } as ToolbarFieldProps,
+          );
         }
         default: {
           const [responsiveProps, componentProps] =
-            liftResponsivePropsToFormField(item.element.props);
+            liftResponsivePropsToFormField(element.props);
 
           return (
-            <ToolbarField {...responsiveProps} {...toolbarItemProps}>
-              {cloneElement(item.element, {
+            <ToolbarField
+              key={item.id}
+              {...responsiveProps}
+              {...toolbarItemProps}
+            >
+              {cloneElement(element, {
                 ...componentProps,
                 // Inject an id that nested Control can use to query status via context
                 id: `toolbar-control-${item.id}`,
