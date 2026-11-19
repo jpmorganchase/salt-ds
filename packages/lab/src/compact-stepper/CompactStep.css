@@ -1,0 +1,16 @@
+.saltCompactStep-icon {
+  --saltIcon-margin: calc((var(--salt-text-lineHeight) - max(var(--salt-size-icon), 12px)) / 2) var(--salt-spacing-75) 0 0;
+  vertical-align: top;
+}
+
+.saltCompactStep-stage-locked .saltCompactStep-icon {
+  --saltIcon-color: var(--salt-content-secondary-foreground);
+}
+
+.saltCompactStep-status-warning .saltCompactStep-icon {
+  --saltIcon-color: var(--salt-status-warning-foreground-decorative);
+}
+
+.saltCompactStep-status-error .saltCompactStep-icon {
+  --saltIcon-color: var(--salt-status-error-foreground-decorative);
+}

@@ -43,20 +43,3 @@
   font-size: 0;
   line-height: 0;
 }
-
-.saltCompactStepper-icon {
-  --saltIcon-margin: calc((var(--salt-text-lineHeight) - max(var(--salt-size-icon), 12px)) / 2) var(--salt-spacing-75) 0 0;
-  vertical-align: top;
-}
-
-.saltCompactStepper-stage-locked .saltCompactStepper-icon {
-  --saltIcon-color: var(--salt-content-secondary-foreground);
-}
-
-.saltCompactStepper-status-warning .saltCompactStepper-icon {
-  --saltIcon-color: var(--salt-status-warning-foreground-decorative);
-}
-
-.saltCompactStepper-status-error .saltCompactStepper-icon {
-  --saltIcon-color: var(--salt-status-error-foreground-decorative);
-}
