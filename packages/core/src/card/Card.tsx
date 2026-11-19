@@ -23,9 +23,8 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
    */
   borderColor?: "strong" | "subtle" | "none";
   /**
-   * **Deprecated:** Use the InteractableCard component instead
-   *
    * If `true`, the card will be disabled.
+   * @deprecated since 1.5.0. Use `InteractableCard` instead.
    */
   disabled?: boolean;
   /**
@@ -34,10 +33,9 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
    */
   hoverable?: boolean;
   /**
-   * **Deprecated:** Use the InteractableCard component instead
-   *
    * If `true`, interactive styles will be applied to `Card`. These styles give prominence to certain content
    * on the page.
+   * @deprecated since 1.5.0. Use `InteractableCard` instead.
    */
   interactable?: boolean;
   /**

@@ -43,8 +43,8 @@ export interface CheckboxProps
    */
   disabled?: boolean;
   /**
-   * **Deprecated**: Use validationStatus instead
    * If `true`, the checkbox will be in the error state.
+   * @deprecated since 1.8.0-rc.2. Use `validationStatus="error"` instead.
    */
   error?: boolean;
   /**

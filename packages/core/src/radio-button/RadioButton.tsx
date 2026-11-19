@@ -34,8 +34,8 @@ export interface RadioButtonProps
    */
   disabled?: boolean;
   /**
-   * **Deprecated**: Use validationStatus instead
-   * Set the error state
+   * Set the error state.
+   * @deprecated since 1.8.0-rc.2. Use `validationStatus="error"` instead.
    */
   error?: boolean;
   /**
