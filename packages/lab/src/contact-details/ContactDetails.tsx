@@ -10,7 +10,11 @@ const withBaseName = makePrefixer("saltContactDetails");
 
 export type ContactDetailsVariant = "default" | "compact" | "mini";
 
-export interface ContactDetailsProps extends HTMLAttributes<HTMLDivElement> {
+export interface ContactDetailsProps
+  extends Omit<
+    HTMLAttributes<HTMLDivElement>,
+    "role" | "aria-roledescription"
+  > {
   variant?: ContactDetailsVariant;
   stackAtBreakpoint?: number;
   embedded?: boolean;

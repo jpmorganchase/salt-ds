@@ -38,10 +38,7 @@ async function renderContact(
       <ContactAvatar />
       <ContactFavoriteToggle onChange={onFavoriteChange} />
       <ContactPrimaryInfo text={primaryText} />
-      <ContactSecondaryInfo
-        text={secondaryText}
-        ValueComponent={MailLinkComponent}
-      />
+      <ContactSecondaryInfo text={secondaryText} />
       <ContactTertiaryInfo text={tertiaryText} />
       <ContactActions>
         {actionLabels.map((label) => (
@@ -187,3 +184,60 @@ for (const variant of variants) {
     });
   });
 }
+
+describe("GIVEN ContactDetails sub-components with consumer props", () => {
+  it("merges a consumer aria-labelledby into the primary heading's label", async () => {
+    await renderWithSalt(
+      <>
+        <span id="extra-label">Extra</span>
+        <ContactDetails>
+          <ContactPrimaryInfo
+            aria-labelledby="extra-label"
+            id="primary"
+            text={primaryText}
+          />
+          <ContactSecondaryInfo id="secondary" text={secondaryText} />
+        </ContactDetails>
+      </>,
+    );
+    await expect
+      .element(page.getByRole("heading"))
+      .toHaveAttribute("aria-labelledby", "primary secondary extra-label");
+  });
+
+  it("applies a consumer className to ContactActions and ContactMetadataItem", async () => {
+    await renderWithSalt(
+      <ContactDetails>
+        <ContactPrimaryInfo text={primaryText} />
+        <ContactActions className="custom-actions" data-testid="actions">
+          <ContactAction label="phone" />
+        </ContactActions>
+        <ContactMetadata>
+          <ContactMetadataItem
+            className="custom-item"
+            data-testid="item"
+            label="Location"
+            value="Location A"
+          />
+        </ContactMetadata>
+      </ContactDetails>,
+    );
+    await expect
+      .element(page.getByTestId("actions"))
+      .toHaveClass("saltContactActions", "custom-actions");
+    await expect
+      .element(page.getByTestId("item"))
+      .toHaveClass("saltContactMetadataItem", "custom-item");
+  });
+
+  it("forwards MailLinkComponent props when the value isn't an email", async () => {
+    await renderWithSalt(
+      <MailLinkComponent
+        className="custom-value"
+        data-testid="value"
+        value="Location A"
+      />,
+    );
+    await expect.element(page.getByTestId("value")).toHaveClass("custom-value");
+  });
+});

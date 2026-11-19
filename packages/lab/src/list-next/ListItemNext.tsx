@@ -32,6 +32,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       id: idProp,
       value,
       onClick,
+      onMouseMove,
       ...props
     },
     ref,
@@ -74,6 +75,7 @@ export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
       if (!highlighted) {
         highlight(event);
       }
+      onMouseMove?.(event);
     };
 
     return (

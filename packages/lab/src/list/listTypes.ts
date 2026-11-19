@@ -114,12 +114,6 @@ export interface ListProps<
   highlightedIndex?: number;
 
   /**
-   * The total number of items.
-   *
-   * Used for keyboard navigation (when `End` key is pressed) and when the list is virtualized.
-   */
-  itemCount?: number;
-  /**
    * Size of the gap between list items. Defaults to zero.
    */
   itemGapSize?: number;

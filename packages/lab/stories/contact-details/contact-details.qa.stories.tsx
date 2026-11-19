@@ -81,7 +81,7 @@ const getComponent = (props: { variant?: string; className?: string }) => {
               : "default"
         }
       >
-        {!!avatar && <ContactAvatar>{avatar1}</ContactAvatar>}
+        {!!avatar && <ContactAvatar />}
 
         <ContactFavoriteToggle onChange={console.log} />
 

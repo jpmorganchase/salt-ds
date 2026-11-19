@@ -1,6 +1,6 @@
 import { Button } from "@salt-ds/core";
 import { QueryInput, type QueryInputCategory } from "@salt-ds/lab";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import { page, server, userEvent } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
 
@@ -119,5 +119,26 @@ describe("GIVEN a QueryInput", () => {
     page.getByRole("textbox").element().focus();
     await userEvent.keyboard("{Shift>}{Tab}{/Shift}");
     await expect.element(page.getByTestId("previous-control")).toHaveFocus();
+  });
+});
+
+describe("GIVEN a QueryInput with focus handlers", () => {
+  it("calls them and still opens and closes the list", async () => {
+    const onFocus = vi.fn();
+    const onBlur = vi.fn();
+    await renderWithSalt(
+      <>
+        <QueryInput categories={categories} onBlur={onBlur} onFocus={onFocus} />
+        <Button>After</Button>
+      </>,
+    );
+    // The text input stops focus events from bubbling, so focus another
+    // element inside the QueryInput.
+    page.getByRole("radio", { name: "And" }).element().focus();
+    await expect.element(page.getByRole("listbox")).toBeVisible();
+    expect(onFocus).toHaveBeenCalled();
+    page.getByRole("button", { name: "After" }).element().focus();
+    await expect.element(page.getByRole("listbox")).not.toBeInTheDocument();
+    expect(onBlur).toHaveBeenCalled();
   });
 });

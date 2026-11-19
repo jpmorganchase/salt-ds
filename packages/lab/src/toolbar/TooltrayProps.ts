@@ -10,8 +10,6 @@ export interface TooltrayProps
     HTMLAttributes<HTMLDivElement> {
   collapse?: boolean;
   collapsed?: boolean;
-  collapsible?: boolean;
-  disabled?: boolean;
   "data-collapsible"?: collapsibleType;
   "data-collapsed"?: booleanAttribute;
   isInsidePanel?: boolean;

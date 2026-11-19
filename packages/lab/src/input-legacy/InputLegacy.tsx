@@ -11,6 +11,7 @@ import {
   forwardRef,
   type HTMLAttributes,
   type InputHTMLAttributes,
+  type KeyboardEvent,
   type KeyboardEventHandler,
   type MouseEvent,
   type MouseEventHandler,
@@ -64,7 +65,10 @@ export interface InputLegacyProps
   /**
    * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
    */
-  inputProps?: InputHTMLAttributes<HTMLInputElement>;
+  inputProps?: Omit<
+    InputHTMLAttributes<HTMLInputElement>,
+    "defaultValue" | "disabled" | "readOnly" | "value"
+  >;
   onBlur?: FocusEventHandler<HTMLInputElement>;
   /**
    * Callback for change event.
@@ -205,6 +209,16 @@ export const InputLegacy = forwardRef<HTMLInputElement, InputLegacyProps>(
       inputPropsProp,
       misplacedAriaProps,
     );
+    const {
+      onBlur: inputOnBlur,
+      onChange: inputOnChange,
+      onFocus: inputOnFocus,
+      onKeyDown: inputOnKeyDown,
+      onKeyUp: inputOnKeyUp,
+      onMouseDown: inputOnMouseDown,
+      onMouseMove: inputOnMouseMove,
+      onMouseUp: inputOnMouseUp,
+    } = inputPropsProp ?? {};
     const isValueEmptyReadOnly = isReadOnly && isEmptyReadOnlyValue(valueProp);
     const isDefaultValueEmptyReadOnly =
       isReadOnly && isEmptyReadOnlyValue(defaultValueProp);
@@ -228,16 +242,19 @@ export const InputLegacy = forwardRef<HTMLInputElement, InputLegacyProps>(
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
       const value = event.target.value;
       setValue(value);
+      inputOnChange?.(event);
       onChange?.(event, value);
     };
 
     const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
+      inputOnFocus?.(event);
       onFocus?.(event);
       setFormFieldFocused?.(true);
       setFocused(true);
     };
 
     const handleBlur = (event: FocusEvent<HTMLInputElement>) => {
+      inputOnBlur?.(event);
       onBlur?.(event);
       setFormFieldFocused?.(false);
       setFocused(false);
@@ -246,19 +263,32 @@ export const InputLegacy = forwardRef<HTMLInputElement, InputLegacyProps>(
     const handleMouseMove = (event: MouseEvent<HTMLInputElement>) => {
       cursorOnFocusHelpers.handleMouseMove(event);
 
+      inputOnMouseMove?.(event);
       onMouseMove?.(event);
     };
 
     const handleMouseUp = (event: MouseEvent<HTMLInputElement>) => {
       cursorOnFocusHelpers.handleMouseUp();
 
+      inputOnMouseUp?.(event);
       onMouseUp?.(event);
     };
 
     const handleMouseDown = (event: MouseEvent<HTMLInputElement>) => {
       cursorOnFocusHelpers.handleMouseDown();
 
+      inputOnMouseDown?.(event);
       onMouseDown?.(event);
+    };
+
+    const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+      inputOnKeyDown?.(event);
+      onKeyDown?.(event);
+    };
+
+    const handleKeyUp = (event: KeyboardEvent<HTMLInputElement>) => {
+      inputOnKeyUp?.(event);
+      onKeyUp?.(event);
     };
 
     return (
@@ -293,8 +323,8 @@ export const InputLegacy = forwardRef<HTMLInputElement, InputLegacyProps>(
           value={value}
           onBlur={handleBlur}
           onChange={handleChange}
-          onKeyDown={onKeyDown}
-          onKeyUp={onKeyUp}
+          onKeyDown={handleKeyDown}
+          onKeyUp={handleKeyUp}
           onFocus={handleFocus}
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}

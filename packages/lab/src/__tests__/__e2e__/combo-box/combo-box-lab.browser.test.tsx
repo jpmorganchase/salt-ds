@@ -113,3 +113,29 @@ describe("A lab combo box", () => {
     await expect.element(comboBox()).toHaveValue("Baby blue");
   });
 });
+
+describe("A lab combo box with dropdown props", () => {
+  it("opens on focus by default", async () => {
+    await renderWithSalt(<Default />);
+    await userEvent.tab();
+    await expect.element(comboBox()).toHaveAttribute("aria-expanded", "true");
+  });
+
+  it("doesn't open on focus when openOnFocus is false", async () => {
+    await renderWithSalt(<Default openOnFocus={false} />);
+    await userEvent.tab();
+    await expect.element(comboBox()).toHaveFocus();
+    await expect.element(comboBox()).toHaveAttribute("aria-expanded", "false");
+  });
+
+  it("is full width by default and respects fullWidth={false}", async () => {
+    const { rerender } = await renderWithSalt(<Default />);
+    await expect
+      .element(page.getByTestId("dropdown"))
+      .toHaveClass("saltDropdownBase-fullWidth");
+    await rerender(<Default fullWidth={false} />);
+    await expect
+      .element(page.getByTestId("dropdown"))
+      .not.toHaveClass("saltDropdownBase-fullWidth");
+  });
+});

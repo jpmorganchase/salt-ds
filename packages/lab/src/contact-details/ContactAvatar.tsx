@@ -5,7 +5,10 @@ import { useContactDetailsContext } from "./internal";
 
 const withBaseName = makePrefixer("saltContactAvatar");
 
-export type ContactAvatarProps = AvatarProps;
+export type ContactAvatarProps = Omit<
+  AvatarProps,
+  "size" | "aria-hidden" | "children"
+>;
 
 export const ContactAvatar = forwardRef<HTMLDivElement, ContactAvatarProps>(
   function ContactAvatar(props, ref) {

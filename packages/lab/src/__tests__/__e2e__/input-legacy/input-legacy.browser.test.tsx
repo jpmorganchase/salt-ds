@@ -1,7 +1,7 @@
 import { Input } from "@salt-ds/lab";
 import { type ChangeEvent, useState } from "react";
 import { describe, expect, it, vi } from "vitest";
-import { page } from "vitest/browser";
+import { page, userEvent } from "vitest/browser";
 import { runAxeScan } from "~browser-test-utils/accessibility";
 import { renderWithSalt } from "~browser-test-utils/render";
 
@@ -208,4 +208,38 @@ describe("GIVEN an Input", () => {
       });
     });
   }
+});
+
+describe("GIVEN an Input with inputProps handlers", () => {
+  it("calls them as well as the Input's own handlers", async () => {
+    const onChange = vi.fn();
+    const inputOnChange = vi.fn();
+    const inputOnFocus = vi.fn();
+    const inputOnBlur = vi.fn();
+    const inputOnKeyDown = vi.fn();
+    const inputOnKeyUp = vi.fn();
+    await renderWithSalt(
+      <Input
+        inputProps={{
+          onBlur: inputOnBlur,
+          onChange: inputOnChange,
+          onFocus: inputOnFocus,
+          onKeyDown: inputOnKeyDown,
+          onKeyUp: inputOnKeyUp,
+        }}
+        onChange={onChange}
+      />,
+    );
+    await textbox().click();
+    expect(inputOnFocus).toHaveBeenCalled();
+    await textbox().fill("abc");
+    expect(inputOnChange).toHaveBeenCalled();
+    expect(onChange).toHaveBeenCalledWith(expect.anything(), "abc");
+    await expect.element(textbox()).toHaveValue("abc");
+    await userEvent.keyboard("d");
+    expect(inputOnKeyDown).toHaveBeenCalled();
+    expect(inputOnKeyUp).toHaveBeenCalled();
+    textbox().element().blur();
+    expect(inputOnBlur).toHaveBeenCalled();
+  });
 });

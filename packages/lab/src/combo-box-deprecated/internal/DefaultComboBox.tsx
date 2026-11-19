@@ -41,7 +41,6 @@ export type BaseComboBoxProps<
     | "listRef"
     | "onChange"
     | "onSelect"
-    | "overscanCount"
     | "virtualized"
     | "width"
   > & {
@@ -58,7 +57,6 @@ export type BaseComboBoxProps<
 
     rootWidth?: string | number;
     rootRef: RefObject<HTMLElement | null>;
-    disabledPortal?: boolean;
     source: ReadonlyArray<Item>;
   };
 

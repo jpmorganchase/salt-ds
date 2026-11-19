@@ -31,10 +31,6 @@ export interface DropdownButtonProps extends ButtonProps {
    */
   iconSize?: IconProps["size"];
   /**
-   * Is the dropdown list open
-   */
-  isOpen?: boolean;
-  /**
    * Label for the dropdown button
    */
   label?: string;
@@ -42,14 +38,6 @@ export interface DropdownButtonProps extends ButtonProps {
    * Id for the label. This is needed for ARIA attributes.
    */
   labelId?: string;
-  /**
-   * When the dropdown is collapsed this value is set as aria-posinset on the span containing the selected value
-   * **/
-  posInSet?: number;
-  /**
-   * When the dropdown is collapsed this value is set as aria-setsize on the span containing the selected value
-   * **/
-  setSize?: number;
   /**
    *
    * **/
@@ -68,12 +56,9 @@ export const DropdownButton = forwardRef(function DropdownButton(
     className,
     disabled,
     iconSize = DEFAULT_ICON_SIZE,
-    isOpen,
     label,
     labelId,
     fullWidth,
-    posInSet,
-    setSize,
     labelAriaAttributes,
     ...rest
   }: DropdownButtonProps,

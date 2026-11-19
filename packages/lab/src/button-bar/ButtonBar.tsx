@@ -149,18 +149,6 @@ export interface ButtonBarProps extends HTMLAttributes<HTMLDivElement> {
    * Use this prop to change that when the button bar is NOT stacked and NOT aligned left.
    */
   sortOrder?: ButtonBarSortOrder;
-  /**
-   * By default ButtonBar sorts buttons in descending order.
-   * Use this prop to change that when the button bar is stacked.
-   */
-  sortStackOrder?: ButtonBarSortOrder;
-  /**
-   * When the viewport is equal to or smaller than the breakpoint the buttons will be stacked vertically.
-   * Alternatively pass a screen width number in pixels.
-   * Use `0` to disable this feature. Defaults to 'xs'.
-   * Actions buttons will be ordered by stackOrder prop.
-   */
-  stackAtBreakpoint?: "xs" | "sm" | "md" | "lg" | "xl" | number;
 }
 
 const withBaseName = makePrefixer("saltButtonBar");
@@ -174,8 +162,6 @@ export const ButtonBar = forwardRef<HTMLDivElement, ButtonBarProps>(
       disableAutoAlignment,
       sortAlignLeft = "desc",
       sortOrder = "desc",
-      sortStackOrder = "desc",
-      stackAtBreakpoint = "xs",
       ...rest
     },
     ref,
@@ -193,12 +179,6 @@ export const ButtonBar = forwardRef<HTMLDivElement, ButtonBarProps>(
 
     const childrenArray = Children.toArray(childrenProp);
     const childrenIndexes = childrenArray.map((_, index) => index);
-    const stackOrderComparator = createComparatorForField(
-      "stackOrder",
-      sortStackOrder,
-      alignLeft,
-      childrenData,
-    );
     const orderComparator = createComparatorForField(
       "order",
       sortOrder,
@@ -217,11 +197,9 @@ export const ButtonBar = forwardRef<HTMLDivElement, ButtonBarProps>(
     if (childrenData.length !== childrenIndexes.length) {
       orderedChildrenIndexes = childrenIndexes;
     } else {
-      orderedChildrenIndexes = matches
-        ? childrenIndexes.sort(stackOrderComparator)
-        : childrenIndexes.sort(
-            alignLeft ? alignLeftComparator : orderComparator,
-          );
+      orderedChildrenIndexes = childrenIndexes.sort(
+        alignLeft ? alignLeftComparator : orderComparator,
+      );
     }
 
     let secondaryChildAlignment: { index?: number; align?: "left" | "right" } =

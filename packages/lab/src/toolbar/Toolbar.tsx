@@ -31,7 +31,6 @@ const classBase = "saltToolbar";
 export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
   function Toolbar(props, ref) {
     const {
-      TooltipComponent,
       "aria-label": ariaLabel,
       "aria-labelledby": ariaLabelledBy,
       children,
