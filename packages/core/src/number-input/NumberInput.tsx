@@ -194,7 +194,7 @@ export interface NumberInputProps
   value?: number | string;
 }
 
-export const isOutOfRange = (
+const isValueOutOfRange = (
   value: number | string,
   min: number,
   max: number,
@@ -206,6 +206,11 @@ export const isOutOfRange = (
     typeof value === "string" ? Number.parseFloat(value) : value;
   return Number.isNaN(floatValue) || floatValue > max || floatValue < min;
 };
+
+/**
+ * @deprecated since 1.76.0. It's internal and will be removed in a future major version.
+ */
+export const isOutOfRange = isValueOutOfRange;
 
 function getNumberPrecision(num: number | string) {
   const numStr = String(num);
@@ -618,7 +623,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
           }
           aria-invalid={
             !isReadOnly && renderedValue.length
-              ? isOutOfRange(floatValue, min, max) ||
+              ? isValueOutOfRange(floatValue, min, max) ||
                 validationStatus === "error"
               : undefined
           }

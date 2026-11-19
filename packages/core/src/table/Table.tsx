@@ -2,8 +2,8 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
-import { makePrefixer, useId, useIsomorphicLayoutEffect } from "../utils";
-
+import { useId, useIsomorphicLayoutEffect } from "../utils";
+import { withTableBaseName as withBaseName } from "./internal/withTableBaseName";
 import tableCss from "./Table.css";
 import { useTable } from "./TableContext";
 
@@ -25,7 +25,10 @@ export interface TableProps extends ComponentPropsWithoutRef<"table"> {
   zebra?: boolean;
 }
 
-export const withTableBaseName = makePrefixer("saltTable");
+/**
+ * @deprecated since 1.76.0. It's internal and will be removed in a future major version.
+ */
+export const withTableBaseName = withBaseName;
 
 export const Table = forwardRef<HTMLTableElement, TableProps>(
   function Table(props, ref) {
@@ -64,11 +67,11 @@ export const Table = forwardRef<HTMLTableElement, TableProps>(
       <table
         id={tableId}
         className={clsx(
-          withTableBaseName(),
+          withBaseName(),
           {
-            [withTableBaseName(variant)]: variant,
-            [withTableBaseName("zebra")]: zebra,
-            [withTableBaseName(`divider-${divider}`)]: divider,
+            [withBaseName(variant)]: variant,
+            [withBaseName("zebra")]: zebra,
+            [withBaseName(`divider-${divider}`)]: divider,
           },
           className,
         )}

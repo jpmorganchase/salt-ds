@@ -98,6 +98,9 @@ export interface DatePickerRangeProps
  */
 export type DatePickerProps = DatePickerSingleProps | DatePickerRangeProps;
 
+/**
+ * @deprecated since 1.2.0. Use `DatePicker` instead.
+ */
 export const DatePickerMain = forwardRef<HTMLDivElement, DatePickerProps>(
   function DatePickerMain(props, ref) {
     const {

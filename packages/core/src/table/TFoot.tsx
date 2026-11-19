@@ -2,7 +2,7 @@ import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
-import { withTableBaseName } from "./Table";
+import { withTableBaseName } from "./internal/withTableBaseName";
 
 import tableCss from "./Table.css";
 

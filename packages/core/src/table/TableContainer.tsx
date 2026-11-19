@@ -14,7 +14,7 @@ import {
   useIsomorphicLayoutEffect,
   useResizeObserver,
 } from "../utils";
-import { withTableBaseName } from "./Table";
+import { withTableBaseName } from "./internal/withTableBaseName";
 import tableCss from "./Table.css";
 import { TableContext } from "./TableContext";
 
