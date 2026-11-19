@@ -49,9 +49,6 @@ const stackedBarChartOptions: Options = {
             verticalAlign: "bottom",
             y: 0,
           },
-          plotOptions: {
-            series: { dataLabels: { padding: 0 } },
-          },
           xAxis: { title: { text: "" } },
           yAxis: { endOnTick: false },
         },
@@ -64,6 +61,7 @@ const stackedBarChartOptions: Options = {
       dataLabels: {
         enabled: true,
         inside: true,
+        padding: 0,
         style: { color: "contrast" },
       },
     },
