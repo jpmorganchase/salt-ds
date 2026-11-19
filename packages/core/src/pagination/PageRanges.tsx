@@ -10,7 +10,15 @@ import { usePaginationContext } from "./usePaginationContext";
 const withBaseName = makePrefixer("saltPageRanges");
 
 export interface PageRangesProps {
+  /**
+   * Number of pages shown at the start and end of the page range when it's truncated. Values below `1` are treated as `1`.
+   * @default 1
+   */
   boundaryCount?: number;
+  /**
+   * Number of pages shown on each side of the current page when the page range is truncated.
+   * @default 2
+   */
   siblingCount?: number;
 }
 

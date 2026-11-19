@@ -30,7 +30,13 @@ import dialogCss from "./Dialog.css";
 import { DialogContext } from "./DialogContext";
 
 interface ConditionalScrimWrapperProps {
+  /**
+   * The content to wrap.
+   */
   children?: ReactNode;
+  /**
+   * If `true`, `children` are wrapped in a fixed `Scrim`.
+   */
   condition: boolean;
 }
 

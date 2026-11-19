@@ -7,6 +7,12 @@ import { makePrefixer } from "../../utils";
 import stepTextCSS from "./StepText.css";
 
 export interface StepTextProps extends TextProps<"div"> {
+  /**
+   * The purpose of the text, which sets its area in the step's layout:
+   * `"label"` for the step's label, or `"description"` for the text below the
+   * label. For a description, `styleAs` defaults to `"label"` and `color` to
+   * `"secondary"`.
+   */
   purpose: "label" | "description";
 }
 

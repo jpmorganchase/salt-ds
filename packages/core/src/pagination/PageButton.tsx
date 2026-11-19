@@ -9,8 +9,17 @@ import { usePaginationContext } from "./usePaginationContext";
 const withBaseName = makePrefixer("saltPageButton");
 
 export interface PageButtonProps {
+  /**
+   * The page number that the button shows and navigates to when clicked.
+   */
   page: number;
+  /**
+   * If `true`, the button is styled as the current page and has `aria-current="page"`.
+   */
   selected?: boolean;
+  /**
+   * If `true`, the button is disabled.
+   */
   disabled?: boolean;
 }
 export const PageButton = forwardRef<HTMLButtonElement, PageButtonProps>(

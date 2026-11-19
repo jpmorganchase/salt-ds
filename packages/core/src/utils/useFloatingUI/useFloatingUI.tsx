@@ -39,14 +39,31 @@ export interface FloatingComponentProps
    */
   focusManagerProps?: Omit<FloatingFocusManagerProps, "children">;
   /**
-   * Position and sizing optional props for the floating component. `top`, `left`, and `position` for floating elements where they aren't positioned with relative to the trigger.
-   * `width` and `height` are used to define the size of the floating element.
-   *
+   * The top position of the floating component in pixels, applied as its `top`
+   * style.
    */
   top?: number;
+  /**
+   * The left position of the floating component in pixels, applied as its
+   * `left` style.
+   */
   left?: number;
+  /**
+   * The width of the floating component in pixels. The default floating
+   * component doesn't use it, but a custom one set with
+   * `FloatingComponentProvider` can use it to size its container.
+   */
   width?: number;
+  /**
+   * The height of the floating component in pixels. The default floating
+   * component doesn't use it, but a custom one set with
+   * `FloatingComponentProvider` can use it to size its container.
+   */
   height?: number;
+  /**
+   * The positioning strategy of the floating component, applied as its
+   * `position` style.
+   */
   position?: Strategy;
   /**
    * If `true`, the page can't be scrolled while the floating component is
@@ -105,6 +122,13 @@ const DefaultFloatingComponent = forwardRef<
 });
 
 export interface FloatingComponentContextType {
+  /**
+   * The component that renders the root element of floating components, such
+   * as `Tooltip`, `MenuPanel` and `Dialog`, in place of the default one. It
+   * receives `FloatingComponentProps`, such as `open`, `top`, `left`, `width`
+   * and `height`, and a ref to forward to its root element. The default
+   * component renders a `div` in a `FloatingPortal` while `open` is `true`.
+   */
   Component: typeof DefaultFloatingComponent;
 }
 
@@ -118,6 +142,10 @@ if (process.env.NODE_ENV !== "production") {
 
 export interface FloatingComponentProviderProps
   extends FloatingComponentContextType {
+  /**
+   * The content that uses the provided `Component` to render floating
+   * components.
+   */
   children: ReactNode;
 }
 
@@ -180,9 +208,25 @@ const FloatingPlatformContext = createContext<FloatingPlatformContextType>(
 );
 
 export interface FloatingPlatformProviderProps {
+  /**
+   * The Floating UI platform used to position floating components. When not
+   * set, Floating UI's default `platform` is used.
+   */
   platform?: Platform;
+  /**
+   * The function that changes the middleware of floating components. It
+   * receives the middleware that a component would use and returns the
+   * middleware to use instead. When not set, the middleware isn't changed.
+   */
   middleware?: GetMiddleware;
+  /**
+   * The content that uses the provided platform settings.
+   */
   children: ReactNode;
+  /**
+   * If `true`, floating components update their position on every animation
+   * frame.
+   */
   animationFrame?: boolean;
 }
 

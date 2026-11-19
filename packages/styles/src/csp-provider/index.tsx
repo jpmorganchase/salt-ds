@@ -16,6 +16,9 @@ export function useCSPNonce(nonce?: string): string | undefined {
 }
 
 export interface CSPProviderProps extends CSPContextType {
+  /**
+   * The content whose injected styles use the provided `nonce`.
+   */
   children: ReactNode;
 }
 

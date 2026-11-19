@@ -844,17 +844,46 @@ export function ToolbarOverflowMenu({
 }
 
 export interface ToolbarOverflowContentProps {
+  /**
+   * The ref that holds the toolbar's last focused control. A named overflow menu uses it to choose which item to focus when it opens.
+   */
   focusMemoryRef?: RefObject<ToolbarFocusMemory | null>;
+  /**
+   * The function that returns a ref callback for the element that an item is rendered into. `kind` is where that element is: `"main"` for the content area, `"measurement"` for the layer that measures overflowed items or `"overflow"` for an overflow menu.
+   */
   getItemHostRef: (
     id: string,
     kind: ToolbarItemHostKind,
   ) => (node: HTMLDivElement | null) => void;
+  /**
+   * The function that returns a ref callback for an item's slot, which is measured to work out overflow.
+   */
   getItemRef: (id: string) => (node: HTMLDivElement | null) => void;
+  /**
+   * The function that returns a ref callback for the slot of a named overflow menu trigger, which is measured to work out overflow.
+   */
   getNamedTriggerRef: (id: string) => (node: HTMLDivElement | null) => void;
+  /**
+   * The function that returns a ref callback for the content area with the given key.
+   */
   getContentRef: (contentKey: string) => (node: HTMLDivElement | null) => void;
+  /**
+   * Callback fired when a control inside a named overflow menu receives focus.
+   * @param itemId - The ID of the toolbar item that contains the focused control.
+   * @param controlIndex - The index of the focused control within the item.
+   */
   onItemFocus?: (itemId: string, controlIndex: number) => void;
+  /**
+   * The named overflow groups in this content area. Each group is shown as an overflow menu in place of its first overflowed item.
+   */
   overflowGroups: ToolbarOverflowGroup[];
+  /**
+   * The IDs of the items that have overflowed. They aren't rendered in the content area.
+   */
   overflowedIds: Set<string>;
+  /**
+   * The model of the content area to render, including its props, position and items.
+   */
   content: ToolbarContentModel;
 }
 

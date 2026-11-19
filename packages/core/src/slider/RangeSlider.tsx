@@ -60,7 +60,16 @@ export interface RangeSliderProps
   /**
    * The marks shown under the track.
    */
-  marks?: { label: string; value: number }[];
+  marks?: {
+    /**
+     * The label of the mark, shown under the track.
+     */
+    label: string;
+    /**
+     * The value of the mark, which sets its position on the track.
+     */
+    value: number;
+  }[];
   /**
    * The maximum value of the slider.
    * @default 100

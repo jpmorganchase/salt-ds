@@ -66,6 +66,10 @@ export interface PillInputProps
    * The tokens to display in the input.
    */
   pills?: string[];
+  /**
+   * Callback fired when the user removes a pill by clicking it, by pressing Backspace or Delete while it's focused, or by pressing Backspace at the start of the input, which removes the last pill. Update `pills` to remove it.
+   * @param index - The index of the removed pill in `pills`.
+   */
   onPillRemove?: (event: SyntheticEvent, index: number) => void;
   /**
    * Start adornment component.
@@ -85,7 +89,15 @@ export interface PillInputProps
    * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
+  /**
+   * If `true`, the pills don't show a close icon, and clicking a pill doesn't call
+   * `onPillRemove`. Pressing Backspace or Delete on a focused pill, or Backspace
+   * at the start of the input, still calls it.
+   */
   hidePillClose?: boolean;
+  /**
+   * If `true`, the pills stay on one line, and the pills that don't fit are replaced with an overflow indicator.
+   */
   truncate?: boolean;
   /**
    * If `true`, the pill input has a full border.

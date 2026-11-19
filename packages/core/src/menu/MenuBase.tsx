@@ -37,6 +37,9 @@ import {
 } from "./MenuGroupContext";
 
 export interface MenuBaseProps {
+  /**
+   * The content of the menu, typically `MenuTrigger` and `MenuPanel`.
+   */
   children?: ReactNode;
   /**
    * If `true`, the menu is open. Use with `onOpenChange` to control it.

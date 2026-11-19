@@ -7,12 +7,33 @@ import {
 } from "react";
 
 export interface ButtonHookProps<T extends Element> {
+  /**
+   * If `true`, the button is in a loading state. It gets `data-loading` and doesn't call `onClick`.
+   */
   loading?: boolean;
+  /**
+   * If `true`, the button is disabled and doesn't call `onClick`. Unless `focusableWhenDisabled` is `true`, it also gets the `disabled` attribute and is removed from the tab order.
+   */
   disabled?: boolean;
+  /**
+   * If `true`, the button stays focusable when it's disabled. It gets `aria-disabled` instead of the `disabled` attribute.
+   */
   focusableWhenDisabled?: boolean;
+  /**
+   * Callback fired when a key is released on the button.
+   */
   onKeyUp?: (event: KeyboardEvent<T>) => void;
+  /**
+   * Callback fired when a key is pressed on the button.
+   */
   onKeyDown?: (event: KeyboardEvent<T>) => void;
+  /**
+   * Callback fired when the button is clicked. It isn't called when the button is disabled or loading.
+   */
   onClick?: (event: MouseEvent<T>) => void;
+  /**
+   * Callback fired when the button loses focus.
+   */
   onBlur?: (event: FocusEvent<T>) => void;
 }
 

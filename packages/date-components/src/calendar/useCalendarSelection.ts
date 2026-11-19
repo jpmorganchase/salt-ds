@@ -540,7 +540,14 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
 
 const withBaseName = makePrefixer("saltCalendarDay");
 
-export function useCalendarSelectionDay({ date }: { date: DateFrameworkType }) {
+export function useCalendarSelectionDay({
+  date,
+}: {
+  /**
+   * The date of the calendar day.
+   */
+  date: DateFrameworkType;
+}) {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
   const {
     state: { selectionVariant, minDate, maxDate },

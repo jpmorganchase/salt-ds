@@ -535,5 +535,10 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     </ListControlProvider>
   );
 }) as <Item = string>(
-  props: DropdownProps<Item> & { ref?: Ref<HTMLButtonElement> },
+  props: DropdownProps<Item> & {
+    /**
+     * A ref to the dropdown's `button` element.
+     */
+    ref?: Ref<HTMLButtonElement>;
+  },
 ) => ReactElement;

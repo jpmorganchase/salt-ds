@@ -15,7 +15,13 @@ export interface A11yValueProps {
 export type NecessityType = "required" | "optional" | "asterisk";
 
 export interface a11yValueAriaProps {
+  /**
+   * The ID of the `FormFieldLabel` in the surrounding `FormField`. Form controls add it to their `aria-labelledby` attribute.
+   */
   "aria-labelledby": A11yValueProps["labelId"];
+  /**
+   * The ID of the `FormFieldHelperText` in the surrounding `FormField`. Form controls add it to their `aria-describedby` attribute.
+   */
   "aria-describedby": A11yValueProps["helperTextId"] | undefined;
 }
 

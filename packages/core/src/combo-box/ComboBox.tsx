@@ -534,5 +534,10 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     </ListControlProvider>
   );
 }) as <Item = string>(
-  props: ComboBoxProps<Item> & { ref?: Ref<HTMLDivElement> },
+  props: ComboBoxProps<Item> & {
+    /**
+     * A ref to the root element, which contains the input and the pills.
+     */
+    ref?: Ref<HTMLDivElement>;
+  },
 ) => ReactElement;

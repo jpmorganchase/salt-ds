@@ -48,38 +48,130 @@ export interface SeparatorProps
     AriaAttributes,
     "aria-orientation" | "aria-valuenow" | "aria-valuemin" | "aria-valuemax"
   > {
+  /**
+   * The ARIA role of the handle. Because the handle is focusable, it's a
+   * movable separator widget with a value, instead of a static divider.
+   */
   role: "separator";
+  /**
+   * The tab index of the handle, which puts it in the tab order so that the
+   * Drawer can be resized from the keyboard.
+   */
   tabIndex: number;
+  /**
+   * The callback ref for the handle element. The hook uses the element to tell
+   * when the pointer is pressed on or hovers over the handle, and to focus the
+   * handle and capture the pointer while dragging.
+   */
   ref: (element: HTMLElement | null) => void;
+  /**
+   * Callback fired when a key is pressed on the handle. The arrow keys for the
+   * Drawer's axis move its edge by 8 pixels, Home and End resize it to its
+   * minimum and maximum size, and Enter collapses it to its minimum size or,
+   * when it's at its minimum size, restores an earlier size. While the user is
+   * placing the edge by click, any key stops placing it, and Escape doesn't
+   * close the Drawer.
+   */
   onKeyDown: (event: ReactKeyboardEvent<HTMLElement>) => void;
+  /**
+   * Callback fired when the handle receives focus. Unless the handle is being
+   * dragged, it measures the Drawer's size and size limits to update the
+   * `aria-valuenow`, `aria-valuemin` and `aria-valuemax` props.
+   */
   onFocus: () => void;
 }
 
 export interface GuideProps {
+  /**
+   * The callback ref for the guide element. The hook moves the guide line by
+   * setting the `--drawerResizeGuide-offset` CSS variable on the element,
+   * without re-rendering, starting at the Drawer's current edge.
+   */
   ref: (element: HTMLElement | null) => void;
+  /**
+   * Callback fired when a pointer is pressed on the guide. It moves the guide
+   * line to the pointer and keeps focus on the handle. A mouse button other
+   * than the primary one stops placing the edge instead.
+   */
   onPointerDown: (event: ReactPointerEvent<HTMLElement>) => void;
+  /**
+   * Callback fired when a pointer moves over the guide. It moves the guide
+   * line to the pointer, within the Drawer's size limits.
+   */
   onPointerMove: (event: ReactPointerEvent<HTMLElement>) => void;
+  /**
+   * Callback fired when the guide is clicked. It stops placing the edge,
+   * resizes the Drawer so that its edge is at the click, within its size
+   * limits, and focuses the handle. It ignores clicks that didn't start with a
+   * press on the guide, such as the click that started placing the edge.
+   */
   onClick: (event: ReactMouseEvent<HTMLElement>) => void;
+  /**
+   * Callback fired when the context menu is opened on the guide. It stops
+   * placing the edge without resizing the Drawer.
+   */
   onContextMenu: () => void;
 }
 
 export interface UseDrawerResizeProps {
+  /**
+   * If `true`, the Drawer can be resized. When it changes to `false`, the size
+   * set by resizing is cleared, so the Drawer returns to its CSS size.
+   */
   enabled: boolean;
+  /**
+   * The position of the Drawer, which sets what resizing changes: the width of
+   * `"left"` and `"right"` drawers, and the height of `"top"` and `"bottom"`
+   * drawers. The size set by resizing only applies while `position` stays on
+   * the same axis.
+   */
   position: DrawerPosition;
+  /**
+   * The Drawer element to resize. The hook measures it, and finds its CSS
+   * minimum and maximum size by briefly setting its size to both extremes.
+   * The Drawer can't be resized until it's set.
+   */
   element: HTMLElement | null | undefined;
 }
 
 export interface UseDrawerResizeResult {
+  /**
+   * The style applied to the Drawer, which sets the width or height chosen by
+   * resizing. It's `undefined` until the user resizes the Drawer, so the
+   * Drawer keeps its CSS size.
+   */
   sizeStyle: CSSProperties | undefined;
+  /**
+   * If `true`, the user is resizing the Drawer, by dragging the handle or by
+   * placing its edge by click.
+   */
   isResizing: boolean;
+  /**
+   * If `true`, a mouse or pen pointer is over the handle and the Drawer isn't
+   * being resized.
+   */
   isHovered: boolean;
+  /**
+   * If `true`, the user is placing the edge by click: they clicked the handle
+   * without dragging, and their next click places the edge. Render a
+   * `DrawerResizeGuide` with `guideProps` while it's `true`.
+   */
   isPlacing: boolean;
   /**
    * The function that checks whether an event is the Escape key press that
    * canceled a resize, so that the Drawer doesn't close on it.
    */
   isCancelResizeEvent: (event?: Event) => boolean;
+  /**
+   * Props applied to the resize handle. `aria-valuenow`, `aria-valuemin` and
+   * `aria-valuemax` are the Drawer's current, minimum and maximum size in
+   * pixels, and `aria-orientation` is `"vertical"` for `"left"` and `"right"`
+   * drawers.
+   */
   separatorProps: SeparatorProps;
+  /**
+   * Props applied to the `DrawerResizeGuide` while `isPlacing` is `true`.
+   */
   guideProps: GuideProps;
 }
 

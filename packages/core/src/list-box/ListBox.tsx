@@ -270,5 +270,10 @@ export const ListBox = forwardRef(function ListBox<Item>(
     </ListControlProvider>
   );
 }) as <Item = string>(
-  props: ListBoxProps<Item> & { ref?: Ref<HTMLDivElement> },
+  props: ListBoxProps<Item> & {
+    /**
+     * A ref to the list box element.
+     */
+    ref?: Ref<HTMLDivElement>;
+  },
 ) => ReactElement;
