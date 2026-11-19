@@ -62,7 +62,7 @@ export const Progress: StoryFn<typeof CompactStepper> = (args) => (
   </StackLayout>
 );
 
-export const Statuses: StoryFn<typeof CompactStepper> = (args) => (
+export const StageStatus: StoryFn<typeof CompactStepper> = (args) => (
   <StackLayout gap={3}>
     <CompactStepper {...args}>
       <CompactStep label="Personal details" stage="completed" />
@@ -85,7 +85,7 @@ export const Statuses: StoryFn<typeof CompactStepper> = (args) => (
   </StackLayout>
 );
 
-export const LongLabel: StoryFn<typeof CompactStepper> = (args) => (
+export const LongText: StoryFn<typeof CompactStepper> = (args) => (
   <div style={{ width: 320 }}>
     <CompactStepper {...args}>
       <CompactStep label="Personal details" stage="completed" />
