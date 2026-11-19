@@ -1,9 +1,4 @@
-import {
-  Step,
-  type StepProps,
-  type StepStage,
-  type StepStatus,
-} from "@salt-ds/core";
+import type { StepStatus } from "@salt-ds/core";
 import {
   Children,
   Fragment,
@@ -11,10 +6,15 @@ import {
   type ReactElement,
   type ReactNode,
 } from "react";
+import {
+  CompactStep,
+  type CompactStepProps,
+  type CompactStepStage,
+} from "../CompactStep";
 
 export interface CompactStepperStep {
-  label?: ReactNode;
-  stage: StepStage;
+  element: ReactElement<CompactStepProps>;
+  stage: CompactStepStage;
   status?: StepStatus;
 }
 
@@ -22,7 +22,6 @@ export interface CompactStepperState {
   steps: CompactStepperStep[];
   /**
    * The first active or locked step, or the last step when every step is completed.
-   * In progress steps aren't supported and count as active.
    * -1 otherwise.
    */
   currentIndex: number;
@@ -32,21 +31,14 @@ export interface CompactStepperState {
    */
   progress: number;
   /**
-   * Number of steps that are active, in progress or locked.
+   * Number of steps that are active or locked.
    */
   currentCount: number;
-  hasInProgressStep: boolean;
   hasNonStepChild: boolean;
-  hasNestedSteps: boolean;
 }
 
 function isCurrentStep(step: CompactStepperStep) {
-  return (
-    step.stage === "active" ||
-    // Not supported, but counted as active so the current step still shows.
-    step.stage === "inprogress" ||
-    step.stage === "locked"
-  );
+  return step.stage === "active" || step.stage === "locked";
 }
 
 function isFinishedProcess(steps: CompactStepperStep[]) {
@@ -71,8 +63,10 @@ function isFragmentElement(
   );
 }
 
-function isStepElement(child: ReactNode): child is ReactElement<StepProps> {
-  return isValidElement<StepProps>(child) && child.type === Step;
+function isCompactStepElement(
+  child: ReactNode,
+): child is ReactElement<CompactStepProps> {
+  return isValidElement<CompactStepProps>(child) && child.type === CompactStep;
 }
 
 function flattenChildren(children: ReactNode): ReactNode[] {
@@ -97,11 +91,11 @@ export function getCompactStepperState(
   children: ReactNode,
 ): CompactStepperState {
   const flattened = flattenChildren(children);
-  const elements = flattened.filter(isStepElement);
+  const elements = flattened.filter(isCompactStepElement);
 
   const steps = elements.map((element) => {
-    const { label, stage = "pending", status } = element.props;
-    return { label, stage, status };
+    const { stage = "pending", status } = element.props;
+    return { element, stage, status };
   });
 
   const currentIndex = getCurrentIndex(steps);
@@ -118,9 +112,6 @@ export function getCompactStepperState(
         ? 0
         : (currentIndex / steps.length) * 100,
     currentCount: steps.filter(isCurrentStep).length,
-    hasInProgressStep: steps.some((step) => step.stage === "inprogress"),
     hasNonStepChild: flattened.length > elements.length,
-    // As in Step, any children count as nested steps.
-    hasNestedSteps: elements.some((element) => !!element.props.children),
   };
 }

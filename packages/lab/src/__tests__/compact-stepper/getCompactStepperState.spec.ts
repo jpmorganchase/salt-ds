@@ -1,9 +1,16 @@
-import { Step, type StepProps } from "@salt-ds/core";
+import { Step } from "@salt-ds/core";
 import { createElement, Fragment, type ReactNode } from "react";
 import { describe, expect, test } from "vitest";
+import {
+  CompactStep,
+  type CompactStepProps,
+} from "../../compact-stepper/CompactStep";
 import { getCompactStepperState } from "../../compact-stepper/internal/getCompactStepperState";
 
-const step = (props: StepProps) => createElement(Step, props);
+const step = (props: CompactStepProps) => createElement(CompactStep, props);
+
+const labelOf = (state: ReturnType<typeof getCompactStepperState>) =>
+  state.current?.element.props.label;
 
 describe("getCompactStepperState", () => {
   test.each<[string, ReactNode[], string, number]>([
@@ -23,17 +30,6 @@ describe("getCompactStepperState", () => {
       [
         step({ label: "One", stage: "completed" }),
         step({ label: "Two", stage: "locked" }),
-        step({ label: "Three" }),
-        step({ label: "Four" }),
-      ],
-      "Two",
-      25,
-    ],
-    [
-      "the in progress step as active",
-      [
-        step({ label: "One", stage: "completed" }),
-        step({ label: "Two", stage: "inprogress" }),
         step({ label: "Three" }),
         step({ label: "Four" }),
       ],
@@ -63,7 +59,7 @@ describe("getCompactStepperState", () => {
   ])("should use %s as the current step", (_, children, label, progress) => {
     const state = getCompactStepperState(children);
 
-    expect(state.current?.label).toBe(label);
+    expect(labelOf(state)).toBe(label);
     expect(state.progress).toBe(progress);
   });
 
@@ -96,46 +92,11 @@ describe("getCompactStepperState", () => {
     const state = getCompactStepperState([
       step({ label: "One", stage: "locked" }),
       step({ label: "Two", stage: "active" }),
-      step({ label: "Three", stage: "inprogress" }),
+      step({ label: "Three", stage: "active" }),
     ]);
 
-    expect(state.current?.label).toBe("One");
+    expect(labelOf(state)).toBe("One");
     expect(state.currentCount).toBe(3);
-  });
-
-  test.each<[string, ReactNode[], boolean]>([
-    [
-      "an in progress step",
-      [
-        step({ label: "One", stage: "completed" }),
-        step({ label: "Two", stage: "inprogress" }),
-      ],
-      true,
-    ],
-    [
-      "no in progress step",
-      [
-        step({ label: "One", stage: "completed" }),
-        step({ label: "Two", stage: "active" }),
-      ],
-      false,
-    ],
-  ])("should flag WHEN there is %s", (_, children, expected) => {
-    expect(getCompactStepperState(children).hasInProgressStep).toBe(expected);
-  });
-
-  test("should flag steps with nested steps", () => {
-    const state = getCompactStepperState([
-      step({
-        label: "One",
-        stage: "active",
-        children: step({ label: "One.One" }),
-      }),
-      step({ label: "Two" }),
-    ]);
-
-    expect(state.hasNestedSteps).toBe(true);
-    expect(state.steps).toHaveLength(2);
   });
 
   test.each<[string, ReactNode]>([
@@ -160,19 +121,24 @@ describe("getCompactStepperState", () => {
     );
 
     expect(state.steps).toHaveLength(2);
-    expect(state.current?.label).toBe("Two");
+    expect(labelOf(state)).toBe("Two");
     expect(state.hasNonStepChild).toBe(false);
   });
 
-  test("should ignore children that aren't steps and flag them", () => {
+  test("should ignore children that aren't compact steps, including Step, and flag them", () => {
     const state = getCompactStepperState([
       "text",
       step({ label: "One", stage: "active" }),
+      createElement(Step, { key: "step", label: "Core", stage: "active" }),
       createElement("div", { key: "div" }),
       step({ label: "Two" }),
     ]);
 
-    expect(state.steps.map((s) => s.label)).toEqual(["One", "Two"]);
+    expect(state.steps.map((s) => s.element.props.label)).toEqual([
+      "One",
+      "Two",
+    ]);
+    expect(state.currentCount).toBe(1);
     expect(state.hasNonStepChild).toBe(true);
   });
 });
