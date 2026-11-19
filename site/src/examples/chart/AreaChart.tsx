@@ -70,6 +70,8 @@ const areaChartOptions: Options = {
       pointStart: 1940,
       dataLabels: {
         enabled: true,
+        // Only the three separated peaks have callouts.
+        allowOverlap: true,
         shape: "callout",
         align: "left",
         verticalAlign: "middle",
