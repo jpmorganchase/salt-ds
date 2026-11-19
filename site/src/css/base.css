@@ -9,7 +9,7 @@
 
 /* Animate in-page anchor / `scrollIntoView` jumps, but only when the user
    hasn't asked the OS to reduce motion. Pairs with `data-scroll-behavior="smooth"`
-   on `<html>` in `_document.tsx`, which lets Next.js suppress the animation
+   on `<html>` in `app/layout.tsx`, which lets Next.js suppress the animation
    during route transitions. */
 @media (prefers-reduced-motion: no-preference) {
   :root {

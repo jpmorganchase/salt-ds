@@ -37,6 +37,7 @@ export default function (response, prefixDir) {
       lastModifiedDate: Date.parse(release.created_at),
       description: summarizeMinorChanges(release.body),
       content: "",
+      search: { exclude: true },
       tags: ["latest-update-feature"],
       data: {
         href: release.html_url,

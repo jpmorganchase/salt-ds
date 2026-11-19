@@ -19,11 +19,6 @@
   max-width: 24rem;
 }
 
-.valueHeaderCell,
-.tokenHeaderCell {
-  vertical-align: middle;
-}
-
 .valueHeaderRow,
 .tokenHeaderRow {
   display: flex;
@@ -43,6 +38,11 @@
 
 .tokenHeaderCell {
   min-width: 24rem;
+}
+
+.tableWrap .valueHeaderCell,
+.tableWrap .tokenHeaderCell {
+  vertical-align: middle;
 }
 
 .tableWrap {

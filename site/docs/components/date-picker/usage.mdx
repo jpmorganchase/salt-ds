@@ -173,17 +173,17 @@ When using a modal `DatePicker` with confirmation controls, you must explicitly 
 
 If you are creating your own confirmation controls instead of using `DatePickerActions`, you must also explicitly set `enableApply={true}` on the `DatePicker` component.
 
-### useDatePicker
+### useDatePickerContext
 
-The `useDatePicker` hook provides `state` and `helpers` to manage the `DatePicker` state.
-
-<PropsTable packageName="date-components" componentName="useDatePicker" />
-
-### useDatePickerOverlay
-
-The `useDatePickerOverlay` hook provides `state` and `helpers` to manage the `DatePickerOverlay` state.
+The `useDatePickerContext` hook provides `state` and `helpers` from the surrounding `DatePicker`. Call it within a descendant component and pass `selectionVariant: "single"` to match the picker.
 
 <PropsTable
   packageName="date-components"
-  componentName="useDatePickerOverlay"
+  componentName="useDatePickerContext"
 />
+
+### useDatePickerOverlay
+
+The `useDatePickerOverlay` hook provides `state` and `helpers` to manage the `DatePickerOverlay` state. It accepts no arguments. Call `useDatePickerOverlay()` within a descendant of `DatePicker`, which supplies its `DatePickerOverlayProvider`.
+
+See the [overlay context types and hook source](https://github.com/jpmorganchase/salt-ds/blob/main/packages/date-components/src/date-picker/DatePickerOverlayProvider.tsx) for the returned state and helpers.

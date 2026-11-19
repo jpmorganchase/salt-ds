@@ -13,7 +13,7 @@ import {
   TabTrigger,
 } from "@salt-ds/core";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
+import { useRouter } from "next/navigation";
 import { type SyntheticEvent, useEffect } from "react";
 import { LivePreviewProvider } from "../../components/components/LivePreviewProvider";
 import { LinkList } from "../../components/link-list/LinkList";
@@ -113,7 +113,7 @@ export const DetailComponent = ({ children }: LayoutProps) => {
   }, [currentTab, newRoute, replace, isOverview]);
 
   const handleTabChange = (_: SyntheticEvent | null, value: string) => {
-    push(`${newRoute}${value}`, undefined, { scroll: false });
+    push(`${newRoute}${value}`, { scroll: false });
   };
 
   const LeftSidebar = (
