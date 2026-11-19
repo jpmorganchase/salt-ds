@@ -21,13 +21,12 @@ export interface CompactStepperStep {
 export interface CompactStepperState {
   steps: CompactStepperStep[];
   /**
-   * The first active or locked step, or the last step when every step is completed.
-   * -1 otherwise.
+   * Index of the first active or locked step, or of the last step when every step is completed. Otherwise `-1`.
    */
   currentIndex: number;
   current?: CompactStepperStep;
   /**
-   * From 0 to 100.
+   * Percentage of the bar to fill, up to and including the current step.
    */
   progress: number;
   /**
@@ -51,7 +50,6 @@ function getCurrentIndex(steps: CompactStepperStep[]) {
     return currentIndex;
   }
 
-  // A finished process shows its last step.
   return isFinishedProcess(steps) ? steps.length - 1 : -1;
 }
 
@@ -104,7 +102,6 @@ export function getCompactStepperState(
     steps,
     currentIndex,
     current: currentIndex === -1 ? undefined : steps[currentIndex],
-    // The bar fills up to and including the current step.
     progress:
       currentIndex === -1 ? 0 : ((currentIndex + 1) / steps.length) * 100,
     currentCount: steps.filter(isCurrentStep).length,

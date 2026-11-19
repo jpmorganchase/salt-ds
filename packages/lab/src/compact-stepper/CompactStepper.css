@@ -12,7 +12,6 @@
   height: var(--salt-size-bar);
 }
 
-/* The bar fills up to and including the current step; the track shows the remaining steps. */
 .saltCompactStepper-bar {
   flex: none;
   align-self: stretch;

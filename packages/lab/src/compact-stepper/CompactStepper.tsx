@@ -15,7 +15,7 @@ import { getCompactStepperState } from "./internal/getCompactStepperState";
 
 export interface CompactStepperProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Steps of the process. Only `CompactStep` elements are read; components that wrap `CompactStep` are ignored.
+   * The steps of the process, as `CompactStep` elements, which can be inside fragments. Components that wrap `CompactStep` are ignored.
    */
   children?: ReactNode;
 }
@@ -83,7 +83,7 @@ export const CompactStepper = forwardRef<HTMLDivElement, CompactStepperProps>(
               <span className={withBaseName("count")}>
                 {`Step ${currentIndex + 1} of ${totalSteps}:`}
               </span>
-              {/* The count's margin sets the visible gap; this space keeps the word break for wrapping, copying and assistive technology. */}
+              {/* Invisible space for wrapping, copying and screen readers; the count's margin sets the visible gap. */}
               <span className={withBaseName("separator")}> </span>
               {current.element}
             </Text>
