@@ -15,6 +15,7 @@ import {
   type ReactNode,
   useContext,
   useEffect,
+  useMemo,
 } from "react";
 
 import compactStepCss from "./CompactStep.css";
@@ -43,7 +44,7 @@ export interface CompactStepProps
    */
   stage?: CompactStepStage;
   /**
-   * The status of the step. Shows an error or warning icon in place of the `locked` icon.
+   * The status of the step. Shows an error or warning icon, and takes precedence over `stage` for the icon and the state read by screen readers.
    */
   status?: StepStatus;
 }
@@ -53,13 +54,16 @@ const withBaseName = makePrefixer("saltCompactStep");
 type CompactStepState = CompactStepStage | StepStatus;
 
 function useCompactStepIcon(state: CompactStepState) {
-  const { ErrorIcon, WarningIcon, LockedIcon } = useIcon();
+  const icons = useIcon();
 
-  const stateToIcon: Partial<Record<CompactStepState, ElementType>> = {
-    error: ErrorIcon,
-    warning: WarningIcon,
-    locked: LockedIcon,
-  };
+  const stateToIcon: Partial<Record<CompactStepState, ElementType>> = useMemo(
+    () => ({
+      error: icons.ErrorIcon,
+      warning: icons.WarningIcon,
+      locked: icons.LockedIcon,
+    }),
+    [icons],
+  );
 
   return stateToIcon[state];
 }
