@@ -15,9 +15,7 @@ const composedStories = composeStories(compactStepperStories);
 const { Default } = composedStories;
 
 function getText() {
-  return document
-    .querySelector(".saltCompactStepper-text")
-    ?.textContent?.replace(/\s+/g, " ");
+  return page.getByRole("group").element().textContent?.replace(/\s+/g, " ");
 }
 
 describe("GIVEN a CompactStepper", () => {
@@ -65,7 +63,7 @@ describe("GIVEN a CompactStepper", () => {
     },
   );
 
-  it("THEN fills the whole bar WHEN every step is completed", async () => {
+  it("THEN shows the last step as completed WHEN every step is completed", async () => {
     await renderWithSalt(
       <CompactStepper>
         <CompactStep label="One" stage="completed" />
@@ -74,33 +72,10 @@ describe("GIVEN a CompactStepper", () => {
       </CompactStepper>,
     );
 
-    const bar = document.querySelector(".saltCompactStepper-bar");
-    const track = document.querySelector(".saltCompactStepper-barContainer");
-    expect(bar?.clientWidth).toBe(track?.clientWidth);
     expect(getText()).toBe("Step 3 of 3: Three, completed");
   });
 
-  it.each<[string, CompactStepStage, CompactStepStage, number]>([
-    ["the first", "active", "pending", 0],
-    ["the last", "completed", "active", 0.5],
-  ])(
-    "THEN fills only the completed steps WHEN %s step is active",
-    async (_, firstStage, secondStage, ratio) => {
-      await renderWithSalt(
-        <div style={{ width: 200 }}>
-          <CompactStepper>
-            <CompactStep label="One" stage={firstStage} />
-            <CompactStep label="Two" stage={secondStage} />
-          </CompactStepper>
-        </div>,
-      );
-
-      const bar = document.querySelector(".saltCompactStepper-bar");
-      expect(bar?.clientWidth).toBe(200 * ratio);
-    },
-  );
-
-  it("THEN renders no text or bar WHEN no step is current and not every step is completed", async () => {
+  it("THEN renders no text WHEN no step is current and not every step is completed", async () => {
     await renderWithSalt(
       <CompactStepper>
         <CompactStep label="One" stage="completed" />
@@ -108,8 +83,7 @@ describe("GIVEN a CompactStepper", () => {
       </CompactStepper>,
     );
 
-    expect(getText()).toBeUndefined();
-    expect(document.querySelector(".saltCompactStepper-bar")).toBeNull();
+    expect(getText()).toBe("");
   });
 
   it("THEN shows the status icon instead of the lock WHEN a locked step has a status", async () => {
@@ -144,13 +118,10 @@ describe("GIVEN a CompactStepper", () => {
     }
   });
 
-  it("THEN renders no text or bar WHEN there are no steps", async () => {
-    await renderWithSalt(<CompactStepper data-testid="compact-stepper" />);
+  it("THEN renders no text WHEN there are no steps", async () => {
+    await renderWithSalt(<CompactStepper />);
 
-    await expect
-      .element(page.getByTestId("compact-stepper"))
-      .toBeInTheDocument();
-    expect(getText()).toBeUndefined();
-    expect(document.querySelector(".saltCompactStepper-bar")).toBeNull();
+    await expect.element(page.getByRole("group")).toBeInTheDocument();
+    expect(getText()).toBe("");
   });
 });

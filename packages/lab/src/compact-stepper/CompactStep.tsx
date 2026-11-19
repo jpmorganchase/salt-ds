@@ -24,12 +24,12 @@ export type CompactStepStage = Extract<
   StepStage,
   "pending" | "active" | "locked" | "completed"
 >;
-export const CompactStepStageValues: readonly CompactStepStage[] = [
+export const CompactStepStageValues = [
   "pending",
   "active",
   "locked",
   "completed",
-];
+] as const;
 
 export interface CompactStepProps
   extends Omit<ComponentPropsWithoutRef<"span">, "children"> {
