@@ -84,7 +84,11 @@ file trace includes it.
 - `src/app/[namespace]/[...route]/page.tsx` compiles MDX on the server and emits
   document metadata.
 - `src/Body/Body.tsx` renders the compiled content with Salt's existing component
-  registry. Live examples and their raw source remain client components.
+  registry. Live examples remain client components.
+- `src/app/api/example-source/[componentName]/[exampleName]/route.ts` serves
+  each example's highlighted source. The build generates every example; in
+  development it reads the file on each request. `LivePreview` requests it only
+  when the reader first shows the code, and prefetches it on hover or focus.
 - `src/app/[namespace]/NamespaceFrame.tsx` keeps Salt's header mounted during
   navigation. Each document has a separate page store so metadata does not leak
   between pages.

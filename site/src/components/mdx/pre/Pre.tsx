@@ -14,16 +14,24 @@ import styles from "./Pre.module.css";
 interface PreProps extends ComponentPropsWithoutRef<"div"> {
   children?: ReactNode;
   code?: string;
+  /** Already highlighted HTML, which skips highlighting in the browser. */
+  html?: string;
   language?: string;
 }
 
 export const Pre = forwardRef<HTMLDivElement, PreProps>(function Pre(
-  { language: languageProp, code: codeProp = "", children, className },
+  {
+    language: languageProp,
+    code: codeProp = "",
+    html: htmlProp,
+    children,
+    className,
+  },
   ref,
 ) {
   let code: string | undefined = codeProp.replace(/<br>/g, "\n");
   let language: string | undefined = languageProp;
-  let serverHtml: string | undefined;
+  let serverHtml: string | undefined = htmlProp;
   if (
     isValidElement<{
       className?: string;
