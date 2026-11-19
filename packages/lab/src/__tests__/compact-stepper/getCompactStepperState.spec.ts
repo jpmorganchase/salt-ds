@@ -23,7 +23,7 @@ describe("getCompactStepperState", () => {
         step({ label: "Four" }),
       ],
       "One",
-      0,
+      25,
     ],
     [
       "the locked step",
@@ -34,7 +34,7 @@ describe("getCompactStepperState", () => {
         step({ label: "Four" }),
       ],
       "Two",
-      25,
+      50,
     ],
     [
       "the last active step",
@@ -45,7 +45,7 @@ describe("getCompactStepperState", () => {
         step({ label: "Four", stage: "active" }),
       ],
       "Four",
-      75,
+      100,
     ],
     [
       "the last step WHEN every step is completed",
