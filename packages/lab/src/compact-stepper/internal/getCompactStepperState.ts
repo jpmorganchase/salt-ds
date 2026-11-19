@@ -1,4 +1,3 @@
-import type { StepStatus } from "@salt-ds/core";
 import {
   Children,
   Fragment,
@@ -15,7 +14,6 @@ import {
 export interface CompactStepperStep {
   element: ReactElement<CompactStepProps>;
   stage: CompactStepStage;
-  status?: StepStatus;
 }
 
 export interface CompactStepperState {
@@ -89,8 +87,8 @@ export function getCompactStepperState(
   const elements = flattened.filter(isCompactStepElement);
 
   const steps = elements.map((element) => {
-    const { stage = "pending", status } = element.props;
-    return { element, stage, status };
+    const { stage = "pending" } = element.props;
+    return { element, stage };
   });
 
   const currentIndex = getCurrentIndex(steps);
