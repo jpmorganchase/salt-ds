@@ -21,12 +21,12 @@ export interface CompactStepperStep {
 export interface CompactStepperState {
   steps: CompactStepperStep[];
   /**
-   * Index of the first active or locked step, or of the last step when every step is completed. Otherwise `-1`.
+   * Index of the first active or locked step, otherwise of the first pending step, or of the last step when every step is completed. `-1` when there are no steps.
    */
   currentIndex: number;
   current?: CompactStepperStep;
   /**
-   * Percentage of the bar to fill, up to and including the current step.
+   * Percentage of the bar to fill, up to and including the current step. A pending current step isn't filled.
    */
   progress: number;
   /**
@@ -40,17 +40,14 @@ function isCurrentStep(step: CompactStepperStep) {
   return step.stage === "active" || step.stage === "locked";
 }
 
-function isFinishedProcess(steps: CompactStepperStep[]) {
-  return steps.length > 0 && steps.every((step) => step.stage === "completed");
-}
-
 function getCurrentIndex(steps: CompactStepperStep[]) {
   const currentIndex = steps.findIndex(isCurrentStep);
   if (currentIndex !== -1) {
     return currentIndex;
   }
 
-  return isFinishedProcess(steps) ? steps.length - 1 : -1;
+  const nextIndex = steps.findIndex((step) => step.stage !== "completed");
+  return nextIndex !== -1 ? nextIndex : steps.length - 1;
 }
 
 function isFragmentElement(
@@ -97,13 +94,15 @@ export function getCompactStepperState(
   });
 
   const currentIndex = getCurrentIndex(steps);
+  const current = currentIndex === -1 ? undefined : steps[currentIndex];
+  const filledSteps =
+    current?.stage === "pending" ? currentIndex : currentIndex + 1;
 
   return {
     steps,
     currentIndex,
-    current: currentIndex === -1 ? undefined : steps[currentIndex],
-    progress:
-      currentIndex === -1 ? 0 : ((currentIndex + 1) / steps.length) * 100,
+    current,
+    progress: current ? (filledSteps / steps.length) * 100 : 0,
     currentCount: steps.filter(isCurrentStep).length,
     hasNonStepChild: flattened.length > elements.length,
   };

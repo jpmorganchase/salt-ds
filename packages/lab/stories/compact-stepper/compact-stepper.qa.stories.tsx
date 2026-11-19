@@ -13,6 +13,12 @@ export const AllStates: StoryFn<QAContainerProps> = (props) => (
   <QAContainer cols={1} itemPadding={12} {...props}>
     <StackLayout gap={2} style={{ width: 400 }}>
       <CompactStepper>
+        <CompactStep label="Personal details" />
+        <CompactStep label="Payment details" />
+        <CompactStep label="Review" />
+        <CompactStep label="Confirmation" />
+      </CompactStepper>
+      <CompactStepper>
         <CompactStep label="Personal details" stage="active" />
         <CompactStep label="Payment details" />
         <CompactStep label="Review" />

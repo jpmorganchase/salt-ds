@@ -38,7 +38,7 @@ export interface CompactStepProps
    */
   label?: ReactNode;
   /**
-   * The stage of the step. Mark the current step as `active`, or `locked` when the user can't continue.
+   * The stage of the step. Mark the current step as `active`, or `locked` when the user can't continue. Without an `active` or `locked` step, the first `pending` step is shown.
    * @default "pending"
    */
   stage?: CompactStepStage;

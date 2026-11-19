@@ -68,6 +68,18 @@ describe("GIVEN a CompactStepper", () => {
     expect(getText()).toBe("Step 3 of 3: Three, completed");
   });
 
+  it("THEN shows the first step as pending WHEN every step is pending", async () => {
+    await renderWithSalt(
+      <CompactStepper>
+        <CompactStep label="One" />
+        <CompactStep label="Two" />
+        <CompactStep label="Three" />
+      </CompactStepper>,
+    );
+
+    expect(getText()).toBe("Step 1 of 3: One, pending");
+  });
+
   it("THEN warns WHEN a CompactStep is used outside a CompactStepper", async () => {
     const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
