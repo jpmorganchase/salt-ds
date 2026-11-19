@@ -56,23 +56,28 @@ describe("getCompactStepperState", () => {
       "Two",
       100,
     ],
+    [
+      "the first pending step WHEN no step is active or locked",
+      [
+        step({ label: "One", stage: "completed" }),
+        step({ label: "Two" }),
+        step({ label: "Three" }),
+        step({ label: "Four" }),
+      ],
+      "Two",
+      25,
+    ],
+    [
+      "the first step WHEN every step is pending",
+      [step({ label: "One" }), step({ label: "Two" })],
+      "One",
+      0,
+    ],
   ])("should use %s as the current step", (_, children, label, progress) => {
     const state = getCompactStepperState(children);
 
     expect(labelOf(state)).toBe(label);
     expect(state.progress).toBe(progress);
-  });
-
-  test("should have no current step WHEN steps are completed and pending", () => {
-    const state = getCompactStepperState([
-      step({ label: "One", stage: "completed" }),
-      step({ label: "Two" }),
-      step({ label: "Three" }),
-    ]);
-
-    expect(state.currentIndex).toBe(-1);
-    expect(state.current).toBeUndefined();
-    expect(state.progress).toBe(0);
   });
 
   test("should use the first current step and count them WHEN there are several", () => {
