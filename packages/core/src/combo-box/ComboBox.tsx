@@ -51,7 +51,7 @@ import { type UseComboBoxProps, useComboBox } from "./useComboBox";
 
 export interface ComboBoxProps<Item = string>
   extends UseComboBoxProps<Item>,
-    Omit<PillInputProps, "onPillRemove"> {
+    Omit<PillInputProps, "hidePillClose" | "onPillRemove" | "pills"> {
   /**
    * The options to display in the combo box.
    */
