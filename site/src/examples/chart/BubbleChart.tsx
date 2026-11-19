@@ -34,7 +34,8 @@ const assetGroups = [
     name: "Alternative",
     points: [
       { name: "Crypto", x: 8.5, y: 14, z: 2 },
-      { name: "Property", x: 4, y: 10.5, z: 8 },
+      // Leave room between the Property and Stocks labels on narrow plots.
+      { name: "Property", x: 4, y: 10.5, z: 8, dataLabels: { x: -8 } },
       { name: "Gold", x: 4.5, y: 3, z: 3 },
     ],
   },
