@@ -5,7 +5,7 @@ import { forwardRef } from "react";
 
 import { CountrySymbol, type CountrySymbolProps } from "../country-symbol";
 
-export type SVProps = CountrySymbolProps;
+export type SVProps = Omit<CountrySymbolProps, "sharp" | "children">;
 
 const SV = forwardRef<SVGSVGElement, SVProps>(function SV(props: SVProps, ref) {
   const uid = useId(props.id);

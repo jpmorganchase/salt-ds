@@ -5,7 +5,7 @@ import { forwardRef } from "react";
 
 import { CountrySymbol, type CountrySymbolProps } from "../country-symbol";
 
-export type JEProps = CountrySymbolProps;
+export type JEProps = Omit<CountrySymbolProps, "sharp" | "children">;
 
 const JE = forwardRef<SVGSVGElement, JEProps>(function JE(props: JEProps, ref) {
   const uid = useId(props.id);

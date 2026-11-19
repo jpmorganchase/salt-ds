@@ -3,7 +3,7 @@ import { forwardRef } from "react";
 
 import { CountrySymbol, type CountrySymbolProps } from "../country-symbol";
 
-export type {{componentName}}Props = CountrySymbolProps;
+export type {{componentName}}Props = Omit<CountrySymbolProps, "sharp" | "children">;
 
 const {{componentName}} = forwardRef<SVGSVGElement, {{componentName}}Props>(
   function {{componentName}}(props: {{componentName}}Props, ref) {

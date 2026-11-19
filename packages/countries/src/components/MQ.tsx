@@ -5,7 +5,7 @@ import { forwardRef } from "react";
 
 import { CountrySymbol, type CountrySymbolProps } from "../country-symbol";
 
-export type MQProps = CountrySymbolProps;
+export type MQProps = Omit<CountrySymbolProps, "sharp" | "children">;
 
 const MQ = forwardRef<SVGSVGElement, MQProps>(function MQ(props: MQProps, ref) {
   const uid = useId(props.id);

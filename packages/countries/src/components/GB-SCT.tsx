@@ -5,7 +5,7 @@ import { forwardRef } from "react";
 
 import { CountrySymbol, type CountrySymbolProps } from "../country-symbol";
 
-export type GB_SCTProps = CountrySymbolProps;
+export type GB_SCTProps = Omit<CountrySymbolProps, "sharp" | "children">;
 
 const GB_SCT = forwardRef<SVGSVGElement, GB_SCTProps>(function GB_SCT(
   props: GB_SCTProps,

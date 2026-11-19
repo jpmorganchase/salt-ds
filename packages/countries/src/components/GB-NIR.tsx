@@ -5,7 +5,7 @@ import { forwardRef } from "react";
 
 import { CountrySymbol, type CountrySymbolProps } from "../country-symbol";
 
-export type GB_NIRProps = CountrySymbolProps;
+export type GB_NIRProps = Omit<CountrySymbolProps, "sharp" | "children">;
 
 const GB_NIR = forwardRef<SVGSVGElement, GB_NIRProps>(function GB_NIR(
   props: GB_NIRProps,

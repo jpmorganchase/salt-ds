@@ -4,7 +4,7 @@ import { lazyMap } from "./lazyMap";
 
 export type LazyCountrySymbolProps = {
   code: CountryCode;
-} & CountrySymbolProps;
+} & Omit<CountrySymbolProps, "children">;
 
 export const LazyCountrySymbol = ({
   code,
