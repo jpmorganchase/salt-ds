@@ -57,8 +57,9 @@ const heatmapChartOptions: Options = {
   },
   yAxis: {
     categories: deskCategories,
+    accessibility: { description: "Desk" },
     title: {
-      text: "Desk",
+      text: "",
     },
     reversed: true,
   },
@@ -80,7 +81,7 @@ const heatmapChartOptions: Options = {
           },
           colorAxis: { layout: "horizontal" },
           xAxis: { labels: { rotation: -45, step: 1 } },
-          yAxis: { title: { margin: 4 } },
+          plotOptions: { heatmap: { dataLabels: { padding: 0 } } },
         },
       },
     ],

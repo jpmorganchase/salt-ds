@@ -15,9 +15,10 @@ accessibility(Highcharts);
 const waterfallChartOptions: Options = {
   chart: {
     type: "waterfall",
+    height: 400,
   },
   title: {
-    text: "Regional revenue by product",
+    text: "Revenue changes by category",
   },
   accessibility: {
     description:
