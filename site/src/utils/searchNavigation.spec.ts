@@ -5,7 +5,14 @@ const SOURCE = "/salt/components/combo-box/examples";
 const DESTINATION = "/salt/components/button/examples";
 const ORIGIN = "https://salt.example";
 
-type Heading = {
+type FocusTarget = EventTarget & {
+  tabIndex: number;
+  hasAttribute: (name: string) => boolean;
+  removeAttribute: (name: string) => void;
+  focus: ReturnType<typeof vi.fn<(options?: FocusOptions) => void>>;
+};
+
+type Heading = FocusTarget & {
   documentTop: number;
   margin: number;
   getBoundingClientRect: () => { top: number };
@@ -18,9 +25,39 @@ function createDocument() {
   let frameId = 0;
   let padding = 72;
   let headings = new Map<string, Heading>();
-  let main = {
-    contains: (element: Heading) => [...headings.values()].includes(element),
+  let activeElement: FocusTarget | undefined;
+
+  const createFocusTarget = (): FocusTarget => {
+    const attributes = new Map<string, string>();
+    const element: FocusTarget = Object.assign(new EventTarget(), {
+      tabIndex: -1,
+      hasAttribute: (name: string) => attributes.has(name),
+      removeAttribute: (name: string) => attributes.delete(name),
+      focus: vi.fn(() => {
+        if (activeElement !== element) {
+          activeElement?.dispatchEvent(new Event("blur"));
+          activeElement = element;
+          const event = new Event("focusin");
+          Object.defineProperty(event, "target", { value: element });
+          browser.dispatchEvent(event);
+        }
+      }),
+    });
+    return Object.defineProperty(element, "tabIndex", {
+      get: () => Number(attributes.get("tabindex") ?? -1),
+      set: (value: number) => attributes.set("tabindex", String(value)),
+    });
   };
+
+  const createMain = () => {
+    const pageHeadings = headings;
+    return Object.assign(createFocusTarget(), {
+      contains: (element: Heading) =>
+        [...pageHeadings.values()].includes(element),
+      querySelector: () => pageHeadings.get("page-title"),
+    });
+  };
+  let main = createMain();
   const root = { clientHeight: 800, scrollHeight: 4000 };
   const browser = Object.assign(new EventTarget(), {
     location: new URL(SOURCE, ORIGIN),
@@ -67,7 +104,7 @@ function createDocument() {
   vi.stubGlobal("ResizeObserver", ResizeObserverMock);
 
   const addHeading = (id: string, documentTop: number) => {
-    const heading: Heading = {
+    const heading: Heading = Object.assign(createFocusTarget(), {
       documentTop,
       margin: 0,
       getBoundingClientRect: () => ({
@@ -82,7 +119,7 @@ function createDocument() {
           ),
         );
       }),
-    };
+    });
     headings.set(id, heading);
     return heading;
   };
@@ -92,12 +129,16 @@ function createDocument() {
     root,
     observers,
     addHeading,
+    createFocusTarget,
+    get main() {
+      return main;
+    },
+    get activeElement() {
+      return activeElement;
+    },
     mountPage() {
       headings = new Map();
-      const pageHeadings = headings;
-      main = {
-        contains: (element) => [...pageHeadings.values()].includes(element),
-      };
+      main = createMain();
     },
     setUrl(href: string) {
       browser.location = new URL(href, ORIGIN);
@@ -121,7 +162,7 @@ function createDocument() {
   };
 }
 
-describe("search anchor navigation", () => {
+describe("search navigation", () => {
   let page: ReturnType<typeof createDocument>;
   let navigation: ReturnType<typeof createSearchNavigation>;
 
@@ -137,7 +178,7 @@ describe("search anchor navigation", () => {
   });
 
   function arrive(id = "disabled", documentTop = 1500) {
-    navigation.requestAnchor(`${DESTINATION}#${id}`);
+    navigation.request(`${DESTINATION}#${id}`);
     page.setUrl(`${DESTINATION}#${id}`);
     page.mountPage();
     const heading = page.addHeading(id, documentTop);
@@ -148,11 +189,12 @@ describe("search anchor navigation", () => {
 
   it("waits for the destination commit even when the old page has the same ID", () => {
     const previous = page.addHeading("disabled", 1000);
-    expect(navigation.requestAnchor(`${DESTINATION}#disabled`)).toBe(true);
+    expect(navigation.request(`${DESTINATION}#disabled`)).toBe(true);
     page.setUrl(`${DESTINATION}#disabled`);
     navigation.commitRoute(SOURCE);
     page.flushFrames();
     expect(previous.scrollIntoView).not.toHaveBeenCalled();
+    expect(previous.focus).not.toHaveBeenCalled();
 
     page.mountPage();
     const destination = page.addHeading("disabled", 1500);
@@ -160,6 +202,10 @@ describe("search anchor navigation", () => {
     page.flushFrames();
     expect(destination.getBoundingClientRect().top).toBe(72);
     expect(previous.scrollIntoView).not.toHaveBeenCalled();
+    expect(destination.focus).toHaveBeenCalledExactlyOnceWith({
+      preventScroll: true,
+    });
+    expect(page.activeElement).toBe(destination);
   });
 
   it("corrects late layout growth and does no work when geometry is unchanged", () => {
@@ -172,6 +218,7 @@ describe("search anchor navigation", () => {
     page.flushFrames();
     expect(heading.getBoundingClientRect().top).toBe(72);
     expect(heading.scrollIntoView).toHaveBeenCalledTimes(2);
+    expect(heading.focus).toHaveBeenCalledTimes(1);
     expect(heading.scrollIntoView).toHaveBeenLastCalledWith({
       behavior: "instant",
       block: "start",
@@ -185,7 +232,7 @@ describe("search anchor navigation", () => {
   });
 
   it("finds a heading introduced by a later content commit", () => {
-    navigation.requestAnchor(`${DESTINATION}#disabled`);
+    navigation.request(`${DESTINATION}#disabled`);
     page.setUrl(`${DESTINATION}#disabled`);
     page.mountPage();
     navigation.commitRoute(DESTINATION);
@@ -194,6 +241,7 @@ describe("search anchor navigation", () => {
     page.resizeContent();
     page.flushFrames();
     expect(heading.getBoundingClientRect().top).toBe(72);
+    expect(heading.focus).toHaveBeenCalledTimes(1);
   });
 
   it("restarts an identical URL selection without another route commit", () => {
@@ -201,16 +249,17 @@ describe("search anchor navigation", () => {
     page.event("wheel");
     page.browser.scrollY = 0;
 
-    expect(navigation.requestAnchor(`${DESTINATION}#disabled`)).toBe(true);
+    expect(navigation.request(`${DESTINATION}#disabled`)).toBe(true);
     page.flushFrames();
     expect(heading.getBoundingClientRect().top).toBe(72);
     expect(heading.scrollIntoView).toHaveBeenCalledTimes(2);
+    expect(heading.focus).toHaveBeenCalledTimes(2);
   });
 
   it("handles a different hash on the current page before Next updates history", () => {
     arrive();
     const next = page.addHeading("full-width", 2500);
-    navigation.requestAnchor(`${DESTINATION}#full-width`);
+    navigation.request(`${DESTINATION}#full-width`);
     page.flushFrames();
     expect(next.getBoundingClientRect().top).toBe(72);
     page.setUrl(`${DESTINATION}#full-width`);
@@ -244,7 +293,7 @@ describe("search anchor navigation", () => {
   );
 
   it("allows automatic viewport resizing while waiting for the destination", () => {
-    navigation.requestAnchor(`${DESTINATION}#disabled`);
+    navigation.request(`${DESTINATION}#disabled`);
     page.event("resize");
     page.flushFrames();
     page.setUrl(`${DESTINATION}#disabled`);
@@ -283,7 +332,7 @@ describe("search anchor navigation", () => {
     const next = page.addHeading("full-width", 2500);
     previous.documentTop += 342;
     page.resizeContent();
-    navigation.requestAnchor(`${DESTINATION}#full-width`);
+    navigation.request(`${DESTINATION}#full-width`);
     page.setUrl(`${DESTINATION}#full-width`);
     oldObserver.deliver();
     page.flushFrames();
@@ -313,16 +362,144 @@ describe("search anchor navigation", () => {
     expect(heading.scrollIntoView).toHaveBeenCalledTimes(1);
   });
 
-  it("leaves non-anchor navigation to Next and cancels the old anchor", () => {
+  it.each(["keydown", "pointerdown", "popstate"])(
+    "does not steal focus if %s cancels a pending navigation",
+    (event) => {
+      navigation.request(`${DESTINATION}#disabled`);
+      page.event(event);
+      page.setUrl(`${DESTINATION}#disabled`);
+      page.mountPage();
+      const heading = page.addHeading("disabled", 1500);
+      navigation.commitRoute(DESTINATION);
+      page.flushFrames();
+      expect(heading.focus).not.toHaveBeenCalled();
+      expect(heading.scrollIntoView).not.toHaveBeenCalled();
+    },
+  );
+
+  it.each(["blur", "pagehide"])(
+    "removes temporary heading focusability on %s",
+    (event) => {
+      const heading = arrive();
+      expect(heading.hasAttribute("tabindex")).toBe(true);
+      expect(heading.tabIndex).toBe(-1);
+      if (event === "blur") {
+        heading.dispatchEvent(new Event(event));
+      } else {
+        page.event(event);
+      }
+      expect(heading.hasAttribute("tabindex")).toBe(false);
+    },
+  );
+
+  it.each([-1, 0])("preserves an author's tabindex of %s", (tabIndex) => {
+    const heading = page.addHeading("disabled", 1000);
+    heading.tabIndex = tabIndex;
+    navigation.request(`${SOURCE}#disabled`);
+    page.flushFrames();
+    heading.dispatchEvent(new Event("blur"));
+    expect(heading.hasAttribute("tabindex")).toBe(true);
+    expect(heading.tabIndex).toBe(tabIndex);
+  });
+
+  it("focuses the page heading once while leaving page scrolling to Next", () => {
+    const previous = page.addHeading("page-title", 1000);
+    expect(navigation.request(DESTINATION)).toBe(false);
+    page.flushFrames();
+    expect(previous.focus).not.toHaveBeenCalled();
+
+    page.setUrl(DESTINATION);
+    page.mountPage();
+    const heading = page.addHeading("page-title", 120);
+    page.browser.scrollY = 60;
+    navigation.commitRoute(DESTINATION);
+    page.flushFrames();
+    expect(heading.focus).toHaveBeenCalledExactlyOnceWith({
+      preventScroll: true,
+    });
+    expect(heading.scrollIntoView).not.toHaveBeenCalled();
+    expect(page.browser.scrollY).toBe(60);
+    page.resizeContent();
+    navigation.commitRoute(DESTINATION);
+    page.flushFrames();
+    expect(heading.focus).toHaveBeenCalledTimes(1);
+  });
+
+  it("focuses main when a page result has no heading", () => {
+    expect(navigation.request(DESTINATION)).toBe(false);
+    page.setUrl(DESTINATION);
+    page.mountPage();
+    navigation.commitRoute(DESTINATION);
+    page.flushFrames();
+    expect(page.activeElement).toBe(page.main);
+    expect(page.main.focus).toHaveBeenCalledExactlyOnceWith({
+      preventScroll: true,
+    });
+    page.event("pagehide");
+    expect(page.main.hasAttribute("tabindex")).toBe(false);
+  });
+
+  it("restores a detached target when another page commits without a blur", () => {
     const heading = arrive();
-    expect(navigation.requestAnchor("/salt/about/index")).toBe(false);
+    page.mountPage();
+    navigation.commitRoute("/salt/about/index");
+    expect(heading.hasAttribute("tabindex")).toBe(false);
+  });
+
+  it("restores temporary focusability when the controller is disposed", () => {
+    const heading = arrive();
+    navigation.cancel();
+    expect(heading.hasAttribute("tabindex")).toBe(false);
+  });
+
+  it("allows ComboBox to restore input focus after pointer selection", () => {
+    const input = page.createFocusTarget();
+    navigation.request(
+      `${DESTINATION}#disabled`,
+      input as unknown as HTMLElement,
+    );
+    input.focus();
+    page.setUrl(`${DESTINATION}#disabled`);
+    page.mountPage();
+    const heading = page.addHeading("disabled", 1500);
+    navigation.commitRoute(DESTINATION);
+    page.flushFrames();
+    expect(heading.focus).toHaveBeenCalledTimes(1);
+  });
+
+  it("cancels pending focus when focus moves to another control without keyboard input", () => {
+    navigation.request(`${DESTINATION}#disabled`);
+    const other = page.createFocusTarget();
+    other.focus();
+    page.setUrl(`${DESTINATION}#disabled`);
+    page.mountPage();
+    const heading = page.addHeading("disabled", 1500);
+    navigation.commitRoute(DESTINATION);
+    page.flushFrames();
+    expect(heading.focus).not.toHaveBeenCalled();
+    expect(page.activeElement).toBe(other);
+  });
+
+  it("stops resize corrections when focus moves away from the destination", () => {
+    const heading = arrive();
+    const other = page.createFocusTarget();
+    other.focus();
+    heading.documentTop += 342;
+    page.resizeContent();
+    page.flushFrames();
+    expect(heading.focus).toHaveBeenCalledTimes(1);
+    expect(heading.scrollIntoView).toHaveBeenCalledTimes(1);
+    expect(page.activeElement).toBe(other);
+  });
+
+  it("cancels old anchors when page results or unsupported destinations are requested", () => {
+    const heading = arrive();
+    expect(navigation.request("/salt/about/index")).toBe(false);
     heading.documentTop += 342;
     page.resizeContent();
     page.flushFrames();
     expect(heading.scrollIntoView).toHaveBeenCalledTimes(1);
-    expect(navigation.requestAnchor("https://other.example/#heading")).toBe(
-      false,
-    );
-    expect(navigation.requestAnchor(`${DESTINATION}#%invalid`)).toBe(false);
+    expect(navigation.request("https://other.example/#heading")).toBe(false);
+    expect(navigation.request(`${DESTINATION}#%invalid`)).toBe(false);
   });
 });

@@ -93,6 +93,7 @@ export function useOverflow({
   }, [tabs]);
   const [visibleCount, setVisibleCount] = useState(0);
   const [isMeasuring, setIsMeasuring] = useState(true);
+  const [measuredInputKey, setMeasuredInputKey] = useState<string | null>(null);
   const [measureRetryVersion, setMeasureRetryVersion] = useState(0);
   const pinnedSelectionRef = useRef(selected);
   const previousOverflowButtonWidthRef = useRef(0);
@@ -175,12 +176,14 @@ export function useOverflow({
       }
       if (isMeasuring) {
         setIsMeasuring(false);
+        setMeasuredInputKey(measurementInputKey);
       }
     }
   }, [
     isMeasuring,
     markMeasurementStale,
     measureVisibleCount,
+    measurementInputKey,
     selected,
     selectedIsHidden,
     visibleCount,
@@ -318,6 +321,7 @@ export function useOverflow({
 
     setVisibleCount(nextVisibleCount);
     setIsMeasuring(false);
+    setMeasuredInputKey(measurementInputKey);
   }, [
     clearMeasureRetry,
     container.current,
@@ -325,6 +329,7 @@ export function useOverflow({
     isMeasuring,
     measureRetryVersion,
     measureVisibleCount,
+    measurementInputKey,
     menuOpen,
   ]);
 
@@ -334,5 +339,9 @@ export function useOverflow({
     pinnedValue,
   );
 
-  return [visibleValues, hiddenValues, isMeasuring] as const;
+  // Whether the layout has been measured for the current tabs. Measuring
+  // happens in layout effects, so it's usually settled before paint.
+  const isSettled = !isMeasuring && measuredInputKey === measurementInputKey;
+
+  return [visibleValues, hiddenValues, isMeasuring, isSettled] as const;
 }

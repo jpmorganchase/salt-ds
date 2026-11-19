@@ -1,25 +1,14 @@
 "use client";
 
 import {
-  disposeStore,
-  initializeStore,
-  registerStore,
-  reseedStore,
+  ColorModeProvider,
   type SiteState,
   StoreProvider,
+  useMosaicStore,
 } from "@jpmorganchase/mosaic-store";
 import { AdapterLuxon } from "@salt-ds/date-adapters/luxon";
 import { LocalizationProvider } from "@salt-ds/date-components";
-import {
-  createContext,
-  type ReactNode,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react";
+import { createContext, type ReactNode, useContext, useMemo } from "react";
 import * as saltLayouts from "../layouts";
 import { LayoutProvider } from "../layouts/LayoutProvider";
 import { ThemeProvider } from "../ThemeProvider";
@@ -38,20 +27,14 @@ export function Providers({
   children: ReactNode;
   themeClassName: string;
 }) {
-  const [store] = useState(() => initializeStore());
-  useEffect(() => {
-    registerStore(store);
-    return () => disposeStore(store);
-  }, [store]);
-
   return (
-    <StoreProvider value={store}>
+    <ColorModeProvider>
       <LocalizationProvider DateAdapter={AdapterLuxon}>
         <ThemeProvider themeClassName={themeClassName}>
           {children}
         </ThemeProvider>
       </LocalizationProvider>
-    </StoreProvider>
+    </ColorModeProvider>
   );
 }
 
@@ -68,20 +51,7 @@ export function StoreShell({
     () => ({ ...defaults, ...storeProps }),
     [defaults, storeProps],
   );
-  const [store] = useState(() => initializeStore(seed));
-  const seededWith = useRef(seed);
-
-  // A refresh replaces server data without unmounting the page. Reset absent
-  // fields as well as changed fields, while preserving the reader's colour mode.
-  useLayoutEffect(() => {
-    if (seededWith.current === seed) return;
-    seededWith.current = seed;
-    reseedStore(store, seed);
-  }, [seed, store]);
-  useEffect(() => {
-    registerStore(store);
-    return () => disposeStore(store);
-  }, [store]);
+  const store = useMosaicStore(seed);
 
   return (
     <StoreProvider value={store}>

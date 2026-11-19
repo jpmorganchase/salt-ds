@@ -9,6 +9,11 @@ const pages = {
   "/salt/index": "# Salt",
   "/salt/components/button": "# Button",
 };
+const snapshotId = "00000000-0000-4000-8000-000000000001";
+const routes = Object.keys(pages).map((pathname) => ({
+  pathname,
+  sourcePathname: `${pathname}.mdx`,
+}));
 const sitemap = `<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://example.test/salt/index</loc><priority>0.5</priority></url>
   <url><loc>https://example.test/salt/components/button</loc><changefreq>weekly</changefreq></url>
@@ -20,6 +25,12 @@ async function fixture(overrides = {}) {
   const files = {
     "sitemap.xml": sitemap,
     "markdown-pages.json": JSON.stringify({ version: 1, pages }),
+    "mosaic-snapshot.json": JSON.stringify({ version: 1, id: snapshotId }),
+    "mosaic-routes.json": JSON.stringify({
+      version: 1,
+      snapshotId,
+      routes,
+    }),
     "llms.txt": "# Salt\n- [Button](/salt/components/button.md)",
     "llms-full.txt": "# Salt\n# Button",
     ...overrides,
@@ -45,7 +56,32 @@ describe("Mosaic snapshot completeness", () => {
     await expect(verifyMosaicSnapshot(await fixture())).resolves.toEqual({
       sitemapRoutes: 2,
       markdownPages: 2,
+      canonicalPages: 2,
     });
+  });
+
+  it("rejects a route inventory missing a public document", async () => {
+    const directory = await fixture({
+      "mosaic-routes.json": JSON.stringify({
+        version: 1,
+        snapshotId,
+        routes: routes.slice(0, 1),
+      }),
+    });
+    await expect(verifyMosaicSnapshot(directory)).rejects.toThrow(
+      "Public sitemap pages absent from the route inventory: /salt/components/button",
+    );
+  });
+
+  it("rejects a route inventory from another generation", async () => {
+    const directory = await fixture({
+      "mosaic-routes.json": JSON.stringify({
+        version: 1,
+        snapshotId: "00000000-0000-4000-8000-000000000002",
+        routes,
+      }),
+    });
+    await expect(verifyMosaicSnapshot(directory)).rejects.toThrow();
   });
 
   it("rejects a partial Markdown result from a failed plugin", async () => {
@@ -72,14 +108,18 @@ describe("Mosaic snapshot completeness", () => {
     );
   });
 
-  it.each(["sitemap.xml", "markdown-pages.json", "llms.txt", "llms-full.txt"])(
-    "rejects missing %s",
-    async (name) => {
-      await expect(
-        verifyMosaicSnapshot(await fixture({ [name]: undefined })),
-      ).rejects.toThrow(name);
-    },
-  );
+  it.each([
+    "sitemap.xml",
+    "markdown-pages.json",
+    "mosaic-snapshot.json",
+    "mosaic-routes.json",
+    "llms.txt",
+    "llms-full.txt",
+  ])("rejects missing %s", async (name) => {
+    await expect(
+      verifyMosaicSnapshot(await fixture({ [name]: undefined })),
+    ).rejects.toThrow(name);
+  });
 
   it.each(["sitemap.xml", "llms.txt", "llms-full.txt"])(
     "rejects empty %s",

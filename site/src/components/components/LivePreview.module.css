@@ -74,6 +74,18 @@
   overflow: hidden;
 }
 
+.status {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--salt-spacing-100);
+}
+
+.codeStatus {
+  padding: var(--salt-spacing-300);
+  border-top: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-container-bold-borderColor);
+}
+
 @media (prefers-reduced-motion: reduce) {
   .codePanel {
     transition: none;

@@ -1,12 +1,9 @@
 "use client";
 
-import { FrameProvider } from "@jpmorganchase/mosaic-layouts/frame";
 import {
-  disposeStore,
-  initializeStore,
-  registerStore,
+  FrameSync as MosaicFrameSync,
+  PersistentFrame,
   type SiteState,
-  StoreProvider,
 } from "@jpmorganchase/mosaic-store";
 import { usePathname } from "next/navigation";
 import {
@@ -16,6 +13,7 @@ import {
   useEffect,
   useLayoutEffect,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import { AppHeader } from "../../components/app-header";
@@ -25,13 +23,8 @@ import { createSearchNavigation } from "../../utils/searchNavigation";
 import { SearchNavigationContext } from "../../utils/searchNavigationContext";
 import { type NamespaceData, NamespaceDataContext } from "../providers";
 
-const FRAME = { header: true };
-const FrameContext = createContext<
-  | {
-      store: ReturnType<typeof initializeStore>;
-      data: NamespaceData;
-    }
-  | undefined
+const LastSharedConfigContext = createContext<
+  { current: SiteState["sharedConfig"] } | undefined
 >(undefined);
 
 /** Salt supplies its own header; Mosaic coordinates it with the page layouts. */
@@ -46,21 +39,17 @@ export function NamespaceFrame({
 }) {
   const pathname = usePathname();
   const [searchNavigation] = useState(createSearchNavigation);
-  const [store] = useState(() =>
-    initializeStore({ ...data, route: `/${namespace}/index` }),
+  const frameData = useMemo(
+    () => ({ sharedConfig: data.sharedConfig, route: `/${namespace}/index` }),
+    [data.sharedConfig, namespace],
   );
+  const lastSharedConfig = useRef(data.sharedConfig);
   const [drawerOpen, setDrawerOpen] = useState(false);
   const [mainId, setMainId] = useState<string>();
   const controls = useMemo(
     () => ({ drawerOpen, setDrawerOpen, mainId, setMainId }),
     [drawerOpen, mainId],
   );
-  const frame = useMemo(() => ({ store, data }), [store, data]);
-
-  useEffect(() => {
-    registerStore(store);
-    return () => disposeStore(store);
-  }, [store]);
   useEffect(() => {
     if (pathname) setDrawerOpen(false);
   }, [pathname]);
@@ -74,19 +63,23 @@ export function NamespaceFrame({
   return (
     <NamespaceDataContext.Provider value={data}>
       <SearchNavigationContext.Provider value={searchNavigation}>
-        <FrameContext.Provider value={frame}>
+        <LastSharedConfigContext.Provider value={lastSharedConfig}>
           <LayoutContext.Provider value={controls}>
-            <StoreProvider value={store}>
-              {!landing && (
-                <>
-                  <SkipToMainContent targetId={MAIN_CONTENT_ID} />
-                  <AppHeader />
-                </>
-              )}
-              <FrameProvider value={FRAME}>{children}</FrameProvider>
-            </StoreProvider>
+            <PersistentFrame
+              data={frameData}
+              renderHeader={() =>
+                !landing && (
+                  <>
+                    <SkipToMainContent targetId={MAIN_CONTENT_ID} />
+                    <AppHeader />
+                  </>
+                )
+              }
+            >
+              {children}
+            </PersistentFrame>
           </LayoutContext.Provider>
-        </FrameContext.Provider>
+        </LastSharedConfigContext.Provider>
       </SearchNavigationContext.Provider>
     </NamespaceDataContext.Provider>
   );
@@ -102,16 +95,24 @@ export function FrameSync({
   route: string;
   preserveSharedConfig?: boolean;
 }) {
-  const frame = useContext(FrameContext);
+  const lastSharedConfig = useContext(LastSharedConfigContext);
+  const namespaceData = useContext(NamespaceDataContext);
   const searchNavigation = useContext(SearchNavigationContext);
+  const currentSharedConfig = preserveSharedConfig
+    ? lastSharedConfig?.current
+    : sharedConfig;
   useLayoutEffect(() => {
-    frame?.store.setState({
-      ...(!preserveSharedConfig && {
-        sharedConfig: sharedConfig ?? frame.data.sharedConfig,
-      }),
-      route,
-    });
+    if (!preserveSharedConfig && lastSharedConfig) {
+      lastSharedConfig.current = sharedConfig ?? namespaceData?.sharedConfig;
+    }
     searchNavigation?.commitRoute(route);
-  }, [frame, route, sharedConfig, preserveSharedConfig, searchNavigation]);
-  return null;
+  }, [
+    lastSharedConfig,
+    route,
+    sharedConfig,
+    preserveSharedConfig,
+    namespaceData,
+    searchNavigation,
+  ]);
+  return <MosaicFrameSync route={route} sharedConfig={currentSharedConfig} />;
 }
