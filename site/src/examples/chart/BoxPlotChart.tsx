@@ -41,6 +41,21 @@ const boxPlotChartOptions: Options = {
       text: "Sales ($K)",
     },
   },
+  responsive: {
+    rules: [
+      {
+        condition: { maxWidth: 480 },
+        chartOptions: {
+          legend: {
+            align: "center",
+            layout: "horizontal",
+            verticalAlign: "bottom",
+            y: 0,
+          },
+        },
+      },
+    ],
+  },
   tooltip: {
     headerFormat: '<span class="title">{series.name} - {point.key}</span><br/>',
     pointFormat:

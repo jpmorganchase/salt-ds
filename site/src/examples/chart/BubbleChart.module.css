@@ -1,0 +1,22 @@
+.container {
+  container-type: inline-size;
+}
+
+.chart {
+  height: 400px;
+}
+
+.pointId {
+  display: none;
+}
+
+/* Highcharts measures its responsive width in whole pixels. */
+@container (width < 481px) {
+  .chart {
+    height: max(400px, calc(30 * var(--salt-text-label-lineHeight)));
+  }
+
+  .pointId {
+    display: inline;
+  }
+}

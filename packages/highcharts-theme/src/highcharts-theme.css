@@ -19,3 +19,11 @@
   stroke-dasharray: 0, 4;
   stroke-linecap: round;
 }
+
+@media (forced-colors: active) {
+  .highcharts-heatmap-series .highcharts-text-outline {
+    /* Separate the outline from the system text color on every cell. */
+    fill: Canvas;
+    stroke: Canvas;
+  }
+}

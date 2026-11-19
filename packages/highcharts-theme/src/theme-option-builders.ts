@@ -1,9 +1,10 @@
-import type { CursorValue, Options } from "highcharts";
+import Highcharts, { type CursorValue, type Options } from "highcharts";
 import { TRANSLUCENT_FILL_OPACITY } from "./constants";
 import {
   CATEGORY_DATAVIZ_TOKENS,
   type SaltChartTokenMap,
 } from "./density-token-map";
+import { isHighcharts10 } from "./highcharts-version";
 import type {
   HighchartsOptionsCompat,
   HighchartsSeriesOptionsCompat,
@@ -117,10 +118,31 @@ export const buildZoomingOptions = (
   };
 };
 
+const getHeatmapHighContrastDefaults = (chartOptions: Options) => {
+  if (
+    !isHighcharts10() ||
+    (chartOptions.chart?.type !== "heatmap" &&
+      !chartOptions.series?.some((series) => series.type === "heatmap"))
+  ) {
+    return;
+  }
+
+  const theme: Options | undefined =
+    Highcharts.getOptions().accessibility?.highContrastTheme;
+  const axis = theme?.colorAxis;
+  if (!Array.isArray(axis) && axis?.stops?.length === 0) {
+    // v10's forced-colors theme supplies an empty array that toColor()
+    // indexes. Clearing it lets Highcharts use the theme's min/max colors.
+    return { highContrastTheme: { colorAxis: { stops: undefined } } };
+  }
+};
+
 export const buildAccessibilityOptions = (
   tokens: SaltChartTokenMap,
+  chartOptions: Options,
 ): Pick<HighchartsOptionsCompat, "accessibility"> => ({
   accessibility: {
+    ...getHeatmapHighContrastDefaults(chartOptions),
     keyboardNavigation: {
       focusBorder: {
         enabled: true,

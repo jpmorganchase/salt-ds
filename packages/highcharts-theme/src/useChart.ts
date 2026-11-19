@@ -14,6 +14,7 @@ import {
 import { applyFillPatternOverrides } from "./fill-patterns";
 import highchartsThemeCss from "./highcharts-theme.css";
 import { mergeChartOptions } from "./merge-chart-options";
+import { observeContainerSize } from "./observe-container-size";
 
 export interface UseChartConfig {
   fillPatterns?: boolean;
@@ -84,7 +85,11 @@ export const useChart = (
   }, [chartRef, getMergedOptions, mode, targetWindow, theme]);
 
   useEffect(() => {
-    enhanceResetZoomFocus(chartRef.current?.chart);
+    const chart = chartRef.current?.chart;
+    if (chart) {
+      observeContainerSize(chart);
+      enhanceResetZoomFocus(chart);
+    }
   });
 
   useEffect(() => {

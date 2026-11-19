@@ -13,6 +13,7 @@ accessibility(Highcharts);
 const scatterChartOptions: Options = {
   chart: {
     type: "scatter",
+    height: 400,
   },
   title: {
     text: "Portfolio risk vs return",
@@ -42,6 +43,23 @@ const scatterChartOptions: Options = {
       text: "Return (annualized %)",
     },
     min: 0,
+  },
+  responsive: {
+    rules: [
+      {
+        condition: { maxWidth: 480 },
+        chartOptions: {
+          chart: { height: 560 },
+          yAxis: { title: { margin: 4 } },
+          legend: {
+            align: "center",
+            layout: "horizontal",
+            verticalAlign: "bottom",
+            y: 0,
+          },
+        },
+      },
+    ],
   },
   tooltip: {
     headerFormat: "<span>{series.name}</span><br/>",

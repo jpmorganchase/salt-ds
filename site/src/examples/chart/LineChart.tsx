@@ -13,6 +13,7 @@ accessibility(Highcharts);
 const lineChartOptions: Options = {
   chart: {
     type: "line",
+    height: 400,
     spacingRight: 52,
   },
   accessibility: {
@@ -26,6 +27,26 @@ const lineChartOptions: Options = {
     title: {
       text: "CCY strength indicator",
     },
+  },
+  responsive: {
+    rules: [
+      {
+        condition: { maxWidth: 480 },
+        chartOptions: {
+          chart: { height: 560 },
+          xAxis: { title: { text: "Year (2011–2020)" } },
+          yAxis: { title: { margin: 4 } },
+          legend: {
+            align: "center",
+            itemDistance: 8,
+            itemMarginBottom: 4,
+            layout: "horizontal",
+            verticalAlign: "bottom",
+            y: 0,
+          },
+        },
+      },
+    ],
   },
   tooltip: {
     headerFormat: "<span>{point.key}</span><br/>",

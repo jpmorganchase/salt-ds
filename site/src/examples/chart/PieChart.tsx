@@ -31,6 +31,8 @@ const pieChartOptions: Options = {
   plotOptions: {
     pie: {
       dataLabels: {
+        padding: 0,
+        connectorPadding: 2,
         format:
           '{point.name} <span class="value">{point.percentage:.0f}%</span>',
       },

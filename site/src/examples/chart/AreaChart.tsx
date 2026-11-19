@@ -12,13 +12,13 @@ patternFill(Highcharts);
 accessibility(Highcharts);
 
 const areaChartOptions: Options = {
-  chart: { type: "area" },
+  chart: { type: "area", height: 400 },
   title: {
     text: "Asset class balances since 1940",
   },
   accessibility: {
     description:
-      "Area chart comparing asset class balances since 1940. Government Bonds remain largest across the period, while Corporate Bonds and Municipal Bonds are lower. Values in US dollars.",
+      "All three bond balances peak around 1960, then decline. Government Bonds reach the highest peak at $32,040 in 1961. Values in US dollars.",
     point: {
       valuePrefix: "$",
     },
@@ -47,6 +47,9 @@ const areaChartOptions: Options = {
       {
         condition: { maxWidth: 480 },
         chartOptions: {
+          chart: { height: 560 },
+          xAxis: { title: { text: "Year (1940–2012)" } },
+          yAxis: { title: { margin: 4 } },
           legend: {
             align: "center",
             layout: "horizontal",

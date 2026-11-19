@@ -13,6 +13,7 @@ accessibility(Highcharts);
 const stackedBarChartOptions: Options = {
   chart: {
     type: "bar",
+    height: 400,
   },
   title: {
     text: "Regional revenue by product",
@@ -43,6 +44,7 @@ const stackedBarChartOptions: Options = {
       {
         condition: { maxWidth: 480 },
         chartOptions: {
+          chart: { height: 520 },
           legend: {
             align: "center",
             layout: "horizontal",
@@ -59,6 +61,7 @@ const stackedBarChartOptions: Options = {
     series: {
       stacking: "normal",
       dataLabels: {
+        allowOverlap: true,
         enabled: true,
         inside: true,
         padding: 0,
@@ -117,7 +120,8 @@ export const StackedBarChart = () => {
         ref={chartRef}
       />
       <p className={styles.chartCaption}>
-        Left to right within each bar: FX, Fixed Income (FI), Equities (EQ).
+        When all products are shown, each bar reads from left to right as FX,
+        Fixed Income (FI), then Equities (EQ).
       </p>
     </div>
   );
