@@ -12,11 +12,11 @@ import { ToggletipContext } from "./ToggletipContext";
 export interface ToggletipProps {
   children?: ReactNode;
   /**
-   * Display or hide the component.
+   * If `true`, the Toggletip is open. Use with `onOpenChange` to control it.
    */
   open?: boolean;
   /**
-   * Callback function triggered when open state changes.
+   * Callback fired when the open state changes.
    */
   onOpenChange?: (open: boolean) => void;
   /**

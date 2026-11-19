@@ -15,7 +15,9 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    */
   variant?: "primary" | "secondary";
   /**
-   * A string to determine the current state of the Banner.
+   * The status of the Banner: `"info"`, `"success"`, `"warning"` or `"error"`.
+   * It sets the Banner's color and status icon.
+   * @default "info"
    */
   status?: ValidationStatus;
 }

@@ -19,11 +19,11 @@ export interface RatingItemProps extends ComponentPropsWithoutRef<"div"> {
    */
   value: number;
   /**
-   * To define if the current star is being hovered.
+   * If `true`, the item is shown in its hovered state.
    */
   isHovered?: boolean;
   /**
-   * To specify if the item is selected.
+   * If `true`, the item is shown as selected.
    */
   isSelected?: boolean;
   /**
@@ -31,26 +31,25 @@ export interface RatingItemProps extends ComponentPropsWithoutRef<"div"> {
    */
   currentRating?: number;
   /**
-   * Callback function when feedback item is hovered.
+   * Callback fired when the pointer enters the item.
    */
   onMouseEnter: (event: MouseEvent<HTMLInputElement>) => void;
   /**
-   * Callback function when feedback item is clicked.
+   * Callback fired when the item is selected, for example when it's clicked.
    */
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   /**
-   * If true, the rating item will be in a read-only state.
+   * If `true`, the item is read-only.
    */
   readOnly?: boolean;
   /**
-   * If true, the rating item will be in a disabled state.
+   * If `true`, the item is disabled.
    */
   disabled?: boolean;
   /**
-   * Indicates whether the current rating item is in an active state.
-   * An active state typically means that the item is visually highlighted
-   * or styled differently to indicate that it is part of the current selection
-   * or interaction (e.g., hover or focus).
+   * If `true`, the item is shown in its unselecting state. This is when the
+   * item is part of the current selection but is above the hovered rating, so
+   * choosing the hovered rating would unselect it.
    */
   isUnselecting?: boolean;
   /**

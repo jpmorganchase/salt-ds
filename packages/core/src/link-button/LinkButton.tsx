@@ -23,12 +23,13 @@ const withBaseName = makePrefixer("saltLinkButton");
 
 export interface LinkButtonProps extends ComponentPropsWithoutRef<"a"> {
   /**
-   * Icon component displayed when `target="_blank"`. Defaults to `ExternalIcon` from `SemanticIconProvider`.
+   * The icon component displayed when `target` is `"_blank"`. Defaults to the
+   * `ExternalIcon` from `SemanticIconProvider`. Pass `null` to hide the icon.
    */
   IconComponent?: ComponentType<IconProps> | null;
   /**
-   * The sentiment of the button. Options are 'accented' and 'neutral'.
-   * 'neutral' is the default value.
+   * The sentiment of the link button.
+   * @default "neutral"
    */
   sentiment?: "accented" | "neutral";
   /**
@@ -36,9 +37,8 @@ export interface LinkButtonProps extends ComponentPropsWithoutRef<"a"> {
    */
   render?: RenderPropsType["render"];
   /**
-   * Either "default" or "never".
-   * Determines when underline should be applied to the link button.
-   *
+   * When the link button is underlined. `"default"` underlines it except while
+   * it's hovered or focused, and `"never"` doesn't underline it.
    * @default "default"
    */
   underline?: "default" | "never";

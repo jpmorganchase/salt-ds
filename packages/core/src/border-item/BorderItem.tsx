@@ -30,11 +30,13 @@ export type BorderItemProps<T extends ElementType> =
     T,
     {
       /**
-       * Aligns a grid item inside a cell along the inline (row) axis. Defaults to "stretch".
+       * Aligns a grid item inside a cell along the inline (row) axis.
+       * @default "stretch"
        */
       horizontalAlignment?: GridItemProps<T>["horizontalAlignment"];
       /**
-       * Aligns a grid item inside a cell along the block (column) axis. Defaults to "stretch".
+       * Aligns a grid item inside a cell along the block (column) axis.
+       * @default "stretch"
        */
       verticalAlignment?: GridItemProps<T>["verticalAlignment"];
       /**
@@ -42,15 +44,17 @@ export type BorderItemProps<T extends ElementType> =
        */
       position: BorderPosition;
       /**
-       * Defines if the item should stick to the edges of its container. Defaults to "false".
+       * If `true`, the item sticks to the edges of its container.
        */
       sticky?: boolean;
       /**
-       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value. Default is `0`.
+       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value.
+       * @default 0
        */
       margin?: ResponsiveProp<number | string>;
       /**
-       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value. Default is `0`.
+       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value.
+       * @default 0
        */
       padding?: ResponsiveProp<number | string>;
     }

@@ -58,8 +58,8 @@ export interface ToggleButtonGroupProps
    */
   orientation?: "horizontal" | "vertical";
   /**
-   * The visual sentimenent of all the toggle buttons within the group.
-   * @default neutral
+   * The sentiment of all the toggle buttons within the group.
+   * @default "neutral"
    */
   sentiment?: ButtonSentiment;
 }

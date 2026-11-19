@@ -48,32 +48,32 @@ export interface DatePickerBaseProps {
    */
   enableApply?: boolean;
   /**
-   * The open/close state of the overlay. The open/close state will be controlled when this prop is provided.
+   * If `true`, the overlay is open. Use with `onOpenChange` to control it.
    */
   open?: boolean;
   /**
-   * When `open` is uncontrolled, set this to `true` to open on click.
+   * If `true`, the overlay opens when the user clicks the `DatePickerTrigger`. Use when `open` is uncontrolled.
    */
   openOnClick?: boolean;
   /**
-   * Handler for when open state changes.
-   * @param newOpen - true when opened
-   * @param reason - reason for the the state change
+   * Callback fired when the open state changes.
+   * @param newOpen - `true` when opened.
+   * @param reason - The reason for the state change.
    */
   onOpenChange?: (
     newOpen: boolean,
     reason?: DatePickerOpenChangeReason,
   ) => void;
   /**
-   * The initial open/close state of the overlay, when the open/close state is un-controlled.
+   * If `true`, the overlay is open initially. Use when `open` is uncontrolled.
    */
   defaultOpen?: DatePickerBaseProps["open"];
   /**
    * Specifies the timezone behavior:
-   * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
-   * - If set to "default", the default timezone of the date library will be used.
-   * - If set to "system", the local system's timezone will be applied.
-   * - If set to "UTC", the time will be returned in UTC.
+   * - If not set, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+   * - If set to `"default"`, the default timezone of the date library will be used.
+   * - If set to `"system"`, the local system's timezone will be applied.
+   * - If set to `"UTC"`, the time will be returned in UTC.
    * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
    */
   timezone?: Timezone;

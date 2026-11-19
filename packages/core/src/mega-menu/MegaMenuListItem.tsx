@@ -26,7 +26,7 @@ export interface MegaMenuListItemProps
    */
   children?: ReactNode;
   /**
-   * Whether the item is the current page. Sets `aria-current="page"`.
+   * If `true`, the item is the current page. Sets `aria-current="page"`.
    */
   current?: boolean;
   /**
@@ -34,7 +34,7 @@ export interface MegaMenuListItemProps
    */
   href?: string;
   /**
-   * Called when the item's action is activated, before the menu closes.
+   * Callback fired when the item's action is activated, before the menu closes.
    */
   onClick?: MouseEventHandler<HTMLAnchorElement>;
   /**

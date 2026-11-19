@@ -13,15 +13,15 @@ import { CollapsibleContext } from "./CollapsibleContext";
 export interface CollapsibleProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onToggle"> {
   /**
-   * Whether the accordion is open.
+   * If `true`, the collapsible is open. Use with `onOpenChange` to control it.
    */
   open?: boolean;
   /**
-   * Whether the accordion is open by default.
+   * If `true`, the collapsible is open initially. Use when the component is uncontrolled.
    */
   defaultOpen?: boolean;
   /**
-   * Callback fired when the accordion is opened or closed.
+   * Callback fired when the collapsible is opened or closed.
    */
   onOpenChange?: (
     event: SyntheticEvent<HTMLButtonElement>,

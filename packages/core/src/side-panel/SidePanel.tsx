@@ -27,8 +27,8 @@ const withBaseName = makePrefixer("saltSidePanel");
 
 export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
   /**
-   * Disable the panel's own open/close animation.
-   * Set to `true` when the parent controls sizing and animation (e.g. inside a splitter).
+   * If `true`, the panel's own open and close animation is disabled.
+   * Set to `true` when the parent controls sizing and animation, for example inside a splitter.
    */
   disableAnimation?: boolean;
   /**
@@ -37,13 +37,14 @@ export interface SidePanelProps extends ComponentPropsWithRef<"div"> {
    */
   position?: "right" | "left";
   /**
-   * Which element receives focus when the panel opens.
-   * Pass a number for the tabbable element index (0 = first), or a ref to a specific element.
-   * Defaults to the first tabbable element inside the panel (close button if present).
+   * The element that receives focus when the panel opens: the index of a
+   * tabbable element inside the panel, in tab order, or a ref to an element.
+   * When the panel has no tabbable elements, the panel itself is focused.
+   * @default 0
    */
   initialFocus?: number | RefObject<HTMLElement | null>;
   /**
-   * The background color palette. Options are 'primary', 'secondary', 'tertiary' and 'none'.
+   * The background color palette. `"none"` removes the background and border.
    * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary" | "none";

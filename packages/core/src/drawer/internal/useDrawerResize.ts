@@ -27,11 +27,17 @@ interface DragState extends Bounds {
   moved: boolean;
 }
 
-/** Click-to-place resizing */
+/**
+ * The state while the user is placing the edge by click.
+ */
 interface PlacingState extends Bounds {
-  /** In viewport coordinates. */
+  /**
+   * The position of the guide line in pixels, in viewport coordinates.
+   */
   guideOffset: number;
-  /** The placing press started on the guide layer. */
+  /**
+   * If `true`, the press that places the edge started on the guide.
+   */
   pressed: boolean;
 }
 
@@ -68,7 +74,10 @@ export interface UseDrawerResizeResult {
   isResizing: boolean;
   isHovered: boolean;
   isPlacing: boolean;
-  /** Whether the event is the Escape that cancelled a resize, so it shouldn't close the drawer. */
+  /**
+   * The function that checks whether an event is the Escape key press that
+   * canceled a resize, so that the Drawer doesn't close on it.
+   */
   isCancelResizeEvent: (event?: Event) => boolean;
   separatorProps: SeparatorProps;
   guideProps: GuideProps;

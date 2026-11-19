@@ -15,7 +15,8 @@ const withBaseName = makePrefixer("saltDrawerHeader");
 
 export interface DrawerHeaderProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Hides the accent bar in the Drawer Header. Defaults to `true` when the Drawer is resizable and positioned `right`, otherwise `false`.
+   * If `true`, the accent bar in the DrawerHeader is hidden. When the `Drawer`
+   * is `resizable` and its `position` is `"right"`, it defaults to `true`.
    */
   disableAccent?: boolean;
   /**

@@ -33,15 +33,15 @@ export interface CalendarGridProps extends ComponentPropsWithoutRef<"div"> {
    */
   columns?: ResponsiveProp<number | string>;
   /**
-   * Props for `CalendarWeekHeader`.
+   * Props applied to the `CalendarWeekHeader` component.
    */
   CalendarWeekHeaderProps?: Partial<CalendarWeekHeaderProps>;
   /**
-   * Props for `CalendarMonthHeader`.
+   * Props applied to the `CalendarMonthHeader` component. The month header is only shown when more than one month is visible.
    */
   CalendarMonthHeaderProps?: Partial<CalendarMonthHeaderProps>;
   /**
-   * Props for `CalendarDay`.
+   * Props applied to each `CalendarDay` component.
    */
   CalendarDayProps?: Partial<CalendarDayProps>;
 }

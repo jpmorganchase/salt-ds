@@ -37,11 +37,13 @@ const MAX_FOCUS_RETRY_ATTEMPTS = 120;
 export interface TabListProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   /**
-   * Styling active color variant. Defaults to "primary".
+   * Styling variant for the background color of the selected tab. Only applies when `appearance` is `"bordered"`.
+   * @default "primary"
    */
   activeColor?: "primary" | "secondary" | "tertiary";
   /**
-   * The appearance of the tabs. Defaults to "bordered".
+   * The appearance of the tabs.
+   * @default "bordered"
    */
   appearance?: "bordered" | "transparent";
 }

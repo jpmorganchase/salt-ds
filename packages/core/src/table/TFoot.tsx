@@ -8,17 +8,18 @@ import tableCss from "./Table.css";
 
 export interface TFootProps extends ComponentPropsWithoutRef<"tfoot"> {
   /**
-   * If footer is positioned with sticky styling.
+   * If `true`, the footer is positioned with sticky styling, so it stays at
+   * the bottom when the table scrolls.
    */
   sticky?: boolean;
   /**
-   * Divider styling variant. Defaults to "primary".
+   * The styling variant of the divider.
    * @default "primary"
    */
   divider?: "primary" | "secondary" | "tertiary" | "none";
   /**
-   * Styling variant for footer.
-   * If undefined, will match variant of parent Table component's variant.
+   * The styling variant of the footer. When not set, it matches the `Table`'s
+   * `variant`.
    */
   variant?: "primary" | "secondary" | "tertiary";
 }

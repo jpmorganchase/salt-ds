@@ -15,16 +15,20 @@ import { calculatePercentage, clampRange, toFloat } from "./internal/utils";
 export interface RangeSliderProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   /**
-   * Accessible text to announce maximum value label.
+   * The text that screen readers announce before the maximum value, in place
+   * of `"maximum"`. When it's set, the maximum value isn't formatted with
+   * `format`.
    */
   accessibleMaxText?: string;
   /**
-   * Accessible text to announce minimum value label.
+   * The text that screen readers announce before the minimum value, in place
+   * of `"minimum"`. When it's set, the minimum value isn't formatted with
+   * `format`.
    */
   accessibleMinText?: string;
   /**
-   * When minimum and maximum labels are defined, ensure
-   * they are confined within the boundary of the slider.
+   * If `true`, the labels of the first and last marks are kept within the
+   * boundary of the slider.
    */
   constrainLabelPosition?: boolean;
   /**
@@ -33,43 +37,48 @@ export interface RangeSliderProps
    */
   decimalPlaces?: number;
   /**
-   * The default value. Use when the component is not controlled.
+   * The initial start and end values. Use when the component is uncontrolled.
    * @default [min, min + (max - min) / 2]
    */
   defaultValue?: [number, number];
   /**
-   * Disable the slider.
+   * If `true`, the slider is disabled. The slider is also disabled when the
+   * surrounding `FormField` is disabled.
    */
   disabled?: boolean;
   /**
-   * Show visual ticks above the marks.
+   * If `true`, visual ticks are shown above the marks. Only applies when
+   * `marks` is set.
    */
   showTicks?: boolean;
   /**
-   * A callback to format the display value in the tooltip, min and max labels
-   * and the `aria-valuetext` attribute.
+   * The function that formats the values shown in the tooltips and set as
+   * `aria-valuetext`. It also formats the range, minimum and maximum values
+   * that screen readers announce.
    */
   format?: (value: number) => string | number;
   /**
-   * Marks that are displayed under the track.
+   * The marks shown under the track.
    */
   marks?: { label: string; value: number }[];
   /**
-   * Maximum slider value.
+   * The maximum value of the slider.
    * @default 100
    */
   max?: number;
   /**
-   * Minimum slider value.
+   * The minimum value of the slider.
    * @default 0
    */
   min?: number;
   /**
-   * Label for maximum value.
+   * The label shown after the track for the maximum value. It's hidden from
+   * screen readers. To change what they announce, use `accessibleMaxText`.
    */
   maxLabel?: string;
   /**
-   * Label for minimum value.
+   * The label shown before the track for the minimum value. It's hidden from
+   * screen readers. To change what they announce, use `accessibleMinText`.
    */
   minLabel?: string;
   /**
@@ -81,37 +90,44 @@ export interface RangeSliderProps
    */
   endName?: string;
   /**
-   * Callback called when slider value is changed.
-   * It provides a generic event and the current value of the slider.
+   * Callback fired when the start or end value of the slider changes.
+   * @param event - The event that changed the value. It's `undefined` when the
+   * value is changed from the keyboard.
    */
   onChange?: (event: Event, value: [number, number]) => void;
   /**
-   * Callback called when the slider is stopped from being dragged or
-   * its value is changed from the keyboard. It provides a generic
-   * event and the current value of the slider.
+   * Callback fired when the user stops dragging the slider or changes its
+   * value from the keyboard.
+   * @param event - The event that ended the change. It's `undefined` when the
+   * value is changed from the keyboard.
    */
   onChangeEnd?: (event: Event, value: [number, number]) => void;
   /**
-   * Restrict slider value to marks only. The step will be ignored.
+   * If `true`, the slider value is restricted to the marks, and `step` is
+   * ignored.
    */
   restrictToMarks?: boolean;
   /**
-   * Show the slider value in a tooltip when the thumb is hovered.
+   * If `true`, each thumb's value is shown in a tooltip when the thumb is
+   * hovered, dragged or focused with the keyboard.
    * @default true
    */
   showTooltip?: boolean;
   /**
-   * Minimum interval the slider thumb can move.
+   * The interval between the values of the slider, and the amount that the
+   * arrow keys change the value by. It's ignored when `restrictToMarks` is
+   * `true`.
    * @default 1
    */
   step?: number;
   /**
-   * Maximum interval the slider thumb can move when using PageUp and PageDown keys.
+   * The number of steps that the Page Up and Page Down keys change the value
+   * by. It's ignored when `restrictToMarks` is `true`.
    * @default 2
    */
   stepMultiplier?: number;
   /**
-   * Value of the slider, to be used when in a controlled state.
+   * The start and end values of the slider. Use with `onChange` to control it.
    */
   value?: [number, number];
 }

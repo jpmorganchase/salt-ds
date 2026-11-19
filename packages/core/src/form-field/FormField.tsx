@@ -42,10 +42,9 @@ export interface FormFieldProps
    */
   readOnly?: boolean;
   /**
-   * Optional id prop
-   *
-   * Used as suffix of FormFieldLabel id: `label-{id}`
-   * Used as suffix of FormFieldHelperText id: `helperText-{id}`.
+   * The ID used in the IDs of the form field's `FormFieldLabel`, `label-{id}`,
+   * and `FormFieldHelperText`, `helperText-{id}`. It isn't applied to the form
+   * field's element. When not set, an ID is generated.
    */
   id?: string;
   /**

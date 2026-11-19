@@ -39,7 +39,8 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
    */
   interactable?: boolean;
   /**
-   * Styling variant. Defaults to "primary".
+   * Styling variant.
+   * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary" | "ghost";
 }

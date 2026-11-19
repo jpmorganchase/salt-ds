@@ -18,11 +18,11 @@ import { generateVisibleDays } from "./utils";
 
 export interface CalendarMonthProps extends ComponentPropsWithRef<"div"> {
   /**
-   * Month to render as selectable dates
+   * The month to show, as any date in that month.
    */
   date: DateFrameworkType;
   /**
-   * Props for the CalendarDay component.
+   * Props applied to each `CalendarDay` component.
    */
   CalendarDayProps?: Partial<CalendarDayProps>;
 }

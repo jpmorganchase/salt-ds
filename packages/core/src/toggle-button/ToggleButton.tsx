@@ -25,7 +25,8 @@ import toggleButtonCss from "./ToggleButton.css";
 export interface ToggleButtonProps
   extends Omit<ComponentPropsWithoutRef<"button">, "onChange"> {
   /**
-   * The appearance of the toggle button when `selected` is true.
+   * The appearance of the toggle button when `selected` is `true`. Inside a
+   * `ToggleButtonGroup`, it defaults to the group's `appearance`.
    * @default "solid"
    */
   appearance?: Extract<ButtonAppearance, "bordered" | "solid">;
@@ -38,17 +39,19 @@ export interface ToggleButtonProps
    */
   readOnly?: boolean;
   /**
-   * The sentiment of the toggle button.
-   * @default neutral
+   * The sentiment of the toggle button. Inside a `ToggleButtonGroup`, it
+   * defaults to the group's `sentiment`.
+   * @default "neutral"
    */
   sentiment?: ButtonSentiment;
   /**
-   * Whether the toggle button is in a selected state.
+   * If `true`, the toggle button is selected. Use with `onChange` to control it.
+   * Inside a `ToggleButtonGroup`, the group's `value` decides whether it's selected instead.
    */
   selected?: boolean;
   /**
-   * Whether the toggle button is selected by default.
-   * This will be disregarded if `selected` is already set.
+   * If `true`, the toggle button is selected initially. Use when the component is uncontrolled.
+   * This is ignored if `selected` is set.
    */
   defaultSelected?: boolean;
   /**

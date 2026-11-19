@@ -26,8 +26,8 @@ export interface CarouselCardProps extends ComponentProps<"div"> {
   media?: ReactNode;
 
   /**
-   * The appearance of the slide. Options are 'bordered', and 'transparent'.
-   * 'transparent' is the default value.
+   * The appearance of the slide.
+   * @default "transparent"
    */
   appearance?: "bordered" | "transparent";
 

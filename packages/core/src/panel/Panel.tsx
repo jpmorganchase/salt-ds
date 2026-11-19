@@ -23,7 +23,8 @@ export interface PanelProps extends HTMLAttributes<HTMLDivElement> {
    */
   elevation?: "flat" | "raised";
   /**
-   * Styling variant; defaults to "primary".
+   * Styling variant.
+   * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
 }

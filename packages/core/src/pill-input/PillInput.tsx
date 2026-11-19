@@ -37,8 +37,9 @@ export interface PillInputProps
       "disabled" | "value" | "defaultValue" | "placeholder"
     > {
   /**
-   * The marker to use in an empty read only Input.
-   * Use `''` to disable this feature. Defaults to '—'.
+   * The text shown when the input is read-only and has no value. Use `""` to
+   * show nothing.
+   * @default "—"
    */
   emptyReadOnlyMarker?: string;
   /**
@@ -46,7 +47,7 @@ export interface PillInputProps
    */
   endAdornment?: ReactNode;
   /**
-   * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
+   * Props applied to the `input` element, such as its [attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes).
    */
   inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>> & DataAttributes;
   /**
@@ -71,7 +72,8 @@ export interface PillInputProps
    */
   startAdornment?: ReactNode;
   /**
-   * Alignment of text within container. Defaults to "left".
+   * Alignment of text within the container.
+   * @default "left"
    */
   textAlign?: "left" | "center" | "right";
   /**
@@ -79,13 +81,14 @@ export interface PillInputProps
    */
   validationStatus?: FormFieldValidationStatus;
   /**
-   * Styling variant. Defaults to "primary".
+   * Styling variant.
+   * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
   hidePillClose?: boolean;
   truncate?: boolean;
   /**
-   * Styling variant with full border. Defaults to false.
+   * If `true`, the pill input has a full border.
    */
   bordered?: boolean;
 }

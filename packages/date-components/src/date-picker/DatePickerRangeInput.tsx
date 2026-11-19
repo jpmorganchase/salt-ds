@@ -34,10 +34,10 @@ const withBaseName = makePrefixer("saltDatePickerRangeInput");
  */
 export interface DatePickerRangeInputProps extends DateInputRangeProps {
   /**
-   * Function to validate the entered date.
-   * @param date - The selected date
-   * @param details - The details of date selection, either a valid date or error
-   * @returns updated DateInputRangeDetails details
+   * Function to validate the entered date range. When set, it replaces the default validation.
+   * @param date - The entered date range.
+   * @param details - The details of the start and end date selections, such as errors.
+   * @returns The updated details.
    */
   validate?: (
     date: DateRangeSelection | null,

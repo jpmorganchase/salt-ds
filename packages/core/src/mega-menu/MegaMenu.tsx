@@ -20,11 +20,11 @@ export interface MegaMenuProps {
    */
   children?: ReactNode;
   /**
-   * Whether the mega menu is open. Use for controlled mode.
+   * If `true`, the mega menu is open. Use with `onOpenChange` to control it.
    */
   open?: boolean;
   /**
-   * Whether the mega menu is initially open. Use for uncontrolled mode.
+   * If `true`, the mega menu is open initially. Use when the component is uncontrolled.
    */
   defaultOpen?: boolean;
   /**

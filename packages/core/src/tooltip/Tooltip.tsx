@@ -67,11 +67,11 @@ export interface TooltipProps
    */
   disabled?: boolean;
   /**
-   * Option to remove the hover listener.
+   * If `true`, the Tooltip doesn't open when its trigger is hovered.
    */
   disableHoverListener?: boolean;
   /**
-   * Option to remove the focus listener.
+   * If `true`, the Tooltip doesn't open when its trigger is focused.
    */
   disableFocusListener?: boolean;
   /**

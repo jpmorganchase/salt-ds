@@ -45,8 +45,8 @@ interface OverflowState {
 interface UseToolbarOverflowProps {
   content: ToolbarContentModel[];
   /**
-   * Called before a measurement is applied, while the DOM still reflects the
-   * previous overflow state.
+   * Callback fired before a measurement is applied, while the DOM still
+   * reflects the previous overflow state.
    */
   onBeforeOverflowUpdate?: () => void;
 }

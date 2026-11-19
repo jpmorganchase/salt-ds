@@ -15,7 +15,10 @@ export interface DrawerResizeGuideProps
   position: NonNullable<DrawerProps["position"]>;
 }
 
-/** Covers the viewport while placing the edge by click, so the click doesn't reach the content. */
+/**
+ * Covers the viewport while placing the edge by click, so the click doesn't
+ * reach the content. It shows a guide line where the edge will be placed.
+ */
 export const DrawerResizeGuide = forwardRef<
   HTMLDivElement,
   DrawerResizeGuideProps

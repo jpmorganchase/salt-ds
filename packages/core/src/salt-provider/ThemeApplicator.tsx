@@ -20,52 +20,60 @@ import { useIsomorphicLayoutEffect } from "../utils/useIsomorphicLayoutEffect";
 
 export interface ThemeApplicatorProps {
   /**
-   * Either "root", "scope" or "child".
-   * Specifies the location of salt theme class and attributes should be applied to.
-   *
-   * Defaults to "root" for a root provider, otherwise "scope".
+   * Where the theme classes and attributes are applied. `"root"` applies them to
+   * the document's root element, `"scope"` to a `div` that wraps `children`, and
+   * `"child"` to the single child element. Inside another `SaltProvider`, it
+   * defaults to `"scope"`.
+   * @default "root"
    */
   applyClassesTo: "root" | "scope" | "child";
   /**
-   * Either "high", "medium", "low", "touch" or "mobile".
-   * Determines the amount of content that can fit on a screen based on the size and spacing of components.
-   * Refer to [density](https://www.saltdesignsystem.com/salt/foundations/density) doc for more detail.
-   *
+   * The density, which sets how much content fits on a screen through the size
+   * and spacing of components. See the
+   * [density](https://www.saltdesignsystem.com/salt/foundations/density) docs for
+   * more detail. Inside another `SaltProvider`, it defaults to the parent's
+   * density.
    * @default "medium"
    */
   density: Density;
   /**
-   * A string. Specifies custom theme name(s) you want to apply, similar to `className`.
+   * The custom theme names to apply as class names, in addition to Salt's own
+   * theme class. Inside another `SaltProvider`, it defaults to the parent's
+   * theme.
    */
   theme: ThemeName;
   /**
-   * Either "light" or "dark". Enable the color palette to change from light to dark.
-   * Refer to [modes](https://www.saltdesignsystem.com/salt/foundations/modes) doc for more detail.
-   *
+   * The mode, which switches the color palette between light and dark. See the
+   * [modes](https://www.saltdesignsystem.com/salt/foundations/modes) docs for
+   * more detail. Inside another `SaltProvider`, it defaults to the parent's mode.
    * @default "light"
    */
   mode: Mode;
   /**
-   * Either "sharp" or "rounded".
-   * Determines selected components corner radius.
+   * The corner radius of the components that support it: `"sharp"` or
+   * `"rounded"`. Inside another `SaltProvider`, it defaults to the parent's
+   * `corner`.
    * @default "sharp"
    */
   corner?: Corner;
   /**
-   * Either "Open Sans" or "Amplitude".
-   * Determines font family of display and heading text.
+   * The font family of display and heading text: `"Open Sans"` or
+   * `"Amplitude"`. Inside another `SaltProvider`, it defaults to the parent's
+   * `headingFont`.
    * @default "Open Sans"
    */
   headingFont?: HeadingFont;
   /**
-   * Either "blue" or "teal".
-   * Determines accent color used across components, e.g. Accent Button, List, Calendar.
+   * The accent color used across components, for example by accented buttons,
+   * lists and calendars: `"blue"` or `"teal"`. Inside another `SaltProvider`, it
+   * defaults to the parent's `accent`.
    * @default "blue"
    */
   accent?: Accent;
   /**
-   * Either "Open Sans" or "Amplitude".
-   * Determines font family of action components, mostly Buttons.
+   * The font family of action components, mostly buttons: `"Open Sans"` or
+   * `"Amplitude"`. Inside another `SaltProvider`, it defaults to the parent's
+   * `actionFont`.
    * @default "Open Sans"
    */
   actionFont?: ActionFont;

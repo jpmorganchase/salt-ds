@@ -26,24 +26,24 @@ const withBaseName = makePrefixer("saltDatePickerActions");
 export interface DatePickerActionsBaseProps
   extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Callback fired when the cancel action is triggered.
+   * Callback fired when the cancel button is clicked.
    * @param _event - The synthetic event.
    */
   onCancel?: (_event: SyntheticEvent) => void;
   /**
-   * Ref to apply button.
+   * Ref to the apply button.
    */
   applyButtonRef?: Ref<HTMLButtonElement>;
   /**
-   * Props for the apply button.
+   * Props applied to the apply `Button` component.
    */
   ApplyButtonProps?: ButtonProps;
   /**
-   * Props for the cancel button.
+   * Props applied to the cancel `Button` component.
    */
   CancelButtonProps?: ButtonProps;
   /**
-   * Ref to cancel button.
+   * Ref to the cancel button.
    */
   cancelButtonRef?: Ref<HTMLButtonElement>;
 }
@@ -57,13 +57,11 @@ export type DatePickerActionsProps<
 > = SelectionVariant extends "single"
   ? DatePickerActionsBaseProps & {
       /**
-       * The selection variant, set to "single".
+       * The selection variant of the `DatePicker`. Use `"single"` when it selects one date, or `"range"` when it selects a date range.
        */
       selectionVariant: "single";
       /**
-       * Callback fired when the apply action is triggered.
-       * @param _event - The synthetic event.
-       * @param date - The selected single date or null.
+       * Callback fired when the apply button is clicked. It's called with the selected date, or with the selected date range when `selectionVariant` is `"range"`.
        */
       onApply?: (
         _event: SyntheticEvent,
@@ -72,13 +70,11 @@ export type DatePickerActionsProps<
     }
   : DatePickerActionsBaseProps & {
       /**
-       * The selection variant, set to "range".
+       * The selection variant of the `DatePicker`. Use `"single"` when it selects one date, or `"range"` when it selects a date range.
        */
       selectionVariant: "range";
       /**
-       * Callback fired when the apply action is triggered.
-       * @param _event - The synthetic event.
-       * @param date - The selected date range or null.
+       * Callback fired when the apply button is clicked. It's called with the selected date, or with the selected date range when `selectionVariant` is `"range"`.
        */
       onApply?: (
         _event: SyntheticEvent,

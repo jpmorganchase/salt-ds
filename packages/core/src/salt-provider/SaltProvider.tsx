@@ -47,7 +47,7 @@ export interface ThemeContextProps {
   mode: Mode;
   window?: WindowContextType;
   /**
-   * Only available when using SaltProviderNext.
+   * If `true`, the closest provider is a `SaltProviderNext` and the next theme is applied.
    */
   themeNext: boolean;
   corner: Corner;
@@ -102,15 +102,15 @@ interface SaltProviderBaseProps
     Omit<ThemeApplicatorProps, "children" | ThemeNextOnlyAttributes>
   > {
   /**
-   * Shape of `{ xs: number; sm: number; md: number; lg: number; xl: number; }`.
-   * Determines breakpoints used in responsive calculation for layout components.
+   * The minimum viewport width, in pixels, of each breakpoint used by
+   * responsive props: `xs`, `sm`, `md`, `lg` and `xl`.
+   * @default { xs: 0, sm: 600, md: 960, lg: 1280, xl: 1920 }
    */
   breakpoints?: Breakpoints;
   /**
-   * A boolean. Enables dynamic style injection for each component.
-   *
-   * If `false`, you'll need to include component CSS yourself.
-   *
+   * If `true`, each component injects its own CSS when it renders. If `false`,
+   * you need to include the components' CSS yourself. Inside another
+   * `SaltProvider`, it defaults to the parent's value.
    * @default true
    */
   enableStyleInjection?: boolean;

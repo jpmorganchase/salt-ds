@@ -25,7 +25,7 @@ export interface TreeProps extends ComponentPropsWithoutRef<"ul"> {
    */
   expanded?: string[];
   /**
-   * Callback on expanded nodes change.
+   * Callback fired when the expanded nodes change.
    */
   onExpandedChange?: (event: SyntheticEvent, expanded: string[]) => void;
   /**
@@ -37,15 +37,16 @@ export interface TreeProps extends ComponentPropsWithoutRef<"ul"> {
    */
   selected?: string[];
   /**
-   * Callback on selected nodes change.
+   * Callback fired when the selected nodes change.
    */
   onSelectionChange?: (event: SyntheticEvent, selected: string[]) => void;
   /**
-   * Sets multiselect mode with checkboxes and allows for multiple node selection.
+   * If `true`, the tree is in multiselect mode, which shows checkboxes and
+   * allows multiple nodes to be selected.
    */
   multiselect?: boolean;
   /**
-   * Sets tree to disabled state, preventing all interaction.
+   * If `true`, the tree is disabled, preventing all interaction.
    */
   disabled?: boolean;
 }

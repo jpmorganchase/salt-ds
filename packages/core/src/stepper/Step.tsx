@@ -31,23 +31,26 @@ export interface StepProps
    */
   label?: ReactNode;
   /**
-   * Description text is displayed just below the label.
+   * The description, displayed below the label.
    */
   description?: ReactNode;
   /**
-   * Optional string to determine the status of the step.
+   * The status of the step, `"warning"` or `"error"`. It replaces the stage's
+   * icon, and screen readers announce it instead of the stage.
    */
   status?: StepStatus;
   /**
-   * The stage of the step.
+   * The stage of the step, which sets its icon.
+   * @default "pending"
    */
   stage?: StepStage;
   /**
-   * Whether the step item is expanded.
+   * If `true`, the step is expanded. Use with `onToggle` to control it.
    */
   expanded?: boolean;
   /**
-   * Initial expanded state of the step.
+   * If `true`, the step is expanded initially. Use when the component is
+   * uncontrolled.
    */
   defaultExpanded?: boolean;
   /**

@@ -22,7 +22,7 @@ type UseCarouselTabProps = {
   selectedIndex: number;
 
   /**
-   * An array of scroll snap positions for the carousel slides.
+   * The scroll snap positions of the carousel slides.
    */
   scrollSnaps: number[];
 };
@@ -71,7 +71,7 @@ export const useCarouselTab = (
  */
 export interface CarouselTabProps extends ComponentPropsWithRef<"button"> {
   /**
-   * Is the selected slide.
+   * If `true`, the tab represents the selected slide.
    */
   selected?: boolean;
 }

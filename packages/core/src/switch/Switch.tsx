@@ -25,8 +25,8 @@ export interface SwitchProps
    */
   checked?: boolean;
   /**
-   * Whether the switch component is checked by default
-   * This will be disregarded if checked is already set.
+   * If `true`, the switch is checked initially. Use when the component is uncontrolled.
+   * This is ignored if `checked` is set.
    */
   defaultChecked?: boolean;
   /**
@@ -34,7 +34,7 @@ export interface SwitchProps
    */
   disabled?: boolean;
   /**
-   * Properties applied to the input element.
+   * Props applied to the `input` element.
    */
   inputProps?: Partial<ComponentPropsWithoutRef<"input">> & DataAttributes;
   /**
@@ -46,15 +46,15 @@ export interface SwitchProps
    */
   name?: string;
   /**
-   * Callback when switch loses focus.
+   * Callback fired when the switch loses focus.
    */
   onBlur?: FocusEventHandler<HTMLInputElement>;
   /**
-   * Callback when checked state is changed.
+   * Callback fired when the checked state changes.
    */
   onChange?: ChangeEventHandler<HTMLInputElement>;
   /**
-   * Callback when switch gains focus.
+   * Callback fired when the switch gains focus.
    */
   onFocus?: FocusEventHandler<HTMLInputElement>;
   /**
