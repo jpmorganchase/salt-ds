@@ -27,7 +27,7 @@ const withBaseName = makePrefixer("saltCarouselTabList");
  */
 export interface CarouselTabListProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Render prop to enable customisation of tab button.
+   * Render prop to enable customization of tab button.
    */
   render?: RenderPropsType["render"];
 }

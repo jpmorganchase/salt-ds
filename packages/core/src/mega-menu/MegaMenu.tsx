@@ -25,7 +25,6 @@ export interface MegaMenuProps {
   open?: boolean;
   /**
    * Whether the mega menu is initially open. Use for uncontrolled mode.
-   * @default false
    */
   defaultOpen?: boolean;
   /**

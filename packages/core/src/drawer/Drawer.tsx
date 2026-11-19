@@ -57,27 +57,27 @@ export interface DrawerProps extends ComponentPropsWithoutRef<"div"> {
    */
   onOpenChange?: (newOpen: boolean) => void;
   /**
-   * Change background color palette
+   * Change background color palette.
    */
   variant?: "primary" | "secondary" | "tertiary";
   /**
-   * Prevent the drawer closing on click away
-   * */
+   * Prevent the drawer closing on click away.
+   */
   disableDismiss?: boolean;
   /**
-   * Prevent Scrim from rendering
-   * */
+   * Prevent Scrim from rendering.
+   */
   disableScrim?: boolean;
   /**
    * Allow the user to resize the drawer. Set size limits with the `--saltDrawer-minResize`/`--saltDrawer-maxResize`
    * variables, which apply to the width of `left` and `right` drawers and the height of `top` and `bottom` drawers.
    * The drawer never shrinks below `--salt-size-base`, unless `min-width`/`min-height` is set directly.
-   * */
+   */
   resizable?: boolean;
   /**
    * Which element to initially focus. Can be either a number (tabbable index as specified by the order) or a ref.
    * Default value is 0 (first tabbable element).
-   * */
+   */
   initialFocus?: ComponentPropsWithoutRef<
     typeof FloatingFocusManager
   >["initialFocus"];

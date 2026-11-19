@@ -24,7 +24,7 @@ export interface RadioButtonGroupProps
    */
   direction?: "horizontal" | "vertical";
   /**
-   * Disable the RadioButton group
+   * Disable the RadioButton group.
    */
   disabled?: boolean;
   /**

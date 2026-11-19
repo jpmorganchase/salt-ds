@@ -19,7 +19,7 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
   T,
   {
     /**
-     * Applies disabled styling when true
+     * Applies disabled styling when true.
      */
     disabled?: boolean;
     /**
@@ -28,7 +28,7 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
      */
     fontWeight?: "lighter" | "bolder";
     /**
-     * Apply text truncation by mentioning number of rows to be displayed
+     * Apply text truncation by mentioning number of rows to be displayed.
      */
     maxRows?: number;
     /**
@@ -60,7 +60,7 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
       | "code"
       | "inherit";
     /**
-     * Change text color palette
+     * Change text color palette.
      * @deprecated since 1.27.1. Use `color` instead.
      */
     variant?: "primary" | "secondary";

@@ -9,18 +9,16 @@ import tableCss from "./Table.css";
 export interface TFootProps extends ComponentPropsWithoutRef<"tfoot"> {
   /**
    * If footer is positioned with sticky styling.
-   * @default false
    */
   sticky?: boolean;
   /**
-   * Divider styling variant. Defaults to "primary";
-   * @default primary
+   * Divider styling variant. Defaults to "primary".
+   * @default "primary"
    */
   divider?: "primary" | "secondary" | "tertiary" | "none";
   /**
    * Styling variant for footer.
    * If undefined, will match variant of parent Table component's variant.
-   * @default undefined
    */
   variant?: "primary" | "secondary" | "tertiary";
 }

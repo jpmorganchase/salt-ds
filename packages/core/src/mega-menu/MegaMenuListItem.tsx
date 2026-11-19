@@ -26,7 +26,7 @@ export interface MegaMenuListItemProps
    */
   children?: ReactNode;
   /**
-   * Whether the item is the current page. Sets `aria-current="page"`
+   * Whether the item is the current page. Sets `aria-current="page"`.
    */
   current?: boolean;
   /**

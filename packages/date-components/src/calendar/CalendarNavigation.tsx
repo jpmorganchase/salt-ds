@@ -61,12 +61,12 @@ export interface CalendarNavigationProps extends ComponentPropsWithRef<"div"> {
    */
   step?: number;
   /**
-   * Format the month dropdown values
+   * Format the month dropdown values.
    * @param date
    */
   formatMonth?: string;
   /**
-   * Format the year dropdown values
+   * Format the year dropdown values.
    * @param date
    */
   formatYear?: string;

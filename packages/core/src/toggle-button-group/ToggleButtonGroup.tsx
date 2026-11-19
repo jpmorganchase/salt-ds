@@ -30,7 +30,7 @@ export interface ToggleButtonGroupProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   /**
    * The appearance of all the toggle buttons within the group.
-   * @default solid
+   * @default "solid"
    */
   appearance?: Extract<ButtonAppearance, "bordered" | "solid">;
   /**

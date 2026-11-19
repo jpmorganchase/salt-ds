@@ -21,7 +21,7 @@ import { flattenTreeNodeChildren, isTreeNodeElement } from "./treeModel";
 
 export interface TreeNodeProps {
   /**
-   * Unique value representing this node within the tree
+   * Unique value representing this node within the tree.
    */
   value: string;
   /**
@@ -29,7 +29,7 @@ export interface TreeNodeProps {
    */
   label?: ReactNode;
   /**
-   * Optional icon to display before the label
+   * Optional icon to display before the label.
    */
   icon?: ComponentType<IconProps>;
   /**

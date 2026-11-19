@@ -28,7 +28,7 @@ export interface CarouselCardProps extends ComponentProps<"div"> {
   /**
    * The appearance of the slide. Options are 'bordered', and 'transparent'.
    * 'transparent' is the default value.
-   **/
+   */
   appearance?: "bordered" | "transparent";
 
   /**

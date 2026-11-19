@@ -44,8 +44,8 @@ export interface CarouselProps extends ComponentPropsWithoutRef<"section"> {
    */
   emblaPlugins?: CarouselPlugin;
   /**
-   * Get embla API instance, use this to manage the state of the Carousel
-   **/
+   * Get embla API instance, use this to manage the state of the Carousel.
+   */
   getEmblaApi?: (embla: CarouselEmblaApiType) => void;
   /**
    * Disable screenreader announcing slide updates, defaults to false.

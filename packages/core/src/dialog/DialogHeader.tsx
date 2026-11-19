@@ -17,7 +17,7 @@ const withBaseName = makePrefixer("saltDialogHeader");
 
 export interface DialogHeaderProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The status of the Dialog
+   * The status of the Dialog.
    */
   status?: ValidationStatus | undefined;
   /**
@@ -27,19 +27,19 @@ export interface DialogHeaderProps extends ComponentPropsWithoutRef<"div"> {
    */
   disableAccent?: boolean;
   /**
-   * Displays the header at the top of the Dialog
+   * Displays the header at the top of the Dialog.
    */
   header: ReactNode;
   /**
-   * Displays the preheader just above the header
-   **/
+   * Displays the preheader just above the header.
+   */
   preheader?: ReactNode;
   /**
-   * Description text is displayed just below the header
-   **/
+   * Description text is displayed just below the header.
+   */
   description?: ReactNode;
   /**
-   * Actions to be displayed in header
+   * Actions to be displayed in header.
    */
   actions?: ReactNode;
 }

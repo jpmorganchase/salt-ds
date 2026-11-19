@@ -46,12 +46,10 @@ export interface NumberInputProps
   > {
   /**
    * Styling variant with full border.
-   * @default false
    */
   bordered?: boolean;
   /**
    * A boolean that, when true, ensures the input value is clamped within the specified min and max range upon losing focus.
-   * @default false
    */
   clamp?: boolean;
   /**
@@ -64,7 +62,7 @@ export interface NumberInputProps
    * Custom decrement function to override the default increment behavior, use when higher precision or large numbers are required
    * value: current value
    * step: step value
-   * stepMultiplier: step multiplier value, when using shift key navigation
+   * stepMultiplier: step multiplier value, when using shift key navigation.
    */
   decrement?: (value: string, step: number, stepMultiplier: number) => string;
   /**
@@ -73,7 +71,6 @@ export interface NumberInputProps
   defaultValue?: number | string;
   /**
    * Disable the `NumberInput`.
-   * @default false
    */
   disabled?: boolean;
   /**
@@ -92,14 +89,13 @@ export interface NumberInputProps
   format?: (value: string) => string;
   /**
    * Hide the number buttons.
-   * @default false
    */
   hideButtons?: boolean;
   /**
    * Custom increment function to override the default increment behavior, use when higher precision or large numbers are required
    * value: current value
    * step: step value
-   * stepMultiplier: step multiplier value, when using shift key navigation
+   * stepMultiplier: step multiplier value, when using shift key navigation.
    */
   increment?: (value: string, step: number, stepMultiplier: number) => string;
   /**
@@ -130,8 +126,7 @@ export interface NumberInputProps
   name?: string;
   /**
    * Callback function that is triggered when the value changes via user input or increment/decrement.
-   * Use `onNumberChange` if you want stable number, after blur or through increment/decrement
-   *
+   * Use `onNumberChange` if you want stable number, after blur or through increment/decrement.
    * @param event - The event that triggers the value change, can be null if called by long-press of increment/decrement
    * @param value - value as string
    */

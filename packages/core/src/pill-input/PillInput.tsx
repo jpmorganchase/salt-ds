@@ -42,7 +42,7 @@ export interface PillInputProps
    */
   emptyReadOnlyMarker?: string;
   /**
-   * End adornment component
+   * End adornment component.
    */
   endAdornment?: ReactNode;
   /**
@@ -50,7 +50,7 @@ export interface PillInputProps
    */
   inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>> & DataAttributes;
   /**
-   * Optional ref for the input component
+   * Optional ref for the input component.
    */
   inputRef?: Ref<HTMLInputElement>;
   /**
@@ -67,11 +67,11 @@ export interface PillInputProps
   pills?: string[];
   onPillRemove?: (event: SyntheticEvent, index: number) => void;
   /**
-   * Start adornment component
+   * Start adornment component.
    */
   startAdornment?: ReactNode;
   /**
-   * Alignment of text within container. Defaults to "left"
+   * Alignment of text within container. Defaults to "left".
    */
   textAlign?: "left" | "center" | "right";
   /**
@@ -84,7 +84,8 @@ export interface PillInputProps
   variant?: "primary" | "secondary" | "tertiary";
   hidePillClose?: boolean;
   truncate?: boolean;
-  /** Styling variant with full border. Defaults to false
+  /**
+   * Styling variant with full border. Defaults to false.
    */
   bordered?: boolean;
 }

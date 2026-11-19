@@ -26,15 +26,15 @@ export interface ParentChildLayoutProps
    */
   gap?: number;
   /**
-   * Parent component to be rendered
+   * Parent component to be rendered.
    */
   parent: ReactNode;
   /**
-   * Child component to be rendered
+   * Child component to be rendered.
    */
   child: ReactNode;
   /**
-   * Function called when the viewport size equal to or less than the collapseAtBreakpoint variable
+   * Function called when the viewport size equal to or less than the collapseAtBreakpoint variable.
    */
   onCollapseChange?: (isCollapsed: boolean) => void;
 }

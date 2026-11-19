@@ -15,20 +15,20 @@ const withBaseName = makePrefixer("saltOverlayHeader");
 
 export interface OverlayHeaderProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Description text is displayed just below the header
-   **/
+   * Description text is displayed just below the header.
+   */
   description?: ReactNode;
   /**
-   * Actions to be displayed in header
+   * Actions to be displayed in header.
    */
   actions?: ReactNode;
   /**
-   * Header text
+   * Header text.
    */
   header?: ReactNode;
   /**
-   * Preheader text is displayed just above the header
-   **/
+   * Preheader text is displayed just above the header.
+   */
   preheader?: ReactNode;
 }
 

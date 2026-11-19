@@ -22,7 +22,7 @@ export interface GoToInputProps extends HTMLAttributes<HTMLSpanElement> {
    */
   label?: string;
   /**
-   * Optional ref for the input component
+   * Optional ref for the input component.
    */
   inputRef?: Ref<HTMLInputElement>;
   /**

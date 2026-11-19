@@ -140,7 +140,7 @@ export interface DateInputRangeProps
    */
   endInputRef?: Ref<HTMLInputElement>;
   /**
-   * Parser callback, if not using the adapter's parser
+   * Parser callback, if not using the adapter's parser.
    * @param value - date string to parse
    * @param field: DateParserField to identify value,
    * @param format - format required

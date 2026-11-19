@@ -10,17 +10,16 @@ import { useTable } from "./TableContext";
 export interface TableProps extends ComponentPropsWithoutRef<"table"> {
   /**
    * Styling variant. Defaults to "primary".
-   * @default primary
+   * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
   /**
-   * Divider styling variant. Defaults to "tertiary";
-   * @default tertiary
+   * Divider styling variant. Defaults to "tertiary".
+   * @default "tertiary"
    */
   divider?: "primary" | "secondary" | "tertiary" | "none";
   /**
    * Zebra styling. Applies a different fill to every other row.
-   * @default false
    */
   zebra?: boolean;
 }

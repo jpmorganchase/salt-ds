@@ -29,19 +29,19 @@ import { CalendarMonth } from "./internal/CalendarMonth";
  */
 export interface CalendarGridProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Number of columns
+   * Number of columns.
    */
   columns?: ResponsiveProp<number | string>;
   /**
-   * Props for `CalendarWeekHeader`
+   * Props for `CalendarWeekHeader`.
    */
   CalendarWeekHeaderProps?: Partial<CalendarWeekHeaderProps>;
   /**
-   * Props for `CalendarMonthHeader`
+   * Props for `CalendarMonthHeader`.
    */
   CalendarMonthHeaderProps?: Partial<CalendarMonthHeaderProps>;
   /**
-   * Props for `CalendarDay`
+   * Props for `CalendarDay`.
    */
   CalendarDayProps?: Partial<CalendarDayProps>;
 }

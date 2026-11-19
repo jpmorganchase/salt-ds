@@ -46,19 +46,29 @@ export interface ThemeContextProps {
   theme: ThemeName;
   mode: Mode;
   window?: WindowContextType;
-  /** Only available when using SaltProviderNext. */
+  /**
+   * Only available when using SaltProviderNext.
+   */
   themeNext: boolean;
   corner: Corner;
-  /** @deprecated since 1.32.0. Use `corner`. */
+  /**
+   * @deprecated since 1.32.0. Use `corner`.
+   */
   UNSTABLE_corner: Corner;
   headingFont: HeadingFont;
-  /** @deprecated since 1.32.0. Use `headingFont`. */
+  /**
+   * @deprecated since 1.32.0. Use `headingFont`.
+   */
   UNSTABLE_headingFont: HeadingFont;
   accent: Accent;
-  /** @deprecated since 1.32.0. Use `accent`. */
+  /**
+   * @deprecated since 1.32.0. Use `accent`.
+   */
   UNSTABLE_accent: Accent;
   actionFont: ActionFont;
-  /** @deprecated since 1.32.0. Use `actionFont`. */
+  /**
+   * @deprecated since 1.32.0. Use `actionFont`.
+   */
   UNSTABLE_actionFont: ActionFont;
 }
 

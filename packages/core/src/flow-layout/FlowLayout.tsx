@@ -20,7 +20,7 @@ export type FlowLayoutProps<T extends ElementType> =
        */
       gap?: FlexLayoutProps<ElementType>["gap"];
       /**
-       * Defines the alignment along the main axis, default is "start"
+       * Defines the alignment along the main axis, default is "start".
        */
       justify?: FlexLayoutProps<ElementType>["justify"];
       /**

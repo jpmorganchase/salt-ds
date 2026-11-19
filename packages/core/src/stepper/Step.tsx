@@ -27,19 +27,19 @@ import { Stepper } from "./Stepper";
 export interface StepProps
   extends Omit<ComponentPropsWithoutRef<"li">, "onToggle"> {
   /**
-   * The label of the step
+   * The label of the step.
    */
   label?: ReactNode;
   /**
-   * Description text is displayed just below the label
-   **/
+   * Description text is displayed just below the label.
+   */
   description?: ReactNode;
   /**
    * Optional string to determine the status of the step.
    */
   status?: StepStatus;
   /**
-   * The stage of the step
+   * The stage of the step.
    */
   stage?: StepStage;
   /**

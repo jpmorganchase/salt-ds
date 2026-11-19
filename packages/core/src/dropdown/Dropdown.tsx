@@ -88,7 +88,7 @@ export interface DropdownProps<Item = string>
    */
   required?: boolean;
   /**
-   * Start adornment component
+   * Start adornment component.
    */
   startAdornment?: ReactNode;
   /**
@@ -103,7 +103,8 @@ export interface DropdownProps<Item = string>
    * Validation status, one of "error" | "warning" | "success".
    */
   validationStatus?: FormFieldValidationStatus;
-  /** Styling variant with a full border. Defaults to false
+  /**
+   * Styling variant with a full border. Defaults to false.
    */
   bordered?: boolean;
   /**

@@ -33,19 +33,19 @@ export type GridItemProps<T extends ElementType> =
     T,
     {
       /**
-       * The item will span across the provided number of grid columns. Defaults to "auto"
+       * The item will span across the provided number of grid columns. Defaults to "auto".
        */
       colSpan?: ResponsiveProp<GridProperty>;
       /**
-       * The item will span across the provided number of grid rows. Defaults to "auto"
+       * The item will span across the provided number of grid rows. Defaults to "auto".
        */
       rowSpan?: ResponsiveProp<GridProperty>;
       /**
-       * Aligns a grid item inside a cell along the inline (row) axis. Defaults to "stretch"
+       * Aligns a grid item inside a cell along the inline (row) axis. Defaults to "stretch".
        */
       horizontalAlignment?: GridAlignment;
       /**
-       * Aligns a grid item inside a cell along the block (column) axis. Defaults to "stretch"
+       * Aligns a grid item inside a cell along the block (column) axis. Defaults to "stretch".
        */
       verticalAlignment?: GridAlignment;
       /**

@@ -17,7 +17,7 @@ export interface FormFieldLabelProps
    * Intent for the label.
    *
    * Defaults to "label"
-   * Using "sentence" gives more prominent styling
+   * Using "sentence" gives more prominent styling.
    */
   intent?: "label" | "sentence";
 }

@@ -26,7 +26,7 @@ export interface ToggleButtonProps
   extends Omit<ComponentPropsWithoutRef<"button">, "onChange"> {
   /**
    * The appearance of the toggle button when `selected` is true.
-   * @default solid
+   * @default "solid"
    */
   appearance?: Extract<ButtonAppearance, "bordered" | "solid">;
   /**

@@ -23,23 +23,23 @@ export type GridLayoutProps<T extends ElementType> =
     T,
     {
       /**
-       * Number of columns to be displayed. Defaults to 12
+       * Number of columns to be displayed. Defaults to 12.
        */
       columns?: ResponsiveProp<number | string>;
       /**
-       * Number of rows to be displayed. Defaults to 1
+       * Number of rows to be displayed. Defaults to 1.
        */
       rows?: ResponsiveProp<number | string>;
       /**
-       * Defines the size of the gutter between the columns and the rows by setting a density multiplier. Defaults to 3
+       * Defines the size of the gutter between the columns and the rows by setting a density multiplier. Defaults to 3.
        */
       gap?: ResponsiveProp<number | string>;
       /**
-       * Defines the size of the gutter between the columns by setting a density multiplier. Defaults to 1
+       * Defines the size of the gutter between the columns by setting a density multiplier. Defaults to 1.
        */
       columnGap?: ResponsiveProp<number | string>;
       /**
-       * Defines the size of the gutter between the rows by setting a density multiplier. Defaults to 1
+       * Defines the size of the gutter between the rows by setting a density multiplier. Defaults to 1.
        */
       rowGap?: ResponsiveProp<number | string>;
       /**

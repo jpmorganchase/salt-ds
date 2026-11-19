@@ -15,7 +15,7 @@ const withBaseName = makePrefixer("saltRatingItem");
 
 export interface RatingItemProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * specifies the value of the feedback item.
+   * Specifies the value of the feedback item.
    */
   value: number;
   /**
@@ -27,15 +27,15 @@ export interface RatingItemProps extends ComponentPropsWithoutRef<"div"> {
    */
   isSelected?: boolean;
   /**
-   * defines the current selected rating.
+   * Defines the current selected rating.
    */
   currentRating?: number;
   /**
-   *  callback function when feedback item is hovered.
+   * Callback function when feedback item is hovered.
    */
   onMouseEnter: (event: MouseEvent<HTMLInputElement>) => void;
   /**
-   *  callback function when feedback item is clicked.
+   * Callback function when feedback item is clicked.
    */
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
   /**
@@ -54,7 +54,7 @@ export interface RatingItemProps extends ComponentPropsWithoutRef<"div"> {
    */
   isUnselecting?: boolean;
   /**
-   * Name of the radio group
+   * Name of the radio group.
    */
   name?: string;
 }

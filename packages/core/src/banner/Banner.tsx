@@ -15,7 +15,7 @@ export interface BannerProps extends HTMLAttributes<HTMLDivElement> {
    */
   variant?: "primary" | "secondary";
   /**
-   *  A string to determine the current state of the Banner
+   * A string to determine the current state of the Banner.
    */
   status?: ValidationStatus;
 }

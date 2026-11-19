@@ -45,15 +45,15 @@ export interface FormFieldProps
    * Optional id prop
    *
    * Used as suffix of FormFieldLabel id: `label-{id}`
-   * Used as suffix of FormFieldHelperText id: `helperText-{id}`
+   * Used as suffix of FormFieldHelperText id: `helperText-{id}`.
    */
   id?: string;
   /**
-   * Displays necessity on label
+   * Displays necessity on label.
    */
   necessity?: "required" | "optional" | "asterisk";
   /**
-   * Validation status
+   * Validation status.
    */
   validationStatus?: FormFieldValidationStatus;
 }
