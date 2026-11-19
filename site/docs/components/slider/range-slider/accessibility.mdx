@@ -8,55 +8,70 @@ data:
   $ref: ./#/data
 ---
 
+## Best practices
+
+- Give the `RangeSlider` an accessible name. Wrap it in a [`FormField`](/salt/components/form-field) with a `FormFieldLabel`, or set the `aria-label` or `aria-labelledby` prop.
+- Screen readers announce the value of the focused thumb and describe the range. The description says whether the thumb is the leading or trailing thumb and includes the selected interval, for example, "leading, 20 to 50, range minimum 0, maximum 100". If `step` isn't 1, the description includes the increment. If `restrictToMarks` is `true`, it includes "custom increments".
+- If you set custom `minLabel` and `maxLabel` text, set `accessibleMinText` and `accessibleMaxText` so screen readers announce the same text. Refer to the [labels example](/salt/components/slider/range-slider/examples#labels).
+- Use the `format()` callback to announce values with units or currency. For non-numeric values, also set `aria-valuetext`. Refer to the [example with non-numeric values](/salt/components/slider/range-slider/examples#with-non-numeric-values).
+- The tooltip is visual only. Screen readers announce the value from the `RangeSlider` itself.
+
 ## Keyboard interactions
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-- If focus is outside the `RangeSlider`, moves focus to the `RangeSlider` indicator within the tabbing order.
-- If focus is on the first thumb of the `RangeSlider`, moves focus to the second thumb. If focus is on the second thumb, moves focus to the next component within the tabbing order.
+- If focus is outside the `RangeSlider`, moves focus to the first thumb.
+- If focus is on the first thumb, moves focus to the second thumb. If focus is on the second thumb, moves focus to the next component in the tab order.
+- If the `RangeSlider` is disabled, it's skipped.
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-- Moves focus to the previous item within the tabbing order.
+- Moves focus to the previous thumb or component in the tab order.
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Up arrow / Right arrow">
 
-- Increase the value of the `RangeSlider` by one step.
+- Increases the value of the focused thumb by one step. If `restrictToMarks` is `true`, moves it to the next mark. A thumb can't move past the other thumb.
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Down arrow / Left arrow">
 
-- Decrease the value of the `RangeSlider` by one step.
+- Decreases the value of the focused thumb by one step. If `restrictToMarks` is `true`, moves it to the previous mark. A thumb can't move past the other thumb.
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Home">
 
-- Set the `RangeSlider` to the first allowed value in its range.
+- Sets the focused thumb to the first allowed value. A thumb can't move past the other thumb.
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="End">
 
-- Set the `RangeSlider` to the last allowed value in its range.
+- Sets the focused thumb to the last allowed value. A thumb can't move past the other thumb.
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Page Up">
 
-- Increase the `RangeSlider` value by an amount larger than the step change made by Up Arrow. This amount can be controlled via the `stepMultiplier` prop.
+- Increases the value of the focused thumb by `step` multiplied by `stepMultiplier`, which defaults to 2. If `restrictToMarks` is `true`, moves it to the next mark. A thumb can't move past the other thumb.
 
 </KeyboardControl>
 
 <KeyboardControl keyOrCombos="Page Down">
 
-- Decrease the `RangeSlider` value by an amount larger than the step change made by Down Arrow. This amount can be controlled via the `stepMultiplier` prop.
+- Decreases the value of the focused thumb by `step` multiplied by `stepMultiplier`, which defaults to 2. If `restrictToMarks` is `true`, moves it to the previous mark. A thumb can't move past the other thumb.
+
+</KeyboardControl>
+
+<KeyboardControl keyOrCombos="Escape">
+
+- Hides the tooltip displayed when hovering over a thumb.
 
 </KeyboardControl>
 

@@ -97,8 +97,16 @@ export const getClickedPosition = (
   if (!sliderRef.current) return;
 
   const sliderRect = sliderRef.current.getBoundingClientRect();
+  const thumbWidth =
+    sliderRef.current.querySelector(".saltSliderThumb")?.getBoundingClientRect()
+      .width ?? 0;
+  // The thumb's center moves between half a thumb width inside each rail edge.
+  const travelWidth = sliderRect.width - thumbWidth;
+  if (travelWidth <= 0) return;
+
   const rawValue =
-    ((clientX - sliderRect.left) / sliderRect.width) * (max - min) + min;
+    ((clientX - sliderRect.left - thumbWidth / 2) / travelWidth) * (max - min) +
+    min;
   const steppedValue = Math.round(rawValue / step) * step;
   return clamp(
     steppedValue,

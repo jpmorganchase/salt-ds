@@ -1,11 +1,16 @@
 .saltSliderTrack {
   --slider-track-background: var(--salt-sentiment-neutral-track);
   --slider-track-fill: var(--salt-sentiment-accent-borderColor);
-  --slider-progressPercentage: 0%;
+  --slider-thumb-width: var(--salt-size-fixed-200);
+  --slider-thumb-gap: var(--salt-spacing-fixed-200);
+  /* Unitless progress (0 - 1) along the track */
+  --slider-progress: 0;
   --slider-tick-height: calc((var(--salt-size-selectable) - var(--salt-size-bar)) / 2);
+  /* Space taken by the mark labels below the ticks */
+  --slider-marks-height: calc(var(--salt-spacing-50) + var(--salt-text-label-lineHeight));
   /* For range */
-  --slider-progressPercentageStart: 0%;
-  --slider-progressPercentageEnd: 0%;
+  --slider-progressStart: 0;
+  --slider-progressEnd: 0;
 
   display: flex;
   touch-action: none;
@@ -14,7 +19,7 @@
 
 .saltSliderTrack.saltSliderTrack-withMarks {
   /* To wrap the marks within the boundary box */
-  margin-bottom: calc(var(--salt-size-base) / 2);
+  margin-bottom: var(--slider-marks-height);
 }
 
 .saltSliderTrack-disabled {
@@ -67,7 +72,7 @@
   background: var(--slider-track-fill);
   border-top-left-radius: var(--salt-palette-corner-weaker);
   border-bottom-left-radius: var(--salt-palette-corner-weaker);
-  width: calc(var(--slider-progressPercentage) - var(--salt-spacing-fixed-300));
+  width: calc(var(--slider-progress) * (100% - var(--slider-thumb-width)) - var(--slider-thumb-gap));
 }
 
 .saltSliderTrack-hasMinTick.saltSliderTrack-rail::before {
@@ -78,7 +83,7 @@
   background: var(--slider-track-background);
   border-top-right-radius: var(--salt-palette-corner-weaker);
   border-bottom-right-radius: var(--salt-palette-corner-weaker);
-  width: calc(100% - var(--slider-progressPercentage) - var(--salt-spacing-fixed-300));
+  width: calc((1 - var(--slider-progress)) * (100% - var(--slider-thumb-width)) - var(--slider-thumb-gap));
 }
 
 .saltSliderTrack-hasMaxTick.saltSliderTrack-rail::after {
@@ -87,20 +92,20 @@
 
 .saltSliderTrack-range .saltSliderTrack-rail::before {
   background: var(--slider-track-background);
-  width: calc(var(--slider-progressPercentageStart) - var(--salt-spacing-fixed-300));
+  width: calc(var(--slider-progressStart) * (100% - var(--slider-thumb-width)) - var(--slider-thumb-gap));
 }
 
 .saltSliderTrack-range .saltSliderTrack-rail::after {
   background: var(--slider-track-background);
-  width: calc(100% - var(--slider-progressPercentageEnd) - var(--salt-spacing-fixed-300));
+  width: calc((1 - var(--slider-progressEnd)) * (100% - var(--slider-thumb-width)) - var(--slider-thumb-gap));
 }
 
 .saltSliderTrack-range .saltSliderTrack-rail .saltSliderTrack-fill {
   background: var(--slider-track-fill);
   height: 100%;
-  left: calc(var(--slider-progressPercentageStart) + var(--salt-spacing-fixed-300));
+  left: calc(var(--slider-progressStart) * (100% - var(--slider-thumb-width)) + var(--slider-thumb-width) + var(--slider-thumb-gap));
   position: absolute;
-  width: calc(var(--slider-progressPercentageEnd) - var(--slider-progressPercentageStart) - var(--salt-size-fixed-600));
+  width: calc((var(--slider-progressEnd) - var(--slider-progressStart)) * (100% - var(--slider-thumb-width)) - var(--slider-thumb-width) - 2 * var(--slider-thumb-gap));
 }
 
 .saltSliderTrack-minLabel,
@@ -122,8 +127,10 @@
 .saltSliderTrack-tick {
   background: var(--slider-track-background);
   height: var(--slider-tick-height);
+  /* Aligns with the thumb, so ticks at the min and max sit within the track */
+  left: calc(var(--slider-markPosition) * (100% - var(--slider-thumb-width)) + var(--slider-thumb-width) / 2);
   position: absolute;
-  transform: translate(-50%);
+  transform: translateX(-50%);
   width: var(--salt-size-fixed-200);
 }
 
@@ -135,15 +142,8 @@
   background: var(--slider-track-fill);
 }
 
-.saltSliderTrack-tick:first-of-type {
-  transform: unset;
-}
-
-.saltSliderTrack-tick:last-of-type {
-  transform: translateX(-100%);
-}
-
 .saltSliderTrack-marks {
+  top: calc(var(--salt-size-bar) + var(--slider-tick-height));
   position: absolute;
   user-select: none;
   width: 100%;
@@ -156,6 +156,7 @@
   font-size: var(--salt-text-label-fontSize);
   line-height: var(--salt-text-label-lineHeight);
   letter-spacing: var(--salt-text-letterSpacing);
+  left: calc(var(--slider-markPosition) * (100% - var(--slider-thumb-width)) + var(--slider-thumb-width) / 2);
   overflow: hidden;
   position: absolute;
   text-overflow: ellipsis;
@@ -164,26 +165,23 @@
   white-space: nowrap;
 }
 
-.saltSliderTrack-constrainLabelPosition .saltSliderTrack-markLabel:first-of-type {
-  transform: translateX(0%);
+.saltSliderTrack-constrainLabelPosition .saltSliderTrack-markLabelMin {
+  transform: translateX(calc(var(--slider-thumb-width) / -2));
 }
 
-.saltSliderTrack-constrainLabelPosition .saltSliderTrack-markLabel:last-of-type {
-  transform: translateX(-100%);
+.saltSliderTrack-constrainLabelPosition .saltSliderTrack-markLabelMax {
+  transform: translateX(calc(-100% + var(--slider-thumb-width) / 2));
 }
 
 /* Styles applied when slider and range slider are inside a form field */
 
-.saltFormField .saltSliderTrack.saltSliderTrack-withMark {
-  margin-bottom: 0;
+.saltFormField .saltSliderTrack.saltSliderTrack-withMarks {
+  /* The container is size-base tall, so part of the marks already sit within it */
+  margin-bottom: calc(var(--slider-marks-height) - (var(--salt-size-base) - var(--salt-size-selectable)) / 2);
 }
 
 .saltFormField .saltSliderTrack-container {
   --saltFormField-label-width: 10%;
 
   height: var(--salt-size-base);
-}
-
-.saltFormField .saltSliderTrack-markLabel {
-  top: calc((var(--salt-size-base) - var(--salt-size-bar)) / 2);
 }
