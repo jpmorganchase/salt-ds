@@ -100,6 +100,11 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    * @since 1.38.0.
    */
   loadingAnnouncement?: string;
+  /**
+   * Callback fired when the button is clicked. It isn't fired when the button
+   * is disabled or loading, including when `focusableWhenDisabled` is `true`.
+   */
+  onClick?: ComponentPropsWithoutRef<"button">["onClick"];
 }
 
 function variantToAppearanceAndColor(

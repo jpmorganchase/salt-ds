@@ -72,17 +72,6 @@ export type StepStage =
 
 export type StepDepth = number;
 
-export interface StepProps
-  extends Omit<ComponentPropsWithoutRef<"li">, "onToggle"> {
-  label?: ReactNode;
-  description?: ReactNode;
-  status?: StepStatus;
-  stage?: StepStage;
-  expanded?: boolean;
-  defaultExpanded?: boolean;
-  onToggle?: ButtonProps["onClick"];
-}
-
 const withBaseName = makePrefixer("saltStep");
 
 export const Step = forwardRef<HTMLLIElement, StepProps>(function Step(
