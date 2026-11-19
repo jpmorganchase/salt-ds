@@ -43,7 +43,7 @@ export interface CompactStepProps
    */
   stage?: CompactStepStage;
   /**
-   * The status of the step. Only shown when the step is the current step.
+   * The status of the step. Shows an error or warning icon in place of the `locked` icon.
    */
   status?: StepStatus;
 }
