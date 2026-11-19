@@ -53,12 +53,6 @@ interface UseCalendarBaseProps {
    */
   hoveredDate?: DateFrameworkType | null;
   /**
-   * Function to determine if a day is visible.
-   * @param date - The date to check.
-   * @returns `true` if the day is visible, otherwise `false`.
-   */
-  isDayVisible?: (date: DateFrameworkType) => boolean;
-  /**
    * Ref to attach to the focused element, enabling focus to be controlled.
    */
   focusedDateRef?: React.MutableRefObject<HTMLElement | null>;
@@ -134,46 +128,69 @@ interface UseCalendarBaseProps {
   visibleMonth?: DateFrameworkType;
 }
 
+// Calculated by `useCalendar` from `minDate`, `maxDate` and `isDayUnselectable`, and passed to `useCalendarSelection`.
+type UseCalendarSelectionInternalProps =
+  | "isOutsideAllowedDates"
+  | "isDaySelectable";
+
 /**
  * UseCalendar hook props for a single date selection.
  */
 export interface UseCalendarSingleProps
-  extends UseCalendarSelectionSingleProps,
+  extends Omit<
+      UseCalendarSelectionSingleProps,
+      UseCalendarSelectionInternalProps
+    >,
     UseCalendarBaseProps {}
 
 /**
  * UseCalendar hook props for a multi-select, single date selection.
  */
 export interface UseCalendarMultiselectSingleProps
-  extends UseCalendarSelectionMultiselectSingleProps,
+  extends Omit<
+      UseCalendarSelectionMultiselectSingleProps,
+      UseCalendarSelectionInternalProps
+    >,
     Omit<UseCalendarBaseProps, "multiselect"> {}
 
 /**
  * UseCalendar hook props for a date range selection.
  */
 export interface UseCalendarRangeProps
-  extends UseCalendarSelectionRangeProps,
+  extends Omit<
+      UseCalendarSelectionRangeProps,
+      UseCalendarSelectionInternalProps
+    >,
     UseCalendarBaseProps {}
 
 /**
  * UseCalendar hook props for a multi-select, date range selection.
  */
 export interface UseCalendarMultiselectRangeProps
-  extends UseCalendarSelectionMultiselectRangeProps,
+  extends Omit<
+      UseCalendarSelectionMultiselectRangeProps,
+      UseCalendarSelectionInternalProps
+    >,
     Omit<UseCalendarBaseProps, "multiselect"> {}
 
 /**
  * UseCalendar hook props for an offset date selection.
  */
 export interface UseCalendarOffsetProps
-  extends UseCalendarSelectionOffsetProps,
+  extends Omit<
+      UseCalendarSelectionOffsetProps,
+      UseCalendarSelectionInternalProps
+    >,
     UseCalendarBaseProps {}
 
 /**
  * UseCalendar hook props for a multi-select, offset selection.
  */
 export interface UseCalendarMultiselectOffsetProps
-  extends UseCalendarSelectionMultiselectOffsetProps,
+  extends Omit<
+      UseCalendarSelectionMultiselectOffsetProps,
+      UseCalendarSelectionInternalProps
+    >,
     Omit<UseCalendarBaseProps, "multiselect"> {}
 
 /**

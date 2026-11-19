@@ -3,6 +3,7 @@ import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
   type ChangeEventHandler,
+  type ComponentPropsWithoutRef,
   type FocusEventHandler,
   forwardRef,
   type InputHTMLAttributes,
@@ -26,7 +27,7 @@ import { useCheckboxGroup } from "./internal/useCheckboxGroup";
 const withBaseName = makePrefixer("saltCheckbox");
 export interface CheckboxProps
   extends Omit<
-    InputHTMLAttributes<HTMLLabelElement>,
+    ComponentPropsWithoutRef<"label">,
     "onChange" | "onBlur" | "onFocus"
   > {
   /**
@@ -79,6 +80,10 @@ export interface CheckboxProps
    * Callback when checkbox gains focus.
    */
   onFocus?: FocusEventHandler<HTMLInputElement>;
+  /**
+   * If `true`, the checkbox is read-only. It's also read-only when the surrounding `FormField` or `CheckboxGroup` is read-only.
+   */
+  readOnly?: boolean;
   /**
    * The value of the checkbox.
    */

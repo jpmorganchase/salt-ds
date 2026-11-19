@@ -11,7 +11,7 @@ const withBaseName = makePrefixer("saltOverlayPanelCloseButton");
 
 export const OverlayPanelCloseButton = forwardRef<
   HTMLButtonElement,
-  ButtonProps
+  Omit<ButtonProps, "children">
 >(function OverlayPanelCloseButton({ className, ...rest }, ref) {
   const targetWindow = useWindow();
   useComponentCssInjection({

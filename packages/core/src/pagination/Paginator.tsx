@@ -11,7 +11,8 @@ import { usePaginationContext } from "./usePaginationContext";
 
 const withBaseName = makePrefixer("saltPaginator");
 
-export interface PaginatorProps extends HTMLAttributes<HTMLDivElement> {
+export interface PaginatorProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, "children"> {
   /**
    * Number of pages next to the arrow buttons when page range is truncated.
    */

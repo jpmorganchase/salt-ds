@@ -138,8 +138,13 @@ export interface DatePickerRangePanelProps
   StartCalendarProps?: Partial<
     Omit<
       CalendarRangeProps | CalendarOffsetProps,
+      | "children"
+      | "createAnnouncement"
       | "selectedDate"
       | "defaultSelectedDate"
+      | "defaultVisibleMonth"
+      | "focusedDate"
+      | "visibleMonth"
       | "multiselect"
       | "onFocusedDateChange"
       | "onHoveredDateChange"
@@ -158,8 +163,13 @@ export interface DatePickerRangePanelProps
   EndCalendarProps?: Partial<
     Omit<
       CalendarRangeProps,
+      | "children"
+      | "createAnnouncement"
       | "selectedDate"
       | "defaultSelectedDate"
+      | "defaultVisibleMonth"
+      | "focusedDate"
+      | "visibleMonth"
       | "multiselect"
       | "onFocusedDateChange"
       | "onHoveredDateChange"

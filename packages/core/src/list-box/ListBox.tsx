@@ -46,7 +46,10 @@ export type ListBoxProps<Item = string> = {
    */
   multiselect?: boolean;
 } & ComponentPropsWithoutRef<"div"> &
-  Omit<ListControlProps<Item>, "onOpenChange">;
+  Omit<
+    ListControlProps<Item>,
+    "onOpenChange" | "open" | "defaultOpen" | "readOnly"
+  >;
 
 const withBaseName = makePrefixer("saltListBox");
 

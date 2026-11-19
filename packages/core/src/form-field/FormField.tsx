@@ -11,7 +11,6 @@ import {
   useRef,
 } from "react";
 import {
-  type A11yValueProps,
   FormFieldContext,
   type FormFieldValidationStatus,
 } from "../form-field-context";
@@ -23,9 +22,7 @@ import { FormFieldLabel } from "./FormFieldLabel";
 
 export type FormFieldLabelPlacement = "top" | "left" | "right";
 
-export interface FormFieldProps
-  extends HTMLAttributes<HTMLDivElement>,
-    A11yValueProps {
+export interface FormFieldProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * If `true`, the field will be disabled.
    */

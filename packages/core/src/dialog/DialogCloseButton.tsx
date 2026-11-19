@@ -10,26 +10,27 @@ import dialogCloseButtonCss from "./DialogCloseButton.css";
 
 const withBaseName = makePrefixer("saltDialogCloseButton");
 
-export const DialogCloseButton = forwardRef<HTMLButtonElement, ButtonProps>(
-  function DialogCloseButton({ className, ...rest }, ref) {
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-dialog-close-button",
-      css: dialogCloseButtonCss,
-      window: targetWindow,
-    });
-    const { CloseIcon } = useIcon();
+export const DialogCloseButton = forwardRef<
+  HTMLButtonElement,
+  Omit<ButtonProps, "children">
+>(function DialogCloseButton({ className, ...rest }, ref) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-dialog-close-button",
+    css: dialogCloseButtonCss,
+    window: targetWindow,
+  });
+  const { CloseIcon } = useIcon();
 
-    return (
-      <Button
-        ref={ref}
-        aria-label="Close dialog"
-        appearance="transparent"
-        className={clsx(withBaseName(), className)}
-        {...rest}
-      >
-        <CloseIcon aria-hidden />
-      </Button>
-    );
-  },
-);
+  return (
+    <Button
+      ref={ref}
+      aria-label="Close dialog"
+      appearance="transparent"
+      className={clsx(withBaseName(), className)}
+      {...rest}
+    >
+      <CloseIcon aria-hidden />
+    </Button>
+  );
+});

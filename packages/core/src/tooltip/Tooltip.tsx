@@ -28,7 +28,7 @@ const withBaseName = makePrefixer("saltTooltip");
 
 export interface TooltipProps
   extends Pick<UseFloatingUIProps, "open" | "onOpenChange" | "placement">,
-    Omit<HTMLAttributes<HTMLDivElement>, "content"> {
+    Omit<HTMLAttributes<HTMLDivElement>, "content" | "role"> {
   /**
    * The children will be the Tooltip's trigger.
    */

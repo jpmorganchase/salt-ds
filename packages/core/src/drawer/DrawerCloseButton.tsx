@@ -13,28 +13,29 @@ const withBaseName = makePrefixer("saltDrawerCloseButton");
 /**
  * @deprecated since 1.71.0. Use `Button` in `DrawerHeader`'s `actions` instead.
  */
-export const DrawerCloseButton = forwardRef<HTMLButtonElement, ButtonProps>(
-  function DrawerCloseButton({ className, ...rest }, ref) {
-    const targetWindow = useWindow();
-    useComponentCssInjection({
-      testId: "salt-drawer-close-button",
-      css: drawerCloseButtonCss,
-      window: targetWindow,
-    });
-    const { CloseIcon } = useIcon();
+export const DrawerCloseButton = forwardRef<
+  HTMLButtonElement,
+  Omit<ButtonProps, "children">
+>(function DrawerCloseButton({ className, ...rest }, ref) {
+  const targetWindow = useWindow();
+  useComponentCssInjection({
+    testId: "salt-drawer-close-button",
+    css: drawerCloseButtonCss,
+    window: targetWindow,
+  });
+  const { CloseIcon } = useIcon();
 
-    return (
-      <div className={withBaseName("container")}>
-        <Button
-          ref={ref}
-          aria-label="Close drawer"
-          appearance="transparent"
-          className={clsx(withBaseName(), className)}
-          {...rest}
-        >
-          <CloseIcon aria-hidden />
-        </Button>
-      </div>
-    );
-  },
-);
+  return (
+    <div className={withBaseName("container")}>
+      <Button
+        ref={ref}
+        aria-label="Close drawer"
+        appearance="transparent"
+        className={clsx(withBaseName(), className)}
+        {...rest}
+      >
+        <CloseIcon aria-hidden />
+      </Button>
+    </div>
+  );
+});

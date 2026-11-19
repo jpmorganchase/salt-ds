@@ -39,11 +39,11 @@ export interface CalendarGridProps extends ComponentPropsWithoutRef<"div"> {
   /**
    * Props for `CalendarMonthHeader`
    */
-  CalendarMonthHeaderProps?: Partial<CalendarMonthHeaderProps>;
+  CalendarMonthHeaderProps?: Partial<Omit<CalendarMonthHeaderProps, "month">>;
   /**
    * Props for `CalendarDay`
    */
-  CalendarDayProps?: Partial<CalendarDayProps>;
+  CalendarDayProps?: Partial<Omit<CalendarDayProps, "date" | "month">>;
 }
 
 export const CalendarGrid = forwardRef<HTMLDivElement, CalendarGridProps>(

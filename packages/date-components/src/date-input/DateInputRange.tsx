@@ -82,7 +82,14 @@ export interface DateInputRangeProps
   extends Omit<ComponentPropsWithoutRef<"div">, "defaultValue" | "onChange">,
     Omit<
       InputProps,
-      "defaultValue" | "inputRef" | "name" | "value" | "onChange"
+      | "defaultValue"
+      | "inputProps"
+      | "inputRef"
+      | "name"
+      | "startAdornment"
+      | "textAlign"
+      | "value"
+      | "onChange"
     > {
   /**
    * Styling variant with full border. Defaults to false.
