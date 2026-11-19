@@ -11,10 +11,12 @@ import styles from "./index.module.css";
 patternFill(Highcharts);
 accessibility(Highcharts);
 
+const compactLabelWidth = 600;
+
 const areaChartOptions: Options = {
   chart: { type: "area", height: 400 },
   title: {
-    text: "Asset class balances since 1940",
+    text: "Bond balances since 1940",
   },
   accessibility: {
     description:
@@ -42,19 +44,22 @@ const areaChartOptions: Options = {
       '<span class="label">{series.name}: </span><span class="value">$' +
       "{point.y:,.0f}</span>",
   },
+  legend: {
+    align: "center",
+    layout: "horizontal",
+    verticalAlign: "bottom",
+    y: 0,
+  },
   responsive: {
     rules: [
       {
-        condition: { maxWidth: 480 },
+        condition: { maxWidth: compactLabelWidth },
         chartOptions: {
           chart: { height: 560 },
           xAxis: { title: { text: "Year (1940–2012)" } },
           yAxis: { title: { margin: 4 } },
           legend: {
-            align: "center",
-            layout: "horizontal",
-            verticalAlign: "bottom",
-            y: 0,
+            labelFormat: "{options.custom.initial} · {name}",
           },
         },
       },
@@ -65,19 +70,22 @@ const areaChartOptions: Options = {
       pointStart: 1940,
       dataLabels: {
         enabled: true,
+        shape: "callout",
         align: "left",
+        verticalAlign: "middle",
         borderRadius: 2,
-        padding: 4,
+        borderWidth: 1,
+        padding: 2,
         x: 6,
-        y: -4,
+        y: 4,
         style: {
           textOutline: "none",
         },
         formatter() {
-          // Label the peak of each series instead of every point.
-          return this.point.y === this.series.dataMax
-            ? this.series.name
-            : undefined;
+          if (this.point.y !== this.series.dataMax) return;
+          return this.series.chart.chartWidth <= compactLabelWidth
+            ? this.series.options.custom?.initial
+            : this.series.name.replace(/ Bonds$/, "");
         },
       },
       marker: {
@@ -89,6 +97,7 @@ const areaChartOptions: Options = {
   series: [
     {
       name: "Government Bonds",
+      custom: { initial: "G" },
       type: "area",
       data: [
         6, 11, 32, 110, 235, 369, 640, 1005, 1436, 2063, 3057, 4618, 6444, 9822,
@@ -102,7 +111,9 @@ const areaChartOptions: Options = {
     },
     {
       name: "Corporate Bonds",
+      custom: { initial: "C" },
       type: "area",
+      dashStyle: "ShortDash",
       data: [
         4, 157, 321, 522, 753, 240, 566, 953, 1383, 1941, 1987, 3152, 4489,
         6834, 10654, 13282, 15832, 18102, 19598, 20786, 20788, 20976, 20601,
@@ -115,7 +126,9 @@ const areaChartOptions: Options = {
     },
     {
       name: "Municipal Bonds",
+      custom: { initial: "M" },
       type: "area",
+      dashStyle: "ShortDot",
       data: [
         3, 125, 254, 410, 586, 766, 1008, 452, 766, 1168, 1736, 2558, 3500,
         5140, 6961, 9315, 11097, 12684, 13737, 14575, 15112, 14418, 14175,
@@ -146,6 +159,7 @@ export const AreaChart = () => {
           area: {
             dataLabels: {
               backgroundColor: chartOptions.chart?.backgroundColor,
+              borderColor: chartOptions.title?.style?.color,
               style: { color: chartOptions.title?.style?.color },
             },
           },
