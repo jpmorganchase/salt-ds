@@ -73,6 +73,38 @@
     {
       "path": "./tooling/biome/stories-package-imports.grit",
       "includes": ["**/packages/*/stories/**"]
+    },
+    // The next three catch props that a component replaces or that replace the
+    // component's own. They match the scope of the noUnusedFunctionParameters
+    // override below. Lab is left out until its fixes land.
+    {
+      "path": "./tooling/biome/props-getter-before-rest.grit",
+      "includes": [
+        "**/packages/*/src/**",
+        "!**/packages/*/src/__tests__/**",
+        "!**/packages/*/src/examples/**",
+        "!**/packages/lab/**"
+      ]
+    },
+    {
+      // Reports warnings.
+      "path": "./tooling/biome/prop-before-rest-spread.grit",
+      "includes": [
+        "**/packages/*/src/**",
+        "!**/packages/*/src/__tests__/**",
+        "!**/packages/*/src/examples/**",
+        "!**/packages/lab/**"
+      ]
+    },
+    {
+      // Reports warnings.
+      "path": "./tooling/biome/clone-element-child-ref.grit",
+      "includes": [
+        "**/packages/*/src/**",
+        "!**/packages/*/src/__tests__/**",
+        "!**/packages/*/src/examples/**",
+        "!**/packages/lab/**"
+      ]
     }
   ],
   "assist": { "actions": { "source": { "organizeImports": "on" } } },
@@ -298,6 +330,33 @@
         "rules": {
           "style": {
             "noDefaultExport": "error"
+          }
+        }
+      }
+    },
+    {
+      // A prop that a component destructures but never uses is usually one it
+      // ignores. Report props destructured next to a rest element too, and
+      // prefix ones taken out only to keep them out of the rest props with _.
+      // Lab is left out until its fixes land.
+      "includes": [
+        "**/packages/*/src/**",
+        "!**/packages/*/src/__tests__/**",
+        "!**/packages/*/src/examples/**",
+        "!**/packages/ag-grid-theme/src/dependencies/**",
+        "!**/packages/lab/**"
+      ],
+      "linter": {
+        "rules": {
+          "correctness": {
+            "noUnusedFunctionParameters": {
+              "level": "error",
+              "options": { "ignoreRestSiblings": false }
+            },
+            "noUnusedVariables": {
+              "level": "error",
+              "options": { "ignoreRestSiblings": false }
+            }
           }
         }
       }

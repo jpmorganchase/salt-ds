@@ -1,0 +1,20 @@
+language js
+
+// Floating UI's props getters, such as getFloatingProps, return event handlers.
+// Spreading the getter's result before the rest props lets a consumer handler,
+// such as onKeyDown, replace Floating UI's, which breaks Escape and arrow key
+// handling. Pass the rest props to the getter instead, so it combines the
+// handlers: {...getFloatingProps(rest)}.
+or {
+  JsxOpeningElement(attributes=$attributes),
+  JsxSelfClosingElement(attributes=$attributes)
+} where {
+  $attributes <: [
+    ..., JsxSpreadAttribute(argument=$getter) as $getterSpread, ...,
+
+    JsxSpreadAttribute(argument=JsIdentifierExpression()), ...
+  ],
+  $getter <: JsCallExpression(callee=r"get(?:Floating|Reference|Item)Props", arguments=JsCallArguments(args=[
+  ])),
+  register_diagnostic(span=$getterSpread, message="Pass the rest props to the props getter, for example {...getFloatingProps(rest)}, so its event handlers are combined with the consumer's instead of being replaced by them.")
+}

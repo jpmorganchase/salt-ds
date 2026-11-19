@@ -1,0 +1,24 @@
+language js
+
+// cloneElement replaces the child's ref with the ref passed to it, so a ref set
+// on the child stops working. Merge the child's own ref, for example with
+// useForkRef(getRefFromChildren(children), ref).
+//
+// This only checks that the file uses getRefFromChildren, so it reports a
+// warning.
+JsCallExpression(callee=$callee, arguments=JsCallArguments(args=[
+  $child, $props, ...
+])) as $call where {
+  $callee <: or {
+    `cloneElement`,
+    `React.cloneElement`
+  },
+  $props <: JsObjectExpression(members=$members),
+  $members <: contains or {
+    JsPropertyObjectMember(name=r"ref") as $ref,
+    JsShorthandPropertyObjectMember(name=r"ref") as $ref
+  },
+  $call <: within JsModule() as $module ,
+  $module <: not contains `getRefFromChildren($_)`,
+  register_diagnostic(span=$ref, message="cloneElement replaces the child's ref. Merge it with the child's own ref, for example with useForkRef(getRefFromChildren(children), ref).", severity="warn")
+}
