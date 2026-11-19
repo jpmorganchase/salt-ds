@@ -29,11 +29,11 @@ describe("GIVEN a CompactStepper", () => {
   });
 
   it("THEN renders a group named by aria-label", async () => {
-    await renderWithSalt(<Default aria-label="Checkout progress" />);
+    await renderWithSalt(<Default aria-label="Account setup progress" />);
 
     await expect
       .element(page.getByRole("group"))
-      .toHaveAccessibleName("Checkout progress");
+      .toHaveAccessibleName("Account setup progress");
   });
 
   it.each<[CompactStepStage, StepStatus | undefined, string]>([
