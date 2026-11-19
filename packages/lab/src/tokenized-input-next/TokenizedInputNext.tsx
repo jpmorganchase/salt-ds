@@ -123,6 +123,11 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
     "aria-describedby": textAreaDescribedBy,
     "aria-labelledby": textAreaLabelledBy,
     required: textAreaRequired,
+    className: textAreaClassName,
+    onBlur: textAreaOnBlur,
+    onChange: textAreaOnChange,
+    onFocus: textAreaOnFocus,
+    onKeyDown: textAreaOnKeyDown,
     ...restTextAreaProps
   } = textAreaProps;
 
@@ -321,12 +326,26 @@ export const TokenizedInputNext = forwardRef(function TokenizedInputNext<Item>(
           rows={1}
           tabIndex={disabled ? -1 : 0}
           value={value}
-          className={clsx(withBaseName("textarea"), textAreaProps?.className)}
-          onChange={onInputChange}
-          onBlur={onInputBlur}
-          onFocus={!disabled ? onInputFocus : undefined}
-          onKeyDown={onKeyDown}
+          className={clsx(withBaseName("textarea"), textAreaClassName)}
           {...restTextAreaProps}
+          onChange={(event) => {
+            onInputChange?.(event);
+            textAreaOnChange?.(event);
+          }}
+          onBlur={(event) => {
+            onInputBlur?.(event);
+            textAreaOnBlur?.(event);
+          }}
+          onFocus={(event) => {
+            if (!disabled) {
+              onInputFocus?.(event);
+            }
+            textAreaOnFocus?.(event);
+          }}
+          onKeyDown={(event) => {
+            onKeyDown?.(event);
+            textAreaOnKeyDown?.(event);
+          }}
         />
         <div className={withBaseName("endAdornmentContainer")}>
           {!disabled && !readOnly && validationStatus && (

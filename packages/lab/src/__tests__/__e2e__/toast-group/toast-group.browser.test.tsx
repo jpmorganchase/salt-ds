@@ -2,6 +2,7 @@ import { Button, Toast, ToastContent } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
 import { ToastGroup } from "@salt-ds/lab";
 import { composeStories } from "@storybook/react-vite";
+import { createRef } from "react";
 import { describe, expect, it } from "vitest";
 import { page } from "vitest/browser";
 import { checkAccessibility } from "~browser-test-utils/accessibility";
@@ -46,5 +47,13 @@ describe("Given a ToastGroup", () => {
     expect(group).toBeInTheDocument();
     expect(getComputedStyle(group as Element).bottom).toBe("0px");
     await expect.element(page.getByRole("alert")).toBeInTheDocument();
+  });
+});
+
+describe("Given a ToastGroup with a ref", () => {
+  it("forwards the ref to the root element", async () => {
+    const ref = createRef<HTMLDivElement>();
+    await renderWithSalt(<ToastGroup ref={ref} data-testid="toast-group" />);
+    expect(ref.current).toBe(page.getByTestId("toast-group").element());
   });
 });
