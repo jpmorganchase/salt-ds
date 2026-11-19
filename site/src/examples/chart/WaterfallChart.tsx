@@ -63,7 +63,7 @@ const waterfallChartOptions: Options = {
           xAxis: { labels: { rotation: -90, step: 1 } },
           yAxis: { title: { margin: 4, text: "Revenue ($M)" } },
           plotOptions: {
-            waterfall: { dataLabels: { format: "{y}", allowOverlap: true } },
+            waterfall: { dataLabels: { format: "{y}" } },
           },
         },
       },
@@ -73,6 +73,7 @@ const waterfallChartOptions: Options = {
     waterfall: {
       dataLabels: {
         enabled: true,
+        allowOverlap: true,
         style: { textOutline: "1px contrast" },
         formatter: function () {
           return `$${this.y}M`;
