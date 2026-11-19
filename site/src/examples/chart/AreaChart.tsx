@@ -42,6 +42,21 @@ const areaChartOptions: Options = {
       '<span class="label">{series.name}: </span><span class="value">$' +
       "{point.y:,.0f}</span>",
   },
+  responsive: {
+    rules: [
+      {
+        condition: { maxWidth: 480 },
+        chartOptions: {
+          legend: {
+            align: "center",
+            layout: "horizontal",
+            verticalAlign: "bottom",
+            y: 0,
+          },
+        },
+      },
+    ],
+  },
   plotOptions: {
     area: {
       pointStart: 1940,

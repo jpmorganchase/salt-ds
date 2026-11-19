@@ -27,6 +27,7 @@ const stackedBarChartOptions: Options = {
   },
   xAxis: {
     categories: ["NA", "EMEA", "APAC", "LATAM"],
+    accessibility: { description: "Region" },
     title: {
       text: "Region",
     },
@@ -36,6 +37,26 @@ const stackedBarChartOptions: Options = {
     title: {
       text: "Revenue ($ millions)",
     },
+  },
+  responsive: {
+    rules: [
+      {
+        condition: { maxWidth: 480 },
+        chartOptions: {
+          legend: {
+            align: "center",
+            layout: "horizontal",
+            verticalAlign: "bottom",
+            y: 0,
+          },
+          plotOptions: {
+            series: { dataLabels: { padding: 0 } },
+          },
+          xAxis: { title: { text: "" } },
+          yAxis: { endOnTick: false },
+        },
+      },
+    ],
   },
   plotOptions: {
     series: {

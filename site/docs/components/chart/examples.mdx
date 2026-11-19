@@ -115,7 +115,7 @@ Use a box plot chart to show the distribution of data across different categorie
 
 Allow Highcharts to calculate box widths from the available space rather than fixing `pointWidth`, especially when multiple series share each category. Use `maxPointWidth` to cap their width on larger screens without forcing it on smaller ones.
 
-The key below the example identifies the fixed left-to-right order of the two regions within each quarter.
+The key below the example explains the left-to-right order within each quarter when both regions are visible.
 
 <Callout title="Note">
   To use the box plot chart, ensure you import the Highcharts `highcharts-more`
@@ -144,7 +144,7 @@ Each portfolio uses a different marker shape, which also appears in the legend.
 ## Bubble chart
 
 Use a bubble chart to show the relationship between two variables, with a third variable represented by the size of each bubble.
-To ensure accessible presentation, data labels have text borders when pattern fills are enabled.
+Salt gives bubble labels a contrasting text outline so they remain readable where they cross the edge of a bubble.
 
 The structured asset-class key identifies the category of each labelled bubble without requiring users to match its color to the legend. The example uses a smaller set of well-spaced points and bubble sizes proportional to the available plot area so labels remain easier to distinguish at narrow widths.
 

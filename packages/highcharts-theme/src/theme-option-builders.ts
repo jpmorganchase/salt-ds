@@ -346,7 +346,7 @@ export const buildPlotOptions = (
           fontSize: tokens["--salt-text-label-fontSize"],
           fontWeight: tokens["--salt-text-label-fontWeight-bolder"],
           lineHeight: tokens["--salt-text-label-lineHeight"],
-          textOutline,
+          textOutline: strongTextOutline,
         },
       },
       marker: {

@@ -79,12 +79,29 @@ const bubbleChartOptions: Options = {
         enabled: true,
         allowOverlap: false,
         format: "{point.name}",
+        padding: 0,
       },
       // Percentages scale with the plot area instead of occupying 50–90px
       // even when the example is displayed at phone widths.
       minSize: "8%",
       maxSize: "18%",
     },
+  },
+  responsive: {
+    rules: [
+      {
+        condition: { maxWidth: 480 },
+        chartOptions: {
+          yAxis: { title: { margin: 4 } },
+          legend: {
+            align: "center",
+            layout: "horizontal",
+            verticalAlign: "bottom",
+            y: 0,
+          },
+        },
+      },
+    ],
   },
   tooltip: {
     headerFormat: "<span>{series.name}</span><br/>",

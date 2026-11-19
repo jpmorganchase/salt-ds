@@ -14,16 +14,14 @@ Charts must communicate their meaning without relying on color alone. The Highch
 
 Choose an approach that identifies the same information as the colors. A color-coded legend is not sufficient when users still have to distinguish colors to match the legend to the chart.
 
-| Chart type          | Preferred approach                                                                                                 | When the chart becomes crowded                                                            |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------- |
-| Line and scatter    | Distinct marker shapes, with matching legend symbols. Label lines directly where possible.                         | Add line styles or direct series labels when symbols repeat or overlap.                   |
-| Bar and column      | Identify categories by their labeled positions. For grouped series, describe the series order or label each group. | Use labels or an additional table if the grouping is no longer clear.                     |
-| Stacked bar         | Label segments with short series names and state their order.                                                      | Use patterns or a visible table when labels cannot fit inside segments.                   |
-| Pie and donut       | Label slices with category names and values.                                                                       | Consider a different chart type or a data table when small slices make labels unreadable. |
-| Area                | Directly label each series at a point where the areas can be distinguished.                                        | Use line styles, patterns, or a visible summary when areas overlap.                       |
-| Heatmap             | Show values or named ranges as text, with meaningful axis labels.                                                  | Provide a data table when individual values cannot be read from the cells.                |
-| Candlestick         | Use hollow bodies when close is above open and filled bodies when close is below open, with a visible explanation. | Pattern fills are another option.                                                         |
-| Bubble and box plot | Label points and their groups, or explicitly describe a consistent series position.                                | Add a visible grouping summary or data table if labels or positions become ambiguous.     |
+- **Line and scatter** charts can use distinct marker shapes with matching legend symbols. Label lines directly where possible. Add line styles or direct series labels when symbols repeat or overlap.
+- **Bar and column** charts identify categories by their labeled positions. For grouped series, describe the series order or label each group. Use labels or an additional table if the grouping is unclear.
+- **Stacked bar** charts can label segments with short series names and state their order. Use patterns or a visible table when labels cannot fit inside segments.
+- **Pie and donut** charts can label slices with category names and values. Consider a different chart type or a data table when small slices make labels unreadable.
+- **Area** charts can label each series at a point where the areas can be distinguished. Use line styles, patterns, or a visible summary when areas overlap.
+- **Heatmaps** can show values or named ranges as text, with meaningful axis labels. Provide a data table when individual values are hard to read from the cells.
+- **Candlestick** charts can use hollow bodies when the close is above the open and filled bodies when the close is below the open. Explain the fills in a visible key. Pattern fills are another option.
+- **Bubble and box plot** charts can label points and their groups or describe a consistent series position. Add a visible grouping summary or data table if labels or positions become ambiguous.
 
 The [examples](./examples) demonstrate these alternatives with patterns switched off by default. Patterns remain an option when another cue does not work for the data.
 
@@ -32,7 +30,7 @@ The [examples](./examples) demonstrate these alternatives with patterns switched
 - **Without color:** Check that users can identify each meaningful series, category, or change using the visible labels, marker shapes, order, fills, or patterns. Verify that the legend matches these cues.
 - **Contrast:** Check required graphical elements against adjacent colors at a minimum of 3:1, and check text contrast separately. Salt chart colors contrasting with the background does not guarantee that adjacent series are distinguishable.
 - **Keyboard and screen reader:** Navigate the rendered chart with a keyboard and screen reader. Confirm its name, description, axes, units, and data are understandable without hover alone.
-- **Layout:** Review light and dark modes, narrow viewports, and increased zoom. Ensure labels remain readable and are not hidden, clipped, or overlapping. Adjust the presentation or provide an alternative when they do not fit.
+- **Layout:** Review light and dark modes, narrow charts, and increased zoom. If the Salt theme’s right-hand legend crowds the plot, use a Highcharts responsive rule to move it below the plot at the chart width where labels stop fitting. Check the smallest chart in your application with its actual data.
 - **Realistic data:** Test crowded cases as well as the demo, such as a line chart with more than five series, a stacked bar with small segments, or a heatmap with too many values to label.
 
 When users need individual values that the chart cannot expose clearly, offer an accessible data table or equivalent text presentation. A passing automated accessibility scan alone does not verify these behaviors.

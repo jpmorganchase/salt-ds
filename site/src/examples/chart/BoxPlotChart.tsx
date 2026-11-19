@@ -13,6 +13,9 @@ highchartsMore(Highcharts);
 patternFill(Highcharts);
 accessibility(Highcharts);
 
+const regionKey =
+  "When both regions are visible, North America is on the left of each pair and Europe is on the right.";
+
 const boxPlotChartOptions: Options = {
   chart: {
     type: "boxplot",
@@ -21,8 +24,7 @@ const boxPlotChartOptions: Options = {
     text: "Quarterly sales distribution by region",
   },
   accessibility: {
-    description:
-      "Box plot chart showing quarterly sales distribution across two regions. Within each quarter, North America is on the left and Europe is on the right. Each box shows minimum, first quartile, median, third quartile, and maximum sales values in thousands of dollars.",
+    description: `Box plot chart showing quarterly sales distribution across two regions. ${regionKey} Each box shows minimum, first quartile, median, third quartile, and maximum sales values in thousands of dollars.`,
     point: {
       valuePrefix: "$",
       valueSuffix: "K",
@@ -105,10 +107,7 @@ export const BoxPlotChart = () => {
         options={chartOptions}
         ref={chartRef}
       />
-      <p className={styles.chartCaption}>
-        Within each quarter, North America is on the left and Europe is on the
-        right.
-      </p>
+      <p className={styles.chartCaption}>{regionKey}</p>
     </div>
   );
 };
