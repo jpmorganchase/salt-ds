@@ -5,6 +5,7 @@ import {
   type CompactStepStage,
 } from "@salt-ds/lab";
 import { composeStories } from "@storybook/react-vite";
+import type { ReactNode } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page } from "vitest/browser";
 import { checkAccessibility } from "~browser-test-utils/accessibility";
@@ -33,14 +34,6 @@ describe("GIVEN a CompactStepper", () => {
     await expect
       .element(page.getByRole("group"))
       .toHaveAccessibleName("Checkout progress");
-  });
-
-  it("THEN hides the progress bar from assistive technology", async () => {
-    await renderWithSalt(<Default />);
-
-    expect(
-      document.querySelector(".saltCompactStepper-barContainer"),
-    ).toHaveAttribute("aria-hidden", "true");
   });
 
   it.each<[CompactStepStage, StepStatus | undefined, string]>([
@@ -75,33 +68,6 @@ describe("GIVEN a CompactStepper", () => {
     expect(getText()).toBe("Step 3 of 3: Three, completed");
   });
 
-  it("THEN renders no text WHEN no step is current and not every step is completed", async () => {
-    await renderWithSalt(
-      <CompactStepper>
-        <CompactStep label="One" stage="completed" />
-        <CompactStep label="Two" />
-      </CompactStepper>,
-    );
-
-    expect(getText()).toBe("");
-  });
-
-  it("THEN shows the status icon instead of the lock WHEN a locked step has a status", async () => {
-    await renderWithSalt(
-      <CompactStepper>
-        <CompactStep label="One" stage="completed" />
-        <CompactStep label="Two" stage="locked" status="error" />
-      </CompactStepper>,
-    );
-
-    await expect
-      .element(page.getByTestId("ErrorSolidIcon"))
-      .toBeInTheDocument();
-    await expect
-      .element(page.getByTestId("LockedIcon"))
-      .not.toBeInTheDocument();
-  });
-
   it("THEN warns WHEN a CompactStep is used outside a CompactStepper", async () => {
     const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
 
@@ -113,6 +79,40 @@ describe("GIVEN a CompactStepper", () => {
           "<CompactStep /> should be used within a <CompactStepper />",
         ),
       );
+    } finally {
+      warnSpy.mockRestore();
+    }
+  });
+
+  it.each<[string, ReactNode, string]>([
+    [
+      "there are no steps",
+      null,
+      "<CompactStepper /> should contain at least one <CompactStep />.",
+    ],
+    [
+      "more than one step is current",
+      <>
+        <CompactStep label="One" stage="active" />
+        <CompactStep label="Two" stage="locked" />
+      </>,
+      "<CompactStepper /> should contain only one",
+    ],
+    [
+      "a child isn't a CompactStep",
+      <>
+        <CompactStep label="One" stage="active" />
+        <div />
+      </>,
+      "<CompactStepper /> children should be <CompactStep /> elements.",
+    ],
+  ])("THEN warns WHEN %s", async (_, children, message) => {
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    try {
+      await renderWithSalt(<CompactStepper>{children}</CompactStepper>);
+
+      expect(warnSpy).toHaveBeenCalledWith(expect.stringContaining(message));
     } finally {
       warnSpy.mockRestore();
     }

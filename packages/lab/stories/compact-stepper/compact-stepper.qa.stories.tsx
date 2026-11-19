@@ -54,6 +54,12 @@ export const AllStates: StoryFn<QAContainerProps> = (props) => (
         <CompactStep label="Review" />
         <CompactStep label="Confirmation" />
       </CompactStepper>
+      <CompactStepper>
+        <CompactStep label="Personal details" stage="completed" />
+        <CompactStep label="Payment details" stage="locked" status="error" />
+        <CompactStep label="Review" />
+        <CompactStep label="Confirmation" />
+      </CompactStepper>
     </StackLayout>
     <div style={{ width: 240 }}>
       <CompactStepper>
