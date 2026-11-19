@@ -99,18 +99,14 @@ export function getCompactStepperState(
   });
 
   const currentIndex = getCurrentIndex(steps);
-  const isFinished = isFinishedProcess(steps);
 
   return {
     steps,
     currentIndex,
     current: currentIndex === -1 ? undefined : steps[currentIndex],
-    // Only completed steps fill the bar; the current step isn't completed yet.
-    progress: isFinished
-      ? 100
-      : currentIndex === -1
-        ? 0
-        : (currentIndex / steps.length) * 100,
+    // The bar fills up to and including the current step.
+    progress:
+      currentIndex === -1 ? 0 : ((currentIndex + 1) / steps.length) * 100,
     currentCount: steps.filter(isCurrentStep).length,
     hasNonStepChild: flattened.length > elements.length,
   };
