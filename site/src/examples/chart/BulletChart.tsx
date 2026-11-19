@@ -43,6 +43,24 @@ const bulletChartOptions: Options = {
     max: 100,
     tickPositions: [0, 20, 40, 60, 80, 100],
   },
+  responsive: {
+    rules: [
+      {
+        condition: { maxWidth: 480 },
+        chartOptions: {
+          chart: { height: 280, spacingRight: 20 },
+          xAxis: { title: { text: "" } },
+          yAxis: { labels: { overflow: "allow" } },
+          legend: {
+            align: "center",
+            layout: "horizontal",
+            verticalAlign: "bottom",
+            y: 0,
+          },
+        },
+      },
+    ],
+  },
   tooltip: {
     headerFormat: "<span>{point.key}</span><br/>",
     pointFormat:
@@ -52,6 +70,7 @@ const bulletChartOptions: Options = {
     {
       name: "Current Revenue",
       type: "bullet",
+      targetOptions: { color: "var(--salt-content-primary-foreground)" },
       data: [{ y: 60, target: 80 }],
     },
   ],

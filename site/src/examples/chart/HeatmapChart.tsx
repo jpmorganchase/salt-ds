@@ -50,6 +50,7 @@ const heatmapChartOptions: Options = {
   },
   xAxis: {
     categories: dayCategories,
+    tickPositions: dayCategories.map((_, index) => index),
     title: {
       text: "Day",
     },
@@ -63,6 +64,26 @@ const heatmapChartOptions: Options = {
   },
   legend: {
     symbolHeight: 200,
+  },
+  responsive: {
+    rules: [
+      {
+        condition: { maxWidth: 480 },
+        chartOptions: {
+          legend: {
+            layout: "horizontal",
+            align: "center",
+            verticalAlign: "bottom",
+            y: 0,
+            symbolHeight: 12,
+            symbolWidth: 120,
+          },
+          colorAxis: { layout: "horizontal" },
+          xAxis: { labels: { rotation: -45, step: 1 } },
+          yAxis: { title: { margin: 4 } },
+        },
+      },
+    ],
   },
   plotOptions: {
     heatmap: {

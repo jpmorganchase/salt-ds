@@ -84,6 +84,8 @@ const lineChartOptions: Options = {
     line: {
       dataLabels: {
         enabled: true,
+        // Only the four separated 2020 endpoints have labels.
+        allowOverlap: true,
         align: "left",
         x: 6,
         crop: false,

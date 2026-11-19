@@ -16,11 +16,11 @@ const barChartOptions: Options = {
     type: "bar",
   },
   title: {
-    text: "Regional revenue by product",
+    text: "Equities revenue by region",
   },
   accessibility: {
     description:
-      "A bar chart comparing revenue by product across regions. Each region shows side-by-side values for each product category.",
+      "Equities revenue in millions of dollars for North America, EMEA, APAC, and LATAM.",
     point: {
       valuePrefix: "$",
       valueSuffix: "M",
@@ -41,6 +41,22 @@ const barChartOptions: Options = {
     headerFormat: "<span>{point.key}</span><br/>",
     pointFormat:
       '<span>{series.name}: </span><span class="value">&dollar;{point.y}M</span>',
+  },
+  responsive: {
+    rules: [
+      {
+        condition: { maxWidth: 480 },
+        chartOptions: {
+          xAxis: { title: { margin: 4 } },
+          legend: {
+            align: "center",
+            layout: "horizontal",
+            verticalAlign: "bottom",
+            y: 0,
+          },
+        },
+      },
+    ],
   },
   series: [
     {

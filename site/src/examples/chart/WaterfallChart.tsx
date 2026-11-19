@@ -53,10 +53,26 @@ const waterfallChartOptions: Options = {
   legend: {
     enabled: false,
   },
+  responsive: {
+    rules: [
+      {
+        condition: { maxWidth: 480 },
+        chartOptions: {
+          chart: { height: 480 },
+          xAxis: { labels: { rotation: -90, step: 1 } },
+          yAxis: { title: { margin: 4, text: "Revenue ($M)" } },
+          plotOptions: {
+            waterfall: { dataLabels: { format: "{y}" } },
+          },
+        },
+      },
+    ],
+  },
   plotOptions: {
     waterfall: {
       dataLabels: {
         enabled: true,
+        style: { textOutline: "1px contrast" },
         formatter: function () {
           return `$${this.y}M`;
         },

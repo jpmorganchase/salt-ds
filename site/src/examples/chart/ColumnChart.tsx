@@ -15,11 +15,11 @@ const columnChartOptions: Options = {
     type: "column",
   },
   title: {
-    text: "Regional revenue by product",
+    text: "Total revenue by region",
   },
   accessibility: {
     description:
-      "A column chart comparing revenue across regions. Each category shows a single column representing the total value for that region.",
+      "Total revenue in millions of dollars for North America, EMEA, APAC, and LATAM.",
     point: {
       valuePrefix: "$",
       valueSuffix: "M",
@@ -41,6 +41,22 @@ const columnChartOptions: Options = {
     headerFormat: "<span>{point.key}</span><br/>",
     pointFormat:
       '<span>{series.name}: </span><span class="value">&#36;{point.y}M</span>',
+  },
+  responsive: {
+    rules: [
+      {
+        condition: { maxWidth: 480 },
+        chartOptions: {
+          yAxis: { title: { margin: 4 } },
+          legend: {
+            align: "center",
+            layout: "horizontal",
+            verticalAlign: "bottom",
+            y: 0,
+          },
+        },
+      },
+    ],
   },
   series: [
     {
