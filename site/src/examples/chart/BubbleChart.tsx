@@ -19,30 +19,23 @@ const assetGroups = [
     points: [
       { name: "Stocks", x: 6.5, y: 10, z: 45 },
       { name: "Tech", x: 7.5, y: 12.5, z: 18 },
-      { name: "Small", x: 8, y: 9, z: 3 },
-      { name: "Mid", x: 5.5, y: 11.5, z: 5 },
-      { name: "Intl", x: 7, y: 8, z: 4 },
+      { name: "Intl", x: 5.5, y: 6.5, z: 4 },
     ],
   },
   {
     name: "Fixed Income",
     points: [
       { name: "Bonds", x: 2, y: 8, z: 25 },
-      { name: "Cash", x: 1, y: 6.4, z: 12 },
-      { name: "Tips", x: 2.5, y: 5, z: 3 },
-      { name: "Muni", x: 1.5, y: 4, z: 4 },
-      { name: "Short", x: 0.7, y: 3, z: 6 },
+      { name: "Cash", x: 1, y: 4, z: 12 },
+      { name: "Short", x: 3.2, y: 5, z: 6 },
     ],
   },
   {
     name: "Alternative",
     points: [
       { name: "Crypto", x: 8.5, y: 14, z: 2 },
-      { name: "RE", x: 4, y: 5, z: 8 },
-      { name: "Goods", x: 4.7, y: 8.5, z: 8 },
-      { name: "Gold", x: 3.2, y: 6, z: 3 },
-      { name: "PE", x: 6, y: 13, z: 4 },
-      { name: "VC", x: 9.4, y: 13, z: 1 },
+      { name: "Property", x: 4, y: 10.5, z: 8 },
+      { name: "Gold", x: 4.5, y: 3, z: 3 },
     ],
   },
 ];
@@ -84,10 +77,13 @@ const bubbleChartOptions: Options = {
     bubble: {
       dataLabels: {
         enabled: true,
+        allowOverlap: false,
         format: "{point.name}",
       },
-      minSize: 50,
-      maxSize: 90,
+      // Percentages scale with the plot area instead of occupying 50–90px
+      // even when the example is displayed at phone widths.
+      minSize: "8%",
+      maxSize: "18%",
     },
   },
   tooltip: {

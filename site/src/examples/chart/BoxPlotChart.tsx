@@ -55,7 +55,7 @@ const boxPlotChartOptions: Options = {
   },
   plotOptions: {
     boxplot: {
-      pointWidth: 40,
+      maxPointWidth: 40,
     },
   },
   series: [

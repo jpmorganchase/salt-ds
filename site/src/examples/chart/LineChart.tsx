@@ -17,7 +17,7 @@ const lineChartOptions: Options = {
   },
   accessibility: {
     description:
-      "A summary communicating the trends, insights, or patterns the chart is intended to provide in a couple sentences.",
+      "Four currency strength indices from 2011 to 2020. MXN peaks at 7 in 2016 before declining to 3. KRW ends highest at 6, followed by TRY at 5 and PLN at 4.5.",
   },
   title: {
     text: "Currency performance trends",

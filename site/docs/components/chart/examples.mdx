@@ -32,11 +32,15 @@ The small, distinct point markers and labels at the end of each series identify 
 
 Use a pie chart to show proportions of a whole.
 
+Keep the number of slices manageable so their labels stay readable. This example groups smaller categories under "Other" and uses short category names and whole percentages.
+
 <LivePreview componentName="chart" exampleName="PieChart" />
 
 ## Donut chart
 
 Use a donut chart to show proportions of a whole, with space in the center to highlight key values or additional information.
+
+As with a pie chart, limit the number of slices and use short labels. This example uses the same six-category revenue breakdown.
 
 A donut chart is a variation of the pie chart, with the `plotOptions.pie.innerSize` set to less than `100%` within the `Options` object.
 
@@ -109,7 +113,7 @@ Use a box plot chart to show the distribution of data across different categorie
 
 ### Best practices
 
-A `pointWidth` value of `40px` is recommended for a good default visual balance.
+Allow Highcharts to calculate box widths from the available space rather than fixing `pointWidth`, especially when multiple series share each category. Use `maxPointWidth` to cap their width on larger screens without forcing it on smaller ones.
 
 The key below the example identifies the fixed left-to-right order of the two regions within each quarter.
 
@@ -142,7 +146,7 @@ Each portfolio uses a different marker shape, which also appears in the legend.
 Use a bubble chart to show the relationship between two variables, with a third variable represented by the size of each bubble.
 To ensure accessible presentation, data labels have text borders when pattern fills are enabled.
 
-The structured asset-class key identifies the category of each labelled bubble without requiring users to match its color to the legend.
+The structured asset-class key identifies the category of each labelled bubble without requiring users to match its color to the legend. The example uses a smaller set of well-spaced points and bubble sizes proportional to the available plot area so labels remain easier to distinguish at narrow widths.
 
 <Callout title="Note">
   To use the bubble chart, import the Highcharts `highcharts-more` module and
@@ -154,7 +158,7 @@ The structured asset-class key identifies the category of each labelled bubble w
 ## Heatmap chart
 
 Use a heatmap chart to compare values across two categorical axes, with color
-used to show magnitude. To ensure accessible presentation, data labels have have borders by default.
+used to show magnitude. To ensure accessible presentation, data labels have borders by default.
 
 For heatmap variations such as discrete range legends or two-color banding, see
 [Color axis](./usage#color-axis) in the usage guide.

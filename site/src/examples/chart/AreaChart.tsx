@@ -4,7 +4,7 @@ import Highcharts, { type Options } from "highcharts";
 import accessibility from "highcharts/modules/accessibility";
 import patternFill from "highcharts/modules/pattern-fill";
 import HighchartsReact from "highcharts-react-official";
-import { useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import styles from "./index.module.css";
 
 // This example uses Highcharts v10 - for more information on enabling the accessibility module in v11+, visit the accessibility tab.
@@ -48,13 +48,11 @@ const areaChartOptions: Options = {
       dataLabels: {
         enabled: true,
         align: "left",
-        backgroundColor: "var(--salt-container-primary-background)",
         borderRadius: 2,
         padding: 4,
         x: 6,
         y: -4,
         style: {
-          color: "var(--salt-content-primary-foreground)",
           textOutline: "none",
         },
         formatter() {
@@ -121,6 +119,23 @@ export const AreaChart = () => {
     fillPatterns: patterns,
   });
 
+  // Highcharts v10 needs resolved colors. Reuse the background and primary
+  // foreground already resolved by Salt's theme, including on theme changes.
+  const optionsWithReadableLabels = useMemo(
+    () =>
+      Highcharts.merge(chartOptions, {
+        plotOptions: {
+          area: {
+            dataLabels: {
+              backgroundColor: chartOptions.chart?.backgroundColor,
+              style: { color: chartOptions.title?.style?.color },
+            },
+          },
+        },
+      }),
+    [chartOptions],
+  );
+
   return (
     <div className={styles.chartContainer}>
       <div className={styles.controlsRow}>
@@ -133,7 +148,7 @@ export const AreaChart = () => {
       <HighchartsReact
         className={styles.chart}
         highcharts={Highcharts}
-        options={chartOptions}
+        options={optionsWithReadableLabels}
         ref={chartRef}
       />
     </div>

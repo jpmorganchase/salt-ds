@@ -15,7 +15,7 @@ const pieChartOptions: Options = {
     type: "pie",
   },
   title: {
-    text: "Bank revenue mix",
+    text: "Illustrative bank revenue mix",
     align: "center",
   },
   tooltip: {
@@ -23,36 +23,30 @@ const pieChartOptions: Options = {
   },
   accessibility: {
     description:
-      "A pie chart showing a breakdown of bank revenue by product line. There are 20 categories, each shown with equal share (5%) for demonstration purposes.",
+      "An illustrative pie chart of bank revenue by business line. Cards has the largest share at 22%, followed by Deposits at 20%, Lending at 18%, Wealth at 16%, Markets at 14%, and Other at 10%.",
     point: {
       valueSuffix: "%",
+    },
+  },
+  plotOptions: {
+    pie: {
+      dataLabels: {
+        format:
+          '{point.name} <span class="value">{point.percentage:.0f}%</span>',
+      },
     },
   },
   series: [
     {
       type: "pie",
-      name: "Revenue by product line",
+      name: "Revenue by business line",
       data: [
-        { name: "Checking Accounts", y: 5 },
-        { name: "Savings Accounts", y: 5 },
-        { name: "Credit Cards", y: 5 },
-        { name: "Mortgages", y: 5 },
-        { name: "Auto Loans", y: 5 },
-        { name: "Personal Loans", y: 5 },
-        { name: "Student Loans", y: 5 },
-        { name: "Small Business Loans", y: 5 },
-        { name: "Wealth Management", y: 5 },
-        { name: "Robo-Advisory", y: 5 },
-        { name: "Brokerage", y: 5 },
-        { name: "Investment Banking", y: 5 },
-        { name: "Asset Management", y: 5 },
-        { name: "Private Banking", y: 5 },
-        { name: "Treasury Services", y: 5 },
-        { name: "Payments", y: 5 },
-        { name: "Foreign Exchange", y: 5 },
-        { name: "Custody Services", y: 5 },
-        { name: "Insurance", y: 5 },
-        { name: "Compliance & Risk Services", y: 5 },
+        { name: "Deposits", y: 20 },
+        { name: "Cards", y: 22 },
+        { name: "Lending", y: 18 },
+        { name: "Wealth", y: 16 },
+        { name: "Markets", y: 14 },
+        { name: "Other", y: 10 },
       ],
     },
   ],
