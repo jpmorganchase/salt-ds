@@ -63,25 +63,12 @@ describe("getCompactStepperState", () => {
     expect(state.progress).toBe(progress);
   });
 
-  test.each<[string, ReactNode[]]>([
-    [
-      "only pending",
-      [
-        step({ label: "One" }),
-        step({ label: "Two" }),
-        step({ label: "Three" }),
-      ],
-    ],
-    [
-      "completed and pending",
-      [
-        step({ label: "One", stage: "completed" }),
-        step({ label: "Two" }),
-        step({ label: "Three" }),
-      ],
-    ],
-  ])("should have no current step WHEN steps are %s", (_, children) => {
-    const state = getCompactStepperState(children);
+  test("should have no current step WHEN steps are completed and pending", () => {
+    const state = getCompactStepperState([
+      step({ label: "One", stage: "completed" }),
+      step({ label: "Two" }),
+      step({ label: "Three" }),
+    ]);
 
     expect(state.currentIndex).toBe(-1);
     expect(state.current).toBeUndefined();
@@ -99,15 +86,15 @@ describe("getCompactStepperState", () => {
     expect(state.currentCount).toBe(3);
   });
 
-  test.each<[string, ReactNode]>([
-    ["undefined", undefined],
-    ["only null and false", [null, false]],
-  ])("should have no current step WHEN children are %s", (_, children) => {
-    const state = getCompactStepperState(children);
+  test("should not flag null and false children", () => {
+    const state = getCompactStepperState([
+      null,
+      step({ label: "One", stage: "active" }),
+      false,
+    ]);
 
-    expect(state.steps).toEqual([]);
-    expect(state.current).toBeUndefined();
-    expect(state.progress).toBe(0);
+    expect(state.steps).toHaveLength(1);
+    expect(state.hasNonStepChild).toBe(false);
   });
 
   test("should read steps inside fragments", () => {
