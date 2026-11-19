@@ -7,7 +7,7 @@ export const WarningAdornmentIcon = forwardRef<
   SVGSVGElement,
   WarningAdornmentIconProps
 >(function WarningAdornmentIcon(
-  { children, className, ...rest }: WarningAdornmentIconProps,
+  { children: _children, className, ...rest }: WarningAdornmentIconProps,
   ref,
 ) {
   return (

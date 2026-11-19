@@ -232,13 +232,10 @@ export const RangeSlider = forwardRef<HTMLDivElement, RangeSliderProps>(
       disabled: disabled,
       format: format,
       max: max,
-      maxLabel: maxLabel,
       min: min,
-      minLabel: minLabel,
       restrictToMarks: restrictToMarks,
       showTooltip: showTooltip,
       step: step,
-      stepMultiplier: stepMultiplier,
       sliderValue: value,
     };
 

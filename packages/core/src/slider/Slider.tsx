@@ -235,16 +235,13 @@ export const Slider = forwardRef<HTMLDivElement, SliderProps>(function Slider(
         inputRef={inputRef}
         isFocusVisible={isFocusVisible}
         min={min}
-        minLabel={minLabel}
         max={max}
-        maxLabel={maxLabel}
         name={name}
         offsetPercentage={`${progressPercentage}%`}
         restrictToMarks={restrictToMarks}
         sliderValue={value}
         showTooltip={showTooltip}
         step={step}
-        stepMultiplier={stepMultiplier}
         trackDragging={isDragging}
       />
     </SliderTrack>

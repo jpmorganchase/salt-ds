@@ -7,7 +7,7 @@ export const ErrorAdornmentIcon = forwardRef<
   SVGSVGElement,
   ErrorAdornmentIconProps
 >(function ErrorAdornmentIcon(
-  { children, className, ...rest }: ErrorAdornmentIconProps,
+  { children: _children, className, ...rest }: ErrorAdornmentIconProps,
   ref,
 ) {
   return (
