@@ -97,6 +97,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       initialFocus,
       id,
       "aria-labelledby": ariaLabelledBy,
+      onAnimationEnd,
       ...rest
     } = props;
     const targetWindow = useWindow();
@@ -172,13 +173,13 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
               },
               className,
             )}
-            onAnimationEnd={() => {
+            onAnimationEnd={(event) => {
               if (!open && showComponent) {
                 setShowComponent(false);
               }
+              onAnimationEnd?.(event);
             }}
-            {...getFloatingProps()}
-            {...rest}
+            {...getFloatingProps(rest)}
           >
             {children}
           </FloatingComponent>

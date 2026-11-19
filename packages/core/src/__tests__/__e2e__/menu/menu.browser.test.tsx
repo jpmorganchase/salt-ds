@@ -168,6 +168,28 @@ describe("Given a Menu", () => {
     }
   });
 
+  it("supports keyboard navigation when onKeyDown is passed to MenuPanel", async () => {
+    const onKeyDown = vi.fn();
+    await renderWithSalt(
+      <Menu>
+        <MenuTrigger>
+          <Button>Open Menu</Button>
+        </MenuTrigger>
+        <MenuPanel onKeyDown={onKeyDown}>
+          <MenuItem>Copy</MenuItem>
+          <MenuItem>Paste</MenuItem>
+        </MenuPanel>
+      </Menu>,
+    );
+    await trigger().click();
+    await expect.element(page.getByRole("menu")).toHaveFocus();
+    await userEvent.keyboard("{ArrowDown}");
+    await expect
+      .element(page.getByRole("menuitem", { name: "Copy" }))
+      .toHaveFocus();
+    expect(onKeyDown).toHaveBeenCalled();
+  });
+
   it("supports nested menus and actions", async () => {
     const alertSpy = vi.spyOn(window, "alert").mockImplementation(() => {});
     await renderWithSalt(<MultiLevel />);

@@ -45,6 +45,14 @@ interface CarouselContextType {
    */
   carouselId: string | undefined;
   /**
+   * The id of the element that contains the slides. The previous and next buttons use it for `aria-controls`.
+   */
+  slidesId?: string;
+  /**
+   * Registers the `id` passed to `CarouselSlides`, so `slidesId` matches the element that has it.
+   */
+  setSlidesId?: Dispatch<SetStateAction<string | undefined>>;
+  /**
    * Announcement state, determines whether change is communicated to screenreader.
    * @param trigger
    */

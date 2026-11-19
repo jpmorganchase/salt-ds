@@ -711,4 +711,43 @@ describe("Number Input", () => {
     );
     await expect.element(input()).toHaveAttribute("name", "override");
   });
+
+  it("applies id to the input with inputProps taking precedence", async () => {
+    await renderWithSalt(
+      <NumberInput id="quantity" validationStatus="error" />,
+    );
+    await expect.element(input()).toHaveAttribute("id", "quantity");
+    expect(document.querySelectorAll("#quantity")).toHaveLength(1);
+
+    await renderWithSalt(
+      <NumberInput id="quantity" inputProps={{ id: "override" }} />,
+    );
+    await expect.element(input()).toHaveAttribute("id", "override");
+  });
+
+  it("calls inputProps.onChange and still updates its value", async () => {
+    const onChange = vi.fn();
+    const inputOnChange = vi.fn();
+    await renderWithSalt(
+      <NumberInput
+        onChange={onChange}
+        inputProps={{ onChange: inputOnChange }}
+      />,
+    );
+    await typeValue("12");
+    await expect.element(input()).toHaveValue("12");
+    expect(onChange.mock.lastCall?.[1]).toBe("12");
+    expect(inputOnChange).toHaveBeenCalled();
+  });
+
+  it("calls inputProps.onKeyDown when read-only", async () => {
+    const onKeyDown = vi.fn();
+    await renderWithSalt(
+      <NumberInput readOnly defaultValue={5} inputProps={{ onKeyDown }} />,
+    );
+    page.getByRole("textbox").element().focus();
+    await userEvent.keyboard("{ArrowUp}");
+    expect(onKeyDown).toHaveBeenCalledTimes(1);
+    await expect.element(page.getByRole("textbox")).toHaveValue("5");
+  });
 });

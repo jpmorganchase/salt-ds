@@ -101,6 +101,7 @@ export const DatePickerSingleInput = forwardRef<
     value: valueProp,
     validate,
     defaultValue,
+    onDateChange,
     onDateValueChange,
     ...rest
   } = props;
@@ -153,8 +154,9 @@ export const DatePickerSingleInput = forwardRef<
         ? validate(date, details)
         : defaultSingleValidation(dateAdapter, date, details, minDate, maxDate);
       select(event, date ?? null, validatedDetails);
+      onDateChange?.(event, date, validatedDetails);
     },
-    [dateAdapter, minDate, maxDate, select, validate],
+    [dateAdapter, minDate, maxDate, onDateChange, select, validate],
   );
 
   const handleDateValueChange = useCallback(

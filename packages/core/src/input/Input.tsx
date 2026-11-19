@@ -165,6 +165,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
     const {
       "aria-describedby": inputDescribedBy,
       "aria-labelledby": inputLabelledBy,
+      className: inputClassName,
       onBlur,
       onChange,
       onFocus,
@@ -234,7 +235,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
           aria-labelledby={
             clsx(formFieldLabelledBy, inputLabelledBy) || undefined
           }
-          className={clsx(withBaseName("input"), inputProps?.className)}
+          className={clsx(withBaseName("input"), inputClassName)}
           disabled={isDisabled}
           id={id}
           name={name}

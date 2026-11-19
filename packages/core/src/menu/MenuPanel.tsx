@@ -63,7 +63,6 @@ export const MenuPanel = forwardRef<HTMLDivElement, MenuPanelProps>(
             <FloatingComponent
               open={openState}
               role="menu"
-              {...getFloatingProps()}
               {...getPanelPosition()}
               className={clsx(withBaseName(), className)}
               focusManagerProps={
@@ -78,7 +77,7 @@ export const MenuPanel = forwardRef<HTMLDivElement, MenuPanelProps>(
               }
               tabIndex={-1}
               ref={handleRef}
-              {...rest}
+              {...getFloatingProps(rest)}
             >
               <MenuPanelBase>{children}</MenuPanelBase>
             </FloatingComponent>

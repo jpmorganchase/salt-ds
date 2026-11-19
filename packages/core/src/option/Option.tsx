@@ -53,6 +53,7 @@ const OptionComponent = forwardRef<HTMLDivElement, OptionProps>(
       children,
       disabled: disabledProp,
       onClick,
+      onMouseOver,
       id: idProp,
       value,
       ...rest
@@ -123,8 +124,9 @@ const OptionComponent = forwardRef<HTMLDivElement, OptionProps>(
       onClick?.(event);
     };
 
-    const handleMouseOver = () => {
+    const handleMouseOver = (event: MouseEvent<HTMLDivElement>) => {
       setActive(optionValue);
+      onMouseOver?.(event);
     };
 
     useIsomorphicLayoutEffect(() => {

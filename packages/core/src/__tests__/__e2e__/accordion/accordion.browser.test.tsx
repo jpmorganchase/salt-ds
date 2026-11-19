@@ -161,4 +161,24 @@ describe("GIVEN an Accordion", () => {
       .element(button)
       .toHaveAttribute("aria-controls", "custom-panel-id");
   });
+
+  it("applies id to the root and derives the header and panel ids from it", async () => {
+    await renderWithSalt(
+      <Accordion value="example" id="custom-accordion-id" expanded>
+        <AccordionHeader>Summary Text</AccordionHeader>
+        <AccordionPanel>Panel content</AccordionPanel>
+      </Accordion>,
+    );
+
+    expect(document.querySelector(".saltAccordion")).toHaveAttribute(
+      "id",
+      "custom-accordion-id",
+    );
+    await expect
+      .element(page.getByRole("button"))
+      .toHaveAttribute("id", "custom-accordion-id-header");
+    await expect
+      .element(page.getByRole("region"))
+      .toHaveAttribute("id", "custom-accordion-id-panel");
+  });
 });

@@ -247,6 +247,55 @@ describe("GIVEN a Tooltip", () => {
     });
   });
 
+  describe("WHEN HTML attributes are passed", () => {
+    it("THEN applies them to the tooltip element", async () => {
+      await renderWithSalt(
+        <Open
+          id="custom-tooltip"
+          data-testid="custom-tooltip-test-id"
+          style={{ maxWidth: "123px" }}
+          aria-label="Custom label"
+          className="customTooltipClass"
+        />,
+      );
+      const tooltip = page.getByRole("tooltip");
+      await expect.element(tooltip).toBeVisible();
+      await expect.element(tooltip).toHaveAttribute("id", "custom-tooltip");
+      await expect
+        .element(tooltip)
+        .toHaveAttribute("data-testid", "custom-tooltip-test-id");
+      await expect
+        .element(tooltip)
+        .toHaveAttribute("aria-label", "Custom label");
+      await expect.element(tooltip).toHaveClass("saltTooltip");
+      await expect.element(tooltip).toHaveClass("customTooltipClass");
+      expect(tooltip.element()).toHaveStyle({ maxWidth: "123px" });
+      expect((tooltip.element() as HTMLElement).style.position).not.toBe("");
+    });
+
+    it("THEN the trigger is described by the tooltip with the custom id", async () => {
+      await renderWithSalt(<Default id="custom-tooltip" />);
+      await userEvent.tab();
+      await expect
+        .element(page.getByRole("tooltip"))
+        .toHaveAttribute("id", "custom-tooltip");
+      await expect
+        .element(page.getByRole("button"))
+        .toHaveAttribute("aria-describedby", "custom-tooltip");
+    });
+
+    it("THEN calls event handlers and keeps the internal ones", async () => {
+      const onMouseEnter = vi.fn();
+      await renderWithSalt(<Default onMouseEnter={onMouseEnter} />);
+      await page.getByRole("button").hover();
+      const tooltip = page.getByRole("tooltip");
+      await expect.element(tooltip).toBeVisible();
+      await tooltip.hover();
+      await expect.element(tooltip).toBeVisible();
+      expect(onMouseEnter).toHaveBeenCalled();
+    });
+  });
+
   describe("WHEN used in a FormField", () => {
     it("AND status is undefined, THEN should inherit status", async () => {
       await renderWithSalt(

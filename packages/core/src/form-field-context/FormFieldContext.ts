@@ -31,6 +31,18 @@ export interface FormFieldContextValue {
   readOnly: boolean;
   validationStatus: FormFieldValidationStatus | undefined;
   formFieldRef?: RefObject<HTMLDivElement | null>;
+  /**
+   * The function that a `FormFieldLabel` with an `id` calls to register it, so
+   * that the form field's controls use it in `aria-labelledby`. It's called with
+   * `undefined` to unregister it.
+   */
+  setLabelId?: (id: string | undefined) => void;
+  /**
+   * The function that a `FormFieldHelperText` with an `id` calls to register it,
+   * so that the form field's controls use it in `aria-describedby`. It's called
+   * with `undefined` to unregister it.
+   */
+  setHelperTextId?: (id: string | undefined) => void;
 }
 
 export const FormFieldContext = createContext(

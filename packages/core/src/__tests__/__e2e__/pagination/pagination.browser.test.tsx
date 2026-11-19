@@ -5,6 +5,7 @@ import {
   Pagination,
   Paginator,
 } from "@salt-ds/core";
+import { createRef } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 
@@ -235,6 +236,21 @@ describe("GIVEN an Pagination", () => {
       await expect.element(input).toHaveValue("4");
       expect(spy).toHaveBeenCalledOnce();
     });
+
+    it("SHOULD pass ref and inputRef to the input element", async () => {
+      const ref = createRef<HTMLInputElement>();
+      const inputRef = createRef<HTMLInputElement>();
+      await renderWithSalt(
+        <Pagination count={10}>
+          <CompactPaginator>
+            <CompactInput ref={ref} inputRef={inputRef} />
+          </CompactPaginator>
+        </Pagination>,
+      );
+      const input = await textbox().element();
+      expect(ref.current).toBe(input);
+      expect(inputRef.current).toBe(input);
+    });
   });
 
   describe("WHEN siblingCount", () => {
@@ -348,6 +364,17 @@ describe("GIVEN an Pagination", () => {
       await input.fill("5");
       (await input.element()).blur();
       await expect.element(input).toHaveValue("");
+    });
+
+    it("SHOULD pass inputRef to the input element", async () => {
+      const inputRef = createRef<HTMLInputElement>();
+      await renderWithSalt(
+        <Pagination count={10}>
+          <GoToInput inputRef={inputRef} />
+          <Paginator />
+        </Pagination>,
+      );
+      expect(inputRef.current).toBe(await textbox().element());
     });
   });
 });

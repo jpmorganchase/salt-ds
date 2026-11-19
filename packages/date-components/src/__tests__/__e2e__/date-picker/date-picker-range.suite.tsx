@@ -49,6 +49,7 @@ const {
   RangeWithCustomPanel,
   RangeWithCustomParser,
   RangeWithFormField,
+  RangeWithInitialError,
   RangeWithMinMaxDate,
   RangeWithUnselectableDates,
   RangeCustomFormat,
@@ -646,6 +647,55 @@ export function registerAdapterTests(
           );
         }),
       ).toBe(true);
+    });
+
+    it("SHOULD show the input's defaultValue when the initial selected date is invalid", async () => {
+      await render(<RangeWithInitialError />);
+      await expect.element(startInput()).toHaveValue("09 Jun 2024");
+      await expect.element(endInput()).toHaveValue("bad date");
+    });
+
+    it("SHOULD call the input's onDateChange and still update the selection", async () => {
+      const selectionChange = vi.fn();
+      const dateChange = vi.fn();
+      await render(
+        <DatePicker
+          selectionVariant="range"
+          onSelectionChange={selectionChange}
+        >
+          <DatePickerTrigger>
+            <DatePickerRangeInput onDateChange={dateChange} />
+          </DatePickerTrigger>
+          <DatePickerOverlay>
+            <DatePickerRangeGridPanel />
+          </DatePickerOverlay>
+        </DatePicker>,
+      );
+      await replaceRangeInput(0, initialRangeDateValue.startDate);
+      await replaceRangeInput(1, initialRangeDateValue.endDate);
+      await userEvent.tab();
+      expect(dateChange).toHaveBeenCalled();
+      const [, changedDate, changedDetails] = lastCall(dateChange);
+      expect(adapter.format(changedDate.startDate, "DD MMM YYYY")).toBe(
+        initialRangeDateValue.startDate,
+      );
+      expect(adapter.format(changedDate.endDate, "DD MMM YYYY")).toBe(
+        initialRangeDateValue.endDate,
+      );
+      expect(changedDetails).toEqual({
+        startDate: { value: initialRangeDateValue.startDate },
+        endDate: { value: initialRangeDateValue.endDate },
+      });
+      expect(selectionChange).toHaveBeenCalledTimes(
+        dateChange.mock.calls.length,
+      );
+      const [, selectedDate] = lastCall(selectionChange);
+      expect(adapter.format(selectedDate.startDate, "DD MMM YYYY")).toBe(
+        initialRangeDateValue.startDate,
+      );
+      expect(adapter.format(selectedDate.endDate, "DD MMM YYYY")).toBe(
+        initialRangeDateValue.endDate,
+      );
     });
 
     it("SHOULD render helper text in the panel when opened", async () => {

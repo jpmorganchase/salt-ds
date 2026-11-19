@@ -80,6 +80,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   const {
     children,
     disabled: disabledProp,
+    emptyReadOnlyMarker,
     endAdornment: endAdornmentProp,
     readOnly: readOnlyProp,
     multiselect,
@@ -112,6 +113,15 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     disabled: formFieldDisabled,
     readOnly: formFieldReadOnly,
   } = useFormFieldProps();
+
+  const { onKeyDown: inputOnKeyDown, ...restInputProps } = inputPropsProp ?? {};
+  const {
+    onClick: overlayOnClick,
+    onFocus: overlayOnFocus,
+    onMouseLeave: overlayOnMouseLeave,
+    onMouseOver: overlayOnMouseOver,
+    ...restOverlayProps
+  } = OverlayProps ?? {};
 
   const disabled = Boolean(disabledProp) || formFieldDisabled;
   const readOnly = Boolean(readOnlyProp) || formFieldReadOnly;
@@ -315,6 +325,11 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     }
   };
 
+  const handleInputKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    handleKeyDown(event);
+    inputOnKeyDown?.(event);
+  };
+
   const handleFocus = (event: FocusEvent<HTMLInputElement>) => {
     if (event.currentTarget === inputRef.current) {
       setFocusedState(true);
@@ -361,16 +376,24 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     removePill(event, removed);
   };
 
-  const handleListMouseOver = () => {
+  const handleListMouseOver = (event: MouseEvent<HTMLDivElement>) => {
     setFocusVisibleState(false);
+    overlayOnMouseOver?.(event);
   };
 
-  const handleListMouseLeave = () => {
+  const handleListMouseLeave = (event: MouseEvent<HTMLDivElement>) => {
     setActive(undefined);
+    overlayOnMouseLeave?.(event);
   };
 
-  const handleFocusInput = () => {
+  const handleListFocus = (event: FocusEvent<HTMLDivElement>) => {
     inputRef.current?.focus();
+    overlayOnFocus?.(event);
+  };
+
+  const handleListClick = (event: MouseEvent<HTMLDivElement>) => {
+    inputRef.current?.focus();
+    overlayOnClick?.(event);
   };
 
   useIsomorphicLayoutEffect(() => {
@@ -478,8 +501,8 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
           "aria-readonly": readOnly ? "true" : undefined,
           "aria-expanded": !readOnly ? popupOpen : undefined,
           "aria-controls": popupOpen ? listId : undefined,
-          onKeyDown: handleKeyDown,
-          ...inputPropsProp,
+          onKeyDown: handleInputKeyDown,
+          ...restInputProps,
         }}
         aria-activedescendant={popupOpen ? activeState?.id : undefined}
         variant={variant}
@@ -499,7 +522,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         onPillRemove={handlePillRemove}
         hidePillClose={!focusedState || readOnly}
         emptyReadOnlyMarker={
-          readOnly && selectedState.length > 0 ? "" : undefined
+          readOnly && selectedState.length > 0 ? "" : emptyReadOnlyMarker
         }
       />
       <OptionList
@@ -511,10 +534,10 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         tabIndex={-1}
         {...getFloatingProps({
           onMouseOver: handleListMouseOver,
-          onFocus: handleFocusInput,
-          onClick: handleFocusInput,
+          onFocus: handleListFocus,
+          onClick: handleListClick,
           onMouseLeave: handleListMouseLeave,
-          ...OverlayProps,
+          ...restOverlayProps,
         })}
         left={x ?? 0}
         top={y ?? 0}

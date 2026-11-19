@@ -99,6 +99,7 @@ export const Accordion = forwardRef<HTMLDivElement, AccordionProps>(
       >
         <div
           ref={ref}
+          id={idProp}
           className={clsx(
             withBaseName(),
             {

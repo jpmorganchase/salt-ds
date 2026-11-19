@@ -343,7 +343,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
     const isDisabled = disabled || formFieldDisabled;
     const isReadOnly = readOnly || formFieldReadOnly;
     const validationStatus = formFieldValidationStatus ?? validationStatusProp;
-    const validationStatusId = useId(id);
+    const validationStatusId = useId();
     const inputRef = useRef<HTMLInputElement>(null);
     const handleInputRef = useForkRef(inputRefProp, inputRef);
 
@@ -352,6 +352,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       "aria-labelledby": inputLabelledBy,
       className: inputClassName,
       onBlur: inputOnBlur,
+      onChange: inputOnChange,
       onFocus: inputOnFocus,
       required: inputRequired,
       onKeyDown: inputOnKeyDown,
@@ -428,6 +429,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       if (!inputValue.length) {
         setValue("");
         onChange?.(event, "");
+        inputOnChange?.(event);
         return;
       }
       const validValue = pattern ? pattern(inputValue) : true;
@@ -439,6 +441,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       } else {
         event.preventDefault();
       }
+      inputOnChange?.(event);
     };
 
     let floatValue = parse(value) ?? 0;
@@ -625,11 +628,12 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
             inputClassName,
           )}
           disabled={isDisabled}
+          id={id}
           name={name}
           onBlur={handleInputBlur}
           onChange={handleInputChange}
           onFocus={handleInputFocus}
-          onKeyDown={isReadOnly ? undefined : handleInputKeyDown}
+          onKeyDown={isReadOnly ? inputOnKeyDown : handleInputKeyDown}
           placeholder={placeholder}
           readOnly={isReadOnly}
           aria-readonly={isReadOnly ? "true" : undefined}

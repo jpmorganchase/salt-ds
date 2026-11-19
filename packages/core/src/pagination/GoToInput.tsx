@@ -89,7 +89,7 @@ export const GoToInput = forwardRef<HTMLDivElement, GoToInputProps>(
           className={clsx(withBaseName("input"), {
             [withBaseName("inputDefaultSize")]: count < 100,
           })}
-          ref={inputRef}
+          inputRef={inputRef}
           inputProps={{
             style: { width: widthCh },
           }}

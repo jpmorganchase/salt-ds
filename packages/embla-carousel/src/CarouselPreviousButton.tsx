@@ -12,11 +12,11 @@ export interface CarouselPreviousButtonProps
 export const CarouselPreviousButton = forwardRef<
   HTMLButtonElement,
   CarouselPreviousButtonProps
->(function CarouselPreviousButton({ className, onClick, ...rest }, ref) {
+>(function CarouselPreviousButton({ onClick, ...rest }, ref) {
   const { PreviousIcon } = useIcon();
   const { prevBtnDisabled, onPrevButtonClick } = usePrevNextButtons();
 
-  const { carouselId } = useCarouselContext();
+  const { carouselId, slidesId } = useCarouselContext();
 
   const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
     onPrevButtonClick();
@@ -29,7 +29,7 @@ export const CarouselPreviousButton = forwardRef<
       disabled={prevBtnDisabled}
       focusableWhenDisabled
       appearance="transparent"
-      aria-controls={`${carouselId}-slides`}
+      aria-controls={slidesId ?? `${carouselId}-slides`}
       sentiment="neutral"
       aria-label="Previous slide"
       ref={ref}

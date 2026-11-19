@@ -8,7 +8,12 @@ import {
   type ReactNode,
   type Ref,
 } from "react";
-import { makePrefixer, mergeProps } from "../utils";
+import {
+  getRefFromChildren,
+  makePrefixer,
+  mergeProps,
+  useForkRef,
+} from "../utils";
 import { useCollapsibleContext } from "./CollapsibleContext";
 
 export interface CollapsibleTriggerProps
@@ -25,6 +30,7 @@ export const CollapsibleTrigger = forwardRef<
   const { children, className, onClick, ...rest } = props;
 
   const { open, setOpen, panelId } = useCollapsibleContext();
+  const handleRef = useForkRef(getRefFromChildren(children), ref);
 
   const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
     setOpen(event, !open);
@@ -47,6 +53,6 @@ export const CollapsibleTrigger = forwardRef<
       },
       children.props,
     ),
-    ref,
+    ref: handleRef,
   });
 });

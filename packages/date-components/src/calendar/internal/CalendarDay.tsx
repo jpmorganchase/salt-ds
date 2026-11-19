@@ -11,7 +11,13 @@ import type { DateFrameworkType } from "@salt-ds/date-adapters";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
-import { type ComponentPropsWithRef, forwardRef } from "react";
+import {
+  type ComponentPropsWithRef,
+  type FocusEventHandler,
+  forwardRef,
+  type KeyboardEventHandler,
+  type MouseEventHandler,
+} from "react";
 import { useLocalization } from "../../localization-provider";
 import { type DayStatus, useCalendarDay } from "../useCalendarDay";
 import calendarDayCss from "./CalendarDay.css";
@@ -60,6 +66,10 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
       month,
       TooltipProps,
       format = "DD",
+      onClick,
+      onFocus,
+      onKeyDown,
+      onMouseMove,
       ...rest
     } = props;
     const { dateAdapter } = useLocalization();
@@ -91,6 +101,26 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
       }
     }, [focused]);
 
+    const handleClick: MouseEventHandler<HTMLButtonElement> = (event) => {
+      dayProps.onClick?.(event);
+      onClick?.(event);
+    };
+
+    const handleFocus: FocusEventHandler<HTMLButtonElement> = (event) => {
+      dayProps.onFocus?.(event);
+      onFocus?.(event);
+    };
+
+    const handleKeyDown: KeyboardEventHandler<HTMLButtonElement> = (event) => {
+      dayProps.onKeyDown?.(event);
+      onKeyDown?.(event);
+    };
+
+    const handleMouseMove: MouseEventHandler<HTMLButtonElement> = (event) => {
+      dayProps.onMouseMove?.(event);
+      onMouseMove?.(event);
+    };
+
     const defaultButtonProps = {
       children: (
         <>
@@ -103,6 +133,10 @@ export const CalendarDay = forwardRef<HTMLButtonElement, CalendarDayProps>(
       ...dayProps,
       ref: buttonRef,
       ...rest,
+      onClick: handleClick,
+      onFocus: handleFocus,
+      onKeyDown: handleKeyDown,
+      onMouseMove: handleMouseMove,
       className: clsx(
         withBaseName(),
         {

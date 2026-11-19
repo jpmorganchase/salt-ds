@@ -107,6 +107,23 @@ describe("GIVEN a Dialog", () => {
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
   });
 
+  it("keeps Escape from bubbling to parents when onKeyDown is passed", async () => {
+    const onKeyDown = vi.fn();
+    const onParentKeyDown = vi.fn();
+    await renderAndOpen(
+      <div onKeyDown={onParentKeyDown}>
+        <Default onKeyDown={onKeyDown} />
+      </div>,
+    );
+    await expect
+      .element(page.getByRole("button", { name: "Close dialog" }))
+      .toHaveFocus();
+    await userEvent.keyboard("{Escape}");
+    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+    expect(onKeyDown).toHaveBeenCalled();
+    expect(onParentKeyDown).not.toHaveBeenCalled();
+  });
+
   it("closes from the scrim", async () => {
     await renderAndOpen(<Default />);
     dismissViaScrim();

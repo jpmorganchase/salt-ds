@@ -990,3 +990,100 @@ describe("GIVEN an open Combo box and a navigation key pressed with a modifier",
     await expectActive("Alabama");
   });
 });
+
+describe("GIVEN a Combo box with consumer handlers", () => {
+  it("opens with ArrowDown and calls both onKeyDown and inputProps.onKeyDown", async () => {
+    const onKeyDown = vi.fn();
+    const inputOnKeyDown = vi.fn();
+    await renderWithSalt(
+      <Default
+        onKeyDown={onKeyDown}
+        inputProps={{ onKeyDown: inputOnKeyDown }}
+      />,
+    );
+    await userEvent.tab();
+    await userEvent.keyboard("{ArrowDown}");
+
+    await expect.element(listbox()).toBeInTheDocument();
+    await expectActive(0);
+    expect(onKeyDown).toHaveBeenCalledTimes(1);
+    expect(inputOnKeyDown).toHaveBeenCalledTimes(1);
+  });
+
+  it("calls Option's onMouseOver and makes the option active", async () => {
+    const onMouseOver = vi.fn();
+    await renderWithSalt(
+      <ComboBox>
+        <Option value="Alabama" />
+        <Option value="Alaska" onMouseOver={onMouseOver} />
+      </ComboBox>,
+    );
+    await input().click();
+    const alaska = page.getByRole("option", { name: "Alaska" });
+    // In Firefox CI the pointer has ended up over Alabama after hovering
+    // Alaska, so hover again until Alaska is active.
+    await expect
+      .poll(async () => {
+        await alaska.hover();
+        return isActive("Alaska");
+      })
+      .toBe(true);
+    expect(onMouseOver).toHaveBeenCalled();
+  });
+
+  it("calls OverlayProps focus and click handlers and returns focus to the input", async () => {
+    const onFocus = vi.fn();
+    const onClick = vi.fn();
+    await renderWithSalt(
+      <Default multiselect OverlayProps={{ onFocus, onClick }} />,
+    );
+    await input().click();
+    await page.getByRole("option", { name: "Alaska" }).click();
+
+    await expect.element(input()).toHaveFocus();
+    expect(onFocus).toHaveBeenCalled();
+    expect(onClick).toHaveBeenCalled();
+  });
+
+  it("calls OverlayProps mouse handlers and clears the active option when the pointer leaves", async () => {
+    const onMouseOver = vi.fn();
+    const onMouseLeave = vi.fn();
+    await renderWithSalt(
+      <Default OverlayProps={{ onMouseOver, onMouseLeave }} />,
+    );
+    await input().click();
+    await userEvent.keyboard("{ArrowDown}");
+    await expect
+      .element(page.getByRole("option").nth(0))
+      .toHaveClass("saltOption-focusVisible");
+
+    await page.getByRole("option").nth(0).hover();
+    await expect
+      .poll(() => document.querySelectorAll(".saltOption-focusVisible").length)
+      .toBe(0);
+    expect(onMouseOver).toHaveBeenCalled();
+
+    await input().hover();
+    await expect.element(input()).not.toHaveAttribute("aria-activedescendant");
+    expect(onMouseLeave).toHaveBeenCalled();
+  });
+});
+
+describe("GIVEN a Combo box with inputProps.className", () => {
+  it("merges it with the input's class", async () => {
+    await renderWithSalt(<Default inputProps={{ className: "customInput" }} />);
+    await expect.element(input()).toHaveClass("saltPillInput-input");
+    await expect.element(input()).toHaveClass("customInput");
+  });
+});
+
+describe("GIVEN a read-only Combo box with no selection", () => {
+  it("shows emptyReadOnlyMarker", async () => {
+    await renderWithSalt(
+      <ComboBox readOnly emptyReadOnlyMarker="None">
+        <Option value="Alabama" />
+      </ComboBox>,
+    );
+    await expect.element(page.getByRole("textbox")).toHaveValue("None");
+  });
+});

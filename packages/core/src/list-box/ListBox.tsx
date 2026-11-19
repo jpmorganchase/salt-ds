@@ -7,6 +7,7 @@ import {
   type ForwardedRef,
   forwardRef,
   type KeyboardEvent,
+  type MouseEvent,
   type ReactElement,
   type ReactNode,
   type Ref,
@@ -70,6 +71,8 @@ export const ListBox = forwardRef(function ListBox<Item>(
     onKeyDown,
     onFocus,
     onBlur,
+    onMouseDown,
+    onMouseOver,
     ...rest
   } = props;
   const targetWindow = useWindow();
@@ -195,11 +198,14 @@ export const ListBox = forwardRef(function ListBox<Item>(
 
   const wasMouseDown = useRef(false);
 
-  const handleMouseDown = () => {
+  const handleMouseDown = (event: MouseEvent<HTMLDivElement>) => {
     wasMouseDown.current = true;
+    onMouseDown?.(event);
   };
 
   const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
+    onFocus?.(event);
+
     if (wasMouseDown.current) {
       wasMouseDown.current = false;
       return;
@@ -231,7 +237,6 @@ export const ListBox = forwardRef(function ListBox<Item>(
 
     setActive(newActive?.data);
     setFocusedState(true);
-    onFocus?.(event);
   };
 
   const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
@@ -240,9 +245,10 @@ export const ListBox = forwardRef(function ListBox<Item>(
     onBlur?.(event);
   };
 
-  const handleListMouseOver = () => {
+  const handleListMouseOver = (event: MouseEvent<HTMLDivElement>) => {
     setFocusVisibleState(false);
     setActive(undefined);
+    onMouseOver?.(event);
   };
 
   const handleRef = useForkRef(setListRef, ref);

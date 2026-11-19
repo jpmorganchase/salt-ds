@@ -90,6 +90,9 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       placement = "right",
       enterDelay = 300,
       leaveDelay = 0,
+      onOpenChange,
+      disableHoverListener,
+      disableFocusListener,
       ...rest
     } = finalProps;
 
@@ -108,7 +111,9 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       placement,
       enterDelay,
       leaveDelay,
-      ...rest,
+      onOpenChange,
+      disableHoverListener,
+      disableFocusListener,
     };
 
     const {
@@ -141,7 +146,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
             className,
           )}
           open={open && !disabled && hasContent}
-          {...getTooltipProps()}
+          {...mergeProps({ ...getTooltipProps() }, rest)}
+          role="tooltip"
           ref={floatingRef}
           {...getTooltipPosition()}
         >

@@ -327,3 +327,68 @@ describe("GIVEN a List box and a navigation key pressed with a modifier", () => 
     await expectActiveOption("Alabama");
   });
 });
+
+describe("GIVEN a List box with mouse and focus handlers", () => {
+  it("calls onFocus when focused after a mouse down", async () => {
+    const onFocus = vi.fn();
+    await renderWithSalt(
+      <ListBox onFocus={onFocus}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </ListBox>,
+    );
+    const listbox = page.getByRole("listbox");
+
+    listbox
+      .element()
+      .dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
+    (listbox.element() as HTMLElement).focus();
+
+    await expect.element(listbox).toHaveFocus();
+    expect(onFocus).toHaveBeenCalledTimes(1);
+  });
+
+  it("calls onMouseDown and doesn't set an active option when focused after a mouse down", async () => {
+    const onMouseDown = vi.fn();
+    await renderWithSalt(
+      <ListBox onMouseDown={onMouseDown}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </ListBox>,
+    );
+    const listbox = page.getByRole("listbox");
+
+    listbox
+      .element()
+      .dispatchEvent(new MouseEvent("mousedown", { bubbles: true }));
+    (listbox.element() as HTMLElement).focus();
+    await expect.element(listbox).toHaveFocus();
+    expect(onMouseDown).toHaveBeenCalledTimes(1);
+
+    // With no active option, ArrowDown moves to the first option.
+    await userEvent.keyboard("{ArrowDown}");
+    await expectActiveOption("Alabama");
+  });
+
+  it("calls onMouseOver and hides focus-visible styling on hover", async () => {
+    const onMouseOver = vi.fn();
+    await renderWithSalt(
+      <ListBox onMouseOver={onMouseOver}>
+        <Option value="Alabama" />
+        <Option value="Alaska" />
+      </ListBox>,
+    );
+    await userEvent.tab();
+    await expectActiveOption("Alabama");
+    await expect
+      .element(page.getByRole("option", { name: "Alabama" }))
+      .toHaveClass("saltOption-focusVisible");
+
+    await page.getByRole("option", { name: "Alaska" }).hover();
+
+    expect(onMouseOver).toHaveBeenCalled();
+    await expect
+      .poll(() => document.querySelectorAll(".saltOption-focusVisible").length)
+      .toBe(0);
+  });
+});

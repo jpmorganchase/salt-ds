@@ -9,6 +9,7 @@ import {
   isValidElement,
   type ReactNode,
   useRef,
+  useState,
 } from "react";
 import {
   FormFieldContext,
@@ -98,8 +99,13 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
     const formId = useId(idProp);
     const hasControls = hasFormFieldControls(children);
 
-    const labelId = formId ? `label-${formId}` : undefined;
-    const helperTextId = formId ? `helperText-${formId}` : undefined;
+    const [registeredLabelId, setLabelId] = useState<string>();
+    const [registeredHelperTextId, setHelperTextId] = useState<string>();
+
+    const labelId =
+      registeredLabelId ?? (formId ? `label-${formId}` : undefined);
+    const helperTextId =
+      registeredHelperTextId ?? (formId ? `helperText-${formId}` : undefined);
 
     return (
       <div
@@ -127,6 +133,8 @@ export const FormField = forwardRef<HTMLDivElement, FormFieldProps>(
             readOnly,
             validationStatus,
             formFieldRef,
+            setLabelId,
+            setHelperTextId,
           }}
         >
           {children}

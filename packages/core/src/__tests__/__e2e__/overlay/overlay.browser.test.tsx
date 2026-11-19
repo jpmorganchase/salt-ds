@@ -282,6 +282,56 @@ describe("GIVEN an Overlay", () => {
         .toBe(true);
     });
 
+    it("THEN it should update the scroll dividers when onScrollCapture is passed", async () => {
+      const onScrollCapture = vi.fn();
+      await renderWithSalt(
+        <Overlay open>
+          <OverlayTrigger>
+            <Button>Show Overlay</Button>
+          </OverlayTrigger>
+          <OverlayPanel style={{ width: 320, maxHeight: 200 }}>
+            <OverlayHeader header="Review changes" />
+            <OverlayPanelContent onScrollCapture={onScrollCapture}>
+              <div style={{ height: 600 }}>Long content</div>
+            </OverlayPanelContent>
+          </OverlayPanel>
+        </Overlay>,
+      );
+
+      const dialog = page.getByRole("dialog");
+      await expect.element(dialog).toBeVisible();
+      const content = dialog
+        .element()
+        .querySelector<HTMLElement>(".saltOverlayPanelContent-container");
+      if (!content) {
+        throw new Error("Overlay panel content was not rendered");
+      }
+      await expect
+        .poll(() =>
+          content.classList.contains("saltOverlayPanelContent-scroll-bottom"),
+        )
+        .toBe(true);
+      // Wait for the content's resize updates, so only the scroll can update
+      // the dividers.
+      await new Promise<void>((resolve) => {
+        const observer = new ResizeObserver(() => {
+          observer.disconnect();
+          requestAnimationFrame(() => requestAnimationFrame(() => resolve()));
+        });
+        observer.observe(content);
+      });
+
+      content.scrollTop = content.scrollHeight;
+      content.dispatchEvent(new Event("scroll"));
+
+      await expect
+        .poll(() =>
+          content.classList.contains("saltOverlayPanelContent-scroll-top"),
+        )
+        .toBe(true);
+      expect(onScrollCapture).toHaveBeenCalled();
+    });
+
     it("THEN it should keep the header and footer in place while the content scrolls", async () => {
       await renderWithSalt(<WithSections />);
       await trigger().click();
