@@ -1,6 +1,6 @@
 /* Styles applied to root element */
 .saltDrawerResizeGuide {
-  --drawerResizeGuide-borderColor: var(--salt-content-secondary-foreground);
+  --drawerResizeGuide-borderColor: var(--salt-target-borderColor);
   --drawerResizeGuide-borderWidth: var(--salt-size-fixed-200);
 
   position: fixed;
