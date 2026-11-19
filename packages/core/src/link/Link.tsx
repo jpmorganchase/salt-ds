@@ -33,8 +33,9 @@ export interface LinkProps
    * Render prop to enable customisation of anchor element.
    */
   render?: RenderPropsType["render"];
-  /*
-   * The color of the text. Defaults to "primary".
+  /**
+   * The color of the text.
+   * @default "primary"
    */
   color?: "inherit" | "primary" | "secondary" | "accent";
   /**
@@ -42,7 +43,7 @@ export interface LinkProps
    * Either "default" or "never".
    * Determines when underline should be applied to the link.
    *
-   * @default "default".
+   * @default "default"
    */
   underline?: "default" | "never";
 }

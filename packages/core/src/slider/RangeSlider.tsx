@@ -56,7 +56,7 @@ export interface RangeSliderProps
   marks?: { label: string; value: number }[];
   /**
    * Maximum slider value.
-   * @default 10
+   * @default 100
    */
   max?: number;
   /**

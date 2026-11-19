@@ -9,6 +9,10 @@ import toastGroupCss from "./ToastGroup.css";
 const withBaseName = makePrefixer("saltToastGroup");
 
 export interface ToastGroupProps extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * The corner of the viewport the group is fixed to.
+   * @default "bottom-right"
+   */
   placement?: "top-right" | "bottom-right";
 }
 

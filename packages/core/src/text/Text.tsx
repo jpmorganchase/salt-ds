@@ -64,8 +64,10 @@ export type TextProps<T extends ElementType> = PolymorphicComponentPropWithRef<
      * @deprecated since 1.27.1. Use `color` instead.
      */
     variant?: "primary" | "secondary";
-    /*
-     * The color of the text. Defaults to "primary".
+    /**
+     * The color of the text. When `styleAs` is `"inherit"`, it defaults to
+     * `"inherit"`.
+     * @default "primary"
      */
     color?: "inherit" | "primary" | "secondary" | ValidationStatus;
   }

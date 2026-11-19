@@ -34,11 +34,11 @@ export interface TooltipProps
    */
   children: ReactNode;
   /**
-   * Whether to hide the Tooltip arrow. Defaults to `false`.
+   * If `true`, the Tooltip arrow is hidden.
    */
   hideArrow?: boolean;
   /**
-   * Whether to hide the status icon within the Tooltip. Defaults to `false`.
+   * If `true`, the status icon within the Tooltip is hidden.
    * If no status is provided, icon will also be hidden.
    */
   hideIcon?: boolean;
@@ -52,14 +52,18 @@ export interface TooltipProps
   status?: FormFieldValidationStatus | ValidationStatus;
   /**
    * Delay in milliseconds before the Tooltip is shown.
+   * @default 300
    */
   enterDelay?: number;
   /**
-   * Delay in milliseconds before the Tooltip is hidden. Defaults to 300ms.
+   * Delay in milliseconds before the Tooltip is hidden.
+   * @default 0
    */
   leaveDelay?: number;
   /**
-   * Option to not display the Tooltip. Can be used in conditional situations like text truncation. Defaults to 0.
+   * If `true`, the Tooltip isn't shown, for example when its trigger's text
+   * isn't truncated. The Tooltip also isn't shown when the surrounding
+   * `FormField` is disabled.
    */
   disabled?: boolean;
   /**
@@ -70,6 +74,17 @@ export interface TooltipProps
    * Option to remove the focus listener.
    */
   disableFocusListener?: boolean;
+  /**
+   * If `true`, the Tooltip is shown. Use with `onOpenChange` to control it.
+   * Leave it unset for the Tooltip to show and hide itself when its trigger is
+   * hovered or focused.
+   */
+  open?: UseFloatingUIProps["open"];
+  /**
+   * The placement of the Tooltip relative to its trigger.
+   * @default "right"
+   */
+  placement?: UseFloatingUIProps["placement"];
 }
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(

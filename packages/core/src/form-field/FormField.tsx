@@ -33,7 +33,8 @@ export interface FormFieldProps
   /**
    * Location of the label relative to the control.
    *
-   * Either 'top', 'left', or 'right'`.
+   * Either `"top"`, `"left"` or `"right"`.
+   * @default "top"
    */
   labelPlacement?: FormFieldLabelPlacement;
   /**

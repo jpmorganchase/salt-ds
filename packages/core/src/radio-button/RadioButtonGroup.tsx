@@ -28,7 +28,10 @@ export interface RadioButtonGroupProps
    */
   disabled?: boolean;
   /**
-   * Only for horizontal direction. When `true` the text in radio button label will wrap to fit within the container. Otherwise the radio buttons will wrap onto the next line.
+   * If `true`, the radio buttons wrap onto the next line. Otherwise, the text in
+   * each radio button's label wraps to fit within the container. Only applies
+   * when `direction` is `"horizontal"`.
+   * @default true
    */
   wrap?: boolean;
   /**

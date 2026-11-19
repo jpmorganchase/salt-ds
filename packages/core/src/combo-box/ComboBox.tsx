@@ -57,6 +57,11 @@ export interface ComboBoxProps<Item = string>
    */
   children?: ReactNode;
   /**
+   * If `true`, the selected pills are kept to one line while the combo box isn't
+   * focused or open, with an overflow icon when some don't fit.
+   */
+  truncate?: boolean;
+  /**
    * If true, options will be selected when the tab key is pressed.
    */
   selectOnTab?: boolean;
