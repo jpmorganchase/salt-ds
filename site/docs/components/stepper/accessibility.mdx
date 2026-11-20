@@ -10,39 +10,47 @@ data:
 
 ## Best practices
 
-Improve accessibility by customizing the `aria-label` prop to provide additional context. For example:
+- Provide an accessible name for each stepper with `aria-label` or `aria-labelledby`, for example by referencing the title of the process.
+- Set `stage="active"` on only one step. Each active step has `aria-current="step"`.
+- If you add a tooltip to a step, don't put essential information in it. Steps can't receive focus, so keyboard users can't open the tooltip.
 
-```jsx
-<Stepper aria-label="Onboarding Process steps">
-  <Step label="Step 1" stage="completed" />
-  <Step label="Step 2" stage="inprogress" />
-  <Step label="Step 3" stage="pending" />
-</Stepper>
-```
+## Step state
+
+`Stepper` renders an ordered list, and each step is a list item.
+
+Screen readers read each step's label, description and state, such as "completed" or "error". If a step has a status, they read the status instead of the stage. The active step is marked as the current step.
+
+Stages don't change on their own, and changes to them aren't announced. Update them from your application's state when the user moves to another step.
+
+## Substeps
+
+In a vertical stepper, a step with substeps has an expand button. The button has `aria-expanded` and `aria-controls`. Its accessible name is the step's label, description and state, followed by "toggle substeps".
+
+The list of substeps is named after the step's label, followed by "substeps". It's hidden while the step is collapsed.
 
 ## Keyboard interactions
 
-Keyboard interactions apply to only Steppers with steps with nested substeps.
-In those cases the parent step renders automatically a button that allows
-for expanding or collapsing the substeps.
+Steps can't receive focus. Only the expand buttons of steps with substeps can.
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-- Moves the focus down to the next expand button.
-- By default all steps with substeps are collapsed, meaning only top level
-  expand buttons will be focusable. Initially the top most step will be focused.
-- If the substeps contain more substeps, the focus will move to the inside steps only if the parent is expanded.
+Moves focus to the next expand button. Expand buttons inside collapsed steps are skipped.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-- Moves the focus up to the previous expand button.
+Moves focus to the previous expand button.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter / Space">
 
-- Applicable to only steps with substeps. Those steps are in the collapsed state by default. Using this action on an the arrow button expands or collapses the step.
+Expands or collapses the substeps of the step. Focus stays on the expand button.
 
 </KeyboardControl>
 </KeyboardControls>
+
+## References
+
+- [WAI-ARIA `aria-current` state](https://www.w3.org/TR/wai-aria-1.2/#aria-current)
+- [ARIA Disclosure Pattern](https://www.w3.org/WAI/ARIA/apg/patterns/disclosure/)

@@ -2,10 +2,11 @@ import { Step, Stepper } from "@salt-ds/core";
 
 export const Horizontal = () => {
   return (
-    <Stepper orientation="horizontal">
-      <Step label="Step 1" stage="completed" />
-      <Step label="Step 2" stage="active" />
-      <Step label="Step 3" stage="pending" />
+    <Stepper aria-label="Account opening">
+      <Step label="Account details" stage="completed" />
+      <Step label="Identity check" stage="active" />
+      <Step label="Funding" stage="pending" />
+      <Step label="Review" stage="pending" />
     </Stepper>
   );
 };

@@ -10,19 +10,37 @@ data:
 
 ## Using the components
 
+`Stepper` displays the `stage` and `status` you set on each `Step`. Steps aren't interactive: users can't focus, select or activate them. In a vertical stepper, the only interactive element is the expand button on a step with substeps.
+
+`Stepper` doesn't track the current step, change stages or provide navigation.
+
+- Set `stage="active"` on the step the user is on, and update the `stage` and `status` of each step as the user moves through the process.
+- Provide your own buttons to move between steps. See the [wizard pattern](/salt/patterns/wizard) for a complete multi-step flow.
+- Substeps are supported in vertical orientation only.
+
 ### When to use
 
 - When there are separate steps within a process, such as a wizard or a multi-step form.
-- When you want to split a process into distinct, bite-sized sections that are less daunting than lengthy forms.
 
 ### When not to use
 
 - When there are fewer than three steps in a process.
-- As navigation; users cannot interact with the steps.
+- As navigation; users can't interact with the steps.
+- When users need to switch between related views on the same page. Instead, use [`Tabs`](../tabs).
+- To show how long a system operation is taking. Instead, use [`Progress`](../progress).
+
+### Choosing an orientation
+
+- Use a horizontal stepper for shorter, simpler processes.
+- Use a vertical stepper for longer, more complex processes, such as when you need to split steps into substeps.
+
+For more guidance, see [horizontal stepper vs. vertical stepper](/salt/patterns/wizard#horizontal-stepper-vs-vertical-stepper) in the wizard pattern.
 
 ## Content
 
-Step labels never truncate, only wrap. Therefore, ensure they're short and self-explanatory.
+- Keep labels short and self-explanatory, such as "Account details".
+- Labels and descriptions wrap and never truncate.
+- Pass plain text to `label` and `description`. They're combined into the text that screen readers announce, so other content, such as an element, isn't announced correctly.
 
 ## Import
 

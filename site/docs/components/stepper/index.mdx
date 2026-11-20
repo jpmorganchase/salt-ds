@@ -1,14 +1,13 @@
 ---
 title: Stepper
 data:
-  description: "`Stepper` communicates user progress through a linear process. It gives context about where they are, which steps are completed, how many steps are remaining, and whether errors or warnings have occurred."
+  description: "`Stepper` displays a user's progress through a linear process split into steps. It shows which steps are completed, which step is current, which steps remain and which steps have a warning or error."
   sourceCodeUrl: "https://github.com/jpmorganchase/salt-ds/tree/main/packages/core/src/stepper"
   package:
     name: "@salt-ds/core"
+    initialVersion: "1.45.0"
   alsoKnownAs:
     [
-      "Discrete progress indicator",
-      "Progress indicator",
       "Progress stepper",
       "Progress steps",
       "Screen flow",
@@ -17,8 +16,8 @@ data:
     ]
   relatedComponents:
     [
-      { name: "SemanticIconProvider", relationship: "contains" },
-      { name: "Accordion", relationship: "similarTo" },
+      { name: "Semantic icon provider", relationship: "contains" },
+      { name: "Tabs", relationship: "similarTo" },
     ]
 keywords:
   $ref: "#/data/alsoKnownAs"
