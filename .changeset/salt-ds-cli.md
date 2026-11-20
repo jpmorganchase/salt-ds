@@ -1,0 +1,5 @@
+---
+"@salt-ds/cli": minor
+---
+
+Added `@salt-ds/cli`. `salt-ds init` sets up `AGENTS.md`, `CLAUDE.md` and, with `--copilot`, Copilot's instructions with an index of the installed Salt docs; `--script typecheck` also makes that script run `salt-ds check`, preserving the application's scope even when an earlier command changes directory. `salt-ds check` reports deprecated or unknown design tokens, direct application use of colour foundations or colour palettes, deprecated props, components missing a required part, an `Input` set up for numbers where `NumberInput` fits, a `Button` with `aria-pressed` where `ToggleButton` fits, a `NumberInput` with `clamp` in a file that announces nothing, a `NumberInput` with `min` and `max` in a `FormField` without helper text, an app setting Salt's own tokens to its own values, and CSS grids and media queries on width where a Salt layout and its responsive props fit. Both read the docs and check data in each installed Salt package, so they match the installed Salt versions.
