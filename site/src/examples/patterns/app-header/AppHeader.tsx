@@ -45,8 +45,8 @@ export const DesktopAppHeader: FC<{
       <FlexLayout
         style={{
           minHeight: "calc(var(--salt-size-base) + var(--salt-spacing-200))",
-          paddingLeft: "var(--salt-spacing-300)",
-          paddingRight: "var(--salt-spacing-300)",
+          paddingLeft: "var(--salt-layout-page-margin)",
+          paddingRight: "var(--salt-layout-page-margin)",
           backgroundColor: "var(--salt-container-primary-background)",
           position: "fixed",
           left: 0,
