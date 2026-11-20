@@ -15,13 +15,6 @@ data:
 
 <LivePreview componentName="patterns/formatted-input" exampleName="PhoneNumber" />
 
-<Diagram
-    src="/img/patterns/formatted-input/formatted-input-example.png"
-    srcDark="/img/patterns/formatted-input/formatted-input-example-dark.png"
-    alt="Formatted input pattern example"
-    border
- />
-
 ## When to use
 - When user input must follow a specific format.
 - When visual formatting improves data entry accuracy and readability.
@@ -65,7 +58,7 @@ Formatted input contains:
 <Diagram
   src="/img/patterns/formatted-input/formatted-input-layout.png"
   srcDark="/img/patterns/formatted-input/formatted-input-layout-dark.png"
-  alt="The layout of the formatted input pattern"
+  alt="Formatted input layout: a form field wrapping a label, an input and helper text."
   border
 />
 
@@ -79,16 +72,11 @@ Formatted input contains:
 
 Use helper text to provide formatting guidance and/or an example of the expected format.
 
-<Diagram
-  src="/img/patterns/formatted-input/formatted-input-guidance.png"
-  srcDark="/img/patterns/formatted-input/formatted-input-guidance-dark.png"
-  alt="Formatting guidance for the formatted input pattern"
-  border
-/>
-
 <Callout status="success" title="Best practices">
     Placeholder text should never be the only source of guidance. Placeholder text disappears once the user begins typing and may not be announced by all screen readers, so it must not be used to convey required formatting rules. Use labels and helper text to provide persistent formatting guidance. If you include placeholder text, use it only as a supplementary hint or example.
 </Callout>
+
+The examples below give the expected format in helper text, as the phone number example at the top of this page does.
 
 <LivePreview componentName="patterns/formatted-input" exampleName="CreditCard" />
 
@@ -294,6 +282,10 @@ Dynamic preview shows the formatted result in real time as the user types. It he
     - If the label is likely to impede the preview, place the dynamic preview next to the input instead.
 </Callout>
 
+<LivePreview componentName="patterns/formatted-input" exampleName="PhoneNumberWithPreview" />
+
+The images below show the preview while typing and the formatted value after the user leaves the field, with the preview near the label and next to the input.
+
 <Diagram
   src="/img/patterns/formatted-input/formatted-input-dynamic-preview.png"
   srcDark="/img/patterns/formatted-input/formatted-input-dynamic-preview-dark.png"
@@ -307,8 +299,6 @@ Dynamic preview shows the formatted result in real time as the user types. It he
   alt="Input dynamic preview example of the formatted input pattern"
   border
 />
-
-<LivePreview componentName="patterns/formatted-input" exampleName="PhoneNumberWithPreview" />
 
 ## Copy & paste behavior
 

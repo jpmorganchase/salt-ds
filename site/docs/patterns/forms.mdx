@@ -34,12 +34,6 @@ data:
 
 <LivePreview componentName="patterns/forms" exampleName="StandardLayout" />
 
-<Diagram
-  src="/img/patterns/forms/form-pattern.png"
-  alt="Example showing a form."
-  border
-/>
-
 ## When to use
 
 Use a form to enable users to input and submit data. Forms can be simple and user-oriented, such as contact forms, surveys, and sign-up pages. They can also be complex and product-oriented, such as app preferences, settings, and multi-step forms split across different screens.
@@ -183,18 +177,12 @@ A form control consists of a [form field](/salt/components/form-field) wrapped a
 - A dropdown.
 - A radio button or checkbox group.
 
-<ImageSwitcher
-  images={[
-    {
-      src: "/img/patterns/forms/form-layout.png",
-      alt: "Four vertically stacked form fields sized to suit their expected values.",
-    },
-    {
-      src: "/img/patterns/forms/form-layout-spacing.png",
-      alt: "Column grid overlay showing how four form fields align at different widths.",
-    },
-  ]}
-  label="Show vertical spacing"
+The columns are separated by `--salt-spacing-300` gutters, and each form field spans a whole number of columns. The example at the top of this page uses a standard layout.
+
+<Diagram
+  src="/img/patterns/forms/form-layout-spacing.png"
+  alt="Column grid overlay showing how four form fields align at different widths, with --salt-spacing-300 gutters."
+  border
 />
 
 Read more in the [spacing foundation](../foundations/spacing).
@@ -211,8 +199,9 @@ Read more in the [spacing foundation](../foundations/spacing).
 
 Headings create more visual separation (after choosing field and background fill color) and group related fields. This helps users complete forms.
 
-- Each heading adds space above for more separation in the form.
-- If your heading is followed by a description, spacing is reduced to reinforce the relationship between heading and description.
+- Each heading adds space above for more separation in the form: `--salt-spacing-200`.
+- If your heading is followed by a description, spacing is reduced to reinforce the relationship between heading and description: `--salt-spacing-100`.
+- Leave `--salt-spacing-300` between the heading block (the heading and any description) and the first field.
 
 <ImageSwitcher
   images={[
@@ -232,21 +221,7 @@ Read more in the [spacing foundation](../foundations/spacing).
 
 #### Sections and separators
 
-Use horizontal separators to increase visual hierarchy alongside fills and headings. They use the tertiary separator style to denote sections of related fields or information.
-
-<ImageSwitcher
-  images={[
-    {
-      src: "/img/patterns/forms/form-sections-separators.png",
-      alt: "Form fields grouped into sections with inset horizontal separators.",
-    },
-    {
-      src: "/img/patterns/forms/form-sections-separators-spacing.png",
-      alt: "Spacing overlay showing the gaps around inset separators between form sections.",
-    },
-  ]}
-  label="Show spacing"
-/>
+Use horizontal separators to increase visual hierarchy alongside fills and headings. They use the tertiary separator style (`--salt-separable-tertiary-borderColor`) to denote sections of related fields or information. Leave `--salt-spacing-300` above and below each separator.
 
 <GuidanceCallout type="positive" customPillText="Best practices">
 
@@ -256,6 +231,12 @@ Use horizontal separators to increase visual hierarchy alongside fills and headi
 </GuidanceCallout>
 
 <LivePreview componentName="patterns/forms" exampleName="Sections" />
+
+<Diagram
+  src="/img/patterns/forms/form-sections-separators-spacing.png"
+  alt="Spacing overlay showing --salt-spacing-300 above and below the inset separators between form sections."
+  border
+/>
 
 ### Multiple columns
 
@@ -535,19 +516,11 @@ Use these layouts to display a:
 
 ### Editable form
 
-<ImageSwitcher
-  images={[
-    {
-      src: "/img/patterns/forms/form-compact-layout.png",
-      alt: "A compact form with labels beside controls in two sections separated by a horizontal rule.",
-    },
-    {
-      src: "/img/patterns/forms/form-compact-layout-spacing.png",
-      alt: "Spacing overlay for the compact form, showing tight row gaps, section spacing, and outer margins.",
-    },
-  ]}
-  label="Show spacing"
-/>
+In a compact editable form:
+
+- Leave `--salt-spacing-100` between rows, and between a section heading and its first row.
+- Leave `--salt-spacing-200` above each following section heading.
+- Keep `--salt-spacing-300` margins at the sides of the form.
 
 <GuidanceCallout type="positive" customPillText="Best practices">
 
@@ -560,6 +533,12 @@ If a compact form is editable, display it with:
 </GuidanceCallout>
 
 <LivePreview componentName="patterns/forms" exampleName="Compact" />
+
+<Diagram
+  src="/img/patterns/forms/form-compact-layout-spacing.png"
+  alt="Spacing overlay for a compact form with right-aligned labels: --salt-spacing-100 between rows, --salt-spacing-200 above the second section and --salt-spacing-300 side margins."
+  border
+/>
 
 ### Read-only summary
 
