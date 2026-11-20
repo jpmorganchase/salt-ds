@@ -10,19 +10,18 @@ data:
 
 ## Using the components
 
-`Stepper` displays the `stage` and `status` you set on each `Step`. Steps aren't interactive: users can't focus, select or activate them. The only interactive element is the expand button on a step with substeps.
+`Stepper` displays the `stage` and `status` you set on each `Step`. Steps aren't interactive: users can't focus, select or activate them. In a vertical stepper, the only interactive element is the expand button on a step with substeps.
 
 `Stepper` doesn't track the current step, change stages or provide navigation.
 
-- Steps are displayed in the order you pass them, so pass them in the order of the process. Steps aren't numbered.
+- Steps are displayed in the order you pass them.
 - Set `stage="active"` on the step the user is on, and update the `stage` and `status` of each step as the user moves through the process.
-- Provide your own buttons to move between steps. Follow the [button bar pattern](/salt/patterns/button-bar) for their layout, and the [wizard pattern](/salt/patterns/wizard) for a complete multi-step flow.
+- Provide your own buttons to move between steps. See the [wizard pattern](/salt/patterns/wizard) for a complete multi-step flow.
 - Substeps are supported in vertical orientation only.
 
 ### When to use
 
 - When there are separate steps within a process, such as a wizard or a multi-step form.
-- When you want to split a process into distinct, bite-sized sections that are less daunting than lengthy forms.
 
 ### When not to use
 
@@ -30,6 +29,11 @@ data:
 - As navigation; users can't interact with the steps.
 - When users need to switch between related views on the same page. Instead, use [`Tabs`](../tabs).
 - To show how long a system operation is taking. Instead, use [`Progress`](../progress).
+
+### Choosing an orientation
+
+- Use a horizontal stepper in wide layouts, above the content of the page. Don't place it in a narrow container.
+- Use a vertical stepper in narrow containers, such as a side column, or when steps have long labels or substeps. Align it to the left of its container.
 
 ## Content
 

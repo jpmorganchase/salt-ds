@@ -18,7 +18,7 @@ data:
 
 `Stepper` renders an ordered list, and each step is a list item.
 
-The visible label, description, icon and track are hidden from assistive technologies. Instead, each step has hidden text that contains its label, its description and its state: "pending", "in progress", "completed", "locked", "warning" or "error". A `status` replaces the stage in this text. An active step has `aria-current="step"`, and has no state in this text unless it has a status.
+Screen readers read each step's label, description and state, such as "completed" or "error". If a step has a status, they read the status instead of the stage. The active step is marked as the current step.
 
 Stages don't change on their own, and changes to them aren't announced. Update them from your application's state when the user moves to another step.
 
