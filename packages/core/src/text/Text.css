@@ -146,6 +146,58 @@ code.saltText,
   --text-fontWeight-lighter: var(--salt-text-display-fontWeight-lighter);
 }
 
+/* Display 5 */
+.saltText-display5.saltText {
+  font-family: var(--salt-text-display-fontFamily);
+  font-size: var(--salt-text-display5-fontSize);
+  font-style: var(--salt-text-display-fontStyle, normal);
+  font-weight: var(--salt-text-display-fontWeight);
+  letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
+  line-height: var(--salt-text-display5-lineHeight);
+  text-transform: var(--salt-text-display-textTransform, none);
+  --text-fontWeight-bolder: var(--salt-text-display-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-display-fontWeight-lighter);
+}
+
+/* Display 6 */
+.saltText-display6.saltText {
+  font-family: var(--salt-text-display-fontFamily);
+  font-size: var(--salt-text-display6-fontSize);
+  font-style: var(--salt-text-display-fontStyle, normal);
+  font-weight: var(--salt-text-display-fontWeight);
+  letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
+  line-height: var(--salt-text-display6-lineHeight);
+  text-transform: var(--salt-text-display-textTransform, none);
+  --text-fontWeight-bolder: var(--salt-text-display-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-display-fontWeight-lighter);
+}
+
+/* Display 7 */
+.saltText-display7.saltText {
+  font-family: var(--salt-text-display-fontFamily);
+  font-size: var(--salt-text-display7-fontSize);
+  font-style: var(--salt-text-display-fontStyle, normal);
+  font-weight: var(--salt-text-display-fontWeight);
+  letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
+  line-height: var(--salt-text-display7-lineHeight);
+  text-transform: var(--salt-text-display-textTransform, none);
+  --text-fontWeight-bolder: var(--salt-text-display-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-display-fontWeight-lighter);
+}
+
+/* Display 8 */
+.saltText-display8.saltText {
+  font-family: var(--salt-text-display-fontFamily);
+  font-size: var(--salt-text-display8-fontSize);
+  font-style: var(--salt-text-display-fontStyle, normal);
+  font-weight: var(--salt-text-display-fontWeight);
+  letter-spacing: var(--salt-text-display-letterSpacing, var(--salt-text-letterSpacing));
+  line-height: var(--salt-text-display8-lineHeight);
+  text-transform: var(--salt-text-display-textTransform, none);
+  --text-fontWeight-bolder: var(--salt-text-display-fontWeight-bolder);
+  --text-fontWeight-lighter: var(--salt-text-display-fontWeight-lighter);
+}
+
 /* Editorial 1 */
 .saltText-editorial1.saltText {
   font-family: var(--salt-text-editorial-fontFamily);
