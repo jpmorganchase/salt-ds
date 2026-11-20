@@ -306,4 +306,10 @@ describe("GIVEN an Input", () => {
     );
     await expect.element(textbox()).toHaveAttribute("name", "override");
   });
+
+  it("SHOULD merge inputProps.className with the input's class", async () => {
+    await renderWithSalt(<Input inputProps={{ className: "customInput" }} />);
+    await expect.element(textbox()).toHaveClass("saltInput-input");
+    await expect.element(textbox()).toHaveClass("customInput");
+  });
 });

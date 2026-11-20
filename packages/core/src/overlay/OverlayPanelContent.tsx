@@ -5,6 +5,7 @@ import {
   type ComponentPropsWithoutRef,
   forwardRef,
   type ReactNode,
+  type UIEvent,
   useCallback,
   useRef,
   useState,
@@ -38,7 +39,7 @@ export const OverlayPanelContent = forwardRef<
     window: targetWindow,
   });
 
-  const { children, className, ...rest } = props;
+  const { children, className, onScrollCapture, ...rest } = props;
   const [scrollBarTop, setScrollBarTop] = useState(false);
   const [scrollBarBottom, setScrollBarBottom] = useState(true);
   const [isOverflowing, setIsOverflowing] = useState(false);
@@ -58,8 +59,9 @@ export const OverlayPanelContent = forwardRef<
     setScrollBarBottom(remainingScroll > 1);
   }, []);
 
-  const handleScroll = () => {
+  const handleScroll = (event: UIEvent<HTMLDivElement>) => {
     targetWindow?.requestAnimationFrame(updateScrollState);
+    onScrollCapture?.(event);
   };
 
   useResizeObserver({ ref: divRef, onResize: updateScrollState });

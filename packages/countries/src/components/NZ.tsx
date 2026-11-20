@@ -5,7 +5,7 @@ import { forwardRef } from "react";
 
 import { CountrySymbol, type CountrySymbolProps } from "../country-symbol";
 
-export type NZProps = CountrySymbolProps;
+export type NZProps = Omit<CountrySymbolProps, "sharp" | "children">;
 
 const NZ = forwardRef<SVGSVGElement, NZProps>(function NZ(props: NZProps, ref) {
   const uid = useId(props.id);

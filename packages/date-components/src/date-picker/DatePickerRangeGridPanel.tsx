@@ -46,25 +46,30 @@ const withBaseName = makePrefixer("saltDatePickerPanel");
 /**
  * Props for the DatePickerRangeGridPanel component.
  */
-export type DatePickerRangeGridPanelProps = DatePickerPanelBaseProps &
-  DateRangeSelection & {
-    onSelectionChange?: (
-      event: SyntheticEvent,
-      selectedDate?: DateRangeSelection | null,
-    ) => void;
-    CalendarProps?: Partial<
-      Omit<
-        CalendarRangeProps,
-        | "selectionVariant"
-        | "selectedDate"
-        | "defaultSelectedDate"
-        | "multiselect"
-        | "onHoveredDateChange"
-        | "onSelectionChange"
-        | "onVisibleMonthChange"
-      >
-    >;
-  };
+export type DatePickerRangeGridPanelProps = DatePickerPanelBaseProps & {
+  onSelectionChange?: (
+    event: SyntheticEvent,
+    selectedDate?: DateRangeSelection | null,
+  ) => void;
+  CalendarProps?: Partial<
+    Omit<
+      CalendarRangeProps,
+      | "children"
+      | "createAnnouncement"
+      | "selectionVariant"
+      | "selectedDate"
+      | "defaultSelectedDate"
+      | "defaultVisibleMonth"
+      | "focusedDate"
+      | "visibleMonth"
+      | "multiselect"
+      | "onFocusedDateChange"
+      | "onHoveredDateChange"
+      | "onSelectionChange"
+      | "onVisibleMonthChange"
+    >
+  >;
+};
 
 export const DatePickerRangeGridPanel = forwardRef(
   function DatePickerRangeGridPanel(

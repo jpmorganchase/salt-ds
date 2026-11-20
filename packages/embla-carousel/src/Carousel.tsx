@@ -93,6 +93,9 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
     const [announcementState, setAnnouncementState] = useState<
       CarouselAnnouncementTrigger | undefined
     >(undefined);
+    const [customSlidesId, setSlidesId] = useState<string | undefined>(
+      undefined,
+    );
 
     return (
       <CarouselContext.Provider
@@ -105,6 +108,8 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
           announcementState,
           setAnnouncementState,
           carouselId,
+          slidesId: customSlidesId ?? `${carouselId}-slides`,
+          setSlidesId,
         }}
       >
         <section
@@ -112,6 +117,7 @@ export const Carousel = forwardRef<HTMLElement, CarouselProps>(
           aria-roledescription="carousel"
           role="region"
           className={clsx(withBaseName(), className)}
+          id={id}
           ref={ref}
           {...rest}
         >

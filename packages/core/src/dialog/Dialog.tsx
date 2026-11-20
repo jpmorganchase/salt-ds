@@ -34,6 +34,9 @@ interface ConditionalScrimWrapperProps {
   condition: boolean;
 }
 
+/**
+ * @deprecated since 1.76.0. It's internal and will be removed in a future major version.
+ */
 export const ConditionalScrimWrapper = ({
   condition,
   children,
@@ -97,6 +100,7 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
       initialFocus,
       id,
       "aria-labelledby": ariaLabelledBy,
+      onAnimationEnd,
       ...rest
     } = props;
     const targetWindow = useWindow();
@@ -172,13 +176,13 @@ export const Dialog = forwardRef<HTMLDivElement, DialogProps>(
               },
               className,
             )}
-            onAnimationEnd={() => {
+            onAnimationEnd={(event) => {
               if (!open && showComponent) {
                 setShowComponent(false);
               }
+              onAnimationEnd?.(event);
             }}
-            {...getFloatingProps()}
-            {...rest}
+            {...getFloatingProps(rest)}
           >
             {children}
           </FloatingComponent>

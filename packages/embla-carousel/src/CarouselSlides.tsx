@@ -1,4 +1,10 @@
-import { makePrefixer, useAriaAnnouncer, useForkRef } from "@salt-ds/core";
+import {
+  getRefFromChildren,
+  makePrefixer,
+  useAriaAnnouncer,
+  useForkRef,
+  useIsomorphicLayoutEffect,
+} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -10,6 +16,7 @@ import {
   forwardRef,
   type KeyboardEvent,
   type MouseEventHandler,
+  type MutableRefObject,
   type ReactElement,
   type Ref,
   useEffect,
@@ -43,7 +50,7 @@ const announceSlideChangesFrom: CarouselAnnouncementTrigger[] = [
 
 export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
   function CarouselSlides(
-    { children, className, id, onKeyDown, ...rest },
+    { children, className, id, onKeyDown, onMouseDown, onMouseUp, ...rest },
     ref,
   ) {
     const targetWindow = useWindow();
@@ -59,7 +66,15 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
       emblaApi,
       emblaRef,
       carouselId,
+      setSlidesId,
     } = useCarouselContext();
+
+    useIsomorphicLayoutEffect(() => {
+      setSlidesId?.(id);
+      return () => {
+        setSlidesId?.(undefined);
+      };
+    }, [id, setSlidesId]);
 
     const containerRef = useRef<HTMLDivElement>(null);
     const forkedEmblaRef = useForkRef<HTMLDivElement>(ref, emblaRef);
@@ -269,11 +284,11 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
 
     const handleMouseDown: MouseEventHandler<HTMLDivElement> = (event) => {
       setDragging(true);
-      rest.onMouseDown?.(event);
+      onMouseDown?.(event);
     };
     const handleMouseUp: MouseEventHandler<HTMLDivElement> = (event) => {
       setDragging(false);
-      rest.onMouseUp?.(event);
+      onMouseUp?.(event);
     };
 
     return (
@@ -302,6 +317,10 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
               tabIndex?: number;
             }>;
             const existingId = element.props.id;
+            const childRef = getRefFromChildren(element) as
+              | Ref<HTMLDivElement>
+              | null
+              | undefined;
             const isFocused = focusedSlideIndex === index;
             const isVisible = visibleSlideIndexes.includes(index + 1);
             const isHidden = !isVisible && !isFocused;
@@ -316,8 +335,15 @@ export const CarouselSlides = forwardRef<HTMLDivElement, CarouselSlidesProps>(
               // prevents native browser scroll, and watchFocus:false on Embla
               // prevents Embla from scrolling on Tab-triggered focus.
               tabIndex: isVisible ? 0 : -1,
-              ref: (el: HTMLDivElement) => {
+              ref: (el: HTMLDivElement | null) => {
                 slideRefs.current[index] = el;
+                if (typeof childRef === "function") {
+                  childRef(el);
+                } else if (childRef) {
+                  (
+                    childRef as MutableRefObject<HTMLDivElement | null>
+                  ).current = el;
+                }
               },
             });
           })}

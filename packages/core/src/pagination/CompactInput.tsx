@@ -9,7 +9,7 @@ import {
   useState,
 } from "react";
 import { Input, type InputProps } from "../input";
-import { makePrefixer } from "../utils";
+import { makePrefixer, useForkRef } from "../utils";
 import compactInputCss from "./CompactInput.css";
 import { usePaginationContext } from "./usePaginationContext";
 
@@ -18,7 +18,7 @@ const withBaseName = makePrefixer("saltCompactInput");
 export const CompactInput = forwardRef<
   HTMLInputElement,
   Pick<InputProps, "inputRef" | "variant">
->(function CompactInput(props, ref) {
+>(function CompactInput({ inputRef: inputRefProp, ...rest }, ref) {
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-compact-input",
@@ -27,6 +27,7 @@ export const CompactInput = forwardRef<
   });
 
   const { count, page, onPageChange } = usePaginationContext();
+  const inputRef = useForkRef(ref, inputRefProp);
 
   const [inputValue, setInputValue] = useState(`${page}`);
 
@@ -67,8 +68,8 @@ export const CompactInput = forwardRef<
       onKeyDown={handleKeyDown}
       value={inputValue}
       textAlign={"center"}
-      ref={ref}
-      {...props}
+      inputRef={inputRef}
+      {...rest}
     />
   );
 });

@@ -47,7 +47,12 @@ export type SplitLayoutProps<T extends ElementType> =
        */
       padding?: FlexLayoutProps<ElementType>["padding"];
     }
-  >;
+  > & {
+    /**
+     * Not supported. `SplitLayout` renders `startItem` and `endItem` instead.
+     */
+    children?: never;
+  };
 
 type SplitLayoutComponent = <T extends ElementType = "div">(
   props: SplitLayoutProps<T>,

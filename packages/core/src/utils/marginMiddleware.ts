@@ -1,5 +1,8 @@
 import type { Middleware } from "@floating-ui/react";
 
+/**
+ * @deprecated since 1.76.0. It's internal and will be removed in a future major version.
+ */
 export const margin = (value = 0): Middleware => ({
   name: "margin",
   options: value,

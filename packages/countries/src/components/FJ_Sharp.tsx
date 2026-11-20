@@ -5,7 +5,7 @@ import { forwardRef } from "react";
 
 import { CountrySymbol, type CountrySymbolProps } from "../country-symbol";
 
-export type FJ_SharpProps = CountrySymbolProps;
+export type FJ_SharpProps = Omit<CountrySymbolProps, "sharp" | "children">;
 
 const FJ_Sharp = forwardRef<SVGSVGElement, FJ_SharpProps>(function FJ_Sharp(
   props: FJ_SharpProps,

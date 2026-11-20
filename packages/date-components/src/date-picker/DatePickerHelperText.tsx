@@ -16,7 +16,7 @@ export interface DatePickerHelperTextProps extends FormFieldHelperTextProps {}
 
 export const DatePickerHelperText = forwardRef(function DatePickerHelperText(
   { className, ...rest }: DatePickerHelperTextProps,
-  ref: React.Ref<HTMLLabelElement>,
+  ref: React.Ref<HTMLDivElement>,
 ) {
   const targetWindow = useWindow();
   useComponentCssInjection({

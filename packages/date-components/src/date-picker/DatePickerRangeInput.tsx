@@ -32,7 +32,8 @@ const withBaseName = makePrefixer("saltDatePickerRangeInput");
 /**
  * Props for the DatePickerRangeInput component.
  */
-export interface DatePickerRangeInputProps extends DateInputRangeProps {
+export interface DatePickerRangeInputProps
+  extends Omit<DateInputRangeProps, "date" | "defaultDate"> {
   /**
    * Function to validate the entered date
    * @param date - The selected date
@@ -167,6 +168,7 @@ export const DatePickerRangeInput = forwardRef<
     value: valueProp,
     validate,
     onChange,
+    onDateChange,
     onDateValueChange,
     ...rest
   } = props;
@@ -237,8 +239,9 @@ export const DatePickerRangeInput = forwardRef<
         ? validate(date, details)
         : defaultRangeValidator(dateAdapter, date, details, minDate, maxDate);
       select(event, date, validatedDetails);
+      onDateChange?.(event, date, validatedDetails);
     },
-    [dateAdapter, select, minDate, maxDate, validate],
+    [dateAdapter, select, minDate, maxDate, onDateChange, validate],
   );
 
   const handleDateValueChange = useCallback(

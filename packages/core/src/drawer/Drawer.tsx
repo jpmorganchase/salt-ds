@@ -211,8 +211,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
               },
               className,
             )}
-            {...getFloatingProps()}
-            {...rest}
+            {...getFloatingProps(rest)}
             style={{
               ...style,
               ...sizeStyle,

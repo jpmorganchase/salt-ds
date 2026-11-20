@@ -5,7 +5,7 @@ import { forwardRef } from "react";
 
 import { CountrySymbol, type CountrySymbolProps } from "../country-symbol";
 
-export type GDProps = CountrySymbolProps;
+export type GDProps = Omit<CountrySymbolProps, "sharp" | "children">;
 
 const GD = forwardRef<SVGSVGElement, GDProps>(function GD(props: GDProps, ref) {
   const uid = useId(props.id);

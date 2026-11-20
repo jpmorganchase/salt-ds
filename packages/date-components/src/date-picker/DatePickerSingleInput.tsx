@@ -32,7 +32,8 @@ const withBaseName = makePrefixer("saltDatePickerSingleInput");
 /**
  * Props for the DatePickerSingleInput component.
  */
-export interface DatePickerSingleInputProps extends DateInputSingleProps {
+export interface DatePickerSingleInputProps
+  extends Omit<DateInputSingleProps, "date" | "defaultDate"> {
   /**
    * Function to validate the entered date
    * @param date - The selected date
@@ -100,6 +101,7 @@ export const DatePickerSingleInput = forwardRef<
     value: valueProp,
     validate,
     defaultValue,
+    onDateChange,
     onDateValueChange,
     ...rest
   } = props;
@@ -152,8 +154,9 @@ export const DatePickerSingleInput = forwardRef<
         ? validate(date, details)
         : defaultSingleValidation(dateAdapter, date, details, minDate, maxDate);
       select(event, date ?? null, validatedDetails);
+      onDateChange?.(event, date, validatedDetails);
     },
-    [dateAdapter, minDate, maxDate, select, validate],
+    [dateAdapter, minDate, maxDate, onDateChange, select, validate],
   );
 
   const handleDateValueChange = useCallback(

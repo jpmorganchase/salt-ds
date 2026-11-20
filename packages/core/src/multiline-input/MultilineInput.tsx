@@ -135,6 +135,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
     const {
       "aria-describedby": textAreaDescribedBy,
       "aria-labelledby": textAreaLabelledBy,
+      className: textAreaClassName,
       onBlur,
       onChange,
       onFocus,
@@ -250,7 +251,7 @@ export const MultilineInput = forwardRef<HTMLDivElement, MultilineInputProps>(
             aria-labelledby={
               clsx(formFieldLabelledBy, textAreaLabelledBy) || undefined
             }
-            className={clsx(withBaseName("textarea"), textAreaProps?.className)}
+            className={clsx(withBaseName("textarea"), textAreaClassName)}
             disabled={isDisabled}
             id={id}
             name={name}

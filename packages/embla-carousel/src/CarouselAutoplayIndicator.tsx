@@ -13,7 +13,7 @@ import carouselAutoplayIndicator from "./CarouselAutoplayIndicator.css";
 import { CarouselAutoplayIndicatorSVG } from "./CarouselAutoplayIndicatorSVG";
 
 export interface CarouselAutoplayIndicatorProps
-  extends ComponentPropsWithoutRef<"div"> {
+  extends Omit<ComponentPropsWithoutRef<"div">, "children"> {
   /**
    * Duration of each slide in milliseconds.
    */
@@ -52,7 +52,7 @@ export const CarouselAutoplayIndicator = forwardRef<
     slideIndex,
     isPlaying,
     isPaused = false,
-    children,
+    style,
     ...props
   },
   ref,
@@ -110,6 +110,7 @@ export const CarouselAutoplayIndicator = forwardRef<
           width: size,
           height: size,
           "--carousel-svg-circumference": circumference,
+          ...style,
         } as CSSProperties
       }
       className={clsx(withBaseName(), className)}

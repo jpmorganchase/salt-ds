@@ -5,10 +5,12 @@ import {
   FormFieldHelperText,
   FormFieldLabel,
   Input,
+  ListBox,
+  Option,
   RadioButton,
   Tooltip,
 } from "@salt-ds/core";
-import { Fragment } from "react";
+import { createRef, Fragment } from "react";
 import { describe, expect, it } from "vitest";
 import { page } from "vitest/browser";
 import { runAxeScan } from "~browser-test-utils/accessibility";
@@ -97,6 +99,139 @@ describe("GIVEN a FormField", () => {
       await expect
         .element(page.getByText("Helper text"))
         .toHaveAttribute("id", "helperText-test-id");
+    });
+
+    it("THEN a nested control is labelled and described by the generated ids", async () => {
+      await renderWithSalt(
+        <FormField id="test-id">
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Input />
+          <FormFieldHelperText>Helper text</FormFieldHelperText>
+        </FormField>,
+      );
+      await expect
+        .element(page.getByRole("textbox"))
+        .toHaveAttribute("aria-labelledby", "label-test-id");
+      await expect
+        .element(page.getByRole("textbox"))
+        .toHaveAttribute("aria-describedby", "helperText-test-id");
+    });
+  });
+
+  describe("WHEN an id is passed to FormFieldLabel and FormFieldHelperText", () => {
+    it("THEN the ids are applied and a nested control is labelled and described by them", async () => {
+      await renderWithSalt(
+        <FormField id="field">
+          <FormFieldLabel id="custom-label">Label</FormFieldLabel>
+          <Input />
+          <FormFieldHelperText id="custom-helper-text">
+            Helper text
+          </FormFieldHelperText>
+        </FormField>,
+      );
+      await expect
+        .element(page.getByText("Label"))
+        .toHaveAttribute("id", "custom-label");
+      await expect
+        .element(page.getByText("Helper text"))
+        .toHaveAttribute("id", "custom-helper-text");
+      await expect
+        .element(page.getByRole("textbox"))
+        .toHaveAttribute("aria-labelledby", "custom-label");
+      await expect
+        .element(page.getByRole("textbox"))
+        .toHaveAttribute("aria-describedby", "custom-helper-text");
+      await expect
+        .element(page.getByRole("textbox"))
+        .toHaveAccessibleName("Label");
+      await expect
+        .element(page.getByRole("textbox"))
+        .toHaveAccessibleDescription("Helper text");
+    });
+
+    it("THEN a control that doesn't use the form field can be labelled by the label's id", async () => {
+      await renderWithSalt(
+        <FormField>
+          <FormFieldLabel id="custom-label">States</FormFieldLabel>
+          <ListBox aria-labelledby="custom-label">
+            <Option value="Alabama" />
+          </ListBox>
+        </FormField>,
+      );
+      await expect
+        .element(page.getByRole("listbox"))
+        .toHaveAccessibleName("States");
+    });
+
+    it("THEN the generated ids are restored when the ids are removed", async () => {
+      const { rerender } = await renderWithSalt(
+        <FormField id="field">
+          <FormFieldLabel id="custom-label">Label</FormFieldLabel>
+          <Input />
+          <FormFieldHelperText id="custom-helper-text">
+            Helper text
+          </FormFieldHelperText>
+        </FormField>,
+      );
+      await expect
+        .element(page.getByRole("textbox"))
+        .toHaveAttribute("aria-labelledby", "custom-label");
+
+      await rerender(
+        <FormField id="field">
+          <FormFieldLabel>Label</FormFieldLabel>
+          <Input />
+          <FormFieldHelperText>Helper text</FormFieldHelperText>
+        </FormField>,
+      );
+      await expect
+        .element(page.getByRole("textbox"))
+        .toHaveAttribute("aria-labelledby", "label-field");
+      await expect
+        .element(page.getByRole("textbox"))
+        .toHaveAttribute("aria-describedby", "helperText-field");
+      await expect
+        .element(page.getByText("Label"))
+        .toHaveAttribute("id", "label-field");
+    });
+
+    it("THEN outside a FormField the ids are applied", async () => {
+      await renderWithSalt(
+        <>
+          <FormFieldLabel id="custom-label">Label</FormFieldLabel>
+          <FormFieldHelperText id="custom-helper-text">
+            Helper text
+          </FormFieldHelperText>
+        </>,
+      );
+      await expect
+        .element(page.getByText("Label"))
+        .toHaveAttribute("id", "custom-label");
+      await expect
+        .element(page.getByText("Helper text"))
+        .toHaveAttribute("id", "custom-helper-text");
+    });
+  });
+
+  describe("WHEN a ref is passed to FormFieldLabel and FormFieldHelperText", () => {
+    it("THEN the refs are set to the rendered elements", async () => {
+      const labelRef = createRef<HTMLLabelElement>();
+      const helperTextRef = createRef<HTMLDivElement>();
+      await renderWithSalt(
+        <FormField>
+          <FormFieldLabel ref={labelRef}>Label</FormFieldLabel>
+          <Input />
+          <FormFieldHelperText ref={helperTextRef}>
+            Helper text
+          </FormFieldHelperText>
+        </FormField>,
+      );
+      expect(labelRef.current).toBeInstanceOf(HTMLLabelElement);
+      expect(labelRef.current).toBe(page.getByText("Label").element());
+      expect(helperTextRef.current).toBeInstanceOf(HTMLDivElement);
+      expect(helperTextRef.current).toBe(
+        page.getByText("Helper text").element(),
+      );
     });
   });
 

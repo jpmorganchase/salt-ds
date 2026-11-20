@@ -36,7 +36,8 @@ import {
 import { useToolbarKeyboardNavigation } from "./useToolbarKeyboardNavigation";
 import { useToolbarOverflow } from "./useToolbarOverflow";
 
-export interface ToolbarProps extends ComponentPropsWithoutRef<"div"> {
+export interface ToolbarProps
+  extends Omit<ComponentPropsWithoutRef<"div">, "role" | "aria-orientation"> {
   /**
    * Visual treatment of the toolbar. Defaults to `"bordered"`.
    */

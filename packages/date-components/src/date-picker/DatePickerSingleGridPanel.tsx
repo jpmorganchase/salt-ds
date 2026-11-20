@@ -118,9 +118,16 @@ export type DatePickerSingleGridPanelProps = DatePickerPanelBaseProps & {
   CalendarProps?: Partial<
     Omit<
       CalendarSingleProps,
+      | "children"
+      | "createAnnouncement"
       | "selectionVariant"
       | "selectedDate"
       | "defaultSelectedDate"
+      | "defaultVisibleMonth"
+      | "focusedDate"
+      | "visibleMonth"
+      | "onFocusedDateChange"
+      | "onHoveredDateChange"
       | "onSelectionChange"
       | "onVisibleMonthChange"
     >

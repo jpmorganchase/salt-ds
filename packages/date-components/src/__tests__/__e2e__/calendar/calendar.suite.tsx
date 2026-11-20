@@ -463,6 +463,42 @@ export function registerAdapterTests(
       );
     });
 
+    it("SHOULD call the CalendarDay event handlers and still select dates", async () => {
+      const selectionChange = vi.fn();
+      const dayClick = vi.fn();
+      const dayKeyDown = vi.fn();
+      await render(
+        <Calendar
+          defaultVisibleMonth={testDate}
+          selectionVariant="single"
+          onSelectionChange={selectionChange}
+        >
+          <CalendarNavigation />
+          <CalendarGrid
+            CalendarDayProps={{ onClick: dayClick, onKeyDown: dayKeyDown }}
+          />
+        </Calendar>,
+      );
+      await page
+        .getByRole("button", { name: "Saturday 02 March 2024" })
+        .click();
+      expect(dayClick).toHaveBeenCalledTimes(1);
+      expect(selectionChange).toHaveBeenCalledTimes(1);
+      await userEvent.keyboard("{ArrowRight}{Enter}");
+      expect(dayKeyDown).toHaveBeenCalled();
+      await expect
+        .element(
+          page.getByRole("button", {
+            name: "Sunday 03 March 2024, selected",
+          }),
+        )
+        .toHaveFocus();
+      const [, date] = lastCall(selectionChange);
+      expect(adapter.format(date, "dddd DD MMMM YYYY")).toBe(
+        "Sunday 03 March 2024",
+      );
+    });
+
     it("SHOULD not allow selection of un-selectable dates", async () => {
       const selectionChange = vi.fn();
       await render(

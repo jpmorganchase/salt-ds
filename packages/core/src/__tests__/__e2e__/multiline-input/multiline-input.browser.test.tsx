@@ -195,4 +195,12 @@ describe("GIVEN an MultilineInput", () => {
     );
     await expect.element(textbox()).toHaveAttribute("name", "override");
   });
+
+  it("SHOULD merge textAreaProps.className with the textarea's class", async () => {
+    await renderWithSalt(
+      <Default textAreaProps={{ className: "customTextArea" }} />,
+    );
+    await expect.element(textbox()).toHaveClass("saltMultilineInput-textarea");
+    await expect.element(textbox()).toHaveClass("customTextArea");
+  });
 });

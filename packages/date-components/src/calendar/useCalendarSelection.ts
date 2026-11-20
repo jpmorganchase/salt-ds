@@ -119,29 +119,44 @@ export interface UseCalendarSelectionBaseProps<Selection> {
   endDateOffset?: (date: DateFrameworkType) => DateFrameworkType;
 }
 
+type UseCalendarSelectionWithoutOffsetBaseProps<Selection> = Omit<
+  UseCalendarSelectionBaseProps<Selection>,
+  "startDateOffset" | "endDateOffset"
+> & {
+  /**
+   * Only supported when `selectionVariant` is `"offset"`.
+   */
+  startDateOffset?: never;
+  /**
+   * Only supported when `selectionVariant` is `"offset"`.
+   */
+  endDateOffset?: never;
+};
+
 export type UseCalendarSelectionSingleProps =
-  UseCalendarSelectionBaseProps<SingleDateSelection<DateFrameworkType> | null> & {
+  UseCalendarSelectionWithoutOffsetBaseProps<SingleDateSelection<DateFrameworkType> | null> & {
     selectionVariant: "single";
     multiselect?: false;
   };
 
 export type UseCalendarSelectionMultiselectSingleProps =
-  UseCalendarSelectionBaseProps<
+  UseCalendarSelectionWithoutOffsetBaseProps<
     Array<SingleDateSelection<DateFrameworkType>>
   > & {
     selectionVariant: "single";
     multiselect: true;
   };
 
-export type UseCalendarSelectionRangeProps = UseCalendarSelectionBaseProps<
-  DateRangeSelection<DateFrameworkType>
-> & {
-  selectionVariant: "range";
-  multiselect?: false;
-};
+export type UseCalendarSelectionRangeProps =
+  UseCalendarSelectionWithoutOffsetBaseProps<
+    DateRangeSelection<DateFrameworkType>
+  > & {
+    selectionVariant: "range";
+    multiselect?: false;
+  };
 
 export type UseCalendarSelectionMultiselectRangeProps =
-  UseCalendarSelectionBaseProps<
+  UseCalendarSelectionWithoutOffsetBaseProps<
     Array<DateRangeSelection<DateFrameworkType>>
   > & {
     selectionVariant: "range";

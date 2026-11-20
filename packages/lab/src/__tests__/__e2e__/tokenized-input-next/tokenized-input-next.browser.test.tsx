@@ -188,3 +188,32 @@ describe("GIVEN a Tokenized Input", () => {
     });
   });
 });
+
+describe("GIVEN a Tokenized Input with textAreaProps", () => {
+  it("calls the textarea handlers and still adds items", async () => {
+    const onChange = vi.fn();
+    const onFocus = vi.fn();
+    const onBlur = vi.fn();
+    const onKeyDown = vi.fn();
+    await renderWithSalt(
+      <Default textAreaProps={{ onBlur, onChange, onFocus, onKeyDown }} />,
+    );
+    await focusInput();
+    expect(onFocus).toHaveBeenCalled();
+    await userEvent.keyboard("Tokio,");
+    await expect.element(page.getByRole("option")).toBeInTheDocument();
+    expect(onChange).toHaveBeenCalled();
+    expect(onKeyDown).toHaveBeenCalled();
+    await userEvent.tab();
+    expect(onBlur).toHaveBeenCalled();
+  });
+
+  it("merges the textarea className", async () => {
+    await renderWithSalt(
+      <Default textAreaProps={{ className: "custom-textarea" }} />,
+    );
+    await expect
+      .element(textbox())
+      .toHaveClass("saltTokenizedInputNext-textarea", "custom-textarea");
+  });
+});

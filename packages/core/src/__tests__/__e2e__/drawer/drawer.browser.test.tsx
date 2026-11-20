@@ -4,6 +4,7 @@ import {
   DrawerContent,
   DrawerFooter,
   DrawerHeader,
+  type DrawerProps,
   Text,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
@@ -34,6 +35,17 @@ const CloseButton = () => (
 afterEach(() => {
   vi.restoreAllMocks();
 });
+
+function OpenDrawer(props: Omit<DrawerProps, "open">) {
+  const [open, setOpen] = useState(true);
+  return (
+    <Drawer open={open} onOpenChange={setOpen} aria-label="Details" {...props}>
+      <DrawerContent>
+        <Button>Action</Button>
+      </DrawerContent>
+    </Drawer>
+  );
+}
 
 function dismissViaScrim() {
   page
@@ -83,6 +95,23 @@ describe("GIVEN a Drawer", () => {
     await expect.element(page.getByTestId("scrim")).not.toBeInTheDocument();
     await userEvent.keyboard("{Escape}");
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+  });
+
+  it("keeps Escape from bubbling to parents when onKeyDown is passed", async () => {
+    const onKeyDown = vi.fn();
+    const onParentKeyDown = vi.fn();
+    await renderWithSalt(
+      <div onKeyDown={onParentKeyDown}>
+        <OpenDrawer onKeyDown={onKeyDown} />
+      </div>,
+    );
+    await expect
+      .element(page.getByRole("button", { name: "Action" }))
+      .toHaveFocus();
+    await userEvent.keyboard("{Escape}");
+    await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
+    expect(onKeyDown).toHaveBeenCalled();
+    expect(onParentKeyDown).not.toHaveBeenCalled();
   });
 
   it("disableDismiss ignores the scrim but still permits Escape", async () => {

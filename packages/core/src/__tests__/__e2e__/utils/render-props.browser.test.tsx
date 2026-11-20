@@ -1,5 +1,10 @@
 import { renderProps } from "@salt-ds/core";
-import type { ComponentPropsWithoutRef, CSSProperties } from "react";
+import {
+  type ComponentPropsWithoutRef,
+  type CSSProperties,
+  createRef,
+  forwardRef,
+} from "react";
 import { describe, expect, it } from "vitest";
 import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
@@ -108,5 +113,37 @@ describe("renderProps function", () => {
       page.getByTestId("render-target").element().getAttribute("style") ?? "";
     expect(style).toContain("--my-var");
     expect(style).toContain("padding");
+  });
+
+  it("sets both the component's ref and the render element's ref", async () => {
+    const RenderButton = forwardRef<
+      HTMLButtonElement,
+      ComponentPropsWithoutRef<"button">
+    >(function RenderButton(props, ref) {
+      return <button ref={ref} {...props} />;
+    });
+    const ComponentWithRenderProp = forwardRef<
+      HTMLButtonElement,
+      ComponentPropsWithoutRef<"button"> & {
+        render?: Parameters<typeof renderProps>[1]["render"];
+      }
+    >(function ComponentWithRenderProp(props, ref) {
+      return renderProps("button", { ...props, ref });
+    });
+    const componentRef = createRef<HTMLButtonElement>();
+    const renderRef = createRef<HTMLButtonElement>();
+
+    await render(
+      <ComponentWithRenderProp
+        ref={componentRef}
+        render={<RenderButton ref={renderRef}>Button Children</RenderButton>}
+      />,
+    );
+
+    const button = await page
+      .getByRole("button", { name: "Button Children" })
+      .element();
+    expect(componentRef.current).toBe(button);
+    expect(renderRef.current).toBe(button);
   });
 });

@@ -1,6 +1,6 @@
 import { makePrefixer, Text, type TextProps } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { useEffect, useState } from "react";
+import { forwardRef, useEffect, useState } from "react";
 import { useCarouselContext } from "./CarouselContext";
 import type { EmblaCarouselType } from "./emblaTypes";
 import { getVisibleSlideIndexes } from "./getVisibleSlideIndexes";
@@ -8,16 +8,15 @@ import { getVisibleSlideIndexes } from "./getVisibleSlideIndexes";
 /**
  * Props for the CarouselProgressLabel component.
  */
-export interface CarouselProgressLabelProps extends TextProps<"div"> {}
+export interface CarouselProgressLabelProps
+  extends Omit<TextProps<"div">, "children"> {}
 
 const withBaseName = makePrefixer("saltCarouselTabList");
 
-export function CarouselProgressLabel({
-  className,
-  styleAs = "label",
-  children,
-  ...props
-}: CarouselProgressLabelProps) {
+export const CarouselProgressLabel = forwardRef<
+  HTMLDivElement,
+  CarouselProgressLabelProps
+>(function CarouselProgressLabel({ className, ...props }, ref) {
   const { emblaApi } = useCarouselContext();
 
   const [progress, setProgress] = useState("");
@@ -55,8 +54,8 @@ export function CarouselProgressLabel({
   }, [emblaApi]);
 
   return (
-    <Text className={clsx(withBaseName(), className)} {...props}>
+    <Text className={clsx(withBaseName(), className)} ref={ref} {...props}>
       {progress}
     </Text>
   );
-}
+});

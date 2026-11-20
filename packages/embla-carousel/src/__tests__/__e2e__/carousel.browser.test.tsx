@@ -1,8 +1,19 @@
-import type { CarouselEmblaApiType } from "@salt-ds/embla-carousel";
+import {
+  Carousel,
+  CarouselAutoplayIndicator,
+  CarouselCard,
+  type CarouselEmblaApiType,
+  CarouselNextButton,
+  CarouselPreviousButton,
+  CarouselProgressLabel,
+  CarouselSlides,
+} from "@salt-ds/embla-carousel";
 import { composeStories } from "@storybook/react-vite";
 import ClassNames from "embla-carousel-class-names";
+import { createRef } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
+import { mouse } from "~browser-test-utils/pointer";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as carouselStories from "~stories/carousel.stories";
 
@@ -279,5 +290,163 @@ describe("Given a Carousel", () => {
       await expect
         .element(page.elementLocator(slides[index]))
         .toHaveAttribute("tabindex", tabIndex);
+  });
+});
+
+describe("Given a Carousel with custom props", () => {
+  it("should apply the id to the carousel root", async () => {
+    await renderWithSalt(
+      <Carousel aria-label="Test carousel" id="test-carousel">
+        <CarouselNextButton />
+        <CarouselSlides>
+          <CarouselCard>Slide 1</CarouselCard>
+        </CarouselSlides>
+      </Carousel>,
+    );
+    await expect
+      .element(page.getByRole("region"))
+      .toHaveAttribute("id", "test-carousel");
+    expect(document.querySelectorAll("#test-carousel")).toHaveLength(1);
+    await expect
+      .element(page.getByLabelText("Next slide"))
+      .toHaveAttribute("aria-controls", "test-carousel-slides");
+    expect(document.getElementById("test-carousel-slides")).toBeInTheDocument();
+  });
+
+  it("should point aria-controls at the slides element when CarouselSlides has an id", async () => {
+    await renderWithSalt(
+      <Carousel aria-label="Test carousel" id="test-carousel">
+        <CarouselPreviousButton />
+        <CarouselNextButton />
+        <CarouselSlides id="custom-slides">
+          <CarouselCard>Slide 1</CarouselCard>
+          <CarouselCard>Slide 2</CarouselCard>
+        </CarouselSlides>
+      </Carousel>,
+    );
+    for (const label of ["Previous slide", "Next slide"]) {
+      await expect
+        .element(page.getByLabelText(label))
+        .toHaveAttribute("aria-controls", "custom-slides");
+    }
+    const slidesContainer = document.getElementById("custom-slides");
+    expect(slidesContainer).toBeInTheDocument();
+    expect(slidesContainer).toHaveClass("saltCarouselSlides-container");
+    expect(document.getElementById("test-carousel-slides")).toBeNull();
+  });
+
+  it("should apply className to the previous and next buttons", async () => {
+    await renderWithSalt(
+      <Carousel aria-label="Test carousel">
+        <CarouselPreviousButton className="customPrevious" />
+        <CarouselNextButton className="customNext" />
+        <CarouselSlides>
+          <CarouselCard>Slide 1</CarouselCard>
+          <CarouselCard>Slide 2</CarouselCard>
+        </CarouselSlides>
+      </Carousel>,
+    );
+    await expect
+      .element(page.getByLabelText("Previous slide"))
+      .toHaveClass("saltButton", "customPrevious");
+    await expect
+      .element(page.getByLabelText("Next slide"))
+      .toHaveClass("saltButton", "customNext");
+  });
+
+  it("should apply styleAs to the progress label and forward its ref", async () => {
+    const ref = createRef<HTMLDivElement>();
+    await renderWithSalt(
+      <Carousel aria-label="Test carousel">
+        <CarouselProgressLabel data-testid="default-label" />
+        <CarouselProgressLabel
+          data-testid="custom-label"
+          ref={ref}
+          styleAs="h3"
+        />
+        <CarouselSlides>
+          <CarouselCard>Slide 1</CarouselCard>
+          <CarouselCard>Slide 2</CarouselCard>
+        </CarouselSlides>
+      </Carousel>,
+    );
+    await expect
+      .element(page.getByTestId("default-label"))
+      .not.toHaveClass("saltText-h3");
+    const customLabel = page.getByTestId("custom-label");
+    await expect.element(customLabel).toHaveClass("saltText-h3");
+    await expect.element(customLabel).toHaveTextContent("Slide 1 of 2");
+    expect(ref.current).toBe(await customLabel.element());
+  });
+
+  it("should call consumer mouse handlers and keep the dragging state", async () => {
+    const onMouseDown = vi.fn();
+    const onMouseUp = vi.fn();
+    await renderWithSalt(
+      <Carousel aria-label="Test carousel">
+        <CarouselSlides
+          data-testid="slides"
+          onMouseDown={onMouseDown}
+          onMouseUp={onMouseUp}
+        >
+          <CarouselCard>Slide 1</CarouselCard>
+          <CarouselCard>Slide 2</CarouselCard>
+        </CarouselSlides>
+      </Carousel>,
+    );
+    const slides = page.getByTestId("slides");
+    const rect = (await slides.element()).getBoundingClientRect();
+    const point = {
+      x: rect.left + rect.width / 2,
+      y: rect.top + rect.height / 2,
+    };
+    await mouse.down(point);
+    expect(onMouseDown).toHaveBeenCalledTimes(1);
+    await expect.element(slides).toHaveClass("saltCarouselSlides-dragging");
+    await mouse.up(point);
+    expect(onMouseUp).toHaveBeenCalledTimes(1);
+    await expect.element(slides).not.toHaveClass("saltCarouselSlides-dragging");
+  });
+
+  it("should forward refs set on slides", async () => {
+    const objectRef = createRef<HTMLDivElement>();
+    const callbackRef = vi.fn();
+    await renderWithSalt(
+      <Carousel aria-label="Test carousel">
+        <CarouselSlides>
+          <CarouselCard data-testid="slide-1" ref={objectRef}>
+            Slide 1
+          </CarouselCard>
+          <CarouselCard data-testid="slide-2" ref={callbackRef}>
+            Slide 2
+          </CarouselCard>
+        </CarouselSlides>
+      </Carousel>,
+    );
+    const firstSlide = await page.getByTestId("slide-1").element();
+    const secondSlide = await page.getByTestId("slide-2").element();
+    expect(objectRef.current).toBe(firstSlide);
+    expect(callbackRef).toHaveBeenLastCalledWith(secondSlide);
+  });
+
+  it("should merge style on the autoplay indicator", async () => {
+    await renderWithSalt(
+      <CarouselAutoplayIndicator
+        data-testid="indicator"
+        duration={1000}
+        isPlaying={false}
+        slideIndex={0}
+        style={{ marginLeft: 8 }}
+      />,
+    );
+    const indicator = (await page
+      .getByTestId("indicator")
+      .element()) as HTMLElement;
+    expect(indicator.style.marginLeft).toBe("8px");
+    expect(indicator.style.width).not.toBe("");
+    expect(indicator.style.height).not.toBe("");
+    expect(
+      indicator.style.getPropertyValue("--carousel-svg-circumference"),
+    ).not.toBe("");
   });
 });

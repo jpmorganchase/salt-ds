@@ -5,6 +5,7 @@ import {
   CollapsibleTrigger,
 } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
+import { createRef } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
@@ -62,6 +63,23 @@ describe("Given a Collapsible", () => {
     await userEvent.keyboard(" ");
     await expect.element(content).not.toBeVisible();
     expect(onOpenChange).toHaveBeenLastCalledWith(expect.anything(), false);
+  });
+
+  it("passes the element to both its ref and the child's ref", async () => {
+    const triggerRef = createRef<HTMLButtonElement>();
+    const childRef = createRef<HTMLButtonElement>();
+    await renderWithSalt(
+      <Collapsible>
+        <CollapsibleTrigger ref={triggerRef}>
+          <Button ref={childRef}>Toggle</Button>
+        </CollapsibleTrigger>
+        <CollapsiblePanel>Content</CollapsiblePanel>
+      </Collapsible>,
+    );
+
+    const button = page.getByRole("button", { name: "Toggle" }).element();
+    expect(triggerRef.current).toBe(button);
+    expect(childRef.current).toBe(button);
   });
 
   it("supports customizing the panel root with render", async () => {

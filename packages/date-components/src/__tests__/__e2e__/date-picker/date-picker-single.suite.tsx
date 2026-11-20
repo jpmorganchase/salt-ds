@@ -3,6 +3,7 @@ import { DateDetailError, type SaltDateAdapter } from "@salt-ds/date-adapters";
 import {
   DatePicker,
   DatePickerActions,
+  DatePickerHelperText,
   DatePickerOverlay,
   DatePickerSingleGridPanel,
   DatePickerSingleInput,
@@ -12,7 +13,7 @@ import type { Dayjs } from "dayjs";
 import type { DateTime } from "luxon";
 import MockDate from "mockdate";
 import type { Moment } from "moment";
-import type { ReactNode } from "react";
+import { createRef, type ReactNode } from "react";
 import {
   afterEach,
   beforeEach,
@@ -45,6 +46,7 @@ const {
   SingleWithCustomPanel,
   SingleWithCustomParser,
   SingleWithFormField,
+  SingleWithInitialError,
   SingleWithMinMaxDate,
   SingleWithTodayButton,
   SingleWithUnselectableDates,
@@ -355,6 +357,35 @@ export function registerAdapterTests(
       expect(validate.mock.calls[1][0]).toBe(null);
     });
 
+    it("SHOULD call the input's onDateChange and still update the selection", async () => {
+      const selectionChange = vi.fn();
+      const dateChange = vi.fn();
+      await render(
+        <DatePicker
+          selectionVariant="single"
+          onSelectionChange={selectionChange}
+        >
+          <DatePickerTrigger>
+            <DatePickerSingleInput onDateChange={dateChange} />
+          </DatePickerTrigger>
+          <DatePickerOverlay>
+            <DatePickerSingleGridPanel />
+          </DatePickerOverlay>
+        </DatePicker>,
+      );
+      await replaceInput(initialDateValue);
+      await userEvent.tab();
+      expect(dateChange).toHaveBeenCalledTimes(1);
+      const [, changedDate, changedDetails] = lastCall(dateChange);
+      expect(adapter.format(changedDate, "DD MMM YYYY")).toBe(initialDateValue);
+      expect(changedDetails).toEqual({ value: initialDateValue });
+      expect(selectionChange).toHaveBeenCalledTimes(1);
+      const [, selectedDate] = lastCall(selectionChange);
+      expect(adapter.format(selectedDate, "DD MMM YYYY")).toBe(
+        initialDateValue,
+      );
+    });
+
     it("SHOULD only be able to select a date between min/max", async () => {
       const selectionChange = vi.fn();
       await render(
@@ -480,6 +511,31 @@ export function registerAdapterTests(
         document.querySelectorAll<HTMLElement>('[id^="helperText-"]'),
       ).find((element) => element.closest('[role="dialog"]'));
       expect(dialogHelper).toBeVisible();
+    });
+
+    it("SHOULD show the input's defaultValue when the initial selected date is invalid", async () => {
+      await render(<SingleWithInitialError />);
+      await expect.element(textInput()).toHaveValue("bad date");
+    });
+
+    it("SHOULD forward the ref of DatePickerHelperText", async () => {
+      const ref = createRef<HTMLDivElement>();
+      await render(
+        <FormField>
+          <FormFieldLabel>Select a date</FormFieldLabel>
+          <DatePicker selectionVariant="single">
+            <DatePickerTrigger>
+              <DatePickerSingleInput />
+            </DatePickerTrigger>
+            <DatePickerOverlay>
+              <DatePickerSingleGridPanel />
+            </DatePickerOverlay>
+            <DatePickerHelperText ref={ref}>Helper text</DatePickerHelperText>
+          </DatePicker>
+        </FormField>,
+      );
+      expect(ref.current).toBeInstanceOf(HTMLDivElement);
+      expect(ref.current).toBe(page.getByText("Helper text").element());
     });
 
     it("SHOULD support custom panel with tenors", async () => {

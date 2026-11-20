@@ -95,6 +95,9 @@ function prepare(doc: Document) {
   doc.addEventListener("visibilitychange", handleVisibilityChange, true);
 }
 
+/**
+ * @deprecated since 1.76.0. It's internal and will be removed in a future major version.
+ */
 export function teardown(doc: Document): void {
   doc.removeEventListener("keydown", handleKeyDown, true);
   doc.removeEventListener("mousedown", handlePointerDown, true);
