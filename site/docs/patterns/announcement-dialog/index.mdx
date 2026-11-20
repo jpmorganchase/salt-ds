@@ -1,0 +1,148 @@
+---
+title: Announcement dialog
+description: "An announcement dialog promotes new features and can provide users with access to onward action, such as installing version updates."
+layout: DetailPattern
+tags:
+  - pattern
+data:
+  patternUrl: /salt/patterns/announcement-dialog
+  resources: []
+  components: ["Dialog", "Header block", "Button bar"]
+---
+
+<Diagram
+  src="/img/patterns/announcement-dialog/announcement-dialog.png"
+  srcDark="/img/patterns/announcement-dialog/announcement-dialog-dark.png"
+  alt="Basic announcement dialog"
+  border
+/>
+
+See the [Announcement dialog examples](/salt/patterns/announcement-dialog/examples) for runnable examples of the pattern.
+
+## When to use
+
+Use an announcement dialog to focus the user's attention on new product features or the highlights of a recent release.
+
+- Use it when the announcement includes a follow-up action, such as **Download update** or **Upgrade**.
+- Use it when the information deserves a modal interruption but does not require the user to complete a longer task.
+- Use it when the message is a concise announcement or informational notice that should stay visually prominent.
+
+## When not to use
+
+- When the user needs to complete a task or configure settings, use a Preferences dialog or another task-specific dialog instead.
+- When the message is a lightweight notification that should not interrupt the workflow, use a Toast or Banner instead.
+- When the content is primarily read-only reference content, use a page section or card instead.
+
+## How to build
+
+### Anatomy
+
+An announcement dialog comprises of the following components:
+
+1. **Pre-header**: optional labels that can be used to display the product name, announcement type, or a common descriptor when there are multiple announcements.
+2. **Heading**: serves as the main title of the announcement.
+3. **Content area**: provides additional information or context to the announcement.
+4. **Image**: an image of the new feature or visual elements that add appeal and clarity to important messages.
+5. **Button bar**: possible actions for users to take.
+
+<Diagram
+  src="/img/patterns/announcement-dialog/anatomy.png"
+  srcDark="/img/patterns/announcement-dialog/anatomy-dark.png"
+  alt="Announcement dialog anatomy"
+  border
+/>
+
+### Layout
+
+- Use the [Header block](/salt/patterns/header-block) to display a header and pre-header.
+- Use the [Dialog](/salt/components/dialog) and it's components as the base structure of the announcement dialog.
+- Use a [Button bar](/salt/patterns/button-bar) to display any actions at the bottom of the dialog. See the button bar pattern to understand how to implement actionable interactions within dialogs across your applications.
+- Place the content area and image side by side in a [`FlexLayout`](/salt/components/layouts/flex-layout), each in a `FlexItem` with `grow={1}` and `basis="50%"`. The default gap places `--salt-spacing-300` between them.
+- Use a [`StackLayout`](/salt/components/layouts/stack-layout) with `gap={1}` (`--salt-spacing-100`) between a content heading and its description.
+
+<Diagram
+  src="/img/patterns/announcement-dialog/spacing.png"
+  srcDark="/img/patterns/announcement-dialog/spacing-dark.png"
+  alt="Announcement dialog spacing: --salt-spacing-300 around the dialog edges, between the header, content and button bar, and between the description and image; --salt-spacing-100 between the content heading and its description."
+  border
+/>
+
+## Multi-announcement dialog
+
+If there are multiple features that need to be announced, include a progress label showing the current and total number of slides in the button bar. The slide indicator uses `--salt-spacing-200` from the core buttons.
+
+<Diagram
+  src="/img/patterns/announcement-dialog/multi-slide.png"
+  srcDark="/img/patterns/announcement-dialog/multi-slide-dark.png"
+  alt="Announcement dialog with multiple announcements"
+  border
+/>
+
+See the [multiple announcements](/salt/patterns/announcement-dialog/examples#multiple-announcements) example.
+
+## Full image
+
+If your announcement would benefit from a large image, vertically stack the content area and image. Apply `--salt-spacing-300` between announcement description and image.
+
+<Diagram
+  src="/img/patterns/announcement-dialog/full-image.png"
+  srcDark="/img/patterns/announcement-dialog/full-image-dark.png"
+  alt="Announcement dialog with a stacking full image and content area"
+  border
+/>
+
+See the [full image](/salt/patterns/announcement-dialog/examples#full-image) example.
+
+## Content area scrolling
+
+In most cases, scrolling shouldn't be required. If additional content does exceed the available space, only the content area and image should scroll together—keeping the header and button bar visible at all times.
+
+<Diagram
+  src="/img/patterns/announcement-dialog/scrolling.png"
+  srcDark="/img/patterns/announcement-dialog/scrolling-dark.png"
+  alt="Announcement dialog with content area and image scroll"
+  border
+/>
+
+<Callout status="success" title="Best practices">
+  - The content in the announcement description should be short and concise.
+  This allows users to quickly grasp the necessary information, reducing
+  cognitive load and preventing abandonment. - By default, the entire image or
+  infographics should be visible without scrolling. To achieve this, adjust the
+  size of the dialog or check that the image is appropriately cropped.
+</Callout>
+
+See the [scrollable content](/salt/patterns/announcement-dialog/examples#scrollable-content) example.
+
+## Responsive behavior
+
+Once the announcement dialog hits a certain breakpoint, you can configure the layout to either:
+
+1. Stack the announcement description and image.
+2. Change the orientation to stack the button bar.
+
+### Stacked content area
+
+This mirrors the full image dialog mentioned above.
+
+<Diagram
+  src="/img/patterns/announcement-dialog/stacked-content.png"
+  srcDark="/img/patterns/announcement-dialog/stacked-content-dark.png"
+  alt="Announcement dialog with a stacked content area"
+  border
+/>
+
+See the [stacked content](/salt/patterns/announcement-dialog/examples#stacked-content) example.
+
+### Stacked button bar
+
+Refer to the [stacked button bar](/salt/patterns/button-bar#stacked-button-bar) guidance for more information. For a multi-announcement dialog, the progress label appears above the buttons.
+
+<Diagram
+  src="/img/patterns/announcement-dialog/stacked-button.png"
+  srcDark="/img/patterns/announcement-dialog/stacked-button-dark.png"
+  alt="Announcement dialog with a stacked button bar"
+  border
+/>
+
+See the [stacked button bar](/salt/patterns/announcement-dialog/examples#stacked-button-bar) example.

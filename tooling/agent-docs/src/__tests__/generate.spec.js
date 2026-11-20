@@ -262,6 +262,48 @@ describe("findBrokenLinks", () => {
 });
 
 describe("generateAgentDocs", () => {
+  it("packages pattern example tabs and links to them from one indexed guidance page", async () => {
+    const repoRoot = await createFixture({
+      "site/docs/patterns/report.mdx": `---
+title: Report
+layout: DetailPattern
+data:
+  patternUrl: /salt/patterns/report
+---
+
+See the [standard form](/salt/patterns/report/examples#standard-form).
+`,
+      "site/docs/patterns/report/examples.mdx": `---
+title: Report examples
+layout: DetailPattern
+data:
+  patternUrl: /salt/patterns/report
+---
+
+## Standard form
+
+<LivePreview componentName="patterns/forms" exampleName="Standard" />
+`,
+    });
+    const { outputs } = await generateAgentDocs({
+      repoRoot,
+      propsProvider,
+      write: false,
+    });
+    const { files } = outputs.get("@salt-ds/core");
+    expect(files.get("patterns/report.md")).toContain(
+      "./report/examples.md#standard-form",
+    );
+    expect(files.get("patterns/report/examples.md")).toContain(
+      "export const Standard = () => null;",
+    );
+    expect(files.get("index.md")).toContain("[Report](patterns/report.md)");
+    expect(files.get("index.md")).not.toContain("patterns/report/examples.md");
+    expect(JSON.parse(files.get("manifest.json")).pages).not.toContainEqual(
+      expect.objectContaining({ path: "patterns/report/examples.md" }),
+    );
+  });
+
   it("adds the parts examples use to their component's table", async () => {
     const button = {
       displayName: "Button",

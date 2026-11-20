@@ -662,12 +662,14 @@ export async function generateAgentDocs({
         );
       }
     }
-    target.entries.push({
-      title: doc.title,
-      docPath: doc.docPath,
-      summary: rendered.summary,
-      aliases: doc.aliases,
-    });
+    if (doc.includeInIndex !== false) {
+      target.entries.push({
+        title: doc.title,
+        docPath: doc.docPath,
+        summary: rendered.summary,
+        aliases: doc.aliases,
+      });
+    }
   }
   for (const example of await unshownPatternExamples({
     examplesDir,

@@ -152,6 +152,10 @@ export async function discoverDocuments({ siteDocsDir }) {
       continue;
     }
     if (rule.skip) continue;
+    const patternUrl = page.frontmatter.data?.patternUrl;
+    const isPatternExamples =
+      page.frontmatter.layout === "DetailPattern" &&
+      page.route === `${patternUrl}/examples`;
     documents.push({
       kind: "page",
       packageName: rule.package,
@@ -160,6 +164,8 @@ export async function discoverDocuments({ siteDocsDir }) {
       title: pageTitle(page),
       summary:
         page.frontmatter.description ?? page.frontmatter.data?.description,
+      // The guidance page links to the tab, so keep one index entry per pattern.
+      includeInIndex: !isPatternExamples,
       // Other names for what the page describes, such as a pattern's, which
       // the docs index lists beside it. A page's `aliases` are its old URLs.
       aliases: asList(
