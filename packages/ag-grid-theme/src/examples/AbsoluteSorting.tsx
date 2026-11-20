@@ -1,6 +1,5 @@
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import absoluteSortingExampleData from "../dependencies/absoluteSortingExampleData";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const colDef = [
   {
@@ -18,12 +17,9 @@ const colDef = [
 ];
 
 const AbsoluteSorting = (props: AgGridReactProps) => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         {...props}
         columnDefs={colDef}
         rowData={absoluteSortingExampleData}

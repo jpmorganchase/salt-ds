@@ -2,6 +2,7 @@ import { AgGridReact } from "ag-grid-react";
 
 import "ag-grid-community/styles/ag-grid.css";
 import "@salt-ds/ag-grid-theme/salt-ag-theme.css";
+import "../src/dependencies/setupAgGrid";
 
 import "@salt-ds/countries/saltSharpCountries.css";
 
@@ -13,7 +14,7 @@ export default {
     chromatic: {
       disableSnapshot: false,
       delay: 200,
-      // double default width from `useAgGridHelpers` given we're using side-by-side mode, + panel wrapper padding
+      // double the examples' 800px width given we're using side-by-side mode, + panel wrapper padding
       modes: {
         dual: { mode: "side-by-side", viewport: { width: 800 * 2 + 24 * 4 } },
       },

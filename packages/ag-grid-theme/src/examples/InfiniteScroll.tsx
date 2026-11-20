@@ -1,9 +1,8 @@
-import { Spinner } from "@salt-ds/core";
+import { Spinner, useDensity } from "@salt-ds/core";
 import type { IDatasource } from "ag-grid-community";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleData from "../dependencies/dataGridExampleData";
 import dataGridInfiniteScrollExampleColumns from "../dependencies/dataGridInfiniteScrollExampleColumns";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 const generateData = function generateData<T extends { name: string }>(
   lst: T[],
@@ -33,12 +32,20 @@ const datasource: IDatasource = {
 };
 
 const InfiniteScroll = (props: AgGridReactProps) => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
+  const density = useDensity();
+  // Before AG Grid v36.2, the infinite row model resizes rows when rowHeight changes, but not when the CSS height changes.
+  const rowHeight = {
+    high: 25,
+    medium: 37,
+    low: 49,
+    touch: 61,
+    mobile: 61,
+  }[density];
 
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
+        rowHeight={rowHeight}
         {...props}
         columnDefs={dataGridInfiniteScrollExampleColumns}
         rowModelType="infinite"
