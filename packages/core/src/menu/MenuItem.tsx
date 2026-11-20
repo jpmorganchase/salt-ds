@@ -196,7 +196,7 @@ export const MenuItem = forwardRef<HTMLDivElement, MenuItemProps>(
               if (disabled || event.repeat) {
                 return;
               }
-              const { view, ...eventInit } = event;
+              const { view: _view, ...eventInit } = event;
               queueMicrotask(() => {
                 activationKeyRef.current = key;
                 element.dispatchEvent(

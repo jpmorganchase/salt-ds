@@ -1,0 +1,40 @@
+language js
+
+// An event handler, className or style set before {...rest} is replaced when
+// the consumer passes the same prop, unless the component takes that prop out
+// of the rest props. Take it out and combine the two: call both handlers, merge
+// the class names with clsx, or spread both styles.
+//
+// This only sees syntax, not types, so it reports a warning. Suppress it with a
+// reason when the rest props can't contain the prop, for example because they
+// come from a hook rather than from the component's props.
+JsxAttribute(name=$name) as $attribute where {
+  $name <: r"on[A-Z]\w*|className|style",
+  $attribute <: within or {
+    JsxOpeningElement(attributes=$attributes),
+    JsxSelfClosingElement(attributes=$attributes)
+  } ,
+  $attributes <: [
+    ..., $attribute, ...,
+
+    JsxSpreadAttribute(argument=JsIdentifierExpression(name=$restName)), ...
+  ],
+  $attribute <: within or {
+    JsFunctionDeclaration(),
+    JsFunctionExpression(),
+    JsArrowFunctionExpression()
+  } as $function ,
+  $function <: contains JsObjectBindingPattern(properties=$properties) as $pattern where {
+    $properties <: contains JsObjectBindingPatternRest(binding=$restBinding),
+    $restBinding <: $restName
+  },
+  // useClassNameInjection removes className from the props it returns.
+  if ($name <: "className") {
+    $pattern <: not within JsVariableDeclarator(initializer=JsInitializerClause(expression=`finalProps`))
+  },
+  $properties <: not contains or {
+    JsObjectBindingPatternShorthandProperty(identifier=$key),
+    JsObjectBindingPatternProperty(member=$key)
+  } where { $key <: $name },
+  register_diagnostic(span=$attribute, message="This prop is set before the rest props, so a consumer's value replaces it. Take it out of the rest props and combine the two.", severity="warn")
+}

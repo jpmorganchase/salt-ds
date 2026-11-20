@@ -31,15 +31,12 @@ interface SliderThumbProps
   inputRef?: Ref<HTMLInputElement>;
   isFocusVisible: boolean;
   max: number;
-  maxLabel?: string;
   min: number;
-  minLabel?: string;
   offsetPercentage?: string;
   restrictToMarks?: boolean;
   showTooltip?: boolean;
   sliderValue: [number, number] | number;
   step: number;
-  stepMultiplier: number;
   trackDragging: boolean;
 }
 
@@ -58,15 +55,12 @@ export const SliderThumb = ({
   inputRef,
   isFocusVisible,
   max,
-  maxLabel,
   min,
-  minLabel,
   offsetPercentage,
   restrictToMarks,
   showTooltip,
   sliderValue,
   step,
-  stepMultiplier,
   trackDragging,
   ...rest
 }: SliderThumbProps) => {
