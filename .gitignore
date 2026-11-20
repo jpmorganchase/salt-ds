@@ -26,6 +26,7 @@ node_modules
 /packages/*/dist-cjs/
 /packages/*/dist-es/
 /packages/*/dist-types/
+/packages/*/docs/
 # Temporary declaration configs left behind by interrupted builds
 /packages/*/.salt-types-*.json
 /packages/ag-grid-theme/fonts/
