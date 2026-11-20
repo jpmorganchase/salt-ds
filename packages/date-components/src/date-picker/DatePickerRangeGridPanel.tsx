@@ -48,10 +48,16 @@ const withBaseName = makePrefixer("saltDatePickerPanel");
  */
 export type DatePickerRangeGridPanelProps = DatePickerPanelBaseProps &
   DateRangeSelection & {
+    /**
+     * Callback fired when the user selects a start or end date in the panel.
+     */
     onSelectionChange?: (
       event: SyntheticEvent,
       selectedDate?: DateRangeSelection | null,
     ) => void;
+    /**
+     * Props applied to the `Calendar` component.
+     */
     CalendarProps?: Partial<
       Omit<
         CalendarRangeProps,

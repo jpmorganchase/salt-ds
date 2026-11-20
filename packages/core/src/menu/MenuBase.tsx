@@ -37,21 +37,26 @@ import {
 } from "./MenuGroupContext";
 
 export interface MenuBaseProps {
+  /**
+   * The content of the menu, typically `MenuTrigger` and `MenuPanel`.
+   */
   children?: ReactNode;
   /**
-   * Display or hide the component.
+   * If `true`, the menu is open. Use with `onOpenChange` to control it.
    */
   open?: boolean;
   /**
-   * If true, the menu will be open by default.
+   * If `true`, the menu is open initially. Use when the component is uncontrolled.
    */
   defaultOpen?: boolean;
   /**
-   * Callback function triggered when open state changes.
+   * Callback fired when the open state changes.
    */
   onOpenChange?: (newOpen: boolean) => void;
   /**
-   * Set the placement of the Menu component relative to the trigger element. Defaults to `bottom-start` if it's the root menu or `right-start` if it's nested.
+   * The placement of the Menu relative to its trigger. Defaults to
+   * `"bottom-start"` for a root menu, and `"right-start"` for a nested menu or a
+   * menu positioned with `getVirtualElement`.
    */
   placement?: UseFloatingUIProps["placement"];
   /**

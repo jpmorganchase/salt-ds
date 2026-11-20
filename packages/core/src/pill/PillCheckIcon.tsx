@@ -7,9 +7,23 @@ import { makePrefixer } from "../utils";
 import pillCheckIcon from "./PillCheckIcon.css";
 
 export interface PillCheckIconProps {
+  /**
+   * If `true`, the icon shows a checkmark.
+   */
   checked?: boolean;
+  /**
+   * Class name applied to the icon's root element.
+   */
   className?: string;
+  /**
+   * If `true`, the icon has the disabled class name.
+   */
   disabled?: boolean;
+  /**
+   * If `true`, the icon shows its active state, for example while the `Pill` is
+   * pressed. When `checked` is `true`, it shows a plain checkmark instead of a
+   * solid one.
+   */
   active?: boolean;
 }
 

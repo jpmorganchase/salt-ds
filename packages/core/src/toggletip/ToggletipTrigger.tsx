@@ -14,6 +14,9 @@ import toggletipTriggerCss from "./ToggletipTrigger.css";
 
 export interface ToggletipTriggerProps
   extends ComponentPropsWithoutRef<"button"> {
+  /**
+   * The content of the trigger button, usually an icon. When it has no visible text, use `aria-label` to give the trigger an accessible name.
+   */
   children?: ReactNode;
 }
 

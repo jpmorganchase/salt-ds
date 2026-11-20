@@ -43,22 +43,53 @@ const DEFAULT_HEADING_FONT: HeadingFont = "Open Sans";
 const DEFAULT_ACCENT: Accent = "blue";
 const DEFAULT_ACTION_FONT: ActionFont = "Open Sans";
 export interface ThemeContextProps {
+  /**
+   * The name of the theme set on the closest `SaltProvider` or `SaltProviderNext`, or inherited from a parent provider. It's `"salt-theme"` when no provider sets one, and `""` outside a provider.
+   */
   theme: ThemeName;
+  /**
+   * The mode of the closest provider, such as `"light"` or `"dark"`.
+   */
   mode: Mode;
+  /**
+   * The window that the closest provider renders in. `useTheme` doesn't return it.
+   */
   window?: WindowContextType;
-  /** Only available when using SaltProviderNext. */
+  /**
+   * If `true`, the closest provider is a `SaltProviderNext` and the next theme is applied.
+   */
   themeNext: boolean;
+  /**
+   * The corner radius of selected components, such as `"sharp"` or `"rounded"`. Only applied when using `SaltProviderNext`.
+   */
   corner: Corner;
-  /** @deprecated since 1.32.0. Use `corner`. */
+  /**
+   * @deprecated since 1.32.0. Use `corner`.
+   */
   UNSTABLE_corner: Corner;
+  /**
+   * The font family of display and heading text. Only applied when using `SaltProviderNext`.
+   */
   headingFont: HeadingFont;
-  /** @deprecated since 1.32.0. Use `headingFont`. */
+  /**
+   * @deprecated since 1.32.0. Use `headingFont`.
+   */
   UNSTABLE_headingFont: HeadingFont;
+  /**
+   * The accent color used across components. Only applied when using `SaltProviderNext`.
+   */
   accent: Accent;
-  /** @deprecated since 1.32.0. Use `accent`. */
+  /**
+   * @deprecated since 1.32.0. Use `accent`.
+   */
   UNSTABLE_accent: Accent;
+  /**
+   * The font family of action components, mostly buttons. Only applied when using `SaltProviderNext`.
+   */
   actionFont: ActionFont;
-  /** @deprecated since 1.32.0. Use `actionFont`. */
+  /**
+   * @deprecated since 1.32.0. Use `actionFont`.
+   */
   UNSTABLE_actionFont: ActionFont;
 }
 
@@ -92,15 +123,15 @@ interface SaltProviderBaseProps
     Omit<ThemeApplicatorProps, "children" | ThemeNextOnlyAttributes>
   > {
   /**
-   * Shape of `{ xs: number; sm: number; md: number; lg: number; xl: number; }`.
-   * Determines breakpoints used in responsive calculation for layout components.
+   * The minimum viewport width, in pixels, of each breakpoint used by
+   * responsive props: `xs`, `sm`, `md`, `lg` and `xl`.
+   * @default { xs: 0, sm: 600, md: 960, lg: 1280, xl: 1920 }
    */
   breakpoints?: Breakpoints;
   /**
-   * A boolean. Enables dynamic style injection for each component.
-   *
-   * If `false`, you'll need to include component CSS yourself.
-   *
+   * If `true`, each component injects its own CSS when it renders. If `false`,
+   * you need to include the components' CSS yourself. Inside another
+   * `SaltProvider`, it defaults to the parent's value.
    * @default true
    */
   enableStyleInjection?: boolean;

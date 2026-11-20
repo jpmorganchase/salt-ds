@@ -36,21 +36,22 @@ export interface CalendarBaseProps extends ComponentPropsWithoutRef<"div"> {
    */
   hideOutOfRangeDates?: boolean;
   /**
-   * Ref to attach to the focused element,enabling focus to be controlled.
+   * Ref to attach to the focused element, enabling focus to be controlled.
    */
   focusedDateRef?: React.MutableRefObject<HTMLElement | null>;
   /**
-   * Number of visible months, maximum 12, defaults to 1
+   * Number of visible months, up to a maximum of 12.
+   * @default 1
    */
   numberOfVisibleMonths?: ResponsiveProp<
     1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
   >;
   /**
    * Specifies the timezone behavior:
-   * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
-   * - If set to "default", the default timezone of the date library will be used.
-   * - If set to "system", the local system's timezone will be applied.
-   * - If set to "UTC", the time will be returned in UTC.
+   * - If not set, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+   * - If set to `"default"`, the default timezone of the date library will be used.
+   * - If set to `"system"`, the local system's timezone will be applied.
+   * - If set to `"UTC"`, the time will be returned in UTC.
    * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
    */
   timezone?: Timezone;
@@ -63,7 +64,7 @@ export interface CalendarSingleProps
   extends CalendarBaseProps,
     UseCalendarSingleProps {
   /**
-   * The selection variant, set to "single".
+   * The selection variant. `"single"` selects dates, `"range"` selects date ranges from a start date and an end date, and `"offset"` selects date ranges calculated from the selected date with `startDateOffset` and `endDateOffset`.
    */
   selectionVariant: "single";
 }
@@ -75,11 +76,11 @@ export interface CalendarMultiselectSingleProps
   extends CalendarBaseProps,
     UseCalendarMultiselectSingleProps {
   /**
-   * The selection variant, set to "single".
+   * The selection variant. `"single"` selects dates, `"range"` selects date ranges from a start date and an end date, and `"offset"` selects date ranges calculated from the selected date with `startDateOffset` and `endDateOffset`.
    */
   selectionVariant: "single";
   /**
-   * Multiple selection
+   * If `true`, multiple dates or date ranges can be selected, and the selection is an array.
    */
   multiselect: true;
 }
@@ -91,7 +92,7 @@ export interface CalendarRangeProps
   extends CalendarBaseProps,
     UseCalendarRangeProps {
   /**
-   * The selection variant, set to "range".
+   * The selection variant. `"single"` selects dates, `"range"` selects date ranges from a start date and an end date, and `"offset"` selects date ranges calculated from the selected date with `startDateOffset` and `endDateOffset`.
    */
   selectionVariant: "range";
 }
@@ -103,11 +104,11 @@ export interface CalendarMultiselectRangeProps
   extends CalendarBaseProps,
     UseCalendarMultiselectRangeProps {
   /**
-   * The selection variant, set to "single".
+   * The selection variant. `"single"` selects dates, `"range"` selects date ranges from a start date and an end date, and `"offset"` selects date ranges calculated from the selected date with `startDateOffset` and `endDateOffset`.
    */
   selectionVariant: "range";
   /**
-   * Multiple selection
+   * If `true`, multiple dates or date ranges can be selected, and the selection is an array.
    */
   multiselect: true;
 }
@@ -119,7 +120,7 @@ export interface CalendarOffsetProps
   extends CalendarBaseProps,
     UseCalendarOffsetProps {
   /**
-   * The selection variant, set to "offset".
+   * The selection variant. `"single"` selects dates, `"range"` selects date ranges from a start date and an end date, and `"offset"` selects date ranges calculated from the selected date with `startDateOffset` and `endDateOffset`.
    */
   selectionVariant: "offset";
 }
@@ -131,11 +132,11 @@ export interface CalendarMultiselectOffsetProps
   extends CalendarBaseProps,
     UseCalendarMultiselectOffsetProps {
   /**
-   * The selection variant, set to "offset".
+   * The selection variant. `"single"` selects dates, `"range"` selects date ranges from a start date and an end date, and `"offset"` selects date ranges calculated from the selected date with `startDateOffset` and `endDateOffset`.
    */
   selectionVariant: "offset";
   /**
-   * Multiple selection
+   * If `true`, multiple dates or date ranges can be selected, and the selection is an array.
    */
   multiselect: true;
 }

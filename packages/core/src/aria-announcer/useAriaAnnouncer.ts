@@ -8,6 +8,12 @@ import {
 import { getAnnouncementTarget } from "./announcementRegistry";
 
 export type useAnnouncerOptions = {
+  /**
+   * The time in milliseconds that `announce` waits after its last call before
+   * it makes the announcement, so that only the last of several quick
+   * announcements is made. When `0`, announcements are made immediately.
+   * @default 0
+   */
   debounce?: number;
 };
 export type useAriaAnnouncerHook = (

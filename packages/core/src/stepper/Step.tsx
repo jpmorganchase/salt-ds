@@ -27,27 +27,30 @@ import { Stepper } from "./Stepper";
 export interface StepProps
   extends Omit<ComponentPropsWithoutRef<"li">, "onToggle"> {
   /**
-   * The label of the step
+   * The label of the step.
    */
   label?: ReactNode;
   /**
-   * Description text is displayed just below the label
-   **/
+   * The description, displayed below the label.
+   */
   description?: ReactNode;
   /**
-   * Optional string to determine the status of the step.
+   * The status of the step, `"warning"` or `"error"`. It replaces the stage's
+   * icon, and screen readers announce it instead of the stage.
    */
   status?: StepStatus;
   /**
-   * The stage of the step
+   * The stage of the step, which sets its icon.
+   * @default "pending"
    */
   stage?: StepStage;
   /**
-   * Whether the step item is expanded.
+   * If `true`, the step is expanded. Use with `onToggle` to control it.
    */
   expanded?: boolean;
   /**
-   * Initial expanded state of the step.
+   * If `true`, the step is expanded initially. Use when the component is
+   * uncontrolled.
    */
   defaultExpanded?: boolean;
   /**
@@ -68,17 +71,6 @@ export type StepStage =
   | "active";
 
 export type StepDepth = number;
-
-export interface StepProps
-  extends Omit<ComponentPropsWithoutRef<"li">, "onToggle"> {
-  label?: ReactNode;
-  description?: ReactNode;
-  status?: StepStatus;
-  stage?: StepStage;
-  expanded?: boolean;
-  defaultExpanded?: boolean;
-  onToggle?: ButtonProps["onClick"];
-}
 
 const withBaseName = makePrefixer("saltStep");
 

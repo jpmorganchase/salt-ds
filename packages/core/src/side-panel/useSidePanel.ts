@@ -17,8 +17,7 @@ export interface SidePanelTriggerExtraProps {
     | MutableRefObject<HTMLElement | null>
     | null;
   /**
-   * Click handler. Runs before the built-in toggle so consumers can
-   * preventDefault to skip the toggle.
+   * Callback fired when the trigger is clicked. It runs before the trigger toggles the panel.
    */
   onClick?: (event: MouseEvent<HTMLButtonElement>) => void;
 }

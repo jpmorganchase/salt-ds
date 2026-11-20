@@ -3,7 +3,7 @@ import { useMemo } from "react";
 
 export interface UseFocusOutProps {
   /**
-   * Whether the hook is enabled
+   * If `true`, the hook is enabled.
    * @default true
    */
   enabled?: boolean;

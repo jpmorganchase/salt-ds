@@ -11,6 +11,9 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 export interface InsertionPointProviderProps extends InsertionPointContextType {
+  /**
+   * The content. Salt components inside it insert their styles before `insertionPoint`.
+   */
   children: ReactNode;
 }
 

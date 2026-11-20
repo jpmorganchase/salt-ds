@@ -30,7 +30,8 @@ import { useDatePickerOverlay } from "./DatePickerOverlayProvider";
 
 interface UseDatePickerBaseProps {
   /**
-   * Factory method for date selection live announcements or null to silence announcements
+   * The function that creates the live announcements when a date or date range
+   * is selected. When not set or `null`, the default announcements are used.
    */
   createAnnouncement?: CreateAnnouncement | null;
   /**
@@ -54,24 +55,29 @@ interface UseDatePickerBaseProps {
    * @returns A string reason if the day is unselectable, otherwise `false` or `undefined`.
    */
   isDayUnselectable?: (date: DateFrameworkType) => string | false | undefined;
-  /** If `true`, the component is read-only. */
+  /**
+   * If `true`, the component is read-only.
+   */
   readOnly?: boolean;
   /**
-   * The minimum date for the range, default is 1900.
+   * The minimum selectable date. Defaults to the `minDate` of the `LocalizationProvider`, which is January 1, 1900 unless it's set.
    */
   minDate?: DateFrameworkType;
   /**
-   * The maximum date for the range, default is 2100.
+   * The maximum selectable date. Defaults to the `maxDate` of the `LocalizationProvider`, which is December 31, 2099 unless it's set.
    */
   maxDate?: DateFrameworkType;
   /**
-   * Handler for when the date selection is cancelled.
+   * Callback fired when the date selection is canceled.
    */
   onCancel?: () => void;
   /**
-   * Timezone, if un-defined will take the timezone from passed date (or defaultSelectedDate/selectedDate)
-   * Can also be set to "default" to use the default timezone of the date library
-   * Can also be set to "system" to take the timezone of the local system.
+   * Specifies the timezone behavior:
+   * - If not set, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+   * - If set to `"default"`, the default timezone of the date library will be used.
+   * - If set to `"system"`, the local system's timezone will be applied.
+   * - If set to `"UTC"`, the time will be returned in UTC.
+   * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
    */
   timezone?: Timezone;
 }
@@ -93,7 +99,7 @@ export interface UseDatePickerSingleProps extends UseDatePickerBaseProps {
    */
   defaultSelectedDate?: SingleDateSelection | null;
   /**
-   * Handler called when the selected date changes.
+   * Callback fired when the selected date changes.
    * @param event - The synthetic event.
    * @param date - The selected date or null.
    * @param details - The selected date details.
@@ -104,7 +110,7 @@ export interface UseDatePickerSingleProps extends UseDatePickerBaseProps {
     details?: DateInputSingleDetails,
   ) => void;
   /**
-   * Handler called when the selected date is confirmed/applied.
+   * Callback fired when the selected date is applied. When `enableApply` isn't `true`, this happens as soon as a valid date is selected.
    * @param event - The synthetic event.
    * @param date - The selected date or null.
    */
@@ -128,7 +134,7 @@ export interface UseDatePickerRangeProps extends UseDatePickerBaseProps {
    */
   defaultSelectedDate?: DateRangeSelection | null;
   /**
-   * Handler called when the selected date range changes.
+   * Callback fired when the selected date range changes.
    * @param event - The synthetic event.
    * @param date - The selected date range or null.
    * @param details - The selected date range details.
@@ -139,7 +145,7 @@ export interface UseDatePickerRangeProps extends UseDatePickerBaseProps {
     details?: DateInputRangeDetails,
   ) => void;
   /**
-   * Handler called when the selected date range is confirmed/applied.
+   * Callback fired when the selected date range is applied. When `enableApply` isn't `true`, this happens as soon as a valid date range is selected.
    * @param event - The synthetic event.
    * @param date - The selected date range.
    */

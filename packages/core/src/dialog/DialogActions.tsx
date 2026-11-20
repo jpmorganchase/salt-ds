@@ -10,7 +10,7 @@ const withBaseName = makePrefixer("saltDialogActions");
 
 export interface DialogActionsProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * The content of Dialog Actions
+   * The content of Dialog Actions.
    */
   children?: ReactNode;
 }

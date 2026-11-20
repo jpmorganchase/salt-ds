@@ -8,7 +8,8 @@ import kbdCss from "./Kbd.css";
 
 export interface KbdProps extends ComponentPropsWithoutRef<"kbd"> {
   /**
-   * The variant of the kbd. Defaults to `"primary"`.
+   * The variant of the kbd.
+   * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
 }

@@ -17,15 +17,17 @@ export interface AccordionProps
    */
   value?: string;
   /**
-   * Whether the accordion is expanded.
+   * If `true`, the accordion is expanded. Use with `onToggle` to control it.
    */
   expanded?: boolean;
   /**
-   * Whether the accordion is expanded by default.
+   * If `true`, the accordion is expanded initially. Use when the component is
+   * uncontrolled.
    */
   defaultExpanded?: boolean;
   /**
-   * Side to align the Accordion's indicator. Defaults to `left`.
+   * The side to align the Accordion's indicator to.
+   * @default "left"
    */
   indicatorSide?: "left" | "right";
   /**
@@ -33,7 +35,7 @@ export interface AccordionProps
    */
   onToggle?: (event: SyntheticEvent<HTMLButtonElement>) => void;
   /**
-   * Whether the accordion is disabled.
+   * If `true`, the accordion is disabled.
    */
   disabled?: boolean;
   /**

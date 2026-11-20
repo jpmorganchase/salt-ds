@@ -11,7 +11,7 @@ import accordionGroupCss from "./AccordionGroup.css";
 
 export interface AccordionGroupProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The child Accordions to be rendered
+   * The child Accordions to be rendered.
    */
   children?: ReactNode;
 }

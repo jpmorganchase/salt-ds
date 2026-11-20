@@ -25,4 +25,9 @@ export type PolymorphicRef<T extends ElementType> =
 export type PolymorphicComponentPropWithRef<
   T extends ElementType,
   Props,
-> = PolymorphicComponentProp<T, Props> & { ref?: PolymorphicRef<T> };
+> = PolymorphicComponentProp<T, Props> & {
+  /**
+   * A ref to the rendered element, whose type depends on `as`.
+   */
+  ref?: PolymorphicRef<T>;
+};

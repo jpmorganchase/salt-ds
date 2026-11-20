@@ -57,11 +57,18 @@ export interface ComboBoxProps<Item = string>
    */
   children?: ReactNode;
   /**
-   * If true, options will be selected when the tab key is pressed.
+   * If `true`, the selected pills are kept to one line while the combo box isn't
+   * focused or open, with an overflow icon when some don't fit.
+   */
+  truncate?: boolean;
+  /**
+   * If `true`, the active option is selected when the Tab key is pressed. When
+   * `multiselect` is `true`, it defaults to `false`.
+   * @default true
    */
   selectOnTab?: boolean;
   /**
-   * Props to pass to ComboBox's overlay.
+   * Props applied to the overlay that contains the options.
    */
   OverlayProps?: Omit<ComponentPropsWithoutRef<"div">, "children" | "id"> &
     DataAttributes;
@@ -527,5 +534,10 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     </ListControlProvider>
   );
 }) as <Item = string>(
-  props: ComboBoxProps<Item> & { ref?: Ref<HTMLDivElement> },
+  props: ComboBoxProps<Item> & {
+    /**
+     * A ref to the root element, which contains the input and the pills.
+     */
+    ref?: Ref<HTMLDivElement>;
+  },
 ) => ReactElement;

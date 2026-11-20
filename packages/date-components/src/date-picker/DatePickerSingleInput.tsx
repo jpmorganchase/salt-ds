@@ -34,10 +34,10 @@ const withBaseName = makePrefixer("saltDatePickerSingleInput");
  */
 export interface DatePickerSingleInputProps extends DateInputSingleProps {
   /**
-   * Function to validate the entered date
-   * @param date - The selected date
-   * @param details - The details of date selection, either a valid date or error
-   * @returns updated DateInputSingleDetails details
+   * Function to validate the entered date. When set, it replaces the default validation.
+   * @param date - The entered date.
+   * @param details - The details of the date selection, such as errors.
+   * @returns The updated details.
    */
   validate?: (
     date: SingleDateSelection | null | undefined,

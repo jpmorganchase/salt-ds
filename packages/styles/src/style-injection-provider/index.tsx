@@ -11,6 +11,9 @@ export function useStyleInjection(enableStyleInjection?: boolean): boolean {
 }
 
 export interface StyleInjectionProviderProps extends StyleInjectionContextType {
+  /**
+   * The content that the style injection setting applies to.
+   */
   children: ReactNode;
 }
 

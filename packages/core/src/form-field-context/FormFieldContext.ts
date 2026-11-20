@@ -3,11 +3,11 @@ import type { ValidationStatuses } from "../status-indicator";
 import { createContext } from "../utils";
 export interface A11yValueProps {
   /**
-   * id for FormFieldHelperText
+   * ID for `FormFieldHelperText`.
    */
   helperTextId?: string;
   /**
-   * id for FormFieldLabel
+   * ID for `FormFieldLabel`.
    */
   labelId?: string;
 }
@@ -15,7 +15,13 @@ export interface A11yValueProps {
 export type NecessityType = "required" | "optional" | "asterisk";
 
 export interface a11yValueAriaProps {
+  /**
+   * The ID of the `FormFieldLabel` in the surrounding `FormField`. Form controls add it to their `aria-labelledby` attribute.
+   */
   "aria-labelledby": A11yValueProps["labelId"];
+  /**
+   * The ID of the `FormFieldHelperText` in the surrounding `FormField`. Form controls add it to their `aria-describedby` attribute.
+   */
   "aria-describedby": A11yValueProps["helperTextId"] | undefined;
 }
 
