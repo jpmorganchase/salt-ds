@@ -1,0 +1,13 @@
+/* The icon's slot keeps its size while progress waits to appear, so the button doesn't change size */
+.icon {
+  display: inline-flex;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.progress {
+  position: absolute;
+  inset: 0;
+  align-items: center;
+  justify-content: center;
+}

@@ -45,6 +45,7 @@ export * from "./logo";
 export * from "./menu-button";
 export * from "./metric";
 export * from "./portal";
+export * from "./progress";
 export * from "./query-input";
 export * from "./responsive";
 export * from "./search-input";
