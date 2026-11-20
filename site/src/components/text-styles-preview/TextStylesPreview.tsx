@@ -53,6 +53,21 @@ function textSample(styleAs?: TextProps<"span">["styleAs"]) {
   };
 }
 
+// Display5 to Display8 only exist as tokens, so they're previewed as a display style with their own size tokens.
+function displaySample(level: 5 | 6 | 7 | 8) {
+  return function DisplaySample(props: SampleProps) {
+    return (
+      <Display4
+        style={{
+          fontSize: `var(--salt-text-display${level}-fontSize)`,
+          lineHeight: `var(--salt-text-display${level}-lineHeight)`,
+        }}
+        {...props}
+      />
+    );
+  };
+}
+
 const textStyles: Array<{ name: string; Sample: ComponentType<SampleProps> }> =
   [
     { name: "Editorial1", Sample: Editorial1 },
@@ -65,6 +80,10 @@ const textStyles: Array<{ name: string; Sample: ComponentType<SampleProps> }> =
     { name: "Display2", Sample: Display2 },
     { name: "Display3", Sample: Display3 },
     { name: "Display4", Sample: Display4 },
+    { name: "Display5", Sample: displaySample(5) },
+    { name: "Display6", Sample: displaySample(6) },
+    { name: "Display7", Sample: displaySample(7) },
+    { name: "Display8", Sample: displaySample(8) },
     { name: "H1", Sample: textSample("h1") },
     { name: "H2", Sample: textSample("h2") },
     { name: "H3", Sample: textSample("h3") },
