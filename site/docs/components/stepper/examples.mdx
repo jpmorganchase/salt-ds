@@ -8,47 +8,81 @@ data:
   $ref: ./#/data
 ---
 
-## Orientation
+## Horizontal
 
-### Horizontal (default)
+By default, `Stepper` is horizontal and displays steps in a row, so users can see their progress through the whole process at a glance. Steps share the available width equally, and each label is centered below its icon.
+
+### Best practices
+
+- Use a horizontal stepper in wide layouts, above the content of the page.
+- Don't place a horizontal stepper in a narrow container. Instead, use a vertical stepper.
 
 <LivePreview componentName="stepper" exampleName="Horizontal" />
 
-### Vertical
+## Vertical
+
+A vertical stepper displays steps in a column, from top to bottom. Set `orientation="vertical"` to use it. Labels are left aligned, next to their icons.
+
+### Best practices
+
+- Use a vertical stepper in narrow containers, such as a side column, or when steps have long labels or substeps.
+- Align a vertical stepper to the left of its container.
 
 <LivePreview componentName="stepper" exampleName="Vertical" />
 
-## Stage + Status
+## With descriptions
 
-<LivePreview componentName="stepper" exampleName="StageStatus" />
+Use the `description` prop to add supporting text to a step. The description appears below the label, with the same alignment.
 
-The `Step` component's appearance depends on its `stage` and `status` props.
-When both are set, `status` takes precedence over `stage`. These props control:
+<LivePreview componentName="stepper" exampleName="WithDescriptions" />
 
-- Icon selection
-- Description text color
-- Track (connector) style
+## Stages
 
-## Nested Steps
+Use the `stage` prop to show where each step is in the process. A step is `"pending"` by default.
 
-The `Stepper` component supports nested steps when used in vertical orientation.
-You can nest `Step` components within other `Step` components to create hierarchical step structures.
+- `"completed"`: the user has finished the step.
+- `"active"`: the step the user is on. Its label uses a bolder font weight.
+- `"pending"`: the user hasn't reached the step yet.
+- `"locked"`: the step displays a lock icon.
 
-### Behavior
+The track after a completed step is solid. The track after an active, pending or locked step is dotted.
 
-- When nesting steps, the parent `Step` automatically renders a new `Stepper` containing its child steps
-- An expand/collapse button appears on parent steps to toggle visibility of nested steps
-- Parent steps containing the active child step are automatically set to `inprogress` state
+### Best practices
 
-### Limitations
+- When the user goes back to an earlier step, set that step to `stage="active"`. Set the steps after it to `stage="pending"`, and remove their `status`. See the [wizard pattern](/salt/patterns/wizard#validation-state).
 
-- Nested steps are only supported in vertical orientation
+<LivePreview componentName="stepper" exampleName="Stages" />
 
-<LivePreview componentName="stepper" exampleName="NestedSteps" />
+### In progress
 
-## Controlled Stepper
+In a vertical stepper, set `stage="inprogress"` on a parent step while one of its [substeps](#substeps) is active. The track after an in-progress step is solid. A horizontal stepper doesn't display substeps, so use `"active"` for its current step.
 
-The `Stepper` and `Step` component are primarily presentational components.
-If you want to control the state of the `Stepper` you can use a custom hook.
+<LivePreview componentName="stepper" exampleName="InProgress" />
 
-<LivePreview componentName="stepper" exampleName="Reducer" />
+## Status
+
+Set `status="warning"` or `status="error"` to show that a step needs attention. The status replaces the stage's icon and changes the color of the description. The label and the track still follow the `stage`.
+
+For guidance on when to show each status, see the [wizard pattern](/salt/patterns/wizard#validation-state).
+
+<LivePreview componentName="stepper" exampleName="Status" />
+
+## Substeps
+
+In a vertical stepper, add `Step` elements as children of a step to give it substeps. You can nest steps up to two levels below the top level. A horizontal stepper doesn't display substeps.
+
+A step with substeps is collapsed by default and has an expand button that shows or hides them. Use the `defaultExpanded` prop to expand the step initially, or the `expanded` and `onToggle` props to control it.
+
+When a collapsed step contains the active step, its label uses a bolder font weight.
+
+### Best practices
+
+- Set the stage of each parent step yourself. For example, use `stage="inprogress"` while one of its substeps is active, and `stage="completed"` when all of its substeps are completed.
+
+<LivePreview componentName="stepper" exampleName="Substeps" />
+
+## Updating progress
+
+Store the steps in your application's state, and update their `stage` and `status` when the user moves to another step.
+
+<LivePreview componentName="stepper" exampleName="UpdatingProgress" />
