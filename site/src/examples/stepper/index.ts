@@ -4,5 +4,6 @@ export * from "./Stages";
 export * from "./Status";
 export * from "./Substeps";
 export * from "./UpdatingProgress";
+export * from "./UpdatingSubsteps";
 export * from "./Vertical";
 export * from "./WithDescriptions";

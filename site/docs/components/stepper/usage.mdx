@@ -14,7 +14,6 @@ data:
 
 `Stepper` doesn't track the current step, change stages or provide navigation.
 
-- Steps are displayed in the order you pass them.
 - Set `stage="active"` on the step the user is on, and update the `stage` and `status` of each step as the user moves through the process.
 - Provide your own buttons to move between steps. See the [wizard pattern](/salt/patterns/wizard) for a complete multi-step flow.
 - Substeps are supported in vertical orientation only.
@@ -32,12 +31,14 @@ data:
 
 ### Choosing an orientation
 
-- Use a horizontal stepper in wide layouts, above the content of the page. Don't place it in a narrow container.
-- Use a vertical stepper in narrow containers, such as a side column, or when steps have long labels or substeps. Align it to the left of its container.
+- Use a horizontal stepper for shorter, simpler processes.
+- Use a vertical stepper for longer, more complex processes, such as when you need to split steps into substeps.
+
+For more guidance, see [horizontal stepper vs. vertical stepper](/salt/patterns/wizard#horizontal-stepper-vs-vertical-stepper) in the wizard pattern.
 
 ## Content
 
-- Keep labels short and specific to the task in each step, such as "Account details". In a horizontal stepper, use one or two words.
+- Keep labels short and self-explanatory, such as "Account details".
 - Labels and descriptions wrap and never truncate.
 - Pass plain text to `label` and `description`. They're combined into the text that screen readers announce, so other content, such as an element, isn't announced correctly.
 

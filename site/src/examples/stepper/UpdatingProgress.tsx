@@ -22,7 +22,6 @@ function getStage(index: number, activeIndex: number): StepStage {
 
 export const UpdatingProgress = () => {
   const [activeIndex, setActiveIndex] = useState(0);
-  const isLastStep = activeIndex >= steps.length - 1;
 
   return (
     <StackLayout style={{ width: "100%" }}>
@@ -35,7 +34,7 @@ export const UpdatingProgress = () => {
           />
         ))}
       </Stepper>
-      <FlexLayout justify="space-between">
+      <FlexLayout gap={1} justify="end">
         <Button
           sentiment="accented"
           appearance="bordered"
@@ -46,10 +45,10 @@ export const UpdatingProgress = () => {
         <Button
           sentiment="accented"
           onClick={() =>
-            setActiveIndex((index) => Math.min(index + 1, steps.length))
+            setActiveIndex((index) => Math.min(index + 1, steps.length - 1))
           }
         >
-          {isLastStep ? "Submit" : "Next"}
+          Next
         </Button>
       </FlexLayout>
     </StackLayout>

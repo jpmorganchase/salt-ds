@@ -14,15 +14,15 @@ export const Status = () => {
         <Step label="Funding" stage="pending" />
         <Step label="Review" stage="pending" />
       </Stepper>
-      <Stepper aria-label="Account opening">
-        <Step label="Account details" stage="completed" />
+      <Stepper aria-label="Add a payee">
+        <Step label="Payee details" stage="completed" />
         <Step
-          label="Identity check"
-          description="Upload a photo ID"
+          label="Bank details"
+          description="Enter a valid account number"
           stage="active"
           status="error"
         />
-        <Step label="Funding" stage="pending" />
+        <Step label="Payment limits" stage="pending" />
         <Step label="Review" stage="pending" />
       </Stepper>
     </StackLayout>
