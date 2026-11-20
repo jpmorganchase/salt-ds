@@ -2,7 +2,7 @@ import { StackLayout, Step, Stepper } from "@salt-ds/core";
 
 export const Substeps = () => {
   return (
-    <StackLayout>
+    <StackLayout style={{ width: "200px" }}>
       <Stepper orientation="vertical" aria-label="Account opening">
         <Step label="Account details" stage="completed">
           <Step label="Name" stage="completed" />

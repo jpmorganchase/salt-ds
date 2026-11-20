@@ -21,7 +21,7 @@ By default, `Stepper` is horizontal and displays steps in a row, so users can se
 
 ## Vertical
 
-A vertical stepper displays steps in a column, from top to bottom. Set `orientation="vertical"` to use it. Labels are left aligned, next to their icons.
+A vertical stepper displays steps in a column, from top to bottom. Set `orientation="vertical"` on `Stepper` to use it. Labels are left aligned, next to their icons.
 
 ### Best practices
 
@@ -32,13 +32,13 @@ A vertical stepper displays steps in a column, from top to bottom. Set `orientat
 
 ## With descriptions
 
-Use the `description` prop to add supporting text to a step. The description appears below the label, with the same alignment.
+Use the `description` prop on `Step` to add supporting text to a step. The description appears below the label, with the same alignment.
 
 <LivePreview componentName="stepper" exampleName="WithDescriptions" />
 
-## Stages
+## Stage
 
-Use the `stage` prop to show where each step is in the process. A step is `"pending"` by default.
+Use the `stage` prop on `Step` to show where each step is in the process. A step is `"pending"` by default.
 
 - `"completed"`: the user has finished the step.
 - `"active"`: the step the user is on. Its label uses a bolder font weight.
@@ -61,7 +61,7 @@ In a vertical stepper, set `stage="inprogress"` on a parent step while one of it
 
 ## Status
 
-Set `status="warning"` or `status="error"` to show that a step needs attention. The status replaces the stage's icon and changes the color of the description. The label and the track still follow the `stage`.
+Set `status="warning"` or `status="error"` on `Step` to show that a step needs attention. The status replaces the stage's icon and changes the color of the description. The label and the track still follow the `stage`.
 
 For guidance on when to show each status, see the [wizard pattern](/salt/patterns/wizard#validation-state).
 
@@ -71,7 +71,7 @@ For guidance on when to show each status, see the [wizard pattern](/salt/pattern
 
 In a vertical stepper, add `Step` elements as children of a step to give it substeps. You can nest steps up to two levels below the top level. A horizontal stepper doesn't display substeps.
 
-A step with substeps is collapsed by default and has an expand button that shows or hides them. Use the `defaultExpanded` prop to expand the step initially, or the `expanded` and `onToggle` props to control it.
+A step with substeps is collapsed by default and has an expand button that shows or hides them. Use the `defaultExpanded` prop on the parent `Step` to expand it initially, or the `expanded` and `onToggle` props to control it.
 
 When a collapsed step contains the active step, its label uses a bolder font weight.
 
