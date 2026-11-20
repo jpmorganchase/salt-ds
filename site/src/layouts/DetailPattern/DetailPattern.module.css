@@ -13,3 +13,12 @@
 .SBLogo {
   display: flex;
 }
+
+.tabs {
+  min-width: 1px;
+  flex-basis: var(--site-content-max-width);
+}
+
+.tabPanel {
+  margin-top: var(--salt-spacing-200);
+}

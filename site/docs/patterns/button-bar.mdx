@@ -7,12 +7,19 @@ tags:
 aliases:
   - /salt/patterns/button-bar
 data:
+  patternUrl: /salt/patterns/button-bar
   resources: []
   components: ["Button", "Flow layout", "Split layout", "Stack layout"]
   relatedPatterns: ["Forms"]
 ---
 
-<LivePreview componentName="patterns/button-bar" exampleName="ButtonBar" />
+<Diagram
+  src="/img/patterns/button-bar/button-bar-hero-shot.png"
+  alt="A button bar with primary and secondary actions on the left and two actions on the right."
+  border
+/>
+
+See the [Button bar examples](/salt/patterns/button-bar/examples) for runnable versions of the pattern.
 
 ## When to use
 
@@ -51,9 +58,7 @@ A button bar typically contains:
 - Use [`SplitLayout`](/salt/components/layouts/split-layout) to separate the button groups and keep core actions visually clear. Pass one group as `startItem` and the other as `endItem`.
 - You can use [`FlowLayout`](/salt/components/layouts/flow-layout) when a group of buttons should wrap across rows. Wrapping does not replace the explicit full-width [stacked button bar](#stacked-button-bar) for narrow views.
 
-In the example below, the solid and bordered buttons form the `startItem` group, and the two transparent buttons form the `endItem` group.
-
-<LivePreview componentName="patterns/button-bar" exampleName="WithSecondary" />
+In the [split button groups example](/salt/patterns/button-bar/examples#split-button-groups), the solid and bordered buttons form the `startItem` group, and the two transparent buttons form the `endItem` group.
 
 <Diagram
   src="/img/patterns/button-bar/button-bar-layout-1.png"
@@ -91,18 +96,28 @@ There are three button appearances to choose from. Choosing the correct button d
 - There can be multiple equally weighted tertiary functions within a button bar.
 - This is commonly a related task or function that’s lower priority than the secondary functions, such as **Import** or **Export**.
 
-Remember to use a hierarchy when making your button choices, much like following a type ramp. In Example 1 below, Cancel is the alternate function and uses a bordered button because there are only two options. However, in Example 2, Cancel uses the transparent button because three actions are available to the user, with this one being tertiary and the least desired option. The [button order](#button-order) section shows both as live examples: Example 1 is the single-step form and Example 2 the multi-step form.
+Remember to use a hierarchy when making your button choices, much like following a type ramp. In Example 1 below, Cancel is the alternate function and uses a bordered button because there are only two options. However, in Example 2, Cancel uses the transparent button because three actions are available to the user, with this one being tertiary and the least desired option.
 
 ### Example 1
 
 - The **Submit** solid action uses the solid button.
 - The **Cancel** secondary action uses the bordered button.
 
+<Diagram
+  src="/img/patterns/button-bar/button-options-example-1.png"
+  alt="A solid Submit button to the left of a bordered Cancel button."
+/>
+
 ### Example 2
 
 - The **Next** primary action uses the solid button.
 - The **Previous** alternate action uses the bordered button (order follows sequential forms).
 - The **Cancel** tertiary action uses the transparent button.
+
+<Diagram
+  src="/img/patterns/button-bar/button-options-example-2.png"
+  alt="A solid Next button on the right, after a bordered Previous button and a transparent Cancel button."
+/>
 
 <GuidanceCallout type="positive" customPillText="Best practices">
   Provide only one solid button for a given task—the action that allows the user
@@ -113,9 +128,7 @@ Remember to use a hierarchy when making your button choices, much like following
 
 Optionally, use colored [sentiment buttons](/salt/components/button/examples#other-sentiments) within a button bar depending on the sentiment of the action - i.e. positive, caution and negative. We recommend combining a sentiment with the button appearance (solid, bordered or transparent) that best represents the importance of the action.
 
-In the example below, **Delete** is a tertiary action, so it uses the transparent appearance with the negative sentiment.
-
-<LivePreview componentName="patterns/button-bar" exampleName="DestructiveActions" />
+In the [destructive action example](/salt/patterns/button-bar/examples#destructive-action), **Delete** is a tertiary action, so it uses the transparent appearance with the negative sentiment.
 
 In the dialog below, the ‘Delete now’ button is styled using a solid appearance and negative sentiment to emphasize the risk of permanently deleting items as an action.
 
@@ -134,14 +147,26 @@ The container and the type of scenario determine the position of actions (solid,
 - Groups core actions on the left.
 - Follows an F-pattern reading model, allowing users to scan down quickly.
 
-<LivePreview componentName="patterns/button-bar" exampleName="SingleStepForm" />
+<Diagram
+  src="/img/patterns/button-bar/vert-nav-layout-2.png"
+  alt="A single-step form with Submit and Cancel grouped on the left."
+  border
+/>
+
+See the [single-step form example](/salt/patterns/button-bar/examples#single-step-form).
 
 ### Multi-step form
 
 - Groups core actions on the right.
 - Always positions **Next** right of **Previous** and **Cancel** to reflect the direction of the steps.
 
-<LivePreview componentName="patterns/button-bar" exampleName="MultiStepForm" />
+<Diagram
+  src="/img/patterns/button-bar/vert-nav-layout-3.png"
+  alt="A multi-step form with the core actions grouped on the right."
+  border
+/>
+
+See the [multi-step form example](/salt/patterns/button-bar/examples#multi-step-form).
 
 ### Dialog
 
@@ -157,7 +182,13 @@ Actions in [`DialogActions`](/salt/components/dialog/usage#action-composition) a
 
 </GuidanceCallout>
 
-<LivePreview componentName="patterns/button-bar" exampleName="DialogForm" />
+<Diagram
+  src="/img/patterns/button-bar/vert-nav-layout-4.png"
+  alt="A dialog with the core form actions grouped on the right."
+  border
+/>
+
+See the [dialog example](/salt/patterns/button-bar/examples#dialog).
 
 ## Button bar position
 
@@ -236,7 +267,13 @@ Order of stacked buttons: In a stacked button layout, we recommend buttons stack
 
 </GuidanceCallout>
 
-<LivePreview componentName="patterns/button-bar" exampleName="Responsive" />
+<Diagram
+  src="/img/patterns/button-bar/vert-nav-layout-5.png"
+  alt="A button bar with actions stacked vertically at a narrow width."
+  border
+/>
+
+See the [stacked button bar example](/salt/patterns/button-bar/examples#stacked-button-bar).
 
 ### Building a stacked button bar
 
@@ -245,9 +282,7 @@ Order of stacked buttons: In a stacked button layout, we recommend buttons stack
 3. When the button bar has core actions on the right, you'll need to configure an alternative stack layout.
    - Reverse the buttons in this layout to ensure that the core actions are at the top. When stacked, the `endItem` group with the core actions sits above the `startItem` group, with the solid button first.
 
-In the example below, the core actions are on the right. When stacked, **Save** moves to the top and **Delete** to the bottom.
-
-<LivePreview componentName="patterns/button-bar" exampleName="ResponsiveReverse" />
+In the [stacked button bar with core actions on the right](/salt/patterns/button-bar/examples#stacked-button-bar-with-core-actions-on-the-right), **Save** moves to the top and **Delete** to the bottom when stacked.
 
 <Diagram
   src="/img/patterns/button-bar/button-bar-building-stacked-button-bar-1.png"
