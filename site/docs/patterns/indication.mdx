@@ -9,11 +9,32 @@ aliases:
 data:
   resources:
     [
-      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-indication", label: "Examples" }
     ]
-  components: ["Icon"]
+  components: ["Icon", "Status indicator"]
   showThemeControl: true
 ---
+
+<LivePreview componentName="patterns/indication" exampleName="Status" />
+
+## When to use
+
+- Use status indication to communicate the state or condition of a system or process.
+- Use sentiment indication to guide users with visual cues about potential outcomes.
+- Use progression indication to show the stage of a process or workflow.
+- Use urgency indication to communicate the level of risk associated with an item, process, or entity.
+
+## When not to use
+
+- When users need a detailed message, recovery instruction, or inline validation, use supporting text or the relevant feedback component instead.
+- When the item needs a primary action, use an action component instead of relying on color, iconography, or status labeling.
+- When users need to navigate between locations, use Navigation, links, or another wayfinding pattern instead.
+- When the visual treatment is only decorative and does not communicate state, sentiment, progression, or urgency, do not use indication.
+
+## How to build
+
+- Choose the indication type that matches the meaning: status, sentiment, progression, or urgency.
+- Apply the color, icon, and label guidance for the selected indication type.
+- Use status for system or process conditions, sentiment for outcome cues, progression for workflow stages, and urgency for risk levels.
 
 ## Indication types
 
@@ -28,16 +49,19 @@ There are four types of indication:
 
 Status indicates the state or condition of a system or process. Each status helps users understand what’s happening, what actions are needed, and whether any issues need to be addressed.
 
-The Salt Design System includes 4 statuses with associated colors and icons:
+Use [`StatusIndicator`](/salt/components/status-indicator) with the appropriate
+`status` prop. It applies the semantic status color and icon together. The table
+shows its default icons; [`SemanticIconProvider`](/salt/components/semantic-icon-provider)
+can customize them. The example labels show the status values.
 
-| Status | Color | Icon | 
-| --- | --- | --- |
-| Info | <ColorIndicator fillColor="blue" size={1.5}/> | `InfoIcon` |
-| Warning | <ColorIndicator fillColor="orange" size={1.5}/> | `WarningIcon` |
-| Error | <ColorIndicator fillColor="red" size={1.5}/> | `ErrorIcon` |
-| Success | <ColorIndicator fillColor="green" size={1.5}/> | `SuccessCircleIcon` |
+| Status | Color | `status` | Default icon |
+| --- | --- | --- | --- |
+| Info | <ColorIndicator fillColor="blue" size={1.5}/> | `"info"` | `InfoSolidIcon` |
+| Warning | <ColorIndicator fillColor="orange" size={1.5}/> | `"warning"` | `WarningSolidIcon` |
+| Error | <ColorIndicator fillColor="red" size={1.5}/> | `"error"` | `ErrorSolidIcon` |
+| Success | <ColorIndicator fillColor="green" size={1.5}/> | `"success"` | `SuccessCircleSolidIcon` |
 
-<LivePreview componentName="pattern-indication" exampleName="Status" />
+<LivePreview componentName="patterns/indication" exampleName="Status" />
 
 ## Sentiment
 
@@ -54,6 +78,7 @@ The Salt design system includes 5 sentiments with associated colors:
 | Negative | <ColorIndicator fillColor="red" size={1.5}/> | Negativity |
 | Positive | <ColorIndicator fillColor="green" size={1.5}/> | Positivity |
 
+<LivePreview componentName="patterns/indication" exampleName="Sentiment" />
 
 ## Progression
 
@@ -88,7 +113,7 @@ There are 5 main stages of progression with associated colors and icons:
 | At Risk | <ColorIndicator fillColor="red" size={1.5}/> | `ProgressCancelledIcon` `ProgressRejectedIcon` |
 | Complete | <ColorIndicator fillColor="green" size={1.5}/> | `ProgressCompleteIcon` `ProgressClosedIcon` |
 
-<LivePreview componentName="pattern-indication" exampleName="Progression" />
+<LivePreview componentName="patterns/indication" exampleName="Progression" />
 
 ## Urgency
 
@@ -117,4 +142,4 @@ There are 5 levels of urgency with associated colors and icons:
 | High | <ColorIndicator fillColor="red" size={1.5}/> | `UrgencyHighIcon` |
 | On Time | <ColorIndicator fillColor="green" size={1.5}/> | Icon TBD |
 
-<LivePreview componentName="pattern-indication" exampleName="Urgency" />
+<LivePreview componentName="patterns/indication" exampleName="Urgency" />

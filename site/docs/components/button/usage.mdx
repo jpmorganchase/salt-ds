@@ -10,7 +10,15 @@ data:
 
 ## Using the component
 
+If you are wrapping `Button`, make sure the wrapper adds behavior or semantics
+beyond prop forwarding.
+
 - Keep the text description short, ideally one to three words and no more than five. If you’re including an icon with the text, use no more than three words.
+
+`Button` defaults to `type="button"`, unlike the native `<button>`, so it doesn't
+submit a form unless you set `type="submit"`. While `loading` is set, a submit
+button doesn't submit. See
+[Form integration](/salt/getting-started/form-integration#submission-and-reset).
 
 ### When to use
 
@@ -19,6 +27,7 @@ To allow the user to execute an action, such as “submit”, “merge” or “
 ### When not to use
 
 - When the interaction navigates the user to a different destination rather than triggering an on-page action. Instead, use [`Link`](../link) for inline or lower-priority navigation, or [`LinkButton`](../link-button) when navigation stands alone, should stand out from inline links, or sits alongside buttons and should share their visual weight and alignment.
+- When the button turns a state on or off, such as marking an item as a favorite or pinning a panel. Instead, use [`ToggleButton`](../toggle-button), which shows and announces whether it's selected. To turn a setting on or off, use [`Switch`](../switch).
 
 ## Import
 

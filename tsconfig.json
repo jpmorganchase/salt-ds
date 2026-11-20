@@ -39,13 +39,14 @@
     }
   },
   "include": [
+    "./declarations.d.ts",
     "packages",
+    "site/src/examples/patterns",
     ".storybook/decorators",
     "docs",
     "tooling",
     "test/browser",
-    "vitest.browser.config.mts",
-    "./declarations.d.ts"
+    "vitest.browser.config.mts"
   ],
   "exclude": [
     "node_modules",

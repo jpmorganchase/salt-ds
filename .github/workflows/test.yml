@@ -79,6 +79,8 @@ jobs:
         run: yarn run typecheck
       - name: Run typecheck (React 19 types)
         run: yarn run typecheck:react19
+      - name: Typecheck site and examples
+        run: yarn run typecheck:site
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest

@@ -9,10 +9,11 @@ aliases:
 data:
   resources:
     [
-      { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-selectable-card--single-selection", label: "Examples" },
     ]
   components: ["Card", "Checkbox", "Radio button", "Stack layout", "Grid layout"]
 ---
+
+<LivePreview componentName="patterns/selectable-card" exampleName="SingleSelection" />
 
 <Diagram
   src="/img/patterns/selectable-card/selectable-card-group.png"
@@ -98,6 +99,8 @@ Use selectable cards with checkboxes when your users need to select multiple opt
 <Callout status="success" title="Best practices">
 Selectable cards must include a non-color selection indicator for selected vs. unselected states. Don’t rely on border/stroke or color alone (e.g., in grayscale the selected card may be indistinguishable). Use a radio button (single-select) or check box (multi-select).
 </Callout>
+
+<LivePreview componentName="patterns/selectable-card" exampleName="MultipleSelection" />
 
 ## States
 Selectable cards support the following states: 
