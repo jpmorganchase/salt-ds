@@ -1,11 +1,11 @@
 ---
 title: Pattern name
-layout:
-  DetailPattern
-  # To omit optional items, comment them out with #
-aliases:
-  - /salt/patterns/pattern-name
+description: "Explain what this pattern helps users do and when teams should choose it."
+layout: DetailPattern
+tags:
+  - pattern
 data:
+  patternUrl: /salt/patterns/pattern-name
   resources: [
       # The below link is publicly accessible, use the structure below for these links
       { href: "https://url-goes-here", label: "URL here" },
@@ -15,10 +15,6 @@ data:
   components: ["Related component 1", "Related component 2"]
   relatedPatterns: ["Related pattern 1"]
 ---
-
-Introduction goes here. Add a series of sentences here.
-
-{" "}
 
 <Diagram
   src="/img/patterns/pattern-name/pattern-name-hero-shot.png"
@@ -40,8 +36,6 @@ Explain the alternatives for scenarios where this pattern is unsuitable.
 
 Anatomy text goes here.
 
-{" "}
-
 <Diagram
   src="/img/patterns/pattern-name/pattern-name-anatomy.png"
   alt="Pattern anatomy."
@@ -52,8 +46,6 @@ Anatomy text goes here.
 ### Layout
 
 Layout section goes here. Add multiple sections if needed.
-
-{" "}
 
 <Diagram
   src="/img/patterns/pattern-name/pattern-name-layout-1.png"
@@ -66,6 +58,8 @@ Layout section goes here. Add multiple sections if needed.
 
 Add as many behavior and variant sections as needed
 
+Link to the relevant [runnable example](/salt/patterns/pattern-name/examples#basic-example) when explaining a behavior or variation.
+
 <GuidanceCallout type="positive" customPillText="Best practices">
   Use best practices boxes like these where relevant
 </GuidanceCallout>
@@ -77,8 +71,6 @@ Add as many behavior and variant sections as needed
 <GuidanceCallout type="negative">
   Use Do and Don't sections together when needed
 </GuidanceCallout>
-
-Use the below code to place images side by side with relevant text.
 
 Use the image switcher below when appropriate.
 
@@ -98,4 +90,4 @@ Use the image switcher below when appropriate.
 
 Leave the code below as-is to display a feedback section.
 
-:fragment{src="./fragments/feedback.mdx"}
+:fragment{src="../fragments/feedback.mdx"}

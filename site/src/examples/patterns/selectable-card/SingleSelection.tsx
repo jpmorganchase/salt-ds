@@ -15,6 +15,7 @@ export const SingleSelection = () => {
 
   return (
     <InteractableCardGroup
+      aria-label="Payment method"
       onChange={(_event, value) => {
         setSelected(value);
       }}

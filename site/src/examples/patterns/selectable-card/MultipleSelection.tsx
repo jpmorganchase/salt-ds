@@ -21,6 +21,7 @@ export const MultipleSelection = () => {
 
   return (
     <InteractableCardGroup
+      aria-label="Business owners"
       onChange={(_event, value) => {
         setSelected(value);
       }}
