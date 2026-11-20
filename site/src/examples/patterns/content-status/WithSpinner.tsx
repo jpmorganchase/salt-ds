@@ -4,10 +4,12 @@ export const WithSpinner = () => {
   return (
     <StackLayout gap={3} align="center">
       <Spinner size="medium" />
-      <Text>
-        Supplementary content can go here if required. This content area is
-        flexible in height and width as needed.
-      </Text>
+      <StackLayout gap={1} align="center">
+        <Text fontWeight="bolder">Loading…</Text>
+        <Text>
+          Sorry, we are experiencing a higher volume of requests than usual.
+        </Text>
+      </StackLayout>
     </StackLayout>
   );
 };

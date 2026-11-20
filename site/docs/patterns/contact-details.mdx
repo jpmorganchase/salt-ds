@@ -15,12 +15,6 @@ data:
 
 <LivePreview componentName="patterns/contact-details" exampleName="ContactDetails" />
 
- <Diagram
-    src="/img/patterns/contact-details/contact-details.png"
-    alt="Contact details how to build"
-    border
-  />
-
 ## When to use
 
 Use this pattern to:
@@ -54,40 +48,32 @@ Keep label lengths similar to ensure close proximity to their respective values.
 
 ### Layout
 
-Use [`StackLayout`](/salt/components/layouts/stack-layout) to display the avatar and all text elements that make up contact details in a row.
+- Use [`StackLayout`](/salt/components/layouts/stack-layout) with `direction="row"` and `gap={2}` (`--salt-spacing-200`) to display the avatar beside the text elements.
+- Stack the header above the additional details in a `StackLayout` with `direction="column"` and `gap={1}` (`--salt-spacing-100`).
+- In the header, use a column `StackLayout` with `gap={0.5}` (`--salt-spacing-50`) between the name and the further information. Display the name with the H2 text style, and the company name and ID with the H4 text style.
+- Display the additional details as a column of labels beside a column of values, in a row `StackLayout` with `gap={2}`. Each column is a `StackLayout` with `gap={0.5}`. Labels use the Body text style in the secondary color, and values use Body.
 
- <Diagram
-    src="/img/patterns/contact-details/contact-details-layout-1.png"
-    alt="Contact Details with layout annotations"
-    border
-  />
+<Diagram
+  src="/img/patterns/contact-details/contact-details-layout-1.png"
+  alt="Contact details layout: row stack layouts with gap 2 between the avatar and the text, and between the labels and values. The name uses H2 and the company details H4."
+  border
+/>
 
-Use `StackLayout` to display the additional details in a row.
+<Diagram
+  src="/img/patterns/contact-details/contact-details-layout-2.png"
+  alt="Contact details layout: a column stack layout with gap 1 between the header and the additional details."
+  border
+/>
 
- <Diagram
-    src="/img/patterns/contact-details/contact-details-layout-2.png"
-    alt="Contact Details with layout annotations"
-    border
-  />
-
-Use `StackLayout` to display the header and additional details section in a column.
-
- <Diagram
-    src="/img/patterns/contact-details/contact-details-layout-3.png"
-    alt="Contact Details with layout annotations"
-    border
-  />
+<Diagram
+  src="/img/patterns/contact-details/contact-details-layout-3.png"
+  alt="Contact details layout: column stack layouts with gap 0.5 in the header and in the labels column."
+  border
+/>
 
 ## Using icons
 
-You can use icon descriptors as a visually concise alternative to textual labels—to help users quickly identify the available communication channels.
-
- <Diagram
-    src="/img/patterns/contact-details/contact-details-icons.png"
-    alt="Contact Details using Icon Descriptors"
-    caption="An example of contact details using descriptive icons."
-    border
-  />
+You can use icon descriptors as a visually concise alternative to textual labels—to help users quickly identify the available communication channels. In the example below, an icon replaces each label.
 
 <GuidanceCallout type="positive" customPillText="Best practices">
 Refrain from using icon descriptors when you have multiple values for similar channels, such as work and cellphone numbers.
@@ -110,14 +96,7 @@ We recommend emails to be interactive links by default, you can also define othe
 
 You can embed contact details in a range of container components. 
 
-This example demonstrates the component embedded within a [card](/salt/components/card).
-
- <Diagram
-    src="/img/patterns/contact-details/contact-details-card.png"
-    alt="Contact Details Embedded in a Card"
-    caption="Contact details embedded within a card."
-    border
-  />
+The example below shows contact details embedded within a [card](/salt/components/card).
 
 <LivePreview componentName="patterns/contact-details" exampleName="CardEmbedded" />
 
@@ -127,14 +106,7 @@ You can define quick actions, one-click shortcuts to specific functions or featu
 
 Ensure that quick action buttons have a tooltip displayed as per the [icon only button best practices](https://www.saltdesignsystem.com/salt/components/button/examples#icon-only).
 
-For layout guidance, refer to the [button bar pattern](/salt/patterns/button-bar).
-
- <Diagram
-    src="/img/patterns/contact-details/contact-details-actions.png"
-    alt="Contact Details with quick actions button bar"
-    caption="Contact details with a quick actions button bar."
-    border
-  />
+For layout guidance, refer to the [button bar pattern](/salt/patterns/button-bar). In the example below, the quick actions are transparent icon-only buttons in a row `StackLayout` with `gap={1}`, below the header.
 
 <LivePreview componentName="patterns/contact-details" exampleName="QuickAction" />
 
@@ -142,25 +114,28 @@ For layout guidance, refer to the [button bar pattern](/salt/patterns/button-bar
 
 If you’re displaying supplementary details, you can configure them to be collapsible.
 
- <Diagram
-    src="/img/patterns/contact-details/contact-details-collapsible-spacing.png"
-    alt="Contact Details with collapsible details"
-    caption="Contact details with collapsible details."
-    border
-  />
-
-   <Diagram
-    src="/img/patterns/contact-details/contact-details-collapsible-layout.png"
-    alt="Collapsible detail layout"
-    caption="Use a split layout between quick actions and the collapsible button."
-    border
-  />
+- Place the quick actions and the collapse button in a [`SplitLayout`](/salt/components/layouts/split-layout), with the actions as the `startItem` and the collapse button as the `endItem`.
+- Separate the collapsible details from the actions with a top border that uses `--salt-separable-primary-borderColor`, and keep `gap={1}` (`--salt-spacing-100`) in the column `StackLayout` that holds the header, actions and details.
 
 <GuidanceCallout type="positive" customPillText="Best practices">
 Consider making supplementary details collapsible when they contain secondary information, and don’t need to be always on display.
 </GuidanceCallout>
 
 <LivePreview componentName="patterns/contact-details" exampleName="CollapsibleDetails" />
+
+<Diagram
+  src="/img/patterns/contact-details/contact-details-collapsible-spacing.png"
+  alt="Contact Details with collapsible details"
+  caption="Contact details with collapsible details."
+  border
+/>
+
+<Diagram
+  src="/img/patterns/contact-details/contact-details-collapsible-layout.png"
+  alt="Collapsible detail layout"
+  caption="Use a split layout between quick actions and the collapsible button."
+  border
+/>
 
 ## List version
 
@@ -170,28 +145,23 @@ To show as many options as possible, we recommend you keep data points to no mor
 
 The link function won't be able to be applied to the text content (e.g. email or phone number) as it is an list item that users select as a whole option from the dropdown.
 
- <Diagram
-    src="/img/patterns/contact-details/contact-details-list.png"
-    alt="Contact Details in list"
-    caption="Contact details in a list."
-    border
-  />
-
-Use `StackLayout` to display the text elements underneath the header in a row.
-
- <Diagram
-    src="/img/patterns/contact-details/contact-details-list-layout-1.png"
-    alt="Contact Details in list using stack layout."
-    border
-  />
-
- <Diagram
-    src="/img/patterns/contact-details/contact-details-list-layout-2.png"
-    alt="Contact Details in list using stack layout."
-    border
-  />
+- Place the avatar beside the text with `gap={1}` (`--salt-spacing-100`).
+- Use a column `StackLayout` with `gap={0.5}` (`--salt-spacing-50`) between the name and the details below it. The name uses the Body text style with the bolder weight.
+- Display the details underneath the header in a row with `gap={3}` (`--salt-spacing-300`) between them, each an icon beside its value.
 
 <LivePreview componentName="patterns/contact-details" exampleName="List" />
+
+<Diagram
+  src="/img/patterns/contact-details/contact-details-list-layout-1.png"
+  alt="List contact details layout: the phone number and email in a row stack layout with gap 3."
+  border
+/>
+
+<Diagram
+  src="/img/patterns/contact-details/contact-details-list-layout-2.png"
+  alt="List contact details spacing: --salt-spacing-100 between the avatar and the text, --salt-spacing-50 between the name and the details."
+  border
+/>
 
 ## Changelog
 

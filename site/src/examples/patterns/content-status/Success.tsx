@@ -4,10 +4,13 @@ export const Success = () => {
   return (
     <StackLayout gap={3} align="center">
       <StatusIndicator status="success" size={2} />
-      <Text>
-        Supplementary content can go here if required. This content area is
-        flexible in height and width as needed.
-      </Text>
+      <StackLayout gap={1} align="center">
+        <Text fontWeight="bolder">Message submitted</Text>
+        <Text>
+          Your message has been received and a member of our team will respond
+          shortly.
+        </Text>
+      </StackLayout>
     </StackLayout>
   );
 };

@@ -21,12 +21,6 @@ data:
 
 <LivePreview componentName="patterns/content-status" exampleName="Info" />
 
-<Diagram
-  src="/img/patterns/content-status/content-status.png"
-  alt="Example showing a content status with an info indicator"
-  border
-/>
-
 ## When to use
 
 Use this pattern in a container component when the state belongs to the content area itself:
@@ -97,8 +91,9 @@ The content status consists of three functional areas:
 
 ### Layout
 
-- Use [`StackLayout`](/salt/components/layouts/stack-layout) to arrange the visual indicator, title, supporting message, and optional action vertically.
-- Use [`Text`](/salt/components/text) for the title and supporting message.
+- Use [`StackLayout`](/salt/components/layouts/stack-layout) to arrange the visual indicator, title, supporting message, and optional action vertically. Set `gap` to `3` (`--salt-spacing-300`) and `align` to `"center"`.
+- Group the title and supporting message in a nested `StackLayout` with `gap` set to `1` (`--salt-spacing-100`).
+- Use [`Text`](/salt/components/text) for the title and supporting message. The title uses the Body text style with the bolder weight, and the supporting message uses Body.
 - Add a [`Button`](/salt/components/button) only when the status offers an action, such as reloading content.
 
 <Diagram
@@ -123,25 +118,11 @@ The content status consists of three functional areas:
 
 ## Loading content
 
-We've used a [progress](/salt/components/progress) component in this example to help manage user expectations. If you know how much of a current process is complete, use this to communicate that information.
-
-<Diagram
-  src="/img/patterns/content-status/content-status-loading.png"
-  alt="Example showing a content status with a progress indicator"
-  caption="Example showing a content status with a progress indicator."
-  border
-/>
+We've used a [circular progress](/salt/components/progress) component in this example to help manage user expectations. If you know how much of a current process is complete, use this to communicate that information.
 
 <LivePreview componentName="patterns/content-status" exampleName="WithProgress" />
 
 We've used a [spinner](/salt/components/spinner) component to reassure users in this example. Use this to let your users know that content is loading or processing without sharing an exact time frame.
-
-<Diagram
-  src="/img/patterns/content-status/content-status-loading-small.png"
-  alt="Example showing a content status with a spinner"
-  caption="Example showing a content status with a spinner."
-  border
-/>
 
 <LivePreview componentName="patterns/content-status" exampleName="WithSpinner" />
 
@@ -149,36 +130,17 @@ We've used a [spinner](/salt/components/spinner) component to reassure users in 
 
 Use this variant to communicate useful information. For example, if there’s no data available, this variation can communicate an empty-state message and let users know why they can't see any content.
 
-<Diagram
-  src="/img/patterns/content-status/content-status-info.png"
-  alt="Example showing a content status with an info indicator"
-  caption="Example showing a content status with an info indicator."
-  border
-/>
+<LivePreview componentName="patterns/content-status" exampleName="Info" />
 
 ## Warning message
 
 Use the warning status to inform users of an issue or potential issue related to their current task. Use this for issues that don't prevent the user from continuing or completing their task. For example, warn about a limitation affecting the content in this region. For essential platform-wide notices, use [SystemStatus](/salt/components/system-status/usage).
-
-<Diagram
-  src="/img/patterns/content-status/content-status-warning.png"
-  alt="Example showing a content status with a warning indicator"
-  caption="Example showing a content status with a warning indicator."
-  border
-/>
 
 <LivePreview componentName="patterns/content-status" exampleName="Warning" />
 
 ## Error message
 
 Use the error status to communicate a critical issue that prevents the user from continuing or completing the task. This could include missing content or user information required.
-
-<Diagram
-  src="/img/patterns/content-status/content-status-error.png"
-  alt="Example showing a content status with an error indicator"
-  caption="Example showing a content status with an error indicator."
-  border
-/>
 
 <GuidanceCallout type="positive" customPillText="Best practices">
 
@@ -195,13 +157,6 @@ Error and warning messages should:
 ## Success message
 
 This example lets users know that content has been successfully processed, e.g., the user has completed and submitted a form.
-
-<Diagram
-  src="/img/patterns/content-status/content-status-success.png"
-  alt="Example showing a content status with a success indicator"
-  caption="Example showing a content status with a success indicator."
-  border
-/>
 
 <LivePreview componentName="patterns/content-status" exampleName="Success" />
 
