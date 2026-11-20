@@ -342,10 +342,22 @@ export async function renderComponentDocument(doc, shared) {
 
 export async function renderPageDocument(doc, shared) {
   const content = await convertPage(doc.page, doc, shared);
+  const facts = [...commonFacts(doc, shared), websiteFact(doc)];
+  const patternUrl = doc.page.frontmatter.data?.patternUrl;
+  if (doc.page.frontmatter.layout === "DetailPattern" && patternUrl) {
+    const examplesUrl = `${patternUrl}/examples`;
+    const isGuidance = doc.route === patternUrl;
+    const otherRoute = isGuidance ? examplesUrl : patternUrl;
+    const otherTab = shared.documents.find((page) => page.route === otherRoute);
+    if (otherTab && (isGuidance || doc.route === examplesUrl)) {
+      const label = isGuidance ? "Examples" : "Guidance";
+      facts.push(fact(label, referenceTo(doc, otherTab, otherTab.title)));
+    }
+  }
   const children = [
     u.heading(1, [u.text(doc.title)]),
     ...frontmatterNodes(doc.summary, doc, doc.page, shared),
-    u.list([...commonFacts(doc, shared), websiteFact(doc)]),
+    u.list(facts),
     ...content,
   ];
   return finishDocument(

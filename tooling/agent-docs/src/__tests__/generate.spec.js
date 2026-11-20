@@ -264,14 +264,14 @@ describe("findBrokenLinks", () => {
 describe("generateAgentDocs", () => {
   it("packages pattern example tabs and links to them from one indexed guidance page", async () => {
     const repoRoot = await createFixture({
-      "site/docs/patterns/report.mdx": `---
+      "site/docs/patterns/report/index.mdx": `---
 title: Report
 layout: DetailPattern
 data:
   patternUrl: /salt/patterns/report
 ---
 
-See the [standard form](/salt/patterns/report/examples#standard-form).
+Use this pattern to gather report details.
 `,
       "site/docs/patterns/report/examples.mdx": `---
 title: Report examples
@@ -292,7 +292,10 @@ data:
     });
     const { files } = outputs.get("@salt-ds/core");
     expect(files.get("patterns/report.md")).toContain(
-      "./report/examples.md#standard-form",
+      "[Report examples](./report/examples.md)",
+    );
+    expect(files.get("patterns/report/examples.md")).toContain(
+      "[Report](../report.md)",
     );
     expect(files.get("patterns/report/examples.md")).toContain(
       "export const Standard = () => null;",

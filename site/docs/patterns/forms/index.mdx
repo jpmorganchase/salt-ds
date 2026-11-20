@@ -37,8 +37,6 @@ data:
   border
 />
 
-See the [Forms examples](/salt/patterns/forms/examples) for runnable examples of the pattern.
-
 ## When to use
 
 Use a form to enable users to input and submit data. Forms can be simple and user-oriented, such as contact forms, surveys, and sign-up pages. They can also be complex and product-oriented, such as app preferences, settings, and multi-step forms split across different screens.
@@ -108,13 +106,6 @@ For custom controls, connect those semantics explicitly. Summary links must also
 focus to the input, not just scroll to it. Announce a concise error count politely;
 avoid adding competing live announcements to the banner and every field.
 
-This example checks three required fields locally. Submit with missing details,
-use the summary links, and correct the fields. Resubmitting checks the remaining
-errors without clearing any values. A valid submission only confirms that the
-example's required details are present; it does not send data.
-
-See the [error summary](/salt/patterns/forms/examples#error-summary) example.
-
 ### Cancellation and drafts
 
 In a Save/Cancel editor, **Cancel** abandons unsaved edits. If nothing has changed,
@@ -182,7 +173,7 @@ A form control consists of a [form field](/salt/components/form-field) wrapped a
 - A dropdown.
 - A radio button or checkbox group.
 
-The columns are separated by `--salt-spacing-300` gutters, and each form field spans a whole number of columns. See the [standard layout](/salt/patterns/forms/examples#standard-layout) example.
+The columns are separated by `--salt-spacing-300` gutters, and each form field spans a whole number of columns.
 
 <ImageSwitcher
   images={[
@@ -242,8 +233,6 @@ Use horizontal separators to increase visual hierarchy alongside fills and headi
 - Inset separators so that they don’t extend into the column layout margin.
 
 </GuidanceCallout>
-
-See the [sections and separators](/salt/patterns/forms/examples#sections-and-separators) example.
 
 <ImageSwitcher
   images={[
@@ -418,8 +407,6 @@ Use a bordered multiline field when the form field fill matches the background f
 
 </GuidanceCallout>
 
-See the [secondary field](/salt/patterns/forms/examples#secondary-field) and [secondary background](/salt/patterns/forms/examples#secondary-background) examples.
-
 ## Label or question
 
 You can display form fields with either:
@@ -550,8 +537,6 @@ If a compact form is editable, display it with:
 - Right-aligned labels (see “Label placement”).
 
 </GuidanceCallout>
-
-See the [compact form](/salt/patterns/forms/examples#compact-form) example.
 
 <ImageSwitcher
   images={[

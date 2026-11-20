@@ -12,8 +12,6 @@ data:
 
 <Diagram src="/img/patterns/menu-button/create.png" alt="Menu button" border />
 
-See the [Menu button examples](/salt/patterns/menu-button/examples) for runnable examples of the pattern.
-
 ## When to use
 
 Use a menu button when multiple related actions need to be viewed in context but are not necessarily deemed high enough priority to be displayed on screen. When activated, the menu button reveals a list of actions a user can take. The options are displayed across a single level or multiple hierarchical levels, in a cascading menu. Choosing an enabled command invokes the application action and closes the menu; choosing a submenu trigger opens its submenu. Follow [Menu action outcomes](/salt/components/menu/usage#action-outcomes) for pending work and recovery.
@@ -50,8 +48,6 @@ A menu button contains:
 
 You can add a descriptive icon before each menu item label.
 
-See the [menu items with icons](/salt/patterns/menu-button/examples#menu-items-with-icons) example.
-
 ### Layout
 
 - Use a [Button](/salt/components/button) inside `MenuTrigger` to open the menu. Place a `ChevronDownIcon` after the button label.
@@ -66,8 +62,6 @@ See the [menu items with icons](/salt/patterns/menu-button/examples#menu-items-w
 By default, the menu aligns below the trigger at its starting edge (`placement="bottom-start"`). Set the `placement` prop on `Menu` to align it to the end edge or above the trigger.
 
 <Diagram src="/img/patterns/menu-button/position.png" alt="layout" border />
-
-See the [menu placement](/salt/patterns/menu-button/examples#menu-placement) example.
 
 Depending on where the button is positioned within the available space and layout of the interface, the menu will dynamically adjust positions in order for its options to remain visible.
 
@@ -113,8 +107,6 @@ Menu button uses a neutral solid button and is used when actions in the menu are
 
 Overflow menus contain actions that affect a smaller type of content within an interface, such as within cards or data grids. This is typically represented by a three dot icon as the action button. This is useful when space is limited or the interface needs to remain uncluttered to reduce cognitive load. A transparent button with `MicroMenuIcon` can open the menu.
 
-See the [overflow menu](/salt/patterns/menu-button/examples#overflow-menu) example.
-
 The images below show overflow menus in the column headers of a data grid.
 
 <ImageSwitcher
@@ -149,14 +141,10 @@ Icon-only menu buttons can be configured to contextually align to the product re
   label="Open overflow menu"
 />
 
-See the [icon-only menu button](/salt/patterns/menu-button/examples#icon-only-menu-button) example.
-
 ## Heading as menu
 
 A menu button beside a heading can expose commands for that section. If the control instead chooses a destination or changes the displayed content, follow [Navigation](/salt/patterns/navigation) or [view switching](/salt/components/toggle-button/usage#view-switching). Vertically align the trigger with its heading and use `--salt-spacing-100` between the button and text. Use a `StackLayout` with `direction="row"`, `align="center"` and `gap={1}`.
 
 <Diagram src="/img/patterns/menu-button/heading.png" alt="layout" border />
-
-See the [menu button beside a heading](/salt/patterns/menu-button/examples#menu-button-beside-a-heading) example.
 
 :fragment{src="../fragments/feedback.mdx"}

@@ -20,8 +20,6 @@ data:
   background="secondary"
 />
 
-See the [Experience customization examples](/salt/patterns/experience-customization/examples) for runnable examples of the pattern.
-
 ## When to use
 
 Use the Experience customization pattern to establish or update foundational settings that align with the user’s application UI preferences. It gives users intentional, explicit control to bridge the gap between a generic experience and one tailored to their workflow.
@@ -85,8 +83,6 @@ The Experience customization pattern utilizes existing Salt components. Refer to
   background="secondary"
 />
 
-See the [preferences dialog](/salt/patterns/experience-customization/examples#preferences-dialog) example.
-
 ## Setup flow
 
 The steps below summarize Salt-specific user preferences that may be made available for configuration.
@@ -95,8 +91,6 @@ The steps below summarize Salt-specific user preferences that may be made avai
 2. **Data interpretation**: Ensure data is understood consistently.
 3. **Data surfaces**: Configure tables and charts, where multiple settings combine and users benefit from seeing outcomes live before finalizing selections.
 4. **Feedback**: Finalize how the system provides feedback after core reading and interpretation is set.
-
-See the [setup flow](/salt/patterns/experience-customization/examples#setup-flow) and [setup flow in a dialog](/salt/patterns/experience-customization/examples#setup-flow-in-a-dialog) examples.
 
 ### Ordering the experience
 
@@ -149,8 +143,6 @@ Use standard controls for familiar, functional settings such as language selec
   background="secondary"
 />
 
-See the [locale and time zone](/salt/patterns/experience-customization/examples#locale-and-time-zone) example.
-
 ### Dynamic live preview – Data presentation
 
 Use a dynamic live preview for report-oriented presentation choices, such as selecting which metadata appears and how it’s displayed. This approach is ideal when users have specific requirements and need confidence in the final output. By showing results as settings change, a dynamic live preview reduces trial and error and minimizes the need to revisit settings later.
@@ -167,8 +159,6 @@ Use a dynamic live preview for report-oriented presentation choices, such as s
   border
   background="secondary"
 />
-
-See the [dynamic preview of data presentation](/salt/patterns/experience-customization/examples#dynamic-preview-of-data-presentation) example.
 
 ### Card selection – Notification placement
 
@@ -188,8 +178,6 @@ Use card selection for settings that lead to meaningful changes in the interfa
   border
   background="secondary"
 />
-
-See the [notification placement](/salt/patterns/experience-customization/examples#notification-placement) example.
 
 ## Reset to default
 
@@ -234,8 +222,6 @@ Support easy recovery by ensuring users can change or undo their selection and r
 Use this pattern when an application provides explicit options—such as a security profile or data-sharing tier—that require a conscious selection to meet governance, compliance, or security standards.
 
 Because the workflow cannot continue without this input, the interface must guide the user through a clear validation sequence that maintains focus and accessibility.
-
-See the [required settings](/salt/patterns/experience-customization/examples#required-settings) example.
 
 If the user selects **Finish** without choosing an option, an error message asks them to choose one:
 
