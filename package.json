@@ -27,6 +27,7 @@
     "lint:fix": "biome check --fix",
     "lint:check:error": "biome check --diagnostic-level=error",
     "lint:style": "stylelint -f verbose \"packages/*/src/**/*.css\"",
+    "lint:jsdoc": "node ./scripts/checkJsdoc.mjs",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "yarn build:ag-grid-theme && yarn bundle:css && storybook build --stats-json",
     "typecheck": "yarn node ./scripts/typecheck.mjs",
