@@ -16,13 +16,6 @@ data:
 
 <LivePreview componentName="patterns/app-header" exampleName="AppHeader" />
 
-  <Diagram
-    src="/img/patterns/app-header/app-header-hero.png"
-    srcDark="/img/patterns/app-header/app-header-hero-dark.png"
-    alt="App header example"
-    border
-  />
-
 ## When to use
 
 Use the app header as the top-level, globally persistent shell element that orients users within the UI and exposes app-wide navigation or utilities.
@@ -53,25 +46,27 @@ The app header has three functional areas that should remain recognizable in bot
 ### Desktop layout
 
 - Use [`NavigationItem`](/salt/components/navigation-item) to build the horizontal primary navigation, as explained in the [navigation pattern](./navigation).
-- Use [`FlexLayout`](/salt/components/layouts/flex-layout) with `justify="space-between"` to position the branding, navigation, and utilities.
+- Use [`FlexLayout`](/salt/components/layouts/flex-layout) with `justify="space-between"` and `gap={3}` to position the branding, navigation, and utilities.
+- Use [`Button`](/salt/components/button) for each utility.
+- Pad the header with `--salt-spacing-100` above and below, and `--salt-layout-page-margin` at each side. The branding area's height is `--salt-size-base`.
 
   <Diagram
     src="/img/patterns/app-header/app-header-layout.png"
     srcDark="/img/patterns/app-header/app-header-layout-dark.png"
-    alt="Example showing header’s desktop layout construction."
+    alt="Desktop app header layout: a flex layout with justify space-between and gap 3 holding the logo, navigation items and utility buttons, with --salt-spacing-100 vertical padding and --salt-layout-page-margin at each side."
     border
   />
 
 ### Mobile layout
 
-- Use [`StackLayout`](/salt/components/layouts/stack-layout) with `direction="row"` to position the menu button and the logo.
+- Use [`StackLayout`](/salt/components/layouts/stack-layout) with `direction="row"` to position the menu button and the logo, with `--salt-spacing-200` between them and `--salt-layout-page-margin` at each side.
 - The menu button opens and closes the navigation [drawer](/salt/components/drawer).
 - Use a stack layout to position the [vertical navigation](./vertical-navigation) and utilities within the drawer.
 
   <Diagram
     src="/img/patterns/app-header/app-header-mobile-layout.png"
     srcDark="/img/patterns/app-header/app-header-mobile-layout-dark.png"
-    alt="Example showing header’s mobile layout construction."
+    alt="Mobile app header layout: a row stack layout with the menu button and logo, and a drawer holding navigation items and utility actions."
     border
   />
 
@@ -122,26 +117,11 @@ Consider the following when placing your logo in the app header:
 
 In this layout, the app header is globally persistent. You can use it as standalone navigation for a small number of sections that do not require secondary navigation. Although this layout provides more horizontal space for content, it has limited space for navigation items, and you may need to use combined navigation for complex hierarchies.
 
-  <Diagram
-    src="/img/patterns/app-header/app-header-only.png"
-    srcDark="/img/patterns/app-header/app-header-only-dark.png"
-    alt="Example of the header-only variant."
-    border
-  />
-
 <LivePreview componentName="patterns/app-header" exampleName="HeaderOnly" />
 
 ## Header with vertical navigation
 
-The app header with vertical navigation offers an additional layer of hierarchy. This layout allows users to navigate complex structures and perform system and product tasks in the UI. Under this configuration, submenus can remain on display without interfering with the content. For more details about navigation hierarchy, visit the [navigation pattern](./navigation).
-
-  <Diagram
-    src="/img/patterns/app-header/app-header-vertical-navigation.png"
-    srcDark="/img/patterns/app-header/app-header-vertical-navigation-dark.png"
-    alt="Header paired with vertical navigation."
-    caption="An app header paired with vertical navigation."
-    border
-  />
+The app header with vertical navigation offers an additional layer of hierarchy. This layout allows users to navigate complex structures and perform system and product tasks in the UI. Under this configuration, submenus can remain on display without interfering with the content. For more details about navigation hierarchy, visit the [navigation pattern](./navigation). The example below pairs an app header with vertical navigation.
 
 <LivePreview componentName="patterns/app-header" exampleName="HeaderWithVerticalNavigation" />
 

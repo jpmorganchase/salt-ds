@@ -16,15 +16,6 @@ data:
 
 <LivePreview componentName="patterns/experience-customization" exampleName="StandardControls" />
 
-
-<Diagram
-  src="/img/patterns/experience-customization/experience-customization-pattern-experience-customization.png"
-  srcDark="/img/patterns/experience-customization/experience-customization-pattern-experience-customization-dark.png"
-  alt="Experience customization overview showing onboarding and ongoing preferences entry points"
-  border
-  background="secondary"
-/>
-
 ## When to use
 
 Use the Experience customization pattern to establish or update foundational settings that align with the user’s application UI preferences. It gives users intentional, explicit control to bridge the gap between a generic experience and one tailored to their workflow.
@@ -140,25 +131,11 @@ The following examples show how the choice of selection pattern is guided by the
 
 Use standard controls for familiar, functional settings such as language selection, time zone selection, or an automatic translate toggle. These options are clearly described by labels alone, so adding visual examples would be redundant and take up unnecessary screen space. Standard controls are the most effective pattern for these straightforward choices.
 
-<Diagram
-  src="/img/patterns/experience-customization/experience-customization-pattern-standard-controls.png"
-  srcDark="/img/patterns/experience-customization/experience-customization-pattern-standard-controls-dark.png"
-  alt="Standard controls example for locale and time zone settings"
-  border
-  background="secondary"
-/>
+<LivePreview componentName="patterns/experience-customization" exampleName="StandardControls" />
 
 ### Dynamic live preview – Data presentation
 
 Use a dynamic live preview for report-oriented presentation choices, such as selecting which metadata appears and how it’s displayed. This approach is ideal when users have specific requirements and need confidence in the final output. By showing results as settings change, a dynamic live preview reduces trial and error and minimizes the need to revisit settings later.
-
-<Diagram
-  src="/img/patterns/experience-customization/experience-customization-pattern-dynamic-live-preview.png"
-  srcDark="/img/patterns/experience-customization/experience-customization-pattern-dynamic-live-preview-dark.png"
-  alt="Dynamic live preview example for data presentation configuration"
-  border
-  background="secondary"
-/>
 
 <GuidanceCallout type="positive" customPillText="Best practices">
 **Heading hierarchy**: If the live preview includes headings or titles, ensure they follow the heading hierarchy of the surrounding page or modal.
@@ -169,14 +146,6 @@ Use a dynamic live preview for report-oriented presentation choices, such as s
 ### Card selection – Notification placement
 
 Use card selection for settings that lead to meaningful changes in the interface layout, such as notification placement. Card selection allows users to compare distinct visual states side by side, making it easier to understand and choose the desired outcome without extra cognitive effort.
-
-<Diagram
-  src="/img/patterns/experience-customization/experience-customization-pattern-card-selection.png"
-  srcDark="/img/patterns/experience-customization/experience-customization-pattern-card-selection-dark.png"
-  alt="Card selection example for notification placement options"
-  border
-  background="secondary"
-/>
 
 <GuidanceCallout type="positive" customPillText="Best practices">
 Switches can be used in multi-step wizards even when changes don’t take effect immediately. Use switches only for true on/off choices, and make any final behavior unmistakable—for example, label the final button 'Finish and apply changes' instead of just 'Finish'.
@@ -228,15 +197,17 @@ Use this pattern when an application provides explicit options—such as a secur
 
 Because the workflow cannot continue without this input, the interface must guide the user through a clear validation sequence that maintains focus and accessibility.
 
+<LivePreview componentName="patterns/experience-customization" exampleName="MandatoryConfigurations" />
+
+If the user selects **Finish** without choosing an option, an error message asks them to choose one:
+
 <Diagram
   src="/img/patterns/experience-customization/experience-customization-pattern-mandatory-configuratons.png"
   srcDark="/img/patterns/experience-customization/experience-customization-pattern-mandatory-configuratons-dark.png"
-  alt="Mandatory configuration step requiring a selection before continuing"
+  alt="Mandatory configuration step showing the error message Choose an option above the three access level cards"
   border
   background="secondary"
 />
-
-<LivePreview componentName="patterns/experience-customization" exampleName="MandatoryConfigurations" />
 
 ### Validation flow
 

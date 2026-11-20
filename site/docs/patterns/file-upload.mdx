@@ -17,7 +17,8 @@ data:
 
 <Diagram
   src="/img/patterns/file-upload/file-upload.png"
-  alt="File upload"
+  alt="A file drop zone above a list of two uploaded files and one file still uploading."
+  caption="File upload after the user has added three files."
   border
 />
 
@@ -60,12 +61,12 @@ These functional areas can be enhanced with text elements, such as headers and d
 
 ### Layout
 
-- Use the [`StackLayout`](/salt/components/layouts/stack-layout) to display the File drop zone, file upload items and text elements that make up file upload in a column.
-- Use the [`StackLayout`](/salt/components/layouts/flex-layout) with a gap of 1 to position the text elements.
+- Use the [`StackLayout`](/salt/components/layouts/stack-layout) with `gap={3}` (`--salt-spacing-300`) to display the File drop zone, file upload items and text elements that make up file upload in a column.
+- Use the [`StackLayout`](/salt/components/layouts/stack-layout) with a gap of 1 to position the text elements.
 
 <Diagram
   src="/img/patterns/file-upload/file-upload-layout.png"
-  alt="File upload with layout annotations."
+  alt="File upload layout: a heading and description above a file drop zone and a static list of files, in a column stack layout with gap 3."
   border
 />
 
