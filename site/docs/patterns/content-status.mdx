@@ -170,9 +170,21 @@ Use the label only content status when you:
 
 For example, use for displaying a loading status in a data grid or in a combo box list.
 
+Style the label like helper text: the Label text style, in the secondary color and italic. Use `Text` for it, not `FormFieldHelperText` or its class, which belong in a form field.
+
+```tsx
+<Text
+  styleAs="label"
+  color="secondary"
+  style={{ fontStyle: "var(--salt-typography-fontStyle-italic)" }}
+>
+  Loading…
+</Text>
+```
+
 <Diagram
   src="/img/patterns/content-status/content-status-label-only.png"
-  alt="Example showing a content status with a label only"
+  alt="A data grid whose last column shows Loading… in each cell, in the helper text style"
   border
   caption="Example showing a content status with a label only."
 />
