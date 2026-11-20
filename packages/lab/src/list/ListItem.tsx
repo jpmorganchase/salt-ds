@@ -13,6 +13,9 @@ const withBaseName = makePrefixer("saltListItem");
 // determine height of ListItem and monitor it for size changes (in
 // case of runtime density switch). This allows ListItem height to
 // be controlled purely through CSS.
+/**
+ * @deprecated since 1.0.0-alpha.109. It's internal and will be removed in a future release.
+ */
 export const ListItemProxy = forwardRef(function ListItemProxy(
   _props: HTMLAttributes<HTMLDivElement>,
   forwardedRef: ForwardedRef<HTMLDivElement>,
@@ -35,7 +38,6 @@ export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
       children,
       className: classNameProp,
       disabled,
-      tabIndex,
       item,
       itemHeight,
       itemTextHighlightPattern,

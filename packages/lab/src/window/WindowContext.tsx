@@ -5,12 +5,10 @@ import {
   useContext,
 } from "react";
 
-export type WindowProps = {
-  open?: boolean;
-} & ComponentPropsWithoutRef<"div">;
+export type WindowProps = ComponentPropsWithoutRef<"div">;
 
 export const Window = forwardRef<HTMLDivElement, WindowProps>(function Window(
-  { children, open, ...props },
+  { children, ...props },
   ref,
 ) {
   return (

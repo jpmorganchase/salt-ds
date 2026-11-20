@@ -15,6 +15,7 @@ import {
   useCollectionItems,
   useImperativeScrollingAPI,
 } from "../common-hooks";
+import { composeEventHandlers } from "./composeEventHandlers";
 import listCss from "./List.css";
 import { ListItem, ListItemProxy } from "./ListItem";
 import type { ListProps } from "./listTypes";
@@ -25,6 +26,19 @@ import { type Row, useVirtualization } from "./useVirtualization";
 const defaultEmptyMessage = "No data to display";
 
 const withBaseName = makePrefixer("saltList");
+
+export type VirtualizedListProps<
+  Item = string,
+  Selection extends SelectionStrategy = "default",
+> = Omit<
+  ListProps<Item, Selection>,
+  | "checkable"
+  | "focusVisible"
+  | "getItemHeight"
+  | "ListItem"
+  | "listHandlers"
+  | "ListPlaceholder"
+>;
 
 export const VirtualizedList = forwardRef(function List<
   Item,
@@ -42,7 +56,6 @@ export const VirtualizedList = forwardRef(function List<
     disableTypeToSelect,
     displayedItemCount = 10,
     emptyMessage,
-    getItemHeight,
     getItemId,
     height,
     highlightedIndex: highlightedIdxProp,
@@ -55,6 +68,14 @@ export const VirtualizedList = forwardRef(function List<
     maxWidth,
     minHeight,
     minWidth,
+    onBlur,
+    onClick,
+    onFocus,
+    onKeyDown,
+    onMouseDownCapture,
+    onMouseLeave,
+    onMouseMove,
+    onScroll: onScrollProp,
     onSelect,
     onSelectionChange,
     onHighlight,
@@ -71,7 +92,7 @@ export const VirtualizedList = forwardRef(function List<
     tabToSelect,
     width,
     ...htmlAttributes
-  }: ListProps<Item, Selection>,
+  }: VirtualizedListProps<Item, Selection>,
   forwardedRef?: ForwardedRef<HTMLDivElement>,
 ) {
   const targetWindow = useWindow();
@@ -171,7 +192,7 @@ export const VirtualizedList = forwardRef(function List<
       <ListItem
         aria-setsize={collectionHook.data.length}
         aria-posinset={pos}
-        className={clsx(className, {
+        className={clsx({
           saltHighlighted: index === highlightedIndex,
           saltFocusVisible: focusVisible === index,
         })}
@@ -181,6 +202,7 @@ export const VirtualizedList = forwardRef(function List<
         role="option"
         selected={isSelected<Item>(selected, item)}
         id={item.id}
+        itemTextHighlightPattern={itemTextHighlightPattern}
         style={{
           transform: `translate3d(0px, ${offset}px, 0px)`,
         }}
@@ -219,7 +241,7 @@ export const VirtualizedList = forwardRef(function List<
     if (data.length) {
       return renderItems(data);
     }
-    renderEmpty();
+    return renderEmpty();
   };
 
   const sizeStyles = {
@@ -236,11 +258,24 @@ export const VirtualizedList = forwardRef(function List<
       {...htmlAttributes}
       {...listHandlers}
       {...listControlProps}
+      onBlur={composeEventHandlers(listControlProps.onBlur, onBlur)}
+      onClick={composeEventHandlers(listHandlers.onClick, onClick)}
+      onFocus={composeEventHandlers(listControlProps.onFocus, onFocus)}
+      onKeyDown={composeEventHandlers(listControlProps.onKeyDown, onKeyDown)}
+      onMouseDownCapture={composeEventHandlers(
+        listControlProps.onMouseDownCapture,
+        onMouseDownCapture,
+      )}
+      onMouseLeave={composeEventHandlers(
+        listControlProps.onMouseLeave,
+        onMouseLeave,
+      )}
+      onMouseMove={composeEventHandlers(listHandlers.onMouseMove, onMouseMove)}
       className={clsx(withBaseName(), className, withBaseName("virtualized"))}
       id={`${id}`}
       ref={useForkRef<HTMLDivElement>(rootRef, forwardedRef)}
       role="listbox"
-      onScroll={onScroll}
+      onScroll={composeEventHandlers(onScroll, onScrollProp)}
       style={{ ...styleProp, ...sizeStyles }}
       tabIndex={listDisabled || disableFocus ? undefined : 0}
     >
@@ -254,7 +289,7 @@ export const VirtualizedList = forwardRef(function List<
     </div>
   );
 }) as <Item = string, Selection extends SelectionStrategy = "default">(
-  props: ListProps<Item, Selection> & {
+  props: VirtualizedListProps<Item, Selection> & {
     ref?: ForwardedRef<HTMLDivElement>;
   },
-) => ReactElement<ListProps<Item, Selection>>;
+) => ReactElement<VirtualizedListProps<Item, Selection>>;

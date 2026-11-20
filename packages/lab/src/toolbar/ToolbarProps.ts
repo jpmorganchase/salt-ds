@@ -1,10 +1,4 @@
-import type { TooltipProps } from "@salt-ds/core";
-import type {
-  ComponentType,
-  HTMLAttributes,
-  ReactElement,
-  ReactNode,
-} from "react";
+import type { HTMLAttributes, ReactElement, ReactNode } from "react";
 
 export type OrientationShape = "vertical" | "horizontal";
 
@@ -15,10 +9,6 @@ export interface ToolbarAlignmentProps {
 }
 
 export interface ToolbarProps extends HTMLAttributes<HTMLDivElement> {
-  /**
-   * Used by custom elements to render a custom tooltip
-   */
-  TooltipComponent?: ComponentType<Partial<TooltipProps>>;
   /**
    * The content of the component.
    */

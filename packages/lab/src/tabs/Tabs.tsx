@@ -15,7 +15,13 @@ import { useTabs } from "./useTabs";
 
 const withBaseName = makePrefixer("saltTabs");
 
-export type TabsProps = Omit<TabstripProps, "defaultSource">;
+export interface TabsProps
+  extends Omit<TabstripProps, "defaultSource" | "source"> {
+  /**
+   * The ID of the tab list. The root element's ID is `${id}-tabs`, and the IDs of the tabs and panels start with it. When not set, an ID is generated.
+   */
+  id?: string;
+}
 
 export const Tabs = forwardRef(function Tabs(
   {
@@ -29,13 +35,18 @@ export const Tabs = forwardRef(function Tabs(
     enableAddTab,
     enableCloseTab,
     enableRenameTab,
+    id: idProp,
+    keyBoardActivation,
     onActiveChange: onActiveChangeProp,
     onAddTab,
     onCloseTab,
     onEnterEditMode,
     onExitEditMode,
     onMoveTab,
+    orientation,
     overflowMenu,
+    promptForNewTabName,
+    showActivationIndicator,
     variant,
     ...htmlAttributes
   }: TabsProps,
@@ -62,6 +73,7 @@ export const Tabs = forwardRef(function Tabs(
     activeTabIndex: activeTabIndexProp,
     children,
     defaultActiveTabIndex,
+    id: idProp,
     onActiveChange: onActiveChangeProp,
   });
 
@@ -74,12 +86,16 @@ export const Tabs = forwardRef(function Tabs(
     enableAddTab,
     enableCloseTab,
     enableRenameTab,
+    keyBoardActivation,
     onAddTab,
     onCloseTab,
     onEnterEditMode,
     onExitEditMode,
     onMoveTab,
+    orientation,
     overflowMenu,
+    promptForNewTabName,
+    showActivationIndicator,
   };
 
   // TODO need to inject aria-controls

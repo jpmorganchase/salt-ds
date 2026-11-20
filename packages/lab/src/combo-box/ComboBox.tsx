@@ -24,10 +24,7 @@ import { useCombobox } from "./useCombobox";
 export interface ComboBoxProps<
   Item = string,
   Selection extends SelectionStrategy = "default",
-> extends Omit<
-      DropdownBaseProps,
-      "triggerComponent" | "onBlur" | "onChange" | "onFocus"
-    >,
+> extends Omit<DropdownBaseProps, "onBlur" | "onChange" | "onFocus">,
     Pick<InputProps, "onBlur" | "onChange" | "onFocus" | "onSelect">,
     Pick<
       ListProps<Item, Selection>,
@@ -63,6 +60,7 @@ export const ComboBox = forwardRef(function Combobox<
     defaultIsOpen,
     defaultValue,
     disabled,
+    fullWidth = true,
     onBlur,
     onFocus,
     onChange,
@@ -73,6 +71,7 @@ export const ComboBox = forwardRef(function Combobox<
     itemToString,
     onOpenChange: onOpenChangeProp,
     onSelectionChange,
+    openOnFocus = true,
     selectionStrategy,
     source,
     stringToItem,
@@ -151,11 +150,11 @@ export const ComboBox = forwardRef(function Combobox<
     <CollectionProvider<Item> collectionHook={collectionHook}>
       <DropdownBase
         {...props}
-        fullWidth
+        fullWidth={fullWidth}
         id={id}
         isOpen={isOpen}
         onOpenChange={onOpenChange}
-        openOnFocus
+        openOnFocus={openOnFocus}
         ref={forwardedRef}
         width={width}
       >

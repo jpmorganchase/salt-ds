@@ -11,6 +11,8 @@ export const MailLinkComponent = (props: ValueComponentProps) => {
       {value}
     </Link>
   ) : (
-    <Text maxRows={1}>{value}</Text>
+    <Text maxRows={1} {...restProps}>
+      {value}
+    </Text>
   );
 };

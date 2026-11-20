@@ -24,7 +24,7 @@ import {
 
 // biome-ignore lint/plugin/named-component-functions: exported as ElectronWindow on desktop.
 const Window = forwardRef<HTMLDivElement, WindowProps>(function ElectronWindow(
-  { className, children, id = "dialog", open = true, style = {}, ...rest },
+  { className, children, id = "dialog", style = {}, ...rest },
   forwardedRef,
 ): ReactElement | null {
   const { top, left, position, ...styleRest } = style;

@@ -38,6 +38,10 @@ export interface DropdownProps<
     ListProps<Item, Selection>,
     "ListItem" | "itemToString" | "source"
   >;
+  /**
+   * The element that opens the Dropdown, used instead of the default `DropdownButton`.
+   */
+  triggerComponent?: ReactElement;
 }
 
 export const Dropdown = forwardRef(function Dropdown<

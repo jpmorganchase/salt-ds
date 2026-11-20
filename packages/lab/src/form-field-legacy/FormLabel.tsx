@@ -32,10 +32,6 @@ export interface FormLabelProps
    */
   NecessityIndicator?: ElementType<NecessityIndicatorOptions>;
   /**
-   * Whether the form field is readOnly.
-   */
-  readOnly?: boolean;
-  /**
    * Props used to configure the StatusIndicator component if hasStatusIndicator is true
    */
   StatusIndicatorProps?: Partial<StatusIndicatorProps>;
@@ -60,7 +56,6 @@ export const FormLabel = ({
   necessityText,
   className,
   disabled,
-  readOnly,
   tooltipText,
   ...restProps
 }: FormLabelProps) => {

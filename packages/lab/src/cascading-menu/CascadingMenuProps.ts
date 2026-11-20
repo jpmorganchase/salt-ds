@@ -2,7 +2,6 @@ import type { UseFloatingUIProps } from "@salt-ds/core";
 import type { IconProps } from "@salt-ds/icons";
 import type {
   ComponentType,
-  HTMLAttributes,
   KeyboardEvent,
   MouseEvent,
   ReactNode,
@@ -25,7 +24,7 @@ export interface MenuDescriptor {
   icon?: ComponentType<IconProps>;
 }
 
-export interface CascadingMenuProps extends HTMLAttributes<HTMLElement> {
+export interface CascadingMenuProps {
   /**
    * Cascading Menu reference element.
    * Needs to be able to hold a ref. If you are passing a custom component remember to spread the props
@@ -34,6 +33,10 @@ export interface CascadingMenuProps extends HTMLAttributes<HTMLElement> {
    * please see {menuTriggerRef}
    */
   children?: ReactNode;
+  /**
+   * The class name applied to each menu.
+   */
+  className?: string;
   /**
    * The document the Cascading Menu will use to listen for click away events.
    * Useful when rendering the Cascading Menu in other windows.

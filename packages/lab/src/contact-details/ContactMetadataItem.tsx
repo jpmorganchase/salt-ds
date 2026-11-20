@@ -1,5 +1,6 @@
 import { makePrefixer, Text } from "@salt-ds/core";
 import type { IconProps } from "@salt-ds/icons";
+import { clsx } from "clsx";
 import { type ComponentType, forwardRef, type HTMLAttributes } from "react";
 import { MailLinkComponent } from "./MailLinkComponent";
 import type { ValueComponentProps } from "./types";
@@ -18,9 +19,16 @@ export const ContactMetadataItem = forwardRef<
   HTMLDivElement,
   ContactMetadataItemProps
 >(function ContactMetadataItem(props, ref) {
-  const { label, value, icon: Icon, ValueComponent, ...restProps } = props;
+  const {
+    label,
+    value,
+    icon: Icon,
+    ValueComponent,
+    className,
+    ...restProps
+  } = props;
   return (
-    <div {...restProps} ref={ref} className={withBaseName()}>
+    <div {...restProps} ref={ref} className={clsx(withBaseName(), className)}>
       {!Icon ? (
         <Text maxRows={1} className={withBaseName("label")} variant="secondary">
           {label}

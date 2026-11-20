@@ -14,6 +14,7 @@ import {
   Children,
   cloneElement,
   createElement,
+  type FocusEvent,
   type ForwardedRef,
   forwardRef,
   isValidElement,
@@ -78,17 +79,20 @@ export const Tabstrip = forwardRef(function Tabstrip(
     keyBoardActivation = "manual",
     onAddTab,
     onActiveChange,
+    onBlur,
     onCloseTab,
     onEnterEditMode,
     onExitEditMode,
+    onFocus,
     onMouseDown,
+    onMouseDownCapture,
+    onMouseLeave,
     onMoveTab,
     orientation = "horizontal",
     overflowMenu: overflowMenuProp = true,
     promptForNewTabName = true,
     showActivationIndicator = true,
     source,
-    title,
     ...htmlAttributes
   }: TabstripProps,
   forwardedRef: ForwardedRef<FocusAPI>,
@@ -286,6 +290,24 @@ export const Tabstrip = forwardRef(function Tabstrip(
     },
     [onMouseDown, tabstripHookMouseDown],
   );
+
+  const { containerProps } = tabstripHook;
+  const handleBlur = (event: FocusEvent<HTMLDivElement>) => {
+    containerProps.onBlur(event);
+    onBlur?.(event);
+  };
+  const handleFocus = (event: FocusEvent<HTMLDivElement>) => {
+    containerProps.onFocus(event);
+    onFocus?.(event);
+  };
+  const handleMouseDownCapture = (event: MouseEvent<HTMLDivElement>) => {
+    containerProps.onMouseDownCapture(event);
+    onMouseDownCapture?.(event);
+  };
+  const handleMouseLeave = (event: MouseEvent<HTMLDivElement>) => {
+    containerProps.onMouseLeave(event);
+    onMouseLeave?.(event);
+  };
 
   // shouldn't we use ref for this ?
   useIsomorphicLayoutEffect(() => {
@@ -485,9 +507,12 @@ export const Tabstrip = forwardRef(function Tabstrip(
   return (
     <div
       {...htmlAttributes}
-      {...tabstripHook.containerProps}
       className={className}
       id={tabstripId}
+      onBlur={handleBlur}
+      onFocus={handleFocus}
+      onMouseDownCapture={handleMouseDownCapture}
+      onMouseLeave={handleMouseLeave}
       ref={root}
       role="tablist"
     >

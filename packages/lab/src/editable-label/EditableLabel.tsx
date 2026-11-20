@@ -29,7 +29,6 @@ export interface EditableLabelProps {
     editedLabel: string | undefined,
     allowDeactivation?: boolean,
   ) => void;
-  defaultIsEditing?: boolean;
   value?: string;
 }
 

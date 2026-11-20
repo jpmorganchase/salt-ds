@@ -10,7 +10,7 @@ export default {
 export const Basic: StoryFn<typeof ButtonBar> = () => {
   return (
     <div style={{ width: "50vw" }}>
-      <ButtonBar data-testid="button-bar" stackAtBreakpoint={0}>
+      <ButtonBar data-testid="button-bar">
         <OrderedButton variant="cta">Save</OrderedButton>
         <OrderedButton>Cancel</OrderedButton>
       </ButtonBar>
@@ -21,7 +21,7 @@ export const Basic: StoryFn<typeof ButtonBar> = () => {
 export const WithSecondaryActions: StoryFn<typeof ButtonBar> = () => {
   return (
     <div style={{ width: "50vw" }}>
-      <ButtonBar data-testid="button-bar" stackAtBreakpoint={0}>
+      <ButtonBar data-testid="button-bar">
         <OrderedButton variant="cta">Save</OrderedButton>
         <OrderedButton>Cancel</OrderedButton>
         <OrderedButton variant="secondary">
@@ -37,13 +37,10 @@ export const WithSecondaryActions: StoryFn<typeof ButtonBar> = () => {
   );
 };
 
-/*
- * We pass the stackAtBreakpoint prop of 0 to disable the stacking behaviour for the purposes of the example.
- */
 export const FullPage: StoryFn<typeof ButtonBar> = () => {
   return (
     <div style={{ width: "50vw" }}>
-      <ButtonBar alignLeft data-testid="button-bar" stackAtBreakpoint={0}>
+      <ButtonBar alignLeft data-testid="button-bar">
         <OrderedButton variant="cta">Continue</OrderedButton>
         <OrderedButton>Previous</OrderedButton>
         <OrderedButton variant="secondary">Upload File</OrderedButton>
@@ -55,7 +52,7 @@ export const FullPage: StoryFn<typeof ButtonBar> = () => {
 export const DestructiveActions: StoryFn<typeof ButtonBar> = () => {
   return (
     <div style={{ width: "50vw" }}>
-      <ButtonBar data-testid="button-bar" stackAtBreakpoint={0}>
+      <ButtonBar data-testid="button-bar">
         <OrderedButton variant="cta">Save Changes</OrderedButton>
         <OrderedButton>Cancel</OrderedButton>
         <OrderedButton variant="secondary">Delete</OrderedButton>
@@ -67,7 +64,7 @@ export const DestructiveActions: StoryFn<typeof ButtonBar> = () => {
 export const Stacked: StoryFn<typeof ButtonBar> = () => {
   return (
     <div style={{ width: 320 }}>
-      <ButtonBar data-testid="button-bar" stackAtBreakpoint="xl">
+      <ButtonBar data-testid="button-bar">
         <OrderedButton variant="cta">CTA</OrderedButton>
         <OrderedButton>Primary</OrderedButton>
         <OrderedButton disabled variant="secondary">

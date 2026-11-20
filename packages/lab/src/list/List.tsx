@@ -21,6 +21,7 @@ import {
   useCollectionItems,
   useImperativeScrollingAPI,
 } from "../common-hooks";
+import { composeEventHandlers } from "./composeEventHandlers";
 import listCss from "./List.css";
 import { ListItem as DefaultListItem, ListItemProxy } from "./ListItem";
 import type { ListItemProps, ListProps } from "./listTypes";
@@ -64,6 +65,13 @@ export const List = forwardRef(function List<
     maxWidth,
     minHeight,
     minWidth,
+    onBlur,
+    onClick,
+    onFocus,
+    onKeyDown,
+    onMouseDownCapture,
+    onMouseLeave,
+    onMouseMove,
     onSelect,
     onSelectionChange,
     onHighlight,
@@ -297,7 +305,7 @@ export const List = forwardRef(function List<
     if (collectionHook.data.length) {
       return renderCollectionItems(collectionHook.data);
     }
-    renderEmpty();
+    return renderEmpty();
   };
 
   const contentHeight = "auto";
@@ -321,6 +329,19 @@ export const List = forwardRef(function List<
       {...htmlAttributes}
       {...listHandlers}
       {...listControlProps}
+      onBlur={composeEventHandlers(listControlProps.onBlur, onBlur)}
+      onClick={composeEventHandlers(listHandlers.onClick, onClick)}
+      onFocus={composeEventHandlers(listControlProps.onFocus, onFocus)}
+      onKeyDown={composeEventHandlers(listControlProps.onKeyDown, onKeyDown)}
+      onMouseDownCapture={composeEventHandlers(
+        listControlProps.onMouseDownCapture,
+        onMouseDownCapture,
+      )}
+      onMouseLeave={composeEventHandlers(
+        listControlProps.onMouseLeave,
+        onMouseLeave,
+      )}
+      onMouseMove={composeEventHandlers(listHandlers.onMouseMove, onMouseMove)}
       className={clsx(withBaseName(), className, {
         // TODO low-emphasis
         [withBaseName("borderless")]: borderless,
