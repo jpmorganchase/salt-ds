@@ -32,15 +32,8 @@ export function guidancePages(manifests) {
   );
 }
 
-/**
- * The block's instructions. `rootBase` is what the index's `root` is relative
- * to, `guidance` uses the same paths, and `check` runs from that base.
- */
-export function instructions({
-  rootBase = "this file",
-  check,
-  guidance = {},
-} = {}) {
+/** Guide paths and the check command are relative to the instructions file. */
+export function instructions({ check, guidance = {} } = {}) {
   return [
     "This project uses the Salt Design System (`@salt-ds/*` packages), whose APIs may differ from your training data.",
     "For any Salt task, prefer retrieval-led reasoning over pre-training-led reasoning: before writing or changing UI that uses Salt, read the relevant pages from the index below.",
@@ -58,7 +51,7 @@ export function instructions({
         ]
       : []),
     check
-      ? `Before you finish, run \`${check}\` from ${rootBase === "this file" ? "this file's folder" : rootBase} and fix what it reports: it checks the Salt tokens, deprecated props and component parts in the files you changed against the installed docs.`
+      ? `Before you finish, run \`${check}\` from this file's folder. Fix errors and review advisory warnings against the installed guidance and intended behavior before changing code.`
       : "Before you finish, check each Salt prop against its component page's props table and avoid deprecated props.",
     "Under each props table, pages list the attributes a component also accepts and the Salt types the table names; use the installed type declarations for anything else, such as whether attributes belong on the wrapper or an inputProps slot.",
     ...(check
@@ -66,7 +59,7 @@ export function instructions({
       : [
           "Check each `--salt-*` token against the installed `@salt-ds/theme` references for its intended use and availability in the selected theme.",
         ]),
-    `${Object.keys(guidance).length > 0 ? "Guide and index paths" : "Index paths"} are relative to \`root\`, which is relative to ${rootBase}.`,
+    `${Object.keys(guidance).length > 0 ? "Guide and index paths" : "Index paths"} are relative to \`root\`, which is relative to this file.`,
     "Names in brackets after page names are other names for the same component.",
   ].join(" ");
 }
@@ -82,13 +75,13 @@ export function checkCommand({ base, project }) {
   return `npx @salt-ds/cli check${relative === "." ? "" : ` --project ${argument}`} --changed`;
 }
 
-export function agentsBlock({ root = ".", lines, rootBase, check, guidance }) {
+export function agentsBlock({ root = ".", lines, check, guidance }) {
   return [
     BEGIN_MARKER,
     "",
     "## Salt Design System",
     "",
-    instructions({ rootBase, check, guidance }),
+    instructions({ check, guidance }),
     "",
     [`[Salt docs index]|root: ${root}`, ...lines].join("\n"),
     "",
@@ -159,12 +152,12 @@ application and does not install or upgrade Salt packages.
 Options:
   --project <path>  Application whose packages to index (default: --dir or cwd)
   --dir <path>      Folder holding AGENTS.md (default: project folder)
-  --copilot         Also add the index to .github/copilot-instructions.md in
-                    the repository holding --dir, for GitHub Copilot
+  --copilot         Add a pointer to the application's AGENTS.md in
+                    .github/copilot-instructions.md
   --check           Change nothing; exit with 1 if any file needs updating
   --no-claude       Leave CLAUDE.md alone
-  --script <name>   Run "salt-ds check" at the end of this package.json script,
-                    such as typecheck or lint
+  --script <name>   Append "salt-ds check" to an existing package.json script.
+                    Use check:salt to create a dedicated script.
   --help            Show this help`;
 
 function readJson(file) {
@@ -289,23 +282,52 @@ export function discoverManifests(project, outputDir = project) {
 
 export function upsertBlock(content, block) {
   const eol = content.includes("\r\n") ? "\r\n" : "\n";
-  const normalized = block.replace(/\n/g, eol);
   const start = content.indexOf(BEGIN_MARKER);
   const end = start === -1 ? -1 : content.indexOf(END_MARKER, start);
-  if (start !== -1 && end !== -1) {
+  if (end === -1 && (start !== -1 || content.includes(END_MARKER))) {
+    throw new Error(
+      `Found an incomplete Salt block. Restore both ${BEGIN_MARKER} and ${END_MARKER}, or remove them, then run again.`,
+    );
+  }
+  const previous = end === -1 ? "" : content.slice(start, end);
+  const next = typeof block === "function" ? block(previous) : block;
+  const normalized = next.replace(/\n/g, eol);
+  if (end !== -1) {
     return (
       content.slice(0, start) +
       normalized +
       content.slice(end + END_MARKER.length)
     );
   }
-  if (start !== -1 || content.includes(END_MARKER)) {
-    throw new Error(
-      `Found an incomplete Salt block. Restore both ${BEGIN_MARKER} and ${END_MARKER}, or remove them, then run again.`,
-    );
-  }
   if (content.trim() === "") return `${normalized}${eol}`;
   return `${content.trimEnd()}${eol}${eol}${normalized}${eol}`;
+}
+
+function copilotBlock(previous, { application, instructionsFile }) {
+  // Use quoted paths so spaces and punctuation don't affect route matching.
+  const quote = (value) => JSON.stringify(value).replaceAll("<", "\\u003c");
+  const prefix = `- ${quote(application)}: `;
+  const destination = quote(instructionsFile);
+  const routes = previous
+    .split(/\r?\n/)
+    .filter((line) => line.startsWith('- "') && !line.startsWith(prefix));
+  if (routes.some((line) => line.endsWith(`: ${destination}`))) {
+    throw new Error(
+      "Use a separate --dir for each Salt application so each AGENTS.md can index its own installed docs.",
+    );
+  }
+  routes.push(`${prefix}${destination}`);
+  return [
+    BEGIN_MARKER,
+    "",
+    "## Salt Design System applications",
+    "",
+    "For Salt UI work, match the files you're editing to the most specific application folder below. Read its AGENTS.md for the Salt docs index and check command. All paths below are relative to the repository root. For work spanning applications, follow each application's own instructions.",
+    "",
+    ...routes.sort(compare),
+    "",
+    END_MARKER,
+  ].join("\n");
 }
 
 export function withClaudeImport(content) {
@@ -428,30 +450,31 @@ export function run(args, { log = console.log, cwd = process.cwd() } = {}) {
     });
   }
   if (options.copilot) {
-    // Copilot reads one instructions file at the repository root and may not
-    // tell the model where it is, so this index is relative to that root.
     const repository = repositoryRoot(dir);
-    const repositoryDir = realpathSync(repository);
-    const copilotManifests = manifests.map((manifest) => ({
-      ...manifest,
-      docsPath: toPosix(path.relative(repositoryDir, manifest.docsDir)),
-    }));
-    const copilotBlock = agentsBlock({
-      root: ".",
-      rootBase: "the repository root",
-      lines: indexLines(copilotManifests),
-      guidance: guidancePages(copilotManifests),
-      check: coreCheck({
-        base: repository,
-        project,
-        manifests: copilotManifests,
-      }),
-    });
+    const route = {
+      application:
+        toPosix(path.relative(repository, realpathSync(project))) || ".",
+      instructionsFile: toPosix(
+        path.relative(repository, path.join(realpathSync(dir), "AGENTS.md")),
+      ),
+    };
     const filePath = path.join(repository, COPILOT_INSTRUCTIONS);
     updates.push({
       file: shown(filePath),
       filePath,
-      update: (content) => upsertBlock(content, copilotBlock),
+      update: (content) => {
+        if (
+          path.basename(realPath(filePath)) === "AGENTS.md" ||
+          sameFile(filePath, path.join(repository, "AGENTS.md"))
+        ) {
+          throw new Error(
+            "Use a separate Copilot instructions file to point to another application's AGENTS.md.",
+          );
+        }
+        return upsertBlock(content, (previous) =>
+          copilotBlock(previous, route),
+        );
+      },
     });
   }
   const isAgentsFile = (filePath) =>

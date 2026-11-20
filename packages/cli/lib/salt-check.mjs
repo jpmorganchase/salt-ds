@@ -569,7 +569,7 @@ function checkStyleLayout({ text, blanked, file, problems, page }) {
       severity: "warning",
       rule: "css-grid",
       message:
-        "A CSS grid lays out what Salt's GridLayout does, with Salt's spacing and columns for each breakpoint. Use GridLayout or another Salt layout instead",
+        "Consider GridLayout if its spacing and responsive columns fit this CSS grid",
       page: page("components/layouts/grid-layout.md", "@salt-ds/core"),
     });
   }
@@ -580,7 +580,7 @@ function checkStyleLayout({ text, blanked, file, problems, page }) {
       severity: "warning",
       rule: "media-query",
       message:
-        "A media query on width repeats Salt's breakpoints. Use a Salt layout's responsive props, useResponsiveProp or useBreakpoint instead",
+        "If this width query matches a Salt breakpoint, consider responsive props, useResponsiveProp or useBreakpoint",
       page: page("foundations/responsiveness/breakpoints.md"),
     });
   }

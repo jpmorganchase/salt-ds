@@ -8,6 +8,7 @@ import { run as init } from "./agents-md.mjs";
 import { run as check } from "./salt-check.mjs";
 
 const CHECK_COMMAND = "salt-ds check --script-project";
+const SALT_CHECK_SCRIPT = "check:salt";
 // A script already runs the check through the bin, npx or node.
 const RUNS_CHECK = /\bsalt-ds(?:\.mjs)? check\b|@salt-ds\/cli(?:@\S+)? check\b/;
 // The exact suffix older init versions appended. Explicit paths and options
@@ -18,7 +19,7 @@ const USAGE = `Usage: salt-ds <command> [options]
 
 Commands:
   init    Add an index of your installed Salt docs to AGENTS.md, import it from
-          CLAUDE.md, and with --copilot add it to Copilot's instructions
+          CLAUDE.md, and with --copilot link it from Copilot's instructions
   check   Check Salt tokens, props and component parts against the installed docs
 
 Both use the Salt packages installed for the application: the current folder,
@@ -111,7 +112,7 @@ function runInit(args, { log, cwd }) {
   const { value: scriptName, rest } = takeOption(args, "script");
   const help = rest.includes("--help") || rest.includes("-h");
   // The application whose package.json to update, as init selects it, read
-  // before init writes anything so a missing or broken one changes nothing.
+  // before init writes anything so an invalid script target changes nothing.
   const { value: project = takeOption(rest, "dir").value ?? "." } = takeOption(
     rest,
     "project",
@@ -120,6 +121,17 @@ function runInit(args, { log, cwd }) {
     scriptName && !help
       ? readScriptTarget(path.resolve(cwd, project))
       : undefined;
+  if (target && scriptName !== SALT_CHECK_SCRIPT) {
+    const scripts = target.manifest.scripts ?? {};
+    if (
+      typeof scripts[scriptName] !== "string" ||
+      !scripts[scriptName].trim()
+    ) {
+      throw new UsageError(
+        `No existing ${scriptName} script in ${target.file}. Use --script ${SALT_CHECK_SCRIPT} for a dedicated Salt check.`,
+      );
+    }
+  }
   let code;
   try {
     code = init(rest, { log, cwd });
@@ -139,7 +151,7 @@ function runInit(args, { log, cwd }) {
   }
   if (!checkOnly) {
     log(
-      "Add --script typecheck (or lint) to run salt-ds check whenever that script runs, in CI or by an agent.",
+      "Use --script check:salt to create a dedicated check, or pass the name of an existing script to append the Salt check.",
     );
   }
   return code;

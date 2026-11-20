@@ -126,11 +126,11 @@ describe("salt-ds init", () => {
     );
     expect(log).toContain("Created AGENTS.md.");
     expect(log.at(-1)).toBe(
-      "Add --script typecheck (or lint) to run salt-ds check whenever that script runs, in CI or by an agent.",
+      "Use --script check:salt to create a dedicated check, or pass the name of an existing script to append the Salt check.",
     );
   });
 
-  it("adds salt-ds check to a script once, and creates the script when missing", async () => {
+  it("appends the Salt check once and can create a dedicated check:salt script", async () => {
     const root = project();
     let result = await salt(root, [
       "init",
@@ -163,12 +163,38 @@ describe("salt-ds init", () => {
       "tsc --noEmit && salt-ds check --script-project",
     );
 
-    result = await salt(root, ["init", "--project", root, "--script", "lint"]);
+    result = await salt(root, [
+      "init",
+      "--project",
+      root,
+      "--script",
+      "check:salt",
+    ]);
+    expect(result.code).toBe(0);
     expect(readManifest(root).scripts).toEqual({
       typecheck: "tsc --noEmit && salt-ds check --script-project",
-      lint: "salt-ds check --script-project",
+      "check:salt": "salt-ds check --script-project",
     });
   });
+
+  it.each([{ flags: [] }, { flags: ["--check"] }])(
+    "rejects a missing typecheck script with flags $flags without writing files",
+    async ({ flags }) => {
+      const root = project({ manifest: { name: "app" } });
+      const { code, log } = await salt(root, [
+        "init",
+        "--script",
+        "typecheck",
+        ...flags,
+      ]);
+      expect(code).toBe(2);
+      expect(log[0]).toContain("No existing typecheck script");
+      expect(log[0]).toContain("--script check:salt");
+      expect(readManifest(root).scripts).toBeUndefined();
+      expect(existsSync(path.join(root, "AGENTS.md"))).toBe(false);
+      expect(existsSync(path.join(root, "CLAUDE.md"))).toBe(false);
+    },
+  );
 
   it("keeps the application scope after a package script changes directory, and preserves failures", async () => {
     const root = project({
@@ -286,10 +312,10 @@ describe("salt-ds init", () => {
       root,
       "--check",
       "--script",
-      "lint",
+      "check:salt",
     ]);
     expect(code).toBe(1);
-    expect(log).toContain("The lint script needs to run salt-ds check.");
+    expect(log).toContain("The check:salt script needs to run salt-ds check.");
     expect(readManifest(root).scripts).toBeUndefined();
   });
 
@@ -305,12 +331,14 @@ describe("salt-ds init", () => {
       root,
       "--no-claude",
       "--script",
-      "lint",
+      "check:salt",
     ]);
     expect(readFileSync(path.join(root, "package.json"), "utf8")).toBe(
-      '{\r\n\t"name": "app",\r\n\t"devDependencies": {\r\n\t\t"@salt-ds/cli": "^0.1.0"\r\n\t},\r\n\t"scripts": {\r\n\t\t"lint": "salt-ds check --script-project"\r\n\t}\r\n}\r\n',
+      '{\r\n\t"name": "app",\r\n\t"devDependencies": {\r\n\t\t"@salt-ds/cli": "^0.1.0"\r\n\t},\r\n\t"scripts": {\r\n\t\t"check:salt": "salt-ds check --script-project"\r\n\t}\r\n}\r\n',
     );
-    expect(log.at(-1)).toBe("Added the lint script to run salt-ds check.");
+    expect(log.at(-1)).toBe(
+      "Added the check:salt script to run salt-ds check.",
+    );
   });
 
   it("doesn't report a bug in init as a usage error", async () => {

@@ -20,7 +20,7 @@ is usually the repository root:
 
 ```sh
 npm install --save-dev @salt-ds/cli
-npx salt-ds init --script typecheck
+npx salt-ds init
 ```
 
 `salt-ds init` adds a Salt section to `AGENTS.md` that tells agents to read the
@@ -33,9 +33,12 @@ makes `CLAUDE.md` import `AGENTS.md` for Claude Code, and keeps your other
 instructions. Instruction-file support depends on the agent, client and mode;
 see [Agent compatibility](#agent-compatibility).
 
-`--script typecheck` also makes your `typecheck` script run that check, so it
-runs in CI and for agents that run your scripts without loading `AGENTS.md`. Use
-`--script lint` for a lint script instead. The check reports deprecated props
+To run the check in CI, initialize with `--script check:salt` and add
+`npm run check:salt` to your CI workflow. To append the Salt check to an
+existing script, pass its name, for example `--script typecheck` or
+`--script lint`. The original command runs first.
+
+The check reports deprecated props
 and deprecated or unknown tokens as errors, which make the script fail with exit
 code 1, so fix any your code already uses before you add it to a script that
 gates your builds. Raw color foundations, color palette tokens, missing parts,
@@ -56,12 +59,10 @@ package versions; each page states the version it documents.
   for setup. Setup and `--check` also fail for malformed documentation
   manifests, mismatched package versions or missing indexed pages.
 - Add `--no-claude` to leave `CLAUDE.md` alone.
-- Add `--copilot` to also add the section to `.github/copilot-instructions.md`
-  for GitHub Copilot, in the Git repository that holds the instructions folder,
-  keeping your other Copilot instructions. Its index paths are relative to the
-  repository root. Copilot reads one such file per repository, so in a
-  repository with several applications it indexes the application you last ran
-  `salt-ds init` for.
+- Add `--copilot` to point GitHub Copilot to the application's `AGENTS.md`
+  from the repository's `.github/copilot-instructions.md`. Each application
+  you initialize gets its own entry. The file directs Copilot to the entry for
+  the application it's editing. Your other Copilot instructions are preserved.
 - Add `--project <path>` to select another application. `salt-ds init` resolves
   each package from that application's `node_modules` hierarchy, so packages can
   be installed at different levels of a monorepo.
@@ -71,15 +72,14 @@ package versions; each page states the version it documents.
 For example, from a monorepo root:
 
 ```sh
-npx salt-ds init --project apps/web --script typecheck
+npx salt-ds init --project apps/web
 ```
 
-This writes the instructions under `apps/web` and updates the `typecheck` script
-in `apps/web/package.json`, using the Salt packages that `apps/web` resolves,
-wherever they're installed. Add `--dir .` only when you want the selected
-application's index in the repository-root instructions. For applications using
-different Salt versions, keep separate application-scoped instructions and use
-the root instructions to direct agents to the appropriate application.
+This writes the instructions under `apps/web` using the Salt packages that
+`apps/web` resolves, wherever they're installed. Give each application its own
+instructions folder so its index matches its installed packages. With
+`--copilot`, rerun setup for each application when upgrading from a CLI that
+put one application's index in the repository-wide instructions.
 
 Agents read the documentation from `node_modules`, which Yarn Plug'n'Play
 installs don't create. To use it with Yarn, set `nodeLinker: node-modules` in
@@ -115,12 +115,12 @@ such as spacing, can still be used as their guidance documents.
 
 Check your client's documentation for the instruction format and scope it loads:
 
-| Agent          | Setup                                                                                                                                                                                                                                                                                                                                                                                                    |
-| -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Codex          | Reads `AGENTS.md`; its directory determines the scope. See [Codex instructions](https://developers.openai.com/codex/guides/agents-md).                                                                                                                                                                                                                                                                   |
-| Cursor         | Supports `AGENTS.md`; check the installed version's [rules documentation](https://cursor.com/docs/context/rules) for scope and settings.                                                                                                                                                                                                                                                                 |
-| Claude Code    | The generated `CLAUDE.md` imports `AGENTS.md`. See [Claude Code memory](https://code.claude.com/docs/en/memory) for loading and import behavior.                                                                                                                                                                                                                                                         |
-| GitHub Copilot | Add `--copilot` for clients that read `.github/copilot-instructions.md`. Formats vary by client and feature, so check the [custom instructions support matrix](https://docs.github.com/en/copilot/reference/custom-instructions-support), including the JetBrains entry if you use IntelliJ or WebStorm. A client that reads `AGENTS.md` doesn't need `--copilot`, and with it may load the index twice. |
+| Agent          | Setup                                                                                                                                                                                                                                                                                                                                          |
+| -------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Codex          | Reads `AGENTS.md`; its directory determines the scope. See [Codex instructions](https://developers.openai.com/codex/guides/agents-md).                                                                                                                                                                                                         |
+| Cursor         | Supports `AGENTS.md`; check the installed version's [rules documentation](https://cursor.com/docs/context/rules) for scope and settings.                                                                                                                                                                                                       |
+| Claude Code    | The generated `CLAUDE.md` imports `AGENTS.md`. See [Claude Code memory](https://code.claude.com/docs/en/memory) for loading and import behavior.                                                                                                                                                                                               |
+| GitHub Copilot | Add `--copilot` to point clients that read `.github/copilot-instructions.md` to the application's `AGENTS.md`. Formats vary by client and feature, so check the [custom instructions support matrix](https://docs.github.com/en/copilot/reference/custom-instructions-support), including the JetBrains entry if you use IntelliJ or WebStorm. |
 
 Custom instructions do not apply to every feature, such as inline code
 suggestions.
@@ -152,7 +152,8 @@ can follow the links into the Salt packages you have installed.
 
 ## Check what agents write
 
-The section in `AGENTS.md` tells agents to run a check before they finish. It
+The section in `AGENTS.md` asks agents to run the check, fix errors, and review
+advisory warnings against the intended behavior before changing code. The check
 compares the files they changed with the docs of the Salt packages you installed,
 and reports deprecated or misspelled design tokens with the token to use
 instead when one is recorded, deprecated props, and components missing a part that Salt's examples

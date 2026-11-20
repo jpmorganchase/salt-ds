@@ -717,9 +717,9 @@ export const App = ({ el }: { el: HTMLElement }) => {
     const { code, log } = check(project({ "src/app.css": css }));
     expect(code).toBe(0);
     const grid = (line, column) =>
-      `src/app.css:${line}:${column}: warning css-grid: A CSS grid lays out what Salt's GridLayout does, with Salt's spacing and columns for each breakpoint. Use GridLayout or another Salt layout instead. See node_modules/@salt-ds/core/docs/components/layouts/grid-layout.md.`;
+      `src/app.css:${line}:${column}: warning css-grid: Consider GridLayout if its spacing and responsive columns fit this CSS grid. See node_modules/@salt-ds/core/docs/components/layouts/grid-layout.md.`;
     const media = (line) =>
-      `src/app.css:${line}:1: warning media-query: A media query on width repeats Salt's breakpoints. Use a Salt layout's responsive props, useResponsiveProp or useBreakpoint instead. See node_modules/@salt-ds/theme/docs/foundations/responsiveness/breakpoints.md.`;
+      `src/app.css:${line}:1: warning media-query: If this width query matches a Salt breakpoint, consider responsive props, useResponsiveProp or useBreakpoint. See node_modules/@salt-ds/theme/docs/foundations/responsiveness/breakpoints.md.`;
     expect(log).toEqual([
       grid(3, 3),
       grid(6, 8),

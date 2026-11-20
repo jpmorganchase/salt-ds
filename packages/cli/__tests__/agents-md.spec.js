@@ -76,6 +76,14 @@ function changeManifest(packageDir, update) {
   writeFileSync(file, JSON.stringify(manifest));
 }
 
+function withCheck(packageDir) {
+  write(
+    packageDir,
+    "docs/salt-check.json",
+    JSON.stringify({ schemaVersion: 1 }),
+  );
+}
+
 const guidePages = [
   {
     path: "getting-started/choosing-the-right-primitive.md",
@@ -287,19 +295,16 @@ describe("task guidance", () => {
     expect(readFileSync(path.join(root, guide), "utf8")).toBe(
       guidePages[2].title,
     );
-    for (const [content, prefix] of [
-      [agents, "../"],
-      [copilot, ""],
-    ]) {
-      expect(content).toContain(
-        `For an accessibility repair or a failing accessibility check, also read \`${prefix}${guide}\` and the affected components' accessibility guidance.`,
-      );
-      // The other guides are in the index, without a route of their own.
-      for (const page of guidePages.slice(0, 2)) {
-        expect(content).not.toContain(`docs/${page.path}`);
-      }
-      expect(content).toContain("Guide and index paths are relative to");
+    expect(agents).toContain(
+      `For an accessibility repair or a failing accessibility check, also read \`../${guide}\` and the affected components' accessibility guidance.`,
+    );
+    // The other guides are in the index, without a route of their own.
+    for (const page of guidePages.slice(0, 2)) {
+      expect(agents).not.toContain(`docs/${page.path}`);
     }
+    expect(agents).toContain("Guide and index paths are relative to");
+    expect(copilot).toContain('- "apps/web": "instructions/AGENTS.md"');
+    expect(copilot).not.toContain(guide);
     expect(run([...args, "--check"], quiet)).toBe(0);
     expect(run(args, quiet)).toBe(0);
     expect(readFileSync(path.join(output, "AGENTS.md"), "utf8")).toBe(agents);
@@ -663,13 +668,6 @@ describe("instruction updates", () => {
 });
 
 describe("salt-check instruction", () => {
-  const withCheck = (packageDir) =>
-    write(
-      packageDir,
-      "docs/salt-check.json",
-      JSON.stringify({ schemaVersion: 1 }),
-    );
-
   it("finds check data through a symlinked instructions folder at another depth", () => {
     const root = project();
     const app = path.join(root, "app");
@@ -692,7 +690,7 @@ describe("salt-check instruction", () => {
     run(["--project", root], quiet);
     const content = readFileSync(path.join(root, "AGENTS.md"), "utf8");
     expect(content).toContain(
-      "Before you finish, run `npx @salt-ds/cli check --changed` from this file's folder and fix what it reports",
+      "Before you finish, run `npx @salt-ds/cli check --changed` from this file's folder. Fix errors and review advisory warnings against the installed guidance and intended behavior before changing code.",
     );
     expect(content).not.toContain("check each Salt prop against");
 
@@ -704,7 +702,7 @@ describe("salt-check instruction", () => {
     );
   });
 
-  it("gives commands that work from each instruction file's base", () => {
+  it("gives commands that work from the AGENTS.md folder", () => {
     const root = project();
     mkdirSync(path.join(root, ".git"));
     const app = path.join(root, "apps/web");
@@ -715,9 +713,7 @@ describe("salt-check instruction", () => {
     );
     expect(
       readFileSync(path.join(root, ".github/copilot-instructions.md"), "utf8"),
-    ).toContain(
-      "run `npx @salt-ds/cli check --project apps/web --changed` from the repository root",
-    );
+    ).toContain('- "apps/web": "apps/web/AGENTS.md"');
 
     run(["--project", app, "--dir", root, "--no-claude"], quiet);
     expect(readFileSync(path.join(root, "AGENTS.md"), "utf8")).toContain(
@@ -752,7 +748,7 @@ describe("GitHub Copilot instructions", () => {
     expect(existsSync(path.join(root, ".github"))).toBe(false);
   });
 
-  it("adds the index to the repository's file, keeping its other instructions", () => {
+  it("adds a pointer to the repository's file, keeping its other instructions", () => {
     const root = project();
     mkdirSync(path.join(root, ".git"));
     install(root);
@@ -770,12 +766,8 @@ describe("GitHub Copilot instructions", () => {
     expect(content).toMatch(
       /^# Team rules\n\n<!-- BEGIN:salt-ds-agent-docs -->/,
     );
-    expect(content).toContain(
-      "Index paths are relative to `root`, which is relative to the repository root.",
-    );
-    expect(content).toContain(
-      "[Salt docs index]|root: .\n|node_modules/@salt-ds/core/docs/components:{button.md}",
-    );
+    expect(content).toContain('- ".": "AGENTS.md"');
+    expect(content).not.toContain("[Salt docs index]");
     // AGENTS.md keeps paths relative to itself.
     expect(readFileSync(path.join(root, "AGENTS.md"), "utf8")).toContain(
       "which is relative to this file.",
@@ -786,7 +778,7 @@ describe("GitHub Copilot instructions", () => {
     expect(readFileSync(copilotFile(root), "utf8")).toBe(content);
   });
 
-  it("indexes an application's packages relative to the repository root", () => {
+  it("links to an application's index relative to the repository root", () => {
     const root = project();
     // A worktree or submodule has a .git file rather than a folder.
     write(root, ".git", "gitdir: ../main/.git/worktrees/root\n");
@@ -796,16 +788,87 @@ describe("GitHub Copilot instructions", () => {
 
     expect(run(["--project", app, "--copilot"], quiet)).toBe(0);
     const content = readFileSync(copilotFile(root), "utf8");
-    expect(content).toContain(
-      "|apps/web/node_modules/@salt-ds/core/docs/components:{button.md}",
-    );
-    expect(content).toContain(
-      "|node_modules/@salt-ds/theme/docs/components:{button.md}",
-    );
+    expect(content).toContain('- "apps/web": "apps/web/AGENTS.md"');
+    expect(content).not.toContain("node_modules");
     expect(existsSync(path.join(app, ".github"))).toBe(false);
     expect(readFileSync(path.join(app, "AGENTS.md"), "utf8")).toContain(
       "|../../node_modules/@salt-ds/theme/docs/components:",
     );
+  });
+
+  it("keeps Copilot routes and freshness checks independent across Salt versions", () => {
+    const root = project();
+    mkdirSync(path.join(root, ".git"));
+    const oldApp = path.join(root, "apps/old");
+    const newApp = path.join(root, "apps/new");
+    const oldCore = install(oldApp, "core", { version: "1.0.0" });
+    const newCore = install(newApp, "core", { version: "2.0.0" });
+    for (const [core, version] of [
+      [oldCore, "1.0.0"],
+      [newCore, "2.0.0"],
+    ]) {
+      write(core, "docs/components/button.md", `# Button for Salt ${version}`);
+      withCheck(core);
+    }
+    write(
+      root,
+      ".github/copilot-instructions.md",
+      [
+        "# Team rules",
+        upsertBlock(
+          "",
+          agentsBlock({ lines: ["|apps/old/node_modules/old-index"] }),
+        ),
+      ].join("\n\n"),
+    );
+
+    for (const app of [oldApp, newApp]) {
+      expect(run(["--project", app, "--copilot"], quiet)).toBe(0);
+    }
+    const instructions = readFileSync(copilotFile(root), "utf8");
+    expect(instructions).toContain("# Team rules");
+    expect(instructions).not.toContain("old-index");
+    for (const [name, version] of [
+      ["old", "1.0.0"],
+      ["new", "2.0.0"],
+    ]) {
+      const app = path.join(root, "apps", name);
+      expect(instructions).toContain(
+        `- "apps/${name}": "apps/${name}/AGENTS.md"`,
+      );
+      const agents = readFileSync(path.join(app, "AGENTS.md"), "utf8");
+      expect(agents).toContain(
+        "|node_modules/@salt-ds/core/docs/components:{button.md}",
+      );
+      expect(agents).toContain(
+        "run `npx @salt-ds/cli check --changed` from this file's folder",
+      );
+      expect(
+        readFileSync(
+          path.join(
+            app,
+            "node_modules/@salt-ds/core/docs/components/button.md",
+          ),
+          "utf8",
+        ),
+      ).toBe(`# Button for Salt ${version}`);
+      expect(run(["--project", app, "--copilot", "--check"], quiet)).toBe(0);
+    }
+    expect(readFileSync(copilotFile(root), "utf8")).toBe(instructions);
+  });
+
+  it("rejects pointing two Copilot routes at the same AGENTS.md", () => {
+    const root = project();
+    mkdirSync(path.join(root, ".git"));
+    install(root);
+    const app = path.join(root, "apps/web");
+    install(app);
+    expect(run(["--project", root, "--copilot"], quiet)).toBe(0);
+    const agents = readFileSync(path.join(root, "AGENTS.md"), "utf8");
+    expect(() =>
+      run(["--project", app, "--dir", root, "--copilot"], quiet),
+    ).toThrow("Use a separate --dir");
+    expect(readFileSync(path.join(root, "AGENTS.md"), "utf8")).toBe(agents);
   });
 
   it.each(["--project", "--dir"])(
@@ -833,18 +896,7 @@ describe("GitHub Copilot instructions", () => {
       expect(existsSync(copilotFile(app))).toBe(false);
       expect(existsSync(copilotFile(root))).toBe(false);
       const content = readFileSync(copilotFile(repository), "utf8");
-      expect(content).toContain(
-        "run `npx @salt-ds/cli check --project apps/web --changed` from the repository root",
-      );
-      expect(content).toContain(
-        "|apps/web/node_modules/@salt-ds/core/docs/components:{button.md}",
-      );
-      expect(content).toContain(
-        "|node_modules/@salt-ds/theme/docs/components:{button.md}",
-      );
-      expect(content).toContain(
-        "read `apps/web/node_modules/@salt-ds/core/docs/getting-started/fixing-accessibility.md`",
-      );
+      expect(content).toContain('- "apps/web": "apps/web/AGENTS.md"');
       const agents = readFileSync(path.join(app, "AGENTS.md"), "utf8");
       expect(agents).toContain(
         "run `npx @salt-ds/cli check --changed` from this file's folder",
@@ -921,7 +973,7 @@ describe("GitHub Copilot instructions", () => {
     install(root);
     expect(run(["--project", root, "--copilot"], quiet)).toBe(0);
     expect(readFileSync(copilotFile(root), "utf8")).toContain(
-      "|node_modules/@salt-ds/core/docs/components:{button.md}",
+      '- ".": "AGENTS.md"',
     );
   });
 
