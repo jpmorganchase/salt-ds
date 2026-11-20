@@ -1,0 +1,89 @@
+name: Vitest Browser Benchmark
+
+on:
+  pull_request:
+    paths:
+      - .github/workflows/vitest-benchmark.yml
+      - scripts/experiments/*VitestBenchmark.mjs
+      - scripts/experiments/vitestBenchmarkReporter.mjs
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vitest-benchmark-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  benchmark:
+    name: Paired browser benchmark (shard ${{ matrix.shard }}/${{ matrix.count }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { count: 3, shard: 1 }
+          - { count: 3, shard: 2 }
+          - { count: 3, shard: 3 }
+          - { count: 2, shard: 1 }
+          - { count: 2, shard: 2 }
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: "26"
+          cache: yarn
+      - name: Fetch the fixed baseline
+        run: git fetch --no-tags --depth=1 origin 00bb4abdb0aa7bc3948cb3dde22c882f4494a926
+      - name: Install candidate dependencies
+        run: node .yarn/releases/yarn-4.17.0.cjs install --immutable
+      - name: Build packages once
+        run: node .yarn/releases/yarn-4.17.0.cjs run build
+      - name: Run paired measurements and check parity
+        env:
+          SHARD: ${{ matrix.shard }}
+          SHARD_COUNT: ${{ matrix.count }}
+        run: node scripts/experiments/runVitestBenchmark.mjs "$SHARD" "$SHARD_COUNT"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        if: always()
+        with:
+          name: vitest-benchmark-${{ matrix.count }}-${{ matrix.shard }}
+          path: .vitest/benchmark
+          include-hidden-files: true
+          if-no-files-found: error
+          retention-days: 14
+
+  summarize:
+    name: Check complete test parity and compare shards
+    if: always()
+    needs: benchmark
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@949feb2413d6458794dcd2491c4babbbce0c15c1 # v7
+        with:
+          node-version: "26"
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8
+        with:
+          pattern: vitest-benchmark-*
+          path: benchmark-artifacts
+      - run: node scripts/experiments/summarizeVitestBenchmark.mjs benchmark-artifacts
+      - name: Publish comparison
+        if: always()
+        run: cat benchmark-artifacts/summary.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7
+        if: always()
+        with:
+          name: vitest-benchmark-summary
+          path: |
+            benchmark-artifacts/summary.md
+            benchmark-artifacts/summary.json
+          if-no-files-found: error
+          retention-days: 14
