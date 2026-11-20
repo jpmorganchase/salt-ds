@@ -35,9 +35,9 @@
     "chromatic": "chromatic"
   },
   "dependencies": {
-    "@biomejs/biome": "^2.5.10",
-    "@biomejs/js-api": "^6.0.0",
-    "@biomejs/wasm-nodejs": "^2.5.7",
+    "@biomejs/biome": "^2.6.8",
+    "@biomejs/js-api": "^6.1.0",
+    "@biomejs/wasm-nodejs": "^2.6.8",
     "@changesets/cli": "^3.0.0",
     "@e965/xlsx": "^0.20.3",
     "@faker-js/faker": "^10.5.0",
