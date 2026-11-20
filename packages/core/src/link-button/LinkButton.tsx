@@ -1,5 +1,8 @@
 import type { IconProps } from "@salt-ds/icons";
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
@@ -46,6 +49,9 @@ export interface LinkButtonProps extends ComponentPropsWithoutRef<"a"> {
 
 export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
   function LinkButton(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltLinkButton", props);
+
     const {
       children,
       className,
@@ -58,7 +64,7 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
       target = "_self",
       underline = "default",
       ...rest
-    } = props;
+    } = propsWithDefaults;
 
     const { active, buttonProps } = useButton<HTMLAnchorElement>({
       onBlur,
@@ -90,6 +96,7 @@ export const LinkButton = forwardRef<HTMLAnchorElement, LinkButtonProps>(
       ),
       ...activeStateProps,
       ...rest,
+      ...rootDataAttributes,
       ref,
       target,
       children,

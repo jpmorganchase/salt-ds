@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
@@ -25,17 +28,18 @@ export interface THeadProps extends ComponentPropsWithoutRef<"thead"> {
 }
 
 export const THead = forwardRef<HTMLTableSectionElement, THeadProps>(
-  function THead(
-    {
+  function THead(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltTHead", props);
+    const {
       children,
       className,
       sticky = false,
       variant,
       divider = "primary",
       ...rest
-    },
-    ref,
-  ) {
+    } = propsWithDefaults;
+
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-table-thead",
@@ -54,6 +58,7 @@ export const THead = forwardRef<HTMLTableSectionElement, THeadProps>(
           className,
         )}
         {...rest}
+        {...rootDataAttributes}
       >
         {children}
       </thead>

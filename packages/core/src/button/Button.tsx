@@ -1,6 +1,7 @@
 import {
   useClassNameInjection,
   useComponentCssInjection,
+  useComponentDefaults,
 } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -122,9 +123,11 @@ function variantToAppearanceAndColor(
 
 export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
   function Button(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltButton", props);
     const { className, props: finalProps } = useClassNameInjection(
       "saltButton",
-      props,
+      propsWithDefaults,
     );
 
     const {
@@ -191,6 +194,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(
           className,
         )}
         {...restProps}
+        {...rootDataAttributes}
         ref={ref}
         type={type}
       >

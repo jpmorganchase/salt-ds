@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
@@ -82,8 +85,10 @@ function hasLostFocus(doc: Document) {
 }
 
 export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
-  function Toolbar(
-    {
+  function Toolbar(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltToolbar", props);
+    const {
       children,
       className,
       onBlurCapture,
@@ -93,9 +98,8 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
       appearance = "bordered",
       variant = "primary",
       ...rest
-    },
-    ref,
-  ) {
+    } = propsWithDefaults;
+
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-toolbar",
@@ -325,6 +329,7 @@ export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
         data-centered={mode !== "invalid" && hasCenteredLayout ? "" : undefined}
         data-mode={mode}
         {...{ [TOOLBAR_SCOPE_ROOT_ATTR]: "main" }}
+        {...rootDataAttributes}
         ref={handleRef}
         onBlurCapture={(event) => {
           // When the window loses focus, the blurred element stays the active

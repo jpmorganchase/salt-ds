@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { type ComponentPropsWithoutRef, forwardRef } from "react";
@@ -47,6 +50,9 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
 
 export const Card = forwardRef<HTMLDivElement, CardProps>(
   function Card(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltCard", props);
+
     const {
       accent,
       borderColor,
@@ -58,7 +64,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
       hoverable,
       variant = "primary",
       ...rest
-    } = props;
+    } = propsWithDefaults;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -89,6 +95,7 @@ export const Card = forwardRef<HTMLDivElement, CardProps>(
         )}
         ref={ref}
         {...rest}
+        {...rootDataAttributes}
       >
         {children}
       </div>

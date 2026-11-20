@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
@@ -81,8 +84,13 @@ const withBaseName = makePrefixer("saltText");
 
 export const Text: TextComponent = forwardRef(function Text<
   T extends ElementType = "div",
->(
-  {
+>(props: TextProps<T>, ref?: ForwardedRef<unknown>) {
+  const { props: propsWithDefaults, rootDataAttributes } = useComponentDefaults(
+    "saltText",
+    props as TextProps<"div">,
+  );
+
+  const {
     as,
     children,
     className,
@@ -94,9 +102,8 @@ export const Text: TextComponent = forwardRef(function Text<
     variant,
     color: colorProp,
     ...restProps
-  }: TextProps<T>,
-  ref?: ForwardedRef<unknown>,
-) {
+  } = propsWithDefaults as TextProps<T>;
+
   const targetWindow = useWindow();
   useComponentCssInjection({
     testId: "salt-text",
@@ -127,6 +134,7 @@ export const Text: TextComponent = forwardRef(function Text<
         className,
       )}
       {...restProps}
+      {...rootDataAttributes}
       ref={ref as PolymorphicRef<T>}
       style={textStyles}
     >
