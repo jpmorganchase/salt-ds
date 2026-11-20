@@ -1,5 +1,6 @@
-import { Avatar, Link, StackLayout, Text } from "@salt-ds/core";
+import { Avatar, GridLayout, Link, StackLayout, Text } from "@salt-ds/core";
 import { CallIcon, LocationIcon, MessageIcon, UserIcon } from "@salt-ds/icons";
+import { Fragment } from "react";
 
 const persona = "/img/examples/avatar.png";
 
@@ -39,7 +40,8 @@ export const ContactDetails = ({ avatarSrc = persona }) => {
       direction={"row"}
       gap={2}
       style={{
-        width: "min-content",
+        width: "max-content",
+        maxWidth: "100%",
       }}
     >
       <Avatar
@@ -48,7 +50,7 @@ export const ContactDetails = ({ avatarSrc = persona }) => {
         fallbackIcon={<UserIcon />}
         size={2}
       />
-      <StackLayout direction={"column"} gap={1}>
+      <StackLayout direction={"column"} gap={1} style={{ minWidth: 0 }}>
         <StackLayout direction={"column"} gap={0.5}>
           <Text styleAs="h2">{basicContact.primary}</Text>
           <StackLayout direction={"column"} gap={0}>
@@ -56,22 +58,24 @@ export const ContactDetails = ({ avatarSrc = persona }) => {
             <Text styleAs="h4">{basicContact.tertiary}</Text>
           </StackLayout>
         </StackLayout>
-        <StackLayout direction={"row"} gap={2}>
-          <StackLayout gap={0.5} direction={"column"}>
-            {basicContact.metadata.map((metadata) => {
-              return (
-                <Text color="secondary" key={metadata.label}>
-                  {metadata.label}
-                </Text>
-              );
-            })}
-          </StackLayout>
-          <StackLayout gap={0.5} direction={"column"}>
-            {basicContact.metadata.map((metadata) => {
-              return <Text key={metadata.label}>{metadata.value}</Text>;
-            })}
-          </StackLayout>
-        </StackLayout>
+        <GridLayout
+          as="dl"
+          columns="max-content minmax(0, 1fr)"
+          rows="auto"
+          columnGap={2}
+          rowGap={0.5}
+        >
+          {basicContact.metadata.map((metadata) => (
+            <Fragment key={metadata.label}>
+              <Text as="dt" color="secondary">
+                {metadata.label}
+              </Text>
+              <Text as="dd" style={{ margin: 0, overflowWrap: "anywhere" }}>
+                {metadata.value}
+              </Text>
+            </Fragment>
+          ))}
+        </GridLayout>
       </StackLayout>
     </StackLayout>
   );
