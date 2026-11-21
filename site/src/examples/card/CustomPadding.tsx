@@ -72,7 +72,7 @@ export const CustomPadding = (): ReactElement => {
             <StackLayout>
               <StackLayout direction="row" align="end" gap={1}>
                 <H3>Threshold Summary</H3>
-                <Text as="p" variant="secondary">
+                <Text as="p" color="secondary">
                   (Projected Revenue)
                 </Text>
               </StackLayout>

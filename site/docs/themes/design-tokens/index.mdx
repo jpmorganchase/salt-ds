@@ -44,11 +44,11 @@ Salt uses a tiered token structure to provide flexibility with mode, theme, and 
 
 ### Foundations
 
-Foundation tokens are the base-level tokens that reference the raw values at the core of the design system. Foundations can sometimes be referenced directly, depending on the use case. For more information about each foundation, see the [Foundations](/salt/foundations/index) section.
+Foundation tokens are the base-level tokens that reference the raw values at the core of the design system. Non-color foundations, such as spacing, can be referenced directly where their guidance documents that use. Raw color foundations, including RGB and alpha variants, belong to the theme implementation and should not be used directly in application styling. Prefer a component's color API, or a semantic characteristic token when custom styling is needed. For more information about each foundation, see the [Foundations](/salt/foundations/index) section.
 
 ### Palettes
 
-Palette tokens are collections of commonly used foundation tokens and are referenced by semantic characteristic tokens. Palette tokens are never referenced directly in components or patterns. The purpose of the palette layer is to enable mode switching (e.g., light or dark), allowing a single semantic token from the characteristics layer to have more than one value.
+Palette tokens are collections of commonly used foundation tokens and are referenced by semantic characteristic tokens. Color palettes belong to the theme implementation and should not be referenced directly in application components or patterns. The purpose of the color palette layer is to enable mode switching (e.g., light or dark), allowing a single semantic token from the characteristics layer to have more than one value. Other palette groups, such as corner tokens, may have documented direct uses where there is no corresponding characteristic.
 
 ### Characteristics
 

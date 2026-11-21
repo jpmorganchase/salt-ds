@@ -33,6 +33,7 @@ export const SingleSelection: StoryFn<typeof InteractableCard> = (args) => {
 
   return (
     <InteractableCardGroup
+      aria-label="Payment method"
       onChange={(_event, value) => {
         setSelected(value);
       }}
@@ -51,7 +52,7 @@ export const SingleSelection: StoryFn<typeof InteractableCard> = (args) => {
             <H3>Credit Card</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
-            <RadioButtonIcon checked={selected === "card"} />
+            <RadioButtonIcon aria-hidden checked={selected === "card"} />
             <Text>Make a payment by credit or debit card</Text>
           </StackLayout>
         </StackLayout>
@@ -70,7 +71,7 @@ export const SingleSelection: StoryFn<typeof InteractableCard> = (args) => {
             <H3>Bank wire</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
-            <RadioButtonIcon checked={selected === "wire"} />
+            <RadioButtonIcon aria-hidden checked={selected === "wire"} />
             <Text>Make a payment by wire transfer</Text>
           </StackLayout>
         </StackLayout>
@@ -84,6 +85,7 @@ export const MultipleSelection: StoryFn<typeof InteractableCard> = (args) => {
 
   return (
     <InteractableCardGroup
+      aria-label="Business owners"
       onChange={(_event, value) => {
         setSelected(value);
       }}
@@ -104,7 +106,10 @@ export const MultipleSelection: StoryFn<typeof InteractableCard> = (args) => {
             <H3>Jane Doe</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
-            <CheckboxIcon checked={selected?.includes("jane-doe")} />
+            <CheckboxIcon
+              aria-hidden
+              checked={selected?.includes("jane-doe")}
+            />
             <Text>Add as business owner</Text>
           </StackLayout>
         </StackLayout>
@@ -124,7 +129,10 @@ export const MultipleSelection: StoryFn<typeof InteractableCard> = (args) => {
             <H3>Tom Roberts</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
-            <CheckboxIcon checked={selected?.includes("tom-roberts")} />
+            <CheckboxIcon
+              aria-hidden
+              checked={selected?.includes("tom-roberts")}
+            />
             <Text>Add as business owner</Text>
           </StackLayout>
         </StackLayout>
@@ -144,7 +152,10 @@ export const MultipleSelection: StoryFn<typeof InteractableCard> = (args) => {
             <H3>Ray Smith</H3>
           </StackLayout>
           <StackLayout direction="row" gap={1}>
-            <CheckboxIcon checked={selected?.includes("ray-smith")} />
+            <CheckboxIcon
+              aria-hidden
+              checked={selected?.includes("ray-smith")}
+            />
             <Text>Add as business owner</Text>
           </StackLayout>
         </StackLayout>

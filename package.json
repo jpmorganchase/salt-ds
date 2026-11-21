@@ -31,6 +31,7 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "yarn build:ag-grid-theme && yarn bundle:css && storybook build --stats-json",
     "typecheck": "yarn node ./scripts/typecheck.mjs",
+    "typecheck:site": "yarn workspace @salt-ds/site gen:css && yarn node ./scripts/typecheck.mjs --incremental false -p site/tsconfig.json",
     "typecheck:consumer": "yarn node ./scripts/checkConsumerTypes.mjs",
     "typecheck:react19": "yarn node ./scripts/typecheckReactTypes.mjs 19",
     "chromatic": "chromatic"
