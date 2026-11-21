@@ -78,6 +78,12 @@ Set `styleAs` to `inherit` to inherit the font and color from the parent element
 
 Use the `color` prop to adjust the foreground color of any nested text. Use the `primary` color most of the time, the `secondary` color for supporting text or to create visual hierarchy, and `inherit` to inherit text color from the parent element.
 
+Use `info`, `error`, `warning` or `success` for text that reports a status, such as an overdue payment. Say what the status is in the text too: don't rely on color alone.
+
+The `color` prop replaces the deprecated `variant` prop. Change `variant="primary"` to `color="primary"` and `variant="secondary"` to `color="secondary"`.
+
+Read our [guidance on how to use text color](/salt/themes/design-tokens/content-characteristic#static-foregrounds).
+
 <LivePreview componentName="text" exampleName="Color" />
 
 ## Font weight
@@ -102,11 +108,3 @@ To change the weight of part of the text, nest `<Text as="span" styleAs="inherit
 Read our [guidance on how to use font weight](/salt/foundations/typography#font-weight).
 
 <LivePreview componentName="text" exampleName="Weight" />
-
-## Variant
-
-**Note:** This prop is deprecated. Use the `color` prop instead.
-
-Use the `variant` prop to adjust the foreground color of any nested text. Use the `primary` variant most often, and the `secondary` variant for supporting text or creating a visual hierarchy.
-
-<LivePreview componentName="text" exampleName="Variant" />

@@ -1,16 +1,27 @@
-# How to use the pattern page MDX template
+# How to use the pattern page MDX templates
 
 Patterns are guides that help teams build design solutions for their project. The goal of the guide is to give teams the information that they can use to build a design solution.
 
 This document outlines how to structure a pattern to best meet this goal. The structure is designed to be as flexible as possible to cover the wide variety of patterns.
 
-Follow these steps to add a new pattern page to the Salt website.
+Follow these steps to add a pattern with Guidance and Examples pages to the Salt website. Patterns without runnable examples can use a guidance page on its own.
 
 ## 1. Getting started
 
-Copy the `pattern-name.mdx/` file into the [`site/docs/patterns/` directory](../../site/docs/patterns/) and rename it to your pattern's name in kebab case. For example `button-bar/`.
+Copy the [`pattern-name/` directory](./pattern-name/) into [`site/docs/patterns/`](../../site/docs/patterns/) and rename it to your pattern's name in kebab case, for example `button-bar/`.
 
-- 💡 **Tip:** If you are using GitHub's website to edit component docs, you can press the <kbd>.</kbd> key to launch a version of VS Code in your browser and copy the directory via that.
+| File                                             | Purpose                                                                               |
+| ------------------------------------------------ | ------------------------------------------------------------------------------------- |
+| `site/docs/patterns/<pattern-name>/index.mdx`    | Guidance: when to use the pattern, how to build it, and its behaviors and variations. |
+| `site/docs/patterns/<pattern-name>/examples.mdx` | Runnable examples, grouped under descriptive headings.                                |
+
+Update both pages' titles, descriptions and `data.patternUrl` to match the new pattern. Set `data.patternUrl` to the guidance URL, such as `/salt/patterns/button-bar`, in **both** files; the layout uses it to connect the Guidance and Examples tabs. Keep `tags: [pattern]` on the guidance page so it appears in the patterns overview. Keep `sidebar.exclude: true` and `data.showThemeControl: true` on the Examples page so the sidebar lists the pattern once and the previews have theme controls.
+
+Replace the placeholder components, related patterns, resource links and image paths with the pattern's actual content, or remove optional entries. Add `aliases` only when preserving a previous URL; the guidance page's current URL does not need an alias.
+
+For a guidance-only pattern, delete `examples.mdx`, remove `data.patternUrl` from `index.mdx`, and remove links to the deleted Examples page. Removing both the page and the tab metadata avoids an Examples tab that leads to a missing route. Keep the `pattern` tag and the guidance page's `DetailPattern` layout.
+
+- 💡 **Tip:** If you are using GitHub's website to edit pattern docs, you can press the <kbd>.</kbd> key to launch a version of VS Code in your browser and copy the directory via that.
 
 Read the [Salt content style guide](../../content-style-guide.md) to ensure your writing maintains consistency with other documentation.
 
@@ -27,7 +38,7 @@ Further notes:
 - Ensure where possible that information displayed in images has accompanying text outlining the information elsewhere. This helps with accessibility.
 - Avoid repeating information where possible to ensure simplicity and clarity.
 - Use images to illustrate points where possible.
-- Use ExampleContainers with the label “Best practices” to highlight key best practices where relevant. If there is one point don’t use bullet points, but if there is more than one use bullet points. Keep points no longer than three sentences. Avoid placing more than three bullet points in a single container.
+- Use `GuidanceCallout` with `type="positive"` and `customPillText="Best practices"` to highlight key best practices where relevant. If there is one point don’t use bullet points, but if there is more than one use bullet points. Keep points no longer than three sentences. Avoid placing more than three bullet points in a single callout. Leave a blank line before and after a Markdown list inside the callout, and put each list item on its own line.
 - Make sure headers are descriptive and unique. Keep headers as short as possible---one to three words, ideally no more than five words.
 - Avoid using too many H2 and H3 headers overall as it makes navigation harder. Consider whether you can consolidate headers or use an H4 instead—but never skip header levels.
 - Aim to keep paragraphs short and to-the-point.
@@ -63,13 +74,13 @@ Note that for an image switcher, the caption is implemented like this:
 
 By default, the sidebar shows an “on this page” section that lists all section headers.
 
-Add these three sections in bold type below:
+Configure the guidance page's frontmatter to populate these sections:
 
-**Components**: Links to the most relevant components used in the pattern
+**Components**: `data.components` lists the most relevant components used in the pattern by their documentation titles.
 
-**Patterns**: Links to other related patterns
+**Patterns**: `data.relatedPatterns` lists other related patterns by their documentation titles.
 
-**Resources**: Links to storybook and Figma and other resources where needed. Separate internal links where needed by marking as internal-only.
+**Resources**: `data.resources` lists Storybook, Figma and other resources where needed. Mark internal-only links with `internal: true`.
 
 When adding Figma links in the sidebar consider the below recommendations:
 
@@ -77,11 +88,11 @@ When adding Figma links in the sidebar consider the below recommendations:
 - Pattern stickers link to the Light component library by default. If a pattern doesn't have a sticker, remove the link.
 - If a pattern has both templates and stickers, include both links.
 
-## Structure
+## Guidance page structure
 
 ### Introduction
 
-No header for the introduction.
+Write the introduction in the guidance page's `description` frontmatter. The page heading displays it, so do not repeat it in the body or add a separate introduction header.
 
 Describe what the design solution sets out to achieve. What is the end result? In broad terms, what does it look like? What is its function? What problem does it solve?
 
@@ -135,7 +146,7 @@ Use this to outline alternatives and variants to the basic pattern described abo
 
 Ensure variants are as comprehensive as possible to avoid using too many headers. Use H3 headers if needed to describe sub-variants.
 
-The variant section should have at least one image showing the variant, plus a short accompanying paragraph explaining why the variant is important. Use bullet points to outline how to use in more detail (following bullet point guidelines above). Use Best practices ExampleContainers to highlight key best practices (following guidelines above).
+The variant section should have at least one image showing the variant, plus a short accompanying paragraph explaining why the variant is important. Use bullet points to outline how to use in more detail (following bullet point guidelines above). Use Best practices `GuidanceCallout` components to highlight key best practices (following guidelines above). Link to the corresponding heading on the Examples page when there is a runnable example.
 
 ### Behaviors
 
@@ -147,8 +158,37 @@ Use images where possible and keep paragraphs short.
 
 ### Feedback
 
-Include the below to automatically include a feedback section:
+Keep this include at the end of `site/docs/patterns/<pattern-name>/index.mdx` to display the feedback section:
 
 ```
-:fragment{src="./fragments/feedback.mdx"}
+:fragment{src="../fragments/feedback.mdx"}
 ```
+
+## Examples page structure
+
+Put runnable examples in `examples.mdx`. Give each one a descriptive H2 heading and add instructions when users need to perform an action to see the behavior. Keep design guidance on `index.mdx`, with links to the relevant example headings, rather than repeating it beside every preview.
+
+Write each example in `site/src/examples/patterns/<pattern-name>/<ExampleName>.tsx` and export it from that folder's `index.ts`. Show each exported example with its own preview on the Examples page:
+
+```mdx
+## Basic example
+
+<LivePreview
+  componentName="patterns/<pattern-name>"
+  exampleName="<ExampleName>"
+/>
+```
+
+Replace the template's `Default` example with the name you export. The website and generated Markdown use the same example source. Pattern Storybook stories should re-export these examples as well. Put code that several examples share in the file of the first example on the page that uses it, so that example's source is complete. Reference images from `site/public`, for example `/img/examples/avatar.png`, rather than importing them.
+
+Generation fails for an exported pattern example that no page shows. Include each supported example, or remove an obsolete export. Guidance-only patterns do not need an examples folder or an Examples page.
+
+## Docs for coding agents
+
+Pattern guidance and Examples pages are also published as Markdown in `@salt-ds/core/docs/patterns`, so coding agents read guidance that matches the installed version. The generator keeps one index entry per pattern and adds links between its guidance and Examples files. See the [component page guide](../component-pages/README.md#6-docs-for-coding-agents) and [tooling/agent-docs](../../tooling/agent-docs/README.md).
+
+Agents don't see images, so:
+
+- Name the components and tokens that the anatomy, layout and color images show in the text as well, for example "Use `--salt-spacing-300` between sections."
+- Write alt text for informative images, and use captions for extra explanation. Both are included in the Markdown.
+- Keep behavior and usage guidance in text on the Guidance page, and include example source through `LivePreview` on the Examples page. The generated documents preserve those links and previews without duplicating the pattern in the index.

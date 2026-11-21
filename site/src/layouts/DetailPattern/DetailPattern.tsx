@@ -1,6 +1,19 @@
 import type { LayoutProps } from "@jpmorganchase/mosaic-layouts";
-import { type SiteState, useStore } from "@jpmorganchase/mosaic-store";
-import type { FC } from "react";
+import {
+  type SiteState,
+  useRoute,
+  useStore,
+} from "@jpmorganchase/mosaic-store";
+import {
+  Tab,
+  TabBar,
+  TabList,
+  TabPanel,
+  Tabs,
+  TabTrigger,
+} from "@salt-ds/core";
+import { useRouter } from "next/router";
+import type { FC, ReactNode } from "react";
 import { LivePreviewProvider } from "../../components";
 import { ThemeControls } from "../../components/components/ThemeControls";
 import { CTALink } from "../../components/cta-link/CTALink";
@@ -25,6 +38,7 @@ type ResourcesArray = {
 type Data = {
   resources: ResourcesArray;
   showThemeControl?: boolean;
+  patternUrl?: string;
 };
 
 type CustomSiteState = SiteState & { data?: Data };
@@ -68,7 +82,53 @@ function PatternPageHeading({
   );
 }
 
+function PatternTabs({
+  patternUrl,
+  children,
+}: {
+  patternUrl: string;
+  children: ReactNode;
+}) {
+  const { route } = useRoute();
+  const { push } = useRouter();
+  const examplesUrl = `${patternUrl}/examples`;
+  const currentTab = route?.replace(/\/$/, "").endsWith("/examples")
+    ? "examples"
+    : "guidance";
+
+  return (
+    <Tabs
+      className={styles.tabs}
+      value={currentTab}
+      onChange={(_event, value) => {
+        void push(value === "examples" ? examplesUrl : patternUrl, undefined, {
+          scroll: false,
+        });
+      }}
+    >
+      <TabBar divider>
+        <TabList appearance="transparent" aria-label="Pattern documentation">
+          <Tab value="guidance">
+            <TabTrigger>Guidance</TabTrigger>
+          </Tab>
+          <Tab value="examples">
+            <TabTrigger>Examples</TabTrigger>
+          </Tab>
+        </TabList>
+      </TabBar>
+      {["guidance", "examples"].map((value) => (
+        <TabPanel className={styles.tabPanel} key={value} value={value}>
+          {value === currentTab ? children : null}
+        </TabPanel>
+      ))}
+    </Tabs>
+  );
+}
+
 export const DetailPattern: FC<LayoutProps> = ({ children }) => {
+  const patternUrl = useStore(
+    (state: CustomSiteState) => state.data?.patternUrl,
+  );
   const LeftSidebar = (
     <PrimarySidebar>
       <PageNavigation />
@@ -91,7 +151,11 @@ export const DetailPattern: FC<LayoutProps> = ({ children }) => {
         RightSidebar={RightSidebar}
         Heading={PatternPageHeading}
       >
-        {children}
+        {patternUrl ? (
+          <PatternTabs patternUrl={patternUrl}>{children}</PatternTabs>
+        ) : (
+          children
+        )}
       </Base>
     </LivePreviewProvider>
   );

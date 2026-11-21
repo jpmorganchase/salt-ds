@@ -1,5 +1,6 @@
 export * from "./CloseButton";
 export * from "./Default";
+export * from "./DeletionWithFocus";
 export * from "./DisableScrim";
 export * from "./Error";
 export * from "./Info";
