@@ -1,5 +1,32 @@
 # @salt-ds/countries
 
+## 1.5.5
+
+### Patch Changes
+
+- 2fa23b6: Added descriptions to props that had none, such as the date picker panels' `onSelectionChange` and `CalendarProps`, `LazyCountrySymbol`'s `code`, `WindowProvider`'s `window`, the `children` of providers such as `CSPProvider` and `StyleInjectionProvider`, and the `ref` of components such as `ComboBox`, `Dropdown`, `ListBox`, `Text` and the layout components.
+- e1e38ea: Packages are now built with tsdown and their type declarations are generated with TypeScript 7. Entry points, export maps and existing deep import paths are unchanged. The compiled output now includes shared compiler helper modules under `_virtual/`.
+- Updated dependencies [e1d9036]
+- Updated dependencies [00bb4ab]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [ea6b309]
+- Updated dependencies [fcea857]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [fff2ebb]
+- Updated dependencies [520e189]
+- Updated dependencies [42b9e94]
+- Updated dependencies [d62c57e]
+- Updated dependencies [e1e38ea]
+  - @salt-ds/core@1.75.1
+  - @salt-ds/styles@0.4.3
+  - @salt-ds/window@0.1.3
+
 ## 1.5.4
 
 ### Patch Changes

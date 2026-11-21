@@ -1,5 +1,21 @@
 # @salt-ds/theme
 
+## 1.49.0
+
+### Minor Changes
+
+- 520e189: Added `--salt-sentiment-accent-track`.
+- ea6b309: Added `--salt-target-borderColor` to all themes, for the border of a target or target marker in its default state, showing where an item can be dropped or placed. Use it with a dashed border style.
+
+  ```css
+  border: var(--salt-size-fixed-200) var(--salt-borderStyle-dashed)
+    var(--salt-target-borderColor);
+  ```
+
+### Patch Changes
+
+- d44aefd: Fixed `--salt-color-purple-300` in the Salt interim theme to match Figma. It was set to the same value as `--salt-color-purple-200` (`rgb(240, 209, 255)`), and is now `rgb(225, 166, 255)`.
+
 ## 1.48.0
 
 ### Minor Changes

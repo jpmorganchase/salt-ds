@@ -1,5 +1,62 @@
 # @salt-ds/lab
 
+## 1.0.0-alpha.109
+
+### Patch Changes
+
+- 2fa23b6: Corrected the descriptions of `Tooltip`'s `open`, `placement`, `leaveDelay` and `disabled` props, `DialogHeader`'s `disableAccent` prop, `RadioButtonGroup`'s `wrap` prop and `Banner`'s `variant` prop. Corrected the documented default of `Slider`'s and `RangeSlider`'s `max` prop from 10 to 100.
+
+  Documented the defaults of `Tooltip`'s `enterDelay` and `placement` props, `RadioButtonGroup`'s `wrap` prop and `FormField`'s `labelPlacement` prop.
+
+  Added descriptions for props that had none: `color` on icons, `Link`'s and `Text`'s `color` and `Toggletip`'s `placement`, whose comments weren't JSDoc; `CheckboxIcon`'s and `RadioButtonIcon`'s props; `Pill`'s `value`; `ComboBox`'s `truncate`; `VerticalNavigationItem`'s `active` and `VerticalNavigationItemTrigger`'s `render`; and `ToastGroup`'s `placement`.
+
+- 5629ed2: Removed the default `role="status"` from `SystemStatus`, matching `Banner`. Because the role was on the system status itself, the live region was added to the page at the same time as its content, which screen readers don't reliably announce.
+
+  A system status that's present when the page loads doesn't need a role. To make it a landmark that screen reader users can find and identify, you can pass `role="region"` and an `aria-label`.
+
+  To announce a system status that's added after the page loads, render it inside a container with `role="alert"` for an error system status, or `role="status"` for all other statuses, and add that container when the page first loads.
+
+  ```tsx
+  <div role="status">
+    {open && (
+      <SystemStatus>
+        <SystemStatusContent>
+          <Text color="inherit">
+            Scheduled maintenance is planned for Saturday from 08:00 to 10:00
+            UTC.
+          </Text>
+        </SystemStatusContent>
+      </SystemStatus>
+    )}
+  </div>
+  ```
+
+  If you use `role="status"` to find `SystemStatus` anywhere in your app, such as in tests, CSS or scripts, update those selectors.
+
+- e1e38ea: Packages are now built with tsdown and their type declarations are generated with TypeScript 7. Entry points, export maps and existing deep import paths are unchanged. The compiled output now includes shared compiler helper modules under `_virtual/`.
+- Updated dependencies [e1d9036]
+- Updated dependencies [00bb4ab]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [40bb637]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [ea6b309]
+- Updated dependencies [fcea857]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [fff2ebb]
+- Updated dependencies [520e189]
+- Updated dependencies [42b9e94]
+- Updated dependencies [d62c57e]
+- Updated dependencies [e1e38ea]
+  - @salt-ds/core@1.75.1
+  - @salt-ds/icons@1.20.0
+  - @salt-ds/styles@0.4.3
+  - @salt-ds/window@0.1.3
+
 ## 1.0.0-alpha.108
 
 ### Patch Changes
