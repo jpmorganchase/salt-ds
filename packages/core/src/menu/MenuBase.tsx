@@ -54,9 +54,9 @@ export interface MenuBaseProps {
    */
   onOpenChange?: (newOpen: boolean) => void;
   /**
-   * The placement of the Menu relative to its trigger. Defaults to
-   * `"bottom-start"` for a root menu, and `"right-start"` for a nested menu or a
-   * menu positioned with `getVirtualElement`.
+   * The placement of the Menu relative to its trigger. When the menu is nested
+   * or positioned with `getVirtualElement`, it defaults to `"right-start"`.
+   * @default "bottom-start"
    */
   placement?: UseFloatingUIProps["placement"];
   /**

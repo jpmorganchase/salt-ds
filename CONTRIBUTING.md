@@ -69,6 +69,8 @@ Added `IconNameIcon`.
 
 Document every prop in a component's props interface with JSDoc. Editors show the JSDoc in tooltips, and `site/propsGen.js` uses `react-docgen-typescript` to build the props tables on the site. The tables render the description as Markdown and show the default in a code cell.
 
+Run `yarn lint:jsdoc` to check props against these standards. CI runs it too. It checks the props of core, date-components, embla-carousel and the other stable packages, but not lab. It checks the format, phrasing, defaults and spelling of each prop's JSDoc, and that the props tables don't show a prop with no description. It can't check that a description is accurate. When a rule doesn't apply, put a comment above the JSDoc with the rule's name and the reason, for example `// jsdoc-lint-ignore default: <reason>`.
+
 #### Format
 
 - Use a `/** */` block directly above the prop. Editors and the props tables ignore `/* */` and `//` comments.
