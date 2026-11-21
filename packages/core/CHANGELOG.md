@@ -1,5 +1,81 @@
 # @salt-ds/core
 
+## 1.75.1
+
+### Patch Changes
+
+- e1d9036: Keep active options synchronized with changing option collections in ComboBox, Dropdown and ListBox. Removed options can no longer be selected, and selection uses each option's current value and disabled state. Reordering options preserves the active option, and filtering preserves committed selections.
+
+  In Dropdown and ListBox, pressing ArrowDown when no option is active now moves to the first option instead of the second.
+
+  Report ComboBox and Dropdown popup expansion and relationships only while the popup is available, including when options disappear or the control becomes read-only.
+
+- 00bb4ab: Removed `hidePillClose` and `pills` from `ComboBoxProps`. `ComboBox` sets both itself and ignored any values passed to them, so they no longer appear in editors or the props table.
+- 2fa23b6: Corrected the descriptions of `Tooltip`'s `open`, `placement`, `leaveDelay` and `disabled` props, `DialogHeader`'s `disableAccent` prop, `RadioButtonGroup`'s `wrap` prop and `Banner`'s `variant` prop. Corrected the documented default of `Slider`'s and `RangeSlider`'s `max` prop from 10 to 100.
+
+  Documented the defaults of `Tooltip`'s `enterDelay` and `placement` props, `RadioButtonGroup`'s `wrap` prop and `FormField`'s `labelPlacement` prop.
+
+  Added descriptions for props that had none: `color` on icons, `Link`'s and `Text`'s `color` and `Toggletip`'s `placement`, whose comments weren't JSDoc; `CheckboxIcon`'s and `RadioButtonIcon`'s props; `Pill`'s `value`; `ComboBox`'s `truncate`; `VerticalNavigationItem`'s `active` and `VerticalNavigationItemTrigger`'s `render`; and `ToastGroup`'s `placement`.
+
+- 2fa23b6: Added `@deprecated` tags to props that were deprecated only in their descriptions, so that editors strike them through: `Card`'s `disabled` and `interactable`, `Checkbox`'s and `RadioButton`'s `error`, and `FlexLayout`'s `separators`. Added the version to the deprecation of `AriaAnnounce`'s `delay`, and moved the deprecation of `Dialog`'s `idProp` after its description.
+- 2fa23b6: Clarified that `hoverable` should be removed from `Card`. Use `LinkCard` or `InteractableCard` when the entire card is interactive.
+- 2fa23b6: Added descriptions to props that had none, such as the date picker panels' `onSelectionChange` and `CalendarProps`, `LazyCountrySymbol`'s `code`, `WindowProvider`'s `window`, the `children` of providers such as `CSPProvider` and `StyleInjectionProvider`, and the `ref` of components such as `ComboBox`, `Dropdown`, `ListBox`, `Text` and the layout components.
+- ea6b309: Updated the guide line shown while placing a resizable `Drawer`'s edge by click to use `--salt-target-borderColor` instead of `--salt-content-secondary-foreground`, to align with design.
+- fcea857: Documented `Menu`'s default `placement`, `"bottom-start"`, with an `@default` tag, so editors and the props table show it.
+- 2fa23b6: Documented the native props that these components change:
+
+  - `Button`'s `onClick` isn't fired when the button is disabled or loading, including when `focusableWhenDisabled` is `true`.
+  - `InteractableCard`'s `onClick` is also fired when Enter or Space is pressed, and isn't fired when the card is disabled.
+  - `Spinner`'s `role` defaults to `"img"`, and its `id` is applied to the spinner's SVG element rather than its root.
+  - `CarouselCard`'s `id` is how `CarouselTabList` refers to the slide.
+
+  `Spinner` no longer redeclares `className`, so it's treated like the other HTML attributes it accepts. It still accepts `className`.
+
+  `ListBox` no longer inherits a second `disabled` and `multiselect` from its list control props, so each shows one description instead of two joined together. `StepProps` is no longer declared twice.
+
+- 2fa23b6: Tidied the formatting of prop descriptions: every description starts with a capital letter and ends with a period, uses American spelling and the multi-line `/** */` layout, and `@default` values are written as they are in code. Removed `@default false` and `@default undefined`, which describe how an unset prop already behaves.
+- 2fa23b6: Reworded prop descriptions to follow a consistent pattern: boolean props start with "If `true`, …", callbacks with "Callback fired when …" and props objects with "Props applied to …". Defaults that were only in the description are now `@default` tags, so they show in editors and the props tables. Defaults that come from somewhere else are described in words, such as `SaltProvider`'s theme props inside another `SaltProvider`, `ToggleButton`'s `appearance` and `sentiment` inside a `ToggleButtonGroup`, and `Button`'s `appearance` and `sentiment` when the deprecated `variant` is set.
+
+  Corrected descriptions that didn't match the components:
+
+  - `CheckboxGroup`'s `wrap` described the opposite of what it does.
+  - `ListBox`'s `bordered` adds a border when `true`, rather than removing one when `false`.
+  - `GridLayout`'s and `BorderLayout`'s `columnGap` and `rowGap` default to the value of `gap`, not to fixed values.
+  - `FlexItem`'s `align` follows the parent's alignment when not set, rather than defaulting to `"start"`.
+  - `RadioButton`'s `checked` is the checked state of the radio button, not the group's default.
+  - `Slider`'s and `RangeSlider`'s `constrainLabelPosition` keeps the labels of the first and last marks within the slider.
+  - `DatePickerRangePanel`'s `EndCalendarProps` are applied to the end `Calendar`.
+  - The `onClick` passed to `useSidePanel`'s trigger props no longer says that calling `preventDefault` stops the toggle, which the code doesn't do.
+  - `Avatar`'s default `nameToInitials` uses the first letters of the first two words of `name`, not of every word.
+  - `Menu`'s `placement` also defaults to `"right-start"` when the menu is positioned with `getVirtualElement`.
+  - `Slider`'s and `RangeSlider`'s `format` formats the tooltip, `aria-valuetext` and the minimum and maximum values that screen readers announce, not the `minLabel` and `maxLabel`. `accessibleMinText` and `accessibleMaxText` replace "minimum" and "maximum" in what screen readers announce, and when they're set, the value after them isn't formatted. `stepMultiplier` is the number of steps that Page Up and Page Down move by. `showTooltip` also shows the tooltip while the thumb is dragged or focused with the keyboard. The event passed to `onChange` and `onChangeEnd` is `undefined` when the value is changed from the keyboard.
+  - `useFloatingUI`'s `middleware` replaces the default middleware rather than updating it.
+  - `DatePicker`'s `minDate` and `maxDate` default to the `LocalizationProvider`'s, which are January 1, 1900 and December 31, 2099 unless set, not 1900 and 2100. Its `createAnnouncement` uses the default announcements when it's `null`, rather than turning them off.
+  - `DateInputSingle`'s and `DateInputRange`'s `onDateChange` passes `null` whenever the input is empty, and their `timezone` is derived from `date` or `defaultDate`. `DateInputRange`'s `onChange` doesn't receive a date.
+  - The `focusedDate` passed to `onFocusedDateChange` on `DatePickerSingleGridPanel` and `DatePickerRangeGridPanel` is the new focused date, not the hovered date.
+  - `DatePickerOverlayProvider`'s `disabled` only stops the overlay from opening on click.
+
+- 2fa23b6: Described `StatusAdornment` as the status icon Salt's input controls render from `validationStatus`, for use only in custom controls.
+- fff2ebb: Removed `color` from the props of `StatusIndicator` and `StatusAdornment`. They had inherited it from `Icon` by mistake. On `StatusIndicator`, setting it replaced the color that `status` sets, and on `StatusAdornment` it had no effect. To change the color of a status indicator, set `--saltStatusIndicator-color`.
+- 520e189: Updated `Stepper` to use `--salt-sentiment-accent-track` for the track after completed and in-progress steps.
+- 42b9e94: Fixed `Tabs` selection and focus when tabs are removed or navigated in the overflow menu.
+
+  - Removing the selected tab from outside the tabs now selects the neighboring tab and calls `onChange` with a `null` event, without moving focus. This also applies while the overflow menu is open, as long as the tab list keeps its width (for example, when it fills its container), so the menu stays open. Otherwise, the menu closes and focus moves to the newly selected tab, as before.
+  - When the selected tab is removed, the neighboring tab is now selected before the next paint, so the tabs no longer briefly show no selected tab or panel.
+  - Dismissing a tab in the open overflow menu now focuses the neighboring overflow tab instead of the first one.
+  - Shift+Tab from a tab action in the overflow menu now moves focus back to its tab on all React versions.
+  - Shift+Tab from an overflow tab now closes the menu and focuses the overflow button of the same `Tabs`, not the first overflow button on the page.
+
+- d62c57e: Fixed `Toolbar` losing focus when an overflow change moved the focused control or overflow button. Focus now returns to the control, or to its overflow button when the control overflows. When an overflow button is removed, focus moves to the first control that returned. `Toolbar` no longer moves focus back into itself when its overflow changes after focus has left it, including when the focused control was removed.
+- e1e38ea: Packages are now built with tsdown and their type declarations are generated with TypeScript 7. Entry points, export maps and existing deep import paths are unchanged. The compiled output now includes shared compiler helper modules under `_virtual/`.
+- Updated dependencies [2fa23b6]
+- Updated dependencies [40bb637]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [e1e38ea]
+  - @salt-ds/icons@1.20.0
+  - @salt-ds/styles@0.4.3
+  - @salt-ds/window@0.1.3
+
 ## 1.75.0
 
 ### Minor Changes

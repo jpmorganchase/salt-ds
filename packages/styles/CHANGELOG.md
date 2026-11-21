@@ -1,5 +1,12 @@
 # @salt-ds/styles
 
+## 0.4.3
+
+### Patch Changes
+
+- 2fa23b6: Added descriptions to props that had none, such as the date picker panels' `onSelectionChange` and `CalendarProps`, `LazyCountrySymbol`'s `code`, `WindowProvider`'s `window`, the `children` of providers such as `CSPProvider` and `StyleInjectionProvider`, and the `ref` of components such as `ComboBox`, `Dropdown`, `ListBox`, `Text` and the layout components.
+- e1e38ea: Packages are now built with tsdown and their type declarations are generated with TypeScript 7. Entry points, export maps and existing deep import paths are unchanged. The compiled output now includes shared compiler helper modules under `_virtual/`.
+
 ## 0.4.2
 
 ### Patch Changes
