@@ -78,7 +78,10 @@ import {
 <LocalizationProvider DateAdapter={AdapterLuxon}>
   <DatePicker
     selectionVariant="range"
-    defaultSelectedDate={{startDate: DateTime.fromFormat("23-06-2025", "dd-MM-yyyy") , endDate: DateTime.fromFormat("25-06-2025", "dd-MM-yyyy")}
+    defaultSelectedDate={{
+      startDate: DateTime.fromFormat("23-06-2025", "dd-MM-yyyy"),
+      endDate: DateTime.fromFormat("25-06-2025", "dd-MM-yyyy"),
+    }}
   >
     <DatePickerTrigger>
       <DatePickerRangeInput />
@@ -87,14 +90,14 @@ import {
       <DatePickerRangeGridPanel />
     </DatePickerOverlay>
   </DatePicker>
-<LocalizationProvider>
+</LocalizationProvider>;
 ```
 
 ### Locale
 
 The default locale for Salt's date adapters is "enUS".
 
-`DatePicker` uses the locale of the configured date adapter provided by the nearest [LocalizationProvider] (../../localization-provider).
+`DatePicker` uses the locale of the configured date adapter provided by the nearest [LocalizationProvider](../../localization-provider).
 Configuration of locales is date framework specific and may require you to import specific locales from the date library you are using.
 
 For example, if you are using `date-fns`, you may need to import the specific locale you want to use, such as `es` or `frFR`.
@@ -174,17 +177,20 @@ When using a modal `DatePicker` with confirmation controls, you must explicitly 
 
 If you are creating your own confirmation controls instead of using `DatePickerActions`, you must also explicitly set `enableApply={true}` on the `DatePicker` component.
 
-### useDatePicker
+### DatePickerHelperText
 
-The `useDatePicker` hook provides `state` and `helpers` to manage the `DatePicker` state.
+`DatePickerHelperText` is `FormFieldHelperText` for a `DatePicker` in a
+`FormField`, and takes the same props. Place it inside `DatePicker`: it reads the
+overlay's state and is hidden while the calendar is open, so give the panel the
+same text through its `helperText` prop.
 
-<PropsTable packageName="date-components" componentName="useDatePicker" />
+### useDatePickerContext
+
+Inside a `DatePicker`, the `useDatePickerContext` hook returns the picker state
+and helpers as `DatePickerState`. Pass `selectionVariant="range"` to match the
+`DatePicker`, then narrow it when you need variant-specific helpers, for example
+`useDatePickerContext({ selectionVariant: "range" }) as RangeDatePickerState`.
 
 ### useDatePickerOverlay
 
-The `useDatePickerOverlay` hook provides `state` and `helpers` to manage the `DatePickerOverlay` state.
-
-<PropsTable
-  packageName="date-components"
-  componentName="useDatePickerOverlay"
-/>
+Inside a `DatePicker`, the `useDatePickerOverlay` hook takes no arguments and returns `state` and `helpers` to manage the `DatePickerOverlay` state, such as whether the overlay is open.

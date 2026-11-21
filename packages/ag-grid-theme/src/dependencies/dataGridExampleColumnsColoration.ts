@@ -5,8 +5,8 @@ const dataGridExampleColumnsColoration = [
     headerName: "Name",
     field: "name",
     cellStyle: {
-      color: "var(--salt-color-gray-900)",
-      backgroundColor: "var(--salt-color-teal-20)",
+      color: "var(--salt-category-1-foreground)",
+      backgroundColor: "var(--salt-category-1-background)",
     },
   },
   {
@@ -21,8 +21,8 @@ const dataGridExampleColumnsColoration = [
     cellStyle: (params: CellClassParams) => {
       if (params.value === "Atlanta") {
         return {
-          color: "var(--salt-color-gray-900)",
-          backgroundColor: "var(--salt-color-orange-20)",
+          color: "var(--salt-category-2-foreground)",
+          backgroundColor: "var(--salt-category-2-background)",
         };
       }
       return null;

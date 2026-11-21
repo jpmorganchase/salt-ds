@@ -39,26 +39,7 @@ export const CustomDatePickerPanel = forwardRef<
   CustomDatePickerPanelProps
 >(function CustomDatePickerPanel({ selectionVariant, helperText }, ref) {
   const { dateAdapter } = useLocalization();
-  // biome-ignore lint/suspicious/noExplicitAny: state and helpers is coerced based on selectionVariant
-  let stateAndHelpers: any;
-  if (selectionVariant === "range") {
-    // TODO
-    // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
-    stateAndHelpers = useDatePickerContext({
-      selectionVariant: "range",
-    }) as RangeDatePickerState;
-  } else {
-    // TODO
-    // biome-ignore lint/correctness/useHookAtTopLevel: This should be fixed.
-    stateAndHelpers = useDatePickerContext({
-      selectionVariant: "single",
-    }) as SingleDatePickerState;
-  }
-
-  const {
-    state: { selectedDate },
-    helpers: { select },
-  } = stateAndHelpers;
+  const datePickerState = useDatePickerContext({ selectionVariant });
 
   const labelId = useId();
   return (
@@ -85,32 +66,42 @@ export const CustomDatePickerPanel = forwardRef<
                   return;
                 }
                 const tenor = Number.parseInt(item[0], 10);
-                let newSelection;
                 if (selectionVariant === "range") {
-                  newSelection = selectedDate?.startDate
-                    ? {
-                        startDate: selectedDate.startDate,
-                        endDate: dateAdapter.add(selectedDate.startDate, {
-                          years: tenor,
-                        }),
-                      }
-                    : {
-                        startDate: dateAdapter.today(),
-                        endDate: dateAdapter.add(dateAdapter.today(), {
-                          years: tenor,
-                        }),
-                      };
-                  select(event, newSelection);
+                  const {
+                    state: { selectedDate },
+                    helpers: { select },
+                  } = datePickerState as RangeDatePickerState;
+                  select(
+                    event,
+                    selectedDate?.startDate
+                      ? {
+                          startDate: selectedDate.startDate,
+                          endDate: dateAdapter.add(selectedDate.startDate, {
+                            years: tenor,
+                          }),
+                        }
+                      : {
+                          startDate: dateAdapter.today(),
+                          endDate: dateAdapter.add(dateAdapter.today(), {
+                            years: tenor,
+                          }),
+                        },
+                  );
                 } else {
-                  newSelection =
+                  const {
+                    state: { selectedDate },
+                    helpers: { select },
+                  } = datePickerState as SingleDatePickerState;
+                  select(
+                    event,
                     selectedDate && dateAdapter.isValid(selectedDate)
                       ? dateAdapter.add(selectedDate, {
                           years: tenor,
                         })
                       : dateAdapter.add(dateAdapter.today(), {
                           years: tenor,
-                        });
-                  select(event, newSelection);
+                        }),
+                  );
                 }
               }}
             >

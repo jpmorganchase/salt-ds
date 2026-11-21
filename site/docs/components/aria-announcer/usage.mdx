@@ -1,0 +1,128 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+Use `useAriaAnnouncer` or `AriaAnnounce` to tell screen reader users about a
+change they wouldn't otherwise hear, such as the number of results after
+filtering, or that a save has finished. The message goes to a visually hidden
+live region, so it isn't shown on screen. Show anything users need to find again
+on the page as well.
+
+The root `SaltProvider` or `SaltProviderNext` already includes an
+`AriaAnnouncerProvider`, so most applications don't add one.
+
+### When to use
+
+- When content changes away from the user's focus, such as a result count or a list that updates after an action.
+- When an action completes without moving focus or changing the focused control, such as saving a draft.
+
+### When not to use
+
+- When focus moves to the changed content, or the focused control's name or state already describes the change. Screen readers read those without an announcement.
+- For changes Salt components already announce. [`Spinner`](/salt/components/spinner) announces its label while it's shown and its `completionAnnouncement` when it's removed, and [`Pagination`](/salt/components/pagination) announces the new page.
+- For every keystroke or intermediate state. Announce once the change settles, using the `debounce` option.
+
+## Announcing from an event
+
+Call `announce` from `useAriaAnnouncer` in the handler or effect that makes the
+change:
+
+```tsx
+const { announce } = useAriaAnnouncer();
+
+const handleSave = () => {
+  saveDraft();
+  announce("Draft saved");
+};
+```
+
+`announce(message, options)` takes these options:
+
+| Option     | Default    | Description                                                                                                                                                                          |
+| ---------- | ---------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `ariaLive` | `"polite"` | `"polite"` waits until the screen reader finishes speaking; `"assertive"` interrupts it. Use `"assertive"` only for urgent messages.                                                 |
+| `duration` | `300`      | How long the message stays in the live region, in milliseconds.                                                                                                                      |
+| `target`   |            | Sends the message to the `AriaAnnouncerProvider` with the same `target`, or to the nearest provider if none is mounted; see [Content in another window](#content-in-another-window). |
+
+`useAriaAnnouncer({ debounce })` waits until calls to `announce` have stopped for
+`debounce` milliseconds, then announces only the last message.
+
+## Announcing from state
+
+`AriaAnnounce` announces its `announcement` when it mounts and whenever the text
+changes. It renders nothing, and takes the same `ariaLive`, `duration` and
+`target` options as props. Use it for state that changes now and then, such as an
+upload finishing:
+
+```tsx
+<AriaAnnounce announcement={uploaded ? "Upload complete" : undefined} />
+```
+
+It has no debounce, and rendering the same text again doesn't repeat the
+announcement. For a value that changes as the user types, or a message that can
+repeat, call `announce` instead.
+
+## Content in another window
+
+Only the root `SaltProvider` includes an `AriaAnnouncerProvider`; a `SaltProvider`
+nested inside it doesn't. Content rendered in another window, such as an overlay
+portaled into a separate window under a nested `SaltProvider`, would otherwise
+send its messages to the main window's live region. Wrap that content in its own
+`AriaAnnouncerProvider`, so its live region renders beside it; `useAriaAnnouncer`
+inside it then uses that provider. Salt's own overlays, such as DatePicker's,
+include one because they can open outside the root provider or in another
+window.
+
+To announce into that provider from code outside it, give the provider a
+`target`, such as `target="order-ticket"`, and pass the same `target` to
+`announce`.
+
+```tsx
+// Rendered into the other window, under a nested SaltProvider.
+<SaltProvider>
+  <AriaAnnouncerProvider target="order-ticket">
+    <OrderTicket />
+  </AriaAnnouncerProvider>
+</SaltProvider>
+```
+
+A nested provider unmounts with its content, so a message sent as that content
+closes may not be read. Send it from outside the provider instead.
+
+## Deprecations and migrations
+
+`delay` is deprecated, both as `AriaAnnounce`'s `delay` prop and as a number
+passed as `announce`'s second argument. Use `duration` to keep a message in the
+live region for longer, or your own `setTimeout` to announce later.
+
+## Import
+
+To import the announcer from the core Salt package, use:
+
+```js
+import {
+  AriaAnnounce,
+  AriaAnnouncerProvider,
+  useAriaAnnouncer,
+} from "@salt-ds/core";
+```
+
+## Props
+
+### AriaAnnouncerProvider
+
+<PropsTable packageName="core" componentName="AriaAnnouncerProvider" />
+
+### AriaAnnounce
+
+`AriaAnnounce` takes `announcement`, the text to announce, and the `ariaLive`,
+`duration` and `target` options described in
+[Announcing from an event](#announcing-from-an-event).
