@@ -47,10 +47,15 @@ handlers in `inputProps` / `textAreaProps`. The ordinary ref targets the wrapper
 
 ### NumberInput
 
-Use `value` and `onNumberChange` for a parsed number, or `onChange`
-for draft text. Native submission contains the displayed text, including formatting.
-Serialize the parsed value when the server expects a number. Use `inputRef` and
-`inputProps` for native focus/blur.
+Control draft text with `value` and `onChange`. Use `onNumberChange` in addition
+to receive the parsed number when a change is committed on blur or
+increment/decrement; an empty value is reported as `null`. For uncontrolled
+usage, use `defaultValue` instead of `value`, with `onNumberChange` for committed
+values.
+
+Native submission contains the displayed text, including formatting. Serialize
+the parsed value when the server expects a number. Use `inputRef` and `inputProps`
+for native focus/blur.
 
 For example, when `quantityError` contains the application's validation error,
 explicitly mark the input invalid, including when `quantity` is empty:

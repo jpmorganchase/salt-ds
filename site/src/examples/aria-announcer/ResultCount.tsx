@@ -20,15 +20,13 @@ const currencies = [
   "US dollar",
 ];
 
-// Match the start of any word, ignoring case.
+// Match from the start of any word, including queries spanning multiple words.
 const filterCurrencies = (query: string) => {
   const normalized = query.trim().toLowerCase();
-  return currencies.filter((currency) =>
-    currency
-      .toLowerCase()
-      .split(" ")
-      .some((word) => word.startsWith(normalized)),
-  );
+  return currencies.filter((currency) => {
+    const label = currency.toLowerCase();
+    return label.startsWith(normalized) || label.includes(` ${normalized}`);
+  });
 };
 
 const describeCount = (count: number) => {
