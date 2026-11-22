@@ -27,7 +27,9 @@ export default function Page() {
 
 ## Pass functions from a Client Component
 
-Server Components can’t pass functions or classes to Client Components. This includes event handlers, such as `onClick`, render prop callbacks and the `DateAdapter` prop of `LocalizationProvider`. Pass these from your own Client Component, marked with `"use client"`.
+Server Components can’t pass ordinary functions or classes to Client Components. This includes event handlers, such as `onClick`, render prop callbacks and the `DateAdapter` prop of `LocalizationProvider`. Pass these from your own Client Component, marked with `"use client"`.
+
+Server Functions marked with `"use server"` are an exception: they can be passed to Client Components and called to run code on the server.
 
 For example, the date components need `LocalizationProvider` to be set up in a Client Component. See [Localization provider](../components/localization-provider/usage#use-in-react-server-components).
 

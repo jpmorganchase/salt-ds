@@ -39,7 +39,7 @@ return (
 
 ## Use in React Server Components
 
-Server Components can’t pass classes, functions or objects that contain them to Client Components. This includes the `DateAdapter` and `instance` props, and date-fns locales. To use the date components in [React Server Components](/salt/getting-started/server-components), set up `LocalizationProvider` in your own Client Component, marked with `"use client"`:
+Server Components can’t pass classes, ordinary functions or objects that contain them to Client Components. This includes the `DateAdapter` and `instance` props, and date-fns locales. To use the date components in [React Server Components](/salt/getting-started/server-components), set up `LocalizationProvider` in your own Client Component, marked with `"use client"`:
 
 ```tsx
 "use client";

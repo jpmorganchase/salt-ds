@@ -5,6 +5,7 @@ import glob from "fast-glob";
 import { getTsconfig } from "get-tsconfig";
 import { build } from "tsdown";
 import { makeTypings } from "./makeTypings.mjs";
+import { markClientModules } from "./markClientModules.mjs";
 import { emptyDir } from "./utils.mjs";
 
 function isExternal(id) {
@@ -68,6 +69,7 @@ function createBuildOptions(
     hash: false,
     cjsDefault: preserveModules,
     treeshake: { propertyReadSideEffects: false },
+    plugins: [markClientModules({ cwd })],
     deps: {
       alwaysBundle: [/^@oxc-project\/runtime(?:\/|$)/],
       neverBundle: isExternal,
