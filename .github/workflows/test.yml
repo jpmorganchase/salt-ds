@@ -62,6 +62,8 @@ jobs:
         run: node ./scripts/checkPackages.mjs
       - name: Check consumer types (React 16-19)
         run: yarn run typecheck:consumer
+      - name: Check React Server Components
+        run: yarn run test:server-components
   type-checks:
     name: Type Checks
     runs-on: ubuntu-latest

@@ -1,0 +1,5 @@
+{
+  // Stops Next.js from using the repo's tsconfig.json, which maps the Salt
+  // packages to their source instead of the packed packages.
+  "compilerOptions": {}
+}
