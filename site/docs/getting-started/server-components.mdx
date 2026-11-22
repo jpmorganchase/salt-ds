@@ -53,4 +53,22 @@ Then render it from a Server Component, such as your root layout, around the com
 
 Utilities in modules that don’t use React, such as `makePrefixer`, can be called from Server Components.
 
-Utilities and constants that are defined alongside components or hooks can only be used in Client Components. These include `resolveResponsiveValue`, `getCurrentBreakpoint`, `DEFAULT_ICON_SIZE` and `countryToComponentMap`. To use them, move the code that uses them into a Client Component.
+Utilities and constants that are defined alongside components or hooks can only be used in Client Components. These include `resolveResponsiveValue`, `getCurrentBreakpoint` and `DEFAULT_ICON_SIZE`. To use them, move the code that uses them into a Client Component.
+
+### Show a country symbol from its code
+
+`countryToComponentMap` can only be used in Client Components. To show a country symbol from a country code in a Server Component, use `LazyCountrySymbol`. You can also use `countryMetaMap` to get the country’s name.
+
+```tsx
+import { Text } from "@salt-ds/core";
+import { countryMetaMap, LazyCountrySymbol } from "@salt-ds/countries";
+
+export default function Page() {
+  return (
+    <Text>
+      <LazyCountrySymbol code="GB" aria-hidden />{" "}
+      {countryMetaMap.GB.countryName}
+    </Text>
+  );
+}
+```
