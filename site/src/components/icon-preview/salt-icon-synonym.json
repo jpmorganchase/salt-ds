@@ -2306,5 +2306,22 @@
     "iconName": "rotate-left",
     "synonym": ["turn", "arrow", "organize", "spin", "counterclockwise"],
     "category": "organize"
+  },
+  {
+    "iconName": "pin-clear",
+    "synonym": ["remove pin", "unpin", "clear pin", "unfreeze", "release"],
+    "category": "actions"
+  },
+  {
+    "iconName": "function",
+    "synonym": [
+      "formula",
+      "calculated",
+      "expression",
+      "calculation",
+      "math",
+      "fx"
+    ],
+    "category": "data"
   }
 ]
