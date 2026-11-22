@@ -41,7 +41,7 @@ export function instructions({ check, guidance = {} } = {}) {
           `For an accessibility repair or a failing accessibility check, also read \`${guidance.accessibility}\` and the affected components' accessibility guidance.`,
         ]
       : []),
-    "For meaningful changes away from focus, such as an updated result count, use `useAriaAnnouncer` if neither a Salt component nor the focused control already conveys the outcome. If an action removes the focused element, move focus to a control that remains.",
+    "When an action changes content away from the user's focus, such as filtering a list, adding or deleting a row, or showing a result, announce the change with `useAriaAnnouncer` as well as showing it, unless a Salt component already announces it, such as `Toast`. If an action removes the focused element, move focus to a control that remains.",
     "Prefer component props, such as `Text`'s `color`; otherwise use semantic characteristic colour tokens. Raw colour foundations (including RGB/alpha) and colour palettes are theme internals. Use non-colour foundations only as documented, such as spacing.",
     ...(guidance.styling
       ? [
