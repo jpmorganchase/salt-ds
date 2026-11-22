@@ -8,8 +8,9 @@ import path from "node:path";
 // A module is marked when it:
 // - uses bindings from `react` or `react-dom`, which provide hooks and
 //   context. Side-effect imports of React are safe on the server.
-// - uses bindings from another marked module, including those of other Salt
-//   packages, like a context created with a client-only helper.
+// - uses bindings from another marked module, like a context created with a
+//   client-only helper. Any binding from another Salt package counts, as
+//   which of its modules are marked isn't known here.
 // - imports a third-party package that depends on React. These don't mark
 //   their own client modules, so loading them on the server can fail.
 // Bindings that are only re-exported don't count, so barrel files and plain
