@@ -1,0 +1,20 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Best practices
+
+- Keep messages short and specific, such as "3 currencies" or "Draft saved", rather than reading out the changed content.
+- Use `"polite"` unless the message is urgent. `"assertive"` interrupts whatever the screen reader is saying.
+- Don't make an announcement the only way to get information. Show the result on the page too, so every user can find it again.
+- Avoid competing announcements: send one message for one change, and don't repeat what a Salt component already announces.
+- Verify announcements with a browser and screen reader. A test that finds the message in the DOM doesn't confirm that it's read.
+
+`AriaAnnouncerProvider` renders two visually hidden live regions, one polite and
+one assertive, and removes each message after its `duration`.

@@ -6,3 +6,4 @@ export * from "./ToggleButtonGroupDisabled";
 export * from "./ToggleButtonGroupReadOnly";
 export * from "./ToggleButtonGroupSentiment";
 export * from "./ToggleButtonGroupVertical";
+export * from "./ToggleButtonGroupViewSwitching";

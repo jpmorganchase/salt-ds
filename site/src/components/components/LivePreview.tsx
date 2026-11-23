@@ -79,7 +79,12 @@ export const LivePreview: FC<LivePreviewProps> = ({
               actionFont="Amplitude"
               applyClassesTo="scope"
             >
-              <div className={styles.example}>
+              <div
+                className={clsx(styles.example, {
+                  [styles.patternExample]:
+                    componentName.startsWith("patterns/"),
+                })}
+              >
                 {/* An explicit theme is needed here to prevent the site theme being inherited */}
                 <ChosenSaltProvider
                   applyClassesTo="scope"

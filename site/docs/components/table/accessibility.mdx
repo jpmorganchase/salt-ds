@@ -26,6 +26,11 @@ data:
 </TableContainer>
 ```
 
+**Announce changes to the rows**
+
+- When filtering, adding or deleting changes the rows away from the user's focus, [announce](/salt/components/aria-announcer/usage#announcing-from-an-event) the result, such as the number of rows shown. A change to the table's content isn't announced on its own.
+- When an action removes the row that has focus, move focus to the same control in the next row, or in the previous row when the last row goes. See [Returning focus after an action](/salt/components/dialog/accessibility#returning-focus-after-an-action).
+
 ## Table container
 
 This component conditionally wraps tables in a scrollable region container when the viewport shrinks below breakpoints. At narrow viewports, table content can overlap and display incorrectly. The scrollable wrapper prevents this overlap while ensuring the table content remains accessible to all users.

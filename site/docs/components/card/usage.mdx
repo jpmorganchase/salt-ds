@@ -16,6 +16,7 @@ Cards may include text, images, or interactive elements. Keep the content aligne
 
 - To group related information with the same visual hierarchy.
 - To present a summary of a larger idea.
+- To highlight a key value, such as a KPI. Follow the [Metric](/salt/patterns/metric) pattern for the title and value styles.
 - **Link cards:** to navigate to more detailed information.
 - **Interactable cards:** to perform an action or present options that behave like checkboxes or radio buttons.
 
@@ -34,7 +35,7 @@ Cards may include text, images, or interactive elements. Keep the content aligne
 
 ### Interactable elements
 
-A static card can contain actionable components such as [buttons](../button) or [links](../link).
+A static card can contain actionable components such as [buttons](../button) or [links](../link). Don't give a static card hover styling, which implies that the card itself is interactive: its `hoverable` prop is deprecated. Use `LinkCard` or `InteractableCard` when the entire card is interactive.
 
 Link cards shouldn't contain actionable components (like [buttons](../button) or [links](../link)), as the card itself is the interactive element.
 
