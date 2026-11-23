@@ -59,3 +59,30 @@ To customize the appearance of panel resize handles and panels, follow these gui
 - **Background Color Customization**: For the panels themselves, apply the class `resizable-panel-salt-variant-<variant>` to the `Panel` component. Replace `<variant>` with the appropriate variant (`primary`, `secondary`, `tertiary`) to set the panel's background color to the associated Salt DS container background color. This helps maintain a consistent and cohesive look across your application.
 
 By using these class names, you can ensure that both separators and panels are styled correctly, providing a seamless and visually appealing user interface.
+
+### Panels that resize to zero
+
+With `react-resizable-panels` v4, set `data-panel-collapsed="true"` on a `Panel` whenever its size is zero. Track the size with `onResize` so the theme can overlap the borders of adjacent separators, or a separator and the container. Set the attribute to `false` when the panel expands again. This applies to both horizontal and vertical groups, including panels that can be dragged to zero without `collapsible`.
+
+```tsx
+import { useState } from "react";
+import { Panel } from "react-resizable-panels";
+
+function CollapsiblePanel() {
+  const [collapsed, setCollapsed] = useState(false);
+
+  return (
+    <Panel
+      collapsible
+      collapsedSize="0%"
+      minSize="10%"
+      data-panel-collapsed={collapsed}
+      onResize={(size) => setCollapsed(size.asPercentage === 0)}
+    >
+      Panel content
+    </Panel>
+  );
+}
+```
+
+Version 3 exposes the panel size in the DOM, so its border overlap styles work without this attribute.
