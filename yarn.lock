@@ -4386,7 +4386,7 @@ __metadata:
     react-dom: "npm:^18.3.1"
     react-hotkeys-hook: "npm:^5.1.0"
     react-resizable-panels: "npm:^4.12.3"
-    react-resizable-panels-v3: "npm:react-resizable-panels@^3.0.0"
+    react-resizable-panels-v3: "npm:react-resizable-panels@^4.0.0"
     react-router: "npm:^7.10.1"
     storybook: "npm:10.6.6"
     stylelint: "npm:^18.0.0"
@@ -12833,13 +12833,17 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-resizable-panels-v3@npm:react-resizable-panels@^3.0.0":
-  version: 3.0.6
-  resolution: "react-resizable-panels@npm:3.0.6"
+"react-resizable-panels-v3@npm:react-resizable-panels@^4.0.0":
+  version: 4.24.1
+  resolution: "react-resizable-panels@npm:4.24.1"
   peerDependencies:
-    react: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
-    react-dom: ^16.14.0 || ^17.0.0 || ^18.0.0 || ^19.0.0 || ^19.0.0-rc
-  checksum: 10/cacd2a0a63e4ecca193ceb2c8369d760946987c6386e38be39c7f98f909db923f161dbfd5187c289f5093c035c4a7757c4bd30b0d792bd8b45f2bc64183fe47f
+    "@types/react": ^18.2.6 || ^19.0.0
+    react: ^18.0.0 || ^19.0.0
+    react-dom: ^18.0.0 || ^19.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 10/0bf7df858cd72cd78761cb1a4ba41d6631e45c5b9a2446c3483ddcfaf97c9190fecc1909e9ce1ff995a79b80411a21170b36669df53c18122aabb05ce6f9c899
   languageName: node
   linkType: hard
 
