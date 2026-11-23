@@ -560,7 +560,18 @@
   },
   {
     "iconName": "filter-clear",
-    "synonym": ["funnel", "data", "x"],
+    "synonym": [
+      "funnel",
+      "data",
+      "x",
+      "clear filter",
+      "remove filter",
+      "reset filter",
+      "unfilter",
+      "clear",
+      "remove",
+      "cancel"
+    ],
     "category": "organize"
   },
   {
@@ -2309,18 +2320,32 @@
   },
   {
     "iconName": "pin-clear",
-    "synonym": ["remove pin", "unpin", "clear pin", "unfreeze", "release"],
+    "synonym": [
+      "unpin",
+      "remove pin",
+      "unfreeze",
+      "release",
+      "cancel",
+      "data",
+      "x"
+    ],
     "category": "actions"
   },
   {
     "iconName": "function",
     "synonym": [
       "formula",
-      "calculated",
+      "calculate",
+      "calculated column",
       "expression",
-      "calculation",
+      "fx",
+      "f(x)",
+      "spreadsheet",
+      "cell",
+      "column",
+      "grid",
       "math",
-      "fx"
+      "equation"
     ],
     "category": "data"
   }
