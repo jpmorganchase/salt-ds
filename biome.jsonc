@@ -154,10 +154,12 @@
       "cssModules": true
     }
   },
+  "markdown": { "formatter": { "enabled": false } },
+  "yaml": { "formatter": { "enabled": false } },
   "overrides": [
     {
       // Disable some rules for tests and stories, because they are not production code.
-      "includes": ["**/__tests__/**", "**/stories/**"],
+      "includes": ["**/__tests__/**", "**/stories/**", "test/**"],
       "linter": {
         "rules": {
           "a11y": {
@@ -170,8 +172,23 @@
             "noImplicitAnyLet": "off"
           },
           "correctness": {
+            "noComponentHookFactories": "off",
             "useUniqueElementIds": "warn"
           }
+        }
+      }
+    },
+    {
+      // These file-local factories and keyboard handler names are stable or not React components.
+      "includes": [
+        "packages/lab/src/list-deprecated/useList.ts",
+        "packages/lab/src/tokenized-input-next/useTokenizedInputNext.tsx",
+        "packages/lab/src/tokenized-input/useTokenizedInput.tsx",
+        "site/src/components/text-styles-preview/TextStylesPreview.tsx"
+      ],
+      "linter": {
+        "rules": {
+          "correctness": { "noComponentHookFactories": "off" }
         }
       }
     },
