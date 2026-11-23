@@ -11,7 +11,7 @@ or {
   `require($source)`,
   TsImportType(arguments=TsImportTypeArguments(argument=$source))
 } where {
-  $source <: not within TsExternalModuleDeclaration() ,
+  $source <: not within TsExternalModuleDeclaration(),
   $filename <: r"(?:.*[/\\])?packages[/\\]([^/\\]+)[/\\]src[/\\].*"($package),
   $source <: r"^[\"'`]@salt-ds/([^/\"'`]+)[\"'`]$"($imported),
   $imported <: $package,

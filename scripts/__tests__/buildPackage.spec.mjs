@@ -51,7 +51,11 @@ describe("package builds", () => {
       'declare module "*.css" { const css: string; export default css; }',
     );
     await write("src/tokens.ts", 'export const suffix = "-salt";');
-    await write("src/index.ts", 'export { Button } from "./Button";');
+    await write(
+      "src/index.ts",
+      `export { Button } from "./Button";
+export const loadCss = () => import("./Button.css");`,
+    );
     await write(
       "src/Button.ts",
       `import css from "./Button.css";
@@ -88,6 +92,7 @@ export function Button() {
     const builtCss = require("./dist-cjs/Button.css.js");
     expect(typeof builtCss).toBe("string");
     expect(builtCss).toBe(css);
+    expect((await require("./dist-cjs/index.js").loadCss()).default).toBe(css);
     expect(require("./dist-cjs/index.js").Button()).toBe(
       `${css}-salt${process.env.NODE_ENV === "production" ? "prod" : "dev"}`,
     );
@@ -123,10 +128,11 @@ export function Button() {
     ).toContain("Button(): string");
   }, 30_000);
 
-  it("preserves default-export deep imports alongside the package entry", async () => {
+  it("preserves default-export deep and dynamic imports alongside the package entry", async () => {
     await write(
       "src/index.ts",
-      'export { default as Item } from "./internal/Item";',
+      `export { default as Item } from "./internal/Item";
+export const loadItem = () => import("./internal/Item");`,
     );
     await write(
       "src/internal/Item.ts",
@@ -149,7 +155,9 @@ export function Button() {
     const Item = require("./dist-cjs/internal/Item.js");
     expect(typeof Item).toBe("function");
     expect(Item()).toBe(42);
-    expect(require("./dist-cjs/index.js").Item).toBe(Item);
+    const { Item: RootItem, loadItem } = require("./dist-cjs/index.js");
+    expect(RootItem).toBe(Item);
+    expect((await loadItem()).default).toBe(Item);
   }, 30_000);
 
   it("fails on declaration type errors and removes its temporary configuration", async () => {
