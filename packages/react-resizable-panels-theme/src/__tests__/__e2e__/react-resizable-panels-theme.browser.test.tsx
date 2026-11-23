@@ -1,7 +1,8 @@
 import { composeStories } from "@storybook/react-vite";
 import { version } from "react";
 import { describe, expect, it } from "vitest";
-import { cdp, page, userEvent } from "vitest/browser";
+import { page, userEvent } from "vitest/browser";
+import { mouse } from "~browser-test-utils/pointer";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as splitterStories from "../../../stories/react-resizable-panels-theme.stories";
 
@@ -9,26 +10,6 @@ const { Horizontal, Variant } = composeStories(splitterStories);
 
 // react-resizable-panels v4 requires React 18+.
 const isReact18OrLater = Number.parseInt(version, 10) >= 18;
-
-type CdpSession = {
-  send(method: string, params: Record<string, unknown>): Promise<unknown>;
-};
-
-async function dispatchMouse(
-  type: "mouseMoved" | "mousePressed" | "mouseReleased",
-  x: number,
-  y: number,
-  buttons = 0,
-) {
-  await (cdp() as CdpSession).send("Input.dispatchMouseEvent", {
-    type,
-    x,
-    y,
-    button: type === "mouseMoved" ? "none" : "left",
-    buttons,
-    clickCount: type === "mouseMoved" ? 0 : 1,
-  });
-}
 
 function resolveColor(element: HTMLElement, customProperty: string) {
   const probe = document.createElement("div");
@@ -90,9 +71,8 @@ describe.skipIf(!isReact18OrLater)(
 
         const { x, y } = getCenter(separator);
 
-        await dispatchMouse("mouseMoved", x, y);
-        await dispatchMouse("mousePressed", x, y, 1);
-        await dispatchMouse("mouseMoved", x + 10, y, 1);
+        await mouse.down({ x, y });
+        await mouse.move({ x: x + 10, y });
 
         try {
           await expect
@@ -105,8 +85,8 @@ describe.skipIf(!isReact18OrLater)(
             activeDot,
           );
         } finally {
-          await dispatchMouse("mouseReleased", x + 10, y);
-          await dispatchMouse("mouseMoved", 4, 4);
+          await mouse.up({ x: x + 10, y });
+          await mouse.move({ x: 4, y: 4 });
         }
       });
 
@@ -122,7 +102,7 @@ describe.skipIf(!isReact18OrLater)(
         expect(hoverBackground).not.toBe(defaultBackground);
 
         const { x, y } = getCenter(separator);
-        await dispatchMouse("mouseMoved", x, y);
+        await mouse.move({ x, y });
 
         await expect
           .poll(() => separator.getAttribute("data-separator"))
@@ -131,7 +111,7 @@ describe.skipIf(!isReact18OrLater)(
           .poll(() => getComputedStyle(separator).backgroundColor)
           .toBe(hoverBackground);
 
-        await dispatchMouse("mouseMoved", 4, 4);
+        await mouse.move({ x: 4, y: 4 });
 
         await expect
           .poll(() => getComputedStyle(separator).backgroundColor)
@@ -180,10 +160,9 @@ describe.skipIf(!isReact18OrLater)(
       const x = left + width / 2;
       const y = top + height / 2;
 
-      await dispatchMouse("mouseMoved", x, y);
-      await dispatchMouse("mousePressed", x, y, 1);
-      await dispatchMouse("mouseMoved", x + 20, y, 1);
-      await dispatchMouse("mouseReleased", x + 20, y);
+      await mouse.down({ x, y });
+      await mouse.move({ x: x + 20, y });
+      await mouse.up({ x: x + 20, y });
 
       await expect.poll(() => document.activeElement).toBe(separator);
       await expect
@@ -197,7 +176,7 @@ describe.skipIf(!isReact18OrLater)(
       );
       expect(getComputedStyle(separator).outlineStyle).toBe("none");
 
-      await dispatchMouse("mouseMoved", 4, 4);
+      await mouse.move({ x: 4, y: 4 });
 
       await expect
         .poll(() => getComputedStyle(separator).backgroundColor)
