@@ -1,5 +1,5 @@
 import { composeStories } from "@storybook/react-vite";
-import { useRef, useState, version } from "react";
+import { useRef, version } from "react";
 import {
   Group,
   Panel,
@@ -56,7 +56,7 @@ const separatorCases = [
   },
 ];
 
-function PanelsWithCollapsedBorder({
+function PanelsWithZeroSizedPanel({
   orientation,
   collapsedIndex,
 }: {
@@ -64,7 +64,6 @@ function PanelsWithCollapsedBorder({
   collapsedIndex: number;
 }) {
   const panelRef = useRef<PanelImperativeHandle>(null);
-  const [collapsed, setCollapsed] = useState(false);
   const sizes = ["50%", "50%", "50%"];
   sizes[collapsedIndex] = "0%";
   const borderClass =
@@ -79,12 +78,6 @@ function PanelsWithCollapsedBorder({
         defaultSize={sizes[index]}
         minSize="0%"
         panelRef={index === collapsedIndex ? panelRef : undefined}
-        data-panel-collapsed={index === collapsedIndex ? collapsed : undefined}
-        onResize={
-          index === collapsedIndex
-            ? (size) => setCollapsed(size.asPercentage === 0)
-            : undefined
-        }
       >
         Panel {index}
       </Panel>
@@ -115,42 +108,48 @@ function PanelsWithCollapsedBorder({
   );
 }
 
-const collapsedBorderCases = [
+const zeroSizeCases = [
   {
     orientation: "horizontal" as const,
     collapsedIndex: 0,
     handle: 0,
     margin: "marginLeft" as const,
+    size: "width" as const,
   },
   {
     orientation: "horizontal" as const,
     collapsedIndex: 1,
     handle: 1,
     margin: "marginLeft" as const,
+    size: "width" as const,
   },
   {
     orientation: "horizontal" as const,
     collapsedIndex: 2,
     handle: 1,
     margin: "marginRight" as const,
+    size: "width" as const,
   },
   {
     orientation: "vertical" as const,
     collapsedIndex: 0,
     handle: 0,
     margin: "marginTop" as const,
+    size: "height" as const,
   },
   {
     orientation: "vertical" as const,
     collapsedIndex: 1,
     handle: 1,
     margin: "marginTop" as const,
+    size: "height" as const,
   },
   {
     orientation: "vertical" as const,
     collapsedIndex: 2,
     handle: 1,
     margin: "marginBottom" as const,
+    size: "height" as const,
   },
 ];
 
@@ -308,11 +307,11 @@ describe.skipIf(!isReact18OrLater)(
       expect(getComputedStyle(element).backgroundColor).toBe(defaultBackground);
     });
 
-    it.each(collapsedBorderCases)(
-      "overlaps the $orientation border when panel $collapsedIndex reaches zero",
-      async ({ orientation, collapsedIndex, handle, margin }) => {
+    it.each(zeroSizeCases)(
+      "keeps $orientation separators styled when panel $collapsedIndex reaches zero",
+      async ({ orientation, collapsedIndex, handle, margin, size }) => {
         const { container } = await renderWithSalt(
-          <PanelsWithCollapsedBorder
+          <PanelsWithZeroSizedPanel
             orientation={orientation}
             collapsedIndex={collapsedIndex}
           />,
@@ -322,21 +321,25 @@ describe.skipIf(!isReact18OrLater)(
             collapsedIndex
           ];
         const separator = page.getByRole("separator").nth(handle).element();
+        const borderStyle =
+          orientation === "horizontal" ? "borderLeftStyle" : "borderTopStyle";
 
         await expect
-          .poll(() => panel.getAttribute("data-panel-collapsed"))
-          .toBe("true");
+          .poll(() => Math.round(panel.getBoundingClientRect()[size]))
+          .toBe(0);
+        expect(panel.hasAttribute("data-panel-collapsed")).toBe(false);
         await expect
           .poll(() => getComputedStyle(separator)[margin])
-          .toBe("-1px");
+          .toBe("0px");
+        expect(getComputedStyle(separator)[borderStyle]).toBe("solid");
 
         await page
           .getByRole("button", { name: "Expand collapsed panel" })
           .click();
 
         await expect
-          .poll(() => panel.getAttribute("data-panel-collapsed"))
-          .toBe("false");
+          .poll(() => Math.round(panel.getBoundingClientRect()[size]))
+          .toBeGreaterThan(0);
         await expect
           .poll(() => getComputedStyle(separator)[margin])
           .toBe("0px");
