@@ -1,4 +1,5 @@
-import "@salt-ds/react-resizable-panels-theme/index.css";
+import resizablePanelsCss from "@salt-ds/react-resizable-panels-theme/index.css";
+import { useComponentCssInjection } from "@salt-ds/styles";
 import {
   Panel,
   PanelGroup,
@@ -27,6 +28,12 @@ function LegacyPanels({
   direction?: "horizontal" | "vertical";
   collapsedMiddle?: boolean;
 }) {
+  useComponentCssInjection({
+    css: resizablePanelsCss,
+    testId: "salt-resizable-panels-theme",
+    window,
+  });
+
   const borderClass =
     direction === "horizontal"
       ? "resize-handle-salt-border-left resize-handle-salt-border-right"
@@ -80,6 +87,7 @@ it("styles a react-resizable-panels v3 separator when hovered and dragged", asyn
     separator,
     "--splitHandle-background-active",
   );
+  expect(hoverBackground).not.toBe(getComputedStyle(separator).backgroundColor);
 
   await mouse.move(point);
   await expect
