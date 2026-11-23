@@ -52,10 +52,10 @@ import {
   useState,
 } from "react";
 import {
-  type ImperativePanelHandle,
+  Group,
   Panel,
-  PanelGroup,
-  PanelResizeHandle,
+  type PanelImperativeHandle,
+  Separator,
 } from "react-resizable-panels";
 import "./side-panel.stories.css";
 
@@ -736,7 +736,7 @@ function useResizableSidePanel({
   defaultExpanded?: boolean;
   expandedSize?: number;
 } = {}) {
-  const panelRef = useRef<ImperativePanelHandle>(null);
+  const panelRef = useRef<PanelImperativeHandle>(null);
   const [expanded, setExpanded] = useState(defaultExpanded);
   const [animating, setAnimating] = useState(false);
 
@@ -746,7 +746,7 @@ function useResizableSidePanel({
     setAnimating(true);
     setExpanded(willExpand);
     requestAnimationFrame(() => {
-      panelRef.current?.resize(willExpand ? expandedSize : 0);
+      panelRef.current?.resize(willExpand ? `${expandedSize}%` : "0%");
     });
   }, [expanded, expandedSize]);
 
@@ -762,10 +762,6 @@ function useResizableSidePanel({
     [],
   );
 
-  const panelTransition = animating
-    ? "flex-grow var(--salt-duration-perceptible) var(--salt-animation-timing-function)"
-    : undefined;
-
   const handleOpenChange = useCallback((_open: boolean) => toggle(), [toggle]);
 
   return {
@@ -773,7 +769,6 @@ function useResizableSidePanel({
     expanded,
     animating,
     toggle,
-    panelTransition,
     handleOpenChange,
     handleTransitionEnd,
   };
@@ -803,7 +798,6 @@ export const Resizable: StoryFn = () => {
     panelRef,
     expanded,
     animating,
-    panelTransition,
     handleOpenChange,
     handleTransitionEnd,
   } = useResizableSidePanel({ expandedSize: 30 });
@@ -825,15 +819,18 @@ export const Resizable: StoryFn = () => {
           overflow: "hidden",
         }}
       >
-        <PanelGroup direction="horizontal">
-          <Panel style={{ transition: panelTransition }}>
+        <Group orientation="horizontal">
+          <Panel
+            data-side-panel-resizable
+            data-animating={animating || undefined}
+          >
             <ContentExample>
               <SidePanelTrigger>
                 <Button>Open right panel</Button>
               </SidePanelTrigger>
             </ContentExample>
           </Panel>
-          <PanelResizeHandle
+          <Separator
             aria-label="Resize panel"
             className="resize-handle-salt-border-left"
             disabled={!expanded || animating}
@@ -843,16 +840,18 @@ export const Resizable: StoryFn = () => {
             }}
           />
           <Panel
-            ref={panelRef}
-            defaultSize={0}
-            minSize={expanded && !animating ? 15 : 0}
-            maxSize={visible ? 50 : 0}
+            data-side-panel-resizable
+            data-animating={animating || undefined}
+            panelRef={panelRef}
+            defaultSize="0%"
+            minSize={expanded && !animating ? "15%" : "0%"}
+            maxSize={visible ? "50%" : "0%"}
             onTransitionEnd={handleTransitionEnd}
-            style={{ overflow: "hidden", transition: panelTransition }}
+            style={{ overflow: "hidden" }}
           >
             <ResizablePanel />
           </Panel>
-        </PanelGroup>
+        </Group>
       </div>
     </SidePanelProvider>
   );

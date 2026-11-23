@@ -1,5 +1,5 @@
 /* resize handle */
-.react-resizable-panels-theme-salt div[data-resize-handle] {
+.react-resizable-panels-theme-salt div:is([data-resize-handle], [data-separator]) {
   --splitHandle-size: var(--salt-size-fixed-600);
   --splitHandle-borderWidth: var(--salt-size-fixed-100);
   --splitHandle-borderColor: var(--salt-separable-secondary-borderColor);
@@ -17,7 +17,7 @@
   background: var(--splitHandle-background);
 }
 
-.react-resizable-panels-theme-salt div[data-resize-handle]::after {
+.react-resizable-panels-theme-salt div:is([data-resize-handle], [data-separator])::after {
   mask-size: cover;
   -webkit-mask-size: cover;
   mask-image: url("data:image/svg+xml,%3Csvg%20width%3D%2212%22%20height%3D%2212%22%20viewBox%3D%220%200%2012%2012%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20%3E%3Cpath%20d%3D%22M5%2011V9H7V11H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%207L5%205H7L7%207H5Z%22%20%2F%3E%3Cpath%20d%3D%22M5%201V3H7V1L5%201Z%22%20%2F%3E%3C%2Fsvg%3E");
@@ -29,21 +29,21 @@
 }
 
 /* resize handle hover and active css variables */
-.react-resizable-panels-theme-salt div[data-resize-handle] {
+.react-resizable-panels-theme-salt div:is([data-resize-handle], [data-separator]) {
   --splitHandle-background-hover: var(--salt-separable-background-hover);
   --splitHandle-background-active: var(--salt-separable-background-active);
 }
 
 /* resize handle background variants */
-.react-resizable-panels-theme-salt .resize-handle-salt-variant-primary[data-resize-handle] {
+.react-resizable-panels-theme-salt .resize-handle-salt-variant-primary:is([data-resize-handle], [data-separator]) {
   --splitHandle-background: var(--salt-container-primary-background);
 }
 
-.react-resizable-panels-theme-salt .resize-handle-salt-variant-secondary[data-resize-handle] {
+.react-resizable-panels-theme-salt .resize-handle-salt-variant-secondary:is([data-resize-handle], [data-separator]) {
   --splitHandle-background: var(--salt-container-secondary-background);
 }
 
-.react-resizable-panels-theme-salt .resize-handle-salt-variant-tertiary[data-resize-handle] {
+.react-resizable-panels-theme-salt .resize-handle-salt-variant-tertiary:is([data-resize-handle], [data-separator]) {
   --splitHandle-background: var(--salt-container-tertiary-background);
 }
 
@@ -73,51 +73,51 @@
 }
 
 /* resize handle hover and active styles */
-.react-resizable-panels-theme-salt div[data-resize-handle][data-resize-handle-state="hover"] {
+.react-resizable-panels-theme-salt div:is([data-resize-handle][data-resize-handle-state="hover"], [data-separator="hover"]) {
   background: var(--splitHandle-background-hover);
 }
 
-.react-resizable-panels-theme-salt div[data-resize-handle][data-resize-handle-state="drag"] {
+.react-resizable-panels-theme-salt div:is([data-resize-handle][data-resize-handle-state="drag"], [data-separator="active"]) {
   --splitHandle-background: var(--splitHandle-background-active);
 }
 
 /* resize handle directions */
-.react-resizable-panels-theme-salt div[data-resize-handle][data-panel-group-direction="horizontal"] {
+.react-resizable-panels-theme-salt div:is([data-resize-handle][data-panel-group-direction="horizontal"], [data-separator][aria-orientation="vertical"]) {
   flex-direction: column;
   width: var(--splitHandle-size);
 }
 
-.react-resizable-panels-theme-salt div[data-resize-handle][data-panel-group-direction="vertical"] {
+.react-resizable-panels-theme-salt div:is([data-resize-handle][data-panel-group-direction="vertical"], [data-separator][aria-orientation="horizontal"]) {
   flex-direction: row;
   height: var(--splitHandle-size);
 }
 
 /* resize handle thumb */
-.react-resizable-panels-theme-salt div[data-resize-handle]::after {
+.react-resizable-panels-theme-salt div:is([data-resize-handle], [data-separator])::after {
   fill: var(--splitHandle-dot-background);
   background: var(--splitHandle-dot-background);
 }
 
-.react-resizable-panels-theme-salt div[data-resize-handle][data-resize-handle-state="hover"]::after {
+.react-resizable-panels-theme-salt div:is([data-resize-handle][data-resize-handle-state="hover"], [data-separator="hover"])::after {
   fill: var(--splitHandle-dot-background-hover);
   background: var(--splitHandle-dot-background-hover);
 }
 
-.react-resizable-panels-theme-salt div[data-resize-handle][data-resize-handle-state="drag"]::after {
+.react-resizable-panels-theme-salt div:is([data-resize-handle][data-resize-handle-state="drag"], [data-separator="active"])::after {
   fill: var(--splitHandle-dot-background-active);
   background: var(--splitHandle-dot-background-active);
 }
 
-.react-resizable-panels-theme-salt div[data-resize-handle][data-panel-group-direction="horizontal"]::after {
+.react-resizable-panels-theme-salt div:is([data-resize-handle][data-panel-group-direction="horizontal"], [data-separator][aria-orientation="vertical"])::after {
   content: "";
 }
 
-.react-resizable-panels-theme-salt div[data-resize-handle][data-panel-group-direction="vertical"]::after {
+.react-resizable-panels-theme-salt div:is([data-resize-handle][data-panel-group-direction="vertical"], [data-separator][aria-orientation="horizontal"])::after {
   content: "";
   transform: rotate(90deg);
 }
 
-.react-resizable-panels-theme-salt div[data-resize-handle]:focus-visible {
+.react-resizable-panels-theme-salt div:is([data-resize-handle], [data-separator]):focus-visible {
   outline-style: var(--salt-focused-outlineStyle);
   outline-width: var(--salt-focused-outlineWidth);
   outline-color: var(--salt-focused-outlineColor);

@@ -1,6 +1,6 @@
 import { FlexLayout, Text } from "@salt-ds/core";
 import { clsx } from "clsx";
-import { Panel, PanelGroup, PanelResizeHandle } from "react-resizable-panels";
+import { Group, Panel, Separator } from "react-resizable-panels";
 
 import styles from "./splitter.module.css";
 
@@ -8,9 +8,9 @@ export function Default() {
   return (
     <div className="react-resizable-panels-theme-salt">
       <FlexLayout className={clsx(styles.box, styles.boxGrey)}>
-        <PanelGroup direction="horizontal">
+        <Group orientation="horizontal">
           <Panel>
-            <PanelGroup direction="vertical">
+            <Group orientation="vertical">
               <Panel
                 className={clsx(
                   styles.center,
@@ -19,7 +19,7 @@ export function Default() {
               >
                 <Text>Top Left</Text>
               </Panel>
-              <PanelResizeHandle className="" />
+              <Separator className="" />
               <Panel
                 className={clsx(
                   styles.center,
@@ -28,7 +28,7 @@ export function Default() {
               >
                 <Text>Middle Left</Text>
               </Panel>
-              <PanelResizeHandle className="" />
+              <Separator className="" />
               <Panel
                 className={clsx(
                   styles.center,
@@ -37,11 +37,11 @@ export function Default() {
               >
                 <Text>Bottom Left</Text>
               </Panel>
-            </PanelGroup>
+            </Group>
           </Panel>
-          <PanelResizeHandle />
+          <Separator />
           <Panel>
-            <PanelGroup direction="vertical">
+            <Group orientation="vertical">
               <Panel
                 className={clsx(
                   styles.center,
@@ -50,7 +50,7 @@ export function Default() {
               >
                 <Text>Top Right</Text>
               </Panel>
-              <PanelResizeHandle className="" />
+              <Separator className="" />
               <Panel
                 className={clsx(
                   styles.center,
@@ -59,9 +59,9 @@ export function Default() {
               >
                 <Text>Bottom Right</Text>
               </Panel>
-            </PanelGroup>
+            </Group>
           </Panel>
-        </PanelGroup>
+        </Group>
       </FlexLayout>
     </div>
   );
