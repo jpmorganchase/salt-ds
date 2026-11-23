@@ -35,7 +35,7 @@ For example, the date components need `LocalizationProvider` to be set up in a C
 
 ## Use utilities and constants
 
-Utilities in modules that don’t use React, such as `makePrefixer`, can be called from Server Components.
+Server-safe utilities in unmarked modules, such as `makePrefixer`, can be called from Server Components. Utilities that access browser APIs still require a browser environment.
 
 Utilities and constants that are defined alongside components or hooks can only be used in Client Components. These include `resolveResponsiveValue`, `getCurrentBreakpoint`, `DEFAULT_ICON_SIZE` and `countryToComponentMap`. To use them, move the code that uses them into a Client Component.
 
