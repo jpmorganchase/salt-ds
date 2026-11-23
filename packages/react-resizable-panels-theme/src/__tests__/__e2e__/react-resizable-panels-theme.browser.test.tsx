@@ -1,5 +1,11 @@
 import { composeStories } from "@storybook/react-vite";
-import { version } from "react";
+import { useRef, useState, version } from "react";
+import {
+  Group,
+  Panel,
+  type PanelImperativeHandle,
+  Separator,
+} from "react-resizable-panels";
 import { describe, expect, it } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { mouse } from "~browser-test-utils/pointer";
@@ -47,6 +53,104 @@ const separatorCases = [
     render: () => renderWithSalt(<Variant />),
     getSeparator: () =>
       page.getByRole("separator").nth(1).element() as HTMLElement,
+  },
+];
+
+function PanelsWithCollapsedBorder({
+  orientation,
+  collapsedIndex,
+}: {
+  orientation: "horizontal" | "vertical";
+  collapsedIndex: number;
+}) {
+  const panelRef = useRef<PanelImperativeHandle>(null);
+  const [collapsed, setCollapsed] = useState(false);
+  const sizes = ["50%", "50%", "50%"];
+  sizes[collapsedIndex] = "0%";
+  const borderClass =
+    orientation === "horizontal"
+      ? "resize-handle-salt-border-left resize-handle-salt-border-right"
+      : "resize-handle-salt-border-top resize-handle-salt-border-bottom";
+
+  function renderPanel(index: number) {
+    return (
+      <Panel
+        id={`panel-${index}`}
+        defaultSize={sizes[index]}
+        minSize="0%"
+        panelRef={index === collapsedIndex ? panelRef : undefined}
+        data-panel-collapsed={index === collapsedIndex ? collapsed : undefined}
+        onResize={
+          index === collapsedIndex
+            ? (size) => setCollapsed(size.asPercentage === 0)
+            : undefined
+        }
+      >
+        Panel {index}
+      </Panel>
+    );
+  }
+
+  return (
+    <div className="react-resizable-panels-theme-salt">
+      <div style={{ width: 480, height: 240 }}>
+        <Group orientation={orientation}>
+          {renderPanel(0)}
+          <Separator
+            aria-label="Resize first and middle panels"
+            className={borderClass}
+          />
+          {renderPanel(1)}
+          <Separator
+            aria-label="Resize middle and last panels"
+            className={borderClass}
+          />
+          {renderPanel(2)}
+        </Group>
+      </div>
+      <button type="button" onClick={() => panelRef.current?.resize("20%")}>
+        Expand collapsed panel
+      </button>
+    </div>
+  );
+}
+
+const collapsedBorderCases = [
+  {
+    orientation: "horizontal" as const,
+    collapsedIndex: 0,
+    handle: 0,
+    margin: "marginLeft" as const,
+  },
+  {
+    orientation: "horizontal" as const,
+    collapsedIndex: 1,
+    handle: 1,
+    margin: "marginLeft" as const,
+  },
+  {
+    orientation: "horizontal" as const,
+    collapsedIndex: 2,
+    handle: 1,
+    margin: "marginRight" as const,
+  },
+  {
+    orientation: "vertical" as const,
+    collapsedIndex: 0,
+    handle: 0,
+    margin: "marginTop" as const,
+  },
+  {
+    orientation: "vertical" as const,
+    collapsedIndex: 1,
+    handle: 1,
+    margin: "marginTop" as const,
+  },
+  {
+    orientation: "vertical" as const,
+    collapsedIndex: 2,
+    handle: 1,
+    margin: "marginBottom" as const,
   },
 ];
 
@@ -203,5 +307,40 @@ describe.skipIf(!isReact18OrLater)(
         .not.toBe("none");
       expect(getComputedStyle(element).backgroundColor).toBe(defaultBackground);
     });
+
+    it.each(collapsedBorderCases)(
+      "overlaps the $orientation border when panel $collapsedIndex reaches zero",
+      async ({ orientation, collapsedIndex, handle, margin }) => {
+        const { container } = await renderWithSalt(
+          <PanelsWithCollapsedBorder
+            orientation={orientation}
+            collapsedIndex={collapsedIndex}
+          />,
+        );
+        const panel =
+          container.querySelectorAll<HTMLElement>("[data-panel]")[
+            collapsedIndex
+          ];
+        const separator = page.getByRole("separator").nth(handle).element();
+
+        await expect
+          .poll(() => panel.getAttribute("data-panel-collapsed"))
+          .toBe("true");
+        await expect
+          .poll(() => getComputedStyle(separator)[margin])
+          .toBe("-1px");
+
+        await page
+          .getByRole("button", { name: "Expand collapsed panel" })
+          .click();
+
+        await expect
+          .poll(() => panel.getAttribute("data-panel-collapsed"))
+          .toBe("false");
+        await expect
+          .poll(() => getComputedStyle(separator)[margin])
+          .toBe("0px");
+      },
+    );
   },
 );

@@ -11,11 +11,17 @@ export function Horizontal() {
           <Panel className={styles.center}>
             <Text>Left</Text>
           </Panel>
-          <Separator className="resize-handle-salt-border-right" />
+          <Separator
+            aria-label="Resize left and center panels"
+            className="resize-handle-salt-border-right"
+          />
           <Panel className={styles.center}>
             <Text>Center</Text>
           </Panel>
-          <Separator className="resize-handle-salt-border-left" />
+          <Separator
+            aria-label="Resize center and right panels"
+            className="resize-handle-salt-border-left"
+          />
           <Panel className={styles.center}>
             <Text>Right</Text>
           </Panel>

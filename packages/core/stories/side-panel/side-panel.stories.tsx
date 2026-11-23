@@ -794,7 +794,7 @@ const ResizablePanel = ({ style }: { style?: CSSProperties }) => {
   );
 };
 
-export const Resizable: StoryFn = () => {
+const ResizableExample: StoryFn = () => {
   const {
     panelRef,
     expanded,
@@ -858,11 +858,17 @@ export const Resizable: StoryFn = () => {
   );
 };
 
-Resizable.parameters = {
-  axe: {
-    // react-resizable-panels v4 requires React 18 and uses React.useId.
-    skip: Number.parseInt(reactVersion, 10) < 18,
-  },
+export const Resizable: StoryFn = () => {
+  if (Number.parseInt(reactVersion, 10) < 18) {
+    return (
+      <Text>
+        This example requires React 18 or later. With React 16 or 17, use
+        react-resizable-panels v3 instead.
+      </Text>
+    );
+  }
+
+  return <ResizableExample />;
 };
 
 const Nav = () => (
