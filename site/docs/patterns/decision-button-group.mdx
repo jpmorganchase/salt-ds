@@ -1,6 +1,6 @@
 ---
 title: Decision button group
-description: "Decision button group arranges a group of related actions or mutually exclusive choices in a compact layout."
+description: "Decision button group presents the user with a choice of two options in a compact layout for a specific decision."
 layout: DetailPattern
 tags:
   - pattern
@@ -11,14 +11,14 @@ data:
     [
       { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-decision-button-group--actions", label: "Examples" },
     ]
-  components: ["Button", "Toggle Button"]
+  components: ["Button", "Toggle Button", "Segmented Button Group"]
   relatedPatterns: ["Button Bar"]
 ---
 
 <Diagram
   src="/img/patterns/decision-button-group/decision-button-group-1.png"
   srcDark="/img/patterns/decision-button-group/decision-button-group-1-dark.png"
-  alt="A default decision button group with Reject and Approve actions."
+  alt="A decision button group with Reject and Approve actions."
   border
 />
 
@@ -30,7 +30,7 @@ Use a decision button group when:
 - The actions have equal priority.
 - The buttons achieve single-selection and deselection capability together. 
 
-### When not to use
+## When not to use
 
 - One action is clearly primary and the others are secondary; use [Button bar](/salt/patterns/button-bar) instead.
 - The actions are unrelated or don't benefit from being grouped visually.
@@ -43,8 +43,8 @@ Use a decision button group when:
 
 A decision button group typically contains two buttons placed together with consistent spacing:
 
-1. **Buttons:** Contains label and icon. 
-2. **Toggle buttons:** Contains label and icon. 
+1. **Buttons:** Contain a label, an icon or both. 
+2. **Toggle buttons:** Contain a label, an icon or both. 
 
 <Diagram
   src="/img/patterns/decision-button-group/decision-button-group-2.png"
@@ -71,12 +71,13 @@ A decision button group typically contains two buttons placed together with cons
 - Don't mix button types in the same group. 
 </GuidanceCallout>
 
-## Interaction models
+### Action buttons
 
-A decision button group can support two different interaction models. Choose the model based on what the user is doing. 
+Use a button within a decision button group when each button performs an action and returns to its default state after activation.
 
-1. Use a button within a decision button group when each button performs an action and return to their default state after activation
-2. Use a toggle button within a decision button group when each button represents a choice or decision. The user is choosing something, and the selected button remains visible as the current value. For example, Like/Dislike or Thumbs up/Thumbs down. 
+### Selectable buttons
+
+Use a toggle button within a decision button group when each button represents a choice or decision. The user is choosing something, and the selected button remains visible as the current value. For example, Like/Dislike or Thumbs up/Thumbs down.
 
 ### Deselection
 
