@@ -20,6 +20,8 @@ The Salt React Resizable Panels theme supports `react-resizable-panels` v3 and v
 
 `react-resizable-panels` v4 requires React 18 or later. If your application uses React 16 or 17, stay on `react-resizable-panels` v3 and use its equivalent API (`PanelGroup`, `Panel` and `PanelResizeHandle`, with `direction` instead of `orientation`). The theme continues to style v3 components.
 
+Size props such as `defaultSize`, `minSize` and `maxSize` also differ between versions. The v4 examples pass strings such as `"25%"`. In v4, a plain number is a size in pixels, but in v3 it is a percentage and strings are not supported. When you copy an example onto v3, replace each string with its percentage as a number, for example `defaultSize={25}`.
+
 </Callout>
 
 To install the `@salt-ds/react-resizable-panels-theme` package, run the command appropriate to your environment: `yarn add @salt-ds/react-resizable-panels-theme` or `npm install @salt-ds/react-resizable-panels-theme`
