@@ -85,8 +85,9 @@
   background: var(--splitHandle-background-hover);
 }
 
+/* the repeated attribute matches the v3 specificity so the active state overrides the background variants */
 .react-resizable-panels-theme-salt div[data-resize-handle][data-resize-handle-state="drag"],
-.react-resizable-panels-theme-salt div[data-separator="active"] {
+.react-resizable-panels-theme-salt div[data-separator][data-separator="active"] {
   --splitHandle-background: var(--splitHandle-background-active);
 }
 
