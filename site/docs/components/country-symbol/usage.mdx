@@ -42,6 +42,26 @@ To import a "sharp" variant from the `countries` Salt package, append `_Sharp` t
 import { AD_Sharp, GB_ENG_Sharp } from "@salt-ds/countries";
 ```
 
+## Use in React Server Components
+
+Country symbols and `LazyCountrySymbol` can be used in [React Server Components](/salt/getting-started/server-components).
+
+`countryToComponentMap` can only be used in Client Components. To show a country symbol from a country code in a Server Component, use `LazyCountrySymbol`. You can also use `countryMetaMap` to get the country’s name.
+
+```tsx
+import { Text } from "@salt-ds/core";
+import { countryMetaMap, LazyCountrySymbol } from "@salt-ds/countries";
+
+export default function Page() {
+  return (
+    <Text>
+      <LazyCountrySymbol code="GB" aria-hidden />{" "}
+      {countryMetaMap.GB.countryName}
+    </Text>
+  );
+}
+```
+
 ## Props
 
 ### `CountrySymbol`
