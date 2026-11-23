@@ -13,9 +13,10 @@ import {
   Text,
   ToggleButton,
   ToggleButtonGroup,
+  useAriaAnnouncer,
   useId,
 } from "@salt-ds/core";
-import { useState } from "react";
+import { type ChangeEvent, useState } from "react";
 
 const incidents = [
   {
@@ -38,17 +39,22 @@ const incidents = [
   },
 ];
 
+const filterIncidents = (filter: string) => {
+  const query = filter.trim().toLowerCase();
+  return incidents.filter((incident) =>
+    `${incident.service} ${incident.team} ${incident.summary}`
+      .toLowerCase()
+      .includes(query),
+  );
+};
+
 export const ToggleButtonGroupViewSwitching = () => {
   const [view, setView] = useState("list");
   const [filter, setFilter] = useState("");
   const [selectedId, setSelectedId] = useState("");
   const id = useId();
-  const query = filter.trim().toLowerCase();
-  const visibleIncidents = incidents.filter((incident) =>
-    `${incident.service} ${incident.team} ${incident.summary}`
-      .toLowerCase()
-      .includes(query),
-  );
+  const { announce } = useAriaAnnouncer({ debounce: 500 });
+  const visibleIncidents = filterIncidents(filter);
   const selectedIncident = incidents.find(
     (incident) => incident.id === selectedId,
   );
@@ -59,6 +65,19 @@ export const ToggleButtonGroupViewSwitching = () => {
     ? selectedId
     : "";
 
+  const handleFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.currentTarget.value;
+    setFilter(value);
+    const count = filterIncidents(value).length;
+    announce(
+      count === 0
+        ? "No incidents match the filter."
+        : count === 1
+          ? "1 incident matches the filter."
+          : `${count} incidents match the filter.`,
+    );
+  };
+
   return (
     <StackLayout gap={2} style={{ width: "100%", maxWidth: 720 }}>
       <FormField>
@@ -66,7 +85,7 @@ export const ToggleButtonGroupViewSwitching = () => {
         <Input
           value={filter}
           inputProps={{
-            onChange: (event) => setFilter(event.currentTarget.value),
+            onChange: handleFilterChange,
           }}
         />
       </FormField>
