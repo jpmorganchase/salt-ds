@@ -34,6 +34,8 @@ jobs:
         run: yarn run prettier:ci
       - name: Stylelint
         run: yarn run lint:style
+      - name: JSDoc
+        run: yarn run lint:jsdoc
       - name: Spellcheck
         run: yarn workspace @salt-ds/site spellcheck
 

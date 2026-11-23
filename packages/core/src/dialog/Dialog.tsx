@@ -30,7 +30,13 @@ import dialogCss from "./Dialog.css";
 import { DialogContext } from "./DialogContext";
 
 interface ConditionalScrimWrapperProps {
+  /**
+   * The content to wrap.
+   */
   children?: ReactNode;
+  /**
+   * If `true`, `children` are wrapped in a fixed `Scrim`.
+   */
   condition: boolean;
 }
 
@@ -43,40 +49,41 @@ export const ConditionalScrimWrapper = ({
 
 export interface DialogProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   * Display or hide the component.
+   * If `true`, the Dialog is shown. Use with `onOpenChange` to control it.
    */
   open?: boolean;
   /**
-   * Callback function triggered when open state changes.
+   * Callback fired when the open state changes, for example when the user
+   * presses the Escape key or clicks outside the Dialog.
    */
   onOpenChange?: (open: boolean) => void;
   /**
-   * The status of the Dialog
-   * */
+   * The status of the Dialog.
+   */
   status?: ValidationStatus;
   /**
-   * Which element to initially focus. Can be either a number (tabbable index as specified by the order) or a ref.
-   * Default value is 0 (first tabbable element).
-   * */
+   * The element that receives focus when the Dialog opens: the index of a
+   * tabbable element inside the Dialog, in tab order, or a ref to an element.
+   * @default 0
+   */
   initialFocus?: ComponentProps<typeof FloatingFocusManager>["initialFocus"];
   /**
-   * Size of the Dialog
-   * */
+   * Size of the Dialog.
+   */
   size?: "small" | "medium" | "large";
   /**
-   * Prevent the dialog closing on click away
-   * */
+   * If `true`, the Dialog doesn't close when the user clicks outside it.
+   */
   disableDismiss?: boolean;
   /**
-   * Prevent Scrim from rendering
-   * */
+   * If `true`, the `Scrim` isn't rendered.
+   */
   disableScrim?: boolean;
   /**
+   * Optional id prop.
+   * Used for accessibility purposes to announce the title and subtitle when using a screen reader.
    * @deprecated since 1.58.0. IDs are now auto-generated internally for proper ARIA labeling.
-   *
-   * Optional id prop
-   * Used for accessibility purposes to announce the title and subtitle when using a screen reader
-   * */
+   */
   idProp?: string;
 }
 

@@ -2,7 +2,7 @@ import { useIcon } from "../semantic-icon-provider";
 
 interface ExpansionIconProps {
   /**
-   * Whether the navigation item is expanded.
+   * If `true`, the icon shows that the navigation item is expanded.
    */
   expanded?: boolean;
   /**

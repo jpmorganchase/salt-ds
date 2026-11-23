@@ -71,8 +71,9 @@ export interface DropdownProps<Item = string>
    */
   children?: ReactNode;
   /**
-   * The marker to use in an empty read only dropdown.
-   * Use `''` to disable this feature. Defaults to '—'.
+   * The text shown when the dropdown is read-only and has no value. Use `""` to
+   * show nothing.
+   * @default "—"
    */
   emptyReadOnlyMarker?: string;
   /**
@@ -88,11 +89,12 @@ export interface DropdownProps<Item = string>
    */
   required?: boolean;
   /**
-   * Start adornment component
+   * Start adornment component.
    */
   startAdornment?: ReactNode;
   /**
-   * Styling variant. Defaults to "primary".
+   * Styling variant.
+   * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
   /**
@@ -103,11 +105,12 @@ export interface DropdownProps<Item = string>
    * Validation status, one of "error" | "warning" | "success".
    */
   validationStatus?: FormFieldValidationStatus;
-  /** Styling variant with a full border. Defaults to false
+  /**
+   * If `true`, the dropdown has a full border.
    */
   bordered?: boolean;
   /**
-   *  Props to pass to Dropdown's overlay.
+   * Props applied to the Dropdown's overlay, which contains the options.
    */
   OverlayProps?: Omit<ComponentPropsWithoutRef<"div">, "children" | "id"> &
     DataAttributes;
@@ -532,5 +535,10 @@ export const Dropdown = forwardRef(function Dropdown<Item>(
     </ListControlProvider>
   );
 }) as <Item = string>(
-  props: DropdownProps<Item> & { ref?: Ref<HTMLButtonElement> },
+  props: DropdownProps<Item> & {
+    /**
+     * A ref to the dropdown's `button` element.
+     */
+    ref?: Ref<HTMLButtonElement>;
+  },
 ) => ReactElement;

@@ -30,11 +30,11 @@ import listBoxCss from "./ListBox.css";
 
 export type ListBoxProps<Item = string> = {
   /**
-   * If `true`, the list box will be disabled.
+   * If `true`, the list box is disabled.
    */
   disabled?: boolean;
   /**
-   * If `false`, the list box will have not a border.
+   * If `true`, the list box has a border.
    */
   bordered?: boolean;
   /**
@@ -42,11 +42,11 @@ export type ListBoxProps<Item = string> = {
    */
   children?: ReactNode;
   /**
-   * If `true`, the list box will be multiselect.
+   * If `true`, multiple options can be selected.
    */
   multiselect?: boolean;
 } & ComponentPropsWithoutRef<"div"> &
-  Omit<ListControlProps<Item>, "onOpenChange">;
+  Omit<ListControlProps<Item>, "disabled" | "multiselect" | "onOpenChange">;
 
 const withBaseName = makePrefixer("saltListBox");
 
@@ -270,5 +270,10 @@ export const ListBox = forwardRef(function ListBox<Item>(
     </ListControlProvider>
   );
 }) as <Item = string>(
-  props: ListBoxProps<Item> & { ref?: Ref<HTMLDivElement> },
+  props: ListBoxProps<Item> & {
+    /**
+     * A ref to the list box element.
+     */
+    ref?: Ref<HTMLDivElement>;
+  },
 ) => ReactElement;

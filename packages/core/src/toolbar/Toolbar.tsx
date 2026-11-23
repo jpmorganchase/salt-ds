@@ -38,11 +38,13 @@ import { useToolbarOverflow } from "./useToolbarOverflow";
 
 export interface ToolbarProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Visual treatment of the toolbar. Defaults to `"bordered"`.
+   * The appearance of the toolbar.
+   * @default "bordered"
    */
   appearance?: "bordered" | "transparent";
   /**
-   * Styling variant. Defaults to `"primary"`.
+   * The styling variant.
+   * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
 }

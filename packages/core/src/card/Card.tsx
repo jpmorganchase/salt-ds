@@ -23,26 +23,24 @@ export interface CardProps extends ComponentPropsWithoutRef<"div"> {
    */
   borderColor?: "strong" | "subtle" | "none";
   /**
-   * **Deprecated:** Use the InteractableCard component instead
-   *
    * If `true`, the card will be disabled.
+   * @deprecated since 1.5.0. Use `InteractableCard` instead.
    */
   disabled?: boolean;
   /**
-   * @deprecated since 1.71.0. Use `LinkCard` or `InteractableCard` when the entire card is interactive.
-   *
-   * If `true` the card will have hover styling.
+   * If `true`, the card has hover styling.
+   * @deprecated since 1.71.0. Remove this prop from `Card`. Use `LinkCard` or `InteractableCard` when the entire card is interactive.
    */
   hoverable?: boolean;
   /**
-   * **Deprecated:** Use the InteractableCard component instead
-   *
    * If `true`, interactive styles will be applied to `Card`. These styles give prominence to certain content
    * on the page.
+   * @deprecated since 1.5.0. Use `InteractableCard` instead.
    */
   interactable?: boolean;
   /**
-   * Styling variant. Defaults to "primary".
+   * Styling variant.
+   * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary" | "ghost";
 }

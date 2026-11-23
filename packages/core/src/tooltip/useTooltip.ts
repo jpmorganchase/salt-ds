@@ -27,15 +27,15 @@ export interface UseTooltipProps
     Pick<UseFloatingUIProps, "onOpenChange" | "open" | "placement">
   > {
   /**
-   * When `true`, the tooltip will be disabled.
+   * If `true`, the tooltip is disabled and doesn't open.
    */
   disabled?: boolean;
   /**
-   * Do not respond to focus events.
+   * If `true`, the tooltip doesn't respond to focus events.
    */
   disableFocusListener?: boolean;
   /**
-   * Do not respond to hover events.
+   * If `true`, the tooltip doesn't respond to hover events.
    */
   disableHoverListener?: boolean;
   /**

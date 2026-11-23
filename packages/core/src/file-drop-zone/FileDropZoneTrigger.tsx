@@ -18,11 +18,11 @@ export interface FileDropZoneTriggerProps
    */
   accept?: string;
   /**
-   * Disable all trigger elements.
+   * If `true`, the trigger button and its hidden file input are disabled.
    */
   disabled?: boolean;
   /**
-   * Allows multiple files to be uploaded.
+   * If `true`, multiple files can be selected for upload.
    */
   multiple?: boolean;
   /**
@@ -30,18 +30,17 @@ export interface FileDropZoneTriggerProps
    */
   name?: string;
   /**
-   * Callback for input change event
+   * Callback fired when the user selects files in the file dialog.
    */
   onChange?: (event: ChangeEvent<HTMLInputElement>, files: File[]) => void;
   /**
-   * The appearance of the button. Options are 'solid', 'bordered', and 'transparent'.
-   * 'solid' is the default value.
+   * The appearance of the button: `"solid"`, `"bordered"` or `"transparent"`.
+   * @default "solid"
    */
   appearance?: ButtonProps["appearance"];
   /**
-   * The sentiment of the button. Options are 'accented' and 'neutral'.
-   * 'neutral' is the default value.
-   *
+   * The sentiment of the button.
+   * @default "neutral"
    */
   sentiment?: Extract<ButtonProps["sentiment"], "accented" | "neutral">;
 }

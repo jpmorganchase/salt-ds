@@ -19,29 +19,30 @@ import calendarDayCss from "./CalendarDay.css";
 export interface CalendarDayProps
   extends Omit<ComponentPropsWithRef<"button">, "children"> {
   /**
-   * Day date
+   * The date of the day.
    */
   date: DateFrameworkType;
   /**
-   * Format of date
+   * The format of the day number, passed to the date adapter's `format` method.
+   * @default "DD"
    */
   format?: string;
   /**
-   * Render prop to enable customisation of day button.
+   * Render prop to enable customization of the day button.
    */
   render?: RenderPropsType["render"];
   /**
-   * Month being rendered
+   * The month that the day is shown in. Days outside this month are shown as out of range.
    */
   month: DateFrameworkType;
   /**
-   * Additional Tooltip props
+   * Props applied to the `Tooltip` that shows why the day is unselectable or highlighted.
    */
   TooltipProps?: Partial<TooltipProps>;
 }
 export interface renderCalendarDayProps extends CalendarDayProps {
   /**
-   * Status of day
+   * The status of the day, such as whether it's selected, today or unselectable.
    */
   status: DayStatus;
 }

@@ -274,7 +274,7 @@ function findNextAfterPanel(
 
 export interface UseMegaMenuNavigationProps {
   /**
-   * Whether the interaction is enabled.
+   * If `true`, the keyboard navigation interaction is enabled.
    * @default true
    */
   enabled?: boolean;

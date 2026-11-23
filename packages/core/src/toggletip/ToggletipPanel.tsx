@@ -28,7 +28,7 @@ const withBaseName = makePrefixer("saltToggletipPanel");
 
 export interface ToggletipPanelProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The content of Toggletip Panel
+   * The content of Toggletip Panel.
    */
   children?: ReactNode;
 }

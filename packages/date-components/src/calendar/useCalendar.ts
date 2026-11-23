@@ -37,19 +37,19 @@ import {
  */
 interface UseCalendarBaseProps {
   /**
-   * Factory method for date selection live announcements or null to silence announcements
+   * The function that creates the live announcements, such as when a date is selected or the visible month changes. Use `null` to turn off announcements.
    */
   createAnnouncement?: CreateAnnouncement | null;
   /**
-   * The default visible month.
+   * The initial visible month. Use when the component is uncontrolled. Defaults to the current month.
    */
   defaultVisibleMonth?: DateFrameworkType;
   /**
-   * The currently focused date in the calendar, or null if no date is focused.
+   * The focused date, or `null` if no date is focused. Use with `onFocusedDateChange` to control it.
    */
   focusedDate?: DateFrameworkType | null;
   /**
-   * The currently hovered date.
+   * The hovered date. Use with `onHoveredDateChange` to control it.
    */
   hoveredDate?: DateFrameworkType | null;
   /**
@@ -106,30 +106,31 @@ interface UseCalendarBaseProps {
    */
   hideOutOfRangeDates?: boolean;
   /**
-   * The minimum selectable date.
+   * The minimum selectable date. Defaults to the `minDate` of the `LocalizationProvider`, which is January 1, 1900 unless it's set.
    */
   minDate?: DateFrameworkType;
   /**
-   * The maximum selectable date.
+   * The maximum selectable date. Defaults to the `maxDate` of the `LocalizationProvider`, which is December 31, 2099 unless it's set.
    */
   maxDate?: DateFrameworkType;
   /**
-   * Number of visible months, maximum 12, defaults to 1.
+   * Number of visible months, up to a maximum of 12.
+   * @default 1
    */
   numberOfVisibleMonths?: ResponsiveProp<
     1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
   >;
   /**
    * Specifies the timezone behavior:
-   * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
-   * - If set to "default", the default timezone of the date library will be used.
-   * - If set to "system", the local system's timezone will be applied.
-   * - If set to "UTC", the time will be returned in UTC.
+   * - If not set, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+   * - If set to `"default"`, the default timezone of the date library will be used.
+   * - If set to `"system"`, the local system's timezone will be applied.
+   * - If set to `"UTC"`, the time will be returned in UTC.
    * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
    */
   timezone?: Timezone;
   /**
-   * The currently visible month.
+   * The visible month. Use with `onVisibleMonthChange` to control it.
    */
   visibleMonth?: DateFrameworkType;
 }
@@ -257,10 +258,10 @@ export interface UseCalendarReturn {
     numberOfVisibleMonths: number;
     /**
      * Specifies the timezone behavior:
-     * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
-     * - If set to "default", the default timezone of the date library will be used.
-     * - If set to "system", the local system's timezone will be applied.
-     * - If set to "UTC", the time will be returned in UTC.
+     * - If not set, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+     * - If set to `"default"`, the default timezone of the date library will be used.
+     * - If set to `"system"`, the local system's timezone will be applied.
+     * - If set to `"UTC"`, the time will be returned in UTC.
      * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
      */
     timezone?: Timezone;

@@ -9,8 +9,20 @@ import type { StepStage, StepStatus } from "../Step";
 import stepIconCSS from "./StepIcon.css";
 
 export interface StepIconProps extends IconProps {
+  /**
+   * The stage of the step, which sets the icon when `status` isn't set.
+   */
   stage: StepStage;
+  /**
+   * The status of the step. When set, it replaces the stage's icon with the
+   * warning or error icon.
+   */
   status?: StepStatus;
+  /**
+   * The size of the icon, as a multiplier of the base icon size. It takes
+   * precedence over `size`. When `size` is set, it defaults to `size`.
+   * @default 1.5
+   */
   sizeMultiplier?: IconProps["size"];
 }
 

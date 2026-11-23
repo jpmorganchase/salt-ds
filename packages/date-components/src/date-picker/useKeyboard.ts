@@ -3,13 +3,12 @@ import { type KeyboardEvent, useMemo } from "react";
 
 export interface UseKeyboardProps {
   /**
-   * Whether the hook is enabled
+   * If `true`, the hook is enabled.
    * @default true
    */
   enabled?: boolean;
   /**
-   * Handler for when the arrow key down is pressed
-   * @param event
+   * Callback fired when the Down Arrow key is pressed on the reference element.
    */
   onArrowDown?: (event: KeyboardEvent) => void;
 }

@@ -13,6 +13,9 @@ import { useCollapsibleContext } from "./CollapsibleContext";
 
 export interface CollapsibleTriggerProps
   extends Pick<ComponentPropsWithoutRef<"button">, "className" | "onClick"> {
+  /**
+   * The element that opens and closes the collapsible, such as a `Button`. It must be a single element, which receives the click handler, `aria-expanded` and `aria-controls`.
+   */
   children: ReactNode;
 }
 

@@ -4359,7 +4359,7 @@ __metadata:
     highcharts: "npm:10.3.3"
     highcharts-react-official: "npm:^3.2.2"
     mockdate: "npm:^3.0.5"
-    playwright: "npm:1.64.1"
+    playwright: "npm:1.65.0"
     prettier: "npm:^3.3.3"
     react: "npm:^18.3.1"
     react-docgen-typescript: "npm:2.4.0"
@@ -12307,23 +12307,23 @@ __metadata:
   languageName: node
   linkType: hard
 
-"playwright-core@npm:1.64.1":
-  version: 1.64.1
-  resolution: "playwright-core@npm:1.64.1"
+"playwright-core@npm:1.65.0":
+  version: 1.65.0
+  resolution: "playwright-core@npm:1.65.0"
   bin:
     playwright-core: cli.js
-  checksum: 10/4a173590bc784d8d5bfe2cace53ccc31316dac11475660b59cea24a2e833875d87183d41a957a20355301ac2b339a17940faaf0b42217156fa9c0c3cfdd4633c
+  checksum: 10/77c76725d9c60a8fc67439e9fcb1ef075268aaf81dd5edc5321da777eb0f2103e8569f9efa55dd0adbd9c8c41ef97c956dd7263dc91c4233f29388cfa451dee3
   languageName: node
   linkType: hard
 
-"playwright@npm:1.64.1":
-  version: 1.64.1
-  resolution: "playwright@npm:1.64.1"
+"playwright@npm:1.65.0":
+  version: 1.65.0
+  resolution: "playwright@npm:1.65.0"
   dependencies:
-    playwright-core: "npm:1.64.1"
+    playwright-core: "npm:1.65.0"
   bin:
     playwright: cli.js
-  checksum: 10/1096fa91e433f84c8677433a26052aa4f269bf0811aa793fe667d7053feb1c2852e9f10f9f0cced77fa2678f8580ed47192f29adbc9c027efa5ba87b38e23e50
+  checksum: 10/bda489bad0809f61a874407244f0de7c38cefb8864148c6094f0f9dc2f808bbcbf4a8074cf7366d90890ff7e88786fc93965614dd63de3ab4594e5a6b0a39abd
   languageName: node
   linkType: hard
 

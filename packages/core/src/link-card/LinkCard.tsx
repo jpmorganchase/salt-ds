@@ -24,7 +24,8 @@ export interface LinkCardProps extends ComponentPropsWithoutRef<"a"> {
    */
   borderColor?: "strong" | "subtle" | "none";
   /**
-   * Styling variant; defaults to "primary".
+   * Styling variant.
+   * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
 }

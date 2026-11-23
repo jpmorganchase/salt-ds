@@ -15,15 +15,17 @@ import { NavigationItemAction } from "./NavigationItemAction";
 
 export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Whether the navigation item is active.
+   * If `true`, the navigation item is active.
    */
   active?: boolean;
   /**
-   * Whether the nested group is collapsed and there is an active nested item within it.
+   * If `true`, the nested group is collapsed and there is an active nested item
+   * within it.
    */
   blurActive?: boolean;
   /**
-   * Whether the navigation item is expanded.
+   * If `true`, the navigation item is expanded. Use with `onExpand` to control
+   * it.
    */
   expanded?: boolean;
   /**
@@ -35,15 +37,16 @@ export interface NavigationItemProps extends ComponentPropsWithoutRef<"div"> {
    */
   orientation?: "horizontal" | "vertical";
   /**
-   * Whether the navigation item is a parent with nested items.
+   * If `true`, the navigation item is a parent with nested items.
    */
   parent?: boolean;
   /**
-   * Render prop to enable customisation of navigation item element.
+   * Render prop to enable customization of navigation item element.
    */
   render?: RenderPropsType["render"];
   /**
-   * Action to be triggered when the navigation item is expanded.
+   * Callback fired when the navigation item is clicked, for example to expand
+   * or collapse its nested items.
    */
   onExpand?: MouseEventHandler<HTMLButtonElement>;
   /**

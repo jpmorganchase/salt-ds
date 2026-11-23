@@ -10,12 +10,13 @@ const withBaseName = makePrefixer("saltScrim");
 
 export interface ScrimProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * If `true` the scrim is bound to the document viewport.
-   * The default value of this prop is false, and the default behavior is for Scrim to be bound to its parent container (nearest positioned ancestor).
+   * If `true`, the scrim is bound to the document viewport. Otherwise, it's
+   * bound to its parent container (the nearest positioned ancestor).
    */
   fixed?: boolean;
   /**
-   * If `true` the scrim is shown.
+   * If `true`, the scrim is shown.
+   * @default true
    */
   open?: boolean;
 }

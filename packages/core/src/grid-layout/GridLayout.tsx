@@ -23,31 +23,36 @@ export type GridLayoutProps<T extends ElementType> =
     T,
     {
       /**
-       * Number of columns to be displayed. Defaults to 12
+       * Number of columns to be displayed.
+       * @default 12
        */
       columns?: ResponsiveProp<number | string>;
       /**
-       * Number of rows to be displayed. Defaults to 1
+       * Number of rows to be displayed.
+       * @default 1
        */
       rows?: ResponsiveProp<number | string>;
       /**
-       * Defines the size of the gutter between the columns and the rows by setting a density multiplier. Defaults to 3
+       * Defines the size of the gutter between the columns and the rows by setting a density multiplier.
+       * @default 3
        */
       gap?: ResponsiveProp<number | string>;
       /**
-       * Defines the size of the gutter between the columns by setting a density multiplier. Defaults to 1
+       * Defines the size of the gutter between the columns by setting a density multiplier. Defaults to the value of `gap`.
        */
       columnGap?: ResponsiveProp<number | string>;
       /**
-       * Defines the size of the gutter between the rows by setting a density multiplier. Defaults to 1
+       * Defines the size of the gutter between the rows by setting a density multiplier. Defaults to the value of `gap`.
        */
       rowGap?: ResponsiveProp<number | string>;
       /**
-       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value. Default is `0`.
+       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value.
+       * @default 0
        */
       margin?: ResponsiveProp<number | string>;
       /**
-       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value. Default is `0`.
+       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value.
+       * @default 0
        */
       padding?: ResponsiveProp<number | string>;
     }
