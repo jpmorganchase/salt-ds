@@ -10,28 +10,30 @@ data:
 
 ## Best practices
 
-- Provide an accessible name for each stepper with `aria-label` or `aria-labelledby`, for example by referencing the title of the process.
-- Set `stage="active"` on only one step.
-- Update the stage of each step from your application's state when the user moves to another step. Stages don't change on their own.
+Improve accessibility by customizing the aria-label prop to provide additional context. For example:
+
+- Each Step must expose its stage (completed / in-progress / pending) and label as programmatically-determined state, not conveyed by icon or color alone
 
 ## Keyboard interactions
 
-Steps can't receive focus. Only the expand buttons of steps with substeps can.
+Keyboard interactions apply to only Steppers with steps with nested substeps. In those cases the parent step renders automatically a button that allows for expanding or collapsing the substeps.
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
-Moves focus to the next expand button. Expand buttons inside collapsed steps are skipped.
+- Moves the focus down to the next expand button.
+- By default all steps with substeps are collapsed, meaning only top level expand buttons will be focusable.
+- If the substeps contain more substeps, the focus will move to the inside steps only if the parent is expanded.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Tab">
 
-Moves focus to the previous expand button.
+- Moves the focus up to the previous expand button.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter / Space">
 
-Expands or collapses the substeps of the step. Focus stays on the expand button.
+- Applicable to only steps with substeps. Those steps are in the collapsed state by default. Using this action on the arrow button expands or collapses the step.
 
 </KeyboardControl>
 </KeyboardControls>

@@ -8,7 +8,11 @@ import {
 } from "@salt-ds/core";
 import { useState } from "react";
 
-const steps = ["Account details", "Identity check", "Funding", "Review"];
+const steps = [
+  { label: "Step 1", description: "Description text" },
+  { label: "Step 2", description: "Description text" },
+  { label: "Step 3", description: "Description text" },
+];
 
 function getStage(index: number, activeIndex: number): StepStage {
   if (index < activeIndex) {
@@ -26,10 +30,11 @@ export const UpdatingProgress = () => {
   return (
     <StackLayout style={{ width: "100%" }}>
       <Stepper aria-label="Account opening">
-        {steps.map((label, index) => (
+        {steps.map((step, index) => (
           <Step
-            key={label}
-            label={label}
+            key={step.label}
+            label={step.label}
+            description={step.description}
             stage={getStage(index, activeIndex)}
           />
         ))}

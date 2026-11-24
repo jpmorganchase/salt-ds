@@ -8,45 +8,27 @@ data:
   $ref: ./#/data
 ---
 
-## Using the components
+| Aspect     | Step count  | Space available    | Layout        | Expandable | Title               | Descriptions |
+| ---------- | ----------- | ------------------ | ------------- | ---------- | ------------------- | ------------ |
+| Horizontal | 3-6 optimal | Wide layouts       | Left-to-right | No         | Concise (1-2 words) | Below steps  |
+| Vertical   | Any count   | Normal/Constrained | Top-to-bottom | Yes        | Can be long         | Beside steps |
 
-`Stepper` displays the `stage` and `status` you set on each `Step`. Steps aren't interactive: users can't focus, select or activate them. In a vertical stepper, the only interactive element is the expand button on a step with substeps.
+## When to use
 
-`Stepper` doesn't track the current step, change stages or provide navigation.
+- Horizontal stepper: for wide layouts and desktop applications where you want to show all steps simultaneously and let users scan progress at a glance; best with 3–6 steps and no nested substeps.
+- Vertical stepper: for step-by-step guided experiences that need detailed, multi-line descriptions per step, or expandable (accordion-style) step content; works well with longer label text.
 
-- Set `stage="active"` on the step the user is on, and update the `stage` and `status` of each step as the user moves through the process.
-- Provide your own buttons to move between steps. See the [wizard pattern](/salt/patterns/wizard) for a complete multi-step flow.
-- Substeps are supported in vertical orientation only.
+## When not to use
 
-### When to use
-
-- When there are separate steps within a process, such as a wizard or a multi-step form.
-- Use a horizontal stepper in wide layouts, when you want to show all steps at once so users can scan their progress at a glance. It works best with three to six steps and no substeps.
-- Use a vertical stepper for guided processes with longer labels, multi-line descriptions or substeps. It works best in a two-column page layout.
-
-### When not to use
-
-- When there are fewer than three steps in a process.
-- As navigation; users can't interact with the steps.
-- When users need to switch between related views on the same page. Instead, use [`Tabs`](../tabs).
-- To show how long a system operation is taking. Instead, use [`Progress`](../progress).
-- A horizontal stepper in a sidebar, panel or other narrow container. Instead, place it above the form or page content, or use a vertical stepper.
-- A vertical stepper when there's plenty of horizontal space and the steps are short and simple. Instead, use a horizontal stepper.
-
-### Choosing an orientation
-
-| Orientation | Step count | Space available  | Direction     | Substeps | Labels                  | Label position          |
-| ----------- | ---------- | ---------------- | ------------- | -------- | ----------------------- | ----------------------- |
-| Horizontal  | 3–6        | Wide layouts     | Left to right | No       | Short, one or two words | Centered below the icon |
-| Vertical    | Any        | Normal or narrow | Top to bottom | Yes      | Can be long             | Next to the icon        |
-
-For more guidance, see [horizontal stepper vs. vertical stepper](/salt/patterns/wizard#horizontal-stepper-vs-vertical-stepper) in the wizard pattern.
+- Horizontal stepper
+  - Avoid in sidebars/panels or narrow containers; it should only be placed above form/page content, not within constrained-width regions.
+- Vertical stepper
+  - Avoid when horizontal space is abundant and steps have minimal content; the extra vertical real estate isn't justified for short, simple step sequences. It should ideally be used in a 2 column page layout
 
 ## Content
 
-- Keep labels short and self-explanatory, such as "Account details".
-- Labels and descriptions wrap and never truncate.
 - Pass plain text to `label` and `description`. They're combined into the text that screen readers announce, so other content, such as an element, isn't announced correctly.
+- Labels and descriptions wrap and never truncate.
 
 ## Import
 
