@@ -46,13 +46,6 @@ function getCenter(element: HTMLElement) {
   return { x: left + width / 2, y: top + height / 2 };
 }
 
-async function hoverSeparator(separator: HTMLElement) {
-  const center = getCenter(separator);
-  await mouse.move(center);
-  await expect.element(separator).toHaveAttribute("data-separator", "hover");
-  return center;
-}
-
 const separatorCases = [
   {
     name: "a separator",
@@ -74,27 +67,24 @@ const separatorCases = [
   },
 ];
 
-async function renderSeparator({
-  Story,
-  separatorName,
-}: (typeof separatorCases)[number]) {
-  await renderWithSalt(<Story />);
-  return page
-    .getByRole("separator", { name: separatorName })
-    .element() as HTMLElement;
-}
-
 describe.skipIf(!isReact18OrLater)(
   "Given react-resizable-panels v4 with the Salt theme",
   () => {
     it.each(separatorCases)(
       "shows distinct active styles while dragging $name",
-      async (testCase) => {
-        const separator = await renderSeparator(testCase);
+      async ({ Story, separatorName }) => {
+        await renderWithSalt(<Story />);
+        const separator = page
+          .getByRole("separator", { name: separatorName })
+          .element() as HTMLElement;
         const defaultBackground = getBackground(separator);
         const defaultDot = getBackground(separator, "::after");
 
-        const { x, y } = await hoverSeparator(separator);
+        const { x, y } = getCenter(separator);
+        await mouse.move({ x, y });
+        await expect
+          .element(separator)
+          .toHaveAttribute("data-separator", "hover");
         await expect
           .poll(() => getBackground(separator))
           .not.toBe(defaultBackground);
@@ -121,11 +111,17 @@ describe.skipIf(!isReact18OrLater)(
 
     it.each(separatorCases)(
       "changes the background while hovering $name",
-      async (testCase) => {
-        const separator = await renderSeparator(testCase);
+      async ({ Story, separatorName }) => {
+        await renderWithSalt(<Story />);
+        const separator = page
+          .getByRole("separator", { name: separatorName })
+          .element() as HTMLElement;
         const defaultBackground = getBackground(separator);
 
-        await hoverSeparator(separator);
+        await mouse.move(getCenter(separator));
+        await expect
+          .element(separator)
+          .toHaveAttribute("data-separator", "hover");
         await expect
           .poll(() => getBackground(separator))
           .not.toBe(defaultBackground);
@@ -140,14 +136,17 @@ describe.skipIf(!isReact18OrLater)(
 
     it.each(separatorCases)(
       "shows the focus ring without hover styles when $name is focused with the keyboard",
-      async (testCase) => {
-        const separator = await renderSeparator(testCase);
+      async ({ Story, separatorName, tabStops }) => {
+        await renderWithSalt(<Story />);
+        const separator = page
+          .getByRole("separator", { name: separatorName })
+          .element() as HTMLElement;
         const defaultBackground = getBackground(separator);
         const focusRing = resolveFocusRing(separator);
         expect(focusRing.outlineStyle).not.toBe("none");
 
         // Programmatic focus() doesn't match :focus-visible in Firefox.
-        for (let i = 0; i < testCase.tabStops; i++) {
+        for (let i = 0; i < tabStops; i++) {
           await userEvent.tab();
         }
 
@@ -161,10 +160,17 @@ describe.skipIf(!isReact18OrLater)(
     );
 
     it("looks hovered without a focus ring after a drag ends over a separator", async () => {
-      const separator = await renderSeparator(separatorCases[0]);
+      await renderWithSalt(<Horizontal />);
+      const separator = page
+        .getByRole("separator", { name: "Resize Left/Center" })
+        .element() as HTMLElement;
       const defaultBackground = getBackground(separator);
 
-      const { x, y } = await hoverSeparator(separator);
+      const { x, y } = getCenter(separator);
+      await mouse.move({ x, y });
+      await expect
+        .element(separator)
+        .toHaveAttribute("data-separator", "hover");
       await expect
         .poll(() => getBackground(separator))
         .not.toBe(defaultBackground);
