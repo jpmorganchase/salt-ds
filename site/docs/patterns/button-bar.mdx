@@ -12,7 +12,7 @@ data:
       { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-button-bar--button-bar", label: "Button bar examples" },
     ]
   components: ["Button", "Split layout", "Stack layout"]
-  relatedPatterns: ["Forms"]
+  relatedPatterns: ["Forms", "Decision button group"]
 ---
 
   <Diagram
@@ -116,6 +116,8 @@ Remember to use a hierarchy when making your button choices, much like following
 Optionally, use colored [sentiment buttons](/salt/components/button/examples#other-sentiments) within a button bar depending on the sentiment of the action - i.e. positive, caution and negative. We recommend combining a sentiment with the button appearance (solid, bordered or transparent) that best represents the importance of the action.
 
 In the example below, the ‘Delete now’ button is styled using a solid appearance and negative sentiment to emphasize the risk of permanently deleting items as an action.
+
+When a compact decision needs single selection and the ability to deselect, such as Like/Dislike. Instead, use [Decision button group](/salt/patterns/decision-button-group).
 
 <Diagram
   src="/img/patterns/button-bar/negative-sentiment-button.png"
