@@ -41,18 +41,21 @@ const separatorCases = [
       page
         .getByRole("separator", { name: "Resize Left/Center" })
         .element() as HTMLElement,
+    tabStops: 1,
   },
   {
     name: "a secondary variant separator",
     render: () => renderWithSalt(<Variant />),
     getSeparator: () =>
       page.getByRole("separator").nth(0).element() as HTMLElement,
+    tabStops: 1,
   },
   {
     name: "a tertiary variant separator",
     render: () => renderWithSalt(<Variant />),
     getSeparator: () =>
       page.getByRole("separator").nth(1).element() as HTMLElement,
+    tabStops: 2,
   },
 ];
 
@@ -221,13 +224,16 @@ describe.skipIf(!isReact18OrLater)(
           .toBe(defaultBackground);
       });
 
-      it("THEN shows the focus ring and keeps its background when focused", async () => {
+      it("THEN shows the focus ring and keeps its background when focused with the keyboard", async () => {
         await testCase.render();
 
         const separator = testCase.getSeparator();
         const defaultBackground = getComputedStyle(separator).backgroundColor;
 
-        separator.focus();
+        // Programmatic focus() doesn't match :focus-visible in Firefox.
+        for (let i = 0; i < testCase.tabStops; i++) {
+          await userEvent.keyboard("{Tab}");
+        }
 
         await expect.poll(() => document.activeElement).toBe(separator);
         await expect
