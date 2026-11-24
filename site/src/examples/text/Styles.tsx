@@ -4,6 +4,10 @@ import {
   Display2,
   Display3,
   Display4,
+  Display5,
+  Display6,
+  Display7,
+  Display8,
   Editorial1,
   Editorial2,
   Editorial3,
@@ -35,6 +39,10 @@ export const Styles = (): ReactElement => (
     <Display2>Display 2</Display2>
     <Display3>Display 3</Display3>
     <Display4>Display 4</Display4>
+    <Display5>Display 5</Display5>
+    <Display6>Display 6</Display6>
+    <Display7>Display 7</Display7>
+    <Display8>Display 8</Display8>
     <H1>H1</H1>
     <H2>H2</H2>
     <H3>H3</H3>
