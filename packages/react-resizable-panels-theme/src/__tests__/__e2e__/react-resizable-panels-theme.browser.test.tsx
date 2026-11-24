@@ -28,6 +28,32 @@ function resolveColor(element: HTMLElement, customProperty: string) {
   return color;
 }
 
+const focusRingTokens = [
+  ["outlineStyle", "--salt-focused-outlineStyle"],
+  ["outlineWidth", "--salt-focused-outlineWidth"],
+  ["outlineColor", "--salt-focused-outlineColor"],
+  ["outlineOffset", "--salt-focused-outlineOffset"],
+] as const;
+
+function getOutline(element: Element) {
+  const styles = getComputedStyle(element);
+  return Object.fromEntries(
+    focusRingTokens.map(([property]) => [property, styles[property]]),
+  );
+}
+
+function resolveFocusRing(element: HTMLElement) {
+  const styles = getComputedStyle(element);
+  const probe = document.createElement("div");
+  for (const [property, token] of focusRingTokens) {
+    probe.style[property] = styles.getPropertyValue(token).trim();
+  }
+  document.body.appendChild(probe);
+  const focusRing = getOutline(probe);
+  probe.remove();
+  return focusRing;
+}
+
 function getCenter(element: HTMLElement) {
   const { left, top, width, height } = element.getBoundingClientRect();
   return { x: left + width / 2, y: top + height / 2 };
@@ -47,14 +73,18 @@ const separatorCases = [
     name: "a secondary variant separator",
     render: () => renderWithSalt(<Variant />),
     getSeparator: () =>
-      page.getByRole("separator").nth(0).element() as HTMLElement,
+      page
+        .getByRole("separator", { name: "Resize left and center panels" })
+        .element() as HTMLElement,
     tabStops: 1,
   },
   {
     name: "a tertiary variant separator",
     render: () => renderWithSalt(<Variant />),
     getSeparator: () =>
-      page.getByRole("separator").nth(1).element() as HTMLElement,
+      page
+        .getByRole("separator", { name: "Resize center and right panels" })
+        .element() as HTMLElement,
     tabStops: 2,
   },
 ];
@@ -223,30 +253,33 @@ describe.skipIf(!isReact18OrLater)(
           .poll(() => getComputedStyle(separator).backgroundColor)
           .toBe(defaultBackground);
       });
+    });
 
-      it("THEN shows the focus ring and keeps its background when focused with the keyboard", async () => {
+    it.each(separatorCases)(
+      "shows the focus ring without hover styles when $name is focused with the keyboard",
+      async (testCase) => {
         await testCase.render();
 
         const separator = testCase.getSeparator();
         const defaultBackground = getComputedStyle(separator).backgroundColor;
+        const focusRing = resolveFocusRing(separator);
+        expect(focusRing.outlineStyle).not.toBe("none");
 
         // Programmatic focus() doesn't match :focus-visible in Firefox.
         for (let i = 0; i < testCase.tabStops; i++) {
           await userEvent.tab();
         }
 
-        await expect.poll(() => document.activeElement).toBe(separator);
+        await expect.element(separator).toHaveFocus();
         await expect
-          .poll(() => separator.getAttribute("data-separator"))
-          .toBe("focus");
-        await expect
-          .poll(() => getComputedStyle(separator).outlineStyle)
-          .not.toBe("none");
+          .element(separator)
+          .toHaveAttribute("data-separator", "focus");
+        await expect.poll(() => getOutline(separator)).toEqual(focusRing);
         expect(getComputedStyle(separator).backgroundColor).toBe(
           defaultBackground,
         );
-      });
-    });
+      },
+    );
 
     it("THEN keeps the hover styles after a drag ends with the pointer over the separator", async () => {
       await renderWithSalt(<Horizontal />);
@@ -290,27 +323,6 @@ describe.skipIf(!isReact18OrLater)(
       await expect
         .poll(() => getComputedStyle(separator).backgroundColor)
         .toBe(defaultBackground);
-    });
-
-    it("THEN shows the focus ring without hover styles when focused with the keyboard", async () => {
-      await renderWithSalt(<Horizontal />);
-
-      const separator = page.getByRole("separator", {
-        name: "Resize Left/Center",
-      });
-      const element = separator.element() as HTMLElement;
-      const defaultBackground = getComputedStyle(element).backgroundColor;
-
-      await userEvent.keyboard("{Tab}");
-
-      await expect.element(separator).toHaveFocus();
-      await expect
-        .element(separator)
-        .toHaveAttribute("data-separator", "focus");
-      await expect
-        .poll(() => getComputedStyle(element).outlineStyle)
-        .not.toBe("none");
-      expect(getComputedStyle(element).backgroundColor).toBe(defaultBackground);
     });
 
     it.each(zeroSizeCases)(
