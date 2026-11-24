@@ -62,32 +62,33 @@ function getCenter(element: HTMLElement) {
 const separatorCases = [
   {
     name: "a separator",
-    render: () => renderWithSalt(<Horizontal />),
-    getSeparator: () =>
-      page
-        .getByRole("separator", { name: "Resize Left/Center" })
-        .element() as HTMLElement,
+    Story: Horizontal,
+    separatorName: "Resize Left/Center",
     tabStops: 1,
   },
   {
     name: "a secondary variant separator",
-    render: () => renderWithSalt(<Variant />),
-    getSeparator: () =>
-      page
-        .getByRole("separator", { name: "Resize left and center panels" })
-        .element() as HTMLElement,
+    Story: Variant,
+    separatorName: "Resize left and center panels",
     tabStops: 1,
   },
   {
     name: "a tertiary variant separator",
-    render: () => renderWithSalt(<Variant />),
-    getSeparator: () =>
-      page
-        .getByRole("separator", { name: "Resize center and right panels" })
-        .element() as HTMLElement,
+    Story: Variant,
+    separatorName: "Resize center and right panels",
     tabStops: 2,
   },
 ];
+
+async function renderSeparator({
+  Story,
+  separatorName,
+}: (typeof separatorCases)[number]) {
+  await renderWithSalt(<Story />);
+  return page
+    .getByRole("separator", { name: separatorName })
+    .element() as HTMLElement;
+}
 
 function PanelsWithZeroSizedPanel({
   orientation,
@@ -141,59 +142,61 @@ function PanelsWithZeroSizedPanel({
   );
 }
 
+const firstSeparator = "Resize first and middle panels";
+const lastSeparator = "Resize middle and last panels";
+
 const zeroSizeCases = [
   {
     orientation: "horizontal" as const,
     collapsedIndex: 0,
-    handle: 0,
+    separatorName: firstSeparator,
     margin: "marginLeft" as const,
     size: "width" as const,
   },
   {
     orientation: "horizontal" as const,
     collapsedIndex: 1,
-    handle: 1,
+    separatorName: lastSeparator,
     margin: "marginLeft" as const,
     size: "width" as const,
   },
   {
     orientation: "horizontal" as const,
     collapsedIndex: 2,
-    handle: 1,
+    separatorName: lastSeparator,
     margin: "marginRight" as const,
     size: "width" as const,
   },
   {
     orientation: "vertical" as const,
     collapsedIndex: 0,
-    handle: 0,
+    separatorName: firstSeparator,
     margin: "marginTop" as const,
     size: "height" as const,
   },
   {
     orientation: "vertical" as const,
     collapsedIndex: 1,
-    handle: 1,
+    separatorName: lastSeparator,
     margin: "marginTop" as const,
     size: "height" as const,
   },
   {
     orientation: "vertical" as const,
     collapsedIndex: 2,
-    handle: 1,
+    separatorName: lastSeparator,
     margin: "marginBottom" as const,
     size: "height" as const,
   },
 ];
 
 describe.skipIf(!isReact18OrLater)(
-  "GIVEN react-resizable-panels v4 with the Salt theme",
+  "Given react-resizable-panels v4 with the Salt theme",
   () => {
-    describe.each(separatorCases)("WHEN using $name", (testCase) => {
-      it("THEN shows the active styles while dragging", async () => {
-        await testCase.render();
-
-        const separator = testCase.getSeparator();
+    it.each(separatorCases)(
+      "shows the active styles while dragging $name",
+      async (testCase) => {
+        const separator = await renderSeparator(testCase);
         const defaultBackground = getComputedStyle(separator).backgroundColor;
         const activeBackground = resolveColor(
           separator,
@@ -212,8 +215,8 @@ describe.skipIf(!isReact18OrLater)(
 
         try {
           await expect
-            .poll(() => separator.getAttribute("data-separator"))
-            .toBe("active");
+            .element(separator)
+            .toHaveAttribute("data-separator", "active");
           await expect
             .poll(() => getComputedStyle(separator).backgroundColor)
             .toBe(activeBackground);
@@ -224,12 +227,13 @@ describe.skipIf(!isReact18OrLater)(
           await mouse.up({ x: x + 10, y });
           await mouse.move({ x: 4, y: 4 });
         }
-      });
+      },
+    );
 
-      it("THEN shows the hover styles when hovered", async () => {
-        await testCase.render();
-
-        const separator = testCase.getSeparator();
+    it.each(separatorCases)(
+      "shows the hover styles when hovering $name",
+      async (testCase) => {
+        const separator = await renderSeparator(testCase);
         const defaultBackground = getComputedStyle(separator).backgroundColor;
         const hoverBackground = resolveColor(
           separator,
@@ -241,8 +245,8 @@ describe.skipIf(!isReact18OrLater)(
         await mouse.move({ x, y });
 
         await expect
-          .poll(() => separator.getAttribute("data-separator"))
-          .toBe("hover");
+          .element(separator)
+          .toHaveAttribute("data-separator", "hover");
         await expect
           .poll(() => getComputedStyle(separator).backgroundColor)
           .toBe(hoverBackground);
@@ -252,15 +256,13 @@ describe.skipIf(!isReact18OrLater)(
         await expect
           .poll(() => getComputedStyle(separator).backgroundColor)
           .toBe(defaultBackground);
-      });
-    });
+      },
+    );
 
     it.each(separatorCases)(
       "shows the focus ring without hover styles when $name is focused with the keyboard",
       async (testCase) => {
-        await testCase.render();
-
-        const separator = testCase.getSeparator();
+        const separator = await renderSeparator(testCase);
         const defaultBackground = getComputedStyle(separator).backgroundColor;
         const focusRing = resolveFocusRing(separator);
         expect(focusRing.outlineStyle).not.toBe("none");
@@ -281,12 +283,8 @@ describe.skipIf(!isReact18OrLater)(
       },
     );
 
-    it("THEN keeps the hover styles after a drag ends with the pointer over the separator", async () => {
-      await renderWithSalt(<Horizontal />);
-
-      const separator = page
-        .getByRole("separator", { name: "Resize Left/Center" })
-        .element() as HTMLElement;
+    it("keeps the hover styles without a focus ring after a drag ends over a separator", async () => {
+      const separator = await renderSeparator(separatorCases[0]);
       const defaultBackground = getComputedStyle(separator).backgroundColor;
       const hoverBackground = resolveColor(
         separator,
@@ -298,18 +296,16 @@ describe.skipIf(!isReact18OrLater)(
       );
       expect(hoverBackground).not.toBe(defaultBackground);
 
-      const { left, top, width, height } = separator.getBoundingClientRect();
-      const x = left + width / 2;
-      const y = top + height / 2;
+      const { x, y } = getCenter(separator);
 
       await mouse.down({ x, y });
       await mouse.move({ x: x + 20, y });
       await mouse.up({ x: x + 20, y });
 
-      await expect.poll(() => document.activeElement).toBe(separator);
+      await expect.element(separator).toHaveFocus();
       await expect
-        .poll(() => separator.getAttribute("data-separator"))
-        .toBe("focus");
+        .element(separator)
+        .toHaveAttribute("data-separator", "focus");
       await expect
         .poll(() => getComputedStyle(separator).backgroundColor)
         .toBe(hoverBackground);
@@ -327,7 +323,7 @@ describe.skipIf(!isReact18OrLater)(
 
     it.each(zeroSizeCases)(
       "keeps $orientation separators styled when panel $collapsedIndex reaches zero",
-      async ({ orientation, collapsedIndex, handle, margin, size }) => {
+      async ({ orientation, collapsedIndex, separatorName, margin, size }) => {
         const { container } = await renderWithSalt(
           <PanelsWithZeroSizedPanel
             orientation={orientation}
@@ -338,7 +334,9 @@ describe.skipIf(!isReact18OrLater)(
           container.querySelectorAll<HTMLElement>("[data-panel]")[
             collapsedIndex
           ];
-        const separator = page.getByRole("separator").nth(handle).element();
+        const separator = page
+          .getByRole("separator", { name: separatorName })
+          .element();
         const borderStyle =
           orientation === "horizontal" ? "borderLeftStyle" : "borderTopStyle";
 
