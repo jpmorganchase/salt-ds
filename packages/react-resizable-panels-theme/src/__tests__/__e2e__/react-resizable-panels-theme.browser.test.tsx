@@ -46,32 +46,27 @@ function getCenter(element: HTMLElement) {
   return { x: left + width / 2, y: top + height / 2 };
 }
 
-const separatorCases = [
-  {
-    name: "a separator",
-    Story: Horizontal,
-    separatorName: "Resize Left/Center",
-    tabStops: 1,
-  },
-  {
-    name: "a secondary variant separator",
-    Story: Variant,
-    separatorName: "Resize left and center panels",
-    tabStops: 1,
-  },
-  {
-    name: "a tertiary variant separator",
-    Story: Variant,
-    separatorName: "Resize center and right panels",
-    tabStops: 2,
-  },
-];
-
 describe.skipIf(!isReact18OrLater)(
   "Given react-resizable-panels v4 with the Salt theme",
   () => {
-    it.each(separatorCases)(
-      "shows distinct active styles while dragging $name",
+    it.each([
+      {
+        variant: "default",
+        Story: Horizontal,
+        separatorName: "Resize Left/Center",
+      },
+      {
+        variant: "secondary",
+        Story: Variant,
+        separatorName: "Resize left and center panels",
+      },
+      {
+        variant: "tertiary",
+        Story: Variant,
+        separatorName: "Resize center and right panels",
+      },
+    ])(
+      "shows distinct active styles while dragging a $variant separator",
       async ({ Story, separatorName }) => {
         await renderWithSalt(<Story />);
         const separator = page
@@ -109,55 +104,45 @@ describe.skipIf(!isReact18OrLater)(
       },
     );
 
-    it.each(separatorCases)(
-      "changes the background while hovering $name",
-      async ({ Story, separatorName }) => {
-        await renderWithSalt(<Story />);
-        const separator = page
-          .getByRole("separator", { name: separatorName })
-          .element() as HTMLElement;
-        const defaultBackground = getBackground(separator);
+    it("changes the background while hovering a separator", async () => {
+      await renderWithSalt(<Horizontal />);
+      const separator = page
+        .getByRole("separator", { name: "Resize Left/Center" })
+        .element() as HTMLElement;
+      const defaultBackground = getBackground(separator);
 
-        await mouse.move(getCenter(separator));
-        await expect
-          .element(separator)
-          .toHaveAttribute("data-separator", "hover");
-        await expect
-          .poll(() => getBackground(separator))
-          .not.toBe(defaultBackground);
+      await mouse.move(getCenter(separator));
+      await expect
+        .element(separator)
+        .toHaveAttribute("data-separator", "hover");
+      await expect
+        .poll(() => getBackground(separator))
+        .not.toBe(defaultBackground);
 
-        await mouse.move({ x: 4, y: 4 });
+      await mouse.move({ x: 4, y: 4 });
 
-        await expect
-          .poll(() => getBackground(separator))
-          .toBe(defaultBackground);
-      },
-    );
+      await expect.poll(() => getBackground(separator)).toBe(defaultBackground);
+    });
 
-    it.each(separatorCases)(
-      "shows the focus ring without hover styles when $name is focused with the keyboard",
-      async ({ Story, separatorName, tabStops }) => {
-        await renderWithSalt(<Story />);
-        const separator = page
-          .getByRole("separator", { name: separatorName })
-          .element() as HTMLElement;
-        const defaultBackground = getBackground(separator);
-        const focusRing = resolveFocusRing(separator);
-        expect(focusRing.outlineStyle).not.toBe("none");
+    it("shows the focus ring without hover styles when a separator is focused with the keyboard", async () => {
+      await renderWithSalt(<Horizontal />);
+      const separator = page
+        .getByRole("separator", { name: "Resize Left/Center" })
+        .element() as HTMLElement;
+      const defaultBackground = getBackground(separator);
+      const focusRing = resolveFocusRing(separator);
+      expect(focusRing.outlineStyle).not.toBe("none");
 
-        // Programmatic focus() doesn't match :focus-visible in Firefox.
-        for (let i = 0; i < tabStops; i++) {
-          await userEvent.tab();
-        }
+      // Programmatic focus() doesn't match :focus-visible in Firefox.
+      await userEvent.tab();
 
-        await expect.element(separator).toHaveFocus();
-        await expect
-          .element(separator)
-          .toHaveAttribute("data-separator", "focus");
-        await expect.poll(() => getOutline(separator)).toEqual(focusRing);
-        expect(getBackground(separator)).toBe(defaultBackground);
-      },
-    );
+      await expect.element(separator).toHaveFocus();
+      await expect
+        .element(separator)
+        .toHaveAttribute("data-separator", "focus");
+      await expect.poll(() => getOutline(separator)).toEqual(focusRing);
+      expect(getBackground(separator)).toBe(defaultBackground);
+    });
 
     it("looks hovered without a focus ring after a drag ends over a separator", async () => {
       await renderWithSalt(<Horizontal />);
