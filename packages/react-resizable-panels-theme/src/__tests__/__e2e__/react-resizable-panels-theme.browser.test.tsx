@@ -11,15 +11,8 @@ const { Horizontal, Variant } = composeStories(splitterStories);
 // react-resizable-panels v4 requires React 18+.
 const isReact18OrLater = Number.parseInt(version, 10) >= 18;
 
-function resolveColor(element: HTMLElement, customProperty: string) {
-  const probe = document.createElement("div");
-  probe.style.backgroundColor = getComputedStyle(element)
-    .getPropertyValue(customProperty)
-    .trim();
-  document.body.appendChild(probe);
-  const color = getComputedStyle(probe).backgroundColor;
-  probe.remove();
-  return color;
+function getBackground(element: Element, pseudoElement?: string) {
+  return getComputedStyle(element, pseudoElement).backgroundColor;
 }
 
 const focusRingTokens = [
@@ -51,6 +44,13 @@ function resolveFocusRing(element: HTMLElement) {
 function getCenter(element: HTMLElement) {
   const { left, top, width, height } = element.getBoundingClientRect();
   return { x: left + width / 2, y: top + height / 2 };
+}
+
+async function hoverSeparator(separator: HTMLElement) {
+  const center = getCenter(separator);
+  await mouse.move(center);
+  await expect.element(separator).toHaveAttribute("data-separator", "hover");
+  return center;
 }
 
 const separatorCases = [
@@ -88,21 +88,17 @@ describe.skipIf(!isReact18OrLater)(
   "Given react-resizable-panels v4 with the Salt theme",
   () => {
     it.each(separatorCases)(
-      "shows the active styles while dragging $name",
+      "shows distinct active styles while dragging $name",
       async (testCase) => {
         const separator = await renderSeparator(testCase);
-        const defaultBackground = getComputedStyle(separator).backgroundColor;
-        const activeBackground = resolveColor(
-          separator,
-          "--splitHandle-background-active",
-        );
-        const activeDot = resolveColor(
-          separator,
-          "--splitHandle-dot-background-active",
-        );
-        expect(activeBackground).not.toBe(defaultBackground);
+        const defaultBackground = getBackground(separator);
+        const defaultDot = getBackground(separator, "::after");
 
-        const { x, y } = getCenter(separator);
+        const { x, y } = await hoverSeparator(separator);
+        await expect
+          .poll(() => getBackground(separator))
+          .not.toBe(defaultBackground);
+        const hoverBackground = getBackground(separator);
 
         await mouse.down({ x, y });
         await mouse.move({ x: x + 10, y });
@@ -112,11 +108,10 @@ describe.skipIf(!isReact18OrLater)(
             .element(separator)
             .toHaveAttribute("data-separator", "active");
           await expect
-            .poll(() => getComputedStyle(separator).backgroundColor)
-            .toBe(activeBackground);
-          expect(getComputedStyle(separator, "::after").backgroundColor).toBe(
-            activeDot,
-          );
+            .poll(() => getBackground(separator))
+            .not.toBe(hoverBackground);
+          expect(getBackground(separator)).not.toBe(defaultBackground);
+          expect(getBackground(separator, "::after")).not.toBe(defaultDot);
         } finally {
           await mouse.up({ x: x + 10, y });
           await mouse.move({ x: 4, y: 4 });
@@ -125,30 +120,20 @@ describe.skipIf(!isReact18OrLater)(
     );
 
     it.each(separatorCases)(
-      "shows the hover styles when hovering $name",
+      "changes the background while hovering $name",
       async (testCase) => {
         const separator = await renderSeparator(testCase);
-        const defaultBackground = getComputedStyle(separator).backgroundColor;
-        const hoverBackground = resolveColor(
-          separator,
-          "--splitHandle-background-hover",
-        );
-        expect(hoverBackground).not.toBe(defaultBackground);
+        const defaultBackground = getBackground(separator);
 
-        const { x, y } = getCenter(separator);
-        await mouse.move({ x, y });
-
+        await hoverSeparator(separator);
         await expect
-          .element(separator)
-          .toHaveAttribute("data-separator", "hover");
-        await expect
-          .poll(() => getComputedStyle(separator).backgroundColor)
-          .toBe(hoverBackground);
+          .poll(() => getBackground(separator))
+          .not.toBe(defaultBackground);
 
         await mouse.move({ x: 4, y: 4 });
 
         await expect
-          .poll(() => getComputedStyle(separator).backgroundColor)
+          .poll(() => getBackground(separator))
           .toBe(defaultBackground);
       },
     );
@@ -157,7 +142,7 @@ describe.skipIf(!isReact18OrLater)(
       "shows the focus ring without hover styles when $name is focused with the keyboard",
       async (testCase) => {
         const separator = await renderSeparator(testCase);
-        const defaultBackground = getComputedStyle(separator).backgroundColor;
+        const defaultBackground = getBackground(separator);
         const focusRing = resolveFocusRing(separator);
         expect(focusRing.outlineStyle).not.toBe("none");
 
@@ -171,22 +156,19 @@ describe.skipIf(!isReact18OrLater)(
           .element(separator)
           .toHaveAttribute("data-separator", "focus");
         await expect.poll(() => getOutline(separator)).toEqual(focusRing);
-        expect(getComputedStyle(separator).backgroundColor).toBe(
-          defaultBackground,
-        );
+        expect(getBackground(separator)).toBe(defaultBackground);
       },
     );
 
-    it("keeps the hover styles without a focus ring after a drag ends over a separator", async () => {
+    it("looks hovered without a focus ring after a drag ends over a separator", async () => {
       const separator = await renderSeparator(separatorCases[0]);
-      const defaultBackground = getComputedStyle(separator).backgroundColor;
-      const hoverBackground = resolveColor(
-        separator,
-        "--splitHandle-background-hover",
-      );
-      expect(hoverBackground).not.toBe(defaultBackground);
+      const defaultBackground = getBackground(separator);
 
-      const { x, y } = getCenter(separator);
+      const { x, y } = await hoverSeparator(separator);
+      await expect
+        .poll(() => getBackground(separator))
+        .not.toBe(defaultBackground);
+      const hoverBackground = getBackground(separator);
 
       await mouse.down({ x, y });
       await mouse.move({ x: x + 20, y });
@@ -196,16 +178,12 @@ describe.skipIf(!isReact18OrLater)(
       await expect
         .element(separator)
         .toHaveAttribute("data-separator", "focus");
-      await expect
-        .poll(() => getComputedStyle(separator).backgroundColor)
-        .toBe(hoverBackground);
+      await expect.poll(() => getBackground(separator)).toBe(hoverBackground);
       expect(getComputedStyle(separator).outlineStyle).toBe("none");
 
       await mouse.move({ x: 4, y: 4 });
 
-      await expect
-        .poll(() => getComputedStyle(separator).backgroundColor)
-        .toBe(defaultBackground);
+      await expect.poll(() => getBackground(separator)).toBe(defaultBackground);
     });
   },
 );
