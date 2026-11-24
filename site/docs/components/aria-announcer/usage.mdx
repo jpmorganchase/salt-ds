@@ -10,7 +10,7 @@ data:
 
 ## Using the component
 
-Use `useAriaAnnouncer` or `AriaAnnounce` to tell screen reader users about a
+Use `useAriaAnnouncer` to tell screen reader users about a
 change they wouldn't otherwise hear, such as the number of results after
 filtering, or that a save has finished. The message goes to a visually hidden
 live region, so it isn't shown on screen. Show anything users need to find again
@@ -32,14 +32,15 @@ The root `SaltProvider` or `SaltProviderNext` already includes an
 
 ## Announcing from an event
 
-Call `announce` from `useAriaAnnouncer` in the handler or effect that makes the
-change:
+Call `announce` from `useAriaAnnouncer` in the relevant action handler or
+completion callback. For asynchronous work, wait for a successful outcome
+before announcing it:
 
 ```tsx
 const { announce } = useAriaAnnouncer();
 
-const handleSave = () => {
-  saveDraft();
+const handleSave = async () => {
+  await saveDraft();
   announce("Draft saved");
 };
 ```
@@ -57,18 +58,15 @@ const handleSave = () => {
 
 ## Announcing from state
 
-`AriaAnnounce` announces its `announcement` when it mounts and whenever the text
-changes. It renders nothing, and takes the same `ariaLive`, `duration` and
-`target` options as props. Use it for state that changes now and then, such as an
-upload finishing:
+For changes driven by an external source, use `useAriaAnnouncer` in your component
+and call `announce` from an effect that observes the change. Decide explicitly
+whether the initial state should be announced. Track the relevant update or
+event, rather than treating every render as a new announcement.
 
-```tsx
-<AriaAnnounce announcement={uploaded ? "Upload complete" : undefined} />
-```
-
-It has no debounce, and rendering the same text again doesn't repeat the
-announcement. For a value that changes as the user types, or a message that can
-repeat, call `announce` instead.
+If separate events can produce the same message, use an event ID or revision to
+recognize each event instead of relying on the message text to change. Keep the
+effect's dependencies and guards aligned with that decision so ordinary renders
+don't repeat announcements.
 
 ## Content in another window
 
@@ -99,6 +97,9 @@ closes may not be read. Send it from outside the provider instead.
 
 ## Deprecations and migrations
 
+`AriaAnnounce` is deprecated. Use `useAriaAnnouncer` instead; see the
+[migration guidance](#ariaannounce).
+
 `delay` is deprecated, both as `AriaAnnounce`'s `delay` prop and as a number
 passed as `announce`'s second argument. Use `duration` to keep a message in the
 live region for longer, or your own `setTimeout` to announce later.
@@ -108,11 +109,7 @@ live region for longer, or your own `setTimeout` to announce later.
 To import the announcer from the core Salt package, use:
 
 ```js
-import {
-  AriaAnnounce,
-  AriaAnnouncerProvider,
-  useAriaAnnouncer,
-} from "@salt-ds/core";
+import { AriaAnnouncerProvider, useAriaAnnouncer } from "@salt-ds/core";
 ```
 
 ## Props
@@ -123,6 +120,14 @@ import {
 
 ### AriaAnnounce
 
-`AriaAnnounce` takes `announcement`, the text to announce, and the `ariaLive`,
-`duration` and `target` options described in
-[Announcing from an event](#announcing-from-an-event).
+**Deprecated.** Use `useAriaAnnouncer` instead. `AriaAnnounce` remains exported
+for existing consumers.
+
+Replace `<AriaAnnounce announcement={message} />` with an
+`announce(message, options)` call from the relevant action handler or completion
+callback. For externally driven changes, follow [Announcing from state](#announcing-from-state)
+to handle initial and repeated announcements deliberately.
+
+Pass the component's `ariaLive`, `duration` and `target` props in the options
+object described in [Announcing from an event](#announcing-from-an-event).
+For `delay`, follow [Deprecations and migrations](#deprecations-and-migrations).
