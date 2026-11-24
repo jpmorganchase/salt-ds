@@ -21,6 +21,8 @@ data:
 ### When to use
 
 - When there are separate steps within a process, such as a wizard or a multi-step form.
+- Use a horizontal stepper in wide layouts, when you want to show all steps at once so users can scan their progress at a glance. It works best with three to six steps and no substeps.
+- Use a vertical stepper for guided processes with longer labels, multi-line descriptions or substeps. It works best in a two-column page layout.
 
 ### When not to use
 
@@ -28,11 +30,15 @@ data:
 - As navigation; users can't interact with the steps.
 - When users need to switch between related views on the same page. Instead, use [`Tabs`](../tabs).
 - To show how long a system operation is taking. Instead, use [`Progress`](../progress).
+- A horizontal stepper in a sidebar, panel or other narrow container. Instead, place it above the form or page content, or use a vertical stepper.
+- A vertical stepper when there's plenty of horizontal space and the steps are short and simple. Instead, use a horizontal stepper.
 
 ### Choosing an orientation
 
-- Use a horizontal stepper for shorter, simpler processes.
-- Use a vertical stepper for longer, more complex processes, such as when you need to split steps into substeps.
+| Orientation | Step count | Space available  | Direction     | Substeps | Labels                  | Label position          |
+| ----------- | ---------- | ---------------- | ------------- | -------- | ----------------------- | ----------------------- |
+| Horizontal  | 3–6        | Wide layouts     | Left to right | No       | Short, one or two words | Centered below the icon |
+| Vertical    | Any        | Normal or narrow | Top to bottom | Yes      | Can be long             | Next to the icon        |
 
 For more guidance, see [horizontal stepper vs. vertical stepper](/salt/patterns/wizard#horizontal-stepper-vs-vertical-stepper) in the wizard pattern.
 

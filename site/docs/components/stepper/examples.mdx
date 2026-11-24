@@ -10,13 +10,13 @@ data:
 
 ## Horizontal
 
-By default, `Stepper` is horizontal and displays steps in a row. Steps share the available width equally, and each label is centered below its icon.
+By default, `Stepper` is horizontal and displays steps in a row, from left to right, so users can see their overall progress at a glance. Steps share the available width equally, and each label is centered below its icon.
 
 <LivePreview componentName="stepper" exampleName="Horizontal" />
 
 ## Vertical
 
-A vertical stepper displays steps in a column, from top to bottom. Set `orientation="vertical"` on `Stepper` to use it. Labels are left aligned, next to their icons.
+A vertical stepper displays steps in a column, from top to bottom, so users can see their overall progress at a glance. Set `orientation="vertical"` on `Stepper` to use it. Labels are left aligned, next to their icons.
 
 <LivePreview componentName="stepper" exampleName="Vertical" />
 
@@ -26,38 +26,7 @@ Use the `description` prop on `Step` to add supporting text to a step. The descr
 
 <LivePreview componentName="stepper" exampleName="WithDescriptions" />
 
-## Stage
-
-Use the `stage` prop on `Step` to show where each step is in the process. A step is `"pending"` by default.
-
-- `"completed"`: the user has finished the step.
-- `"active"`: the step the user is on. Its label uses a bolder font weight.
-- `"pending"`: the user hasn't reached the step yet.
-- `"locked"`: the step displays a lock icon.
-
-The track after a completed step is solid. The track after an active, pending or locked step is dotted.
-
-### Best practices
-
-- When the user goes back to an earlier step, set that step to `stage="active"`. Set the steps after it to `stage="pending"`, and remove their `status`. See the [wizard pattern](/salt/patterns/wizard#validation-state).
-
-<LivePreview componentName="stepper" exampleName="Stages" />
-
-### In progress
-
-In a vertical stepper, set `stage="inprogress"` on a parent step while one of its [substeps](#substeps) is active. The track after an in-progress step is solid.
-
-<LivePreview componentName="stepper" exampleName="InProgress" />
-
-## Status
-
-Set `status="warning"` or `status="error"` on `Step` to show that a step needs attention. The status replaces the stage's icon and changes the color of the description. The label and the track still follow the `stage`.
-
-For guidance on when to show each status, see the [wizard pattern](/salt/patterns/wizard#validation-state).
-
-<LivePreview componentName="stepper" exampleName="Status" />
-
-## Substeps
+## Nested steps
 
 In a vertical stepper, add `Step` elements as children of a step to give it substeps. You can nest steps up to two levels below the top level. A horizontal stepper doesn't display substeps.
 
@@ -65,20 +34,58 @@ A step with substeps is collapsed by default and has an expand button that shows
 
 When a collapsed step contains the active step, its label uses a bolder font weight.
 
-### Best practices
-
-- Set the stage of each parent step yourself. For example, use `stage="inprogress"` while one of its substeps is active, and `stage="completed"` when all of its substeps are completed. See [updating substeps](#updating-substeps).
-
 <LivePreview componentName="stepper" exampleName="Substeps" />
 
-## Updating progress
+### In progress
 
-Store the current step in your application's state, and set the `stage` of each step from it. Update the current step when the user moves to another step.
+Set `stage="inprogress"` on a parent step while one of its substeps is active. The track after an in-progress step is solid.
+
+#### Best practices
+
+- Set the stage of each parent step yourself. For example, use `stage="inprogress"` while one of its substeps is active, and `stage="completed"` when all of its substeps are completed. See [vertical controlled stepper](#vertical-controlled-stepper).
+
+<LivePreview componentName="stepper" exampleName="InProgress" />
+
+## Controlled stepper
+
+`Stepper` and `Step` are presentational. To control a stepper, store the current step in your application's state, and set the `stage` of each step from it. Update the current step when the user moves to another step.
+
+`Stepper` shows linear progress only. The Previous and Next buttons in these examples aren't part of it.
 
 <LivePreview componentName="stepper" exampleName="UpdatingProgress" />
 
-### Updating substeps
+### Vertical controlled stepper
 
-In a vertical stepper, store the current substep, and set the stage of each parent step from its substeps.
+In a vertical stepper with nested steps, store the current substep, and set the stage of each parent step from its substeps.
 
 <LivePreview componentName="stepper" exampleName="UpdatingSubsteps" />
+
+## Stage and status
+
+The appearance of a `Step` depends on its `stage` and `status` props. When you set both, the status takes precedence over the stage for the icon and the description color.
+
+### Stage
+
+Use the `stage` prop on `Step` to show where each step is in the process. A step is `"pending"` by default.
+
+- `"completed"`: the user has finished the step.
+- `"active"`: the step the user is on. Its label uses a bolder font weight.
+- `"pending"`: the user hasn't reached the step yet.
+- `"locked"`: the step displays a lock icon.
+- `"inprogress"`: one of the step's substeps is active. See [in progress](#in-progress).
+
+The track after a completed step is solid. The track after an active, pending or locked step is dotted.
+
+#### Best practices
+
+- When the user goes back to an earlier step, set that step to `stage="active"`. Set the steps after it to `stage="pending"`, and remove their `status`. See the [wizard pattern](/salt/patterns/wizard#validation-state).
+
+<LivePreview componentName="stepper" exampleName="Stages" />
+
+### Status
+
+Set `status="warning"` or `status="error"` on `Step` to show that a step needs attention. The status replaces the stage's icon and changes the color of the description. The label and the track still follow the `stage`.
+
+For guidance on when to show each status, see the [wizard pattern](/salt/patterns/wizard#validation-state).
+
+<LivePreview componentName="stepper" exampleName="Status" />
