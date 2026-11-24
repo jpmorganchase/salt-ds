@@ -30,15 +30,20 @@
 }
 
 .saltCompactStepper-text {
+  display: flex;
+  align-items: flex-start;
   text-align: start;
   overflow-wrap: anywhere;
 }
 
 .saltCompactStepper-count {
+  flex: none;
   margin-inline-end: var(--salt-spacing-100);
 }
 
 .saltCompactStepper-separator {
+  flex: none;
   font-size: 0;
   line-height: 0;
+  white-space: pre;
 }

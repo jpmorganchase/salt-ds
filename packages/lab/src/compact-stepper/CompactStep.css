@@ -1,6 +1,17 @@
+.saltCompactStep {
+  display: flex;
+  flex: 1;
+  align-items: flex-start;
+  min-width: 0;
+}
+
 .saltCompactStep-icon {
   --saltIcon-margin: calc((var(--salt-text-lineHeight) - max(var(--salt-size-icon), 12px)) / 2) var(--salt-spacing-75) 0 0;
-  vertical-align: top;
+  flex: none;
+}
+
+.saltCompactStep-label {
+  min-width: 0;
 }
 
 .saltCompactStep-stage-locked .saltCompactStep-icon {
