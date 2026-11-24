@@ -560,18 +560,7 @@
   },
   {
     "iconName": "filter-clear",
-    "synonym": [
-      "funnel",
-      "data",
-      "x",
-      "clear filter",
-      "remove filter",
-      "reset filter",
-      "unfilter",
-      "clear",
-      "remove",
-      "cancel"
-    ],
+    "synonym": ["remove", "cancel", "reset", "x", "funnel", "unfilter", "data"],
     "category": "organize"
   },
   {
@@ -1442,11 +1431,14 @@
     "iconName": "tag-clear",
     "synonym": [
       "remove",
-      "x label",
+      "cancel",
+      "reset",
+      "x",
+      "label",
+      "unfilter",
       "metadata",
-      "filter",
       "category",
-      "cancel"
+      "untag"
     ],
     "category": "actions"
   },
@@ -2320,32 +2312,21 @@
   },
   {
     "iconName": "pin-clear",
-    "synonym": [
-      "unpin",
-      "remove pin",
-      "unfreeze",
-      "release",
-      "cancel",
-      "data",
-      "x"
-    ],
+    "synonym": ["remove", "cancel", "reset", "push pin", "tack", "x", "unmark"],
     "category": "actions"
   },
   {
     "iconName": "function",
     "synonym": [
-      "formula",
       "calculate",
-      "calculated column",
-      "expression",
       "fx",
-      "f(x)",
-      "spreadsheet",
-      "cell",
-      "column",
-      "grid",
+      "calculation",
+      "equation",
+      "expression",
+      "formula",
+      "rule",
       "math",
-      "equation"
+      "maths"
     ],
     "category": "data"
   }
