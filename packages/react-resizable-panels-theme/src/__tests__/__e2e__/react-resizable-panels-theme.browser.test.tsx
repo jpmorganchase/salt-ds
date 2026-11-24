@@ -232,7 +232,7 @@ describe.skipIf(!isReact18OrLater)(
 
         // Programmatic focus() doesn't match :focus-visible in Firefox.
         for (let i = 0; i < testCase.tabStops; i++) {
-          await userEvent.keyboard("{Tab}");
+          await userEvent.tab();
         }
 
         await expect.poll(() => document.activeElement).toBe(separator);
