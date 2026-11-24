@@ -105,9 +105,7 @@ export const UpdatingSubsteps = () => {
         <Button
           sentiment="accented"
           onClick={() =>
-            setActiveIndex((index) =>
-              Math.min(index + 1, terminalSteps.length - 1),
-            )
+            setActiveIndex((index) => Math.min(index + 1, terminalSteps.length))
           }
         >
           Next

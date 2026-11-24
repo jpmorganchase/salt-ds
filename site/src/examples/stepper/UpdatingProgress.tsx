@@ -50,7 +50,7 @@ export const UpdatingProgress = () => {
         <Button
           sentiment="accented"
           onClick={() =>
-            setActiveIndex((index) => Math.min(index + 1, steps.length - 1))
+            setActiveIndex((index) => Math.min(index + 1, steps.length))
           }
         >
           Next
