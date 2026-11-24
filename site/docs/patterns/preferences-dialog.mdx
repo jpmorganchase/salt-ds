@@ -176,7 +176,7 @@ When the navigation collapses, selecting a category opens its settings across th
 - On Back, restore focus to the category that opened the section.
 - In the wide layout, keep focus on the category control when its settings change; users can move into the content themselves. Move focus for the collapsed navigation actions, without resetting it on every render or update to the wide layout.
 
-Keep the [Dialog keyboard behavior](/salt/components/dialog/accessibility#keyboard-interactions): Escape dismisses the dialog, and focus returns to the control that opened it.
+Keep the [Dialog keyboard behavior](/salt/components/dialog/accessibility#keyboard-interactions): Escape dismisses the dialog. Return focus to the control that opened it when that control remains available. For a menu command whose item is no longer mounted, return focus to the surviving menu trigger; see [Returning focus after an action](/salt/components/dialog/accessibility#returning-focus-after-an-action).
 
 <Diagram
   src="/img/patterns/preferences-dialog/preferences-dialog-collapsed-navigation.png"
