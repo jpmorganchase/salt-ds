@@ -12,15 +12,15 @@ data:
 
 ### When to use
 
-- To make a single selection when switching between opposing yet mutually exclusive options.
+- To make a single selection when switching between views or states of information. 
 - To visually prioritize options higher than [`RadioButton`](../radio-button) or [`Switch`](../switch).
 
 ### When not to use
 
-- To present an instantaneous or binary choice between two options. Instead, use [`Switch`](../switch).
+- To present an instantaneous change of state between two options. Instead, use [`Switch`](../switch).
 - When the options in the group are not high priority and high affordance is not necessary. Instead, use [`RadioButtonGroup`](../radio-button).
 - When all options in the group don’t need to be visible at once. Consider using [`Dropdown`](../dropdown).
-- When a compact decision needs single selection and the ability to deselect, such as Like/Dislike. Consider using [`Decision button group`](/salt/patterns/decision-button-group).
+- When toggle behavior is needed to collect feedback or make a decision, such as Like/Dislike, rather than to change a view or state. Consider using [`Decision button group`](/salt/patterns/decision-button-group), which also lets users deselect their choice.
 
 ## Content
 

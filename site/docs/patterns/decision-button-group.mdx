@@ -26,6 +26,8 @@ data:
 
 Use a decision button group when:
 
+- A user decision is needed on how to proceed with a specific action.
+- User feedback or choice needs to be captured.
 - The group represents one compact decision point in a flow.
 - The actions have equal priority.
 - The buttons achieve single-selection and deselection capability together. 
@@ -33,15 +35,15 @@ Use a decision button group when:
 ## When not to use
 
 - One action is clearly primary and the others are secondary; use [Button bar](/salt/patterns/button-bar) instead.
-- The actions are unrelated or don't benefit from being grouped visually.
+- The actions are unrelated such as 'Share' and 'Edit'.
 - The group is being used as a page-level action bar. 
-- When you don't need deselection, use [Toggle button group](/salt/components/toggle-button/examples) instead. 
+- When you want to change the view or state of information or content on the page, use [Toggle button group](/salt/components/toggle-button/examples) instead. 
 
 ## How to build
 
 ### Anatomy
 
-A decision button group typically contains two buttons placed together with consistent spacing:
+A decision button group contains two buttons placed together with consistent spacing:
 
 1. **Buttons:** Contain a label, an icon or both. 
 2. **Toggle buttons:** Contain a label, an icon or both. 
@@ -73,15 +75,15 @@ A decision button group typically contains two buttons placed together with cons
 
 ## Action buttons
 
-Use a button within a decision button group when each button performs an action and returns to its default state after activation.
+Use a button to display the choices when the user's decision is immediately registered and submitted on click, such as Approve/Reject. Each button then returns to its default state, with no selection remaining visible.
 
 ## Selectable buttons
 
-Use a toggle button within a decision button group when each button represents a choice or decision. The user is choosing something, and the selected button remains visible as the current value. For example, Like/Dislike or Thumbs up/Thumbs down.
+Use a toggle button to display the choices when the user's decision needs to remain visible, or is submitted or collected at a later point in the flow. The selected button stays selected as the current value until the user changes or deselects it.
 
 ### Deselection
 
-When a user selects an option, any previously selected option in the group should be deselected. This prevents conflicting selections.
+When a user selects an option, any previously selected option in the group should be deselected. This prevents conflicting selections. Users can deselect both decisions if they decide they prefer not to submit feedback. 
 
 <Diagram
   src="/img/patterns/decision-button-group/decision-button-group-4.png"
