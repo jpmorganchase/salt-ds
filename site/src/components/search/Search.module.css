@@ -17,6 +17,7 @@
 
 .status {
   position: absolute;
+  overflow-wrap: anywhere;
   inset-inline: 0;
   top: calc(100% + var(--salt-size-fixed-100));
   z-index: var(--salt-zIndex-flyover);
