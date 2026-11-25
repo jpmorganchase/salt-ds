@@ -7,6 +7,19 @@ module.exports = {
   },
   turbopack: {
     rules: {
+      "*.css": {
+        condition: {
+          all: [
+            {
+              path: /^packages\/(core|countries|date-components|embla-carousel|highcharts-theme|icons|lab)\/src\//,
+            },
+            { not: { path: /\.module\.css$/ } },
+            { not: { query: /raw|salt-stylesheet/ } },
+          ],
+        },
+        loaders: [require.resolve("./loaders/salt-css.cjs")],
+        as: "*.js",
+      },
       "*": {
         condition: { query: /raw/ },
         type: "text",

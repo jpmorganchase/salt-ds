@@ -79,6 +79,11 @@ file trace includes it.
 
 ## Integration boundaries
 
+- Next.js uses Turbopack for development and production. The site loads Salt
+  workspace component CSS through `loaders/salt-css.cjs`, which retains the
+  source string for runtime style injection and a native CSS import for
+  server-rendered styles. Theme styles and site CSS modules use Next's normal
+  CSS pipeline; `?raw` imports use Turbopack's native text module type.
 - `src/lib/content.ts` calls Mosaic's shared route resolver. Aliases use the
   backing document's configuration and public canonical URL.
 - `src/app/[namespace]/[...route]/page.tsx` compiles MDX on the server and emits
