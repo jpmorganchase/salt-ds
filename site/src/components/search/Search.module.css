@@ -1,3 +1,7 @@
+.root {
+  position: relative;
+}
+
 .result.result {
   overflow: hidden;
   padding: var(--salt-spacing-100);
@@ -11,7 +15,16 @@
   max-width: 50vw;
 }
 
-.statusOption {
+.status {
+  position: absolute;
+  inset-inline: 0;
+  top: calc(100% + var(--salt-size-fixed-100));
+  z-index: var(--salt-zIndex-flyover);
+  background: var(--salt-container-primary-background);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
+  border-radius: var(--salt-palette-corner, 0);
+  box-shadow: var(--salt-overlayable-shadow-popout);
+  box-sizing: border-box;
   display: flex;
   align-items: center;
   font-style: var(--salt-typography-fontStyle-italic);
