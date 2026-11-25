@@ -26,20 +26,20 @@ export interface RadioButtonProps
     "onChange" | "onBlur" | "onFocus"
   > {
   /**
-   * Set the default selected radio button in the group
+   * If `true`, the radio button is checked. Inside a `RadioButtonGroup`, when `checked` isn't set, the group's `value` decides whether it's checked.
    */
   checked?: boolean;
   /**
-   * Set the disabled state
+   * If `true`, the radio button is disabled. It's also disabled when the surrounding `RadioButtonGroup` or `FormField` is disabled.
    */
   disabled?: boolean;
   /**
-   * **Deprecated**: Use validationStatus instead
-   * Set the error state
+   * Set the error state.
+   * @deprecated since 1.8.0-rc.2. Use `validationStatus="error"` instead.
    */
   error?: boolean;
   /**
-   * Props to be passed to the radio input
+   * Props applied to the `input` element.
    */
   inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>> & DataAttributes;
   /**
@@ -47,32 +47,32 @@ export interface RadioButtonProps
    */
   inputRef?: Ref<HTMLInputElement>;
   /**
-   * The label to be shown next to the radio icon
+   * The label to be shown next to the radio icon.
    */
   label?: ReactNode;
   /**
-   * Name of the radio group
+   * Name of the radio group.
    */
   name?: string;
   /**
-   * Callback for blur event
+   * Callback fired when the radio button loses focus.
    */
   onBlur?: FocusEventHandler<HTMLInputElement>;
   /**
-   * Callback for change event
+   * Callback fired when the checked state changes. It isn't fired when the radio button is read-only.
    */
   onChange?: ChangeEventHandler<HTMLInputElement>;
   /**
-   * Callback for focus event
+   * Callback fired when the radio button receives focus.
    */
   onFocus?: FocusEventHandler<HTMLInputElement>;
   /**
-   * Set the read only state.
-   * **Note**: Setting a standalone radio button as read-only is not accessible. The whole radio buttton group should be set as read-only instead.
+   * If `true`, the radio button is read-only. It's also read-only when the surrounding `RadioButtonGroup` or `FormField` is read-only.
+   * **Note**: Setting a standalone radio button as read-only isn't accessible. Set the whole radio button group as read-only instead.
    */
   readOnly?: boolean;
   /**
-   * Value of radio button
+   * Value of radio button.
    */
   value?: string;
   /**

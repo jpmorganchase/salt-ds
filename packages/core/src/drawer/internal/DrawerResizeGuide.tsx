@@ -12,10 +12,18 @@ const withBaseName = makePrefixer("saltDrawerResizeGuide");
 
 export interface DrawerResizeGuideProps
   extends ComponentPropsWithoutRef<"div"> {
+  /**
+   * The position of the Drawer, which sets the direction of the guide line:
+   * vertical for `"left"` and `"right"` drawers, and horizontal for `"top"`
+   * and `"bottom"` drawers.
+   */
   position: NonNullable<DrawerProps["position"]>;
 }
 
-/** Covers the viewport while placing the edge by click, so the click doesn't reach the content. */
+/**
+ * Covers the viewport while placing the edge by click, so the click doesn't
+ * reach the content. It shows a guide line where the edge will be placed.
+ */
 export const DrawerResizeGuide = forwardRef<
   HTMLDivElement,
   DrawerResizeGuideProps

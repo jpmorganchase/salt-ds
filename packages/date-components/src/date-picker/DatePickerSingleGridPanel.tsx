@@ -54,7 +54,7 @@ export interface DatePickerPanelBaseProps
    */
   helperText?: string;
   /**
-   * The visible month for the first visible calendar
+   * The visible month for the first visible calendar.
    */
   visibleMonth?: DateFrameworkType;
   /**
@@ -62,7 +62,9 @@ export interface DatePickerPanelBaseProps
    */
   columns?: ResponsiveProp<number | string>;
   /**
-   * Number of visible months, maximum 12, defaults to 1
+   * Number of visible months, maximum 12.
+   * In `DatePickerRangeGridPanel`, it defaults to `2`.
+   * @default 1
    */
   numberOfVisibleMonths?: ResponsiveProp<
     1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 | 11 | 12
@@ -83,7 +85,7 @@ export interface DatePickerPanelBaseProps
   /**
    * Callback fired when the focused date changes.
    * @param event - The synthetic event or null if triggered by code.
-   * @param focusedDate - The new hovered date.
+   * @param focusedDate - The new focused date.
    */
   onFocusedDateChange?: (
     event: SyntheticEvent | null,
@@ -99,11 +101,11 @@ export interface DatePickerPanelBaseProps
     hoveredDate?: DateFrameworkType | null,
   ) => void;
   /**
-   * Props to be passed to the CalendarNavigation component.
+   * Props applied to the `CalendarNavigation` component.
    */
   CalendarNavigationProps?: Partial<CalendarNavigationPropsType>;
   /**
-   * Props to be passed to the CalendarGrid component.
+   * Props applied to the `CalendarGrid` component.
    */
   CalendarGridProps?: Partial<CalendarGridProps>;
 }
@@ -111,10 +113,16 @@ export interface DatePickerPanelBaseProps
 const withBaseName = makePrefixer("saltDatePickerPanel");
 
 export type DatePickerSingleGridPanelProps = DatePickerPanelBaseProps & {
+  /**
+   * Callback fired when the user selects a date in the panel.
+   */
   onSelectionChange?: (
     event: SyntheticEvent,
     selectedDate?: DateFrameworkType | null,
   ) => void;
+  /**
+   * Props applied to the `Calendar` component.
+   */
   CalendarProps?: Partial<
     Omit<
       CalendarSingleProps,

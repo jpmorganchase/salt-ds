@@ -15,23 +15,24 @@ const withBaseName = makePrefixer("saltDrawerHeader");
 
 export interface DrawerHeaderProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * Hides the accent bar in the Drawer Header. Defaults to `true` when the Drawer is resizable and positioned `right`, otherwise `false`.
+   * If `true`, the accent bar in the DrawerHeader is hidden. When the `Drawer`
+   * is `resizable` and its `position` is `"right"`, it defaults to `true`.
    */
   disableAccent?: boolean;
   /**
-   * Displays the header at the top of the Drawer
+   * Displays the header at the top of the Drawer.
    */
   header?: ReactNode;
   /**
-   * Displays the preheader just above the header
-   **/
+   * Displays the preheader just above the header.
+   */
   preheader?: ReactNode;
   /**
-   * Description text is displayed just below the header
-   **/
+   * Description text is displayed just below the header.
+   */
   description?: ReactNode;
   /**
-   * Actions to be displayed in header
+   * Actions to be displayed in header.
    */
   actions?: ReactNode;
 }

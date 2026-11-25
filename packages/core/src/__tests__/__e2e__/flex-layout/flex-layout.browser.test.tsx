@@ -43,7 +43,9 @@ describe("GIVEN a FlexLayout", () => {
     expect(outer.justifyContent).toBe("space-between");
     expect(outer.rowGap).toBe("48px");
     expect(inner.flexWrap).toBe("nowrap");
-    expect(inner.justifyContent).toBe("flex-start");
+    // Custom properties compute to their specified tokens, so this doesn't
+    // depend on how a browser serializes the computed justify-content keyword.
+    expect(inner.getPropertyValue("--flexLayout-justify")).toBe("flex-start");
     expect(inner.rowGap).toBe("24px");
   });
 

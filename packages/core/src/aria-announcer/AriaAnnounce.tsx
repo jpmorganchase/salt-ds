@@ -9,8 +9,7 @@ export interface AriaAnnounceProps extends AnnounceFnOptions {
   announcement?: string;
   /**
    * Legacy option, precede the announcement with a delay.
-   * @deprecated
-   * useAriaAnnouncer `delay` arg is deprecated, use your own `setTimeout` or consider using `duration` through `AnnounceFnOptions` instead.
+   * @deprecated since 1.60.0. Use your own `setTimeout`, or use `duration` instead.
    */
   delay?: number;
 }

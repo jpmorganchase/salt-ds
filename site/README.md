@@ -5,12 +5,11 @@ the layouts, navigation, search UI, MDX component registry and live examples.
 The public Salt packages retain their existing React support; React 19 is the
 documentation application's runtime.
 
-## Mosaic integration snapshot
+## Mosaic App Router integration
 
-The documentation site pins Mosaic to `0.0.0-snapshot-20261115213905`, published
-from commit `3f16c888bf54d64833132cdf26a2248010dfd76a`.
-[Mosaic #931](https://github.com/jpmorganchase/mosaic/pull/931),
-[snapshot release run](https://github.com/jpmorganchase/mosaic/actions/runs/43764783187).
+The documentation site pins Mosaic to the published `1.0.0-beta.99` release,
+which includes the App Router integration merged in
+[Mosaic #931](https://github.com/jpmorganchase/mosaic/pull/931).
 
 For testing future local candidates in a separate verification branch, use the
 tarballs produced by the Mosaic snapshot workflow:
@@ -80,12 +79,25 @@ file trace includes it.
 
 ## Integration boundaries
 
+- Next.js uses Turbopack for development and production. The site loads Salt
+  workspace component CSS through `loaders/salt-css.cjs`, which retains the
+  source string for runtime style injection and a native CSS import for
+  server-rendered styles. Theme styles and site CSS modules use Next's normal
+  CSS pipeline; `?raw` imports use Turbopack's native text module type.
+- Next 16.4 does not apply `outputFileTracingIncludes` to Turbopack's proxy
+  entry. The production compile hook in `scripts/include-proxy-snapshots.cjs`
+  copies snapshot entries from the page trace into the proxy trace, preserving
+  file hashes and symlink aliases before deployment packaging.
 - `src/lib/content.ts` calls Mosaic's shared route resolver. Aliases use the
   backing document's configuration and public canonical URL.
 - `src/app/[namespace]/[...route]/page.tsx` compiles MDX on the server and emits
   document metadata.
 - `src/Body/Body.tsx` renders the compiled content with Salt's existing component
-  registry. Live examples and their raw source remain client components.
+  registry. Live examples remain client components.
+- `src/app/api/example-source/[componentName]/[exampleName]/route.ts` serves
+  each example's highlighted source. The build generates every example; in
+  development it reads the file on each request. `LivePreview` requests it only
+  when the reader first shows the code, and prefetches it on hover or focus.
 - `src/app/[namespace]/NamespaceFrame.tsx` keeps Salt's header mounted during
   navigation. Each document has a separate page store so metadata does not leak
   between pages.

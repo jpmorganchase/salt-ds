@@ -14,6 +14,7 @@ import {
   Text,
 } from "@salt-ds/core";
 import { CloseIcon, SearchIcon } from "@salt-ds/icons";
+import { clsx } from "clsx";
 import { useRouter } from "next/navigation";
 import {
   type ChangeEvent,
@@ -21,7 +22,10 @@ import {
   type SyntheticEvent,
   useContext,
   useDeferredValue,
+  useEffect,
+  useId,
   useMemo,
+  useRef,
   useState,
 } from "react";
 import useSWR from "swr";
@@ -58,14 +62,22 @@ const categoryOf = (route: string) =>
 
 function SearchResultOption({ result }: { result: SearchResult }) {
   const heading = result.headings[result.headings.length - 1];
+  const titleId = useId();
+  const descriptionId = useId();
   return (
-    <Option className={styles.result} value={result.href}>
-      <Text>
+    <Option
+      className={styles.result}
+      value={result.href}
+      aria-labelledby={titleId}
+      aria-describedby={result.snippet ? descriptionId : undefined}
+    >
+      <Text id={titleId}>
         {result.title}
         {heading && ` › ${heading}`}
       </Text>
       {result.snippet && (
         <Text
+          id={descriptionId}
           styleAs="label"
           color="secondary"
           className={styles.resultDescription}
@@ -87,7 +99,10 @@ function SearchResultOption({ result }: { result: SearchResult }) {
 export function Search(props: ComponentPropsWithoutRef<"search">) {
   const router = useRouter();
   const searchNavigation = useContext(SearchNavigationContext);
+  const inputRef = useRef<HTMLInputElement>(null);
   const [value, setValue] = useState("");
+  const [open, setOpen] = useState(false);
+  const [announcement, setAnnouncement] = useState("");
   const query = useDeferredValue(value).trim();
   // Download the records the first time the reader focuses search.
   const [wantsIndex, setWantsIndex] = useState(false);
@@ -105,7 +120,8 @@ export function Search(props: ComponentPropsWithoutRef<"search">) {
   const handleSelectionChange = (_event: SyntheticEvent, href: string[]) => {
     if (!href[0]) return;
     setValue("");
-    const anchor = searchNavigation?.requestAnchor(href[0]) ?? false;
+    const anchor =
+      searchNavigation?.request(href[0], inputRef.current) ?? false;
     router.push(href[0], { scroll: !anchor });
   };
 
@@ -127,6 +143,12 @@ export function Search(props: ComponentPropsWithoutRef<"search">) {
     return byCategory;
   }, [searchIndex, query]);
 
+  const resultCount = Object.values(results).reduce(
+    (count, categoryResults) =>
+      count + Math.min(categoryResults.length, RESULTS_PER_CATEGORY),
+    0,
+  );
+
   const status =
     query === ""
       ? undefined
@@ -138,15 +160,45 @@ export function Search(props: ComponentPropsWithoutRef<"search">) {
             ? `No results found for "${query}"`
             : undefined;
 
+  const feedback =
+    open && query !== "" && query === value.trim()
+      ? (status ??
+        (resultCount > 0
+          ? `${resultCount} ${resultCount === 1 ? "result" : "results"} for "${query}"`
+          : ""))
+      : "";
+
+  useEffect(() => {
+    setAnnouncement("");
+    if (!feedback) return;
+
+    // Wait for a pause in typing; transient loading and intermediate queries
+    // should not interrupt the reader with a stream of announcements.
+    const timeout = window.setTimeout(() => setAnnouncement(feedback), 300);
+    return () => window.clearTimeout(timeout);
+  }, [feedback]);
+
   return (
-    <search {...props}>
+    <search {...props} className={clsx(styles.root, props.className)}>
       <ComboBox
+        inputRef={inputRef}
         inputProps={{
           "aria-label": "Site Search",
+          "aria-autocomplete": "list",
         }}
+        OverlayProps={{ "aria-label": "Search results" }}
+        open={open}
+        onOpenChange={setOpen}
         onChange={handleChange}
         onFocus={() => setWantsIndex(true)}
+        onBlur={() => setOpen(false)}
+        onKeyDown={(event) => {
+          // Empty/loading feedback is outside the listbox, so it also needs
+          // dismissal when ComboBox has no popup of its own to dismiss.
+          if (event.key === "Escape") setOpen(false);
+        }}
         onSelectionChange={handleSelectionChange}
+        selectOnTab={false}
         selected={[]}
         startAdornment={<SearchIcon aria-hidden />}
         bordered
@@ -155,7 +207,10 @@ export function Search(props: ComponentPropsWithoutRef<"search">) {
             <Button
               aria-label="Clear search"
               appearance="transparent"
-              onClick={() => setValue("")}
+              onClick={() => {
+                setValue("");
+                setOpen(false);
+              }}
             >
               <CloseIcon aria-hidden />
             </Button>
@@ -164,24 +219,19 @@ export function Search(props: ComponentPropsWithoutRef<"search">) {
         value={value}
         placeholder="Search"
       >
-        {status ? (
-          <div
-            className={styles.statusOption}
-            role="option"
-            aria-selected="false"
-          >
-            {status}
-          </div>
-        ) : (
+        {!status &&
           Object.entries(results).map(([category, categoryResults]) => (
             <OptionGroup label={category} key={category}>
               {categoryResults.slice(0, RESULTS_PER_CATEGORY).map((result) => (
                 <SearchResultOption result={result} key={result.id} />
               ))}
             </OptionGroup>
-          ))
-        )}
+          ))}
       </ComboBox>
+      {open && status && <div className={styles.status}>{status}</div>}
+      <div className="salt-visuallyHidden" role="status" aria-atomic="true">
+        {announcement}
+      </div>
     </search>
   );
 }

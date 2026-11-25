@@ -20,6 +20,9 @@ import tabsCss from "./Tabs.css";
 
 export interface TabsProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
+  /**
+   * The content of the tabs, usually a `TabBar` containing a `TabList`, and a `TabPanel` for each tab.
+   */
   children?: ReactNode;
   /**
    * The default value. Use when the component is not controlled.
@@ -110,6 +113,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
       sortItems,
       removalVersion,
       getRemovedItems,
+      peekRemovedItems,
     } = useCollection({ targetWindow, wrap: true });
 
     const activeTab = useRef<Pick<Item, "id" | "value"> | undefined>(undefined);
@@ -208,6 +212,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
         sortItems,
         removalVersion,
         getRemovedItems,
+        peekRemovedItems,
       }),
       [
         renderMode,
@@ -237,6 +242,7 @@ export const Tabs = forwardRef<HTMLDivElement, TabsProps>(
         sortItems,
         removalVersion,
         getRemovedItems,
+        peekRemovedItems,
         selectionFromOverflowValueRef,
       ],
     );

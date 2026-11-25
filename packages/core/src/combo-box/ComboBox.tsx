@@ -51,17 +51,24 @@ import { type UseComboBoxProps, useComboBox } from "./useComboBox";
 
 export interface ComboBoxProps<Item = string>
   extends UseComboBoxProps<Item>,
-    Omit<PillInputProps, "onPillRemove"> {
+    Omit<PillInputProps, "hidePillClose" | "onPillRemove" | "pills"> {
   /**
    * The options to display in the combo box.
    */
   children?: ReactNode;
   /**
-   * If true, options will be selected when the tab key is pressed.
+   * If `true`, the selected pills are kept to one line while the combo box isn't
+   * focused or open, with an overflow icon when some don't fit.
+   */
+  truncate?: boolean;
+  /**
+   * If `true`, the active option is selected when the Tab key is pressed. When
+   * `multiselect` is `true`, it defaults to `false`.
+   * @default true
    */
   selectOnTab?: boolean;
   /**
-   * Props to pass to ComboBox's overlay.
+   * Props applied to the overlay that contains the options.
    */
   OverlayProps?: Omit<ComponentPropsWithoutRef<"div">, "children" | "id"> &
     DataAttributes;
@@ -185,10 +192,11 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
 
   const hasValidChildren =
     Children.toArray(children).filter(Boolean).length > 0;
+  const popupOpen = openState && !readOnly && hasValidChildren;
 
   const { x, y, strategy, elements, floating, reference, context } =
     useFloatingUI({
-      open: openState && !readOnly && hasValidChildren,
+      open: popupOpen,
       onOpenChange: handleOpenChange,
       placement: "bottom-start",
       strategy: "fixed",
@@ -430,8 +438,8 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     <Button
       aria-labelledby={clsx(buttonId, formFieldLabelledBy)}
       aria-label="Show options"
-      aria-expanded={openState}
-      aria-controls={openState ? listId : undefined}
+      aria-expanded={popupOpen}
+      aria-controls={popupOpen ? listId : undefined}
       aria-haspopup="listbox"
       disabled={disabled}
       appearance="transparent"
@@ -439,7 +447,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
       onFocus={handleButtonFocus}
       tabIndex={-1}
     >
-      {openState ? <CollapseIcon aria-hidden /> : <ExpandIcon aria-hidden />}
+      {popupOpen ? <CollapseIcon aria-hidden /> : <ExpandIcon aria-hidden />}
     </Button>
   );
 
@@ -475,12 +483,12 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
         readOnly={readOnly}
         inputProps={{
           "aria-readonly": readOnly ? "true" : undefined,
-          "aria-expanded": !readOnly ? openState : undefined,
-          "aria-controls": openState && !readOnly ? listId : undefined,
+          "aria-expanded": !readOnly ? popupOpen : undefined,
+          "aria-controls": popupOpen ? listId : undefined,
           onKeyDown: handleKeyDown,
           ...inputPropsProp,
         }}
-        aria-activedescendant={activeState?.id}
+        aria-activedescendant={popupOpen ? activeState?.id : undefined}
         variant={variant}
         inputRef={handleInputRef}
         value={valueState}
@@ -526,5 +534,10 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     </ListControlProvider>
   );
 }) as <Item = string>(
-  props: ComboBoxProps<Item> & { ref?: Ref<HTMLDivElement> },
+  props: ComboBoxProps<Item> & {
+    /**
+     * A ref to the root element, which contains the input and the pills.
+     */
+    ref?: Ref<HTMLDivElement>;
+  },
 ) => ReactElement;

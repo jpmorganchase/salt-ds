@@ -10,17 +10,21 @@ import { useControlled } from "../utils";
 import { ToggletipContext } from "./ToggletipContext";
 
 export interface ToggletipProps {
+  /**
+   * The content of the Toggletip, usually a `ToggletipTrigger` and a `ToggletipPanel`.
+   */
   children?: ReactNode;
   /**
-   * Display or hide the component.
+   * If `true`, the Toggletip is open. Use with `onOpenChange` to control it.
    */
   open?: boolean;
   /**
-   * Callback function triggered when open state changes.
+   * Callback fired when the open state changes.
    */
   onOpenChange?: (open: boolean) => void;
-  /*
-   * Set the placement of the Toggletip component relative to the trigger element. Defaults to `top`.
+  /**
+   * The placement of the Toggletip relative to its trigger.
+   * @default "top"
    */
   placement?: "top" | "bottom" | "left" | "right";
 }

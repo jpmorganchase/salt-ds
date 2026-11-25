@@ -45,26 +45,29 @@ export interface NumberInputProps
     "onChange" | "defaultValue" | "value"
   > {
   /**
-   * Styling variant with full border.
-   * @default false
+   * If `true`, the NumberInput has a full border.
    */
   bordered?: boolean;
   /**
-   * A boolean that, when true, ensures the input value is clamped within the specified min and max range upon losing focus.
-   * @default false
+   * If `true`, the value is clamped within the `min` and `max` range when the input loses focus.
    */
   clamp?: boolean;
   /**
-   * Number of decimal places allowed (only used by default parser/formatter).
-   * Defaults to the decimal scale of either the initial value provided or the step, whichever is greater.
-   * For high precision of larger numbers, consider a custom parser/formatter from a third-party library.
+   * The number of decimal places allowed. Only the default parser and formatter
+   * use it. Defaults to the number of decimal places in `value` or
+   * `defaultValue`, or in `step`, whichever is greater. For high precision or
+   * large numbers, consider a custom parser and formatter from a third-party
+   * library.
    */
   decimalScale?: number;
   /**
-   * Custom decrement function to override the default increment behavior, use when higher precision or large numbers are required
-   * value: current value
-   * step: step value
-   * stepMultiplier: step multiplier value, when using shift key navigation
+   * The function that decrements the value, replacing the default decrement
+   * behavior. Use it when higher precision or large numbers are required.
+   * @param value - The current value.
+   * @param step - The step value.
+   * @param stepMultiplier - The `stepMultiplier` prop when Up Arrow or Down
+   * Arrow is pressed with Shift, or Page Up or Page Down is pressed, and `1`
+   * otherwise.
    */
   decrement?: (value: string, step: number, stepMultiplier: number) => string;
   /**
@@ -72,12 +75,12 @@ export interface NumberInputProps
    */
   defaultValue?: number | string;
   /**
-   * Disable the `NumberInput`.
-   * @default false
+   * If `true`, the NumberInput is disabled. The NumberInput is also disabled when the surrounding `FormField` is disabled.
    */
   disabled?: boolean;
   /**
-   * The marker to use in an empty read only Input.
+   * The text shown when the NumberInput is read-only and has no value. Use `""`
+   * to show nothing.
    * @default "—"
    */
   emptyReadOnlyMarker?: string;
@@ -91,19 +94,21 @@ export interface NumberInputProps
    */
   format?: (value: string) => string;
   /**
-   * Hide the number buttons.
-   * @default false
+   * If `true`, the increment and decrement buttons are hidden.
    */
   hideButtons?: boolean;
   /**
-   * Custom increment function to override the default increment behavior, use when higher precision or large numbers are required
-   * value: current value
-   * step: step value
-   * stepMultiplier: step multiplier value, when using shift key navigation
+   * The function that increments the value, replacing the default increment
+   * behavior. Use it when higher precision or large numbers are required.
+   * @param value - The current value.
+   * @param step - The step value.
+   * @param stepMultiplier - The `stepMultiplier` prop when Up Arrow or Down
+   * Arrow is pressed with Shift, or Page Up or Page Down is pressed, and `1`
+   * otherwise.
    */
   increment?: (value: string, step: number, stepMultiplier: number) => string;
   /**
-   * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
+   * Props applied to the `input` element, such as its [attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes).
    */
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
   /**
@@ -129,18 +134,17 @@ export interface NumberInputProps
    */
   name?: string;
   /**
-   * Callback function that is triggered when the value changes via user input or increment/decrement.
-   * Use `onNumberChange` if you want stable number, after blur or through increment/decrement
-   *
-   * @param event - The event that triggers the value change, can be null if called by long-press of increment/decrement
-   * @param value - value as string
+   * Callback fired when the value changes through user input or when it's incremented or decremented.
+   * Use `onNumberChange` for a complete number, after blur or when the value is incremented or decremented.
+   * @param event - The event that triggered the change. It's `null` when the change comes from a long press of the increment or decrement button.
+   * @param value - The value as a string.
    */
   onChange?: (event: SyntheticEvent | null, value: string) => void;
   /**
-   * Callback function that is triggered when the value changes via increment/decrement or on blur.
+   * Callback fired when the value changes through increment or decrement, or on blur.
    *
-   * @param event - The event that triggers the change, can be null if called by long-press of increment/decrement
-   * @param value - The committed, parsed number value or null if an empty value
+   * @param event - The event that triggered the change. It's `null` when the change comes from a long press of the increment or decrement button.
+   * @param value - The committed, parsed number value, or `null` if the value is empty.
    */
   onNumberChange?: (event: SyntheticEvent | null, value: number | null) => void;
   /**
@@ -149,13 +153,11 @@ export interface NumberInputProps
    */
   parse?: (value: string) => number | null;
   /**
-   * A string displayed in a dimmed color when the `NumberInput` value is empty.
+   * The text displayed in a dimmed color when the `NumberInput` value is empty.
    */
   placeholder?: string;
   /**
-   * A boolean property that controls the read-only state of the `NumberInput`.
-   * - When set to `true`, the `NumberInput` becomes read-only, preventing user edits.
-   * - When set to `false` or omitted, the `NumberInput` is editable by the user.
+   * If `true`, the NumberInput is read-only, preventing user edits. The NumberInput is also read-only when the surrounding `FormField` is read-only.
    */
   readOnly?: boolean;
   /**

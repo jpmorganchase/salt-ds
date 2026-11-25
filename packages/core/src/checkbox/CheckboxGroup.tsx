@@ -28,7 +28,8 @@ export interface CheckboxGroupProps
    */
   direction?: "horizontal" | "vertical";
   /**
-   * Disable the Checkbox group
+   * If `true`, the checkbox group is disabled. The group is also disabled when
+   * the surrounding `FormField` is disabled.
    */
   disabled?: boolean;
   /**
@@ -45,7 +46,9 @@ export interface CheckboxGroupProps
    */
   readOnly?: boolean;
   /**
-   * Only for horizontal direction. When `true` the text in radio button label will wrap to fit within the container. Otherwise, the checkboxes will wrap onto the next line.
+   * If `true`, the checkboxes wrap onto the next line. Otherwise, the text in
+   * each checkbox's label wraps to fit within the container. Only applies when
+   * `direction` is `"horizontal"`.
    */
   wrap?: boolean;
   /**

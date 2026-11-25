@@ -37,20 +37,21 @@ export interface PillInputProps
       "disabled" | "value" | "defaultValue" | "placeholder"
     > {
   /**
-   * The marker to use in an empty read only Input.
-   * Use `''` to disable this feature. Defaults to '—'.
+   * The text shown when the input is read-only and has no value. Use `""` to
+   * show nothing.
+   * @default "—"
    */
   emptyReadOnlyMarker?: string;
   /**
-   * End adornment component
+   * End adornment component.
    */
   endAdornment?: ReactNode;
   /**
-   * [Attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes) applied to the `input` element.
+   * Props applied to the `input` element, such as its [attributes](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input#Attributes).
    */
   inputProps?: Partial<InputHTMLAttributes<HTMLInputElement>> & DataAttributes;
   /**
-   * Optional ref for the input component
+   * Optional ref for the input component.
    */
   inputRef?: Ref<HTMLInputElement>;
   /**
@@ -65,13 +66,18 @@ export interface PillInputProps
    * The tokens to display in the input.
    */
   pills?: string[];
+  /**
+   * Callback fired when the user removes a pill by clicking it, by pressing Backspace or Delete while it's focused, or by pressing Backspace at the start of the input, which removes the last pill. Update `pills` to remove it.
+   * @param index - The index of the removed pill in `pills`.
+   */
   onPillRemove?: (event: SyntheticEvent, index: number) => void;
   /**
-   * Start adornment component
+   * Start adornment component.
    */
   startAdornment?: ReactNode;
   /**
-   * Alignment of text within container. Defaults to "left"
+   * Alignment of text within the container.
+   * @default "left"
    */
   textAlign?: "left" | "center" | "right";
   /**
@@ -79,12 +85,22 @@ export interface PillInputProps
    */
   validationStatus?: FormFieldValidationStatus;
   /**
-   * Styling variant. Defaults to "primary".
+   * Styling variant.
+   * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
+  /**
+   * If `true`, the pills don't show a close icon, and clicking a pill doesn't call
+   * `onPillRemove`. Pressing Backspace or Delete on a focused pill, or Backspace
+   * at the start of the input, still calls it.
+   */
   hidePillClose?: boolean;
+  /**
+   * If `true`, the pills stay on one line, and the pills that don't fit are replaced with an overflow indicator.
+   */
   truncate?: boolean;
-  /** Styling variant with full border. Defaults to false
+  /**
+   * If `true`, the pill input has a full border.
    */
   bordered?: boolean;
 }

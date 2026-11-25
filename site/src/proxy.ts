@@ -1,10 +1,29 @@
 import {
+  loadSnapshotRoutes,
   resolveContent,
   resolveMosaicMode,
 } from "@jpmorganchase/mosaic-site-middleware";
 import { type NextRequest, NextResponse } from "next/server";
 import legacyDocumentationRoutes from "./lib/legacyDocumentationRoutes.json";
 import { getMarkdownRoute } from "./lib/markdownRoutes";
+
+let knownSnapshotRoutes:
+  | {
+      inventory: Awaited<ReturnType<typeof loadSnapshotRoutes>>;
+      paths: Set<string>;
+    }
+  | undefined;
+
+async function snapshotRouteExists(pathname: string) {
+  const inventory = await loadSnapshotRoutes();
+  if (knownSnapshotRoutes?.inventory !== inventory) {
+    knownSnapshotRoutes = {
+      inventory,
+      paths: new Set(inventory.routes.map((route) => route.pathname)),
+    };
+  }
+  return knownSnapshotRoutes.paths.has(pathname);
+}
 
 export async function proxy(request: NextRequest) {
   if (request.method !== "GET" && request.method !== "HEAD") {
@@ -28,6 +47,20 @@ export async function proxy(request: NextRequest) {
 
     // Proxy runs before the legacy rewrites in next.config.js.
     const { mode, contentUrl } = resolveMosaicMode();
+    if (mode === "snapshot-file") {
+      try {
+        // Most document requests are known from the completed snapshot. Avoid
+        // parsing MDX and shared config just to check that they exist.
+        const publicPath = legacy
+          ? `/salt${request.nextUrl.pathname}`
+          : request.nextUrl.pathname;
+        if (await snapshotRouteExists(publicPath)) {
+          return NextResponse.next();
+        }
+      } catch {
+        // Legacy or incomplete snapshots retain the content resolver fallback.
+      }
+    }
     const result = await resolveContent(
       legacy ? `/salt${pathname}` : pathname,
       mode,

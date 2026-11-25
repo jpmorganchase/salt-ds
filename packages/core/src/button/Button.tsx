@@ -59,9 +59,8 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    */
   focusableWhenDisabled?: boolean;
   /**
-   * The variant to use. Options are 'primary', 'secondary' and 'cta'.
-   * 'primary' is the default value.
-   *
+   * The variant to use: `"primary"`, `"secondary"` or `"cta"`.
+   * @default "primary"
    * @deprecated since 1.36.0. Use `appearance` and `sentiment` instead.
    *
    * | variant     | appearance    | sentiment   |
@@ -72,16 +71,18 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    */
   variant?: ButtonVariant;
   /**
-   * The appearance of the button. Options are 'solid', 'bordered', and 'transparent'.
-   * 'solid' is the default value.
-   *
+   * The appearance of the button: `"solid"`, `"bordered"` or `"transparent"`.
+   * When the deprecated `variant` is set, it defaults to the appearance that
+   * matches the variant.
+   * @default "solid"
    * @since 1.36.0.
    */
   appearance?: ButtonAppearance;
   /**
-   * The sentiment of the button. Options are 'accented', 'neutral', 'positive', 'negative' and 'caution'.
-   * 'neutral' is the default value.
-   *
+   * The sentiment of the button: `"accented"`, `"neutral"`, `"positive"`,
+   * `"negative"` or `"caution"`. When the deprecated `variant` is set, it
+   * defaults to the sentiment that matches the variant.
+   * @default "neutral"
    * @since 1.36.0.
    */
   sentiment?: ButtonSentiment;
@@ -99,6 +100,11 @@ export interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
    * @since 1.38.0.
    */
   loadingAnnouncement?: string;
+  /**
+   * Callback fired when the button is clicked. It isn't fired when the button
+   * is disabled or loading, including when `focusableWhenDisabled` is `true`.
+   */
+  onClick?: ComponentPropsWithoutRef<"button">["onClick"];
 }
 
 function variantToAppearanceAndColor(

@@ -29,6 +29,7 @@ export const Placeholder = (): ReactElement => {
   return (
     <ComboBox
       onChange={handleChange}
+      inputProps={{ "aria-autocomplete": "list" }}
       onSelectionChange={handleSelectionChange}
       value={value}
       placeholder="Color"

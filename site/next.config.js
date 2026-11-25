@@ -1,14 +1,34 @@
 const legacyDocumentationRoutes = require("./src/lib/legacyDocumentationRoutes.json");
+const includeProxySnapshots = require("./scripts/include-proxy-snapshots.cjs");
 
 module.exports = {
   outputFileTracingIncludes: {
     "/*": ["snapshots/**/*"],
     proxy: ["snapshots/**/*"],
   },
-  experimental: {
-    // Start tracing after the server compile so it can overlap the client build.
-    webpackBuildWorker: true,
-    parallelServerBuildTraces: true,
+  compiler: {
+    runAfterProductionCompile: includeProxySnapshots,
+  },
+  turbopack: {
+    rules: {
+      "*.css": {
+        condition: {
+          all: [
+            {
+              path: /^packages\/(core|countries|date-components|embla-carousel|highcharts-theme|icons|lab)\/src\//,
+            },
+            { not: { path: /\.module\.css$/ } },
+            { not: { query: /raw|salt-stylesheet/ } },
+          ],
+        },
+        loaders: [require.resolve("./loaders/salt-css.cjs")],
+        as: "*.js",
+      },
+      "*": {
+        condition: { query: /raw/ },
+        type: "text",
+      },
+    },
   },
   transpilePackages: [
     "@jpmorganchase/mosaic-site-middleware",
@@ -33,18 +53,6 @@ module.exports = {
       /** Insert the domains where you will load images from */
       /* https://nextjs.org/docs/messages/next-image-unconfigured-host */
     ],
-  },
-  webpack(config) {
-    for (const rule of config.module.rules) {
-      if (rule.oneOf) {
-        rule.oneOf.unshift({
-          resourceQuery: /raw/,
-          type: "asset/source",
-        });
-      }
-    }
-
-    return config;
   },
   env: {},
   async redirects() {

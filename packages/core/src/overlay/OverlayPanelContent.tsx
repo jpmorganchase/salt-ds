@@ -22,7 +22,7 @@ const withBaseName = makePrefixer("saltOverlayPanelContent");
 export interface OverlayPanelContentProps
   extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The content of Overlay Panel Content
+   * The content of Overlay Panel Content.
    */
   children?: ReactNode;
 }

@@ -40,8 +40,8 @@ export interface InteractableCardGroupProps
    */
   value?: InteractableCardValue;
   /**
-   * If `true` the Interactable Card Group will allow multiple selection functionality, with keyboard interactions matching those of a checkbox.
-   * By default the group allows mutually exclusive selection with keyboard interactions matching radio buttons.
+   * If `true`, the Interactable Card Group allows multiple selection, with keyboard interactions matching those of a checkbox.
+   * Otherwise, the group allows mutually exclusive selection with keyboard interactions matching radio buttons.
    */
   multiSelect?: boolean;
   /**

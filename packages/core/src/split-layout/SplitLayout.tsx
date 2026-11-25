@@ -23,7 +23,8 @@ export type SplitLayoutProps<T extends ElementType> =
        */
       align?: FlexLayoutProps<ElementType>["align"];
       /**
-       * Establishes the main-axis, defining the direction children are placed. Default is "row".
+       * Establishes the main axis, defining the direction in which children are placed.
+       * @default "row"
        */
       direction?: FlexLayoutProps<ElementType>["direction"];
       /**
@@ -39,11 +40,13 @@ export type SplitLayoutProps<T extends ElementType> =
        */
       startItem?: ReactNode;
       /**
-       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value. Default is `0`.
+       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value.
+       * @default 0
        */
       margin?: FlexLayoutProps<ElementType>["margin"];
       /**
-       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value. Default is `0`.
+       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value.
+       * @default 0
        */
       padding?: FlexLayoutProps<ElementType>["padding"];
     }

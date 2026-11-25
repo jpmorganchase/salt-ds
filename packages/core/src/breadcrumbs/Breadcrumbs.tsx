@@ -47,12 +47,12 @@ export interface BreadcrumbsProps
   children?: ReactNode;
   /**
    * The number of items to keep after the collapse point.
-   * Defaults to 1.
+   * @default 1
    */
   itemsAfterCollapse?: number;
   /**
    * The number of items to keep before the collapse point.
-   * Defaults to 1.
+   * @default 1
    */
   itemsBeforeCollapse?: number;
   /**
@@ -65,7 +65,6 @@ export interface BreadcrumbsProps
   render?: RenderPropsType["render"];
   /**
    * If `true`, breadcrumbs can wrap onto multiple lines.
-   * Defaults to `false`.
    */
   wrap?: boolean;
 }

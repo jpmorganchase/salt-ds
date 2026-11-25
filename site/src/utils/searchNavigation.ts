@@ -3,30 +3,58 @@ type ActiveNavigation = {
   commitRoute: (route: string) => void;
 };
 
-/** Keep a search heading in place while examples load, until the reader acts. */
+/** Focus a search destination and keep its heading aligned until the reader acts. */
 export function createSearchNavigation() {
   let committedRoute: string | undefined;
   let active: ActiveNavigation | undefined;
+  let restoreFocusTarget: (() => void) | undefined;
 
-  const cancel = () => active?.cancel();
+  const clearFocusTarget = () => {
+    restoreFocusTarget?.();
+    restoreFocusTarget = undefined;
+  };
+
+  const focusDestination = (element: HTMLElement) => {
+    clearFocusTarget();
+    if (element.tabIndex < 0 && !element.hasAttribute("tabindex")) {
+      // Keep headings/main out of the Tab order and restore them before a
+      // route change or the browser's back-forward cache retains the page.
+      element.tabIndex = -1;
+      restoreFocusTarget = () => {
+        element.removeAttribute("tabindex");
+        element.removeEventListener("blur", clearFocusTarget);
+        window.removeEventListener("pagehide", clearFocusTarget);
+      };
+      element.addEventListener("blur", clearFocusTarget, { once: true });
+      window.addEventListener("pagehide", clearFocusTarget, { once: true });
+    }
+    element.focus({ preventScroll: true });
+  };
+
+  const cancel = () => {
+    active?.cancel();
+    clearFocusTarget();
+  };
 
   return {
     cancel,
     commitRoute(route: string) {
+      if (route !== committedRoute) clearFocusTarget();
       committedRoute = route;
       active?.commitRoute(route);
     },
-    requestAnchor(href: string) {
+    request(href: string, input?: HTMLElement | null) {
       cancel();
       const source = new URL(window.location.href);
       const sourceRoute = committedRoute;
       const destination = new URL(href, source);
-      if (!destination.hash || destination.origin !== source.origin)
-        return false;
+      if (destination.origin !== source.origin) return false;
 
-      let id: string;
+      let id: string | undefined;
       try {
-        id = decodeURIComponent(destination.hash.slice(1));
+        if (destination.hash) {
+          id = decodeURIComponent(destination.hash.slice(1));
+        }
       } catch {
         return false;
       }
@@ -34,6 +62,8 @@ export function createSearchNavigation() {
       let disposed = false;
       let arrived = false;
       let destinationCommitted = false;
+      let focused = false;
+      let focusedElement: HTMLElement | undefined;
       let main: HTMLElement | null = null;
       let observer: ResizeObserver | undefined;
       let frame: number | undefined;
@@ -62,6 +92,7 @@ export function createSearchNavigation() {
         }
         window.removeEventListener("scroll", handleScroll);
         window.removeEventListener("resize", schedule);
+        window.removeEventListener("focusin", handleFocus);
         if (active === navigation) active = undefined;
       };
 
@@ -77,6 +108,7 @@ export function createSearchNavigation() {
       };
 
       const target = () => {
+        if (!id) return main?.querySelector<HTMLElement>("h1") ?? main;
         const element = document.getElementById(id);
         return element && main?.contains(element) ? element : undefined;
       };
@@ -85,6 +117,19 @@ export function createSearchNavigation() {
         if (!current()) return;
         const element = target();
         if (!element) return;
+
+        if (!focused) {
+          focused = true;
+          focusedElement = element;
+          focusDestination(element);
+        }
+
+        if (!id) {
+          // Next retains scroll ownership for page results. The site only
+          // moves focus, once, when the destination content has committed.
+          finish();
+          return;
+        }
 
         const root = document.documentElement;
         const scrollRoot = document.scrollingElement ?? root;
@@ -125,6 +170,19 @@ export function createSearchNavigation() {
         });
       };
 
+      function handleFocus(event: FocusEvent) {
+        // ComboBox returns focus to its input after a pointer selection.
+        // Any other focus move is reader intent, including AT navigation that
+        // does not produce a pointer, keyboard or scroll event.
+        if (
+          event.target === focusedElement ||
+          (!focused && event.target === input)
+        ) {
+          return;
+        }
+        finish();
+      }
+
       function handleScroll() {
         if (!current() || lastDocumentTop === undefined) return;
         const element = target();
@@ -161,8 +219,10 @@ export function createSearchNavigation() {
           if (main !== nextMain) {
             observer?.disconnect();
             main = nextMain;
-            observer ??= new ResizeObserver(schedule);
-            if (main) observer.observe(main);
+            if (id) {
+              observer ??= new ResizeObserver(schedule);
+              if (main) observer.observe(main);
+            }
           }
           schedule();
         },
@@ -176,8 +236,10 @@ export function createSearchNavigation() {
       }
       window.addEventListener("scroll", handleScroll, { passive: true });
       window.addEventListener("resize", schedule, { passive: true });
+      window.addEventListener("focusin", handleFocus);
       if (committedRoute) navigation.commitRoute(committedRoute);
-      return true;
+      // Anchor results own scrolling; page results use Next's normal scroll.
+      return Boolean(id);
     },
   };
 }

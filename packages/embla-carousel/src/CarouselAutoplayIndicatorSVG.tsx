@@ -7,11 +7,7 @@ const withBaseName = makePrefixer("saltCarouselAutoplayIndicatorSVG");
 export interface CarouselAutoplayIndicatorSVGProps
   extends SVGAttributes<SVGSVGElement> {
   /**
-   * Class name to apply to the SVG element.
-   */
-  className?: string;
-  /**
-   * Ref to attach to progress indicator element
+   * Ref to attach to progress indicator element.
    */
   barRef: Ref<SVGCircleElement>;
   /**

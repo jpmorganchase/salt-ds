@@ -17,7 +17,7 @@ import accordionHeaderCss from "./AccordionHeader.css";
 export interface AccordionHeaderProps
   extends ComponentPropsWithoutRef<"button"> {
   /**
-   * The content of the Accordion Header
+   * The content of the Accordion Header.
    */
   children?: ReactNode;
 }

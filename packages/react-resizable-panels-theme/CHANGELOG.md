@@ -1,5 +1,22 @@
 # @salt-ds/react-resizable-panels-theme
 
+## 1.1.0
+
+### Minor Changes
+
+- 02e531c: Added support for `react-resizable-panels` v4. Version 3 is still supported, and the theme styles both versions.
+
+  `react-resizable-panels` v4 requires React 18 or later. Applications using React 16 or 17 must stay on `react-resizable-panels` v3.
+
+### Patch Changes
+
+- Updated dependencies [520e189]
+- Updated dependencies [ff895b8]
+- Updated dependencies [d44aefd]
+- Updated dependencies [ff895b8]
+- Updated dependencies [ea6b309]
+  - @salt-ds/theme@1.49.0
+
 ## 1.0.3
 
 ### Patch Changes

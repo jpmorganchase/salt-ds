@@ -6,6 +6,7 @@
   --salt-sentiment-positive-foreground-decorative: var(--salt-palette-positive-medium);
 
   --salt-sentiment-neutral-track: var(--salt-palette-alpha-contrast-high);
+  --salt-sentiment-accent-track: var(--salt-palette-accent-medium);
 
   --salt-sentiment-caution-dataviz: var(--salt-palette-warning-medium);
   --salt-sentiment-negative-dataviz: var(--salt-palette-negative-medium);

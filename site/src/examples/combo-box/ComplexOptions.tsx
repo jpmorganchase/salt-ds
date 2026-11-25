@@ -177,6 +177,7 @@ export const ComplexOptions = (): ReactElement => {
     <ComboBox<Contact>
       style={{ width: "266px" }}
       onChange={handleChange}
+      inputProps={{ "aria-autocomplete": "list" }}
       valueToString={(contact) => contact.displayName}
     >
       {contacts

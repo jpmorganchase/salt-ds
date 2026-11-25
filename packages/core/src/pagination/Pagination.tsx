@@ -33,7 +33,7 @@ export interface PaginationProps extends HTMLAttributes<HTMLElement> {
    */
   defaultPage?: number;
   /**
-   * Callback function triggered when current page changed.
+   * Callback fired when the current page changes.
    */
   onPageChange?: (event: SyntheticEvent, page: number) => void;
 }

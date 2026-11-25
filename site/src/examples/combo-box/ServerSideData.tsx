@@ -62,6 +62,7 @@ export const ServerSideData = (): ReactElement => {
       <FormFieldLabel>State</FormFieldLabel>
       <ComboBox
         onChange={handleChange}
+        inputProps={{ "aria-autocomplete": "list" }}
         onSelectionChange={handleSelectionChange}
         value={value}
         endAdornment={loading && <Spinner size="small" />}

@@ -37,11 +37,13 @@ const MAX_FOCUS_RETRY_ATTEMPTS = 120;
 export interface TabListProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
   /**
-   * Styling active color variant. Defaults to "primary".
+   * Styling variant for the background color of the selected tab. Only applies when `appearance` is `"bordered"`.
+   * @default "primary"
    */
   activeColor?: "primary" | "secondary" | "tertiary";
   /**
-   * The appearance of the tabs. Defaults to "bordered".
+   * The appearance of the tabs.
+   * @default "bordered"
    */
   appearance?: "bordered" | "transparent";
 }
@@ -53,7 +55,10 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
       activeColor = "primary",
       children,
       className,
+      onBlurCapture,
+      onFocusCapture,
       onKeyDown,
+      onPointerDownCapture,
       ...rest
     } = props;
     const targetWindow = useWindow();
@@ -81,6 +86,7 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
       setMenuOpen,
       sortItems,
       getRemovedItems,
+      peekRemovedItems,
       getRenderedTab,
       renderedTabs,
       removalVersion,
@@ -92,21 +98,55 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
     const removalRecoveryRafRef = useRef<number | null>(null);
     const pendingRemovalRecoveryRef = useRef(false);
     const pendingRemovalRecoveryRetriesRef = useRef(0);
+    // Whether the tabs own focus, so removing the focused tab can recover it.
+    // The tab list's React capture handlers set and clear it, not document
+    // listeners: Chrome fires a native focusout while removing the focused
+    // tab, which looks like an explicit blur, but React doesn't dispatch it
+    // for an unmounting tab. Document listeners only clear it when focus or a
+    // pointer press moves outside the tabs.
+    const focusWithinRef = useRef(false);
     const [slotVersion, setSlotVersion] = useState(0);
 
     const handleRef = useForkRef(tabstripRef, ref);
     const overflowButtonRef = useRef<HTMLButtonElement>(null);
 
+    useEffect(() => {
+      const doc = targetWindow?.document;
+      if (!doc) return;
+
+      const clearOutsideFocusOwnership = (event: Event) => {
+        const target = event.target as Node | null;
+        if (
+          !tabstripRef.current?.contains(target) &&
+          !overflowListRef.current?.contains(target)
+        ) {
+          focusWithinRef.current = false;
+        }
+      };
+      // Also clear pointer ownership in browsers that don't focus buttons.
+      doc.addEventListener("focusin", clearOutsideFocusOwnership, true);
+      doc.addEventListener("pointerdown", clearOutsideFocusOwnership, true);
+      return () => {
+        doc.removeEventListener("focusin", clearOutsideFocusOwnership, true);
+        doc.removeEventListener(
+          "pointerdown",
+          clearOutsideFocusOwnership,
+          true,
+        );
+      };
+    }, [targetWindow]);
+
     const { announce } = useAriaAnnouncer();
     const overflowMenuOpen = renderMode === "portal" ? menuOpen : false;
 
-    const [visibleValues, hiddenValues, isMeasuring] = useOverflow({
-      container: tabstripRef,
-      menuOpen: overflowMenuOpen,
-      selected,
-      tabs: renderedTabs,
-      overflowButton: overflowButtonRef,
-    });
+    const [visibleValues, hiddenValues, isMeasuring, isLayoutSettled] =
+      useOverflow({
+        container: tabstripRef,
+        menuOpen: overflowMenuOpen,
+        selected,
+        tabs: renderedTabs,
+        overflowButton: overflowButtonRef,
+      });
 
     useEffect(() => {
       setBootstrapOverflowReady(
@@ -119,8 +159,21 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
       setBootstrapOverflowReady,
     ]);
 
+    const exitOverflowMenu = useCallback(() => {
+      setMenuOpen(false);
+
+      const focusOverflowButton = () =>
+        overflowButtonRef.current?.focus({ preventScroll: true });
+      if (targetWindow?.requestAnimationFrame) {
+        targetWindow.requestAnimationFrame(focusOverflowButton);
+      } else {
+        queueMicrotask(focusOverflowButton);
+      }
+    }, [setMenuOpen, targetWindow]);
+
     const { resolvedOverflowActiveValue, tabListLayoutContext } =
       useOverflowLayoutState({
+        exitOverflowMenu,
         hiddenValues,
         menuOpen,
         overflowMenuOpen,
@@ -225,6 +278,7 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
     useTabSelectionFocus({
       announce,
       focusElementWithRetry,
+      focusWithinRef,
       getRenderedTab,
       getSelectedTabElement,
       menuOpen,
@@ -237,21 +291,25 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
     const handleTabRemoval = useTabRemovalHandler({
       activeTab,
       focusElementWithRetry,
+      focusWithinRef,
       getFirst,
       getIndex,
       getLast,
       getRemovedItems,
       getRenderedTab,
       getSelectedTabElement,
+      isLayoutSettled,
       item,
       itemAt,
       maxRetryAttempts: MAX_FOCUS_RETRY_ATTEMPTS,
       menuOpen,
       overflowButtonRef,
       overflowListRef,
+      peekRemovedItems,
       pendingRemovalRecoveryRef,
       pendingRemovalRecoveryRetriesRef,
       removalRecoveryRafRef,
+      removalVersion,
       selected,
       setSelected,
       tabstripRef,
@@ -282,7 +340,28 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
           renderMode === "portal" && isMeasuring ? true : undefined
         }
         ref={handleRef}
+        onBlurCapture={(event) => {
+          // Window blur leaves the active element in place. An explicit blur
+          // to the body, unlike removing the focused tab, clears ownership.
+          if (
+            event.target !== event.currentTarget.ownerDocument.activeElement
+          ) {
+            focusWithinRef.current = false;
+          }
+          onBlurCapture?.(event);
+        }}
+        onFocusCapture={(event) => {
+          // React focus events include the portaled overflow menu.
+          focusWithinRef.current = true;
+          onFocusCapture?.(event);
+        }}
         onKeyDown={handleKeyDown}
+        onPointerDownCapture={(event) => {
+          // Safari doesn't focus buttons on click, but dismissing a tab with
+          // the pointer still gives the tabs ownership of focus recovery.
+          focusWithinRef.current = true;
+          onPointerDownCapture?.(event);
+        }}
         {...rest}
       >
         {renderMode === "inline" ? (

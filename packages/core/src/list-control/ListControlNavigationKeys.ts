@@ -61,25 +61,32 @@ export interface ListControlNavigationGetters<Item> {
   ) => OptionAndElement<Item> | undefined;
 }
 
-/** Shared by Dropdown and ListBox, which always have an active option. */
+/** Shared by Dropdown and ListBox, which start at the first available option. */
 export function getListControlNavigationTarget<Item>(
   key: string,
-  activeOption: OptionValue<Item>,
+  activeOption: OptionValue<Item> | undefined,
   getters: ListControlNavigationGetters<Item>,
 ): OptionAndElement<Item> | undefined {
+  const fromOption = activeOption ?? getters.getFirstOption()?.data;
+  if (!fromOption) return undefined;
+
   switch (key) {
     case "ArrowDown":
-      return getters.getOptionAfter(activeOption) ?? getters.getLastOption();
+      // With no active option, either none yet or it was removed, start at the
+      // first option rather than skipping past it.
+      return activeOption
+        ? (getters.getOptionAfter(activeOption) ?? getters.getLastOption())
+        : getters.getFirstOption();
     case "ArrowUp":
-      return getters.getOptionBefore(activeOption) ?? getters.getFirstOption();
+      return getters.getOptionBefore(fromOption) ?? getters.getFirstOption();
     case "Home":
       return getters.getFirstOption();
     case "End":
       return getters.getLastOption();
     case "PageUp":
-      return getters.getOptionPageAbove(activeOption);
+      return getters.getOptionPageAbove(fromOption);
     case "PageDown":
-      return getters.getOptionPageBelow(activeOption);
+      return getters.getOptionPageBelow(fromOption);
     default:
       return undefined;
   }

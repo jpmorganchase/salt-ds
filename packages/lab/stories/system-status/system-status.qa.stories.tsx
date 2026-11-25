@@ -23,7 +23,7 @@ const statuses: ValidationStatus[] = ["info", "success", "warning", "error"];
 const actions = (
   <SystemStatusActions>
     <OnSolidButton>Action</OnSolidButton>
-    <OnSolidButton aria-label="Dismiss">
+    <OnSolidButton aria-label="Dismiss system status">
       <CloseIcon aria-hidden />
     </OnSolidButton>
   </SystemStatusActions>

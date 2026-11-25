@@ -1,6 +1,7 @@
 import { readFile } from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { parseSnapshotRoutes } from "@jpmorganchase/mosaic-site-middleware/routes";
 
 const defaultSnapshotDir = fileURLToPath(
   new URL("../snapshots/latest/", import.meta.url),
@@ -39,9 +40,11 @@ export async function verifyMosaicSnapshot(snapshotDir = defaultSnapshotDir) {
     return content;
   }
 
-  const [sitemap, markdown] = await Promise.all([
+  const [sitemap, markdown, routeInventory, completion] = await Promise.all([
     readRequiredFile("sitemap.xml"),
     readRequiredFile("markdown-pages.json"),
+    readRequiredFile("mosaic-routes.json"),
+    readRequiredFile("mosaic-snapshot.json"),
     readRequiredFile("llms.txt"),
     readRequiredFile("llms-full.txt"),
   ]);
@@ -50,6 +53,37 @@ export async function verifyMosaicSnapshot(snapshotDir = defaultSnapshotDir) {
   );
   if (!routes.size)
     throw new Error("sitemap.xml contains no public Salt routes");
+
+  // Mosaic's route inventory is the prerender source of truth. Validate its
+  // completion identity separately from the SEO sitemap.
+  const identity = JSON.parse(completion);
+  if (typeof identity?.id !== "string") {
+    throw new Error("mosaic-snapshot.json has no completion identity");
+  }
+  const inventory = parseSnapshotRoutes(
+    JSON.parse(routeInventory),
+    identity.id,
+  );
+  const canonicalPages = new Set(
+    inventory.routes
+      .filter(
+        ({ pathname, sourcePathname }) =>
+          pathname.startsWith("/salt/") &&
+          sourcePathname.endsWith(".mdx") &&
+          pathname === sourcePathname.slice(0, -".mdx".length),
+      )
+      .map(({ pathname }) => pathname),
+  );
+  if (!canonicalPages.size)
+    throw new Error("mosaic-routes.json contains no Salt document pages");
+  const missingRoutes = [...routes].filter(
+    (route) => !canonicalPages.has(route),
+  );
+  if (missingRoutes.length) {
+    throw new Error(
+      `Public sitemap pages absent from the route inventory: ${missingRoutes.join(", ")}`,
+    );
+  }
 
   const file = JSON.parse(markdown);
   if (
@@ -85,6 +119,7 @@ export async function verifyMosaicSnapshot(snapshotDir = defaultSnapshotDir) {
   return {
     sitemapRoutes: routes.size,
     markdownPages: Object.keys(file.pages).length,
+    canonicalPages: canonicalPages.size,
   };
 }
 
@@ -95,7 +130,7 @@ if (
   try {
     const result = await verifyMosaicSnapshot(process.argv[2]);
     console.log(
-      `Verified Mosaic snapshot: ${result.sitemapRoutes} public routes and ${result.markdownPages} Markdown pages.`,
+      `Verified Mosaic snapshot: ${result.sitemapRoutes} public routes, ${result.canonicalPages} prerender pages and ${result.markdownPages} Markdown pages.`,
     );
   } catch (error) {
     console.error(`Incomplete Mosaic snapshot: ${error.message}`);

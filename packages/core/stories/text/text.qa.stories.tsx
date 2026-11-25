@@ -4,6 +4,10 @@ import {
   Display2,
   Display3,
   Display4,
+  Display5,
+  Display6,
+  Display7,
+  Display8,
   Editorial1,
   Editorial2,
   Editorial3,
@@ -89,6 +93,22 @@ export const AllVariantsGrid: StoryFn<QAContainerProps> = (props) => (
       Display 4 <strong>strong</strong>, <b>b</b> and{" "}
       <LighterText>lighter</LighterText> text
     </Display4>
+    <Display5>
+      Display 5 <strong>strong</strong>, <b>b</b> and{" "}
+      <LighterText>lighter</LighterText> text
+    </Display5>
+    <Display6>
+      Display 6 <strong>strong</strong>, <b>b</b> and{" "}
+      <LighterText>lighter</LighterText> text
+    </Display6>
+    <Display7>
+      Display 7 <strong>strong</strong>, <b>b</b> and{" "}
+      <LighterText>lighter</LighterText> text
+    </Display7>
+    <Display8>
+      Display 8 <strong>strong</strong>, <b>b</b> and{" "}
+      <LighterText>lighter</LighterText> text
+    </Display8>
     <H1>
       H1 <strong>strong</strong>, <b>b</b> and{" "}
       <LighterText>lighter</LighterText> text
@@ -164,6 +184,22 @@ export const FontWeightGrid: StoryFn<QAContainerProps> = (props) => (
     <Display4 fontWeight="bolder">
       Display 4 bolder text with <b>b</b>
     </Display4>
+    <Display5 fontWeight="lighter">Display 5 lighter text</Display5>
+    <Display5 fontWeight="bolder">
+      Display 5 bolder text with <b>b</b>
+    </Display5>
+    <Display6 fontWeight="lighter">Display 6 lighter text</Display6>
+    <Display6 fontWeight="bolder">
+      Display 6 bolder text with <b>b</b>
+    </Display6>
+    <Display7 fontWeight="lighter">Display 7 lighter text</Display7>
+    <Display7 fontWeight="bolder">
+      Display 7 bolder text with <b>b</b>
+    </Display7>
+    <Display8 fontWeight="lighter">Display 8 lighter text</Display8>
+    <Display8 fontWeight="bolder">
+      Display 8 bolder text with <b>b</b>
+    </Display8>
     <H1 fontWeight="lighter">H1 lighter text</H1>
     <H1 fontWeight="bolder">
       H1 bolder text with <b>b</b>

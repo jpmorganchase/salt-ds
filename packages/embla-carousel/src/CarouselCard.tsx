@@ -26,9 +26,9 @@ export interface CarouselCardProps extends ComponentProps<"div"> {
   media?: ReactNode;
 
   /**
-   * The appearance of the slide. Options are 'bordered', and 'transparent'.
-   * 'transparent' is the default value.
-   **/
+   * The appearance of the slide.
+   * @default "transparent"
+   */
   appearance?: "bordered" | "transparent";
 
   /**
@@ -38,8 +38,8 @@ export interface CarouselCardProps extends ComponentProps<"div"> {
   header?: ReactNode;
 
   /**
-   * Carousel slide id.
-   * This can be used to uniquely identify the slide.
+   * The ID of the slide. `CarouselTabList` refers to slides by their IDs. When
+   * not set, `CarouselSlides` generates one.
    */
   id?: string;
 }
