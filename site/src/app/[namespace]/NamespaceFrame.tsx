@@ -21,6 +21,8 @@ import { SkipToMainContent } from "../../layouts/Base/SkipToMainContent";
 import { LayoutContext, MAIN_CONTENT_ID } from "../../layouts/LayoutContext";
 import { createSearchNavigation } from "../../utils/searchNavigation";
 import { SearchNavigationContext } from "../../utils/searchNavigationContext";
+import { createTabNavigation } from "../../utils/tabNavigation";
+import { TabNavigationContext } from "../../utils/tabNavigationContext";
 import { type NamespaceData, NamespaceDataContext } from "../providers";
 
 const LastSharedConfigContext = createContext<
@@ -39,6 +41,7 @@ export function NamespaceFrame({
 }) {
   const pathname = usePathname();
   const [searchNavigation] = useState(createSearchNavigation);
+  const [tabNavigation] = useState(createTabNavigation);
   const frameData = useMemo(
     () => ({ sharedConfig: data.sharedConfig, route: `/${namespace}/index` }),
     [data.sharedConfig, namespace],
@@ -54,6 +57,7 @@ export function NamespaceFrame({
     if (pathname) setDrawerOpen(false);
   }, [pathname]);
   useEffect(() => () => searchNavigation.cancel(), [searchNavigation]);
+  useEffect(() => () => tabNavigation.cancel(), [tabNavigation]);
 
   // Salt's landing page has its own hero and search, and deliberately has no
   // fixed app header. This is known from the URL before the first client paint.
@@ -63,23 +67,25 @@ export function NamespaceFrame({
   return (
     <NamespaceDataContext.Provider value={data}>
       <SearchNavigationContext.Provider value={searchNavigation}>
-        <LastSharedConfigContext.Provider value={lastSharedConfig}>
-          <LayoutContext.Provider value={controls}>
-            <PersistentFrame
-              data={frameData}
-              renderHeader={() =>
-                !landing && (
-                  <>
-                    <SkipToMainContent targetId={MAIN_CONTENT_ID} />
-                    <AppHeader />
-                  </>
-                )
-              }
-            >
-              {children}
-            </PersistentFrame>
-          </LayoutContext.Provider>
-        </LastSharedConfigContext.Provider>
+        <TabNavigationContext.Provider value={tabNavigation}>
+          <LastSharedConfigContext.Provider value={lastSharedConfig}>
+            <LayoutContext.Provider value={controls}>
+              <PersistentFrame
+                data={frameData}
+                renderHeader={() =>
+                  !landing && (
+                    <>
+                      <SkipToMainContent targetId={MAIN_CONTENT_ID} />
+                      <AppHeader />
+                    </>
+                  )
+                }
+              >
+                {children}
+              </PersistentFrame>
+            </LayoutContext.Provider>
+          </LastSharedConfigContext.Provider>
+        </TabNavigationContext.Provider>
       </SearchNavigationContext.Provider>
     </NamespaceDataContext.Provider>
   );
@@ -98,6 +104,7 @@ export function FrameSync({
   const lastSharedConfig = useContext(LastSharedConfigContext);
   const namespaceData = useContext(NamespaceDataContext);
   const searchNavigation = useContext(SearchNavigationContext);
+  const tabNavigation = useContext(TabNavigationContext);
   const currentSharedConfig = preserveSharedConfig
     ? lastSharedConfig?.current
     : sharedConfig;
@@ -106,6 +113,7 @@ export function FrameSync({
       lastSharedConfig.current = sharedConfig ?? namespaceData?.sharedConfig;
     }
     searchNavigation?.commitRoute(route);
+    tabNavigation?.commitRoute(route);
   }, [
     lastSharedConfig,
     route,
@@ -113,6 +121,7 @@ export function FrameSync({
     preserveSharedConfig,
     namespaceData,
     searchNavigation,
+    tabNavigation,
   ]);
   return <MosaicFrameSync route={route} sharedConfig={currentSharedConfig} />;
 }
