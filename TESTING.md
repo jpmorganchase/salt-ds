@@ -48,9 +48,11 @@ When a browser test checks styling:
   background differs from its resting value while hovered and returns after.
   Resolving component-private custom properties restates the CSS and breaks on
   harmless refactors.
-- Compare against public Salt tokens only when they define the contract, such
-  as `--salt-focused-outline*` for the focus ring. Checking only that an outline
-  exists also passes with the browser's default outline.
+- Compare against public Salt tokens only when the component's own CSS applies
+  them, such as a focus ring drawn on a child element or through a
+  `-focusVisible` class. Salt's global `:focus-visible` rule already rings any
+  focused element inside the theme, so checking the ring on the focused element
+  itself usually tests the theme, not the component.
 - Reach states the way users do: `userEvent.tab()` rather than `focus()`, and
   real pointer input for hover and drag.
 
