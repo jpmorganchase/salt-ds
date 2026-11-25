@@ -15,13 +15,14 @@ data:
 
 ## When to use
 
-- Horizontal stepper: for wide layouts and desktop applications where you want to show all steps simultaneously and let users scan progress at a glance; best with 3–6 steps and no nested substeps.
-- Vertical stepper: for step-by-step guided experiences that need detailed, multi-line descriptions per step, or expandable (accordion-style) step content; works well with longer label text.
+- Horizontal stepper: for wide layouts and desktop applications where you want to show all steps simultaneously and let users scan progress at a glance; best with 3–6 steps, relatively basic flows and no nested substeps.
+- Vertical stepper: for step-by-step guided experiences that need detailed, multi-line descriptions per step, or expandable (accordion-style) step content; works well with longer label text. Use it for longer, more complex linear flows, where steps benefit from being broken down into more digestible groups.
 
 ## When not to use
 
 - Horizontal stepper
   - Avoid in sidebars/panels or narrow containers; it should only be placed above form/page content, not within constrained-width regions.
+  - Avoid for longer or more complex flows, or flows with substeps. Instead, use a vertical stepper.
 - Vertical stepper
   - Avoid when horizontal space is abundant and steps have minimal content; the extra vertical real estate isn't justified for short, simple step sequences. It should ideally be used in a 2 column page layout
 
