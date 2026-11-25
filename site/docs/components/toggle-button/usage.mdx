@@ -12,7 +12,7 @@ data:
 
 ### When to use
 
-- To make a single selection between mutually exclusive options that take immediate effect.
+- To make a single selection between mutually exclusive views or states of information that take immediate effect.
 - To switch the same records between list and card presentations, keeping one view selected.
 - To visually prioritize options higher than [`RadioButton`](../radio-button) or [`Switch`](../switch).
 
@@ -22,6 +22,7 @@ data:
 - To switch between distinct content panels, such as Details and History. Instead, use [`Tabs`](../tabs).
 - When the options in the group are not high priority and high affordance is not necessary. Instead, use [`RadioButtonGroup`](../radio-button).
 - When all options in the group don’t need to be visible at once. Consider using [`Dropdown`](../dropdown).
+- When toggle behavior is needed to collect feedback or make a decision, such as Like/Dislike, rather than to change a view or state. Consider using [`Decision button group`](/salt/patterns/decision-button-group), which also lets users deselect their choice.
 
 ## View switching
 

@@ -69,4 +69,20 @@
   --ag-icon-font-code-up: "\e938";
   --ag-icon-font-code-aasc: "\e939";
   --ag-icon-font-code-adesc: "\e93a";
+  --ag-icon-font-code-search: "\e93b";
+  --ag-icon-font-code-chevron-down: "\e93c";
+  --ag-icon-font-code-chevron-left: "\e93d";
+  --ag-icon-font-code-chevron-right: "\e93e";
+  --ag-icon-font-code-chevron-up: "\e93f";
+  --ag-icon-font-code-document: "\e940";
+  --ag-icon-font-code-edit: "\e941";
+  --ag-icon-font-code-pdf: "\e942";
+  --ag-icon-font-code-settings: "\e943";
+  --ag-icon-font-code-column-arrow: "\e944";
+  --ag-icon-font-code-filter-add: "\e945";
+  --ag-icon-font-code-pinned-bottom: "\e946";
+  --ag-icon-font-code-pinned-top: "\e947";
+  --ag-icon-font-code-values-as: "\e948";
+  --ag-icon-font-code-fx: "\e949";
+  --ag-icon-font-code-un-pin: "\e94a";
 }

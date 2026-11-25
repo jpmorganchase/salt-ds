@@ -12,7 +12,7 @@ data:
       { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-button-bar--button-bar", label: "Button bar examples" },
     ]
   components: ["Button", "Flow layout", "Split layout", "Stack layout"]
-  relatedPatterns: ["Forms"]
+  relatedPatterns: ["Forms", "Decision button group"]
 ---
 
 <Diagram
@@ -131,6 +131,8 @@ Optionally, use colored [sentiment buttons](/salt/components/button/examples#oth
 In the [destructive action example](https://storybook.saltdesignsystem.com/?path=/story/patterns-button-bar--destructive-actions), **Delete** is a tertiary action, so it uses the transparent appearance with the negative sentiment.
 
 In the dialog below, the ‘Delete now’ button is styled using a solid appearance and negative sentiment to emphasize the risk of permanently deleting items as an action.
+
+If the buttons collect feedback or capture the user's choice, such as like/dislike, and the user needs to select a single option or deselect it, use [Decision button group](/salt/patterns/decision-button-group) instead.
 
 <Diagram
   src="/img/patterns/button-bar/negative-sentiment-button.png"
