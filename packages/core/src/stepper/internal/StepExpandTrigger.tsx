@@ -8,6 +8,11 @@ import { makePrefixer } from "../../utils";
 import stepExpandTriggerCSS from "./StepExpandTrigger.css";
 
 export interface StepExpandTriggerProps extends ButtonProps {
+  /**
+   * If `true`, the trigger shows the collapse icon, for a step whose nested
+   * steps are expanded. Otherwise, it shows the expand icon. It doesn't set
+   * `aria-expanded`.
+   */
   expanded: boolean;
 }
 

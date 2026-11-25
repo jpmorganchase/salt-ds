@@ -42,7 +42,13 @@ const InjectionContext =
   createContext<ClassNameInjectionRegistry>(EMPTY_REGISTRY);
 
 export type ClassNameInjectionProviderProps = {
+  /**
+   * The content of the provider. Supported components inside it can have classes injected by the injectors in `value`.
+   */
   children: ReactNode;
+  /**
+   * The registry of class name injectors, keyed by component. Add injectors to it with `registerClassInjector`. When not set, no classes are injected.
+   */
   value?: ClassNameInjectionRegistry;
 };
 

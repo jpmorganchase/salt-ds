@@ -26,23 +26,24 @@ export interface LinkProps
   extends Omit<ComponentPropsWithoutRef<"a">, "color">,
     Pick<TextProps<"a">, "maxRows" | "styleAs" | "variant"> {
   /**
-   * Icon component displayed for external links. Defaults to `ExternalIcon` from `SemanticIconProvider`.
+   * The icon component displayed for external links, when `target` is
+   * `"_blank"`. Defaults to the `ExternalIcon` from `SemanticIconProvider`. Pass
+   * `null` to hide the icon.
    */
   IconComponent?: ComponentType<IconProps> | null;
   /**
-   * Render prop to enable customisation of anchor element.
+   * Render prop to enable customization of anchor element.
    */
   render?: RenderPropsType["render"];
-  /*
-   * The color of the text. Defaults to "primary".
+  /**
+   * The color of the text.
+   * @default "primary"
    */
   color?: "inherit" | "primary" | "secondary" | "accent";
   /**
-   *
-   * Either "default" or "never".
-   * Determines when underline should be applied to the link.
-   *
-   * @default "default".
+   * When the link is underlined. `"default"` underlines the link except while
+   * it's hovered or focused, and `"never"` doesn't underline it.
+   * @default "default"
    */
   underline?: "default" | "never";
 }

@@ -38,6 +38,7 @@ export const ObjectValues = (): ReactElement => {
       onChange={handleChange}
       onSelectionChange={handleSelectionChange}
       value={value}
+      inputProps={{ "aria-autocomplete": "list" }}
       style={{ width: "266px" }}
       valueToString={(value) => value.name}
     >

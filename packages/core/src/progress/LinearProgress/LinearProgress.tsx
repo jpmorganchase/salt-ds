@@ -17,17 +17,17 @@ export interface LinearProgressProps extends ComponentPropsWithoutRef<"div"> {
    */
   bufferValue?: number;
   /**
-   * Whether to hide the text label within the progress. Defaults to `false`.
+   * If `true`, the text label within the progress is hidden.
    */
   hideLabel?: boolean;
   /**
-   * The value of the max progress indicator.
-   * Default value is 100.
+   * The maximum value of the progress indicator.
+   * @default 100
    */
   max?: number;
   /**
-   * The value of the min progress indicator.
-   * Default value is 0.
+   * The minimum value of the progress indicator.
+   * @default 0
    */
   min?: number;
   /**

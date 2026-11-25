@@ -47,6 +47,6 @@ JsCallExpression(callee=$callee) as $call where {
       $guard <: dev_condition(),
       or { $call <: $guarded, $call <: within $guarded }
     }
-  } ,
+  },
   register_diagnostic(span=$call, message="Put console calls in a process.env.NODE_ENV !== \"production\" branch so they are removed from production builds.")
 }

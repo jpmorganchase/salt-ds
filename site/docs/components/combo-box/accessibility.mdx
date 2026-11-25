@@ -10,12 +10,14 @@ data:
 
 ## Keyboard interactions
 
+The selection behavior of Tab and Shift+Tab depends on `selectOnTab`, which defaults to `true` for single-select and `false` for multi-select combo boxes. Set it to `false` when selection triggers navigation, so moving focus out of the field does not open a result.
+
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
   
 - If the combo box is single-select and if focus is above the combo box, Tab sets focus on the component. When focused, combo box has a visible text cursor and the list is opened.
 - If the combo box is multi-select and if the focus is above the combo box, Tab sets focus on the pill list if pills are present. If no pills are present then focus is set on the input. 
-- If the list is open, Tab moves focus to the next focusable element in the tab order and selects the current active option.
+- If the list is open, Tab moves focus to the next focusable element in the tab order. When `selectOnTab={true}`, it also selects the current active option.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Shift + Tab">
@@ -23,7 +25,7 @@ data:
 - If the combo box is single-select and focus is below the combo box, this action sets focus on the input.
 - If the combo box is multi-select and focus is below the combo box, this action sets focus on the input.
 - If the combo box is multi-select and focus is on the input, this action sets focus on the pill list if pills are present. If no pills are present the previous focusable element in the tab order is focused.
-- If the list is open, Tab moves focus to the previous focusable element in the tab order and selects the current active option.
+- If the list is open, Shift+Tab moves focus to the previous focusable element in the tab order. When `selectOnTab={true}`, it also selects the current active option.
 
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter">

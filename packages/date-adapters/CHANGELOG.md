@@ -1,5 +1,12 @@
 # @salt-ds/date-adapters
 
+## 1.0.3
+
+### Patch Changes
+
+- 2fa23b6: Described `DateFrameworkType` as the date object of the date adapter the app uses, such as `Date` for date-fns or `DateTime` for Luxon.
+- e1e38ea: Packages are now built with tsdown and their type declarations are generated with TypeScript 7. Entry points, export maps and existing deep import paths are unchanged. The compiled output now includes shared compiler helper modules under `_virtual/`.
+
 ## 1.0.2
 
 ### Patch Changes

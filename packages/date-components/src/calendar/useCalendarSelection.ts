@@ -29,11 +29,11 @@ export type DateRangeSelection<
   TDate extends DateFrameworkType = DateFrameworkType,
 > = {
   /**
-   * The start date of the range, or null if empty
+   * The start date of the range, or `null` if it's empty.
    */
   startDate?: TDate | null;
   /**
-   * The end date of the range, or null if empty
+   * The end date of the range, or `null` if it's empty.
    */
   endDate?: TDate | null;
 };
@@ -62,9 +62,9 @@ export type SelectionVariant = "single" | "range" | "offset";
  */
 export interface UseCalendarSelectionBaseProps<Selection> {
   /**
-   * Determines if a date is outside the allowed date range.
+   * Function to determine if a date is outside the allowed date range.
    * @param date - The date to check.
-   * @returns 0 if inside the date range, -1 if before the min date, 1 if after the max date.
+   * @returns `0` if inside the date range, `-1` if before the min date, `1` if after the max date.
    */
   isOutsideAllowedDates?: (date: DateFrameworkType) => -1 | 0 | 1;
   /**
@@ -74,19 +74,19 @@ export interface UseCalendarSelectionBaseProps<Selection> {
    */
   isDaySelectable?: (date: DateFrameworkType) => boolean;
   /**
-   * If `true`, the calendar will be multiselect.
+   * If `true`, multiple dates or date ranges can be selected, and the selection is an array.
    */
   multiselect?: boolean;
   /**
-   * The selection variant, set to "single".
+   * The selection variant. `"single"` selects dates, `"range"` selects date ranges from a start date and an end date, and `"offset"` selects date ranges calculated from the selected date with `startDateOffset` and `endDateOffset`.
    */
   selectionVariant: SelectionVariant;
   /**
-   * The currently selected date.
+   * The selected date or date range. Use with `onSelectionChange` to control it.
    */
   selectedDate?: Selection;
   /**
-   * The default selected date.
+   * The initial selected date or date range. Use when the component is uncontrolled.
    */
   defaultSelectedDate?: Selection;
   /**
@@ -96,23 +96,22 @@ export interface UseCalendarSelectionBaseProps<Selection> {
    */
   onSelectionChange?: (event: SyntheticEvent, selectedDate: Selection) => void;
   /**
-   * A pure function to manage the selected date for uncontrolled use-cases.
-   * Return the selection based on the previous selection and the new date.
-   * @param previousSelectedDate
-   * @param newDate
+   * The pure function that returns the new selection when a date is selected, instead of the default selection behavior. It's useful for customizing selection when the selected date is uncontrolled.
+   * @param previousSelectedDate - The selection before the date was selected.
+   * @param newDate - The date that was selected.
    */
   select?: (
     previousSelectedDate: Selection,
     newDate: DateFrameworkType,
   ) => Selection;
   /**
-   * Function to calculate the start date offset.
+   * Function to calculate the start date offset. Only applies when `selectionVariant` is `"offset"`.
    * @param date - The date to offset.
    * @returns The offset start date.
    */
   startDateOffset?: (date: DateFrameworkType) => DateFrameworkType;
   /**
-   * Function to calculate the end date offset.
+   * Function to calculate the end date offset. Only applies when `selectionVariant` is `"offset"`.
    * @param date - The date to offset.
    * @returns The offset end date.
    */
@@ -541,7 +540,14 @@ export function useCalendarSelection(props: UseCalendarSelectionProps) {
 
 const withBaseName = makePrefixer("saltCalendarDay");
 
-export function useCalendarSelectionDay({ date }: { date: DateFrameworkType }) {
+export function useCalendarSelectionDay({
+  date,
+}: {
+  /**
+   * The date of the calendar day.
+   */
+  date: DateFrameworkType;
+}) {
   const { dateAdapter } = useLocalization<DateFrameworkType>();
   const {
     state: { selectionVariant, minDate, maxDate },

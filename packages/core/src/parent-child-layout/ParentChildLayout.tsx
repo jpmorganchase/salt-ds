@@ -22,19 +22,20 @@ export interface ParentChildLayoutProps
    */
   visibleView?: "child" | "parent";
   /**
-   * Controls the space between parent and child components, default is 0.
+   * Controls the space between the parent and child components.
+   * @default 0
    */
   gap?: number;
   /**
-   * Parent component to be rendered
+   * Parent component to be rendered.
    */
   parent: ReactNode;
   /**
-   * Child component to be rendered
+   * Child component to be rendered.
    */
   child: ReactNode;
   /**
-   * Function called when the viewport size equal to or less than the collapseAtBreakpoint variable
+   * Callback fired when the layout collapses or expands. The layout collapses when the viewport is equal to or smaller than `collapseAtBreakpoint`.
    */
   onCollapseChange?: (isCollapsed: boolean) => void;
 }

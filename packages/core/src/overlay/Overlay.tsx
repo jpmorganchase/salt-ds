@@ -23,19 +23,20 @@ export interface OverlayProps {
    */
   children?: ReactNode;
   /**
-   * Display or hide the component.
+   * If `true`, the Overlay is open. Use with `onOpenChange` to control it.
    */
   open?: boolean;
   /**
-   * Callback function triggered when open state changes.
+   * Callback fired when the open state changes.
    */
   onOpenChange?: (open: boolean) => void;
   /**
-   * Set the placement of the Overlay component relative to the trigger element. Defaults to `top`.
+   * The placement of the Overlay relative to the trigger element.
+   * @default "top"
    */
   placement?: UseFloatingUIProps["placement"];
   /**
-   * When `true`, the arrow indicator is hidden
+   * If `true`, the Overlay arrow is hidden.
    */
   hideArrow?: boolean;
 }

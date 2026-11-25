@@ -13,7 +13,7 @@ const withBaseName = makePrefixer("saltBannerActions");
 
 interface BannerActionsProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The content of BannerActions
+   * The content of the `BannerActions`, usually one or more buttons.
    */
   children: ReactNode;
 }

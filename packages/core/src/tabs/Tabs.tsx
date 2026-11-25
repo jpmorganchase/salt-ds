@@ -20,6 +20,9 @@ import tabsCss from "./Tabs.css";
 
 export interface TabsProps
   extends Omit<ComponentPropsWithoutRef<"div">, "onChange"> {
+  /**
+   * The content of the tabs, usually a `TabBar` containing a `TabList`, and a `TabPanel` for each tab.
+   */
   children?: ReactNode;
   /**
    * The default value. Use when the component is not controlled.

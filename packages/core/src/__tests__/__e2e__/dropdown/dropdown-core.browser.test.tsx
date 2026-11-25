@@ -411,6 +411,44 @@ describe("Given a core Dropdown", () => {
   it("does not render a list without options", async () => {
     await renderWithSalt(<Dropdown open />);
     await expect.element(listbox()).not.toBeInTheDocument();
+    await expect.element(combobox()).toHaveAttribute("aria-expanded", "false");
+    await expect.element(combobox()).not.toHaveAttribute("aria-controls");
+  });
+
+  it("matches popup relationships to available options and read-only state", async () => {
+    const { rerender } = await renderWithSalt(
+      <Dropdown open>{false && <Option value="Alabama" />}</Dropdown>,
+    );
+    await expect.element(combobox()).toHaveAttribute("aria-expanded", "false");
+    await expect.element(combobox()).not.toHaveAttribute("aria-controls");
+    await expect.element(listbox()).not.toBeInTheDocument();
+
+    await rerender(
+      <Dropdown open>
+        <Option value="Alabama" />
+      </Dropdown>,
+    );
+
+    await expect.element(combobox()).toHaveAttribute("aria-expanded", "true");
+    await expect
+      .element(combobox())
+      .toHaveAttribute("aria-controls", listbox().element().id);
+    combobox().element().focus();
+    await userEvent.keyboard("{Home}");
+    await expectActive("Alabama");
+
+    await rerender(
+      <Dropdown open readOnly>
+        <Option value="Alabama" />
+      </Dropdown>,
+    );
+
+    await expect.element(combobox()).toHaveAttribute("aria-expanded", "false");
+    await expect.element(combobox()).not.toHaveAttribute("aria-controls");
+    await expect
+      .element(combobox())
+      .not.toHaveAttribute("aria-activedescendant");
+    await expect.element(listbox()).not.toBeInTheDocument();
   });
 
   it("shows a placeholder for an empty value", async () => {

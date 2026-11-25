@@ -13,7 +13,7 @@ const withBaseName = makePrefixer("saltBannerContent");
 
 interface BannerContentProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The content of BannerContent
+   * The content of the `BannerContent`.
    */
   children: ReactNode;
 }

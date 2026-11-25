@@ -8,7 +8,15 @@ export const StepperOrientationContext =
 export const StepDepthContext = createContext<StepDepth>(-1);
 
 export interface StepperProviderProps {
+  /**
+   * The orientation of the stepper, which the steps inside it and nested
+   * steppers read from context.
+   */
   orientation: StepperOrientation;
+  /**
+   * The content of the stepper. Steps inside it get a depth one more than the
+   * steps of the surrounding stepper, starting at `0`.
+   */
   children: ReactNode;
 }
 

@@ -12,23 +12,28 @@ export type FlowLayoutProps<T extends ElementType> =
     T,
     {
       /**
-       * Defines the default behavior for how flex items are laid out along the cross axis on the current line, default is "stretch".
+       * Defines the default behavior for how flex items are laid out along the cross axis on the current line.
+       * @default "stretch"
        */
       align?: FlexLayoutProps<ElementType>["align"];
       /**
-       * Controls the space between items, default is 3.
+       * Controls the space between items.
+       * @default 3
        */
       gap?: FlexLayoutProps<ElementType>["gap"];
       /**
-       * Defines the alignment along the main axis, default is "start"
+       * Defines the alignment along the main axis.
+       * @default "start"
        */
       justify?: FlexLayoutProps<ElementType>["justify"];
       /**
-       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value. Default is `0`.
+       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value.
+       * @default 0
        */
       margin?: FlexLayoutProps<ElementType>["margin"];
       /**
-       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value. Default is `0`.
+       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value.
+       * @default 0
        */
       padding?: FlexLayoutProps<ElementType>["padding"];
     }

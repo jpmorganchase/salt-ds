@@ -15,11 +15,13 @@ const withBaseName = makePrefixer("saltToast");
 
 export interface ToastProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   *  A string to determine the current state of the Toast.
+   * The status of the Toast: `"info"`, `"success"`, `"warning"` or `"error"`.
+   * It sets the Toast's color and shows the matching status icon.
    */
   status?: ValidationStatus;
   /**
-   * (Optional) if provided, this icon component will be used instead of the status icon
+   * The icon shown instead of the status icon. It's only shown when `status` is
+   * set.
    */
   icon?: ReactElement<IconProps>;
 }

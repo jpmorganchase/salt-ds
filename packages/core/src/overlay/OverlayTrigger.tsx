@@ -9,6 +9,9 @@ import { getRefFromChildren, mergeProps, useForkRef } from "../utils";
 import { useOverlayContext } from "./OverlayContext";
 
 export interface OverlayTriggerProps {
+  /**
+   * The element that opens and closes the Overlay when clicked, such as a `Button`. It must be a single element that can hold a ref.
+   */
   children?: ReactNode;
 }
 

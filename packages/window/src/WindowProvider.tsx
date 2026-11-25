@@ -11,7 +11,15 @@ if (process.env.NODE_ENV !== "production") {
 }
 
 export interface WindowProviderProps {
+  /**
+   * The content that can access `window` with `useWindow`.
+   */
   children: ReactNode;
+  /**
+   * The window that `useWindow` returns inside the provider, for example a
+   * pop-out window. Use `null` when no window is available, such as during
+   * server-side rendering.
+   */
   window: WindowContextType;
 }
 

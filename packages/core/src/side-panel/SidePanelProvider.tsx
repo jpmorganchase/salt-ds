@@ -11,15 +11,15 @@ import { SidePanelContext, useSidePanelTabOrder } from "./internal";
 
 export interface SidePanelProviderProps {
   /**
-   * Whether the panel is open.
+   * If `true`, the panel is open. Use with `onOpenChange` to control it.
    */
   open?: boolean;
   /**
-   * Default open state when initially rendered.
+   * If `true`, the panel is open initially. Use when the component is uncontrolled.
    */
   defaultOpen?: boolean;
   /**
-   * Callback when open state changes.
+   * Callback fired when the open state changes.
    */
   onOpenChange?: (open: boolean) => void;
   /**

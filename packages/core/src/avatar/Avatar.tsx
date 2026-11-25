@@ -20,8 +20,9 @@ export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
    */
   name?: string;
   /**
-   * Defines the function that gets initials. Default is capital first letter of each separate word in name.
-   * If a function is not passed or returns undefined, Avatar will default to Icon.
+   * The function that gets the initials from `name`. By default, the initials
+   * are the first letters of the first two words, in uppercase. When it returns
+   * `undefined`, the Avatar shows `fallbackIcon` instead.
    */
   nameToInitials?: NameToInitials;
   /**
@@ -33,9 +34,9 @@ export interface AvatarProps extends HTMLAttributes<HTMLDivElement> {
    */
   size?: number;
   /**
-   * Icon to be used as a default item. Defaults to the semantic `UserIcon` when
-   * `kind` is `"person"`, and the semantic `EntityIcon` when `kind`
-   * is `"entity"`.
+   * The icon shown when there's no image, `children` or initials to show.
+   * Defaults to the semantic `UserIcon` when `kind` is `"person"`, and the
+   * semantic `EntityIcon` when `kind` is `"entity"`.
    */
   fallbackIcon?: ReactNode;
   /**

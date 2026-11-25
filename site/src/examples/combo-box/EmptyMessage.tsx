@@ -34,6 +34,7 @@ export const EmptyMessage = (): ReactElement => {
   return (
     <ComboBox
       onChange={handleChange}
+      inputProps={{ "aria-autocomplete": "list" }}
       onSelectionChange={handleSelectionChange}
       value={value}
       style={{ width: "266px" }}

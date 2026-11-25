@@ -21,7 +21,7 @@ import { flattenTreeNodeChildren, isTreeNodeElement } from "./treeModel";
 
 export interface TreeNodeProps {
   /**
-   * Unique value representing this node within the tree
+   * Unique value representing this node within the tree.
    */
   value: string;
   /**
@@ -29,11 +29,12 @@ export interface TreeNodeProps {
    */
   label?: ReactNode;
   /**
-   * Optional icon to display before the label
+   * Optional icon to display before the label.
    */
   icon?: ComponentType<IconProps>;
   /**
-   * Whether the node is disabled.
+   * If `true`, the node is disabled. The node is also disabled when the `Tree`
+   * or its parent node is disabled.
    */
   disabled?: boolean;
   /**

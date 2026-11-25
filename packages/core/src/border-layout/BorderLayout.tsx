@@ -23,15 +23,16 @@ export type BorderLayoutProps<T extends ElementType> =
     T,
     {
       /**
-       * Defines the size of the gutter between the columns and the rows by setting a density multiplier. Defaults to 0
+       * Defines the size of the gutter between the columns and the rows by setting a density multiplier.
+       * @default 0
        */
       gap?: GridLayoutProps<T>["gap"];
       /**
-       * Defines the size of the gutter between the columns by setting a density multiplier. Defaults to 0
+       * Defines the size of the gutter between the columns by setting a density multiplier. When not set, it uses the value of `gap`.
        */
       columnGap?: GridLayoutProps<T>["columnGap"];
       /**
-       * Defines the size of the gutter between the rows by setting a density multiplier. Defaults to 0
+       * Defines the size of the gutter between the rows by setting a density multiplier. When not set, it uses the value of `gap`.
        */
       rowGap?: GridLayoutProps<T>["rowGap"];
       /**
@@ -39,11 +40,13 @@ export type BorderLayoutProps<T extends ElementType> =
        */
       children: ReactNode;
       /**
-       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value. Default is `0`.
+       * Defines the margin around the component. It can be specified as a number (which acts as a multiplier) or a string representing the margin value.
+       * @default 0
        */
       margin?: ResponsiveProp<number | string>;
       /**
-       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value. Default is `0`.
+       * Defines the padding within the component. It can be specified as a number (which acts as a multiplier) or a string representing the padding value.
+       * @default 0
        */
       padding?: ResponsiveProp<number | string>;
     }

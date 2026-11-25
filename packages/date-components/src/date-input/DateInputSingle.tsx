@@ -53,12 +53,12 @@ export interface DateInputSingleProps
       "disabled" | "value" | "defaultValue" | "placeholder"
     > {
   /**
-   * Styling variant with full border. Defaults to false.
+   * If `true`, the date input has a full border.
    */
   bordered?: boolean;
   /**
-   * The marker to use in an empty read-only DateInput.
-   * Use `''` to disable this feature. Defaults to '—'.
+   * The text shown when the date input is read-only and has no value. Use `""` to show nothing.
+   * @default "—"
    */
   emptyReadOnlyMarker?: string;
   /**
@@ -66,7 +66,7 @@ export interface DateInputSingleProps
    */
   endAdornment?: ReactNode;
   /**
-   * Attributes applied to the `input` element.
+   * Props applied to the `input` element.
    * @see https://developer.mozilla.org/en-US/docs/Web/HTML/Element/dateInput#Attributes
    */
   inputProps?: InputHTMLAttributes<HTMLInputElement>;
@@ -79,7 +79,7 @@ export interface DateInputSingleProps
    */
   readOnly?: boolean;
   /**
-   * Start adornment component
+   * Start adornment component.
    */
   startAdornment?: ReactNode;
   /**
@@ -87,11 +87,13 @@ export interface DateInputSingleProps
    */
   validationStatus?: "error" | "warning" | "success";
   /**
-   * Styling variant. Defaults to "primary".
+   * Styling variant.
+   * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
   /**
    * Format string for date.
+   * @default "DD MMM YYYY"
    */
   format?: string;
   /**
@@ -99,13 +101,13 @@ export interface DateInputSingleProps
    */
   inputRef?: Ref<HTMLInputElement>;
   /**
-   * Parser callback, if not using the adapter's parser
-   * @param value - date string to parse
-   * @param format - format required
+   * Parser callback, if not using the adapter's parser.
+   * @param value - The date string to parse.
+   * @param format - The format of the date string.
    */
   parse?: (value: string, format: string) => ParserResult;
   /**
-   * Input value. Use when the input value is controlled.
+   * The value of the input. Use with `onDateValueChange` to control it.
    */
   value?: string;
   /**
@@ -113,18 +115,18 @@ export interface DateInputSingleProps
    */
   defaultValue?: string;
   /**
-   * The date value. Use when the component is controlled.
+   * The selected date. Use with `onDateChange` to control it.
    */
   date?: DateFrameworkType | null;
   /**
-   * The initial selected date value. Use when the component is uncontrolled.
+   * The initial selected date. Use when the component is uncontrolled.
    */
   defaultDate?: DateFrameworkType | null;
   /**
    * Callback fired when the selected date changes.
    * @param event - The synthetic event.
-   * @param date - the selected date, invalid date if not a valid date or undefined (uncontrolled) or null (controlled) if not defined
-   * @param details - The details of date selection, either a valid date or error
+   * @param date - The selected date. It's `null` if the input is empty, or an invalid date if the input value isn't a valid date.
+   * @param details - The details of the date selection, such as errors.
    */
   onDateChange?: (
     event: SyntheticEvent,
@@ -132,17 +134,17 @@ export interface DateInputSingleProps
     details: DateInputSingleDetails,
   ) => void;
   /**
-   * Called when input value changes, either due to user interaction or programmatic formatting of valid dates.
-   * @param event - The synthetic event or null if a programmatic change.
+   * Callback fired when the input value changes, either through user interaction or programmatic formatting of valid dates.
+   * @param event - The synthetic event, or `null` if it's a programmatic change.
    * @param newValue - The new date input value.
    */
   onDateValueChange?: (event: SyntheticEvent | null, newValue: string) => void;
   /**
    * Specifies the timezone behavior:
-   * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
-   * - If set to "default", the default timezone of the date library will be used.
-   * - If set to "system", the local system's timezone will be applied.
-   * - If set to "UTC", the time will be returned in UTC.
+   * - If not set, the timezone will be derived from `date` or `defaultDate`.
+   * - If set to `"default"`, the default timezone of the date library will be used.
+   * - If set to `"system"`, the local system's timezone will be applied.
+   * - If set to `"UTC"`, the time will be returned in UTC.
    * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
    */
   timezone?: Timezone;

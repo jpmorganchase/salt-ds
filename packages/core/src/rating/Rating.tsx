@@ -27,16 +27,18 @@ export interface RatingProps
    */
   defaultValue?: number;
   /**
-   * Callback function for rating change.
+   * Callback fired when the user selects a rating.
    * The first parameter is the event, and the second is the selected rating value.
    */
   onChange?: (event: ChangeEvent<HTMLInputElement>, value: number) => void;
   /**
-   * If true, the rating component will be in a read-only state.
+   * If `true`, the rating is read-only. The rating is also read-only when the
+   * surrounding `FormField` is read-only.
    */
   readOnly?: boolean;
   /**
-   * If true, the rating component will be in a disabled state.
+   * If `true`, the rating is disabled. The rating is also disabled when the
+   * surrounding `FormField` is disabled.
    */
   disabled?: boolean;
   /**

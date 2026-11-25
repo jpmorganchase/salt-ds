@@ -38,7 +38,7 @@ export function useComboBox<Item>(props: UseComboBoxProps<Item>) {
     valueToString,
   });
 
-  const { selectedState, setSelectedState, setOpen } = listControl;
+  const { selectedState, setSelectedState } = listControl;
 
   const [valueState, setValueState] = useControlled({
     controlled: value,
@@ -53,26 +53,11 @@ export function useComboBox<Item>(props: UseComboBoxProps<Item>) {
 
   const select = useEventCallback(
     (event: SyntheticEvent, option: OptionValue<Item>) => {
-      if (option.disabled || disabled || readOnly) {
-        return;
-      }
-
-      let newSelected = [option.value];
-
-      if (multiselect) {
-        if (selectedState.includes(option.value)) {
-          newSelected = selectedState.filter((item) => item !== option.value);
-        } else {
-          newSelected = selectedState.concat([option.value]);
-        }
-      }
-
-      setSelectedState(newSelected);
-      setValueState(multiselect ? "" : listControl.valueToString(option.value));
-      onSelectionChange?.(event, newSelected);
-
-      if (!multiselect) {
-        setOpen(false);
+      const selectedOption = listControl.select(event, option);
+      if (selectedOption) {
+        setValueState(
+          multiselect ? "" : listControl.valueToString(selectedOption.value),
+        );
       }
     },
   );

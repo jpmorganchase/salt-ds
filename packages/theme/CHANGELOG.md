@@ -1,5 +1,23 @@
 # @salt-ds/theme
 
+## 1.49.0
+
+### Minor Changes
+
+- 520e189: Added `--salt-sentiment-accent-track`.
+- ff895b8: Added font size and line height tokens for the new Display 5 to Display 8 text styles to all themes and densities: `--salt-text-display5-fontSize` to `--salt-text-display8-fontSize` and `--salt-text-display5-lineHeight` to `--salt-text-display8-lineHeight`. They share the existing `--salt-text-display-*` font family, font weight, letter spacing, text transform and font style tokens.
+- ea6b309: Added `--salt-target-borderColor` to all themes, for the border of a target or target marker in its default state, showing where an item can be dropped or placed. Use it with a dashed border style.
+
+  ```css
+  border: var(--salt-size-fixed-200) var(--salt-borderStyle-dashed)
+    var(--salt-target-borderColor);
+  ```
+
+### Patch Changes
+
+- d44aefd: Fixed `--salt-color-purple-300` in the Salt interim theme to match Figma. It was set to the same value as `--salt-color-purple-200` (`rgb(240, 209, 255)`), and is now `rgb(225, 166, 255)`.
+- ff895b8: Updated display line heights in the experimental Salt (Interim) theme. `--salt-text-display1-lineHeight` to `--salt-text-display8-lineHeight` are now about 1.1 times their font size, instead of 1.3 times, in every density.
+
 ## 1.48.0
 
 ### Minor Changes

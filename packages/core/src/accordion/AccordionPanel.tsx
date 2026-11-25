@@ -13,7 +13,7 @@ import accordionPanelCss from "./AccordionPanel.css";
 
 export interface AccordionPanelProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The content of the Accordion Panel
+   * The content of the Accordion Panel.
    */
   children?: ReactNode;
 }

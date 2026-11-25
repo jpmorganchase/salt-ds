@@ -8,19 +8,18 @@ import tableCss from "./Table.css";
 
 export interface THeadProps extends ComponentPropsWithoutRef<"thead"> {
   /**
-   * If header is positioned with sticky styling.
-   * @default false
+   * If `true`, the header is positioned with sticky styling, so it stays at
+   * the top when the table scrolls.
    */
   sticky?: boolean;
   /**
-   * Divider styling variant. Defaults to "primary";
-   * @default primary
+   * The styling variant of the divider.
+   * @default "primary"
    */
   divider?: "primary" | "secondary" | "tertiary" | "none";
   /**
-   * Styling variant for header.
-   * If undefined, will match variant of parent Table component's variant.
-   * @default undefined
+   * The styling variant of the header. When not set, it matches the `Table`'s
+   * `variant`.
    */
   variant?: "primary" | "secondary" | "tertiary";
 }

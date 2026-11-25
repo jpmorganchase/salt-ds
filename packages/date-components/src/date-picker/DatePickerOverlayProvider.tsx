@@ -103,28 +103,28 @@ const DatePickerOverlayContext = createContext<
  */
 interface DatePickerOverlayProviderProps {
   /**
-   * If `true`, the overlay is disabled.
+   * If `true`, the overlay doesn't open when the user clicks the `DatePickerTrigger`, even when `openOnClick` is `true`.
    */
   disabled?: boolean;
   /**
-   * If `true`, the overlay is open.
+   * If `true`, the overlay is open. Use with `onOpenChange` to control it.
    */
   open?: boolean;
   /**
-   * When `open` is uncontrolled, set this to `true` to open on click
+   * If `true`, the overlay opens when the user clicks the `DatePickerTrigger`. Use when `open` is uncontrolled.
    */
   openOnClick?: boolean;
   /**
-   * Handler for when open state changes
-   * @param newOpen - true when opened
-   * @param reason - reason for the the state change
+   * Callback fired when the open state changes.
+   * @param newOpen - `true` when opened.
+   * @param reason - The reason for the state change.
    */
   onOpenChange?: (
     newOpen: boolean,
     reason?: DatePickerOpenChangeReason,
   ) => void;
   /**
-   * The default open state of the overlay.
+   * If `true`, the overlay is open initially. Use when `open` is uncontrolled.
    */
   defaultOpen?: boolean;
   /**
@@ -132,11 +132,11 @@ interface DatePickerOverlayProviderProps {
    */
   children: ReactNode;
   /**
-   * A factory method to create a set of interaction, if provided overrides the default interactions
+   * The function that creates the Floating UI interactions for the overlay. When set, it replaces the default interactions.
    */
   interactions?: (context: FloatingContext) => Array<ElementProps>;
   /**
-   * When true, shouldn't open the overlay.
+   * If `true`, the overlay doesn't open.
    */
   readOnly?: boolean;
 }

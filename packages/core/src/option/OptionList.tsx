@@ -8,6 +8,11 @@ import {
 import { OptionListBase } from "./OptionListBase";
 
 export interface OptionListProps extends FloatingComponentProps {
+  /**
+   * If `true`, the option list is hidden with `display: none`. Unlike setting
+   * `open` to `false`, the list stays in the DOM, so it only has an effect while
+   * `open` is `true`.
+   */
   collapsed?: boolean;
 }
 

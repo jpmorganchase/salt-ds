@@ -1,0 +1,43 @@
+.saltCompactStep {
+  display: flex;
+  flex: 1;
+  align-items: flex-start;
+  min-width: 0;
+}
+
+.saltCompactStep-icon {
+  --saltIcon-margin: calc((var(--salt-text-lineHeight) - max(var(--salt-size-icon), 12px)) / 2) var(--salt-spacing-75) 0 0;
+  flex: none;
+}
+
+.saltCompactStep-label {
+  min-width: 0;
+}
+
+/* Visually hidden state for screen readers, left out when the visible text is copied. */
+.saltCompactStep-state {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  white-space: nowrap;
+  border: 0;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.saltCompactStep-stage-locked .saltCompactStep-icon {
+  --saltIcon-color: var(--salt-content-secondary-foreground);
+}
+
+.saltCompactStep-status-warning .saltCompactStep-icon {
+  --saltIcon-color: var(--salt-status-warning-foreground-decorative);
+}
+
+.saltCompactStep-status-error .saltCompactStep-icon {
+  --saltIcon-color: var(--salt-status-error-foreground-decorative);
+}

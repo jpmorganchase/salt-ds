@@ -15,6 +15,7 @@ By default, a single item can be selected from the combo box options. The select
 ### Best practices
 
 - You can wrap `ComboBox` in a `FormField` when it’s displayed within a form context. This provides functionality built into Form Field for increased accessibility. For more information, refer to the [`FormField`](../form-field) guidance.
+- When you filter suggestions as the user types, set `inputProps={{ "aria-autocomplete": "list" }}`. Use `"none"` when the available options do not depend on the typed text. `ComboBox` leaves filtering to the application, so it cannot determine this mode automatically.
 
 <LivePreview componentName="combo-box" exampleName="Default" />
 
@@ -143,7 +144,9 @@ Use the `truncate` prop when you are limited on space and want to prevent the mu
 
 ## Select on Tab
 
-Use the `selectOnTab` prop to select the active option from the list on Tab key press.
+Use the `selectOnTab` prop to select the active option from the list when pressing Tab or Shift+Tab. It defaults to `true` for single-select and `false` for multi-select combo boxes.
+
+Set `selectOnTab={false}` when selection navigates to a page or section. This lets users leave the search field with Tab or Shift+Tab and activate a result explicitly with Enter or a pointer. The application is responsible for moving focus to the destination after navigation.
 
 <LivePreview componentName="combo-box" exampleName="SelectOnTab" />
 

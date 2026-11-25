@@ -11,6 +11,7 @@ export type {
   SelectionStrategy,
   useCollectionItems,
 } from "./common-hooks";
+export * from "./compact-stepper";
 export * from "./contact-details";
 export * from "./content-status";
 export * from "./deck-item";

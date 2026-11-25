@@ -7,11 +7,13 @@ import dividerCss from "./Divider.css";
 
 export interface DividerProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The orientation of the divider. Defaults to `"horizontal"`.
+   * The orientation of the divider.
+   * @default "horizontal"
    */
   orientation?: "horizontal" | "vertical";
   /**
-   * The variant of the divider. Defaults to `"primary"`.
+   * The variant of the divider.
+   * @default "primary"
    */
   variant?: "primary" | "secondary" | "tertiary";
 }

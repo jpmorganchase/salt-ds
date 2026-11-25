@@ -45,10 +45,10 @@ interface DatePickerBaseState {
     containerRef: Ref<HTMLDivElement>;
     /**
      * Specifies the timezone behavior:
-     * - If undefined, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
-     * - If set to "default", the default timezone of the date library will be used.
-     * - If set to "system", the local system's timezone will be applied.
-     * - If set to "UTC", the time will be returned in UTC.
+     * - If not set, the timezone will be derived from the passed date, or from `defaultSelectedDate`/`selectedDate`.
+     * - If set to `"default"`, the default timezone of the date library will be used.
+     * - If set to `"system"`, the local system's timezone will be applied.
+     * - If set to `"UTC"`, the time will be returned in UTC.
      * - If set to a valid IANA timezone identifier, the time will be returned for that specific timezone.
      */
     timezone?: Timezone;

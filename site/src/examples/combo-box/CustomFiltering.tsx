@@ -47,6 +47,7 @@ export const CustomFiltering = (): ReactElement => {
     <ComboBox
       style={{ width: "266px" }}
       onChange={handleChange}
+      inputProps={{ "aria-autocomplete": showAll ? "none" : "list" }}
       onSelectionChange={handleSelectionChange}
       onOpenChange={handleOpenChange}
       value={value}
