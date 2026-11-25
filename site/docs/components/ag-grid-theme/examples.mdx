@@ -98,13 +98,13 @@ Users can quickly filter table information with the controls at the top. The exa
 
 Users can move between pages using the controls in the lower right.
 
-The example below suppresses AG Grid's built-in pagination panel and composes Salt controls around AG Grid's pagination state. AG Grid owns the pages of generated local rows; the example synchronizes the active page, page count, page size, and displayed range with the grid. It does not implement remote data loading. When adapting it for remote data, decide whether AG Grid or your application owns pagination state, and keep the controls in sync with the actual page and result count.
+The example below suppresses AG Grid's built-in pagination panel and composes Salt controls around AG Grid's pagination state. AG Grid owns the pages of generated local rows; the example synchronizes the active page, page count, page size, and displayed range with the grid. It does not implement remote data loading. When adapting it for remote data, decide whether AG Grid or your application owns pagination state, and keep the controls in sync with the actual page and result count. See [Pagination data and page ownership](../pagination/usage#data-and-page-ownership).
 
 <LivePreview componentName="ag-grid-theme" exampleName="Pagination" />
 
 ### Infinite scroll
 
-The grid requests additional row blocks as the user scrolls. This example simulates a loading delay by slicing generated local data into blocks. It does not implement remote fetching, filtering, sorting, or failure recovery. For a real data source, handle loading, empty results, errors and retries in your application; the example does not implement those states.
+The grid requests additional row blocks as the user scrolls. This example simulates a loading delay by slicing generated local data into blocks. It does not implement remote fetching, filtering, sorting, or failure recovery. For a real data source, handle loading, empty results, errors and retries in your application; the example does not implement those states. See [Content status guidance](/salt/patterns/content-status#choosing-how-to-communicate-loading-and-recovery).
 
 The infinite row model follows CSS density changes from AG Grid v36.2. This example retains a reactive `rowHeight` for compatibility with earlier versions, deriving it from `useDensity()` and the heights in [Density](./usage#density), so the grid updates without remounting.
 
@@ -150,7 +150,7 @@ Users can drag rows to rearrange.
 
 ### Checkbox selection
 
-Users can select rows via checkboxes. Make the scope of a bulk selection explicit: loaded rows, the current page, filtered results, or all records, as supported by the grid configuration and data source. Do not imply that unloaded records are selected unless the application supports that operation. When filtering hides selected records or unsaved edits, decide whether selection persists and communicate that behavior to users.
+Users can select rows via checkboxes. Make the scope of a bulk selection explicit: loaded rows, the current page, filtered results, or all records, as supported by the grid configuration and data source. Do not imply that unloaded records are selected unless the application supports that operation. When filtering hides selected records or unsaved edits, decide whether selection persists and communicate that behavior to users. See [List filtering guidance](/salt/patterns/list-filtering#clearing-and-selection).
 
 <LivePreview componentName="ag-grid-theme" exampleName="CheckboxSelection" />
 

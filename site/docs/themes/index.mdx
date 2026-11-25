@@ -57,11 +57,11 @@ You can set themes in code using a provider and CSS imports. For a step-by-step 
 
 ### Setting up the J.P. Morgan theme
 
-Import the base theme CSS plus the J.P. Morgan layer, then wrap your app in `<SaltProviderNext>`:
+Import the base theme CSS plus the J.P. Morgan layer, then wrap your app in `<SaltProviderNext>` with the J.P. Morgan brand settings: a teal accent, rounded corners and Amplitude for headings and actions. Without these props, `SaltProviderNext` uses a blue accent, sharp corners and Open Sans.
 
 ```tsx
 import { SaltProviderNext } from "@salt-ds/core";
-import "@salt-ds/theme/index.css";
+import "@salt-ds/theme/css/global.css";
 import "@salt-ds/theme/css/theme-next.css";
 
 <SaltProviderNext

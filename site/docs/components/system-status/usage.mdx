@@ -10,28 +10,25 @@ data:
 
 ## Using the component
 
-The primary purpose of the system status is to provide information and, if necessary, prompt further action.
+Use system status for essential information that affects the application or platform as a whole, such as maintenance, outages, or service disruption. Position it at the top of the application, spanning its width, and explain the impact and any necessary action. See the [placement example](/salt/components/system-status/examples#placement).
 
-Always position the system status at the very top of the screen, spanning the full width of the page. See the [placement example](/salt/components/system-status/examples#placement) for more information.
-
-Remove it when:
-
-- The event that triggered it is resolved, such as when service is restored after an outage.
-- The information is no longer relevant, such as when scheduled maintenance has finished.
+The host application controls the message lifecycle. Keep information about an ongoing condition accessible, and update it when the condition changes. Remove it when the condition resolves or the information is no longer relevant, such as when service is restored or scheduled maintenance finishes. Do not remove essential ongoing information on a timer.
 
 We advise against adding too much content to a system status because of potential color contrast issues. To add actions, such as dismiss, use [`OnSolidButton`](/salt/components/button/examples#on-solid) within `SystemStatusActions`. If you add other components, it's the application team's responsibility to make sure they're accessible.
 
 ### When to use
 
 - To inform users about critical system-wide issues, security updates or vulnerabilities that require immediate attention.
-- To notify users about new system-wide features or enhancements.
+- To explain important platform-wide changes that affect how users access or use the application.
 - To alert users about planned maintenance schedules and potential service disruptions affecting the entire platform.
 
 ### When not to use
 
-- For inline messaging, or a notification that applies to the user’s current task or workflow. Instead, use [`Banner`](../banner).
-- To communicate when content is loading. Instead, use the [content status pattern](/salt/patterns/content-status).
-- When the notification requires immediate action and relates to the user’s current task. Instead, use [`Dialog`](../dialog) to interrupt the user's workflow.
+- For an issue limited to a page, form, or content region with useful content still available. Use [`Banner`](../banner) within the affected area.
+- For a brief, non-blocking event update or confirmation that does not need to stay visible. Consider [`Toast`](../toast), with essential information and recovery actions available elsewhere.
+- For loading, empty, or failure states within a bounded content region when no useful previous content is available. Use the [Content status pattern](/salt/patterns/content-status).
+- For the current health of an individual service or item. Use [`StatusIndicator`](../status-indicator) with explanatory text in the relevant view.
+- When the user must make a decision before continuing. Consider [`Dialog`](../dialog) only when interrupting the workflow is necessary; a routine failure does not automatically require a dialog.
 
 ## Content
 

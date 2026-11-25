@@ -1,0 +1,164 @@
+import {
+  FormField,
+  FormFieldLabel,
+  GridLayout,
+  H3,
+  Input,
+  InteractableCard,
+  InteractableCardGroup,
+  ListBox,
+  Option,
+  RadioButtonIcon,
+  StackLayout,
+  Text,
+  ToggleButton,
+  ToggleButtonGroup,
+  useAriaAnnouncer,
+  useId,
+} from "@salt-ds/core";
+import { type ChangeEvent, useState } from "react";
+
+const incidents = [
+  {
+    id: "order-gateway",
+    service: "Order gateway",
+    team: "Trading",
+    summary: "Delayed order acknowledgements",
+  },
+  {
+    id: "pricing-feed",
+    service: "Pricing feed",
+    team: "Trading",
+    summary: "Stale price updates",
+  },
+  {
+    id: "settlement-queue",
+    service: "Settlement queue",
+    team: "Operations",
+    summary: "Processing backlog",
+  },
+];
+
+const filterIncidents = (filter: string) => {
+  const query = filter.trim().toLowerCase();
+  return incidents.filter((incident) =>
+    `${incident.service} ${incident.team} ${incident.summary}`
+      .toLowerCase()
+      .includes(query),
+  );
+};
+
+export const ToggleButtonGroupViewSwitching = () => {
+  const [view, setView] = useState("list");
+  const [filter, setFilter] = useState("");
+  const [selectedId, setSelectedId] = useState("");
+  const id = useId();
+  const { announce } = useAriaAnnouncer({ debounce: 500 });
+  const visibleIncidents = filterIncidents(filter);
+  const selectedIncident = incidents.find(
+    (incident) => incident.id === selectedId,
+  );
+
+  const visibleSelectedId = visibleIncidents.some(
+    (incident) => incident.id === selectedId,
+  )
+    ? selectedId
+    : "";
+
+  const handleFilterChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const value = event.currentTarget.value;
+    setFilter(value);
+    const count = filterIncidents(value).length;
+    announce(
+      count === 0
+        ? "No incidents match the filter."
+        : count === 1
+          ? "1 incident matches the filter."
+          : `${count} incidents match the filter.`,
+    );
+  };
+
+  return (
+    <StackLayout gap={2} style={{ width: "100%", maxWidth: 720 }}>
+      <FormField>
+        <FormFieldLabel>Filter incidents</FormFieldLabel>
+        <Input
+          value={filter}
+          inputProps={{
+            onChange: handleFilterChange,
+          }}
+        />
+      </FormField>
+      <StackLayout gap={1} align="start">
+        <Text id={`${id}-view`}>View</Text>
+        <ToggleButtonGroup
+          aria-labelledby={`${id}-view`}
+          value={view}
+          onChange={(event) => setView(event.currentTarget.value)}
+        >
+          <ToggleButton value="list">List</ToggleButton>
+          <ToggleButton value="cards">Cards</ToggleButton>
+        </ToggleButtonGroup>
+      </StackLayout>
+      {visibleIncidents.length === 0 ? (
+        <Text>No incidents match the filter.</Text>
+      ) : view === "cards" ? (
+        <InteractableCardGroup
+          aria-label="Select an incident"
+          value={visibleSelectedId}
+          onChange={(_event, value) => {
+            if (typeof value === "string") setSelectedId(value);
+          }}
+        >
+          <GridLayout
+            columns="repeat(auto-fill, minmax(min(100%, 220px), 1fr))"
+            gap={2}
+            style={{ width: "100%", gridAutoRows: "1fr" }}
+          >
+            {visibleIncidents.map((incident) => (
+              <InteractableCard key={incident.id} value={incident.id}>
+                <StackLayout gap={1}>
+                  <H3 style={{ margin: 0 }}>{incident.service}</H3>
+                  <StackLayout direction="row" gap={1}>
+                    <RadioButtonIcon
+                      aria-hidden
+                      checked={selectedId === incident.id}
+                    />
+                    <Text>
+                      {incident.team}: {incident.summary}
+                    </Text>
+                  </StackLayout>
+                </StackLayout>
+              </InteractableCard>
+            ))}
+          </GridLayout>
+        </InteractableCardGroup>
+      ) : (
+        <ListBox
+          aria-label="Select an incident"
+          selected={selectedId ? [selectedId] : []}
+          onSelectionChange={(_event, selected) =>
+            setSelectedId(selected[0] ?? "")
+          }
+          valueToString={(value) =>
+            incidents.find((incident) => incident.id === value)?.service ??
+            value
+          }
+          style={{ width: "100%" }}
+        >
+          {visibleIncidents.map((incident) => (
+            <Option key={incident.id} value={incident.id}>
+              <StackLayout gap={0.5}>
+                <Text>{incident.service}</Text>
+                <Text color="inherit">
+                  {incident.team}: {incident.summary}
+                </Text>
+              </StackLayout>
+            </Option>
+          ))}
+        </ListBox>
+      )}
+      <Text>Selected incident: {selectedIncident?.service ?? "None"}</Text>
+    </StackLayout>
+  );
+};

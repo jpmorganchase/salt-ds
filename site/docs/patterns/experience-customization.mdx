@@ -11,10 +11,10 @@ data:
     [
       { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-experience-customization", label: "Examples" },
     ]
-  components: ["Banner", "Dropdown", "Radio button", "Stepper", "Switch", "Toggle button"]
+  components:
+    ["Banner", "Dropdown", "Radio button", "Stepper", "Switch", "Toggle button"]
   relatedPatterns: ["Button bar", "Selectable card", "Wizard"]
 ---
-
 
 <Diagram
   src="/img/patterns/experience-customization/experience-customization-pattern-experience-customization.png"
@@ -31,7 +31,7 @@ Use the Experience customization pattern to establish or update foundational s
 ### Usage contexts
 
 1. **Onboarding (Wizard)**: A guided, step-by-step experience used to initialize the workspace and capture essential preferences upon the user’s first entry into the application. Establishing accessibility defaults during this setup phase ensures a compliant environment from the very first session.
-2. **Ongoing customization**:  A persistent entry point that allows users to return and adjust their environment as their operational needs evolve.
+2. **Ongoing customization**: A persistent entry point that allows users to return and adjust their environment as their operational needs evolve.
 
 ### Accessibility and compliance
 
@@ -48,6 +48,12 @@ Typical groups of settings you might expose to your users are:
 - **Structure**: Workspace initialization, naming conventions, and project templates
 - **Feedback / notification**: Toast position, auto-dismiss, duration; notification preferences
 
+## When not to use
+
+- When choices are fixed by policy, role, permissions, or system logic and users cannot change them, do not present them as customization options.
+- When a setting only affects the current task, page, or data view, use local controls in that workflow instead of onboarding or preferences.
+- When users are entering data required to complete a business task, use the relevant form or workflow instead of the customization pattern.
+- When options expose styling, component design, implementation details, or system logic, do not include them in user-facing customization.
 
 ## How to build
 
@@ -92,31 +98,37 @@ The steps below summarize Salt-specific user preferences that may be made avai
 
 ### Ordering the experience
 
-| Step | Stage               | What the user sets                                                                                                                               | Sequence rationale                                                                                                                                    |
-| ---- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 1    | Foundation          | Theme, Density, [Reduced motion](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions)                                                                                                                    | Establishes global system behavior first                                                                                                              |
-| 2    | Data interpretation | Number format, Currency format, Date/Time format, Locale, and timezone if needed                                                                | Ensures data is immediately understandable and consistently interpreted before configuring surfaces                                                   |
+| Step | Stage               | What the user sets                                                                                                                                     | Sequence rationale                                                                                                                                 |
+| ---- | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- |
+| 1    | Foundation          | Theme, Density, [Reduced motion](https://www.w3.org/WAI/WCAG22/Understanding/animation-from-interactions)                                              | Establishes global system behavior first                                                                                                           |
+| 2    | Data interpretation | Number format, Currency format, Date/Time format, Locale, and timezone if needed                                                                       | Ensures data is immediately understandable and consistently interpreted before configuring surfaces                                                |
 | 3    | Data surfaces       | Tables (live preview): Columns, Sorting, Density/Compact, Zebra striping. Charts (live preview): Lines, Patterns, Markers, Labels, Grid lines, Legend. | Outcomes are cumulative, so users need to see results live before setting; this is the core step because it shapes how data is read and understood |
-| 4    | Feedback            | Toast position, Auto-dismiss, Duration                                                                                                            | Finalizes how the system provides feedback after core reading/interpretation is set                                                                   |
+| 4    | Feedback            | Toast position, Auto-dismiss, Duration                                                                                                                 | Finalizes how the system provides feedback after core reading/interpretation is set                                                                |
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-**Language selection**: If you include language selection in this flow, place it at the beginning so users can understand the rest of the setup. Apply the selected language from the next step onward. When the language changes, ensure the language metadata is updated (set the lang attribute to a valid language code) so assistive technologies interpret the content correctly.
+  **Language selection**: If you include language selection in this flow, place
+  it at the beginning so users can understand the rest of the setup. Apply the
+  selected language from the next step onward. When the language changes, ensure
+  the language metadata is updated (set the lang attribute to a valid language
+  code) so assistive technologies interpret the content correctly.
 </GuidanceCallout>
 
 ## Selection model
 
-The selection model uses an escalation-based approach for presenting configuration choices in Experience customization, progressing from Standard controls to Card selection to Dynamic live preview based on complexity and cumulative visual impact. This approach aligns options with user comprehension, supports [WCAG 2.2 accessibility guidelines](https://www.w3.org/WAI/WCAG22/Understanding/), and ensures all choices are practical within the Salt design system. 
+The selection model uses an escalation-based approach for presenting configuration choices in Experience customization, progressing from Standard controls to Card selection to Dynamic live preview based on complexity and cumulative visual impact. This approach aligns options with user comprehension, supports [WCAG 2.2 accessibility guidelines](https://www.w3.org/WAI/WCAG22/Understanding/), and ensures all choices are practical within the Salt design system.
 
 ### Choosing the right pattern
 
-| Pattern              | Use when                                                                       | Typical examples                                                        | Best for                                |
-| -------------------- | ------------------------------------------------------------------------------ | ----------------------------------------------------------------------- | --------------------------------------- |
-| Standard controls    | Labels clearly communicate the outcome without needing visual comparison        | Date format, currency, reduced motion (on/off), value labels (show/hide) | High-volume (5+ options) and efficiency |
-| Card selection       | The difference is best understood visually and there are typically 2–4 options | Theme (light/dark), density, toast position                             | Low-volume (2–4 options) and visual state |
-| Dynamic live preview | Multiple settings combine and users need to see results before committing      | Data grid configuration, chart configuration                            | Complex tasks and real-time validation  |
+| Pattern              | Use when                                                                       | Typical examples                                                         | Best for                                  |
+| -------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------------------------ | ----------------------------------------- |
+| Standard controls    | Labels clearly communicate the outcome without needing visual comparison       | Date format, currency, reduced motion (on/off), value labels (show/hide) | High-volume (5+ options) and efficiency   |
+| Card selection       | The difference is best understood visually and there are typically 2–4 options | Theme (light/dark), density, toast position                              | Low-volume (2–4 options) and visual state |
+| Dynamic live preview | Multiple settings combine and users need to see results before committing      | Data grid configuration, chart configuration                             | Complex tasks and real-time validation    |
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  Focus on configuration that changes how the system communicates data—supporting readability, structure, and interpretation—without exposing styling, component design, or system logic.
+  Focus on configuration that changes how the system communicates
+  data—supporting readability, structure, and interpretation—without exposing
+  styling, component design, or system logic.
 </GuidanceCallout>
 
 ## Use cases
@@ -139,6 +151,11 @@ Use standard controls for familiar, functional settings such as language selec
 
 Use a dynamic live preview for report-oriented presentation choices, such as selecting which metadata appears and how it’s displayed. This approach is ideal when users have specific requirements and need confidence in the final output. By showing results as settings change, a dynamic live preview reduces trial and error and minimizes the need to revisit settings later.
 
+<GuidanceCallout type="positive" customPillText="Best practices">
+  **Heading hierarchy**: If the live preview includes headings or titles, ensure
+  they follow the heading hierarchy of the surrounding page or modal.
+</GuidanceCallout>
+
 <Diagram
   src="/img/patterns/experience-customization/experience-customization-pattern-dynamic-live-preview.png"
   srcDark="/img/patterns/experience-customization/experience-customization-pattern-dynamic-live-preview-dark.png"
@@ -147,13 +164,16 @@ Use a dynamic live preview for report-oriented presentation choices, such as s
   background="secondary"
 />
 
-<GuidanceCallout type="positive" customPillText="Best practices">
-**Heading hierarchy**: If the live preview includes headings or titles, ensure they follow the heading hierarchy of the surrounding page or modal.
-</GuidanceCallout>
-
 ### Card selection – Notification placement
 
 Use card selection for settings that lead to meaningful changes in the interface layout, such as notification placement. Card selection allows users to compare distinct visual states side by side, making it easier to understand and choose the desired outcome without extra cognitive effort.
+
+<GuidanceCallout type="positive" customPillText="Best practices">
+  Switches can be used in multi-step wizards even when changes don’t take effect
+  immediately. Use switches only for true on/off choices, and make any final
+  behavior unmistakable—for example, label the final button 'Finish and apply
+  changes' instead of just 'Finish'.
+</GuidanceCallout>
 
 <Diagram
   src="/img/patterns/experience-customization/experience-customization-pattern-card-selection.png"
@@ -162,10 +182,6 @@ Use card selection for settings that lead to meaningful changes in the interfa
   border
   background="secondary"
 />
-
-<GuidanceCallout type="positive" customPillText="Best practices">
-Switches can be used in multi-step wizards even when changes don’t take effect immediately. Use switches only for true on/off choices, and make any final behavior unmistakable—for example, label the final button 'Finish and apply changes' instead of just 'Finish'.
-</GuidanceCallout>
 
 ## Reset to default
 
@@ -211,10 +227,12 @@ Use this pattern when an application provides explicit options—such as a secur
 
 Because the workflow cannot continue without this input, the interface must guide the user through a clear validation sequence that maintains focus and accessibility.
 
+If the user selects **Finish** without choosing an option, an error message asks them to choose one:
+
 <Diagram
   src="/img/patterns/experience-customization/experience-customization-pattern-mandatory-configuratons.png"
   srcDark="/img/patterns/experience-customization/experience-customization-pattern-mandatory-configuratons-dark.png"
-  alt="Mandatory configuration step requiring a selection before continuing"
+  alt="Mandatory configuration step showing the error message Choose an option above the three access level cards"
   border
   background="secondary"
 />
@@ -236,6 +254,6 @@ The following sequence illustrates the expected behavior when a mandatory select
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-**Explicit requirements**: Use the label or description in the header section to clearly communicate that a selection is required to proceed.
+  **Explicit requirements**: Use the label or description in the header section
+  to clearly communicate that a selection is required to proceed.
 </GuidanceCallout>
-

@@ -27,7 +27,7 @@ export const DensityResponsive = (): ReactElement => {
   const isTouchscreen = useSyncExternalStore(subscribe, getSnapshot);
 
   return (
-    <SaltProvider density={isTouchscreen ? "touch" : "low"}>
+    <SaltProvider density={isTouchscreen ? "mobile" : "low"}>
       <FlexLayout justify="center" align="center">
         <DensityCard />
       </FlexLayout>

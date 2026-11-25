@@ -1,15 +1,17 @@
 import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
-import type { GridApi } from "ag-grid-community";
+import type { FilterModel, GridApi } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { useState } from "react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { customFilterColumns, defaultData } from "./data";
 
 export const CustomFilter = () => {
-  const [hasSavedState, setHasSavedState] = useState(true);
+  const [savedFilterModel, setSavedFilterModel] = useState<FilterModel | null>(
+    null,
+  );
   const [api, setApi] = useState<GridApi>();
 
-  const handlePopMt100kClick = async () => {
+  const handlePopGt100kClick = async () => {
     await api?.setColumnFilterModel("population", {
       type: "greaterThan",
       filter: 100000,
@@ -17,7 +19,6 @@ export const CustomFilter = () => {
     });
 
     api?.onFilterChanged();
-    setHasSavedState(false);
   };
 
   const handlePopLt100kClick = async () => {
@@ -28,7 +29,6 @@ export const CustomFilter = () => {
     });
 
     api?.onFilterChanged();
-    setHasSavedState(false);
   };
 
   const filterNewYork = async () => {
@@ -39,35 +39,56 @@ export const CustomFilter = () => {
     });
 
     api?.onFilterChanged();
-    setHasSavedState(false);
   };
 
-  const saveState = () => {
-    (window as any).filterState = api?.getFilterModel();
-    setHasSavedState(false);
+  const saveFilters = () => {
+    if (api) {
+      setSavedFilterModel(structuredClone(api.getFilterModel()));
+    }
   };
 
-  const restoreState = () => {
-    api?.setFilterModel((window as any).filterState);
-    setHasSavedState(true);
+  const restoreFilters = () => {
+    if (savedFilterModel !== null) {
+      api?.setFilterModel(structuredClone(savedFilterModel));
+    }
   };
 
-  const clearState = () => {
+  const clearFilters = () => {
     api?.setFilterModel(null);
-    setHasSavedState(true);
+  };
+
+  const clearStoredFilter = () => {
+    setSavedFilterModel(null);
   };
 
   return (
     <StackLayout gap={4}>
       <FlowLayout gap={2}>
-        <Button onClick={handlePopLt100kClick}>Pop &gt; 100k</Button>
-        <Button onClick={handlePopMt100kClick}>Pop &lt; 100k</Button>
-        <Button onClick={filterNewYork}>New York</Button>
-        <Button onClick={saveState}>Save State</Button>
-        <Button disabled={hasSavedState} onClick={restoreState}>
-          Restore State
+        <Button disabled={!api} onClick={handlePopGt100kClick}>
+          Pop &gt; 100k
         </Button>
-        <Button disabled={hasSavedState} onClick={clearState}>
+        <Button disabled={!api} onClick={handlePopLt100kClick}>
+          Pop &lt; 100k
+        </Button>
+        <Button disabled={!api} onClick={filterNewYork}>
+          New York
+        </Button>
+        <Button disabled={!api} onClick={saveFilters}>
+          Save Filters
+        </Button>
+        <Button
+          disabled={!api || savedFilterModel === null}
+          onClick={restoreFilters}
+        >
+          Restore Saved Filters
+        </Button>
+        <Button disabled={!api} onClick={clearFilters}>
+          Clear Filters
+        </Button>
+        <Button
+          disabled={savedFilterModel === null}
+          onClick={clearStoredFilter}
+        >
           Clear Stored Filter
         </Button>
       </FlowLayout>
