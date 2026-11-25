@@ -1,5 +1,20 @@
 # @salt-ds/ag-grid-theme
 
+## 2.12.0
+
+### Minor Changes
+
+- a7e7ef0: Added Salt icons for the AG Grid `search`, `chevron-up`, `chevron-down`, `chevron-left`, `chevron-right`, `document`, `edit`, `pdf`, `settings`, `column-arrow`, `filter-add`, `pinned-top`, `pinned-bottom`, `un-pin`, `fx` and `values-as` icon names. These icons were previously blank, for example the search icon in column filters.
+
+### Patch Changes
+
+- Updated dependencies [520e189]
+- Updated dependencies [ff895b8]
+- Updated dependencies [d44aefd]
+- Updated dependencies [ff895b8]
+- Updated dependencies [ea6b309]
+  - @salt-ds/theme@1.49.0
+
 ## 2.11.0
 
 ### Minor Changes
