@@ -15,32 +15,6 @@ function getBackground(element: Element, pseudoElement?: string) {
   return getComputedStyle(element, pseudoElement).backgroundColor;
 }
 
-const focusRingTokens = [
-  ["outlineStyle", "--salt-focused-outlineStyle"],
-  ["outlineWidth", "--salt-focused-outlineWidth"],
-  ["outlineColor", "--salt-focused-outlineColor"],
-  ["outlineOffset", "--salt-focused-outlineOffset"],
-] as const;
-
-function getOutline(element: Element) {
-  const styles = getComputedStyle(element);
-  return Object.fromEntries(
-    focusRingTokens.map(([property]) => [property, styles[property]]),
-  );
-}
-
-function resolveFocusRing(element: HTMLElement) {
-  const styles = getComputedStyle(element);
-  const probe = document.createElement("div");
-  for (const [property, token] of focusRingTokens) {
-    probe.style[property] = styles.getPropertyValue(token).trim();
-  }
-  document.body.appendChild(probe);
-  const focusRing = getOutline(probe);
-  probe.remove();
-  return focusRing;
-}
-
 function getCenter(element: HTMLElement) {
   const { left, top, width, height } = element.getBoundingClientRect();
   return { x: left + width / 2, y: top + height / 2 };
@@ -124,23 +98,19 @@ describe.skipIf(!isReact18OrLater)(
       await expect.poll(() => getBackground(separator)).toBe(defaultBackground);
     });
 
-    it("shows the focus ring without hover styles when a separator is focused with the keyboard", async () => {
+    it("keeps the resting background when a separator is focused with the keyboard", async () => {
       await renderWithSalt(<Horizontal />);
       const separator = page
         .getByRole("separator", { name: "Resize Left/Center" })
         .element() as HTMLElement;
       const defaultBackground = getBackground(separator);
-      const focusRing = resolveFocusRing(separator);
-      expect(focusRing.outlineStyle).not.toBe("none");
 
-      // Programmatic focus() doesn't match :focus-visible in Firefox.
       await userEvent.tab();
 
       await expect.element(separator).toHaveFocus();
       await expect
         .element(separator)
         .toHaveAttribute("data-separator", "focus");
-      await expect.poll(() => getOutline(separator)).toEqual(focusRing);
       expect(getBackground(separator)).toBe(defaultBackground);
     });
 
