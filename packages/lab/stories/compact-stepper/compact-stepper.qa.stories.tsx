@@ -66,19 +66,19 @@ export const AllStates: StoryFn<QAContainerProps> = (props) => (
         <CompactStep label="Review" />
         <CompactStep label="Confirmation" />
       </CompactStepper>
+      <div style={{ width: 240 }}>
+        <CompactStepper>
+          <CompactStep label="Personal details" stage="completed" />
+          <CompactStep
+            label="Confirm the payment details and the billing address for this account"
+            stage="active"
+            status="error"
+          />
+          <CompactStep label="Review" />
+          <CompactStep label="Confirmation" />
+        </CompactStepper>
+      </div>
     </StackLayout>
-    <div style={{ width: 240 }}>
-      <CompactStepper>
-        <CompactStep label="Personal details" stage="completed" />
-        <CompactStep
-          label="Confirm the payment details and the billing address for this account"
-          stage="active"
-          status="error"
-        />
-        <CompactStep label="Review" />
-        <CompactStep label="Confirmation" />
-      </CompactStepper>
-    </div>
   </QAContainer>
 );
 

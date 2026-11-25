@@ -69,7 +69,7 @@ export const CompactStepper = forwardRef<HTMLDivElement, CompactStepperProps>(
           ref={ref}
           {...rest}
         >
-          <div className={withBaseName("barContainer")} aria-hidden="true">
+          <div className={withBaseName("barContainer")}>
             {current && (
               <div
                 className={withBaseName("bar")}

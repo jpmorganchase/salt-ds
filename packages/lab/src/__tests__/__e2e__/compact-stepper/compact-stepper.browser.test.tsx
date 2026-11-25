@@ -1,4 +1,4 @@
-import type { StepStatus } from "@salt-ds/core";
+import { Step, type StepStatus } from "@salt-ds/core";
 import {
   CompactStep,
   CompactStepper,
@@ -17,6 +17,13 @@ const { Default } = composedStories;
 
 function getText() {
   return page.getByRole("group").element().textContent?.replace(/\s+/g, " ");
+}
+
+function getBarWidth() {
+  return page
+    .getByRole("group")
+    .element()
+    .querySelector<HTMLElement>(".saltCompactStepper-bar")?.style.width;
 }
 
 describe("GIVEN a CompactStepper", () => {
@@ -66,6 +73,113 @@ describe("GIVEN a CompactStepper", () => {
     );
 
     expect(getText()).toBe("Step 1 of 3: One, pending");
+    expect(getBarWidth()).toBe("0%");
+  });
+
+  it.each<[string, CompactStepStage[], string, string]>([
+    [
+      "the active step",
+      ["active", "pending", "pending", "pending"],
+      "Step 1 of 4: One",
+      "25%",
+    ],
+    [
+      "the locked step",
+      ["completed", "locked", "pending", "pending"],
+      "Step 2 of 4: Two, locked",
+      "50%",
+    ],
+    [
+      "the last active step",
+      ["completed", "completed", "completed", "active"],
+      "Step 4 of 4: Four",
+      "100%",
+    ],
+    [
+      "the first pending step WHEN no step is active or locked",
+      ["completed", "pending", "pending", "pending"],
+      "Step 2 of 4: Two, pending",
+      "25%",
+    ],
+  ])("THEN shows %s as the current step", async (_, stages, text, width) => {
+    const labels = ["One", "Two", "Three", "Four"];
+
+    await renderWithSalt(
+      <CompactStepper>
+        {stages.map((stage, index) => (
+          <CompactStep
+            key={labels[index]}
+            label={labels[index]}
+            stage={stage}
+          />
+        ))}
+      </CompactStepper>,
+    );
+
+    expect(getText()).toBe(text);
+    expect(getBarWidth()).toBe(width);
+  });
+
+  it("THEN shows the first current step WHEN several steps are current", async () => {
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    try {
+      await renderWithSalt(
+        <CompactStepper>
+          <CompactStep label="One" stage="locked" />
+          <CompactStep label="Two" stage="active" />
+          <CompactStep label="Three" stage="active" />
+        </CompactStepper>,
+      );
+
+      expect(getText()).toBe("Step 1 of 3: One, locked");
+    } finally {
+      warnSpy.mockRestore();
+    }
+  });
+
+  it("THEN reads steps inside fragments without warning", async () => {
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    try {
+      await renderWithSalt(
+        <CompactStepper>
+          <>
+            <CompactStep label="One" stage="completed" />
+            <>
+              <CompactStep label="Two" stage="active" />
+            </>
+          </>
+          {null}
+          {false}
+        </CompactStepper>,
+      );
+
+      expect(getText()).toBe("Step 2 of 2: Two");
+      expect(warnSpy).not.toHaveBeenCalled();
+    } finally {
+      warnSpy.mockRestore();
+    }
+  });
+
+  it("THEN ignores children that aren't CompactStep elements, including Step", async () => {
+    const warnSpy = vi.spyOn(console, "warn").mockImplementation(() => {});
+
+    try {
+      await renderWithSalt(
+        <CompactStepper>
+          text
+          <CompactStep label="One" stage="active" />
+          <Step label="Core" stage="active" />
+          <div />
+          <CompactStep label="Two" />
+        </CompactStepper>,
+      );
+
+      expect(getText()).toBe("Step 1 of 2: One");
+    } finally {
+      warnSpy.mockRestore();
+    }
   });
 
   it("THEN warns WHEN a CompactStep is used outside a CompactStepper", async () => {

@@ -25,12 +25,6 @@ export type CompactStepStage = Extract<
   StepStage,
   "pending" | "active" | "locked" | "completed"
 >;
-export const CompactStepStageValues = [
-  "pending",
-  "active",
-  "locked",
-  "completed",
-] as const;
 
 export interface CompactStepProps
   extends Omit<ComponentPropsWithoutRef<"span">, "children"> {
@@ -117,7 +111,7 @@ export const CompactStep = forwardRef<HTMLSpanElement, CompactStepProps>(
           {label}
         </Text>
         {stateText && (
-          <span className="salt-visuallyHidden">{`, ${stateText}`}</span>
+          <span className={withBaseName("state")}>{`, ${stateText}`}</span>
         )}
       </span>
     );
