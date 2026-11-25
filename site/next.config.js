@@ -5,10 +5,13 @@ module.exports = {
     "/*": ["snapshots/**/*"],
     proxy: ["snapshots/**/*"],
   },
-  experimental: {
-    // Start tracing after the server compile so it can overlap the client build.
-    webpackBuildWorker: true,
-    parallelServerBuildTraces: true,
+  turbopack: {
+    rules: {
+      "*": {
+        condition: { query: /raw/ },
+        type: "text",
+      },
+    },
   },
   transpilePackages: [
     "@jpmorganchase/mosaic-site-middleware",
@@ -33,18 +36,6 @@ module.exports = {
       /** Insert the domains where you will load images from */
       /* https://nextjs.org/docs/messages/next-image-unconfigured-host */
     ],
-  },
-  webpack(config) {
-    for (const rule of config.module.rules) {
-      if (rule.oneOf) {
-        rule.oneOf.unshift({
-          resourceQuery: /raw/,
-          type: "asset/source",
-        });
-      }
-    }
-
-    return config;
   },
   env: {},
   async redirects() {
