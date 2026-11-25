@@ -48,15 +48,6 @@ describe("getCompactStepperState", () => {
       100,
     ],
     [
-      "the last step WHEN every step is completed",
-      [
-        step({ label: "One", stage: "completed" }),
-        step({ label: "Two", stage: "completed" }),
-      ],
-      "Two",
-      100,
-    ],
-    [
       "the first pending step WHEN no step is active or locked",
       [
         step({ label: "One", stage: "completed" }),

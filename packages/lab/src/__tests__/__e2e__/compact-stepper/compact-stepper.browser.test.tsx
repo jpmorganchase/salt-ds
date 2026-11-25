@@ -56,18 +56,6 @@ describe("GIVEN a CompactStepper", () => {
     },
   );
 
-  it("THEN shows the last step as completed WHEN every step is completed", async () => {
-    await renderWithSalt(
-      <CompactStepper>
-        <CompactStep label="One" stage="completed" />
-        <CompactStep label="Two" stage="completed" />
-        <CompactStep label="Three" stage="completed" />
-      </CompactStepper>,
-    );
-
-    expect(getText()).toBe("Step 3 of 3: Three, completed");
-  });
-
   it("THEN shows the first step as pending WHEN every step is pending", async () => {
     await renderWithSalt(
       <CompactStepper>

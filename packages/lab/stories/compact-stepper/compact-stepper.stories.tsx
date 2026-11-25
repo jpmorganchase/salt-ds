@@ -53,12 +53,6 @@ export const Progress: StoryFn<typeof CompactStepper> = (args) => (
       <CompactStep label="Review" stage="completed" />
       <CompactStep label="Confirmation" stage="active" />
     </CompactStepper>
-    <CompactStepper {...args}>
-      <CompactStep label="Personal details" stage="completed" />
-      <CompactStep label="Payment details" stage="completed" />
-      <CompactStep label="Review" stage="completed" />
-      <CompactStep label="Confirmation" stage="completed" />
-    </CompactStepper>
   </StackLayout>
 );
 
