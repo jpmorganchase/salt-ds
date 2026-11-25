@@ -14,6 +14,12 @@ Improve accessibility by customizing the aria-label prop to provide additional c
 
 - Each Step must expose its stage (completed / in-progress / pending) and label as programmatically-determined state, not conveyed by icon or color alone
 
+For compact stepper:
+
+- completed: visually-hidden text (e.g., "Step 6 of 6: Step title, completed")
+- active: visible text (e.g., "Step 2 of 6: Step title")
+- pending: visually-hidden text (e.g., "Step 1 of 6: Step title, pending")
+
 ## Keyboard interactions
 
 Keyboard interactions apply to only Steppers with steps with nested substeps. In those cases the parent step renders automatically a button that allows for expanding or collapsing the substeps.

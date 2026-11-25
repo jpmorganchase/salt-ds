@@ -32,6 +32,14 @@ Use the `description` prop on `Step` to add supporting text to a step. The descr
 
 <LivePreview componentName="stepper" exampleName="WithDescriptions" />
 
+## Compact stepper
+
+Compact stepper condenses progress into a single track with a current-step label. Use Compact Stepper exclusively in dedicated, constrained viewports or linear forms where a simplified progress indicator is required from the start across all supported screen sizes. It is not interactive or navigable.
+
+Do not use Compact Stepper as a downscaled responsive breakpoint fallback for Horizontal Stepper unless an accessible progressive disclosure pattern is provided.
+
+<LivePreview componentName="stepper" exampleName="Compact" />
+
 ## Nested steps
 
 In a vertical stepper, add `Step` elements as children of a step to give it substeps. You can nest steps up to two levels below the top level.
