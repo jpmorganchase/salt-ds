@@ -2,10 +2,8 @@ import fs from "node:fs";
 import os from "node:os";
 import path from "node:path";
 import url from "node:url";
-import fantasticon from "fantasticon";
+import { FontAssetType, generateFonts } from "fantasticon";
 import { normalizeSvgWinding } from "./normalize-svg-winding.mjs";
-
-const { generateFonts, FontAssetType } = fantasticon;
 
 const packageDir = path.join(
   path.dirname(url.fileURLToPath(import.meta.url)),
