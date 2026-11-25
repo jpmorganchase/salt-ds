@@ -84,6 +84,10 @@ file trace includes it.
   source string for runtime style injection and a native CSS import for
   server-rendered styles. Theme styles and site CSS modules use Next's normal
   CSS pipeline; `?raw` imports use Turbopack's native text module type.
+- Next 16.4 does not apply `outputFileTracingIncludes` to Turbopack's proxy
+  entry. The production compile hook in `scripts/include-proxy-snapshots.cjs`
+  copies snapshot entries from the page trace into the proxy trace, preserving
+  file hashes and symlink aliases before deployment packaging.
 - `src/lib/content.ts` calls Mosaic's shared route resolver. Aliases use the
   backing document's configuration and public canonical URL.
 - `src/app/[namespace]/[...route]/page.tsx` compiles MDX on the server and emits

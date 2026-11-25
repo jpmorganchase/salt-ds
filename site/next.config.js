@@ -1,9 +1,13 @@
 const legacyDocumentationRoutes = require("./src/lib/legacyDocumentationRoutes.json");
+const includeProxySnapshots = require("./scripts/include-proxy-snapshots.cjs");
 
 module.exports = {
   outputFileTracingIncludes: {
     "/*": ["snapshots/**/*"],
     proxy: ["snapshots/**/*"],
+  },
+  compiler: {
+    runAfterProductionCompile: includeProxySnapshots,
   },
   turbopack: {
     rules: {
