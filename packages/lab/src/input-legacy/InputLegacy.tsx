@@ -26,6 +26,9 @@ const withBaseName = makePrefixer("saltInputLegacy");
 
 // TODO: Double confirm whether this should be extending DivElement given root is `<div>`.
 // And forwarded ref is not assigned to the root like other components.
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Input` from `@salt-ds/core` instead.
+ */
 export interface InputLegacyProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange" | "defaultValue"> {
   /**
@@ -129,6 +132,9 @@ function isEmptyReadOnlyValue(
   return value == null || value === "";
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Input` from `@salt-ds/core` instead.
+ */
 export const InputLegacy = forwardRef<HTMLInputElement, InputLegacyProps>(
   function InputLegacy(
     {

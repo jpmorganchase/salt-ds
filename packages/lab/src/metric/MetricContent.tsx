@@ -14,6 +14,9 @@ import { useMetricContext } from "./internal";
 
 import metricContentCss from "./MetricContent.css";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [metric pattern](https://www.saltdesignsystem.com/salt/patterns/metric) instead.
+ */
 export interface MetricContentProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * These props will be passed to the indicator icon. Use this to render a
@@ -44,6 +47,9 @@ const iconComponentMap = {
 
 const withBaseName = makePrefixer("saltMetricContent");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [metric pattern](https://www.saltdesignsystem.com/salt/patterns/metric) instead.
+ */
 export const MetricContent = forwardRef<HTMLDivElement, MetricContentProps>(
   function MetricContent(
     {

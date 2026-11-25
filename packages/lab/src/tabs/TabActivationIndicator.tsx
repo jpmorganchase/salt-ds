@@ -14,6 +14,9 @@ interface TabActivationIndicatorProps {
 
 const withBaseName = makePrefixer("saltTabActivationIndicator");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Tabs` from `@salt-ds/core` instead.
+ */
 export const TabActivationIndicator = ({
   hideThumb = false,
   orientation = "horizontal",

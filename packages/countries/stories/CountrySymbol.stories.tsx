@@ -1,4 +1,11 @@
-import { FlexLayout, StackLayout, Text } from "@salt-ds/core";
+import {
+  FlexLayout,
+  FormField,
+  FormFieldLabel,
+  Input,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import type { CountryCode } from "@salt-ds/countries";
 import {
   CountrySymbol,
@@ -9,9 +16,8 @@ import {
   TT,
   TT_Sharp,
 } from "@salt-ds/countries";
-import { FormField, Input } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { Suspense, useState } from "react";
+import { type ChangeEvent, Suspense, useState } from "react";
 
 export default {
   title: "Country Symbols/Country Symbol",
@@ -61,13 +67,13 @@ export const AllCountrySymbolsWithSearch: StoryFn<typeof CountrySymbol> = (
   return (
     <Suspense fallback="Loading...">
       <StackLayout separators>
-        <FormField
-          label={"Search country symbols"}
-          style={{ marginBlock: "1rem", maxWidth: "300px" }}
-        >
+        <FormField style={{ marginBlock: "1rem", maxWidth: "300px" }}>
+          <FormFieldLabel>Search country symbols</FormFieldLabel>
           <Input
             value={inputText}
-            onChange={(_, value) => setInputText(value)}
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              setInputText(event.target.value)
+            }
           />
         </FormField>
         <FlexLayout wrap gap={3} style={{ paddingBlock: "1rem" }}>

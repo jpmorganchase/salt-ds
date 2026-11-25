@@ -51,6 +51,9 @@ export interface A11yValueProps
   renderHelperText?: boolean;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `FormField` from `@salt-ds/core` instead.
+ */
 export interface FormFieldLegacyProps
   extends HTMLAttributes<HTMLDivElement>,
     A11yValueProps {
@@ -190,6 +193,9 @@ export const useFormFieldLegacy = ({
 
 const withBaseName = makePrefixer(classBase);
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `FormField` from `@salt-ds/core` instead.
+ */
 export const FormFieldLegacy = forwardRef(function FormFieldLegacy(
   {
     ActivationIndicatorComponent = FormActivationIndicator,

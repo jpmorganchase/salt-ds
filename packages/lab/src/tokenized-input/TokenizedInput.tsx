@@ -6,13 +6,22 @@ import {
 } from "./TokenizedInputBase";
 import { useTokenizedInput } from "./useTokenizedInput";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ */
 export type StringToItem<Item> = (
   selectedItems: Array<Item>,
   value: string,
 ) => Item | null | undefined;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ */
 export type ChangeHandler<Item> = (selectedItems: Item[] | undefined) => void;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ */
 export interface TokenizedInputProps<Item>
   extends Omit<
     TokenizedInputBaseProps<Item>,
@@ -35,6 +44,9 @@ export interface TokenizedInputProps<Item>
   tooltipPlacement?: UseTooltipProps["placement"];
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ */
 export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
   props: TokenizedInputProps<Item>,
   ref: ForwardedRef<HTMLDivElement>,

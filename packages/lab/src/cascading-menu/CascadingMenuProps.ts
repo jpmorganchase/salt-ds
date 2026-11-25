@@ -10,11 +10,17 @@ import type {
 import type { ItemToStringFunction } from "../list-deprecated";
 import type { CascadingMenuListProps } from "./CascadingMenuList";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Menu` from `@salt-ds/core` instead.
+ */
 export interface ScreenBounds {
   clientHeight: number;
   clientWidth: number;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Menu` from `@salt-ds/core` instead.
+ */
 export interface MenuDescriptor {
   id?: string;
   menuItems?: MenuDescriptor[];
@@ -25,6 +31,9 @@ export interface MenuDescriptor {
   icon?: ComponentType<IconProps>;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Menu` from `@salt-ds/core` instead.
+ */
 export interface CascadingMenuProps extends HTMLAttributes<HTMLElement> {
   /**
    * Cascading Menu reference element.

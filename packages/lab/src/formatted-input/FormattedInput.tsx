@@ -15,8 +15,14 @@ import {
   type InputWithMaskProps,
 } from "./internal/InputWithMask";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [formatted input pattern](https://www.saltdesignsystem.com/salt/patterns/formatted-input) instead.
+ */
 export type MaskFunction = (value: string | undefined) => boolean;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [formatted input pattern](https://www.saltdesignsystem.com/salt/patterns/formatted-input) instead.
+ */
 export interface RifmOptions {
   format?: (str: string) => string;
   replace?: (str: string) => string;
@@ -25,6 +31,9 @@ export interface RifmOptions {
   accept?: RegExp;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [formatted input pattern](https://www.saltdesignsystem.com/salt/patterns/formatted-input) instead.
+ */
 export interface FormattedInputProps extends Omit<InputProps, "onChange"> {
   mask?: string;
   onChange?: (value: string) => void;
@@ -36,6 +45,9 @@ export interface FormattedInputProps extends Omit<InputProps, "onChange"> {
 const defaultFormatter = (string: string): string => string;
 const defaultRifmOptions: RifmOptions = {};
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [formatted input pattern](https://www.saltdesignsystem.com/salt/patterns/formatted-input) instead.
+ */
 export const FormattedInput = forwardRef<HTMLInputElement, FormattedInputProps>(
   function FormattedInput(
     {

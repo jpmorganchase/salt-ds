@@ -23,6 +23,9 @@ const baseName = "saltSearchInput";
 
 //TODO formfield integration
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [search pattern](https://www.saltdesignsystem.com/salt/patterns/search) instead.
+ */
 export interface SearchInputProps extends Omit<InputProps, "onSubmit"> {
   /**
    * Override "search" icon.
@@ -44,6 +47,9 @@ export interface SearchInputProps extends Omit<InputProps, "onSubmit"> {
   onSubmit?: (value: InputProps["value"]) => void;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [search pattern](https://www.saltdesignsystem.com/salt/patterns/search) instead.
+ */
 export const SearchInput = forwardRef<HTMLInputElement, SearchInputProps>(
   function SearchInput(
     {

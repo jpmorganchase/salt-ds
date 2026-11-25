@@ -6,6 +6,9 @@ import type { ValueComponentProps } from "./types";
 
 const withBaseName = makePrefixer("saltContactMetadataItem");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export interface ContactMetadataItemProps
   extends HTMLAttributes<HTMLDivElement> {
   label?: string;
@@ -14,6 +17,9 @@ export interface ContactMetadataItemProps
   ValueComponent?: ComponentType<ValueComponentProps>;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export const ContactMetadataItem = forwardRef<
   HTMLDivElement,
   ContactMetadataItemProps

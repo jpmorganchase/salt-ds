@@ -12,6 +12,9 @@ import { OverflowPanel } from "./overflow-panel/OverflowPanel";
 import tooltrayCss from "./Tooltray.css";
 import type { TooltrayProps } from "./TooltrayProps";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Tooltray` from `@salt-ds/core` instead.
+ */
 export const Tooltray = (props: TooltrayProps) => {
   const {
     "aria-label": ariaLabel,

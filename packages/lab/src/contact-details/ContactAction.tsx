@@ -7,6 +7,9 @@ import {
 import type { IconProps } from "@salt-ds/icons";
 import { type ComponentType, forwardRef } from "react";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export type ContactActionProps = ButtonProps & {
   accessibleText?: string;
   tooltipProps?: TooltipProps;
@@ -21,6 +24,9 @@ export type ContactActionProps = ButtonProps & {
       }
   );
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export const ContactAction = forwardRef<HTMLButtonElement, ContactActionProps>(
   function ContactAction(props, ref) {
     const { label, icon, accessibleText, tooltipProps, ...restProps } = props;

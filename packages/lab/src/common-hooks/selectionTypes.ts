@@ -12,6 +12,9 @@ export type MultiSelectionStrategy =
   | "multiple"
   | "extended"
   | "extended-multi-range";
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export type SelectionStrategy =
   // | SelectionDisallowed
   SingleSelectionStrategy | MultiSelectionStrategy;
@@ -21,11 +24,17 @@ export type selectedType<
   Selection extends SelectionStrategy,
 > = Selection extends MultiSelectionStrategy ? Item[] : Item | null;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export type SelectHandler<Item = string> = (
   event: SyntheticEvent,
   selectedItem: Item,
 ) => void;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export type SelectionChangeHandler<
   Item = string,
   Selection extends SelectionStrategy = "default",

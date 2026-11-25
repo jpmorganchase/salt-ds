@@ -22,6 +22,9 @@ import { getCursorPosition } from "./internal/getCursorPosition";
 import type { TokenizedInputProps } from "./TokenizedInput";
 import type { TokenizedInputBaseProps } from "./TokenizedInputBase";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ */
 export interface TokenizedInputState<Item> {
   activeIndices: Array<number>;
   expanded: boolean | undefined;
@@ -31,6 +34,9 @@ export interface TokenizedInputState<Item> {
   value: string | undefined;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ */
 export interface TokenizedInputHelpers<Item> {
   cancelBlur: () => void;
   setFocused: (expanded: boolean) => void;
@@ -82,6 +88,9 @@ type useTokenizedInputResult<Item> = {
   inputProps: Omit<TokenizedInputBaseProps<Item>, "helpers">;
 };
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ */
 export function useTokenizedInput<Item>(
   props: TokenizedInputProps<Item>,
 ): useTokenizedInputResult<Item> {

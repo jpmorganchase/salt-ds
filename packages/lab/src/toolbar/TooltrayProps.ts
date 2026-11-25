@@ -5,6 +5,9 @@ import type { OrientationShape, ToolbarAlignmentProps } from "./ToolbarProps";
 type collapsibleType = "dynamic" | "instant";
 type booleanAttribute = "true" | "false";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Toolbar` from `@salt-ds/core` instead.
+ */
 export interface TooltrayProps
   extends ToolbarAlignmentProps,
     HTMLAttributes<HTMLDivElement> {

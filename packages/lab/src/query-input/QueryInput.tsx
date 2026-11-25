@@ -10,6 +10,9 @@ import { type BooleanOperator, useQueryInput } from "./useQueryInput";
 
 const withBaseName = makePrefixer("saltQueryInput");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [search pattern](https://www.saltdesignsystem.com/salt/patterns/search) instead.
+ */
 export interface QueryInputProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onChange"> {
   disabled?: boolean;
@@ -25,6 +28,9 @@ export interface QueryInputProps
   defaultBooleanOperator?: BooleanOperator;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [search pattern](https://www.saltdesignsystem.com/salt/patterns/search) instead.
+ */
 export const QueryInput = forwardRef<HTMLDivElement, QueryInputProps>(
   function QueryInput(props, externalRef) {
     const {

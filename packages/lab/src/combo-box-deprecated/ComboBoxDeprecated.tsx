@@ -47,6 +47,9 @@ const validateProps = ({
   }
 };
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ComboBox` from `@salt-ds/core` instead.
+ */
 export type ComboBoxDeprecatedProps = Omit<
   DefaultComboBoxProps<any> | MultiSelectComboBoxProps<any>,
   "rootRef"
@@ -55,6 +58,9 @@ export type ComboBoxDeprecatedProps = Omit<
   delimiter?: string | string[];
 };
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ComboBox` from `@salt-ds/core` instead.
+ */
 export const ComboBoxDeprecated = forwardRef<
   HTMLDivElement,
   ComboBoxDeprecatedProps

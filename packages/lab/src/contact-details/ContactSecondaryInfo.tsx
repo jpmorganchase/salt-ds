@@ -12,6 +12,9 @@ import type { ValueComponentProps } from "./types";
 
 const withBaseName = makePrefixer("saltContactSecondaryInfo");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export interface ContactSecondaryInfoProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "color"> {
   icon?: ComponentType<IconProps>;
@@ -19,6 +22,9 @@ export interface ContactSecondaryInfoProps
   ValueComponent?: ComponentType<ValueComponentProps>;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export const ContactSecondaryInfo = forwardRef<
   HTMLDivElement,
   ContactSecondaryInfoProps

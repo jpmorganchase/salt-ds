@@ -6,10 +6,16 @@ import { type ComponentPropsWithoutRef, forwardRef } from "react";
 
 import logoSeparatorCss from "./LogoSeparator.css";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [app header pattern](https://www.saltdesignsystem.com/salt/patterns/app-header) instead.
+ */
 export type LogoSeparatorProps = ComponentPropsWithoutRef<"span">;
 
 const withBaseName = makePrefixer("saltLogoSeparator");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [app header pattern](https://www.saltdesignsystem.com/salt/patterns/app-header) instead.
+ */
 export const LogoSeparator = forwardRef<HTMLImageElement, LogoSeparatorProps>(
   function LogoSeparator(props, ref) {
     const { className, ...rest } = props;

@@ -30,6 +30,9 @@ const popNextOverflowedItem = (items: OverflowItem[]) => {
   return null;
 };
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const useOverflow = ({
   collectionHook: { dispatch },
   id: idProp,

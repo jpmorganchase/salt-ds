@@ -5,6 +5,9 @@ import {
   type FavoriteToggleWithTooltipProps,
 } from "./internal";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export interface ContactFavoriteToggleProps
   extends FavoriteToggleWithTooltipProps {
   isFavorite?: boolean;
@@ -13,6 +16,9 @@ export interface ContactFavoriteToggleProps
   tooltipProps?: TooltipProps;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export const ContactFavoriteToggle = forwardRef<
   HTMLSpanElement,
   ContactFavoriteToggleProps

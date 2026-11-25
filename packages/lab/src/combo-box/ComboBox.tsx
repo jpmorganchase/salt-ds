@@ -21,6 +21,9 @@ import {
 import { List, type ListProps } from "../list";
 import { useCombobox } from "./useCombobox";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ComboBox` from `@salt-ds/core` instead.
+ */
 export interface ComboBoxProps<
   Item = string,
   Selection extends SelectionStrategy = "default",
@@ -49,6 +52,9 @@ export interface ComboBoxProps<
   value?: string;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ComboBox` from `@salt-ds/core` instead.
+ */
 export const ComboBox = forwardRef(function Combobox<
   Item = string,
   Selection extends SelectionStrategy = "default",

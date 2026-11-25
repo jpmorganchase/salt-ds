@@ -35,6 +35,9 @@ export interface IndexedListItemProps<Item> extends ListItemProps<Item> {
   itemHeight?: number | string;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ */
 export function useListItem<Item>(
   props: IndexedListItemProps<Item>,
 ): UseItemHookReturnType<Item> {

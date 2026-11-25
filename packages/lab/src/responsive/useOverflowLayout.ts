@@ -24,6 +24,9 @@ const MONITORED_DIMENSIONS: { [key: string]: string[] } = {
 type overflowUpdate = (item1: OverflowItem, item2: OverflowItem) => void;
 
 // we need id, just to be able to assign id to overflowIndicator in useOverflow
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const useOverflowLayout = ({
   collectionHook,
   id,

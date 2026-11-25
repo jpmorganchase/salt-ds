@@ -45,13 +45,25 @@ import type {
   TokenizedInputState,
 } from "./useTokenizedInput";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ */
 export type RemoveItemHandler = (itemIndex: number) => void;
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ */
 export type ItemToString<Item> = (item: Item) => string;
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ */
 export type ExpandButtonProps = Pick<
   ButtonProps,
   "role" | "aria-roledescription" | "aria-describedby"
 > & { accessibleText?: string };
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ */
 export interface TokenizedInputBaseProps<Item>
   extends Partial<TokenizedInputState<Item>>,
     Omit<
@@ -98,6 +110,9 @@ function hasHelpers<Item>(helpers: TokenizedInputHelpers<Item>) {
   return helpers != null;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ */
 export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
   props: TokenizedInputBaseProps<Item>,
   ref: ForwardedRef<HTMLDivElement>,

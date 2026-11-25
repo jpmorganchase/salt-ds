@@ -5,11 +5,17 @@ import { useContactDetailsContext } from "./internal";
 
 const withBaseName = makePrefixer("saltContactMetadata");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export interface ContactMetadataProps extends HTMLAttributes<HTMLDivElement> {
   collapsible?: boolean;
   collapseButtonId?: string;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export const ContactMetadata = forwardRef<HTMLDivElement, ContactMetadataProps>(
   function ContactMetadata(props, ref) {
     const { collapsible, children, collapseButtonId, className, ...restProps } =

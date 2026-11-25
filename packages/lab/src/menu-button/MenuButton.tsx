@@ -6,6 +6,9 @@ import { CascadingMenu, type CascadingMenuProps } from "../cascading-menu";
 import menuButtonCss from "./MenuButton.css";
 import { MenuButtonTrigger } from "./MenuButtonTrigger";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [menu button pattern](https://www.saltdesignsystem.com/salt/patterns/menu-button) instead.
+ */
 export interface MenuButtonProps extends ButtonProps {
   CascadingMenuProps: CascadingMenuProps;
   children: ReactNode;
@@ -13,6 +16,9 @@ export interface MenuButtonProps extends ButtonProps {
   hideCaret?: boolean;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [menu button pattern](https://www.saltdesignsystem.com/salt/patterns/menu-button) instead.
+ */
 export const MenuButton = forwardRef<HTMLButtonElement, MenuButtonProps>(
   function MenuButton(
     { variant = "secondary", CascadingMenuProps = {}, children, ...restProps },

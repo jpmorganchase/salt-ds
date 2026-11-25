@@ -8,11 +8,17 @@ import highligherCss from "./Highlighter.css";
 
 const withBaseName = makePrefixer("saltHighlighter");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ */
 export interface HighlighterProps {
   matchPattern?: RegExp | string;
   text?: string;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ */
 export const Highlighter = (
   props: HighlighterProps,
 ): ReactElement<HighlighterProps> => {

@@ -17,8 +17,14 @@ import type { ValueSelectorProps } from "./internal/ValueSelector";
 import type { QueryInputProps } from "./QueryInput";
 import type { QueryInputCategory, QueryInputItem } from "./queryInputTypes";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [search pattern](https://www.saltdesignsystem.com/salt/patterns/search) instead.
+ */
 export type BooleanOperator = "or" | "and";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [search pattern](https://www.saltdesignsystem.com/salt/patterns/search) instead.
+ */
 export interface UseQueryInputResult {
   queryInputProps: {
     onFocus: FocusEventHandler<HTMLDivElement>;
@@ -29,6 +35,9 @@ export interface UseQueryInputResult {
   valueSelectorProps: ValueSelectorProps;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [search pattern](https://www.saltdesignsystem.com/salt/patterns/search) instead.
+ */
 export function useQueryInput(
   props: QueryInputProps,
   forwardedRef: ForwardedRef<HTMLDivElement>,

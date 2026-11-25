@@ -1,13 +1,25 @@
-import { FlexLayout, StackLayout, Text } from "@salt-ds/core";
+import {
+  FlexLayout,
+  FormField,
+  FormFieldLabel,
+  Input,
+  StackLayout,
+  Text,
+} from "@salt-ds/core";
 import {
   AddDocumentIcon,
   AddDocumentSolidIcon,
   Icon,
   type IconProps,
 } from "@salt-ds/icons";
-import { FormField, Input } from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { createElement, type ElementType, useMemo, useState } from "react";
+import {
+  type ChangeEvent,
+  createElement,
+  type ElementType,
+  useMemo,
+  useState,
+} from "react";
 import { allIcons } from "./icon.all";
 
 const formatIconName = (icon: string) => {
@@ -113,11 +125,14 @@ export const AllIconsWithSearch: StoryFn<typeof Icon> = () => {
 
   return (
     <StackLayout separators>
-      <FormField
-        label={"search icon"}
-        style={{ marginBlock: "1rem", maxWidth: "300px" }}
-      >
-        <Input value={inputText} onChange={(_, value) => setInputText(value)} />
+      <FormField style={{ marginBlock: "1rem", maxWidth: "300px" }}>
+        <FormFieldLabel>Search icon</FormFieldLabel>
+        <Input
+          value={inputText}
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            setInputText(event.target.value)
+          }
+        />
       </FormField>
       <FlexLayout wrap gap={3} style={{ paddingBlock: "1rem" }}>
         {allIconNames

@@ -26,6 +26,9 @@ const defaultEmptyMessage = "No data to display";
 
 const withBaseName = makePrefixer("saltList");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ */
 export const VirtualizedList = forwardRef(function List<
   Item,
   Selection extends SelectionStrategy = "default",

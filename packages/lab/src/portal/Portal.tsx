@@ -16,6 +16,9 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `createPortal` from `react-dom` instead.
+ */
 export interface PortalProps {
   /**
    * The children to render into the `container`.
@@ -49,6 +52,7 @@ const DEFAULT_ID = "portal-root";
 /**
  * Portals provide a first-class way to render children into a DOM node
  * that exists outside the DOM hierarchy of the parent component.
+ * @deprecated since 1.0.0-alpha.110. Use `createPortal` from `react-dom` instead.
  */
 export const Portal = forwardRef<HTMLElement, PortalProps>(function Portal(
   {

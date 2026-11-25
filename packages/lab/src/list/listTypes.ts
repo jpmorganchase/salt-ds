@@ -26,14 +26,23 @@ import type {
   ViewportTrackingResult,
 } from "../common-hooks";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ */
 export type ComponentType<T = unknown> = (
   props: PropsWithChildren<T>,
 ) => ReactElement;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ */
 export type ListItemType<T = unknown> = ComponentType<
   ListItemProps<T> & { ref?: Ref<HTMLDivElement> }
 >;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ */
 export interface ListItemProps<T = unknown>
   extends HTMLAttributes<HTMLDivElement> {
   children?: ReactNode;
@@ -50,12 +59,18 @@ export interface ListItemProps<T = unknown>
   selected?: boolean;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ */
 export interface ListScrollHandles<Item> {
   scrollToIndex: (itemIndex: number) => void;
   scrollToItem: (item: Item) => void;
   scrollTo: (scrollOffset: number) => void;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ */
 export interface ListProps<
   Item = string,
   Selection extends SelectionStrategy = "default",
@@ -194,6 +209,9 @@ export interface ListProps<
   width?: number | string;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ */
 export interface ListControlProps {
   "aria-activedescendant"?: string;
   onBlur: FocusEventHandler;
@@ -203,6 +221,9 @@ export interface ListControlProps {
   onMouseLeave: MouseEventHandler;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ */
 export interface ListHookProps<Item, Selection extends SelectionStrategy>
   extends Omit<
     SelectionProps<CollectionItem<Item>, Selection>,
@@ -232,6 +253,9 @@ export interface ListHookProps<Item, Selection extends SelectionStrategy>
   tabToSelect?: boolean;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ */
 export interface ListHookResult<Item, Selection extends SelectionStrategy>
   extends Partial<ViewportTrackingResult<Item>>,
     Pick<SelectionHookResult<Item, Selection>, "selected" | "setSelected">,

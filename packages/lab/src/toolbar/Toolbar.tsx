@@ -27,6 +27,7 @@ const classBase = "saltToolbar";
 
 /**
  * The core Toolbar implementation, without the external wrapper provided by Toolbar.js
+ * @deprecated since 1.0.0-alpha.110. Use `Toolbar` from `@salt-ds/core` instead.
  */
 export const Toolbar = forwardRef<HTMLDivElement, ToolbarProps>(
   function Toolbar(props, ref) {

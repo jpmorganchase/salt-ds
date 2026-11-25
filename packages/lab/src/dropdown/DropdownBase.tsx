@@ -25,6 +25,9 @@ import { useDropdownBase } from "./useDropdownBase";
 // Any component may be passed as our trigger or popup component.
 // Define the common props that we will act on, if present,
 // so we can type them.
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Dropdown` from `@salt-ds/core` instead.
+ */
 export type MaybeChildProps = {
   className?: string;
   id?: string;
@@ -34,6 +37,9 @@ export type MaybeChildProps = {
 
 const withBaseName = makePrefixer("saltDropdownBase");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Dropdown` from `@salt-ds/core` instead.
+ */
 export const DropdownBase = forwardRef<HTMLDivElement, DropdownBaseProps>(
   function DropdownBase(
     {

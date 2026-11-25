@@ -49,6 +49,9 @@ export interface FormLabelProps
   tooltipText?: string;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `FormFieldLabel` from `@salt-ds/core` instead.
+ */
 export const FormLabel = ({
   label,
   NecessityIndicator = DefaultNecessityIndicator,

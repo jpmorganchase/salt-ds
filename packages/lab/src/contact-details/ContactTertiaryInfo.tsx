@@ -11,12 +11,18 @@ import { useContactDetailsContext } from "./internal";
 
 const withBaseName = makePrefixer("saltContactTertiaryInfo");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export interface ContactTertiaryInfoProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "color"> {
   icon?: ComponentType<IconProps>;
   text: string;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export const ContactTertiaryInfo = forwardRef<
   HTMLDivElement,
   ContactTertiaryInfoProps

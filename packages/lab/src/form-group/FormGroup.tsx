@@ -5,6 +5,9 @@ import { forwardRef, type HTMLAttributes } from "react";
 
 import formGroupCss from "./FormGroup.css";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `StackLayout` from `@salt-ds/core` instead.
+ */
 export interface FormGroupProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Display group of elements in a compact row.
@@ -14,6 +17,9 @@ export interface FormGroupProps extends HTMLAttributes<HTMLDivElement> {
 
 const baseName = "saltFormGroup";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `StackLayout` from `@salt-ds/core` instead.
+ */
 export const FormGroup = forwardRef<HTMLDivElement, FormGroupProps>(
   function FormGroup({ className, row, ...other }, ref) {
     const targetWindow = useWindow();

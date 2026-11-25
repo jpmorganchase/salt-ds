@@ -6,6 +6,9 @@ import type {
   SetStateAction,
 } from "react";
 import type { useA11yValueValue } from "../form-field-legacy";
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `FormField` from `@salt-ds/core` instead.
+ */
 export interface FormFieldLegacyContextValue {
   inFormField: true;
   ref: RefObject<HTMLDivElement | null>;
@@ -16,6 +19,9 @@ export interface FormFieldLegacyContextValue {
   onFocus: FocusEventHandler<HTMLElement>;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `FormField` from `@salt-ds/core` instead.
+ */
 export const FormFieldLegacyContext = createContext(
   "FormFieldContext",
   {} as FormFieldLegacyContextValue,

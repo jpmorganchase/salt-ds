@@ -11,6 +11,9 @@ import {
   useState,
 } from "react";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export function useOverflowDetection<Element extends HTMLElement>(
   dependencies: DependencyList = [],
 ): [Ref<Element>, boolean] {

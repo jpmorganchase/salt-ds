@@ -13,6 +13,9 @@ import { useDescendant } from "./internal/useDescendant";
 
 import orderedButtonCss from "./OrderedButton.css";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [button bar pattern](https://www.saltdesignsystem.com/salt/patterns/button-bar) instead.
+ */
 export interface OrderedButtonProps extends ButtonProps {
   /**
    * Aligns the button (and any buttons before/after) it on the left/right
@@ -45,6 +48,9 @@ export interface OrderedButtonProps extends ButtonProps {
 
 const withBasename = makePrefixer("saltOrderedButton");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [button bar pattern](https://www.saltdesignsystem.com/salt/patterns/button-bar) instead.
+ */
 export const OrderedButton = forwardRef<HTMLButtonElement, OrderedButtonProps>(
   function OrderedButton(
     {
