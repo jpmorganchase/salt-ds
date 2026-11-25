@@ -560,7 +560,7 @@
   },
   {
     "iconName": "filter-clear",
-    "synonym": ["funnel", "data", "x"],
+    "synonym": ["remove", "cancel", "reset", "x", "funnel", "unfilter", "data"],
     "category": "organize"
   },
   {
@@ -1431,11 +1431,14 @@
     "iconName": "tag-clear",
     "synonym": [
       "remove",
-      "x label",
+      "cancel",
+      "reset",
+      "x",
+      "label",
+      "unfilter",
       "metadata",
-      "filter",
       "category",
-      "cancel"
+      "untag"
     ],
     "category": "actions"
   },
@@ -2306,5 +2309,25 @@
     "iconName": "rotate-left",
     "synonym": ["turn", "arrow", "organize", "spin", "counterclockwise"],
     "category": "organize"
+  },
+  {
+    "iconName": "pin-clear",
+    "synonym": ["remove", "cancel", "reset", "push pin", "tack", "x", "unmark"],
+    "category": "actions"
+  },
+  {
+    "iconName": "function",
+    "synonym": [
+      "calculate",
+      "fx",
+      "calculation",
+      "equation",
+      "expression",
+      "formula",
+      "rule",
+      "math",
+      "maths"
+    ],
+    "category": "data"
   }
 ]
