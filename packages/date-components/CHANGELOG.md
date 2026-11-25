@@ -1,5 +1,60 @@
 # @salt-ds/date-components
 
+## 1.1.5
+
+### Patch Changes
+
+- 2fa23b6: Added descriptions to props that had none, such as the date picker panels' `onSelectionChange` and `CalendarProps`, `LazyCountrySymbol`'s `code`, `WindowProvider`'s `window`, the `children` of providers such as `CSPProvider` and `StyleInjectionProvider`, and the `ref` of components such as `ComboBox`, `Dropdown`, `ListBox`, `Text` and the layout components.
+- 2fa23b6: Tidied the formatting of prop descriptions: every description starts with a capital letter and ends with a period, uses American spelling and the multi-line `/** */` layout, and `@default` values are written as they are in code. Removed `@default false` and `@default undefined`, which describe how an unset prop already behaves.
+- 2fa23b6: Reworded prop descriptions to follow a consistent pattern: boolean props start with "If `true`, …", callbacks with "Callback fired when …" and props objects with "Props applied to …". Defaults that were only in the description are now `@default` tags, so they show in editors and the props tables. Defaults that come from somewhere else are described in words, such as `SaltProvider`'s theme props inside another `SaltProvider`, `ToggleButton`'s `appearance` and `sentiment` inside a `ToggleButtonGroup`, and `Button`'s `appearance` and `sentiment` when the deprecated `variant` is set.
+
+  Corrected descriptions that didn't match the components:
+
+  - `CheckboxGroup`'s `wrap` described the opposite of what it does.
+  - `ListBox`'s `bordered` adds a border when `true`, rather than removing one when `false`.
+  - `GridLayout`'s and `BorderLayout`'s `columnGap` and `rowGap` default to the value of `gap`, not to fixed values.
+  - `FlexItem`'s `align` follows the parent's alignment when not set, rather than defaulting to `"start"`.
+  - `RadioButton`'s `checked` is the checked state of the radio button, not the group's default.
+  - `Slider`'s and `RangeSlider`'s `constrainLabelPosition` keeps the labels of the first and last marks within the slider.
+  - `DatePickerRangePanel`'s `EndCalendarProps` are applied to the end `Calendar`.
+  - The `onClick` passed to `useSidePanel`'s trigger props no longer says that calling `preventDefault` stops the toggle, which the code doesn't do.
+  - `Avatar`'s default `nameToInitials` uses the first letters of the first two words of `name`, not of every word.
+  - `Menu`'s `placement` also defaults to `"right-start"` when the menu is positioned with `getVirtualElement`.
+  - `Slider`'s and `RangeSlider`'s `format` formats the tooltip, `aria-valuetext` and the minimum and maximum values that screen readers announce, not the `minLabel` and `maxLabel`. `accessibleMinText` and `accessibleMaxText` replace "minimum" and "maximum" in what screen readers announce, and when they're set, the value after them isn't formatted. `stepMultiplier` is the number of steps that Page Up and Page Down move by. `showTooltip` also shows the tooltip while the thumb is dragged or focused with the keyboard. The event passed to `onChange` and `onChangeEnd` is `undefined` when the value is changed from the keyboard.
+  - `useFloatingUI`'s `middleware` replaces the default middleware rather than updating it.
+  - `DatePicker`'s `minDate` and `maxDate` default to the `LocalizationProvider`'s, which are January 1, 1900 and December 31, 2099 unless set, not 1900 and 2100. Its `createAnnouncement` uses the default announcements when it's `null`, rather than turning them off.
+  - `DateInputSingle`'s and `DateInputRange`'s `onDateChange` passes `null` whenever the input is empty, and their `timezone` is derived from `date` or `defaultDate`. `DateInputRange`'s `onChange` doesn't receive a date.
+  - The `focusedDate` passed to `onFocusedDateChange` on `DatePickerSingleGridPanel` and `DatePickerRangeGridPanel` is the new focused date, not the hovered date.
+  - `DatePickerOverlayProvider`'s `disabled` only stops the overlay from opening on click.
+
+- e1e38ea: Packages are now built with tsdown and their type declarations are generated with TypeScript 7. Entry points, export maps and existing deep import paths are unchanged. The compiled output now includes shared compiler helper modules under `_virtual/`.
+- Updated dependencies [e1d9036]
+- Updated dependencies [00bb4ab]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [40bb637]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [ff895b8]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [ea6b309]
+- Updated dependencies [fcea857]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [23eeb4e]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [fff2ebb]
+- Updated dependencies [520e189]
+- Updated dependencies [42b9e94]
+- Updated dependencies [d62c57e]
+- Updated dependencies [e1e38ea]
+  - @salt-ds/core@1.76.0
+  - @salt-ds/icons@1.20.0
+  - @salt-ds/date-adapters@1.0.3
+  - @salt-ds/styles@0.4.3
+  - @salt-ds/window@0.1.3
+
 ## 1.1.4
 
 ### Patch Changes

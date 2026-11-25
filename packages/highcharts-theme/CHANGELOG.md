@@ -1,5 +1,38 @@
 # @salt-ds/highcharts-theme
 
+## 1.0.8
+
+### Patch Changes
+
+- e1e38ea: Packages are now built with tsdown and their type declarations are generated with TypeScript 7. Entry points, export maps and existing deep import paths are unchanged. The compiled output now includes shared compiler helper modules under `_virtual/`.
+- Updated dependencies [520e189]
+- Updated dependencies [e1d9036]
+- Updated dependencies [00bb4ab]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [ff895b8]
+- Updated dependencies [ff895b8]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [ea6b309]
+- Updated dependencies [d44aefd]
+- Updated dependencies [ff895b8]
+- Updated dependencies [fcea857]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [2fa23b6]
+- Updated dependencies [fff2ebb]
+- Updated dependencies [520e189]
+- Updated dependencies [42b9e94]
+- Updated dependencies [ea6b309]
+- Updated dependencies [d62c57e]
+- Updated dependencies [e1e38ea]
+  - @salt-ds/theme@1.49.0
+  - @salt-ds/core@1.76.0
+  - @salt-ds/styles@0.4.3
+  - @salt-ds/window@0.1.3
+
 ## 1.0.7
 
 ### Patch Changes
