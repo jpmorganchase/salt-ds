@@ -1,4 +1,4 @@
-import { Step, type StepStatus } from "@salt-ds/core";
+import { Step } from "@salt-ds/core";
 import {
   CompactStep,
   CompactStepper,
@@ -13,27 +13,23 @@ import { renderWithSalt } from "~browser-test-utils/render";
 import * as compactStepperStories from "~stories/compact-stepper/compact-stepper.stories";
 
 const composedStories = composeStories(compactStepperStories);
-const { Default } = composedStories;
+const { Default, Progress, StageStatus } = composedStories;
 
-function getText() {
-  return page.getByRole("group").element().textContent?.replace(/\s+/g, " ");
+function getGroup(index = 0) {
+  return page.getByRole("group").nth(index).element();
 }
 
-function getBarWidth() {
-  return page
-    .getByRole("group")
-    .element()
-    .querySelector<HTMLElement>(".saltCompactStepper-bar")?.style.width;
+function getText(index = 0) {
+  return getGroup(index).textContent?.replace(/\s+/g, " ");
+}
+
+function getBarWidth(index = 0) {
+  return getGroup(index).querySelector<HTMLElement>(".saltCompactStepper-bar")
+    ?.style.width;
 }
 
 describe("GIVEN a CompactStepper", () => {
   checkAccessibility(composedStories);
-
-  it("THEN shows the position and label of the active step without reading its state", async () => {
-    await renderWithSalt(<Default />);
-
-    expect(getText()).toBe("Step 2 of 4: Payment details");
-  });
 
   it("THEN renders a group named by aria-label", async () => {
     await renderWithSalt(<Default aria-label="Account setup progress" />);
@@ -43,63 +39,48 @@ describe("GIVEN a CompactStepper", () => {
       .toHaveAccessibleName("Account setup progress");
   });
 
-  it.each<[CompactStepStage, StepStatus | undefined, string]>([
-    ["active", "error", "Step 2 of 3: Two, error"],
-    ["active", "warning", "Step 2 of 3: Two, warning"],
-    ["locked", undefined, "Step 2 of 3: Two, locked"],
-    ["locked", "error", "Step 2 of 3: Two, error"],
+  it.each([
+    [0, "Step 1 of 4: Personal details", "25%"],
+    [1, "Step 2 of 4: Payment details", "50%"],
+    [2, "Step 3 of 4: Review", "75%"],
+    [3, "Step 4 of 4: Confirmation", "100%"],
   ])(
-    "THEN reads the state WHEN the current step is %s with status %s",
-    async (stage, status, expected) => {
-      await renderWithSalt(
-        <CompactStepper>
-          <CompactStep label="One" stage="completed" />
-          <CompactStep label="Two" stage={stage} status={status} />
-          <CompactStep label="Three" />
-        </CompactStepper>,
-      );
+    "THEN shows the active step without reading its state and fills the bar up to it, in stepper %i",
+    async (index, text, width) => {
+      await renderWithSalt(<Progress />);
 
-      expect(getText()).toBe(expected);
+      expect(getText(index)).toBe(text);
+      expect(getBarWidth(index)).toBe(width);
     },
   );
 
-  it("THEN shows the first step as pending WHEN every step is pending", async () => {
-    await renderWithSalt(
-      <CompactStepper>
-        <CompactStep label="One" />
-        <CompactStep label="Two" />
-        <CompactStep label="Three" />
-      </CompactStepper>,
-    );
+  it.each([
+    [0, "Step 2 of 4: Payment details, error"],
+    [1, "Step 2 of 4: Payment details, warning"],
+    [2, "Step 2 of 4: Payment details, locked"],
+    [3, "Step 2 of 4: Payment details, error"],
+  ])(
+    "THEN reads the stage or status of the current step, in stepper %i",
+    async (index, text) => {
+      await renderWithSalt(<StageStatus />);
 
-    expect(getText()).toBe("Step 1 of 3: One, pending");
-    expect(getBarWidth()).toBe("0%");
-  });
+      expect(getText(index)).toBe(text);
+      expect(getBarWidth(index)).toBe("50%");
+    },
+  );
 
   it.each<[string, CompactStepStage[], string, string]>([
-    [
-      "the active step",
-      ["active", "pending", "pending", "pending"],
-      "Step 1 of 4: One",
-      "25%",
-    ],
-    [
-      "the locked step",
-      ["completed", "locked", "pending", "pending"],
-      "Step 2 of 4: Two, locked",
-      "50%",
-    ],
-    [
-      "the last active step",
-      ["completed", "completed", "completed", "active"],
-      "Step 4 of 4: Four",
-      "100%",
-    ],
     [
       "the first pending step WHEN no step is active or locked",
       ["completed", "pending", "pending", "pending"],
       "Step 2 of 4: Two, pending",
       "25%",
+    ],
+    [
+      "the first step WHEN every step is pending",
+      ["pending", "pending", "pending", "pending"],
+      "Step 1 of 4: One, pending",
+      "0%",
     ],
   ])("THEN shows %s as the current step", async (_, stages, text, width) => {
     const labels = ["One", "Two", "Three", "Four"];

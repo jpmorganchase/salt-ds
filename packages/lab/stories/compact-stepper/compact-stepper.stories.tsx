@@ -76,6 +76,12 @@ export const StageStatus: StoryFn<typeof CompactStepper> = (args) => (
       <CompactStep label="Review" />
       <CompactStep label="Confirmation" />
     </CompactStepper>
+    <CompactStepper {...args}>
+      <CompactStep label="Personal details" stage="completed" />
+      <CompactStep label="Payment details" stage="locked" status="error" />
+      <CompactStep label="Review" />
+      <CompactStep label="Confirmation" />
+    </CompactStepper>
   </StackLayout>
 );
 
