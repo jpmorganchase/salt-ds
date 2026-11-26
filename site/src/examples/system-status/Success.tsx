@@ -5,7 +5,9 @@ import type { ReactElement } from "react";
 export const Success = (): ReactElement => (
   <SystemStatus status="success">
     <SystemStatusContent>
-      <Text color="inherit">Your operation was completed successfully.</Text>
+      <Text color="inherit">
+        Scheduled maintenance is complete. All services are running normally.
+      </Text>
     </SystemStatusContent>
   </SystemStatus>
 );

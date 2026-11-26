@@ -7,9 +7,11 @@ export const WithTitle = (): ReactElement => (
     <SystemStatusContent>
       <StackLayout gap={0.5}>
         <Text color="inherit" fontWeight="bolder">
-          Connection interrupted
+          Service outage
         </Text>
-        <Text color="inherit">Please refresh the page.</Text>
+        <Text color="inherit">
+          Some services are unavailable. We're working to restore them.
+        </Text>
       </StackLayout>
     </SystemStatusContent>
   </SystemStatus>

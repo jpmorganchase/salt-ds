@@ -21,7 +21,7 @@ export const Announced = (): ReactElement => {
       {/* Always mounted so screen readers announce content added to it. */}
       <div role="status" style={{ width: "100%" }}>
         {open && (
-          <SystemStatus>
+          <SystemStatus status="warning">
             <SystemStatusContent>
               <Text color="inherit">
                 Scheduled maintenance is planned for Saturday from 08:00 to
