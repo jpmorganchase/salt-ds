@@ -5,7 +5,7 @@ import {
   MetricContent,
   MetricHeader,
   Tab,
-  Tooltray,
+  Tabstrip,
   useEventCallback,
 } from "@salt-ds/lab";
 import { createRef } from "react";
@@ -18,10 +18,8 @@ import {
   type MockInstance,
   vi,
 } from "vitest";
+import { page } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
-import { Dropdown as InternalDropdown } from "../../../dropdown";
-import { Tab as InternalTab } from "../../../tabs";
-import { Tooltray as InternalTooltray } from "../../../toolbar";
 
 describe("GIVEN deprecated lab exports", () => {
   let warnSpy: MockInstance<typeof console.warn>;
@@ -83,9 +81,24 @@ describe("GIVEN deprecated lab exports", () => {
     ]);
   });
 
-  it("doesn't wrap components that lab compares by type", () => {
-    expect(Dropdown).not.toBe(InternalDropdown);
-    expect(Tab).toBe(InternalTab);
-    expect(Tooltray).toBe(InternalTooltray);
+  // Tabstrip only passes selection to children whose type is Tab, so this
+  // fails if the Tab export is wrapped.
+  it("keeps components that lab compares by type working", async () => {
+    await renderWithSalt(
+      <Tabstrip>
+        <Tab label="Home" />
+        <Tab label="Transactions" />
+      </Tabstrip>,
+    );
+
+    await expect
+      .element(page.getByRole("tab", { name: /Home/ }))
+      .toHaveAttribute("aria-selected", "true");
+    await expect
+      .element(page.getByRole("tab", { name: /Transactions/ }))
+      .toHaveAttribute("aria-selected", "false");
+    expect(deprecationWarnings()).toEqual([
+      "Tabstrip from @salt-ds/lab is deprecated and will be removed in a future release. Use Tabs from @salt-ds/core instead.",
+    ]);
   });
 });
