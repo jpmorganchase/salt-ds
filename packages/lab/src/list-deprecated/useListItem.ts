@@ -36,7 +36,7 @@ export interface IndexedListItemProps<Item> extends ListItemProps<Item> {
 }
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export function useListItem<Item>(
   props: IndexedListItemProps<Item>,

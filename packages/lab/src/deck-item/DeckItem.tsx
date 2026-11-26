@@ -10,7 +10,7 @@ import deckItemCss from "./DeckItem.css";
 const withBaseName = makePrefixer("saltDeckItem");
 
 /**
- * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ * @deprecated since 1.0.0-alpha.110. Consider `Carousel` from `@salt-ds/embla-carousel` instead.
  */
 export interface DeckItemProps extends HTMLAttributes<HTMLDivElement> {
   activeIndex?: number;
@@ -20,7 +20,7 @@ export interface DeckItemProps extends HTMLAttributes<HTMLDivElement> {
 }
 
 /**
- * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ * @deprecated since 1.0.0-alpha.110. Consider `Carousel` from `@salt-ds/embla-carousel` instead.
  */
 export const DeckItem = forwardRef<HTMLDivElement, DeckItemProps>(
   function DeckItem(

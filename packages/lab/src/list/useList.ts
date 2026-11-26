@@ -27,7 +27,7 @@ import type {
 } from "./listTypes";
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export const useList = <Item, Selection extends SelectionStrategy = "default">({
   collapsibleHeaders,

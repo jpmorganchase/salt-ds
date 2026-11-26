@@ -348,23 +348,29 @@ export const ContentStatus = deprecatedComponent(
 );
 
 /**
- * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ * @deprecated since 1.0.0-alpha.110. Consider `Carousel` from `@salt-ds/embla-carousel` instead.
  */
 export const DeckItem = deprecatedComponent(
   _DeckItem,
   "DeckItem",
   "@salt-ds/lab/DeckItem",
-  message("DeckItem"),
+  message(
+    "DeckItem",
+    "Consider Carousel from @salt-ds/embla-carousel instead.",
+  ),
 );
 
 /**
- * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ * @deprecated since 1.0.0-alpha.110. Consider `Carousel` from `@salt-ds/embla-carousel` instead.
  */
 export const DeckLayout = deprecatedComponent(
   _DeckLayout,
   "DeckLayout",
   "@salt-ds/lab/DeckLayout",
-  message("DeckLayout"),
+  message(
+    "DeckLayout",
+    "Consider Carousel from @salt-ds/embla-carousel instead.",
+  ),
 );
 
 /**
@@ -471,16 +477,13 @@ export const FormLabel = deprecatedComponent(
 );
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export const Highlighter = deprecatedComponent(
   _Highlighter,
   "Highlighter",
   "@salt-ds/lab/Highlighter",
-  message(
-    "Highlighter",
-    "Use ListBox from @salt-ds/core, or StaticList, instead.",
-  ),
+  message("Highlighter", "Use ListBox from @salt-ds/core instead."),
 );
 
 /**
@@ -507,117 +510,93 @@ export const LayerLayout = deprecatedComponent(
 );
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export const List = deprecatedComponent(
   _List,
   "List",
   "@salt-ds/lab/List",
-  message("List", "Use ListBox from @salt-ds/core, or StaticList, instead."),
+  message("List", "Use ListBox from @salt-ds/core instead."),
 );
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export const ListItem = deprecatedComponent(
   _ListItem,
   "ListItem",
   "@salt-ds/lab/ListItem",
-  message(
-    "ListItem",
-    "Use ListBox from @salt-ds/core, or StaticList, instead.",
-  ),
+  message("ListItem", "Use ListBox from @salt-ds/core instead."),
 );
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export const ListItemBaseDeprecated = deprecatedComponent(
   _ListItemBaseDeprecated,
   "ListItemBaseDeprecated",
   "@salt-ds/lab/ListItemBaseDeprecated",
-  message(
-    "ListItemBaseDeprecated",
-    "Use ListBox from @salt-ds/core, or StaticList, instead.",
-  ),
+  message("ListItemBaseDeprecated", "Use ListBox from @salt-ds/core instead."),
 );
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export const ListItemNext = deprecatedComponent(
   _ListItemNext,
   "ListItemNext",
   "@salt-ds/lab/ListItemNext",
-  message(
-    "ListItemNext",
-    "Use ListBox from @salt-ds/core, or StaticList, instead.",
-  ),
+  message("ListItemNext", "Use ListBox from @salt-ds/core instead."),
 );
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export const ListItemProxy = deprecatedComponent(
   _ListItemProxy,
   "ListItemProxy",
   "@salt-ds/lab/ListItemProxy",
-  message(
-    "ListItemProxy",
-    "Use ListBox from @salt-ds/core, or StaticList, instead.",
-  ),
+  message("ListItemProxy", "Use ListBox from @salt-ds/core instead."),
 );
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export const ListNext = deprecatedComponent(
   _ListNext,
   "ListNext",
   "@salt-ds/lab/ListNext",
-  message(
-    "ListNext",
-    "Use ListBox from @salt-ds/core, or StaticList, instead.",
-  ),
+  message("ListNext", "Use ListBox from @salt-ds/core instead."),
 );
 
 /**
- * @deprecated since 1.0.0-alpha.110. Follow the [app header pattern](https://www.saltdesignsystem.com/salt/patterns/app-header) instead.
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
  */
 export const Logo = deprecatedComponent(
   _Logo,
   "Logo",
   "@salt-ds/lab/Logo",
-  message(
-    "Logo",
-    "Follow the app header pattern instead: https://www.saltdesignsystem.com/salt/patterns/app-header",
-  ),
+  message("Logo"),
 );
 
 /**
- * @deprecated since 1.0.0-alpha.110. Follow the [app header pattern](https://www.saltdesignsystem.com/salt/patterns/app-header) instead.
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
  */
 export const LogoImage = deprecatedComponent(
   _LogoImage,
   "LogoImage",
   "@salt-ds/lab/LogoImage",
-  message(
-    "LogoImage",
-    "Follow the app header pattern instead: https://www.saltdesignsystem.com/salt/patterns/app-header",
-  ),
+  message("LogoImage"),
 );
 
 /**
- * @deprecated since 1.0.0-alpha.110. Follow the [app header pattern](https://www.saltdesignsystem.com/salt/patterns/app-header) instead.
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
  */
 export const LogoSeparator = deprecatedComponent(
   _LogoSeparator,
   "LogoSeparator",
   "@salt-ds/lab/LogoSeparator",
-  message(
-    "LogoSeparator",
-    "Follow the app header pattern instead: https://www.saltdesignsystem.com/salt/patterns/app-header",
-  ),
+  message("LogoSeparator"),
 );
 
 /**
@@ -801,23 +780,29 @@ export const Tabstrip = deprecatedComponent(
 );
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ * @deprecated since 1.0.0-alpha.110. Consider `ComboBox` from `@salt-ds/core` with `multiselect` first. If users need to enter their own values, use `TokenizedInputNext`.
  */
 export const TokenizedInput = deprecatedComponent(
   _TokenizedInput,
   "TokenizedInput",
   "@salt-ds/lab/TokenizedInput",
-  message("TokenizedInput", "Use TokenizedInputNext instead."),
+  message(
+    "TokenizedInput",
+    "Consider ComboBox from @salt-ds/core with multiselect first. If users need to enter their own values, use TokenizedInputNext.",
+  ),
 );
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ * @deprecated since 1.0.0-alpha.110. Consider `ComboBox` from `@salt-ds/core` with `multiselect` first. If users need to enter their own values, use `TokenizedInputNext`.
  */
 export const TokenizedInputBase = deprecatedComponent(
   _TokenizedInputBase,
   "TokenizedInputBase",
   "@salt-ds/lab/TokenizedInputBase",
-  message("TokenizedInputBase", "Use TokenizedInputNext instead."),
+  message(
+    "TokenizedInputBase",
+    "Consider ComboBox from @salt-ds/core with multiselect first. If users need to enter their own values, use TokenizedInputNext.",
+  ),
 );
 
 /**
@@ -919,24 +904,21 @@ export const useLayoutEffectSkipFirst = deprecatedFunction(
 );
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export const useList = deprecatedFunction(
   _useList,
   "@salt-ds/lab/useList",
-  message("useList", "Use ListBox from @salt-ds/core, or StaticList, instead."),
+  message("useList", "Use ListBox from @salt-ds/core instead."),
 );
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export const useListItemDeprecated = deprecatedFunction(
   _useListItemDeprecated,
   "@salt-ds/lab/useListItemDeprecated",
-  message(
-    "useListItemDeprecated",
-    "Use ListBox from @salt-ds/core, or StaticList, instead.",
-  ),
+  message("useListItemDeprecated", "Use ListBox from @salt-ds/core instead."),
 );
 
 /**
@@ -1018,12 +1000,15 @@ export const useSlideSelection = deprecatedFunction(
 );
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ * @deprecated since 1.0.0-alpha.110. Consider `ComboBox` from `@salt-ds/core` with `multiselect` first. If users need to enter their own values, use `TokenizedInputNext`.
  */
 export const useTokenizedInput = deprecatedFunction(
   _useTokenizedInput,
   "@salt-ds/lab/useTokenizedInput",
-  message("useTokenizedInput", "Use TokenizedInputNext instead."),
+  message(
+    "useTokenizedInput",
+    "Consider ComboBox from @salt-ds/core with multiselect first. If users need to enter their own values, use TokenizedInputNext.",
+  ),
 );
 
 /**
@@ -1045,16 +1030,13 @@ export const useWindow = deprecatedFunction(
 );
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export const VirtualizedList = deprecatedComponent(
   _VirtualizedList,
   "VirtualizedList",
   "@salt-ds/lab/VirtualizedList",
-  message(
-    "VirtualizedList",
-    "Use ListBox from @salt-ds/core, or StaticList, instead.",
-  ),
+  message("VirtualizedList", "Use ListBox from @salt-ds/core instead."),
 );
 
 /**

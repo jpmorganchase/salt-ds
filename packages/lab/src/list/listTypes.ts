@@ -27,21 +27,21 @@ import type {
 } from "../common-hooks";
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export type ComponentType<T = unknown> = (
   props: PropsWithChildren<T>,
 ) => ReactElement;
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export type ListItemType<T = unknown> = ComponentType<
   ListItemProps<T> & { ref?: Ref<HTMLDivElement> }
 >;
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export interface ListItemProps<T = unknown>
   extends HTMLAttributes<HTMLDivElement> {
@@ -60,7 +60,7 @@ export interface ListItemProps<T = unknown>
 }
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export interface ListScrollHandles<Item> {
   scrollToIndex: (itemIndex: number) => void;
@@ -69,7 +69,7 @@ export interface ListScrollHandles<Item> {
 }
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export interface ListProps<
   Item = string,
@@ -210,7 +210,7 @@ export interface ListProps<
 }
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export interface ListControlProps {
   "aria-activedescendant"?: string;
@@ -222,7 +222,7 @@ export interface ListControlProps {
 }
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export interface ListHookProps<Item, Selection extends SelectionStrategy>
   extends Omit<
@@ -254,7 +254,7 @@ export interface ListHookProps<Item, Selection extends SelectionStrategy>
 }
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export interface ListHookResult<Item, Selection extends SelectionStrategy>
   extends Partial<ViewportTrackingResult<Item>>,

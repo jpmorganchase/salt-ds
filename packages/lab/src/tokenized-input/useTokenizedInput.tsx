@@ -23,7 +23,7 @@ import type { TokenizedInputProps } from "./TokenizedInput";
 import type { TokenizedInputBaseProps } from "./TokenizedInputBase";
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ * @deprecated since 1.0.0-alpha.110. Consider `ComboBox` from `@salt-ds/core` with `multiselect` first. If users need to enter their own values, use `TokenizedInputNext`.
  */
 export interface TokenizedInputState<Item> {
   activeIndices: Array<number>;
@@ -35,7 +35,7 @@ export interface TokenizedInputState<Item> {
 }
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ * @deprecated since 1.0.0-alpha.110. Consider `ComboBox` from `@salt-ds/core` with `multiselect` first. If users need to enter their own values, use `TokenizedInputNext`.
  */
 export interface TokenizedInputHelpers<Item> {
   cancelBlur: () => void;
@@ -89,7 +89,7 @@ type useTokenizedInputResult<Item> = {
 };
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ * @deprecated since 1.0.0-alpha.110. Consider `ComboBox` from `@salt-ds/core` with `multiselect` first. If users need to enter their own values, use `TokenizedInputNext`.
  */
 export function useTokenizedInput<Item>(
   props: TokenizedInputProps<Item>,

@@ -9,7 +9,7 @@ import { useListItem } from "./ListNextContext";
 const withBaseName = makePrefixer("saltListItemNext");
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export interface ListItemNextProps extends HTMLAttributes<HTMLLIElement> {
   /**
@@ -27,7 +27,7 @@ export interface ListItemNextProps extends HTMLAttributes<HTMLLIElement> {
 }
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
   function ListItemNext(

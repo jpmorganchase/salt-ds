@@ -7,7 +7,7 @@ import {
 import { useTokenizedInput } from "./useTokenizedInput";
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ * @deprecated since 1.0.0-alpha.110. Consider `ComboBox` from `@salt-ds/core` with `multiselect` first. If users need to enter their own values, use `TokenizedInputNext`.
  */
 export type StringToItem<Item> = (
   selectedItems: Array<Item>,
@@ -15,12 +15,12 @@ export type StringToItem<Item> = (
 ) => Item | null | undefined;
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ * @deprecated since 1.0.0-alpha.110. Consider `ComboBox` from `@salt-ds/core` with `multiselect` first. If users need to enter their own values, use `TokenizedInputNext`.
  */
 export type ChangeHandler<Item> = (selectedItems: Item[] | undefined) => void;
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ * @deprecated since 1.0.0-alpha.110. Consider `ComboBox` from `@salt-ds/core` with `multiselect` first. If users need to enter their own values, use `TokenizedInputNext`.
  */
 export interface TokenizedInputProps<Item>
   extends Omit<
@@ -45,7 +45,7 @@ export interface TokenizedInputProps<Item>
 }
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `TokenizedInputNext` instead.
+ * @deprecated since 1.0.0-alpha.110. Consider `ComboBox` from `@salt-ds/core` with `multiselect` first. If users need to enter their own values, use `TokenizedInputNext`.
  */
 export const TokenizedInput = forwardRef(function TokenizedInput<Item>(
   props: TokenizedInputProps<Item>,

@@ -18,7 +18,7 @@ import { useList } from "./useList";
 const withBaseName = makePrefixer("saltListNext");
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export interface ListNextProps
   extends Omit<ComponentPropsWithoutRef<"ul">, "onChange" | "onSelect"> {
@@ -44,7 +44,7 @@ export interface ListNextProps
 }
 
 /**
- * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core`, or `StaticList`, instead.
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
  */
 export const ListNext = forwardRef<HTMLUListElement, ListNextProps>(
   function ListNext(
