@@ -14,7 +14,7 @@ Horizontal stepper displays a sequence of steps arranged left-to-right, letting 
 
 Steps share the available width equally, and each label is centered below its icon.
 
-Use a horizontal stepper for relatively basic flows with up to six steps and no substeps. For longer or more complex flows, use a vertical stepper. See [when to use](/salt/components/stepper/usage#when-to-use).
+Use a horizontal stepper for relatively basic flows with up to six steps and no substeps. For longer or more complex flows, use a vertical stepper. See the [usage guidelines](/salt/components/stepper/usage#when-to-use).
 
 <LivePreview componentName="stepper" exampleName="Horizontal" />
 
@@ -31,14 +31,6 @@ Use a vertical stepper for longer, more complex linear flows, where steps benefi
 Use the `description` prop on `Step` to add supporting text to a step. The description appears below the label, with the same alignment.
 
 <LivePreview componentName="stepper" exampleName="WithDescriptions" />
-
-## Compact stepper
-
-Compact stepper condenses progress into a single track with a current-step label. Use Compact Stepper exclusively in dedicated, constrained viewports or linear forms where a simplified progress indicator is required from the start across all supported screen sizes. It is not interactive or navigable.
-
-Do not use Compact Stepper as a downscaled responsive breakpoint fallback for Horizontal Stepper unless an accessible progressive disclosure pattern is provided.
-
-<LivePreview componentName="stepper" exampleName="Compact" />
 
 ## Nested steps
 
@@ -63,7 +55,7 @@ _Vertical stepper + Multistep stepper_
 
 The Stepper and Step components are primarily presentational components.
 
-The Stepper itself shows linear progress only and does not include navigation buttons (like the Previous/Next shown below); if your use case requires navigation, it should be implemented and maintained by application teams.
+The Stepper itself shows linear progress only and does not include navigation buttons (like the Previous/Next shown below); if your use case requires navigation, it should be implemented and maintained by individual application teams.
 
 Set `stage="inprogress"` on a parent step when any of its substeps are started but not completed, including when the user has moved to another step.
 
@@ -98,3 +90,44 @@ Set `status="warning"` or `status="error"` on `Step` to show that a step needs a
 - A warning highlights a potential issue that users can choose to resolve. They can proceed without resolving it.
 
 <LivePreview componentName="stepper" exampleName="StageAndStatus" />
+
+## Compact stepper
+
+Compact stepper condenses progress into a single track with a current-step label. Use Compact Stepper exclusively in dedicated, constrained viewports or linear forms where a simplified progress indicator is required from the start across all supported screen sizes. It is not interactive or navigable.
+
+Do not use Compact Stepper as a downscaled responsive breakpoint fallback for Horizontal Stepper unless an accessible progressive disclosure pattern is provided.
+
+A compact stepper has four parts:
+
+- An accented track that shows progress up to and including the current step.
+- A dotted track that shows how much of the flow is still pending.
+- A step count that shows the position of the current step, such as "Step 2 of 5:".
+- The `label` of the current step.
+
+It only shows the current step. Other steps aren't listed, labeled or interactive.
+
+<LivePreview componentName="stepper" exampleName="Compact" />
+
+## Compact stepper stage and status
+
+`CompactStep` has the same `stage` and `status` props as `Step`, except that `stage` doesn't accept `"inprogress"`. Because a compact stepper only shows the current step, `stage` controls which step is shown and how the track fills, not a row of step icons.
+
+### Stage
+
+A step is `"pending"` by default.
+
+- `"completed"`: the user has finished the step. It's part of the accented track.
+- `"active"`: the step the user is on. Its step count and label are shown, with no icon.
+- `"pending"`: the user hasn't reached the step yet. It's part of the dotted track.
+- `"locked"`: the step the user is on, when they can't continue until a requirement is met. Its step count and label are shown, with a lock icon before the label.
+
+Set `stage="active"` or `stage="locked"` on one step. If more than one step has either stage, the first one is shown. If no step has either stage, the first pending step is shown, and the track fills up to the step before it. When every step is `"completed"`, the last step is shown and the track is full.
+
+### Status
+
+Set `status="warning"` or `status="error"` on the current step to show that it needs attention. The status icon appears before the label, and replaces the lock icon on a locked step. Status doesn't change which step is shown or how the track fills. Only use a status when a step needs the user's attention, so the icon stays a clear signal.
+
+- An error indicates a critical issue that users must resolve before they proceed. `CompactStepper` doesn't prevent users from moving to the next step, so your application must handle this.
+- A warning highlights a potential issue that users can choose to resolve. They can proceed without resolving it.
+
+<LivePreview componentName="stepper" exampleName="CompactStageAndStatus" />

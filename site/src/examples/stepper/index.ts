@@ -1,4 +1,5 @@
 export * from "./Compact";
+export * from "./CompactStageAndStatus";
 export * from "./Horizontal";
 export * from "./StageAndStatus";
 export * from "./Substeps";
