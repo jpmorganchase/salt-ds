@@ -38,7 +38,7 @@ Use the `useDensity` hook to access the current density.
 
 ## Responsive density
 
-It is recommended to use `"touch"` density on touchscreen/mobile devices. You can use media queries or other methods to detect devices to achieve this.
+It is recommended to use `"mobile"` density on phones and tablets; `"touch"` density is deprecated. You can use media queries or other methods to detect devices to achieve this.
 
 <LivePreview componentName="salt-provider" exampleName="DensityResponsive" />
 
@@ -52,6 +52,6 @@ Use the `useBreakpoints` hook to access the current breakpoints defined via the 
 
 ## Nested providers
 
-You can use `SaltProvider` to create scoped themes, allowing you to mix themes, modes, densities and breakpoints in your application. Familiarize yourself with the guidance on our [foundations](/salt/foundations/index) pages, where we recommend that you use this sparingly. Nested providers will inherit values from parent providers.
+You can use `SaltProvider` to create scoped themes, allowing you to mix themes, modes, densities and breakpoints in your application. Familiarize yourself with the guidance on our [foundations](/salt/foundations/index) pages, where we recommend that you use this sparingly. Nested providers inherit values such as theme, mode and density from parent providers, but not `breakpoints`. If you customize breakpoints, pass the same `breakpoints` to each nested provider.
 
 <LivePreview componentName="salt-provider" exampleName="NestedProviders" />

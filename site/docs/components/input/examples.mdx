@@ -14,6 +14,12 @@ data:
 
 <LivePreview componentName="input" exampleName="Basic" />
 
+## Controlled
+
+Pass `value` and `onChange` to `Input` to control its value.
+
+<LivePreview componentName="input" exampleName="Controlled" />
+
 ## Variants
 
 The `Input` has three variants: primary, secondary and tertiary. Each variant adjusts the background color of the field, providing options to support the creation of a visual hierarchy. By selecting the appropriate variant, you can tailor the appearance of inputs to suit different contexts and design needs.
@@ -86,7 +92,7 @@ Disable your interactive buttons or make them read-only should they match the st
 
 ## Validation
 
-Input can show validation states (warning, success and error) with the prop `validationStatus`.
+Input can show validation states (warning, success and error) with the prop `validationStatus`. It shows the matching status icon at its end, so don't add a `StatusAdornment` yourself.
 
 ### Best practices
 

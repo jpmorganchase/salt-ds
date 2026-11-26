@@ -18,7 +18,11 @@ Use the segmented button group to display a list of actionable buttons, flush wi
 
 ### When not to use
 
+- For a persistent selection such as List or Cards, use [`ToggleButtonGroup`](../toggle-button/usage#view-switching).
 - When the user needs to take an action or make a decision between two choices, use [`Decision button group`](/salt/patterns/decision-button-group).
+
+`SegmentedButtonGroup` supplies layout for related actions; it does not own a
+selected value or selection behavior.
 
 ## Import
 

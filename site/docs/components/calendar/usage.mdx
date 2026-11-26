@@ -88,14 +88,11 @@ import {
 } from "@salt-ds/date-components";
 
 <LocalizationProvider DateAdapter={AdapterLuxon}>
-    <Calendar
-      selectionVariant={"single"}
-      defaultSelectedDate={new DateTime().now()}
-    >
-      <CalendarNavigation />
-      <CalendarGrid />
-    </Calendar>
-<LocalizationProvider>
+  <Calendar selectionVariant={"single"} defaultSelectedDate={DateTime.now()}>
+    <CalendarNavigation />
+    <CalendarGrid />
+  </Calendar>
+</LocalizationProvider>;
 ```
 
 ### Locale

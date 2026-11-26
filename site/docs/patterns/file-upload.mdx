@@ -11,12 +11,13 @@ data:
     [
       { href: "https://storybook.saltdesignsystem.com/?path=/story/patterns-file-upload--file-upload-example", label: "Examples" }
     ]
-  components: ["File Drop Zone", "Static List"]
+  components: ["File drop zone", "Static list"]
 ---
 
 <Diagram
   src="/img/patterns/file-upload/file-upload.png"
-  alt="File upload"
+  alt="A file drop zone above a list of two uploaded files and one file still uploading."
+  caption="File upload after the user has added three files."
   border
 />
 
@@ -29,10 +30,18 @@ Use this pattern to:
 - Display file upload progress, file listings, and management options.
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  - Consider using a full-page layout or a drawer if additional actions need to be performed on the files. 
-  - When used in dialogs, ensure that submit actions are disabled until the file upload is complete. 
-  - When used in drawers, the upload status (e.g., completed) should remain  visible regardless of the drawer's open or close actions.
+
+- Consider using a full-page layout or a drawer if additional actions need to be performed on the files.
+- When used in dialogs, ensure that submit actions are disabled until the file upload is complete.
+- When used in drawers, the upload status (e.g., completed) should remain visible regardless of the drawer's open or close actions.
+
 </GuidanceCallout>
+
+## When not to use
+
+- When users only need to browse files or records that already exist in the product, use a list, table, or data grid surface instead.
+- When users are entering a file URL, path, or other text reference without transferring a file, use an input field instead.
+- When the main task is ongoing file management after upload, use a full-page layout or drawer workflow around the file list and actions instead of a standalone embedded upload area.
 
 ## How to build
 
@@ -53,12 +62,12 @@ These functional areas can be enhanced with text elements, such as headers and d
 
 ### Layout
 
-- Use the [`StackLayout`](/salt/components/layouts/stack-layout) to display the File drop zone, file upload items and text elements that make up file upload in a column.
-- Use the [`StackLayout`](/salt/components/layouts/flex-layout) with a gap of 1 to position the text elements.
+- Use the [`StackLayout`](/salt/components/layouts/stack-layout) with `gap={3}` (`--salt-spacing-300`) to display the File drop zone, file upload items and text elements that make up file upload in a column.
+- Use the [`StackLayout`](/salt/components/layouts/stack-layout) with a gap of 1 to position the text elements.
 
 <Diagram
   src="/img/patterns/file-upload/file-upload-layout.png"
-  alt="File upload with layout annotations."
+  alt="File upload layout: a heading and description above a file drop zone and a static list of files, in a column stack layout with gap 3."
   border
 />
 
@@ -73,9 +82,11 @@ The file drop zone component enables users to upload files by providing a design
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  - The file drop zone component should support both single and multiple file uploads.
-  - Restrict file selection to allowed file types.
-  - Include text elements to assist users in making informed decisions.
+
+- The file drop zone component should support both single and multiple file uploads.
+- Restrict file selection to allowed file types.
+- Include text elements to assist users in making informed decisions.
+
 </GuidanceCallout>
 
 ## Space-restricted areas
@@ -89,9 +100,11 @@ In space-restricted scenarios, single file uploads can be facilitated using a bu
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  - Use a button for single file uploads only
-  - Restrict file selection to allowed file types
-  - Include text elements to help users make informed decisions
+
+- Use a button for single file uploads only
+- Restrict file selection to allowed file types
+- Include text elements to help users make informed decisions
+
 </GuidanceCallout>
 
 ## Uploading files
@@ -114,7 +127,7 @@ Following a pause action, play and delete buttons can be used to resume or remov
 
 ## Success validation
 
-Inform users when a file upload has been successfully completed. Once  the process is finished, provide users with the ability to remove the  file or perform other related actions.
+Inform users when a file upload has been successfully completed. Once the process is finished, provide users with the ability to remove the file or perform other related actions.
 
 <Diagram
   src="/img/patterns/file-upload/file-upload-success-validation.png"
@@ -128,7 +141,7 @@ Inform users when a file upload has been successfully completed. Once  the proce
 
 Error validation can occur independently at the file item level without impacting other files in the group. In such case scenarios, the secondary label should clearly explain the issue and offer a solution. A refresh button can be used to retry the upload after error validation.
 
-Inform users when a file upload has been successfully completed. Once  the process is finished, provide users with the ability to remove the  file or perform other related actions.
+Inform users when a file upload has been successfully completed. Once the process is finished, provide users with the ability to remove the file or perform other related actions.
 
 <Diagram
   src="/img/patterns/file-upload/file-upload-file-error.png"
@@ -138,7 +151,7 @@ Inform users when a file upload has been successfully completed. Once  the proce
 
 ### Group error
 
-Errors can occur at the group level. In such scenarios, error messages should be displayed within the file drop zone component. For instance, if only 2 files can be uploaded, the error message should clearly communicate this limit and guide the user, as demonstrated  below. For more details, see file drop zone validation.
+Errors can occur at the group level. In such scenarios, error messages should be displayed within the file drop zone component. For instance, if only 2 files can be uploaded, the error message should clearly communicate this limit and guide the user, as demonstrated below. For more details, see file drop zone validation.
 
 <Diagram
   src="/img/patterns/file-upload/file-upload-group-error.png"
@@ -146,7 +159,7 @@ Errors can occur at the group level. In such scenarios, error messages should be
   border
 />
 
-Alternatively, group error messages can be displayed using a banner component positioned below the file drop zone. In such scenarios, ensure that error messages are displayed exclusively in the banner and not  within the file drop zone itself.
+Alternatively, group error messages can be displayed using a banner component positioned below the file drop zone. In such scenarios, ensure that error messages are displayed exclusively in the banner and not within the file drop zone itself.
 
 <Diagram
   src="/img/patterns/file-upload/file-upload-group-error-banner.png"
@@ -155,8 +168,10 @@ Alternatively, group error messages can be displayed using a banner component po
 />
 
 <GuidanceCallout type="positive" customPillText="Best practices">
-  - Clearly communicate the issue and offer a solution
-  - Ensure error messages are simple and concise
+
+- Clearly communicate the issue and offer a solution
+- Ensure error messages are simple and concise
+
 </GuidanceCallout>
 
 :fragment{src="./fragments/feedback.mdx"}

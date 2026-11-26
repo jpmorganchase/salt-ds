@@ -2,6 +2,8 @@
 title: Formatted input
 description: "Formatted input is an input behavior that guides users to enter data in a predefined pattern (e.g., phone numbers, card numbers, currency, postal/ZIP codes). As users type and when they submit, the value is validated against that pattern and displayed in a consistent, standardized format that matches it."
 layout: DetailPattern
+alsoKnownAs:
+  ["Input mask", "Masked input", "Phone number", "Card number", "Postal code"]
 tags:
   - pattern
 aliases:
@@ -14,60 +16,85 @@ data:
 ---
 
 <Diagram
-    src="/img/patterns/formatted-input/formatted-input-example.png"
-    srcDark="/img/patterns/formatted-input/formatted-input-example-dark.png"
-    alt="Formatted input pattern example"
-    border
- />
+  src="/img/patterns/formatted-input/formatted-input-example.png"
+  srcDark="/img/patterns/formatted-input/formatted-input-example-dark.png"
+  alt="Formatted input pattern example"
+  border
+/>
 
 ## When to use
+
 - When user input must follow a specific format.
 - When visual formatting improves data entry accuracy and readability.
 - When validation against a format pattern is required.
 - Common formats include phone numbers, card numbers, currency amounts, and postal/ZIP codes.
 
 <Callout title="Depending on the use case, consider these existing Salt options:">
+
 - **[Number input](/salt/components/number-input)**: Best for numeric values that require increment/decrement controls or adjustments within a defined range.
 - **[Date input](/salt/components/date-input)**: Best for single dates or date ranges.
 - **[International phone number input (pattern)](/salt/patterns/international-phone-number-input)**: Best for country-specific phone number entry with a location selector.
+
 </Callout>
+
+## When not to use
+
+- When users need to increment, decrement, or adjust a numeric value within a defined range, use [Number input](/salt/components/number-input) instead.
+- When users need to enter a single date or date range, use [Date input](/salt/components/date-input) instead.
+- When phone number entry needs country-specific formatting with a location selector, use the [International phone number input pattern](/salt/patterns/international-phone-number-input) instead.
+- When the value is open-ended text that does not need a strict format or validation pattern, use [Input](/salt/components/input) or [Multiline input](/salt/components/multiline-input) with helper text instead.
+- When users choose from a known set of values instead of typing a formatted value, use a selection component such as Dropdown or Combo box instead.
 
 ## How to build
 
 ### Anatomy
 
 Formatted input contains:
+
 1. **Label:** Helps users understand what information to provide.
 2. **Input field:** A single input field where users type their value.
 3. **Helper text:** Assists users in providing the right information.
 
 <Diagram
-    src="/img/patterns/formatted-input/formatted-input-anatomy.png"
-    srcDark="/img/patterns/formatted-input/formatted-input-anatomy-dark.png"
-    alt="The anatomy of the formatted input pattern"
-    border
- />
+  src="/img/patterns/formatted-input/formatted-input-anatomy.png"
+  srcDark="/img/patterns/formatted-input/formatted-input-anatomy-dark.png"
+  alt="The anatomy of the formatted input pattern"
+  border
+/>
 
 ### Layout
+
 - Use [Input](/salt/components/input) to capture the user's value.
 - Use [FormField](/salt/components/form-field) to wrap [Input](/salt/components/input) with visible label, helper text and a status message.
 
 <Diagram
   src="/img/patterns/formatted-input/formatted-input-layout.png"
   srcDark="/img/patterns/formatted-input/formatted-input-layout-dark.png"
-  alt="The layout of the formatted input pattern"
+  alt="Formatted input layout: a form field wrapping a label, an input and helper text."
   border
 />
 
 <Callout status="success" title="Best practices">
-  - Wrap the input in [FormField](/salt/components/form-field) to provide a visible label, help text, and a validation status message—supporting accessibility compliance. For more guidance, refer to the [W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
-  - Follow [Input](/salt/components/input) and [FormField](/salt/components/form-field) specifications for accessibility and consistency.
-  - For instructions on formatting form fields, please refer to the [CIB Digital Content Style Guide](https://go/contentguide/page/502) (Internal users only).
+
+- Wrap the input in [FormField](/salt/components/form-field) to provide a visible label, help text, and a validation status message—supporting accessibility compliance. For more guidance, refer to the [W3C form instructions](https://www.w3.org/WAI/tutorials/forms/instructions/).
+- Follow [Input](/salt/components/input) and [FormField](/salt/components/form-field) specifications for accessibility and consistency.
+- For instructions on formatting form fields, please refer to the [CIB Digital Content Style Guide](https://go/contentguide/page/502) (Internal users only).
+
 </Callout>
 
 ### Formatting guidance
 
 Use helper text to provide formatting guidance and/or an example of the expected format.
+
+<Callout status="success" title="Best practices">
+  Placeholder text should never be the only source of guidance. Placeholder text
+  disappears once the user begins typing and may not be announced by all screen
+  readers, so it must not be used to convey required formatting rules. Use
+  labels and helper text to provide persistent formatting guidance. If you
+  include placeholder text, use it only as a supplementary hint or example.
+</Callout>
+
+Use helper text to give the expected format for each field.
 
 <Diagram
   src="/img/patterns/formatted-input/formatted-input-guidance.png"
@@ -76,16 +103,15 @@ Use helper text to provide formatting guidance and/or an example of the expected
   border
 />
 
-<Callout status="success" title="Best practices">
-    Placeholder text should never be the only source of guidance. Placeholder text disappears once the user begins typing and may not be announced by all screen readers, so it must not be used to convey required formatting rules. Use labels and helper text to provide persistent formatting guidance. If you include placeholder text, use it only as a supplementary hint or example.
-</Callout>
-
 ## Formatting behavior
 
 The user types freely into the input and the value is formatted to a defined pattern when the user clicks away (or moves their focus) from the field.
 
 <Callout>
-    This pattern applies formatting on blur (after the user finishes and leaves the field) to keep interaction predictable and avoid unexpected changes during input, aligning with [WCAG 2.1 guidance](https://www.w3.org/TR/WCAG21) on predictable behavior for focus and input changes.
+  This pattern applies formatting on blur (after the user finishes and leaves
+  the field) to keep interaction predictable and avoid unexpected changes during
+  input, aligning with [WCAG 2.1 guidance](https://www.w3.org/TR/WCAG21) on
+  predictable behavior for focus and input changes.
 </Callout>
 
 ### 1. Before entry
@@ -142,6 +168,7 @@ For general validation behavior (error, warning, success states), refer to [Form
 ### Error
 
 When the value does not meet the required format or criteria.
+
 - Input turns to error state.
 - An error message is displayed to guide the user.
 
@@ -155,6 +182,7 @@ When the value does not meet the required format or criteria.
 ### Warning
 
 When the value is technically correct but has potential issues.
+
 - Input turns to warning state.
 - A warning message is displayed to guide the user.
 
@@ -170,6 +198,7 @@ When the value is technically correct but has potential issues.
 Use a success state to reassure users when their input is correct. Avoid unnecessary success messages unless confirmation is important for the workflow.
 
 When the value is valid:
+
 - No error or warning message is displayed.
 - An optional success indicator can be displayed.
 
@@ -242,7 +271,9 @@ If the user leaves the field without correcting the value, keep the error state 
 />
 
 <Callout status="success" title="Best practices">
-    Reuse the same error message when possible for consistency; only change it if the blur/submit message adds clearer next steps without contradicting the real-time one.
+  Reuse the same error message when possible for consistency; only change it if
+  the blur/submit message adds clearer next steps without contradicting the
+  real-time one.
 </Callout>
 
 ## Input normalization
@@ -264,19 +295,25 @@ Input normalization is the practice of converting user-entered values into a con
 - Validate after normalization and provide clear feedback if rules are violated.
 
 <Callout title="Defining normalization rules">
-    Product teams should define normalization rules that match their domain, validation requirements, and downstream system needs.
+  Product teams should define normalization rules that match their domain,
+  validation requirements, and downstream system needs.
 </Callout>
 
 ## Dynamic preview
 
 Dynamic preview shows the formatted result in real time as the user types. It helps users understand how formatting will be applied. While the user is typing, display a formatted preview of the value (without interrupting input).
+
 - When the user leaves the field, the preview can disappear, since the input itself should now display the final formatted value.
 - The preview can appear near the label or next to the input, depending on the layout.
 
 <Callout status="success" title="Best practices">
-    - Place the dynamic preview near the label when there is enough space and it won’t compete with or crowd the label content.
-    - If the label is likely to impede the preview, place the dynamic preview next to the input instead.
+
+- Place the dynamic preview near the label when there is enough space and it won’t compete with or crowd the label content.
+- If the label is likely to impede the preview, place the dynamic preview next to the input instead.
+
 </Callout>
+
+The images below show the preview while typing and the formatted value after the user leaves the field, with the preview near the label and next to the input.
 
 <Diagram
   src="/img/patterns/formatted-input/formatted-input-dynamic-preview.png"
@@ -295,6 +332,7 @@ Dynamic preview shows the formatted result in real time as the user types. It he
 ## Copy & paste behavior
 
 Users can paste a value into the input field. Pasted input follows the same rules as typed input:
+
 - Validate the pasted value (including invalid characters) and show feedback.
 - Normalize the value as needed (typically on blur or submit).
 - Format on blur so the field displays the preferred system format after the user finishes and leaves the input.

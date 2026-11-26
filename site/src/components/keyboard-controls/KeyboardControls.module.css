@@ -1,6 +1,6 @@
 .table {
   table-layout: initial;
-  margin-bottom: calc(2 * var(--salt-size-unit));
+  margin-bottom: calc(2 * var(--salt-spacing-100));
 }
 
 .table td > :last-child {
@@ -17,7 +17,7 @@
   font-weight: var(--salt-text-label-fontWeight-bolder);
   margin: var(--salt-spacing-25);
   padding: var(--salt-spacing-25) var(--salt-spacing-75);
-  box-shadow: var(--salt-shadow-200-color) 0px 2px;
+  box-shadow: 0 var(--salt-size-fixed-200) 0 0 var(--salt-container-bold-borderColor);
 }
 
 .keyCol {

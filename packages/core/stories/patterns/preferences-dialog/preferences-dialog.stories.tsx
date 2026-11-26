@@ -18,6 +18,7 @@ import {
   StackLayout,
   Switch,
   Text,
+  useResponsiveProp,
   VerticalNavigation,
   VerticalNavigationItem,
   VerticalNavigationItemContent,
@@ -25,7 +26,7 @@ import {
   VerticalNavigationItemTrigger,
 } from "@salt-ds/core";
 import type { Meta, StoryFn } from "@storybook/react-vite";
-import { useState } from "react";
+import { type RefCallback, useCallback, useRef, useState } from "react";
 
 export default {
   title: "Patterns/Preferences Dialog",
@@ -35,14 +36,16 @@ function PreferencesNavigation({
   items,
   location,
   onChange,
+  currentItemRef,
 }: {
   items: string[];
   location: string;
   onChange: (location: string) => void;
+  currentItemRef: RefCallback<HTMLElement>;
 }) {
   return (
     <VerticalNavigation
-      aria-label="Basic indicator sidebar"
+      aria-label="Preferences sections"
       appearance="indicator"
       style={{ minWidth: "30ch" }}
     >
@@ -50,6 +53,7 @@ function PreferencesNavigation({
         <VerticalNavigationItem key={item} active={location === item}>
           <VerticalNavigationItemContent>
             <VerticalNavigationItemTrigger
+              ref={location === item ? currentItemRef : undefined}
               onClick={() => onChange(item)}
               render={<button type="button" />}
             >
@@ -62,7 +66,13 @@ function PreferencesNavigation({
   );
 }
 
-function PreferencesContent({ currentSection }: { currentSection: string }) {
+function PreferencesContent({
+  currentSection,
+  headingRef,
+}: {
+  currentSection: string;
+  headingRef: RefCallback<HTMLHeadingElement>;
+}) {
   let content;
 
   if (currentSection === "Account") {
@@ -199,7 +209,9 @@ function PreferencesContent({ currentSection }: { currentSection: string }) {
 
   return (
     <StackLayout>
-      <H2 styleAs="h3">{currentSection}</H2>
+      <H2 ref={headingRef} styleAs="h3" tabIndex={-1}>
+        {currentSection}
+      </H2>
       <div>{content}</div>
     </StackLayout>
   );
@@ -207,59 +219,125 @@ function PreferencesContent({ currentSection }: { currentSection: string }) {
 
 const PreferencesDialogTemplate: StoryFn = () => {
   const sections = ["Account", "General", "Grid", "Export"];
+  const [open, setOpen] = useState(false);
   const [currentSection, setCurrentSection] = useState(sections[0]);
   const [collapsed, setCollapsed] = useState(false);
   const [view, setView] = useState<"parent" | "child">("parent");
+  const pendingFocus = useRef<"settings" | "category" | null>(null);
+  const stackActions = useResponsiveProp({ xs: true, sm: false }, false);
+
+  // Only move focus for an explicit collapsed-view navigation action, after
+  // its destination mounts. Ordinary renders and resizing do not request focus.
+  const focusSettings = useCallback((node: HTMLHeadingElement | null) => {
+    if (node && pendingFocus.current === "settings") {
+      node.focus();
+      pendingFocus.current = null;
+    }
+  }, []);
+  const focusCategory = useCallback((node: HTMLElement | null) => {
+    if (node && pendingFocus.current === "category") {
+      node.focus();
+      pendingFocus.current = null;
+    }
+  }, []);
 
   const handleSectionChange = (section: string) => {
+    pendingFocus.current = collapsed ? "settings" : null;
     setView("child");
     setCurrentSection(section);
   };
 
+  const handleBack = () => {
+    pendingFocus.current = "category";
+    setView("parent");
+  };
+
+  const handleOpen = () => {
+    pendingFocus.current = null;
+    setView("parent");
+    setOpen(true);
+  };
+
+  const handleClose = () => setOpen(false);
+
+  const backButton = collapsed && view === "child" && (
+    <Button
+      sentiment="accented"
+      appearance="transparent"
+      onClick={handleBack}
+      style={{ width: stackActions ? "100%" : undefined }}
+    >
+      Back
+    </Button>
+  );
+  const cancelButton = (
+    <Button
+      sentiment="accented"
+      appearance="bordered"
+      onClick={handleClose}
+      style={{ width: stackActions ? "100%" : undefined }}
+    >
+      Cancel
+    </Button>
+  );
+  const saveButton = (
+    <Button
+      sentiment="accented"
+      appearance="solid"
+      onClick={handleClose}
+      style={{ width: stackActions ? "100%" : undefined }}
+    >
+      Save
+    </Button>
+  );
+
   return (
-    <Dialog style={{ minHeight: "60%" }} open>
-      <DialogHeader header="Preferences" />
-      <DialogContent>
-        <ParentChildLayout
-          gap={3}
-          onCollapseChange={(newCollapsed) => setCollapsed(newCollapsed)}
-          visibleView={view}
-          parent={
-            <PreferencesNavigation
-              items={sections}
-              location={currentSection}
-              onChange={handleSectionChange}
-            />
-          }
-          child={<PreferencesContent currentSection={currentSection} />}
-        />
-      </DialogContent>
-      <DialogActions>
-        <SplitLayout
-          startItem={
-            collapsed && view === "child" ? (
-              <Button
-                sentiment="accented"
-                appearance="transparent"
-                onClick={() => setView("parent")}
-              >
-                Back
-              </Button>
-            ) : undefined
-          }
-          endItem={
-            <StackLayout direction="row" gap={1}>
-              <Button sentiment="accented" appearance="bordered">
-                Cancel
-              </Button>
-              <Button sentiment="accented" appearance="solid">
-                Save
-              </Button>
+    <>
+      <Button onClick={handleOpen}>Open Preferences Dialog</Button>
+      <Dialog style={{ minHeight: "60%" }} open={open} onOpenChange={setOpen}>
+        <DialogHeader header="Preferences" />
+        <DialogContent>
+          <ParentChildLayout
+            gap={3}
+            onCollapseChange={(newCollapsed) => setCollapsed(newCollapsed)}
+            visibleView={view}
+            parent={
+              <PreferencesNavigation
+                items={sections}
+                location={currentSection}
+                onChange={handleSectionChange}
+                currentItemRef={focusCategory}
+              />
+            }
+            child={
+              <PreferencesContent
+                currentSection={currentSection}
+                headingRef={focusSettings}
+              />
+            }
+          />
+        </DialogContent>
+        <DialogActions>
+          {stackActions ? (
+            <StackLayout gap={1} style={{ width: "100%" }}>
+              {saveButton}
+              {cancelButton}
+              {backButton}
             </StackLayout>
-          }
-        />
-      </DialogActions>
-    </Dialog>
+          ) : (
+            <SplitLayout
+              startItem={backButton}
+              endItem={
+                <StackLayout direction="row" gap={1}>
+                  {cancelButton}
+                  {saveButton}
+                </StackLayout>
+              }
+            />
+          )}
+        </DialogActions>
+      </Dialog>
+    </>
   );
 };
 

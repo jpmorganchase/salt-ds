@@ -2,6 +2,9 @@ import { type ComponentType, useEffect } from "react";
 import type { AnnounceFnOptions } from "./AriaAnnouncerContext";
 import { useAriaAnnouncer } from "./useAriaAnnouncer";
 
+/**
+ * @deprecated Use `useAriaAnnouncer` instead. Its announcement options use `AnnounceFnOptions`.
+ */
 export interface AriaAnnounceProps extends AnnounceFnOptions {
   /**
    * String to be announced by screenreader.
@@ -14,6 +17,9 @@ export interface AriaAnnounceProps extends AnnounceFnOptions {
   delay?: number;
 }
 
+/**
+ * @deprecated Use `useAriaAnnouncer` to announce from event handlers or effects instead.
+ */
 export const AriaAnnounce: ComponentType<AriaAnnounceProps> = ({
   announcement,
   delay,

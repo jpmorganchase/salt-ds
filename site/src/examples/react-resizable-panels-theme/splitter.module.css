@@ -1,7 +1,7 @@
 .box {
   width: 420px;
   height: 240px;
-  border: 1px solid var(--salt-separable-secondary-borderColor);
+  border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-separable-secondary-borderColor);
 }
 
 .boxGrey {

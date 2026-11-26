@@ -15,56 +15,70 @@ data:
   relatedPatterns: ["Navigation", "Vertical navigation"]
 ---
 
-  <Diagram
-    src="/img/patterns/app-header/app-header-hero.png"
-    srcDark="/img/patterns/app-header/app-header-hero-dark.png"
-    alt="App header example"
-    border
-  />
+<Diagram
+  src="/img/patterns/app-header/app-header-hero.png"
+  srcDark="/img/patterns/app-header/app-header-hero-dark.png"
+  alt="App header example"
+  border
+/>
 
 ## When to use
 
-Use as the primary element to orient users within the UI. The app header should be globally persistent, enabling easy navigation and access to utilities.
+Use the app header as the top-level, globally persistent shell element that orients users within the UI and exposes app-wide navigation or utilities.
+
+Use it when the page needs:
+
+- a persistent branding area
+- application-wide navigation or utility actions
+- a compact top bar that stays visible while the user scrolls
+
+## When not to use
+
+- When the header is not globally persistent, use a smaller section header or page title instead.
+- When the navigation needs multiple levels and the shell is primarily a sidebar, use [Vertical navigation](/salt/patterns/vertical-navigation) as the main navigation surface.
+- When the page only needs branding without app-wide actions, use a simpler brand lockup instead of a full header.
 
 ## How to build
 
 ### Anatomy
 
-The app header has three functional areas:
+The app header has three functional areas that should remain recognizable in both desktop and mobile layouts:
 
 1. **Branding:** Displays a brand logo or mark followed by the application name in text form. This should always link to the product’s homepage.
-2. **Navigation:** Serves as the container for the primary navigation. Its inclusion is optional if you have single-page applications or use a persistent side navigation.
-3. **Utilities:** Provides access to persistent application-wide utilities, such as external links, search, notifications, help, account details and settings.
+2. **Primary navigation:** Serves as the container for the top-level navigation. Its inclusion is optional if you have a persistent side navigation or only a single page.
+3. **Utilities:** Provides access to persistent application-wide utilities, such as external links, search, notifications, help, account details, and settings.
 
-  <Diagram
-    src="/img/patterns/app-header/app-header-anatomy.png"
-    srcDark="/img/patterns/app-header/app-header-anatomy-dark.png"
-    alt="Header functional areas—branding, navigation and utilities."
-    border
-  />
+<Diagram
+  src="/img/patterns/app-header/app-header-anatomy.png"
+  srcDark="/img/patterns/app-header/app-header-anatomy-dark.png"
+  alt="Header functional areas—branding, navigation and utilities."
+  border
+/>
 
 ### Desktop layout
 
-- Use [`NavigationItem`](/salt/components/navigation-item) to build the horizontal page navigation, as explained in the [navigation pattern](./navigation).
-- Use `FlexLayout` with justify set to `space-between` to position the brand logo, navigation and utilities.
+- Use [`NavigationItem`](/salt/components/navigation-item) to build the horizontal primary navigation, as explained in the [navigation pattern](/salt/patterns/navigation).
+- Use [`FlexLayout`](/salt/components/layouts/flex-layout) with `justify="space-between"` and `gap={3}` to position the branding, navigation, and utilities.
+- Use [`Button`](/salt/components/button) for each utility.
+- Pad the header with `--salt-spacing-100` above and below, and `--salt-layout-page-margin` at each side. The branding area's height is `--salt-size-base`.
 
   <Diagram
     src="/img/patterns/app-header/app-header-layout.png"
     srcDark="/img/patterns/app-header/app-header-layout-dark.png"
-    alt="Example showing header’s desktop layout construction."
+    alt="Desktop app header layout: a flex layout with justify space-between and gap 3 holding the logo, navigation items and utility buttons, with --salt-spacing-100 vertical padding and --salt-layout-page-margin at each side."
     border
   />
 
 ### Mobile layout
 
-- Use a [stack layout](/salt/components/layouts/stack-layout) with the direction property set to row to position the menu button and the logo. 
-- The menu button opens and closes the navigation [drawer](/salt/components/drawer). 
-- Use a stack layout to position the [vertical navigation](./vertical-navigation) and utilities within the drawer.
+- Use [`StackLayout`](/salt/components/layouts/stack-layout) with `direction="row"` to position the menu button and the logo, with `--salt-spacing-200` between them and `--salt-layout-page-margin` at each side.
+- The menu button opens and closes the navigation [drawer](/salt/components/drawer).
+- Use a stack layout to position the [vertical navigation](/salt/patterns/vertical-navigation) and utilities within the drawer.
 
   <Diagram
     src="/img/patterns/app-header/app-header-mobile-layout.png"
     srcDark="/img/patterns/app-header/app-header-mobile-layout-dark.png"
-    alt="Example showing header’s mobile layout construction."
+    alt="Mobile app header layout: a row stack layout with the menu button and logo, and a drawer holding navigation items and utility actions."
     border
   />
 
@@ -72,118 +86,121 @@ The app header has three functional areas:
 
 Always place your logo on the top-left corner of the application. It can be preceded by the app name in text form as part of the branding area. This area can vary in size and composition where:
 
-- The max-height follows the fixed default height for base components in each density —size-base.    
-- The width responds to its content —standalone logo; or logo & app name together. 
+- The max-height follows the fixed default height for base components in each density —size-base.
+- The width responds to its content —standalone logo; or logo & app name together.
 
 Refer to the [J.P. Morgan Brand Toolbox](https://www.jpmcbrandtoolbox.com/users/sign_in) brand guidelines if using an authorized J.P. Morgan logo.
 
-  <Diagram
-    src="/img/patterns/app-header/app-header-logo-treatment.png"
-    srcDark="/img/patterns/app-header/app-header-logo-treatment-dark.png"
-    alt="Example showing the logo layout construction."
-    border
-  />
+<Diagram
+  src="/img/patterns/app-header/app-header-logo-treatment.png"
+  srcDark="/img/patterns/app-header/app-header-logo-treatment-dark.png"
+  alt="Example showing the logo layout construction."
+  border
+/>
 
 Consider the following when placing your logo in the app header:
 
-- Keep the aspect ratio of your logo when resizing it in each density. Consider visual balance and affordance. 
-- You don't need to resize your logo to fit the max-height (size-base) of the branding area. 
+- Keep the aspect ratio of your logo when resizing it in each density. Consider visual balance and affordance.
+- You don't need to resize your logo to fit the max-height (size-base) of the branding area.
 - If preceded by the app name, the text should follow density aware body-text.
 - Consider creating a compact version of your logo for small viewport experiences.
 
 <Diagram
-    src="/img/patterns/app-header/app-header-compact-logo.png"
-    srcDark="/img/patterns/app-header/app-header-compact-logo-dark.png"
-    alt="Example showing the compact logo layout construction."
-    border
-  />
+  src="/img/patterns/app-header/app-header-compact-logo.png"
+  srcDark="/img/patterns/app-header/app-header-compact-logo-dark.png"
+  alt="Example showing the compact logo layout construction."
+  border
+/>
 
 <Callout status="success" title="Best practices">
+
 - Always place the logo on the top-left corner of the application.
 - You can place a title or app name in text form next to the logo.
-- Link the logo to the app home page. 
+- Link the logo to the app home page.
 - The logo should give users a sense of place while providing a large enough clickable target area.
+
 </Callout>
 
 ## Header only
 
-In this layout, the app header is globally persistent. You can use it as standalone navigation for a small number of sections that don’t require secondary navigation. Although this layout provides more horizontal space for content, it has limited space for navigation items, and you may need to use combined navigation for complex hierarchies.
+In this layout, the app header is globally persistent. You can use it as standalone navigation for a small number of sections that do not require secondary navigation. Although this layout provides more horizontal space for content, it has limited space for navigation items, and you may need to use combined navigation for complex hierarchies.
 
-  <Diagram
-    src="/img/patterns/app-header/app-header-only.png"
-    srcDark="/img/patterns/app-header/app-header-only-dark.png"
-    alt="Example of the header-only variant."
-    border
-  />
+<Diagram
+  src="/img/patterns/app-header/app-header-only.png"
+  srcDark="/img/patterns/app-header/app-header-only-dark.png"
+  alt="Example of the header-only variant."
+  border
+/>
 
 ## Header with vertical navigation
 
-The app header with vertical navigation offers an additional layer of hierarchy. This layout allows users to navigate complex structures and perform system and product tasks in the UI. Under this configuration, submenus can remain on display without interfering with the content. For more details about navigation hierarchy, visit the [navigation pattern](./navigation).  
+The app header with vertical navigation offers an additional layer of hierarchy. This layout allows users to navigate complex structures and perform system and product tasks in the UI. Under this configuration, submenus can remain on display without interfering with the content. For more details about navigation hierarchy, visit the [navigation pattern](/salt/patterns/navigation). The example below pairs an app header with vertical navigation.
 
-  <Diagram
-    src="/img/patterns/app-header/app-header-vertical-navigation.png"
-    srcDark="/img/patterns/app-header/app-header-vertical-navigation-dark.png"
-    alt="Header paired with vertical navigation."
-    caption="An app header paired with vertical navigation."
-    border
-  />
+<Diagram
+  src="/img/patterns/app-header/app-header-vertical-navigation.png"
+  srcDark="/img/patterns/app-header/app-header-vertical-navigation-dark.png"
+  alt="Header paired with vertical navigation."
+  caption="An app header paired with vertical navigation."
+  border
+/>
 
 ## Responsive behavior
 
-The app header is responsive to the width of the application viewport and responds dynamically to the [Salt breakpoints](/salt/foundations/responsiveness#breakpoints). As the app header scales down to fit smaller viewports, its elements adjust dynamically to provide the best possible user experience. 
+The app header is responsive to the width of the application viewport and responds dynamically to the [Salt breakpoints](/salt/foundations/responsiveness/breakpoints). As the app header scales down to fit smaller viewports, its elements adjust dynamically to provide the best possible user experience.
 
-For small viewport experiences, the app logo remains visible, while navigation and utility actions collapse into a hamburger menu positioned to the left of the brand logo. The navigation items will sit on top of the utility actions in the hierarchy of the vertical navigation. 
+For small viewport experiences, the app logo remains visible, while navigation and utility actions collapse into a hamburger menu positioned to the left of the brand logo. The navigation items sit above the utility actions in the hierarchy of the vertical navigation.
 
 ### Desktop
 
-  <Diagram
-    src="/img/patterns/app-header/app-header-responsive-behavior-desktop.png"
-    srcDark="/img/patterns/app-header/app-header-responsive-behavior-desktop-dark.png"
-    alt="App header with desktop layout for medium, large and extra large viewport experiences."
-    caption="App header with desktop layout for medium, large and extra large viewport experiences."
-    border
-  />
+<Diagram
+  src="/img/patterns/app-header/app-header-responsive-behavior-desktop.png"
+  srcDark="/img/patterns/app-header/app-header-responsive-behavior-desktop-dark.png"
+  alt="App header with desktop layout for medium, large and extra large viewport experiences."
+  caption="App header with desktop layout for medium, large and extra large viewport experiences."
+  border
+/>
 
 ### Mobile
 
-  <Diagram
-    src="/img/patterns/app-header/app-header-responsive-behavior-mobile.png"
-    srcDark="/img/patterns/app-header/app-header-responsive-behavior-mobile-dark.png"
-    alt="App header with mobile layout for extra small and small viewport experiences."
-    caption="App header with mobile layout for extra small and small viewport experiences."
-    border
-  />
+<Diagram
+  src="/img/patterns/app-header/app-header-responsive-behavior-mobile.png"
+  srcDark="/img/patterns/app-header/app-header-responsive-behavior-mobile-dark.png"
+  alt="App header with mobile layout for extra small and small viewport experiences."
+  caption="App header with mobile layout for extra small and small viewport experiences."
+  border
+/>
 
 <Callout status="success" title="Best practices">
- - Navigation items sit on top of the utility actions in the hierarchy of the hamburger menu.
- - If a search utility action is part of the app header, keep search functionality persistently available for small viewports. 
- - Consider medium, large and extra large [Salt breakpoints](/salt/foundations/responsiveness#breakpoints) for desktop experiences. 
- - Consider extra small and small [Salt breakpoints](/salt/foundations/responsiveness#breakpoints) for mobile experiences.
-</Callout>
 
+- Navigation items sit on top of the utility actions in the hierarchy of the hamburger menu.
+- If a search utility action is part of the app header, keep search functionality persistently available for small viewports.
+- Consider medium, large and extra large [Salt breakpoints](/salt/foundations/responsiveness/breakpoints) for desktop experiences.
+- Consider extra small and small [Salt breakpoints](/salt/foundations/responsiveness/breakpoints) for mobile experiences.
+
+</Callout>
 
 ## Sticky header position
 
-The app header should sit in the north region, above the main, in a sticky position while the user scrolls down the page. This increases the discoverability of the elements in the header, where users can quickly access the navigation and utility actions elements without scrolling up to the top of the page. 
+The app header should sit in the north region, above the main, in a sticky position while the user scrolls down the page. This increases the discoverability of the elements in the header, where users can quickly access the navigation and utility actions elements without scrolling up to the top of the page.
 
-  <Diagram
-    src="/img/patterns/app-header/app-header-sticky-position.png"
-    srcDark="/img/patterns/app-header/app-header-sticky-position-dark.png"
-    alt="The header stays in place while the user scrolls."
-    caption="The header stays in place while the user scrolls."
-    border
-  />
+<Diagram
+  src="/img/patterns/app-header/app-header-sticky-position.png"
+  srcDark="/img/patterns/app-header/app-header-sticky-position-dark.png"
+  alt="The header stays in place while the user scrolls."
+  caption="The header stays in place while the user scrolls."
+  border
+/>
 
 ## Bypass app header
 
 If you're implementing a complex app header with several navigation items and utility actions, you should precede those header components with a skip link. This enables keyboard and screen reader users to shift focus quickly to the main page content and navigate your application more efficiently.
 
-  <Diagram
-    src="/img/patterns/app-header/app-header-bypass-behavior.png"
-    srcDark="/img/patterns/app-header/app-header-bypass-behavior-dark.png"
-    alt="Example of the 'Skip to content' link in the app header."
-    caption="Example of the 'Skip to content' link in the app header."
-    border
-  />
+<Diagram
+  src="/img/patterns/app-header/app-header-bypass-behavior.png"
+  srcDark="/img/patterns/app-header/app-header-bypass-behavior-dark.png"
+  alt="Example of the 'Skip to content' link in the app header."
+  caption="Example of the 'Skip to content' link in the app header."
+  border
+/>
 
 :fragment{src="./fragments/feedback.mdx"}
