@@ -89,6 +89,11 @@ For a Legacy theme application using `SaltProvider`, use a nested
 `SaltProvider` instead. Keep the provider type consistent so the region uses
 the application's theme with its selected mode.
 
+A nested provider inherits the application's theme, density and other settings,
+but not custom breakpoints. If your application sets `breakpoints`, pass the
+same value to the nested provider so responsive layouts in the region match the
+rest of the page.
+
 For page and embedded application backgrounds, see
 [Application backgrounds](/salt/getting-started/application-backgrounds).
 

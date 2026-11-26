@@ -60,13 +60,14 @@ Follow [Content status guidance for loading and recovery](/salt/patterns/content
 
 An analytical dashboard is easiest to build when the named regions are explicit and the shell layout is separated from the main content area.
 
-1. **Dashboard header**: The top region introduces the context of the dashboard and can contain branding, status, or summary actions.
-2. **Key metrics**: A compact strip of metric cards or metrics highlights the most important values first.
-3. **Fixed controls or filters**: Persistent controls sit outside the main body so the user can refine the data without losing context.
-4. **Main analytical body**: The main content area contains charts, tables, or other widgets that provide the detailed analysis.
+1. **Main analytical body**: The main content area contains charts, tables, or other data visualization widgets, usually in a [`Card`](/salt/components/card), that provide the detailed analysis.
+2. **Fixed controls or filters**: Persistent controls, such as date range selectors, dropdowns, checkboxes, and search, sit outside the main body so the user can refine the data without losing context.
+3. **Key metrics**: A compact strip of metric cards or metrics highlights the most important values and key performance indicators (KPIs) first.
+4. **Export and share actions**: Buttons or icons let users export data and reports in formats such as CSV or PDF, and share the dashboard with others.
 
 Other features typically found in an analytical dashboard include:
 
+- **Dashboard header**: The top region introduces the context of the dashboard and can contain branding, status, or summary actions. See [Header region](#header-region).
 - **Data grid or table**: Table supports application-filtered rows and cell actions. Use Data grid for integrated grid interactions.
 - **Tooltip**: Offer the ability to drill down into more granular data from summary views and view additional information. Users should have access to specific data points and their underlying details.
 - **Text**: Clearly display information about the data sources, update frequency, and any disclaimers related to data accuracy.

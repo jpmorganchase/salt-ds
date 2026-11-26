@@ -31,7 +31,7 @@ Use this pattern to help users
 
 - When users already know the destination and only need a direct navigation control, use a link, button, or navigation item instead.
 - When the task is filtering a visible data set in place, use filters or a data grid instead of Search.
-- When the scope is a small, fixed set of options, use a Combo box or Select control instead of Search.
+- When the scope is a small, fixed set of options, use [Dropdown](/salt/components/dropdown) or [Combo box](/salt/components/combo-box) instead of Search. See [Choosing a selection control](/salt/components/list-box/usage#choosing-a-selection-control).
 
 ## How to build
 
@@ -39,8 +39,8 @@ Use this pattern to help users
 
 Choosing a suggestion and submitting a free-text query are separate actions:
 
-- When the suggestion list is open and an enabled suggestion is active, **Enter** chooses that active suggestion. It does not always choose the first result. Users can change the active suggestion with the arrow keys or choose a result directly.
-- If free-text search is supported and no suggestion is active, **Enter** can submit the typed query to a results page. A dedicated **Search** button can also explicitly submit that query.
+- When the suggestion list is open and an enabled suggestion is active, **Enter** chooses that active suggestion. As the user types, `ComboBox` makes the first matching suggestion active, so **Enter** chooses it unless the user moves to another suggestion with the arrow keys or chooses a result directly.
+- If free-text search is supported, **Enter** submits the typed query only when no suggestion is active, such as when no suggestions match. Provide a dedicated **Search** button, or a "Search for" option at the top of the suggestions, so users can always submit the text they typed.
 - The host application owns navigation and query submission. Selecting a suggestion must not also submit the text query or trigger a second navigation.
 
 Use [`ComboBox`](/salt/components/combo-box) selection callbacks for choosing a suggestion, and keep query submission separate. Follow [List filtering](/salt/patterns/list-filtering#focus-and-result-updates) for focus, asynchronous updates, and result feedback.
@@ -207,7 +207,7 @@ In addition to returning matching results in the menu, use free text search capa
 
 ### Direct submission
 
-When no suggestion is active, pressing **Enter** submits the typed query if the application supports free-text search. If a suggestion is active, Enter chooses it instead.
+When no suggestion is active, such as when no suggestions match, pressing **Enter** submits the typed query if the application supports free-text search. If a suggestion is active, Enter chooses it instead; because `ComboBox` makes the first match active as the user types, also provide a **Search** button or a "Search for" option for submitting the typed text.
 
 </Diagram>
 

@@ -64,6 +64,8 @@ Salt’s breakpoints and column counts are optimized for the layout of Salt comp
 Salt names the breakpoints `xs`, `sm`, `md`, `lg` and `xl`, starting at 0, 600,
 960, 1280 and 1920 pixels. Change them with `SaltProvider`'s
 [`breakpoints` prop](/salt/components/salt-provider/examples#breakpoints).
+Nested providers don't inherit custom breakpoints, so pass the same value to
+each nested provider.
 Breakpoints follow the width of the browser window, not the space a component
 has, so a layout in a narrow panel still uses the window's breakpoint.
 

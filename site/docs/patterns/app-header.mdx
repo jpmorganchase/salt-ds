@@ -32,6 +32,12 @@ Use it when the page needs:
 - application-wide navigation or utility actions
 - a compact top bar that stays visible while the user scrolls
 
+## When not to use
+
+- When the header is not globally persistent, use a smaller section header or page title instead.
+- When the navigation needs multiple levels and the shell is primarily a sidebar, use [Vertical navigation](/salt/patterns/vertical-navigation) as the main navigation surface.
+- When the page only needs branding without app-wide actions, use a simpler brand lockup instead of a full header.
+
 ## How to build
 
 ### Anatomy
@@ -75,12 +81,6 @@ The app header has three functional areas that should remain recognizable in bot
     alt="Mobile app header layout: a row stack layout with the menu button and logo, and a drawer holding navigation items and utility actions."
     border
   />
-
-## When not to use
-
-- When the header is not globally persistent, use a smaller section header or page title instead.
-- When the navigation needs multiple levels and the shell is primarily a sidebar, use [Vertical navigation](/salt/patterns/vertical-navigation) as the main navigation surface.
-- When the page only needs branding without app-wide actions, use a simpler brand lockup instead of a full header.
 
 ### Logo treatment
 
