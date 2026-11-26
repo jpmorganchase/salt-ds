@@ -10,28 +10,25 @@ data:
 
 ## Best practices
 
-Improve accessibility by customizing the `aria-label` prop to provide additional context. For example:
+Improve accessibility by customizing the aria-label prop to provide additional context. For example:
 
-```jsx
-<Stepper aria-label="Onboarding Process steps">
-  <Step label="Step 1" stage="completed" />
-  <Step label="Step 2" stage="inprogress" />
-  <Step label="Step 3" stage="pending" />
-</Stepper>
-```
+- Each Step must expose its stage (completed / in-progress / pending) and label as programmatically-determined state, not conveyed by icon or color alone
+
+For compact stepper:
+
+- completed: visually-hidden text (e.g., "Step 6 of 6: Step title, completed")
+- active: visible text (e.g., "Step 2 of 6: Step title")
+- pending: visually-hidden text (e.g., "Step 1 of 6: Step title, pending")
 
 ## Keyboard interactions
 
-Keyboard interactions apply to only Steppers with steps with nested substeps.
-In those cases the parent step renders automatically a button that allows
-for expanding or collapsing the substeps.
+Keyboard interactions apply to only Steppers with steps with nested substeps. In those cases the parent step renders automatically a button that allows for expanding or collapsing the substeps.
 
 <KeyboardControls>
 <KeyboardControl keyOrCombos="Tab">
 
 - Moves the focus down to the next expand button.
-- By default all steps with substeps are collapsed, meaning only top level
-  expand buttons will be focusable. Initially the top most step will be focused.
+- By default all steps with substeps are collapsed, meaning only top level expand buttons will be focusable.
 - If the substeps contain more substeps, the focus will move to the inside steps only if the parent is expanded.
 
 </KeyboardControl>
@@ -42,7 +39,7 @@ for expanding or collapsing the substeps.
 </KeyboardControl>
 <KeyboardControl keyOrCombos="Enter / Space">
 
-- Applicable to only steps with substeps. Those steps are in the collapsed state by default. Using this action on an the arrow button expands or collapses the step.
+- Applicable to only steps with substeps. Those steps are in the collapsed state by default. Using this action on the arrow button expands or collapses the step.
 
 </KeyboardControl>
 </KeyboardControls>

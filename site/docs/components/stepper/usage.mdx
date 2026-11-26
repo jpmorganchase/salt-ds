@@ -8,21 +8,34 @@ data:
   $ref: ./#/data
 ---
 
-## Using the components
+| Aspect     | Step count  | Space available    | Layout        | Expandable | Title               | Descriptions  |
+| ---------- | ----------- | ------------------ | ------------- | ---------- | ------------------- | ------------- |
+| Horizontal | 3-6 optimal | Wide layouts       | Left-to-right | No         | Concise (1-2 words) | Below steps   |
+| Vertical   | Any count   | Normal/Constrained | Top-to-bottom | Yes        | Can be long         | Beside steps  |
+| Compact    | Any count   | Very tight/minimal | Inline        | No         | Concise             | Below tracker |
 
-### When to use
+## When to use
 
-- When there are separate steps within a process, such as a wizard or a multi-step form.
-- When you want to split a process into distinct, bite-sized sections that are less daunting than lengthy forms.
+- Horizontal stepper: for wide layouts and desktop applications where you want to show all steps simultaneously and let users scan progress at a glance; best with 3–6 steps, relatively basic flows and no nested substeps.
+- Vertical stepper: for step-by-step guided experiences that need detailed, multi-line descriptions per step, or expandable (accordion-style) step content; works well with longer label text. Use it for longer, more complex linear flows, where steps benefit from being broken down into more digestible groups.
+- Compact stepper: Use Compact Stepper exclusively in dedicated, constrained viewports or linear forms where a simplified progress indicator is required from the start across all supported screen sizes
 
-### When not to use
+## When not to use
 
-- When there are fewer than three steps in a process.
-- As navigation; users cannot interact with the steps.
+- Horizontal stepper
+  - Avoid in sidebars/panels or narrow containers; it should only be placed above form/page content, not within constrained-width regions.
+  - Do not swap Horizontal Stepper with Compact Stepper at smaller viewports/media queries. Dropping step names, descriptions, and statuses upon screen resize or browser zoom (320px / 400% zoom) constitutes an accessibility failure under WCAG 1.4.10 Reflow (Loss of Information).
+  - Avoid for longer or more complex flows, or flows with substeps. Instead, use a vertical stepper.
+- Vertical stepper
+  - Avoid when horizontal space is abundant and steps have minimal content; the extra vertical real estate isn't justified for short, simple step sequences. It should ideally be used in a 2 column page layout
+- Compact stepper
+  - Avoid when step descriptions or expandable substeps are needed; its condensed format drops detail, so use Horizontal or Vertical instead when more context per step is required
+  - Do not use Compact Stepper as a downscaled responsive breakpoint fallback for Horizontal Stepper unless an accessible progressive disclosure pattern (such as an expandable step directory) is provided to prevent loss of step information under WCAG 1.4.10
 
 ## Content
 
-Step labels never truncate, only wrap. Therefore, ensure they're short and self-explanatory.
+- Pass plain text to `label` and `description`. They're combined into the text that screen readers announce, so other content, such as an element, isn't announced correctly.
+- Labels and descriptions wrap and never truncate.
 
 ## Import
 
@@ -30,6 +43,12 @@ To import `Stepper` and `Step` from the core Salt package, use:
 
 ```js
 import { Stepper, Step } from "@salt-ds/core";
+```
+
+To import `CompactStepper` and `CompactStep` from the lab Salt package, use:
+
+```js
+import { CompactStepper, CompactStep } from "@salt-ds/lab";
 ```
 
 ## Props
@@ -41,3 +60,11 @@ import { Stepper, Step } from "@salt-ds/core";
 ### `Step`
 
 <PropsTable packageName="core" componentName="Step" />
+
+### `CompactStepper`
+
+<PropsTable packageName="lab" componentName="CompactStepper" />
+
+### `CompactStep`
+
+<PropsTable packageName="lab" componentName="CompactStep" />

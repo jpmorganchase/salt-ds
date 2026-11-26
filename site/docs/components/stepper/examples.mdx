@@ -8,47 +8,93 @@ data:
   $ref: ./#/data
 ---
 
-## Orientation
+## Horizontal
 
-### Horizontal (default)
+Horizontal stepper displays a sequence of steps arranged left-to-right, letting users see overall progress through a multi-step process at a glance. Steps are not interactive or navigable.
+
+Steps share the available width equally, and each label is centered below its icon.
+
+Use a horizontal stepper for relatively basic flows with up to six steps and no substeps. For longer or more complex flows, use a vertical stepper. See [when to use](/salt/components/stepper/usage#when-to-use).
 
 <LivePreview componentName="stepper" exampleName="Horizontal" />
 
-### Vertical
+## Vertical
+
+Vertical stepper displays steps in a column, stacked top-to-bottom, letting users see overall progress through a multi-step process at a glance; steps are not interactive or navigable. Labels are left aligned, next to their icons. Set `orientation="vertical"` on `Stepper` to use it.
+
+Use a vertical stepper for longer, more complex linear flows, where steps benefit from being broken down into more digestible groups. See [nested steps](#nested-steps).
 
 <LivePreview componentName="stepper" exampleName="Vertical" />
 
-## Stage + Status
+## With descriptions
 
-<LivePreview componentName="stepper" exampleName="StageStatus" />
+Use the `description` prop on `Step` to add supporting text to a step. The description appears below the label, with the same alignment.
 
-The `Step` component's appearance depends on its `stage` and `status` props.
-When both are set, `status` takes precedence over `stage`. These props control:
+<LivePreview componentName="stepper" exampleName="WithDescriptions" />
 
-- Icon selection
-- Description text color
-- Track (connector) style
+## Compact stepper
 
-## Nested Steps
+Compact stepper condenses progress into a single track with a current-step label. Use Compact Stepper exclusively in dedicated, constrained viewports or linear forms where a simplified progress indicator is required from the start across all supported screen sizes. It is not interactive or navigable.
 
-The `Stepper` component supports nested steps when used in vertical orientation.
-You can nest `Step` components within other `Step` components to create hierarchical step structures.
+Do not use Compact Stepper as a downscaled responsive breakpoint fallback for Horizontal Stepper unless an accessible progressive disclosure pattern is provided.
 
-### Behavior
+<LivePreview componentName="stepper" exampleName="Compact" />
 
-- When nesting steps, the parent `Step` automatically renders a new `Stepper` containing its child steps
+## Nested steps
+
+In a vertical stepper, add `Step` elements as children of a step to give it substeps. You can nest steps up to two levels below the top level.
+
+**Behavior**
+
+- When nesting steps, the parent Step automatically renders a new Stepper containing its child steps
 - An expand/collapse button appears on parent steps to toggle visibility of nested steps
-- Parent steps containing the active child step are automatically set to `inprogress` state
+- In a vertical stepper, set `stage="inprogress"` on a parent step while one of its substeps is active. The track after an in-progress step is solid.
+- When a collapsed step contains the active step, its label uses a bolder font weight.
 
-### Limitations
+**Limitations**
 
 - Nested steps are only supported in vertical orientation
 
-<LivePreview componentName="stepper" exampleName="NestedSteps" />
+<LivePreview componentName="stepper" exampleName="Substeps" />
 
-## Controlled Stepper
+_Vertical stepper + Multistep stepper_
 
-The `Stepper` and `Step` component are primarily presentational components.
-If you want to control the state of the `Stepper` you can use a custom hook.
+## Controlled stepper
 
-<LivePreview componentName="stepper" exampleName="Reducer" />
+The Stepper and Step components are primarily presentational components.
+
+The Stepper itself shows linear progress only and does not include navigation buttons (like the Previous/Next shown below); if your use case requires navigation, it should be implemented and maintained by application teams.
+
+Set `stage="inprogress"` on a parent step when any of its substeps are started but not completed, including when the user has moved to another step.
+
+<LivePreview componentName="stepper" exampleName="UpdatingProgress" />
+
+_Horizontal controlled stepper_
+
+<LivePreview componentName="stepper" exampleName="UpdatingSubsteps" />
+
+_Vertical controlled stepper_
+
+## Stage + Status
+
+The Step component's appearance depends on its stage and status props. When both are set, status takes precedence over stage.
+
+### Stage
+
+Use the `stage` prop on `Step` to show the user's progress on that step. A step is `"pending"` by default.
+
+- `"completed"`: the user has finished the step.
+- `"active"`: the step the user is on. Its label uses a bolder font weight.
+- `"pending"`: the user hasn't reached the step yet.
+- `"locked"`: the step displays a lock icon.
+
+The track after a completed step is solid. The track after an active, pending or locked step is dotted.
+
+### Status
+
+Set `status="warning"` or `status="error"` on `Step` to show that a step needs attention. The status replaces the stage's icon and changes the color of the description. The label and the track still follow the `stage`.
+
+- An error indicates a critical issue that users must resolve before they proceed. `Stepper` doesn't prevent users from moving to the next step, so your application must handle this. See the [wizard pattern](/salt/patterns/wizard#error).
+- A warning highlights a potential issue that users can choose to resolve. They can proceed without resolving it.
+
+<LivePreview componentName="stepper" exampleName="StageAndStatus" />
