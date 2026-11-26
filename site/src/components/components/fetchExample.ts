@@ -10,11 +10,8 @@ export default async function fetchExample(
       ElementType
     >
   )[exampleName];
-  const sourceCode = (
-    (await import(
-      `../../examples/${componentName}/${exampleName}.tsx?raw`
-    )) as Record<string, string>
-  ).default;
-
-  return { Example, sourceCode };
+  if (!Example) {
+    throw new Error(`${componentName} has no example named ${exampleName}`);
+  }
+  return Example;
 }
