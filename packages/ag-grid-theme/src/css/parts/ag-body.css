@@ -296,6 +296,9 @@
 
   background-color: var(--salt-status-error-foreground-decorative);
   content: "";
+  /* Chrome and Edge before 120 only support the prefixed mask */
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6' %3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3 6C4.65685 6 6 4.65685 6 3C6 1.34315 4.65685 0 3 0C1.34315 0 0 1.34315 0 3C0 4.65685 1.34315 6 3 6Z' /%3E%3C/svg%3E")
+    no-repeat 50% 50%;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6' %3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3 6C4.65685 6 6 4.65685 6 3C6 1.34315 4.65685 0 3 0C1.34315 0 0 1.34315 0 3C0 4.65685 1.34315 6 3 6Z' /%3E%3C/svg%3E")
     no-repeat 50% 50%;
 }
@@ -371,6 +374,8 @@
 
   background-color: var(--salt-status-warning-foreground-decorative);
   content: "";
+  /* Chrome and Edge before 120 only support the prefixed mask */
+  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6' %3E%3Cpath d='M0 6L3 0L6 6H0Z' /%3E%3C/svg%3E") no-repeat 50% 50%;
   mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 6 6' %3E%3Cpath d='M0 6L3 0L6 6H0Z' /%3E%3C/svg%3E") no-repeat 50% 50%;
 }
 
@@ -445,6 +450,9 @@
 
   background-color: var(--salt-status-success-foreground-decorative);
   content: "";
+  /* Chrome and Edge before 120 only support the prefixed mask */
+  -webkit-mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.51878 8.36782L10.7368 1.1499L11.9742 2.38735L3.51877 10.8427L0.0299988 7.35389L1.26744 6.11646L3.51878 8.36782Z' /%3E%3C/svg%3E%0A")
+    no-repeat 50% 50%;
   mask: url("data:image/svg+xml,%3Csvg viewBox='0 0 12 12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M3.51878 8.36782L10.7368 1.1499L11.9742 2.38735L3.51877 10.8427L0.0299988 7.35389L1.26744 6.11646L3.51878 8.36782Z' /%3E%3C/svg%3E%0A")
     no-repeat 50% 50%;
 }

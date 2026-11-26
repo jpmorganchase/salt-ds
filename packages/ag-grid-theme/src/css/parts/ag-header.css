@@ -565,7 +565,12 @@
 }
 
 /* Make filter and menu icon apart, to accomodate hover effects above */
-.ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-menu-icon {
+.ag-theme-salt .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-menu-icon,
+.ag-theme-salt-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-menu-icon,
+.ag-theme-salt-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-menu-icon,
+.ag-theme-salt-compact .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-menu-icon,
+.ag-theme-salt-compact-light .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-menu-icon,
+.ag-theme-salt-compact-dark .ag-ltr .ag-header-cell:not(.ag-right-aligned-header) .ag-header-menu-icon {
   margin-left: var(--salt-spacing-100);
 }
 
