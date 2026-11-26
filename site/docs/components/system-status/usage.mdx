@@ -33,6 +33,12 @@ We advise against adding too much content to a system status because of potentia
 - To communicate when content is loading. Instead, use the [content status pattern](/salt/patterns/content-status).
 - When the notification requires immediate action and relates to the user’s current task. Instead, use [`Dialog`](../dialog) to interrupt the user's workflow.
 
+### Stacking
+
+A system status doesn't manage other system statuses on the page. If more than one needs to appear at the same time, stack them vertically in order of severity, from top to bottom: error, then warning, then info and success.
+
+Show a maximum of two system statuses at a time. When the user dismisses one, show the next.
+
 ## Content
 
 A system status typically has one or two lines of text. Make content short, clear, and concise, allowing users to quickly understand the situation and/or next steps.
