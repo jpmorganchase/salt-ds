@@ -22,7 +22,7 @@ export const customFilterColumns: ColDef[] = [
   {
     headerName: "Capital",
     field: "capital",
-    filter: "agSetColumnFilter",
+    filter: "agTextColumnFilter",
     suppressHeaderMenuButton: true,
     floatingFilter: true,
   },

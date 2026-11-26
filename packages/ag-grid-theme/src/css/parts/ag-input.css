@@ -1,26 +1,38 @@
 /* INPUT */
+.ag-theme-salt .ag-filter input[class^="ag-"][type="text"],
 .ag-theme-salt-light .ag-filter input[class^="ag-"][type="text"],
 .ag-theme-salt-dark .ag-filter input[class^="ag-"][type="text"],
+.ag-theme-salt-compact .ag-filter input[class^="ag-"][type="text"],
 .ag-theme-salt-compact-light .ag-filter input[class^="ag-"][type="text"],
 .ag-theme-salt-compact-dark .ag-filter input[class^="ag-"][type="text"],
+.ag-theme-salt .ag-filter input[class^="ag-"][type="number"],
 .ag-theme-salt-light .ag-filter input[class^="ag-"][type="number"],
 .ag-theme-salt-dark .ag-filter input[class^="ag-"][type="number"],
+.ag-theme-salt-compact .ag-filter input[class^="ag-"][type="number"],
 .ag-theme-salt-compact-light .ag-filter input[class^="ag-"][type="number"],
 .ag-theme-salt-compact-dark .ag-filter input[class^="ag-"][type="number"],
+.ag-theme-salt .ag-filter input[class^="ag-"][type="date"],
 .ag-theme-salt-light .ag-filter input[class^="ag-"][type="date"],
 .ag-theme-salt-dark .ag-filter input[class^="ag-"][type="date"],
+.ag-theme-salt-compact .ag-filter input[class^="ag-"][type="date"],
 .ag-theme-salt-compact-light .ag-filter input[class^="ag-"][type="date"],
 .ag-theme-salt-compact-dark .ag-filter input[class^="ag-"][type="date"],
+.ag-theme-salt .ag-column-select input[class^="ag-"][type="text"],
 .ag-theme-salt-light .ag-column-select input[class^="ag-"][type="text"],
 .ag-theme-salt-dark .ag-column-select input[class^="ag-"][type="text"],
+.ag-theme-salt-compact .ag-column-select input[class^="ag-"][type="text"],
 .ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="text"],
 .ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="text"],
+.ag-theme-salt .ag-column-select input[class^="ag-"][type="number"],
 .ag-theme-salt-light .ag-column-select input[class^="ag-"][type="number"],
 .ag-theme-salt-dark .ag-column-select input[class^="ag-"][type="number"],
+.ag-theme-salt-compact .ag-column-select input[class^="ag-"][type="number"],
 .ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="number"],
 .ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="number"],
+.ag-theme-salt .ag-column-select input[class^="ag-"][type="date"],
 .ag-theme-salt-light .ag-column-select input[class^="ag-"][type="date"],
 .ag-theme-salt-dark .ag-column-select input[class^="ag-"][type="date"],
+.ag-theme-salt-compact .ag-column-select input[class^="ag-"][type="date"],
 .ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="date"],
 .ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="date"] {
   /* Matching the Figma filter inputs: a bordered Salt Input at --salt-size-base */
@@ -31,48 +43,68 @@
   padding: 0 var(--salt-spacing-100);
 }
 
+.ag-theme-salt .ag-filter input[type="text"]::placeholder,
 .ag-theme-salt-light .ag-filter input[type="text"]::placeholder,
 .ag-theme-salt-dark .ag-filter input[type="text"]::placeholder,
+.ag-theme-salt-compact .ag-filter input[type="text"]::placeholder,
 .ag-theme-salt-compact-light .ag-filter input[type="text"]::placeholder,
 .ag-theme-salt-compact-dark .ag-filter input[type="text"]::placeholder,
+.ag-theme-salt .ag-filter input[type="number"]::placeholder,
 .ag-theme-salt-light .ag-filter input[type="number"]::placeholder,
 .ag-theme-salt-dark .ag-filter input[type="number"]::placeholder,
+.ag-theme-salt-compact .ag-filter input[type="number"]::placeholder,
 .ag-theme-salt-compact-light .ag-filter input[type="number"]::placeholder,
 .ag-theme-salt-compact-dark .ag-filter input[type="number"]::placeholder,
+.ag-theme-salt .ag-column-select input[type="text"]::placeholder,
 .ag-theme-salt-light .ag-column-select input[type="text"]::placeholder,
 .ag-theme-salt-dark .ag-column-select input[type="text"]::placeholder,
+.ag-theme-salt-compact .ag-column-select input[type="text"]::placeholder,
 .ag-theme-salt-compact-light .ag-column-select input[type="text"]::placeholder,
 .ag-theme-salt-compact-dark .ag-column-select input[type="text"]::placeholder,
+.ag-theme-salt .ag-column-select input[type="number"]::placeholder,
 .ag-theme-salt-light .ag-column-select input[type="number"]::placeholder,
 .ag-theme-salt-dark .ag-column-select input[type="number"]::placeholder,
+.ag-theme-salt-compact .ag-column-select input[type="number"]::placeholder,
 .ag-theme-salt-compact-light .ag-column-select input[type="number"]::placeholder,
 .ag-theme-salt-compact-dark .ag-column-select input[type="number"]::placeholder {
   color: var(--salt-content-secondary-foreground);
   opacity: 1;
 }
 
+.ag-theme-salt .ag-filter input[class^="ag-"][type="text"]:focus,
 .ag-theme-salt-light .ag-filter input[class^="ag-"][type="text"]:focus,
 .ag-theme-salt-dark .ag-filter input[class^="ag-"][type="text"]:focus,
+.ag-theme-salt-compact .ag-filter input[class^="ag-"][type="text"]:focus,
 .ag-theme-salt-compact-light .ag-filter input[class^="ag-"][type="text"]:focus,
 .ag-theme-salt-compact-dark .ag-filter input[class^="ag-"][type="text"]:focus,
+.ag-theme-salt .ag-filter input[class^="ag-"][type="number"]:focus,
 .ag-theme-salt-light .ag-filter input[class^="ag-"][type="number"]:focus,
 .ag-theme-salt-dark .ag-filter input[class^="ag-"][type="number"]:focus,
+.ag-theme-salt-compact .ag-filter input[class^="ag-"][type="number"]:focus,
 .ag-theme-salt-compact-light .ag-filter input[class^="ag-"][type="number"]:focus,
 .ag-theme-salt-compact-dark .ag-filter input[class^="ag-"][type="number"]:focus,
+.ag-theme-salt .ag-filter input[class^="ag-"][type="date"]:focus,
 .ag-theme-salt-light .ag-filter input[class^="ag-"][type="date"]:focus,
 .ag-theme-salt-dark .ag-filter input[class^="ag-"][type="date"]:focus,
+.ag-theme-salt-compact .ag-filter input[class^="ag-"][type="date"]:focus,
 .ag-theme-salt-compact-light .ag-filter input[class^="ag-"][type="date"]:focus,
 .ag-theme-salt-compact-dark .ag-filter input[class^="ag-"][type="date"]:focus,
+.ag-theme-salt .ag-column-select input[class^="ag-"][type="text"]:focus,
 .ag-theme-salt-light .ag-column-select input[class^="ag-"][type="text"]:focus,
 .ag-theme-salt-dark .ag-column-select input[class^="ag-"][type="text"]:focus,
+.ag-theme-salt-compact .ag-column-select input[class^="ag-"][type="text"]:focus,
 .ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="text"]:focus,
 .ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="text"]:focus,
+.ag-theme-salt .ag-column-select input[class^="ag-"][type="number"]:focus,
 .ag-theme-salt-light .ag-column-select input[class^="ag-"][type="number"]:focus,
 .ag-theme-salt-dark .ag-column-select input[class^="ag-"][type="number"]:focus,
+.ag-theme-salt-compact .ag-column-select input[class^="ag-"][type="number"]:focus,
 .ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="number"]:focus,
 .ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="number"]:focus,
+.ag-theme-salt .ag-column-select input[class^="ag-"][type="date"]:focus,
 .ag-theme-salt-light .ag-column-select input[class^="ag-"][type="date"]:focus,
 .ag-theme-salt-dark .ag-column-select input[class^="ag-"][type="date"]:focus,
+.ag-theme-salt-compact .ag-column-select input[class^="ag-"][type="date"]:focus,
 .ag-theme-salt-compact-light .ag-column-select input[class^="ag-"][type="date"]:focus,
 .ag-theme-salt-compact-dark .ag-column-select input[class^="ag-"][type="date"]:focus {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
@@ -84,8 +116,10 @@
   The textarea scrolls itself, so the border, corners and focus ring are drawn by the popup around it. The textarea is
   inset from the top and bottom by the corner radius, so its scrollbar isn't clipped by the rounded corners.
 */
+.ag-theme-salt .ag-popup-editor .ag-large-text,
 .ag-theme-salt-light .ag-popup-editor .ag-large-text,
 .ag-theme-salt-dark .ag-popup-editor .ag-large-text,
+.ag-theme-salt-compact .ag-popup-editor .ag-large-text,
 .ag-theme-salt-compact-light .ag-popup-editor .ag-large-text,
 .ag-theme-salt-compact-dark .ag-popup-editor .ag-large-text {
   border: var(--salt-size-fixed-100) var(--salt-borderStyle-solid) var(--salt-selectable-borderColor-selected);
@@ -93,15 +127,19 @@
   padding-block: max(0px, var(--salt-palette-corner, 0px) - var(--salt-size-fixed-100));
 }
 
+.ag-theme-salt .ag-popup-editor .ag-large-text:focus-within,
 .ag-theme-salt-light .ag-popup-editor .ag-large-text:focus-within,
 .ag-theme-salt-dark .ag-popup-editor .ag-large-text:focus-within,
+.ag-theme-salt-compact .ag-popup-editor .ag-large-text:focus-within,
 .ag-theme-salt-compact-light .ag-popup-editor .ag-large-text:focus-within,
 .ag-theme-salt-compact-dark .ag-popup-editor .ag-large-text:focus-within {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
 }
 
+.ag-theme-salt .ag-popup-editor .ag-large-text textarea[class^="ag-"],
 .ag-theme-salt-light .ag-popup-editor .ag-large-text textarea[class^="ag-"],
 .ag-theme-salt-dark .ag-popup-editor .ag-large-text textarea[class^="ag-"],
+.ag-theme-salt-compact .ag-popup-editor .ag-large-text textarea[class^="ag-"],
 .ag-theme-salt-compact-light .ag-popup-editor .ag-large-text textarea[class^="ag-"],
 .ag-theme-salt-compact-dark .ag-popup-editor .ag-large-text textarea[class^="ag-"] {
   border: none;
@@ -110,27 +148,35 @@
   padding: calc(var(--salt-spacing-100) - max(0px, var(--salt-palette-corner, 0px) - var(--salt-size-fixed-100))) var(--salt-spacing-100);
 }
 
+.ag-theme-salt .ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus,
 .ag-theme-salt-light .ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus,
 .ag-theme-salt-dark .ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus,
+.ag-theme-salt-compact .ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus,
 .ag-theme-salt-compact-light .ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus,
 .ag-theme-salt-compact-dark .ag-popup-editor .ag-large-text textarea[class^="ag-"]:focus {
   outline: none;
 }
 
+.ag-theme-salt .ag-autocomplete-list-popup,
 .ag-theme-salt-light .ag-autocomplete-list-popup,
 .ag-theme-salt-dark .ag-autocomplete-list-popup,
+.ag-theme-salt-compact .ag-autocomplete-list-popup,
 .ag-theme-salt-compact-light .ag-autocomplete-list-popup,
 .ag-theme-salt-compact-dark .ag-autocomplete-list-popup {
   border: none;
 }
 
 /* Dropdowns in filters and the paging panel match the filter inputs, with the Salt chevron instead of a triangle */
+.ag-theme-salt .ag-filter .ag-picker-field-wrapper,
 .ag-theme-salt-light .ag-filter .ag-picker-field-wrapper,
 .ag-theme-salt-dark .ag-filter .ag-picker-field-wrapper,
+.ag-theme-salt-compact .ag-filter .ag-picker-field-wrapper,
 .ag-theme-salt-compact-light .ag-filter .ag-picker-field-wrapper,
 .ag-theme-salt-compact-dark .ag-filter .ag-picker-field-wrapper,
+.ag-theme-salt .ag-paging-page-size .ag-picker-field-wrapper,
 .ag-theme-salt-light .ag-paging-page-size .ag-picker-field-wrapper,
 .ag-theme-salt-dark .ag-paging-page-size .ag-picker-field-wrapper,
+.ag-theme-salt-compact .ag-paging-page-size .ag-picker-field-wrapper,
 .ag-theme-salt-compact-light .ag-paging-page-size .ag-picker-field-wrapper,
 .ag-theme-salt-compact-dark .ag-paging-page-size .ag-picker-field-wrapper {
   min-height: var(--salt-size-base);
@@ -139,20 +185,26 @@
   background: var(--salt-editable-primary-background);
 }
 
+.ag-theme-salt .ag-filter .ag-select .ag-icon-small-down::before,
 .ag-theme-salt-light .ag-filter .ag-select .ag-icon-small-down::before,
 .ag-theme-salt-dark .ag-filter .ag-select .ag-icon-small-down::before,
+.ag-theme-salt-compact .ag-filter .ag-select .ag-icon-small-down::before,
 .ag-theme-salt-compact-light .ag-filter .ag-select .ag-icon-small-down::before,
 .ag-theme-salt-compact-dark .ag-filter .ag-select .ag-icon-small-down::before,
+.ag-theme-salt .ag-paging-page-size .ag-select .ag-icon-small-down::before,
 .ag-theme-salt-light .ag-paging-page-size .ag-select .ag-icon-small-down::before,
 .ag-theme-salt-dark .ag-paging-page-size .ag-select .ag-icon-small-down::before,
+.ag-theme-salt-compact .ag-paging-page-size .ag-select .ag-icon-small-down::before,
 .ag-theme-salt-compact-light .ag-paging-page-size .ag-select .ag-icon-small-down::before,
 .ag-theme-salt-compact-dark .ag-paging-page-size .ag-select .ag-icon-small-down::before {
   content: var(--ag-icon-font-code-contracted);
 }
 
 /* The page number input in the pagination panel matches the filter inputs */
+.ag-theme-salt .ag-paging-number input[class^="ag-"][type="number"],
 .ag-theme-salt-light .ag-paging-number input[class^="ag-"][type="number"],
 .ag-theme-salt-dark .ag-paging-number input[class^="ag-"][type="number"],
+.ag-theme-salt-compact .ag-paging-number input[class^="ag-"][type="number"],
 .ag-theme-salt-compact-light .ag-paging-number input[class^="ag-"][type="number"],
 .ag-theme-salt-compact-dark .ag-paging-number input[class^="ag-"][type="number"] {
   box-sizing: border-box;
@@ -164,8 +216,10 @@
 }
 
 /* Leave room for the page size value next to the chevron */
+.ag-theme-salt .ag-paging-panel .ag-paging-page-size .ag-picker-field-wrapper,
 .ag-theme-salt-light .ag-paging-panel .ag-paging-page-size .ag-picker-field-wrapper,
 .ag-theme-salt-dark .ag-paging-panel .ag-paging-page-size .ag-picker-field-wrapper,
+.ag-theme-salt-compact .ag-paging-panel .ag-paging-page-size .ag-picker-field-wrapper,
 .ag-theme-salt-compact-light .ag-paging-panel .ag-paging-page-size .ag-picker-field-wrapper,
 .ag-theme-salt-compact-dark .ag-paging-panel .ag-paging-page-size .ag-picker-field-wrapper {
   min-width: calc(2 * var(--salt-size-base) + var(--salt-spacing-100));
@@ -173,8 +227,10 @@
 }
 
 /* The Filters tool panel search input matches the filter inputs */
+.ag-theme-salt .ag-filter-toolpanel-search input[class^="ag-"][type="text"],
 .ag-theme-salt-light .ag-filter-toolpanel-search input[class^="ag-"][type="text"],
 .ag-theme-salt-dark .ag-filter-toolpanel-search input[class^="ag-"][type="text"],
+.ag-theme-salt-compact .ag-filter-toolpanel-search input[class^="ag-"][type="text"],
 .ag-theme-salt-compact-light .ag-filter-toolpanel-search input[class^="ag-"][type="text"],
 .ag-theme-salt-compact-dark .ag-filter-toolpanel-search input[class^="ag-"][type="text"] {
   box-sizing: border-box;
@@ -186,16 +242,20 @@
   color: var(--salt-content-primary-foreground);
 }
 
+.ag-theme-salt .ag-filter-toolpanel-search input[class^="ag-"][type="text"]:focus,
 .ag-theme-salt-light .ag-filter-toolpanel-search input[class^="ag-"][type="text"]:focus,
 .ag-theme-salt-dark .ag-filter-toolpanel-search input[class^="ag-"][type="text"]:focus,
+.ag-theme-salt-compact .ag-filter-toolpanel-search input[class^="ag-"][type="text"]:focus,
 .ag-theme-salt-compact-light .ag-filter-toolpanel-search input[class^="ag-"][type="text"]:focus,
 .ag-theme-salt-compact-dark .ag-filter-toolpanel-search input[class^="ag-"][type="text"]:focus {
   outline: var(--salt-focused-outlineWidth) var(--salt-focused-outlineStyle) var(--salt-focused-outlineColor);
   outline-offset: calc(-1 * var(--salt-focused-outlineWidth));
 }
 
+.ag-theme-salt .ag-filter-toolpanel-search input[class^="ag-"][type="text"]::placeholder,
 .ag-theme-salt-light .ag-filter-toolpanel-search input[class^="ag-"][type="text"]::placeholder,
 .ag-theme-salt-dark .ag-filter-toolpanel-search input[class^="ag-"][type="text"]::placeholder,
+.ag-theme-salt-compact .ag-filter-toolpanel-search input[class^="ag-"][type="text"]::placeholder,
 .ag-theme-salt-compact-light .ag-filter-toolpanel-search input[class^="ag-"][type="text"]::placeholder,
 .ag-theme-salt-compact-dark .ag-filter-toolpanel-search input[class^="ag-"][type="text"]::placeholder {
   color: var(--salt-content-secondary-foreground);

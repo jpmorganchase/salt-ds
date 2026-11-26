@@ -1,3 +1,6 @@
+import "./registerModules";
+
+export * from "./AutoHeight";
 export * from "./CellValidation";
 export * from "./CheckboxSelection";
 export * from "./Coloration";

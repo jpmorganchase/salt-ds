@@ -1,6 +1,5 @@
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 import iconCss from "./Icons.css";
 
@@ -91,12 +90,8 @@ const Icons = () => {
     window: targetWindow,
   });
 
-  const {
-    containerProps: { className },
-  } = useAgGridHelpers();
-
   return (
-    <div className={className}>
+    <div className="ag-theme-salt">
       {providedIcons.map((x) => (
         <div key={x} className={`ag-icon-${x}`}>
           {x}

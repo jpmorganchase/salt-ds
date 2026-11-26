@@ -2,7 +2,6 @@ import type { DateStringDataTypeDefinition } from "ag-grid-community";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import agProvidedCellEditorsExampleColumns from "../dependencies/agProvidedCellEditorsExampleColumns";
 import { dataGridExampleDataCellEditors } from "../dependencies/dataGridExampleDataCellEditors";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 // https://www.ag-grid.com/javascript-data-grid/cell-data-types/#date-as-string-data-type-definition
 const dateString: DateStringDataTypeDefinition<
@@ -39,12 +38,9 @@ const dateString: DateStringDataTypeDefinition<
 };
 
 export const ProvidedCellEditors = (props: AgGridReactProps) => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         {...props}
         columnDefs={agProvidedCellEditorsExampleColumns}
         rowData={[...dataGridExampleDataCellEditors]}

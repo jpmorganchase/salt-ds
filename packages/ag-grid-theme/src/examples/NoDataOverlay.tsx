@@ -6,7 +6,6 @@ import {
 } from "@salt-ds/core";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 import dataGridExampleColumns from "../dependencies/dataGridExampleColumns";
-import { useAgGridHelpers } from "../dependencies/useAgGridHelpers";
 
 // Assembling a custom Dialog so it's not floating to the center of the full screen.
 const CustomDialog = () => {
@@ -37,12 +36,9 @@ const CustomDialog = () => {
 };
 
 const NoDataOverlay = (props: AgGridReactProps) => {
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
-    <div style={{ height: 800, width: 800 }} {...containerProps}>
+    <div className="ag-theme-salt" style={{ height: 500, width: 800 }}>
       <AgGridReact
-        {...agGridProps}
         {...props}
         columnDefs={dataGridExampleColumns}
         rowData={[]}

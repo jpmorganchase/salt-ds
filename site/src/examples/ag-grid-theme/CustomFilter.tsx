@@ -1,18 +1,15 @@
 import { Button, FlowLayout, StackLayout } from "@salt-ds/core";
-import type { FilterModel } from "ag-grid-community";
+import type { FilterModel, GridApi } from "ag-grid-community";
 import { AgGridReact } from "ag-grid-react";
 import { useState } from "react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { customFilterColumns, defaultData } from "./data";
-import { useAgGridHelpers } from "./useAgGridHelpers";
 
 export const CustomFilter = () => {
   const [savedFilterModel, setSavedFilterModel] = useState<FilterModel | null>(
     null,
   );
-  // We've created a local custom hook to set the rows and column sizes.
-  // refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts
-  const { api, agGridProps, containerProps, isGridReady } = useAgGridHelpers();
+  const [api, setApi] = useState<GridApi>();
 
   const handlePopGt100kClick = async () => {
     await api?.setColumnFilterModel("population", {
@@ -67,25 +64,25 @@ export const CustomFilter = () => {
   return (
     <StackLayout gap={4}>
       <FlowLayout gap={2}>
-        <Button disabled={!isGridReady} onClick={handlePopGt100kClick}>
+        <Button disabled={!api} onClick={handlePopGt100kClick}>
           Pop &gt; 100k
         </Button>
-        <Button disabled={!isGridReady} onClick={handlePopLt100kClick}>
+        <Button disabled={!api} onClick={handlePopLt100kClick}>
           Pop &lt; 100k
         </Button>
-        <Button disabled={!isGridReady} onClick={filterNewYork}>
+        <Button disabled={!api} onClick={filterNewYork}>
           New York
         </Button>
-        <Button disabled={!isGridReady} onClick={saveFilters}>
+        <Button disabled={!api} onClick={saveFilters}>
           Save Filters
         </Button>
         <Button
-          disabled={!isGridReady || savedFilterModel === null}
+          disabled={!api || savedFilterModel === null}
           onClick={restoreFilters}
         >
           Restore Saved Filters
         </Button>
-        <Button disabled={!isGridReady} onClick={clearFilters}>
+        <Button disabled={!api} onClick={clearFilters}>
           Clear Filters
         </Button>
         <Button
@@ -96,12 +93,14 @@ export const CustomFilter = () => {
         </Button>
       </FlowLayout>
 
-      <div {...containerProps}>
+      <div className="ag-theme-salt" style={{ height: 500, width: "100%" }}>
         <AgGridReact
           defaultColDef={{ floatingFilter: true, filter: true }}
           columnDefs={customFilterColumns}
           rowData={defaultData}
-          {...agGridProps}
+          onGridReady={(event) => setApi(event.api)}
+          theme="legacy"
+          autoSizeStrategy={{ type: "fitGridWidth" }}
         />
       </div>
     </StackLayout>

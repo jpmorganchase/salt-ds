@@ -4,13 +4,9 @@ import { clsx } from "clsx";
 import { type SyntheticEvent, useState } from "react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { defaultColumns, defaultData } from "./data";
-import { useAgGridHelpers } from "./useAgGridHelpers";
 
 export const Variants = (props: AgGridReactProps) => {
   const [selected, setSelected] = useState("primary");
-  // We've created a local custom hook to set the rows and column sizes.
-  // refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts
-  const { agGridProps, containerProps } = useAgGridHelpers();
 
   const onChange = (event: SyntheticEvent<HTMLButtonElement>) => {
     setSelected(event.currentTarget.value);
@@ -24,14 +20,16 @@ export const Variants = (props: AgGridReactProps) => {
         <ToggleButton value="tertiary">Tertiary</ToggleButton>
       </ToggleButtonGroup>
       <div
-        {...containerProps}
-        className={clsx(containerProps.className, {
+        className={clsx("ag-theme-salt", {
           "ag-theme-salt-variant-secondary": selected === "secondary",
           "ag-theme-salt-variant-tertiary": selected === "tertiary",
         })}
+        style={{ height: 500, width: "100%" }}
       >
         <AgGridReact
-          {...agGridProps}
+          theme="legacy"
+          autoSizeStrategy={{ type: "fitGridWidth" }}
+          defaultColDef={{ filter: true }}
           {...props}
           rowData={defaultData}
           columnDefs={defaultColumns}

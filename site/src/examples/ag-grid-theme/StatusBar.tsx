@@ -2,7 +2,6 @@ import { Divider, StackLayout, Text } from "@salt-ds/core";
 import { AgGridReact, type AgGridReactProps } from "ag-grid-react";
 // refer to https://github.com/jpmorganchase/salt-ds/tree/main/site/src/examples/ag-grid-theme/data
 import { defaultColumns, defaultData } from "./data";
-import { useAgGridHelpers } from "./useAgGridHelpers";
 
 const CustomClickableStatusBar = () => {
   return (
@@ -35,14 +34,10 @@ const statusBar = {
 };
 
 export const StatusBar = (props: AgGridReactProps) => {
-  // We've created a local custom hook to set the rows and column sizes.
-  // refer to https://github.com/jpmorganchase/salt-ds/blob/main/site/src/examples/ag-grid-theme/useAgGridHelpers.ts
-  const { agGridProps, containerProps } = useAgGridHelpers();
-
   return (
     <>
       <Text>Select rows to enable status bar display</Text>
-      <div {...containerProps}>
+      <div className="ag-theme-salt" style={{ height: 500, width: "100%" }}>
         <AgGridReact
           cellSelection
           rowSelection="multiple"
@@ -56,7 +51,9 @@ export const StatusBar = (props: AgGridReactProps) => {
               }
             });
           }}
-          {...agGridProps}
+          theme="legacy"
+          autoSizeStrategy={{ type: "fitGridWidth" }}
+          defaultColDef={{ filter: true }}
           {...props}
         />
       </div>
