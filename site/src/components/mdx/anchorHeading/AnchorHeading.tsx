@@ -2,6 +2,7 @@ import { LinkedIcon } from "@salt-ds/icons";
 import { clsx } from "clsx";
 import type NextLink from "next/link";
 import type {
+  Attributes,
   ComponentPropsWithoutRef,
   ElementType,
   FC,
@@ -25,7 +26,6 @@ interface TypographyProps {
 }
 
 export interface AnchorHeadingProps extends HTMLProps<HTMLHeadingElement> {
-  children: ReactNode[];
   Component: FC<PropsWithChildren<TypographyProps>>;
   LinkProps?: ComponentPropsWithoutRef<typeof NextLink>;
 }
@@ -53,8 +53,8 @@ export const AnchorHeading: FC<PropsWithChildren<AnchorHeadingProps>> = ({
   );
 };
 
-type WithAnchorHeadingProps = JSX.IntrinsicAttributes &
-  AnchorHeadingProps & { children?: ReactNode };
+type WithAnchorHeadingProps = Attributes &
+  Omit<AnchorHeadingProps, "Component">;
 
 export const withAnchorHeading =
   (Component: FC<PropsWithChildren<TypographyProps>>) =>

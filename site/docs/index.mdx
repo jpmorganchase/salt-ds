@@ -16,6 +16,7 @@ data:
 
 <QuickLinks
   columns={{ xs: 1, md: 2 }}
+  prefetch={false}
   links={[
     {
       title: "Foundations",
@@ -88,7 +89,7 @@ data:
 
 ## How to find help
 
-<QuickLinks columns={{ md: 3, xs: 1 }} >
+<QuickLinks className="saltLandingHelp" columns={{ md: 3, xs: 1 }} >
     
   <QuickLink title="J.P. Morgan internal resources" action="Visit Salt's internal site" href="https://go/salt-ds">
     A wealth of information for JPM employees, including OKRs, migration guides, updates, training and shared patterns.
@@ -106,7 +107,11 @@ data:
 
 ## Latest updates
 
-<ArticleCards columns={{ xs: 1, sm: 2 }} gap={{ md: 3, xs: 1 }}>
+<ArticleCards
+  className="saltLandingUpdates"
+  columns={{ xs: 1, sm: 2 }}
+  gap={{ md: 3, xs: 1 }}
+>
   {meta.data.latestUpdates
     .sort((a, b) => b.lastModifiedDate - a.lastModifiedDate)
     .slice(0, 2)

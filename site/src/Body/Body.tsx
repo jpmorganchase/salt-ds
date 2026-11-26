@@ -1,85 +1,29 @@
-import { useRouter } from "next/router";
-import { MDXRemote } from "next-mdx-remote";
-import { type ReactNode, useEffect } from "react";
-import {
-  ErrorBoundary,
-  type FallbackProps,
-  getErrorMessage,
-  useErrorBoundary,
-} from "react-error-boundary";
+"use client";
+
+import { useRoute } from "@jpmorganchase/mosaic-store";
+import { MDXClient } from "next-mdx-remote-client";
+import type { SerializeResult } from "next-mdx-remote-client/serialize";
+import { ErrorBoundary } from "react-error-boundary";
 import styles from "../layouts/Base/Base.module.css";
-import { Page404 } from "./404";
 import { Page500 } from "./500";
+import { mdxComponents } from "./mdxComponents";
 
-const DefaultFallBackComponent = ({ error }: FallbackProps) => {
-  const router = useRouter();
-  const { resetBoundary } = useErrorBoundary();
+/** Keep Salt's MDX registry in the client graph and compilation on the server. */
+export function Body({ source }: { source: SerializeResult }) {
+  const { route } = useRoute();
+  if ("error" in source) throw source.error;
 
-  useEffect(() => {
-    const handleRouteChange = () => {
-      resetBoundary();
-    };
-
-    router.events.on("routeChangeComplete", handleRouteChange);
-
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-    };
-  }, [router, resetBoundary]);
-  console.error("An un-handled error created a 500 message");
-  console.error(getErrorMessage(error) ?? "unknown");
-  return <Page500 />;
-};
-
-function MDXRemoteWithErrorBoundary({
-  components,
-  source,
-  meta = {},
-}: {
-  components: any;
-  source: { compiledSource: string; frontmatter: Record<string, unknown> };
-  meta: Record<string, unknown>;
-}) {
   return (
-    <ErrorBoundary FallbackComponent={DefaultFallBackComponent}>
-      <MDXRemote components={components} lazy {...source} scope={{ meta }} />
-    </ErrorBoundary>
+    <div className={styles.contentWrapper}>
+      <ErrorBoundary
+        fallbackRender={({ resetErrorBoundary }) => (
+          <Page500 retry={resetErrorBoundary} />
+        )}
+        onError={console.error}
+        resetKeys={[route]}
+      >
+        <MDXClient {...source} components={mdxComponents} />
+      </ErrorBoundary>
+    </div>
   );
-}
-
-export function Body({
-  components = {},
-  type,
-  ...props
-}: {
-  components: any;
-  type: string;
-  show404?: boolean;
-  show500?: boolean;
-  content?: ReactNode;
-  source: { compiledSource: string; frontmatter: Record<string, unknown> };
-}) {
-  if (props.show404) {
-    return <Page404 />;
-  }
-  if (props.show500) {
-    return <Page500 />;
-  }
-
-  if (type === "mdx") {
-    return (
-      <div className={styles.contentWrapper}>
-        <MDXRemoteWithErrorBoundary
-          components={components}
-          source={props.source}
-          meta={props.source.frontmatter}
-        />
-      </div>
-    );
-  }
-  // If file is JSON, we expect it to have a `content` attr
-  if (type === "json") {
-    return <div className={styles.contentWrapper}>{props.content}</div>;
-  }
-  return <div className={styles.contentWrapper}>Unsupported file type</div>;
 }

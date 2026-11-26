@@ -3,13 +3,16 @@
 
 # Misc
 .DS_Store
+.env*.local
 
 # Generated files
 /.tmp/
 /.next/
+/tsconfig.tsbuildinfo
 next-env.d.ts
 /snapshots/
 /public/sitemap.xml
 /public/search-data.json
+/public/search-records.json
 /src/props/*.json
 /src/components/css-display/*.json

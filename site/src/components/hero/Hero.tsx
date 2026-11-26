@@ -14,7 +14,8 @@ export function Hero() {
         alt=""
         src={background}
         fill
-        priority
+        loading="eager"
+        fetchPriority="high"
       />
       <div className={styles.content}>
         <div className={styles.eyebrow}>

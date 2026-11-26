@@ -2,8 +2,62 @@
   "extends": "../tsconfig.json",
   "compilerOptions": {
     "jsx": "preserve",
-    "incremental": true
+    "incremental": true,
+    "types": ["node", "react", "react-dom"],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ],
+    "paths": {
+      "~browser-test-utils/*": ["../test/browser/*"],
+      "~storybook-decorators/*": ["../.storybook/decorators/*"],
+      "~stories/*": [
+        "../packages/ag-grid-theme/stories/*",
+        "../packages/core/stories/*",
+        "../packages/countries/stories/*",
+        "../packages/date-components/stories/*",
+        "../packages/icons/stories/*",
+        "../packages/lab/stories/*",
+        "../packages/embla-carousel/stories/*",
+        "../packages/theme/stories/*"
+      ],
+      "@salt-ds/ag-grid-theme/salt-ag-theme.css": [
+        "../packages/ag-grid-theme/src/salt-ag-theme.css"
+      ],
+      "@salt-ds/core": ["../packages/core/src/index.ts"],
+      "@salt-ds/countries": ["../packages/countries/src/index.ts"],
+      "@salt-ds/date-adapters": ["../packages/date-adapters/src/index.ts"],
+      "@salt-ds/date-adapters/*": [
+        "../packages/date-adapters/src/*-adapter/index.ts"
+      ],
+      "@salt-ds/date-components": ["../packages/date-components/src/index.ts"],
+      "@salt-ds/embla-carousel": ["../packages/embla-carousel/src/index.ts"],
+      "@salt-ds/highcharts-theme": [
+        "../packages/highcharts-theme/src/index.ts"
+      ],
+      "@salt-ds/icons": ["../packages/icons/src/index.ts"],
+      "@salt-ds/lab": ["../packages/lab/src/index.ts"],
+      "@salt-ds/react-resizable-panels-theme/index.css": [
+        "../packages/react-resizable-panels-theme/src/index.css"
+      ],
+      "@salt-ds/styles": ["../packages/styles/src/index.ts"],
+      "@salt-ds/theme/css/*": ["../packages/theme/src/css/*"],
+      "@salt-ds/theme/index.css": ["../packages/theme/src/index.css"],
+      "@salt-ds/window": ["../packages/window/src/index.ts"],
+      "src/*": ["../site/src/*"],
+      "react": ["../node_modules/types-react-19"],
+      "react/*": ["../node_modules/types-react-19/*"],
+      "react-dom": ["../node_modules/types-react-dom-19"],
+      "react-dom/*": ["../node_modules/types-react-dom-19/*"]
+    }
   },
-  "include": ["src/**/*", "globals.d.ts"],
+  "include": [
+    "src/**/*",
+    "globals.d.ts",
+    "next-env.d.ts",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
   "exclude": ["node_modules"]
 }

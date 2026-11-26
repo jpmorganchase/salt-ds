@@ -28,6 +28,32 @@
   max-width: var(--site-max-width);
 }
 
+/* Match the four grids in docs/index.mdx before Salt's breakpoint hook runs.
+   Hydrated inline values take over with the same columns and spacing. */
+.content :global(.saltGridLayout) {
+  --gridLayout-columns: repeat(1, 1fr);
+  --gridLayout-columnGap: var(--salt-spacing-100);
+  --gridLayout-rowGap: var(--salt-spacing-100);
+}
+
+@media screen and (min-width: 600px) {
+  .content :global(.saltLandingUpdates) {
+    --gridLayout-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (min-width: 960px) {
+  .content :global(.saltGridLayout) {
+    --gridLayout-columns: repeat(2, 1fr);
+    --gridLayout-columnGap: calc(3 * var(--salt-spacing-100));
+    --gridLayout-rowGap: calc(3 * var(--salt-spacing-100));
+  }
+
+  .content :global(.saltLandingHelp) {
+    --gridLayout-columns: repeat(3, 1fr);
+  }
+}
+
 .search {
   display: flex;
   flex-direction: column;
