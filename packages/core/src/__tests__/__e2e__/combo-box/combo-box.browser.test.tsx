@@ -1,10 +1,16 @@
 import { ComboBox, Option } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
-import { type KeyboardEventHandler, useRef, useState } from "react";
+import {
+  type ChangeEvent,
+  type KeyboardEventHandler,
+  useRef,
+  useState,
+} from "react";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { trackNativeEvents } from "~browser-test-utils/interactions";
 import { renderWithSalt } from "~browser-test-utils/render";
+import { usStateExampleData } from "~stories/assets/exampleData";
 import * as comboBoxStories from "~stories/combo-box/combo-box.stories";
 import { CustomFloatingComponentProvider, FLOATING_TEST_ID } from "../common";
 
@@ -455,6 +461,35 @@ describe("Given a ComboBox", () => {
     await input().fill("");
     await page.getByRole("option", { name: "Alabama" }).click();
     await expect.element(input()).toHaveValue("Alabama");
+  });
+
+  it("highlights the selected option, not the first, when opened with its text in the input", async () => {
+    const onSelectionChange = vi.fn();
+    function UnfilteredComboBox() {
+      const [value, setValue] = useState("Alaska");
+      return (
+        <ComboBox
+          defaultSelected={["Alaska"]}
+          value={value}
+          onChange={(event: ChangeEvent<HTMLInputElement>) =>
+            setValue(event.target.value)
+          }
+          onSelectionChange={onSelectionChange}
+        >
+          {usStateExampleData.slice(0, 3).map((state) => (
+            <Option key={state} value={state} />
+          ))}
+        </ComboBox>
+      );
+    }
+    await renderWithSalt(<UnfilteredComboBox />);
+
+    await input().click();
+    await expectActive("Alaska");
+    await userEvent.keyboard("{Enter}");
+
+    await expect.element(input()).toHaveValue("Alaska");
+    expect(onSelectionChange.mock.lastCall?.[1]).toEqual(["Alaska"]);
   });
 
   it.each([

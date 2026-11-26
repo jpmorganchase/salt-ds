@@ -1,7 +1,9 @@
 import { ComboBox, type ComboBoxProps, Option } from "@salt-ds/core";
+import { type ChangeEvent, useState } from "react";
 import { describe, expect, it, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
+import { usStateExampleData } from "~stories/assets/exampleData";
 
 type Item = { id: string; value: string; disabled?: boolean };
 
@@ -11,6 +13,7 @@ const initialOptions: Item[] = [
 ];
 
 const input = () => page.getByRole("combobox", { name: "Letters" });
+const option = (name: string) => page.getByRole("option", { name });
 
 function DynamicComboBox({
   options,
@@ -26,6 +29,26 @@ function DynamicComboBox({
       </ComboBox>
       <button type="button">After</button>
     </>
+  );
+}
+
+// Holds the input value, as a typeahead that loads options for it would. Tests
+// pass the options that each response renders as children.
+function SearchComboBox({
+  initialValue = "",
+  ...props
+}: ComboBoxProps & { initialValue?: string }) {
+  const [value, setValue] = useState(initialValue);
+
+  return (
+    <ComboBox
+      inputProps={{ "aria-label": "Letters" }}
+      value={value}
+      onChange={(event: ChangeEvent<HTMLInputElement>) =>
+        setValue(event.target.value)
+      }
+      {...props}
+    />
   );
 }
 
@@ -256,4 +279,216 @@ describe("ComboBox with changing options", () => {
         .toHaveFocus();
     },
   );
+
+  it.each(["{Enter}", "{Tab}"])(
+    "highlights the first option when typed results replace the highlighted one, and commits it with %s",
+    async (key) => {
+      const onSelectionChange = vi.fn();
+      const { rerender } = await renderWithSalt(
+        <SearchComboBox onSelectionChange={onSelectionChange}>
+          {usStateExampleData.slice(0, 3).map((state) => (
+            <Option key={state} value={state} />
+          ))}
+        </SearchComboBox>,
+      );
+      await input().click();
+      await userEvent.keyboard("Alas");
+      await expect
+        .element(input())
+        .toHaveAttribute(
+          "aria-activedescendant",
+          option("Alabama").element().id,
+        );
+
+      // The response recreates its options, so the highlighted one is removed.
+      await rerender(
+        <SearchComboBox onSelectionChange={onSelectionChange}>
+          <Option key="response-Alaska" value="Alaska" />
+        </SearchComboBox>,
+      );
+      await expect
+        .element(input())
+        .toHaveAttribute(
+          "aria-activedescendant",
+          option("Alaska").element().id,
+        );
+      await userEvent.keyboard(key);
+
+      expect(onSelectionChange).toHaveBeenCalledOnce();
+      expect(onSelectionChange.mock.lastCall?.[1]).toEqual(["Alaska"]);
+    },
+  );
+
+  it("highlights the first option when typed results arrive for an empty list", async () => {
+    const { rerender } = await renderWithSalt(<SearchComboBox />);
+    await input().click();
+    await userEvent.keyboard("Ala");
+    await expect.element(input()).not.toHaveAttribute("aria-activedescendant");
+
+    await rerender(
+      <SearchComboBox>
+        {usStateExampleData.slice(0, 2).map((state) => (
+          <Option key={state} value={state} />
+        ))}
+      </SearchComboBox>,
+    );
+
+    await expect
+      .element(input())
+      .toHaveAttribute("aria-activedescendant", option("Alabama").element().id);
+  });
+
+  it("keeps the highlighted option when typed results still include it", async () => {
+    const { rerender } = await renderWithSalt(
+      <SearchComboBox>
+        {usStateExampleData.slice(0, 3).map((state) => (
+          <Option key={state} value={state} />
+        ))}
+      </SearchComboBox>,
+    );
+    await input().click();
+    await userEvent.keyboard("A");
+    await expect
+      .element(input())
+      .toHaveAttribute("aria-activedescendant", option("Alabama").element().id);
+
+    await rerender(
+      <SearchComboBox>
+        {usStateExampleData
+          .slice(0, 3)
+          .reverse()
+          .map((state) => (
+            <Option key={state} value={state} />
+          ))}
+      </SearchComboBox>,
+    );
+
+    await expect
+      .element(page.getByRole("option").first())
+      .toHaveAccessibleName("Arizona");
+    await expect
+      .element(input())
+      .toHaveAttribute("aria-activedescendant", option("Alabama").element().id);
+  });
+
+  it("keeps the option the user hovers when typed results still include it", async () => {
+    const { rerender } = await renderWithSalt(
+      <SearchComboBox>
+        {usStateExampleData.slice(0, 3).map((state) => (
+          <Option key={state} value={state} />
+        ))}
+      </SearchComboBox>,
+    );
+    await input().click();
+    await userEvent.keyboard("A");
+    await option("Alaska").hover();
+    await expect
+      .element(input())
+      .toHaveAttribute("aria-activedescendant", option("Alaska").element().id);
+
+    await rerender(
+      <SearchComboBox>
+        {usStateExampleData.slice(0, 4).map((state) => (
+          <Option key={state} value={state} />
+        ))}
+      </SearchComboBox>,
+    );
+
+    await expect.element(option("Arkansas")).toBeInTheDocument();
+    await expect
+      .element(input())
+      .toHaveAttribute("aria-activedescendant", option("Alaska").element().id);
+  });
+
+  it("does not highlight another option when typed results remove the one the user navigated to", async () => {
+    const { rerender } = await renderWithSalt(
+      <SearchComboBox>
+        {usStateExampleData.slice(0, 3).map((state) => (
+          <Option key={state} value={state} />
+        ))}
+      </SearchComboBox>,
+    );
+    await input().click();
+    await userEvent.keyboard("A");
+    await expect
+      .element(input())
+      .toHaveAttribute("aria-activedescendant", option("Alabama").element().id);
+    await userEvent.keyboard("{ArrowDown}");
+    await expect
+      .element(input())
+      .toHaveAttribute("aria-activedescendant", option("Alaska").element().id);
+
+    await rerender(
+      <SearchComboBox>
+        <Option key="Alabama" value="Alabama" />
+        <Option key="Arizona" value="Arizona" />
+      </SearchComboBox>,
+    );
+
+    await expect.element(option("Alaska")).not.toBeInTheDocument();
+    await expect.element(input()).not.toHaveAttribute("aria-activedescendant");
+  });
+
+  it("highlights and toggles the first typed result in a multiselect ComboBox", async () => {
+    const onSelectionChange = vi.fn();
+    const { rerender } = await renderWithSalt(
+      <SearchComboBox multiselect onSelectionChange={onSelectionChange} />,
+    );
+    await input().click();
+    await userEvent.keyboard("Alas");
+
+    await rerender(
+      <SearchComboBox multiselect onSelectionChange={onSelectionChange}>
+        <Option key="Alaska" value="Alaska" />
+      </SearchComboBox>,
+    );
+    await expect
+      .element(input())
+      .toHaveAttribute("aria-activedescendant", option("Alaska").element().id);
+    await userEvent.keyboard("{Enter}");
+
+    expect(onSelectionChange).toHaveBeenCalledOnce();
+    expect(onSelectionChange.mock.lastCall?.[1]).toEqual(["Alaska"]);
+    await expect.element(page.getByRole("listbox")).toBeInTheDocument();
+  });
+
+  it("highlights the selected option when options load after opening with its text in the input", async () => {
+    const { rerender } = await renderWithSalt(
+      <SearchComboBox initialValue="Alaska" defaultSelected={["Alaska"]} />,
+    );
+    await input().click();
+
+    await rerender(
+      <SearchComboBox initialValue="Alaska" defaultSelected={["Alaska"]}>
+        {usStateExampleData.slice(0, 3).map((state) => (
+          <Option key={state} value={state} />
+        ))}
+      </SearchComboBox>,
+    );
+
+    await expect
+      .element(input())
+      .toHaveAttribute("aria-activedescendant", option("Alaska").element().id);
+  });
+
+  it("highlights the first option once the user edits the selected option's text", async () => {
+    await renderWithSalt(
+      <SearchComboBox initialValue="Alaska" defaultSelected={["Alaska"]}>
+        {usStateExampleData.slice(0, 3).map((state) => (
+          <Option key={state} value={state} />
+        ))}
+      </SearchComboBox>,
+    );
+    await input().click();
+    await expect
+      .element(input())
+      .toHaveAttribute("aria-activedescendant", option("Alaska").element().id);
+
+    await userEvent.keyboard("{Backspace}");
+
+    await expect.element(input()).toHaveValue("Alask");
+    await expect
+      .element(input())
+      .toHaveAttribute("aria-activedescendant", option("Alabama").element().id);
+  });
 });

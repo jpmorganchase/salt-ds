@@ -248,6 +248,18 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
   }
   const registry = registryRef.current;
   const scheduleRebuildRef = useRef<(() => void) | undefined>(undefined);
+  const [optionChangeListeners] = useState(() => new Set<() => void>());
+
+  // Notifies after the options change and the active option is reconciled.
+  const subscribeToOptionChanges = useCallback(
+    (listener: () => void) => {
+      optionChangeListeners.add(listener);
+      return () => {
+        optionChangeListeners.delete(listener);
+      };
+    },
+    [optionChangeListeners],
+  );
 
   // React state (including controlled props) is authoritative. The store only
   // publishes committed state to the affected Options.
@@ -294,6 +306,9 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
       setActive((active) =>
         active ? registry.findById(active.id)?.data : undefined,
       );
+      for (const listener of optionChangeListeners) {
+        listener();
+      }
     };
     const coalescedRebuild = createCoalescedRebuild(rebuild);
     scheduleRebuildRef.current = coalescedRebuild.schedule;
@@ -326,7 +341,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
       coalescedRebuild.cancel();
       mutationObserver.disconnect();
     };
-  }, [listElement, registry]);
+  }, [listElement, optionChangeListeners, registry]);
 
   const getOptionAtIndex = useCallback(
     (
@@ -477,6 +492,7 @@ export function useListControl<Item>(props: ListControlProps<Item>) {
     setListRef,
     listRef,
     register,
+    subscribeToOptionChanges,
     getOptionAtIndex,
     getIndexOfOption,
     getOptionsMatching,

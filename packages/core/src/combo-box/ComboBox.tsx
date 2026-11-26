@@ -42,6 +42,7 @@ import type { DataAttributes } from "../types";
 import {
   makePrefixer,
   type UseFloatingUIProps,
+  useEventCallback,
   useFloatingUI,
   useForkRef,
   useId,
@@ -166,6 +167,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     valueState,
     setValueState,
     removePill,
+    subscribeToOptionChanges,
   } = listControl;
 
   const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
@@ -386,16 +388,42 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     }
   }, [value]);
 
+  // While the input still shows a selected option's text, the user hasn't
+  // searched yet, so prefer that option to the first one.
+  const getAutoSelectOption = useEventCallback(() => {
+    const selectedItem = selectedState.find(
+      (item) => valueToString(item) === valueState,
+    );
+    const selectedOption =
+      selectedItem === undefined
+        ? undefined
+        : getOptionsMatching((option) => option.value === selectedItem)[0];
+    return selectedOption ?? getFirstOption();
+  });
+
   useEffect(() => {
     if (openState && value) {
       queueMicrotask(() => {
-        const newOption = getFirstOption();
+        const newOption = getAutoSelectOption();
         if (newOption && shouldAutoSelectRef.current) {
           setActive(newOption.data);
         }
       });
     }
-  }, [value, setActive, openState, getFirstOption]);
+  }, [value, setActive, openState, getAutoSelectOption]);
+
+  // Options can arrive after the value changes, e.g. from a server. Highlight
+  // an option if the highlighted one is gone, unless the user has navigated.
+  const handleOptionChanges = useEventCallback(() => {
+    if (openState && value && shouldAutoSelectRef.current) {
+      setActive((active) => active ?? getAutoSelectOption()?.data);
+    }
+  });
+
+  useEffect(
+    () => subscribeToOptionChanges(handleOptionChanges),
+    [subscribeToOptionChanges, handleOptionChanges],
+  );
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: We only want this to run when the list's openState or the displayed options change.
   useEffect(() => {
