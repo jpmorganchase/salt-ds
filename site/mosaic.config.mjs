@@ -17,6 +17,22 @@ const require = createRequire(import.meta.url);
  * sources: <...source definitions>
  */
 
+const SEARCH_INDEX_PLUGIN = "@jpmorganchase/mosaic-plugins/SearchIndexPlugin";
+
+/**
+ * Mosaic's default SearchIndexPlugin runs after `$ref`s are resolved, so
+ * tab pages get their component's title. Component pages list their other
+ * names in `data.alsoKnownAs`, so a search for "Select" finds Dropdown.
+ */
+const searchIndexOptions = {
+  records: {
+    fields: {
+      description: ["description", "data.description"],
+      keywords: ["keywords", "data.alsoKnownAs"],
+    },
+  },
+};
+
 const saltConfig = {
   ...fsConfig,
   plugins: [
@@ -30,6 +46,11 @@ const saltConfig = {
             ),
             priority: 2,
             options: { ...plugin.options, rootDirGlob: "*/*" },
+          };
+        case SEARCH_INDEX_PLUGIN:
+          return {
+            ...plugin,
+            options: { ...plugin.options, ...searchIndexOptions },
           };
         case "@jpmorganchase/mosaic-plugins/TableOfContentsPlugin":
           return {
