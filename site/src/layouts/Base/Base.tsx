@@ -1,19 +1,23 @@
+import { useFrame } from "@jpmorganchase/mosaic-layouts/frame";
 import { useRoute, useStore } from "@jpmorganchase/mosaic-store";
-import { type DrawerProps, SkipLink, useId } from "@salt-ds/core";
+import { type DrawerProps, useId } from "@salt-ds/core";
 import { clsx } from "clsx";
 import dynamic from "next/dynamic";
 import {
   type ComponentType,
   type ReactNode,
+  useContext,
   useEffect,
+  useLayoutEffect,
   useMemo,
   useState,
 } from "react";
 import { AppHeader, Footer } from "src/components";
 import { useIsMobileView } from "src/utils/useIsMobileView";
-import { LayoutContext } from "../LayoutContext";
+import { LayoutContext, MAIN_CONTENT_ID } from "../LayoutContext";
 import styles from "./Base.module.css";
 import { PageHeading, type PageHeadingProps } from "./PageHeading";
+import { SkipToMainContent } from "./SkipToMainContent";
 
 const Drawer = dynamic<DrawerProps>(() =>
   import("./Drawer").then((mod) => mod.Drawer),
@@ -38,7 +42,12 @@ export function Base({
   }));
 
   const isMobileOrTablet = useIsMobileView();
-  const [drawerOpen, setDrawerOpen] = useState(false);
+  const [localDrawerOpen, setLocalDrawerOpen] = useState(false);
+  const frame = useFrame();
+  const frameControls = useContext(LayoutContext);
+  const { drawerOpen, setDrawerOpen } = frame.header
+    ? frameControls
+    : { drawerOpen: localDrawerOpen, setDrawerOpen: setLocalDrawerOpen };
 
   const { route } = useRoute();
 
@@ -47,51 +56,56 @@ export function Base({
       // Close drawer whenever a page loads
       setDrawerOpen(false);
     }
-  }, [route]);
-
-  const LeftSidebar = isMobileOrTablet ? (
-    <Drawer
-      open={drawerOpen}
-      onOpenChange={(newOpen) => setDrawerOpen(newOpen)}
-    >
-      {LeftSidebarProp}
-    </Drawer>
-  ) : (
-    LeftSidebarProp
-  );
-  const RightSidebar = isMobileOrTablet ? undefined : RightSidebarProp;
+  }, [route, setDrawerOpen]);
 
   const context = useMemo(
     () => ({
       drawerOpen,
       setDrawerOpen,
     }),
-    [drawerOpen],
+    [drawerOpen, setDrawerOpen],
   );
 
   const headingId = useId();
+  const localMainId = useId();
+  const mainId = frame.header ? MAIN_CONTENT_ID : localMainId;
+  const { setMainId } = frameControls;
+
+  // Let the retained header know when the page-owned drawer can open.
+  useLayoutEffect(() => {
+    if (!frame.header || !setMainId) return;
+    setMainId(mainId);
+    return () => setMainId(undefined);
+  }, [frame.header, mainId, setMainId]);
 
   return (
     <LayoutContext.Provider value={context}>
       <div
         className={clsx(
           styles.root,
-          { [styles.oneColumn]: !LeftSidebar || isMobileOrTablet },
+          { [styles.oneColumn]: !LeftSidebarProp },
           className,
         )}
       >
-        {headingId && (
-          <SkipLink targetId={headingId}>Skip to main content</SkipLink>
+        {!frame.header && mainId && <SkipToMainContent targetId={mainId} />}
+        {!frame.header && <AppHeader />}
+        {LeftSidebarProp && (
+          <div className={styles.desktopSidebar}>{LeftSidebarProp}</div>
         )}
-        <AppHeader />
-        {LeftSidebar}
-        <main className={styles.middle}>
+        {isMobileOrTablet && (
+          <Drawer open={drawerOpen} onOpenChange={setDrawerOpen}>
+            {LeftSidebarProp}
+          </Drawer>
+        )}
+        <main id={mainId} className={styles.middle}>
           {(title || description) && (
             <Heading title={title} description={description} id={headingId} />
           )}
           <div className={styles.twoColumn}>
             <div className={styles.content}>{children}</div>
-            {RightSidebar}
+            {RightSidebarProp && (
+              <div className={styles.desktopSidebar}>{RightSidebarProp}</div>
+            )}
           </div>
         </main>
         <Footer />

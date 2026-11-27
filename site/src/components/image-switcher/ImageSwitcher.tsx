@@ -11,7 +11,7 @@ export interface ImageSwitcherProps {
   darkImages: Array<{ alt: string; src: string }>;
 }
 
-export function ImageSwitcher(props: ImageSwitcherProps): JSX.Element {
+export function ImageSwitcher(props: ImageSwitcherProps) {
   const { darkImages, label, images, caption } = props;
   const [toggle, setToggle] = useState(false);
   const siteMode = useColorMode();

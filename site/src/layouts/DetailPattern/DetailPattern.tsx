@@ -29,11 +29,7 @@ type Data = {
 
 type CustomSiteState = SiteState & { data?: Data };
 
-function PatternPageHeading({
-  title,
-  description,
-  id,
-}: PageHeadingProps): JSX.Element {
+function PatternPageHeading({ title, description, id }: PageHeadingProps) {
   const resourcesArray =
     useStore((state: CustomSiteState) => state.data?.resources) ?? [];
   const showThemeControl =

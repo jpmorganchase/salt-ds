@@ -13,13 +13,14 @@ import {
   TabTrigger,
 } from "@salt-ds/core";
 import dynamic from "next/dynamic";
-import { useRouter } from "next/router";
-import { type SyntheticEvent, useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { type SyntheticEvent, useCallback, useContext, useEffect } from "react";
 import { LivePreviewProvider } from "../../components/components/LivePreviewProvider";
 import { LinkList } from "../../components/link-list/LinkList";
 import { PageNavigation } from "../../components/navigation/PageNavigation";
 import { TableOfContents } from "../../components/toc/index";
 import { getHrefFromComponent } from "../../utils/getHrefFromComponent";
+import { TabNavigationContext } from "../../utils/tabNavigationContext";
 import { Base } from "../Base/Base";
 import { PrimarySidebar } from "../Base/PrimarySidebar";
 import { SecondarySidebar } from "../Base/SecondarySidebar";
@@ -93,6 +94,13 @@ const ComponentPageHeading = dynamic(() => import("./ComponentPageHeading"));
 export const DetailComponent = ({ children }: LayoutProps) => {
   const { replace, push } = useRouter();
   const { route } = useRoute();
+  const tabNavigation = useContext(TabNavigationContext);
+  const registerTabBar = useCallback(
+    (element: HTMLDivElement | null) => {
+      if (route) tabNavigation?.registerTabBar(route, element);
+    },
+    [route, tabNavigation],
+  );
 
   const newRoute = route?.substring(0, route.lastIndexOf("/") + 1);
 
@@ -112,8 +120,14 @@ export const DetailComponent = ({ children }: LayoutProps) => {
     }
   }, [currentTab, newRoute, replace, isOverview]);
 
-  const handleTabChange = (_: SyntheticEvent | null, value: string) => {
-    push(`${newRoute}${value}`, undefined, { scroll: false });
+  const handleTabChange = (event: SyntheticEvent | null, value: string) => {
+    const destination = `${newRoute}${value}`;
+    const trigger =
+      event?.target instanceof Element
+        ? event.target.closest('[role="tab"]')
+        : null;
+    if (trigger) tabNavigation?.requestFocus(destination, value, trigger);
+    push(destination, { scroll: false });
   };
 
   const LeftSidebar = (
@@ -157,7 +171,7 @@ export const DetailComponent = ({ children }: LayoutProps) => {
             value={currentTabName}
             onChange={handleTabChange}
           >
-            <TabBar divider>
+            <TabBar divider ref={registerTabBar}>
               <TabList appearance="transparent">
                 {tabs.map(({ name, label }) => (
                   <Tab key={name} value={name}>

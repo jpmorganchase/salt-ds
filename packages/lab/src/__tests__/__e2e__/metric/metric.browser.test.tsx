@@ -139,16 +139,32 @@ describe("GIVEN Metric accessibility labelling", () => {
   });
 });
 
-it.each([
-  ["left", "flex-start"],
-  ["center", "center"],
-  ["right", "flex-end"],
-] as const)("aligns the MetricHeader to the %s", async (align, expected) => {
-  await renderWithSalt(<BasicMetric align={align} />);
-  expect(getComputedStyle(metricElement(".saltMetricHeader")).alignItems).toBe(
-    expected,
-  );
-});
+const alignmentEdges = {
+  left: (rect: DOMRect) => rect.left,
+  center: (rect: DOMRect) => rect.left + rect.width / 2,
+  right: (rect: DOMRect) => rect.right,
+};
+
+it.each(["left", "center", "right"] as const)(
+  "aligns the MetricHeader to the %s",
+  async (align) => {
+    // The subtitle is narrower than the Metric, so its position reflects both
+    // the Metric's and the MetricHeader's alignment.
+    await renderWithSalt(
+      <Metric align={align}>
+        <MetricHeader title="Revenue YTD" subtitle="Q3" />
+        <MetricContent value="$801.9B" />
+      </Metric>,
+    );
+    const edge = alignmentEdges[align];
+    expect(
+      edge(metricElement(".saltMetricHeader-subtitle").getBoundingClientRect()),
+    ).toBeCloseTo(
+      edge(metricElement(".saltMetric").getBoundingClientRect()),
+      0,
+    );
+  },
+);
 
 describe("GIVEN MetricContent", () => {
   it("renders its value without a subvalue", async () => {

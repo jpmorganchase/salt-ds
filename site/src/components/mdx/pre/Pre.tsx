@@ -14,19 +14,35 @@ import styles from "./Pre.module.css";
 interface PreProps extends ComponentPropsWithoutRef<"div"> {
   children?: ReactNode;
   code?: string;
+  /** Already highlighted HTML, which skips highlighting in the browser. */
+  html?: string;
   language?: string;
 }
 
 export const Pre = forwardRef<HTMLDivElement, PreProps>(function Pre(
-  { language: languageProp, code: codeProp = "", children, className },
+  {
+    language: languageProp,
+    code: codeProp = "",
+    html: htmlProp,
+    children,
+    className,
+  },
   ref,
 ) {
   let code: string | undefined = codeProp.replace(/<br>/g, "\n");
   let language: string | undefined = languageProp;
-  if (isValidElement<{ className?: string; children: string }>(children)) {
+  let serverHtml: string | undefined = htmlProp;
+  if (
+    isValidElement<{
+      className?: string;
+      children: string;
+      "data-mosaic-html"?: string;
+    }>(children)
+  ) {
     const codeBlock = children.props;
     code = codeBlock.children;
     language = codeBlock.className?.replace("language-", "");
+    serverHtml = codeBlock["data-mosaic-html"];
   }
 
   const divRef = useRef<HTMLDivElement>(null);
@@ -43,6 +59,8 @@ export const Pre = forwardRef<HTMLDivElement, PreProps>(function Pre(
   const [html, setHtml] = useState<string>("");
 
   useIsomorphicLayoutEffect(() => {
+    if (serverHtml) return;
+    let cancelled = false;
     async function format() {
       const { codeToHtml } = await import("shiki");
 
@@ -55,12 +73,15 @@ export const Pre = forwardRef<HTMLDivElement, PreProps>(function Pre(
           },
           defaultColor: false,
         });
-        setHtml(html);
+        if (!cancelled) setHtml(html);
       }
     }
 
-    format();
-  }, [trimmedCode, language]);
+    format().catch(console.error);
+    return () => {
+      cancelled = true;
+    };
+  }, [trimmedCode, language, serverHtml]);
 
   return (
     <div className={clsx(styles.pre, className)} ref={ref}>
@@ -73,12 +94,20 @@ export const Pre = forwardRef<HTMLDivElement, PreProps>(function Pre(
       >
         <CopyIcon aria-hidden />
       </Button>
-      <div
-        className={styles.codeblock}
-        // biome-ignore lint/security/noDangerouslySetInnerHtml: Needed for Shiki.
-        dangerouslySetInnerHTML={{ __html: html }}
-        ref={divRef}
-      />
+      {serverHtml || html ? (
+        <div
+          className={styles.codeblock}
+          // biome-ignore lint/security/noDangerouslySetInnerHtml: Needed for Shiki.
+          dangerouslySetInnerHTML={{ __html: serverHtml || html }}
+          ref={divRef}
+        />
+      ) : (
+        <div className={styles.codeblock} ref={divRef}>
+          <pre>
+            <code>{trimmedCode}</code>
+          </pre>
+        </div>
+      )}
     </div>
   );
 });

@@ -5,7 +5,7 @@ import nextEnv from "@next/env";
 import deepmerge from "deepmerge";
 
 const projectDir = process.cwd();
-nextEnv.loadEnvConfig(projectDir);
+nextEnv.loadEnvConfig(projectDir, process.env.NODE_ENV === "development");
 
 const require = createRequire(import.meta.url);
 
@@ -17,25 +17,70 @@ const require = createRequire(import.meta.url);
  * sources: <...source definitions>
  */
 
+const SEARCH_INDEX_PLUGIN = "@jpmorganchase/mosaic-plugins/SearchIndexPlugin";
+
+/**
+ * Mosaic's default SearchIndexPlugin runs after `$ref`s are resolved, so
+ * tab pages get their component's title. Component pages list their other
+ * names in `data.alsoKnownAs`, so a search for "Select" finds Dropdown.
+ */
+const searchIndexOptions = {
+  records: {
+    fields: {
+      description: ["description", "data.description"],
+      keywords: ["keywords", "data.alsoKnownAs"],
+    },
+  },
+};
+
 const saltConfig = {
   ...fsConfig,
   plugins: [
-    ...fsConfig.plugins,
+    ...fsConfig.plugins.map((plugin) => {
+      switch (plugin.modulePath) {
+        case "@jpmorganchase/mosaic-plugins/SidebarPlugin":
+          return {
+            ...plugin,
+            modulePath: require.resolve(
+              "./src/mosaic-plugins/SidebarPlugin.mjs",
+            ),
+            priority: 2,
+            options: { ...plugin.options, rootDirGlob: "*/*" },
+          };
+        case SEARCH_INDEX_PLUGIN:
+          return {
+            ...plugin,
+            options: { ...plugin.options, ...searchIndexOptions },
+          };
+        case "@jpmorganchase/mosaic-plugins/TableOfContentsPlugin":
+          return {
+            ...plugin,
+            options: { ...plugin.options, minRank: 2, maxRank: 2 },
+          };
+        case "@jpmorganchase/mosaic-plugins/LlmsTxtPlugin":
+          return {
+            ...plugin,
+            options: {
+              ...plugin.options,
+              title: "Salt Design System",
+              description:
+                "Salt is an accessible React design system for building enterprise applications. Explore component usage, examples, API references, patterns and theming guidance.",
+              siteUrl: process.env.SITE_URL,
+              exclude: ["**/salt-github/**"],
+              componentsModulePath: require.resolve(
+                "./src/mosaic-plugins/markdownComponents.mjs",
+              ),
+            },
+          };
+        default:
+          return plugin;
+      }
+    }),
     {
-      modulePath: require.resolve("./src/mosaic-plugins/SidebarPlugin.mjs"),
-      priority: 2,
-      options: { rootDirGlob: "*/*" },
-    },
-    {
-      modulePath: "@jpmorganchase/mosaic-plugins/BreadcrumbsPlugin",
-    },
-    {
-      modulePath: "@jpmorganchase/mosaic-plugins/SearchIndexPlugin",
-      previewDisabled: true,
+      modulePath: "@jpmorganchase/mosaic-plugins/SiteMapPlugin",
       options: {
-        maxLineLength: 240,
-        maxLineCount: 240,
-        keys: ["keywords", "content"],
+        siteUrl: process.env.SITE_URL,
+        exclude: ["**/salt-github/**"],
       },
       priority: Number.NEGATIVE_INFINITY,
     },
@@ -44,18 +89,7 @@ const saltConfig = {
       priority: Number.NEGATIVE_INFINITY,
       options: {
         outputDir: "./public",
-        assets: ["sitemap.xml", "search-data.json"],
-      },
-    },
-    {
-      modulePath: "@jpmorganchase/mosaic-plugins/FragmentPlugin",
-      options: {},
-    },
-    {
-      modulePath: "@jpmorganchase/mosaic-plugins/TableOfContentsPlugin",
-      options: {
-        minRank: 2,
-        maxRank: 2,
+        assets: ["sitemap.xml", "search-records.json"],
       },
     },
     {
@@ -82,6 +116,7 @@ export default deepmerge(saltConfig, {
       namespace: "salt",
       options: {
         prefixDir: "salt-github",
+        requestTimeout: 30_000,
         endpoints: [
           "https://api.github.com/repos/jpmorganchase/salt-ds/releases",
         ],
