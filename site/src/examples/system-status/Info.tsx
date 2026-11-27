@@ -5,7 +5,9 @@ import type { ReactElement } from "react";
 export const Info = (): ReactElement => (
   <SystemStatus>
     <SystemStatusContent>
-      <Text color="inherit">New feature updates are available.</Text>
+      <Text color="inherit">
+        New features are available. Refresh the page to start using them.
+      </Text>
     </SystemStatusContent>
   </SystemStatus>
 );

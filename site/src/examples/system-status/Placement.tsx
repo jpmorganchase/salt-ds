@@ -18,7 +18,9 @@ export const Placement = (): ReactElement => (
   <StackLayout gap={0} style={{ width: "100%" }}>
     <SystemStatus role="region" aria-label="System status">
       <SystemStatusContent>
-        <Text color="inherit">New feature updates are available.</Text>
+        <Text color="inherit">
+          New features are available. Refresh the page to start using them.
+        </Text>
       </SystemStatusContent>
       <SystemStatusActions>
         <OnSolidButton aria-label="Dismiss system status">
