@@ -10,7 +10,7 @@
   "scripts": {
     "clean": "rm -fr public/.tmp .next",
     "build": "yarn gen:icons && yarn gen:css && next build",
-    "dev": "yarn gen:icons && yarn gen:css && next dev",
+    "dev": "yarn gen:css && next dev",
     "start": "next start",
     "gen:snapshot": "yarn gen:props && yarn mosaic build --out snapshots --name latest --config mosaic.config.mjs && node scripts/verify-mosaic-snapshot.mjs",
     "serve:snapshot:file": "yarn cross-env MOSAIC_MODE='snapshot-file' concurrently --kill-others 'yarn dev'",

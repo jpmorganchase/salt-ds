@@ -39,10 +39,11 @@ component API data and initial content snapshot. `serve` starts the Next.js
 application and Mosaic content server together. Changes to `site/docs` refresh
 the current page while keeping the header and reader's theme mounted.
 
-`dev` and `build` regenerate the icon components, icon list and CSS token data.
-The site imports Salt components and theme CSS directly from their workspace
-sources, so it does not need the packages' distribution builds. Next.js watches
-the theme source files during development.
+`dev` and `build` regenerate the CSS token data, and `build` also regenerates the
+committed icon components and icon list. The site imports Salt components and
+theme CSS directly from their workspace sources, so it does not need the
+packages' distribution builds. Next.js watches the theme source files during
+development.
 
 The committed `.env.development` sets the content server to port 8080 and the
 site to port 3000. If you change these ports, set `MOSAIC_ACTIVE_MODE_URL` and
