@@ -69,6 +69,8 @@ export async function proxy(request: NextRequest) {
     if (result.kind === "not-found") {
       // Next.js #62228 sends an empty HTML shell when a matched page calls
       // notFound(). The built-in 404 route already has server-rendered HTML.
+      // In development, /_not-found is only reached when no app route
+      // matches it, so there must be no page for a single path segment.
       return NextResponse.rewrite(new URL("/_not-found", request.url), {
         status: 404,
       });
