@@ -10,7 +10,9 @@ import {
   BubbleChart as BubbleChartComponent,
   BulletChart as BulletChartComponent,
   CandlestickChart as CandlestickChartComponent,
+  CenteredConversionFunnelChart as CenteredConversionFunnelChartComponent,
   ColumnChart as ColumnChartComponent,
+  ConversionFunnelChart as ConversionFunnelChartComponent,
   DonutChart as DonutChartComponent,
   DualAxisChart as DualAxisChartComponent,
   HeatmapChart as HeatmapChartComponent,
@@ -27,7 +29,9 @@ import {
   bubbleOptions,
   bulletOptions,
   candlestickOptions,
+  centeredConversionFunnelOptions,
   columnOptions,
+  conversionFunnelOptions,
   donutOptions,
   dualAxisOptions,
   heatmapDataClassesOptions,
@@ -56,6 +60,10 @@ interface ChartStoryArgs {
 
 interface HeatmapStoryArgs extends ChartStoryArgs {
   saltColorAxis?: SaltColorAxis;
+}
+
+interface ConversionFunnelStoryArgs extends ChartStoryArgs {
+  showConnectors?: boolean;
 }
 
 const getChromaticStableOptions = (options: Options): Options =>
@@ -305,6 +313,33 @@ export const StackLabelsBarChart = {
   args: {
     fillPatterns: false,
     options: stackLabelsBarOptions,
+  },
+};
+
+export const CenteredConversionFunnelChart = {
+  render: (args: ChartStoryArgs) => (
+    <CenteredConversionFunnelChartComponent {...getChromaticStableArgs(args)} />
+  ),
+  args: {
+    fillPatterns: false,
+    options: centeredConversionFunnelOptions,
+  },
+};
+
+export const ConversionFunnelChart = {
+  render: (args: ConversionFunnelStoryArgs) => (
+    <ConversionFunnelChartComponent {...getChromaticStableArgs(args)} />
+  ),
+  argTypes: {
+    showConnectors: {
+      control: "boolean",
+      description: "Show connectors between conversion stages",
+    },
+  },
+  args: {
+    fillPatterns: false,
+    options: conversionFunnelOptions,
+    showConnectors: true,
   },
 };
 
