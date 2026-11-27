@@ -19,6 +19,14 @@ The source baseline is [`main` at `3bd9580`](https://github.com/jpmorganchase/sa
 
 The first review should decide whether the team agrees with these directions and the initial slices. It should not require agreement on every future API or an estimate for the entire program.
 
+## Additional proposals
+
+| RFC                                                          | Decision for the team                                                                                                                              | First useful delivery                                                                                                             |
+| ------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------- |
+| [005: Interaction telemetry](./005-interaction-telemetry.md) | Report semantic interaction events from Salt components through an opt-in, vendor-neutral context, without changing callbacks or owning transport. | Internal event contract and emitter, asserted through the RFC 001 popup harness for `Dialog`, `Menu`, `Dropdown`, and `ComboBox`. |
+
+RFC 005 depends on RFC 001's contract records, reason prototype, and selection identity, and on RFC 003's provider and root ownership. It asks that RFC 001's internal reason prototype start alongside the popup pilot.
+
 ## Shared constraints
 
 - **Preserve Salt.** Retain Salt's architecture, visual language, and supported consumer patterns while delivering focused improvements.
@@ -71,13 +79,14 @@ The first stage is parallel work, not a prerequisite to start every other invest
 
 ## Dependencies and ownership
 
-| Shared concern                                                  | Primary RFC | Coordination required                                                                             |
-| --------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------- |
-| Selection identity versus labels/query                          | 001         | 002 uses the same identity when defining serialized values.                                       |
-| Form payload, validation, reset, and field association          | 002         | 001's React recipes must use a verified form contract.                                            |
-| Popup focus and component lifecycle                             | 001         | 003 handles shared document locks, independent roots, and target-window resources.                |
-| Provider, portal, document, and style ownership                 | 003         | 001/002 consume the resulting boundaries without adding a competing ownership mechanism.          |
-| Canonical guidance, examples, diagnostics, and agent evaluation | 004         | All RFCs supply their accepted contracts and verified examples to the same documentation sources. |
+| Shared concern                                                  | Primary RFC | Coordination required                                                                                         |
+| --------------------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------- |
+| Selection identity versus labels/query                          | 001         | 002 uses the same identity when defining serialized values.                                                   |
+| Form payload, validation, reset, and field association          | 002         | 001's React recipes must use a verified form contract.                                                        |
+| Popup focus and component lifecycle                             | 001         | 003 handles shared document locks, independent roots, and target-window resources.                            |
+| Provider, portal, document, and style ownership                 | 003         | 001/002 consume the resulting boundaries without adding a competing ownership mechanism.                      |
+| Canonical guidance, examples, diagnostics, and agent evaluation | 004         | All RFCs supply their accepted contracts and verified examples to the same documentation sources.             |
+| Interaction telemetry events and context                        | 005         | Uses 001's contract records, reasons, and identity; 003's provider and root ownership; 004's catalog sources. |
 
 Keep one owner for each shared mechanism. For example, do not independently introduce different object-key systems in the list controls and the new form selectors, or different document-ownership rules in system appearance and MFE integration.
 
