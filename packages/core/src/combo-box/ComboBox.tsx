@@ -42,6 +42,7 @@ import type { DataAttributes } from "../types";
 import {
   makePrefixer,
   type UseFloatingUIProps,
+  useEventCallback,
   useFloatingUI,
   useForkRef,
   useId,
@@ -166,6 +167,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     valueState,
     setValueState,
     removePill,
+    subscribeToOptionChanges,
   } = listControl;
 
   const handleOpenChange: UseFloatingUIProps["onOpenChange"] = (
@@ -386,16 +388,46 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     }
   }, [value]);
 
+  const matchingSelectedItem = selectedState.find(
+    (item) => valueToString(item) === valueState,
+  );
+
+  const getAutoSelectOption = useEventCallback(() => {
+    if (matchingSelectedItem === undefined) {
+      return getFirstOption();
+    }
+
+    const selectedOption = getOptionsMatching(
+      (option) => option.value === matchingSelectedItem,
+    )[0];
+    // While the input shows the single selection, wait for it to load so
+    // committing the highlight cannot replace it with a cached option.
+    return selectedOption ?? (multiselect ? getFirstOption() : undefined);
+  });
+
   useEffect(() => {
     if (openState && value) {
       queueMicrotask(() => {
-        const newOption = getFirstOption();
-        if (newOption && shouldAutoSelectRef.current) {
-          setActive(newOption.data);
+        if (shouldAutoSelectRef.current) {
+          setActive(getAutoSelectOption()?.data);
         }
       });
     }
-  }, [value, setActive, openState, getFirstOption]);
+  }, [value, setActive, openState, getAutoSelectOption]);
+
+  // Options can arrive after the value changes, e.g. from a server. Highlight
+  // an option if the highlighted one is gone, unless the user has navigated.
+  const handleOptionChanges = useEventCallback(() => {
+    if (openState && valueState && shouldAutoSelectRef.current) {
+      const next = getAutoSelectOption()?.data;
+      setActive((active) => active ?? next);
+    }
+  });
+
+  useEffect(
+    () => subscribeToOptionChanges(handleOptionChanges),
+    [subscribeToOptionChanges, handleOptionChanges],
+  );
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: We only want this to run when the list's openState or the displayed options change.
   useEffect(() => {
@@ -404,6 +436,14 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     if (!openState) {
       setActive(undefined);
       return;
+    }
+
+    if (
+      !openKey.current &&
+      !multiselect &&
+      matchingSelectedItem !== undefined
+    ) {
+      shouldAutoSelectRef.current = true;
     }
 
     // If we have selected an item, we should make that the active item
