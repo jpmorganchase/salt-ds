@@ -388,25 +388,28 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     }
   }, [value]);
 
-  // While the input still shows a selected option's text, the user hasn't
-  // searched yet, so prefer that option to the first one.
+  const matchingSelectedItem = selectedState.find(
+    (item) => valueToString(item) === valueState,
+  );
+
   const getAutoSelectOption = useEventCallback(() => {
-    const selectedItem = selectedState.find(
-      (item) => valueToString(item) === valueState,
-    );
-    const selectedOption =
-      selectedItem === undefined
-        ? undefined
-        : getOptionsMatching((option) => option.value === selectedItem)[0];
-    return selectedOption ?? getFirstOption();
+    if (matchingSelectedItem === undefined) {
+      return getFirstOption();
+    }
+
+    const selectedOption = getOptionsMatching(
+      (option) => option.value === matchingSelectedItem,
+    )[0];
+    // While the input shows the single selection, wait for it to load so
+    // committing the highlight cannot replace it with a cached option.
+    return selectedOption ?? (multiselect ? getFirstOption() : undefined);
   });
 
   useEffect(() => {
     if (openState && value) {
       queueMicrotask(() => {
-        const newOption = getAutoSelectOption();
-        if (newOption && shouldAutoSelectRef.current) {
-          setActive(newOption.data);
+        if (shouldAutoSelectRef.current) {
+          setActive(getAutoSelectOption()?.data);
         }
       });
     }
@@ -415,8 +418,9 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   // Options can arrive after the value changes, e.g. from a server. Highlight
   // an option if the highlighted one is gone, unless the user has navigated.
   const handleOptionChanges = useEventCallback(() => {
-    if (openState && value && shouldAutoSelectRef.current) {
-      setActive((active) => active ?? getAutoSelectOption()?.data);
+    if (openState && valueState && shouldAutoSelectRef.current) {
+      const next = getAutoSelectOption()?.data;
+      setActive((active) => active ?? next);
     }
   });
 
@@ -432,6 +436,14 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
     if (!openState) {
       setActive(undefined);
       return;
+    }
+
+    if (
+      !openKey.current &&
+      !multiselect &&
+      matchingSelectedItem !== undefined
+    ) {
+      shouldAutoSelectRef.current = true;
     }
 
     // If we have selected an item, we should make that the active item

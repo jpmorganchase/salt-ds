@@ -338,6 +338,40 @@ describe("ComboBox with changing options", () => {
       .toHaveAttribute("aria-activedescendant", option("Alabama").element().id);
   });
 
+  it.each(["{Enter}", "{Tab}"])(
+    "highlights async results for uncontrolled text and commits with %s",
+    async (key) => {
+      const onSelectionChange = vi.fn();
+      const comboBoxProps = {
+        inputProps: { "aria-label": "Letters" },
+        onSelectionChange,
+      };
+      const { rerender } = await renderWithSalt(
+        <ComboBox {...comboBoxProps} />,
+      );
+      await input().click();
+      await userEvent.keyboard("Ala");
+      await expect.element(input()).toHaveValue("Ala");
+
+      await rerender(
+        <ComboBox {...comboBoxProps}>
+          <Option key="Alaska" value="Alaska" />
+        </ComboBox>,
+      );
+      await expect
+        .element(input())
+        .toHaveAttribute(
+          "aria-activedescendant",
+          option("Alaska").element().id,
+        );
+      await userEvent.keyboard(key);
+
+      expect(onSelectionChange).toHaveBeenCalledOnce();
+      expect(onSelectionChange.mock.lastCall?.[1]).toEqual(["Alaska"]);
+      await expect.element(input()).toHaveValue("Alaska");
+    },
+  );
+
   it("keeps the highlighted option when typed results still include it", async () => {
     const { rerender } = await renderWithSalt(
       <SearchComboBox>
@@ -470,6 +504,44 @@ describe("ComboBox with changing options", () => {
       .element(input())
       .toHaveAttribute("aria-activedescendant", option("Alaska").element().id);
   });
+
+  it.each([true, false])(
+    "waits for the selected option while a cached option is shown (controlled: %s)",
+    async (controlled) => {
+      const onSelectionChange = vi.fn();
+      const TestComboBox = controlled ? SearchComboBox : ComboBox;
+      const renderComboBox = (options: string[]) => (
+        <TestComboBox
+          {...(controlled ? { initialValue: "Alaska" } : {})}
+          defaultSelected={["Alaska"]}
+          inputProps={{ "aria-label": "Letters" }}
+          onSelectionChange={onSelectionChange}
+        >
+          {options.map((state) => (
+            <Option key={state} value={state} />
+          ))}
+        </TestComboBox>
+      );
+      const { rerender } = await renderWithSalt(renderComboBox(["Alabama"]));
+      await input().click();
+      await expect.element(option("Alabama")).toBeInTheDocument();
+      await expect
+        .element(input())
+        .not.toHaveAttribute("aria-activedescendant");
+
+      await rerender(renderComboBox(["Alabama", "Alaska"]));
+      await expect
+        .element(input())
+        .toHaveAttribute(
+          "aria-activedescendant",
+          option("Alaska").element().id,
+        );
+      await userEvent.keyboard("{Enter}");
+
+      expect(onSelectionChange).toHaveBeenCalledOnce();
+      expect(onSelectionChange.mock.lastCall?.[1]).toEqual(["Alaska"]);
+    },
+  );
 
   it("highlights the first option once the user edits the selected option's text", async () => {
     await renderWithSalt(
