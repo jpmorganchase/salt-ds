@@ -13,7 +13,7 @@ const withBaseName = makePrefixer("saltSystemStatusContent");
 
 interface SystemStatusContentProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The content of SystemStatusContent
+   * The content of the `SystemStatusContent`.
    */
   children: ReactNode;
 }

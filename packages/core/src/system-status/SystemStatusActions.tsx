@@ -13,7 +13,8 @@ const withBaseName = makePrefixer("saltSystemStatusActions");
 
 interface SystemStatusActionsProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The content of SystemStatusActions
+   * The content of the `SystemStatusActions`, usually one or more
+   * `OnSolidButton` components.
    */
   children: ReactNode;
 }
