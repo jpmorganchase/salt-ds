@@ -1,10 +1,11 @@
-import { OnSolidButton, Text } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
 import {
+  OnSolidButton,
   SystemStatus,
   SystemStatusActions,
   SystemStatusContent,
-} from "@salt-ds/lab";
+  Text,
+} from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import type { ReactElement } from "react";
 
 export const Interactive = (): ReactElement => (

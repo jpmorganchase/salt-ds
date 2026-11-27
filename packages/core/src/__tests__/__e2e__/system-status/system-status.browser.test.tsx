@@ -1,4 +1,4 @@
-import { SystemStatus, SystemStatusContent } from "@salt-ds/lab";
+import { SystemStatus, SystemStatusContent } from "@salt-ds/core";
 import { composeStories } from "@storybook/react-vite";
 import { describe, expect, it } from "vitest";
 import { page } from "vitest/browser";
