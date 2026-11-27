@@ -1,10 +1,13 @@
-import { Button, OnSolidButton, StackLayout, Text } from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
 import {
+  Button,
+  OnSolidButton,
+  StackLayout,
   SystemStatus,
   SystemStatusActions,
   SystemStatusContent,
-} from "@salt-ds/lab";
+  Text,
+} from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import { type ReactElement, useRef, useState } from "react";
 
 export const Announced = (): ReactElement => {

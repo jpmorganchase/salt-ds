@@ -1,4 +1,3 @@
-import { makePrefixer } from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -7,13 +6,15 @@ import {
   forwardRef,
   type ReactNode,
 } from "react";
+import { makePrefixer } from "../utils";
 import systemStatusActionsCss from "./SystemStatusActions.css";
 
 const withBaseName = makePrefixer("saltSystemStatusActions");
 
 interface SystemStatusActionsProps extends ComponentPropsWithoutRef<"div"> {
   /**
-   * The content of SystemStatusActions
+   * The content of the `SystemStatusActions`, usually one or more
+   * `OnSolidButton` components.
    */
   children: ReactNode;
 }

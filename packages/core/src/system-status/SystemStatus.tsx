@@ -1,18 +1,17 @@
-import {
-  makePrefixer,
-  StatusIndicator,
-  type ValidationStatus,
-} from "@salt-ds/core";
 import { useComponentCssInjection } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import { forwardRef, type HTMLAttributes } from "react";
+import { StatusIndicator, type ValidationStatus } from "../status-indicator";
+import { makePrefixer } from "../utils";
 
 import systemStatusCss from "./SystemStatus.css";
 
 export interface SystemStatusProps extends HTMLAttributes<HTMLDivElement> {
   /**
-   *  A string to determine the current state of the SystemStatus. Defaults to `info`.
+   * The status of the SystemStatus: `"info"`, `"success"`, `"warning"` or
+   * `"error"`. It sets the SystemStatus's background color and status icon.
+   * @default "info"
    */
   status?: ValidationStatus;
 }

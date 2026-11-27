@@ -29,9 +29,9 @@ We advise against adding too much content to a system status because of potentia
 
 ### When not to use
 
-- For inline messaging, or a notification that applies to the user’s current task or workflow. Instead, use [`Banner`](../banner).
+- For inline messaging, or a notification that applies to the user’s current task or workflow. Instead, use [`Banner`](/salt/components/banner).
 - To communicate when content is loading. Instead, use the [content status pattern](/salt/patterns/content-status).
-- When the notification requires immediate action and relates to the user’s current task. Instead, use [`Dialog`](../dialog) to interrupt the user's workflow.
+- When the notification requires immediate action and relates to the user’s current task. Instead, use [`Dialog`](/salt/components/dialog) to interrupt the user's workflow.
 
 ## Content
 
@@ -41,26 +41,26 @@ If a title is needed, set `fontWeight="bolder"` on it, as shown in the [with tit
 
 ## Import
 
-To import `SystemStatus` and related components from the lab Salt package, use:
+To import `SystemStatus` and related components from the core Salt package, use:
 
 ```js
 import {
   SystemStatus,
   SystemStatusContent,
   SystemStatusActions,
-} from "@salt-ds/lab";
+} from "@salt-ds/core";
 ```
 
 ## Props
 
 ### `SystemStatus`
 
-<PropsTable packageName="lab" componentName="SystemStatus" />
+<PropsTable packageName="core" componentName="SystemStatus" />
 
 ### `SystemStatusContent`
 
-<PropsTable packageName="lab" componentName="SystemStatusContent" />
+<PropsTable packageName="core" componentName="SystemStatusContent" />
 
 ### `SystemStatusActions`
 
-<PropsTable packageName="lab" componentName="SystemStatusActions" />
+<PropsTable packageName="core" componentName="SystemStatusActions" />

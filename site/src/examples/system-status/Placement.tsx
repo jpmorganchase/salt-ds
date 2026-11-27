@@ -4,14 +4,12 @@ import {
   H1,
   OnSolidButton,
   StackLayout,
-  Text,
-} from "@salt-ds/core";
-import { CloseIcon } from "@salt-ds/icons";
-import {
   SystemStatus,
   SystemStatusActions,
   SystemStatusContent,
-} from "@salt-ds/lab";
+  Text,
+} from "@salt-ds/core";
+import { CloseIcon } from "@salt-ds/icons";
 import type { ReactElement } from "react";
 
 export const Placement = (): ReactElement => (

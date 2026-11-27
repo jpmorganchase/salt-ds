@@ -6,20 +6,18 @@ import {
   Link,
   OnSolidButton,
   StackLayout,
+  SystemStatus,
+  SystemStatusActions,
+  SystemStatusContent,
   Text,
   type ValidationStatus,
 } from "@salt-ds/core";
 import { CloseIcon } from "@salt-ds/icons";
-import {
-  SystemStatus,
-  SystemStatusActions,
-  SystemStatusContent,
-} from "@salt-ds/lab";
 import type { Meta, StoryFn } from "@storybook/react-vite";
 import { useRef, useState } from "react";
 
 export default {
-  title: "Lab/System Status",
+  title: "Core/System Status",
   component: SystemStatus,
 } as Meta<typeof SystemStatus>;
 
