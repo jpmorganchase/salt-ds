@@ -1,5 +1,11 @@
 # @salt-ds/core
 
+## 1.76.1
+
+### Patch Changes
+
+- 3d3f1b6: Aligned the internal Avatar image hook with the existing string URL contract so it typechecks with React 19.3 types.
+
 ## 1.76.0
 
 ### Minor Changes
