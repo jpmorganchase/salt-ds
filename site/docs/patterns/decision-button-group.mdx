@@ -29,7 +29,7 @@ Use a decision button group when:
 - A user decision is needed on how to proceed with a specific action.
 - User feedback or choice needs to be captured.
 - The group represents one compact decision point in a flow.
-- The actions have equal priority.
+- The choices have equal priority.
 - The buttons achieve single-selection and deselection capability together. 
 
 ## When not to use
@@ -43,15 +43,16 @@ Use a decision button group when:
 
 ### Anatomy
 
-A decision button group contains:
+A decision button group places two choices side by side as a single group:
 
-1. **Buttons:** Possible actions or choices that users can take.
-2. **Groups:** Used to visually communicate which buttons are related to each other.
+1. **Choice:** Possible answers to the decision, displayed as a button or a toggle button.
+2. **Label:** Text describing the choice. Optional if an icon is present.
+3. **Icon:** A visual representation of the choice. Optional if a label is present.
 
 <Diagram
   src="/img/patterns/decision-button-group/decision-button-group-2.png"
   srcDark="/img/patterns/decision-button-group/decision-button-group-2-dark.png"
-  alt="Comparison of a default decision button group and a selectable decision button group."
+  alt="Anatomy of a decision button group, with numbered markers showcasing the buttons as choices, label and icon."
   border
 />
 
