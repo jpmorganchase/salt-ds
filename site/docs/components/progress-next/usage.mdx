@@ -1,0 +1,43 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Using the component
+
+`Progress` is a proof of concept for the [progress and loading](/salt/patterns/progress-and-loading) pattern. It covers both [`LinearProgress`](../progress) and [`CircularProgress`](../progress), and the looping job of [`Spinner`](../spinner), in one component.
+
+### When to use
+
+- To show how much of a system task is complete, when you can measure it. Give it a `value`.
+- To show the system is working, when you can't measure how long it will take. Leave the value out.
+- When a task's size isn't known yet, start without a value and add one once it's known. The indicator fills in place.
+
+### When not to use
+
+- To show a user's place in a multi-step task. Instead, use [`Stepper`](../stepper).
+- To show an amount that isn't a task, such as storage used.
+- For actions that complete in under a second. Set `delay` so `Progress` doesn't show for tasks that finish quickly.
+
+## Content
+
+- Use `label` to say what's happening, such as "Uploading report.pdf". It's also the accessible name.
+- Show the value in units that make sense to users, such as "3 of 5 files", with `getValueText`. Use a percentage only when there's no better unit.
+- Use `description` for helper text, such as "About 2 minutes left".
+
+## Import
+
+To import `Progress` from the lab Salt package, use:
+
+```js
+import { Progress } from "@salt-ds/lab";
+```
+
+## Props
+
+<PropsTable packageName="lab" componentName="Progress" />
