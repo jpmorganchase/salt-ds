@@ -6,7 +6,16 @@ import {
 } from "./internal";
 
 export interface ContactFavoriteToggleProps
-  extends FavoriteToggleWithTooltipProps {
+  extends Omit<
+    FavoriteToggleWithTooltipProps,
+    | "aria-label"
+    | "isFocusVisible"
+    | "isFocused"
+    | "isHighlighted"
+    | "isSelected"
+    | "onChange"
+    | "tooltipTitle"
+  > {
   isFavorite?: boolean;
   defaultIsFavorite?: boolean;
   onChange?: (isFavorite: boolean) => void;

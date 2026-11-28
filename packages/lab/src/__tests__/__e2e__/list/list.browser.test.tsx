@@ -1,6 +1,6 @@
-import { List } from "@salt-ds/lab";
+import { List, ListItem, VirtualizedList } from "@salt-ds/lab";
 import { describe, expect, it, vi } from "vitest";
-import { page } from "vitest/browser";
+import { page, userEvent } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
 
 const items = [
@@ -112,5 +112,116 @@ describe("GIVEN a source List", () => {
     await renderWithSalt(<List onMouseDown={onMouseDown} source={items} />);
     await page.getByText("list item 1").click();
     expect(onMouseDown).toHaveBeenCalled();
+  });
+});
+
+describe("GIVEN an empty List", () => {
+  it("renders emptyMessage", async () => {
+    await renderWithSalt(<List emptyMessage="Nothing here" source={[]} />);
+    await expect.element(page.getByText("Nothing here")).toBeInTheDocument();
+  });
+
+  it("renders a default message with showEmptyMessage", async () => {
+    await renderWithSalt(<List showEmptyMessage source={[]} />);
+    await expect
+      .element(page.getByText("No data to display"))
+      .toBeInTheDocument();
+  });
+});
+
+describe("GIVEN a ListItem", () => {
+  it("forwards tabIndex", async () => {
+    await renderWithSalt(
+      <List>
+        <ListItem tabIndex={-1}>list item 1</ListItem>
+      </List>,
+    );
+    await expect
+      .element(page.getByRole("option"))
+      .toHaveAttribute("tabindex", "-1");
+  });
+});
+
+describe("GIVEN a VirtualizedList", () => {
+  it("highlights item text matching itemTextHighlightPattern", async () => {
+    await renderWithSalt(
+      <VirtualizedList itemTextHighlightPattern="item 2" source={items} />,
+    );
+    await expect
+      .element(page.getByRole("option").nth(1).getByText("item 2"))
+      .toHaveClass("saltHighlighter-highlight");
+  });
+
+  it("applies className to the list but not its items", async () => {
+    await renderWithSalt(
+      <VirtualizedList className="custom-list" source={items} />,
+    );
+    await expect.element(page.getByRole("listbox")).toHaveClass("custom-list");
+    await expect
+      .element(page.getByRole("option").first())
+      .not.toHaveClass("custom-list");
+  });
+
+  it("renders emptyMessage", async () => {
+    await renderWithSalt(
+      <VirtualizedList emptyMessage="Nothing here" source={[]} />,
+    );
+    await expect.element(page.getByText("Nothing here")).toBeInTheDocument();
+  });
+});
+
+describe("GIVEN a List with event handlers", () => {
+  it("calls them as well as its own handlers", async () => {
+    const handlers = {
+      onBlur: vi.fn(),
+      onClick: vi.fn(),
+      onFocus: vi.fn(),
+      onKeyDown: vi.fn(),
+      onMouseDownCapture: vi.fn(),
+      onMouseLeave: vi.fn(),
+      onMouseMove: vi.fn(),
+    };
+    await renderWithSalt(
+      <>
+        <List {...handlers} source={items} />
+        <button type="button">after</button>
+      </>,
+    );
+    await page.getByText("list item 2").hover();
+    expect(handlers.onMouseMove).toHaveBeenCalled();
+    await page.getByText("list item 2").click();
+    await expect
+      .element(page.getByRole("option").nth(1))
+      .toHaveAttribute("aria-selected", "true");
+    expect(handlers.onMouseDownCapture).toHaveBeenCalled();
+    expect(handlers.onFocus).toHaveBeenCalled();
+    expect(handlers.onClick).toHaveBeenCalled();
+    await userEvent.keyboard("{ArrowDown}");
+    await expect
+      .element(page.getByRole("option").nth(2))
+      .toHaveClass("saltHighlighted");
+    expect(handlers.onKeyDown).toHaveBeenCalled();
+    await page.getByRole("button", { name: "after" }).hover();
+    expect(handlers.onMouseLeave).toHaveBeenCalled();
+    await page.getByRole("button", { name: "after" }).click();
+    expect(handlers.onBlur).toHaveBeenCalled();
+  });
+});
+
+describe("GIVEN a VirtualizedList with event handlers", () => {
+  it("calls them as well as its own handlers", async () => {
+    const onClick = vi.fn();
+    const onScroll = vi.fn();
+    await renderWithSalt(
+      <VirtualizedList onClick={onClick} onScroll={onScroll} source={items} />,
+    );
+    // A DOM click avoids the pointer scrolling the virtualized list.
+    (page.getByText("list item 1").element() as HTMLElement).click();
+    await expect
+      .element(page.getByRole("option").first())
+      .toHaveAttribute("aria-selected", "true");
+    expect(onClick).toHaveBeenCalled();
+    page.getByRole("listbox").element().dispatchEvent(new Event("scroll"));
+    expect(onScroll).toHaveBeenCalled();
   });
 });

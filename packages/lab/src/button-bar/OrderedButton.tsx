@@ -35,12 +35,6 @@ export interface OrderedButtonProps extends ButtonProps {
    * This defaults to 0 for `CTA`, 1 for `regular` and 2 for `secondary`
    */
   order?: number;
-  /**
-   * The order the button will be rendered when stacked. Buttons are ordered
-   * in descending order by default and then by their source order.
-   * This defaults to 2 for `CTA`, 1 for `regular` and 0 for `secondary`
-   */
-  stackOrder?: number;
 }
 
 const withBasename = makePrefixer("saltOrderedButton");
@@ -52,7 +46,6 @@ export const OrderedButton = forwardRef<HTMLButtonElement, OrderedButtonProps>(
       align: alignProp,
       order,
       alignLeftOrder,
-      stackOrder,
       variant,
       ...restProps
     },
@@ -65,7 +58,7 @@ export const OrderedButton = forwardRef<HTMLButtonElement, OrderedButtonProps>(
       window: targetWindow,
     });
 
-    const index = useDescendant({ order, stackOrder, alignLeftOrder, variant });
+    const index = useDescendant({ order, alignLeftOrder, variant });
     const {
       matches,
       align: alignContext,

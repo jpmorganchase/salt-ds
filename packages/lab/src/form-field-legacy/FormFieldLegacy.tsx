@@ -53,7 +53,7 @@ export interface A11yValueProps
 
 export interface FormFieldLegacyProps
   extends HTMLAttributes<HTMLDivElement>,
-    A11yValueProps {
+    Omit<A11yValueProps, "helperTextId" | "labelId" | "renderHelperText"> {
   /**
    * The component used for activation indicator. Default to `FormActivationIndicator`.
    */
@@ -105,7 +105,18 @@ export interface FormFieldLegacyProps
   /**
    * Props to be applied to the `LabelComponent`
    */
-  LabelProps?: Partial<FormLabelProps>;
+  LabelProps?: Partial<
+    Omit<
+      FormLabelProps,
+      | "disabled"
+      | "hasStatusIndicator"
+      | "label"
+      | "required"
+      | "StatusIndicatorProps"
+      | "tooltipText"
+      | "validationStatus"
+    >
+  >;
   /**
    * Override props to be used with the StatusIndicator component
    */
@@ -303,7 +314,6 @@ export const FormFieldLegacy = forwardRef(function FormFieldLegacy(
               className={LabelProps.className}
               label={label}
               disabled={disabled}
-              readOnly={readOnly}
               required={required}
               tooltipText={helperText}
               id={labelId}

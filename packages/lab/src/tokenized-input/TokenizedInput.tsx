@@ -1,5 +1,5 @@
-import { type UseTooltipProps, useForkRef } from "@salt-ds/core";
-import { type ComponentType, type ForwardedRef, forwardRef } from "react";
+import { useForkRef } from "@salt-ds/core";
+import { type ForwardedRef, forwardRef } from "react";
 import {
   TokenizedInputBase,
   type TokenizedInputBaseProps,
@@ -22,7 +22,6 @@ export interface TokenizedInputProps<Item>
     | "helpers"
     | "onRemoveItem"
   > {
-  Tooltip?: ComponentType;
   delimiter?: string | Array<string>;
   disableAddOnBlur?: boolean;
   initialSelectedItems?: Array<Item>;
@@ -30,9 +29,6 @@ export interface TokenizedInputProps<Item>
   onCollapse?: () => void;
   onExpand?: () => void;
   stringToItem?: StringToItem<Item>;
-  tooltipEnterDelay?: UseTooltipProps["enterDelay"];
-  tooltipLeaveDelay?: UseTooltipProps["leaveDelay"];
-  tooltipPlacement?: UseTooltipProps["placement"];
 }
 
 export const TokenizedInput = forwardRef(function TokenizedInput<Item>(

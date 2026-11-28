@@ -99,7 +99,7 @@ export interface responsiveDataAttributes {
 
 export type TabProps = Omit<
   HTMLAttributes<HTMLElement>,
-  "onClick" | "onKeyUp"
+  "onClick" | "onKeyUp" | "role" | "aria-controls" | "aria-selected"
 > & {
   ariaControls?: AriaAttributes["aria-controls"];
   closeable?: boolean;
@@ -107,10 +107,7 @@ export type TabProps = Omit<
   dragging?: boolean;
   editable?: boolean;
   editing?: EditableLabelProps["editing"];
-  focused?: boolean;
-  // DO we need this as well as focussed ?
   focusVisible?: boolean;
-  focusedChildIndex?: number;
   selected?: boolean;
   index?: number;
   label?: EditableLabelProps["defaultValue"];
@@ -120,7 +117,6 @@ export type TabProps = Omit<
   onExitEditMode?: exitEditHandler;
   onKeyUp?: (e: KeyboardEvent, index: number) => void;
   orientation?: "horizontal" | "vertical";
-  tabChildIndex?: number;
 };
 
 export type TabElement = ReactElement<TabProps>;

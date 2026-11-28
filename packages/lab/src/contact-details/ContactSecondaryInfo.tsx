@@ -8,7 +8,6 @@ import {
   useEffect,
 } from "react";
 import { useContactDetailsContext } from "./internal";
-import type { ValueComponentProps } from "./types";
 
 const withBaseName = makePrefixer("saltContactSecondaryInfo");
 
@@ -16,21 +15,13 @@ export interface ContactSecondaryInfoProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "color"> {
   icon?: ComponentType<IconProps>;
   text: string;
-  ValueComponent?: ComponentType<ValueComponentProps>;
 }
 
 export const ContactSecondaryInfo = forwardRef<
   HTMLDivElement,
   ContactSecondaryInfoProps
 >(function ContactSecondaryInfo(props, ref) {
-  const {
-    id: idProp,
-    text,
-    icon: Icon,
-    className,
-    ValueComponent: _ValueComponent,
-    ...restProps
-  } = props;
+  const { id: idProp, text, icon: Icon, className, ...restProps } = props;
   const { setSecondary, setSecondaryId, variant } = useContactDetailsContext();
   const id = useId(idProp);
 

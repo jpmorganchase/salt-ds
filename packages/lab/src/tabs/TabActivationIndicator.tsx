@@ -8,12 +8,14 @@ import { useActivationIndicator } from "./useActivationIndicator";
 interface TabActivationIndicatorProps {
   hideThumb?: boolean;
   orientation?: "horizontal" | "vertical";
-  disableAnimation?: boolean;
   tabId?: string | null;
 }
 
 const withBaseName = makePrefixer("saltTabActivationIndicator");
 
+/**
+ * @deprecated since 1.0.0-alpha.109. It's internal and will be removed in a future release.
+ */
 export const TabActivationIndicator = ({
   hideThumb = false,
   orientation = "horizontal",

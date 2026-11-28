@@ -40,6 +40,8 @@ export const QueryInput = forwardRef<HTMLDivElement, QueryInputProps>(
       onBooleanOperatorChange: _onBooleanOperatorChange,
       defaultBooleanOperator: _defaultBooleanOperator,
       className,
+      onBlur,
+      onFocus,
       ...restProps
     } = props;
 
@@ -60,10 +62,16 @@ export const QueryInput = forwardRef<HTMLDivElement, QueryInputProps>(
     return (
       <div
         className={clsx(withBaseName(), className)}
-        onBlur={queryInputProps.onBlur}
-        onFocus={queryInputProps.onFocus}
         data-testid="query-input"
         {...restProps}
+        onBlur={(event) => {
+          queryInputProps.onBlur(event);
+          onBlur?.(event);
+        }}
+        onFocus={(event) => {
+          queryInputProps.onFocus(event);
+          onFocus?.(event);
+        }}
       >
         <QueryInputBody
           ref={queryInputBodyRef}

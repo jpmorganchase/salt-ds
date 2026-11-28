@@ -14,9 +14,9 @@ import type { TooltrayProps } from "./TooltrayProps";
 
 export const Tooltray = (props: TooltrayProps) => {
   const {
-    "aria-label": ariaLabel,
     // Tooltray itself doesn't use these alignment props directly,
     // they are read and used by the parent Toolbar
+    alignCenter,
     alignEnd,
     alignStart,
     children,

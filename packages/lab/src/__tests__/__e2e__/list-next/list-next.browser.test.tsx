@@ -186,3 +186,20 @@ describe("GIVEN a list", () => {
     });
   });
 });
+
+describe("GIVEN a list item with onMouseMove", () => {
+  it("calls it and still highlights the item on hover", async () => {
+    const onMouseMove = vi.fn();
+    await renderWithSalt(
+      <SingleSelectList>
+        <ListItemNext onMouseMove={onMouseMove} value={items[0].value}>
+          {items[0].label}
+        </ListItemNext>
+        <ListItemNext value={items[1].value}>{items[1].label}</ListItemNext>
+      </SingleSelectList>,
+    );
+    await option(0).hover();
+    await expect.element(option(0)).toHaveClass("saltListItemNext-highlighted");
+    expect(onMouseMove).toHaveBeenCalled();
+  });
+});

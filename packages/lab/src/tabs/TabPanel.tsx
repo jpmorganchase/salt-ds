@@ -8,13 +8,20 @@ import tabPanelCss from "./TabPanel.css";
 
 const withBaseName = makePrefixer("saltTabPanel");
 
-export interface TabPanelProps extends HTMLAttributes<HTMLDivElement> {
+export interface TabPanelProps
+  extends Omit<HTMLAttributes<HTMLDivElement>, "role" | "tabIndex"> {
   enableClose?: boolean;
   label: string;
 }
 
 export const TabPanel = forwardRef(function TabPanel(
-  { children, className, enableClose, ...htmlAttributes }: TabPanelProps,
+  {
+    children,
+    className,
+    enableClose: _enableClose,
+    label: _label,
+    ...htmlAttributes
+  }: TabPanelProps,
   forwardedRef: ForwardedRef<HTMLDivElement>,
 ) {
   const targetWindow = useWindow();

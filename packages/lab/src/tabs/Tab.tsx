@@ -70,7 +70,6 @@ export const Tab = forwardRef(function Tab(
     onMouseDown,
     orientation,
     selected,
-    tabChildIndex = 0,
     tabIndex,
     ...props
   }: TabProps,
@@ -175,14 +174,18 @@ export const Tab = forwardRef(function Tab(
       {...props}
       aria-controls={ariaControls}
       aria-selected={selected}
-      className={clsx(withBaseName(), {
-        [withBaseName("closeable")]: closeable,
-        [withBaseName("closeHover")]: closeHover,
-        [withBaseName("dragAway")]: dragging,
-        [withBaseName("editing")]: editing,
-        [withBaseName("vertical")]: orientation === "vertical",
-        saltFocusVisible: focusVisible,
-      })}
+      className={clsx(
+        withBaseName(),
+        {
+          [withBaseName("closeable")]: closeable,
+          [withBaseName("closeHover")]: closeHover,
+          [withBaseName("dragAway")]: dragging,
+          [withBaseName("editing")]: editing,
+          [withBaseName("vertical")]: orientation === "vertical",
+          saltFocusVisible: focusVisible,
+        },
+        className,
+      )}
       data-editable={editable || undefined}
       onClick={handleClick}
       onFocus={handleFocus}

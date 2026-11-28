@@ -1,5 +1,5 @@
 import { composeStories } from "@storybook/react-vite";
-import { afterEach, describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { page } from "vitest/browser";
 import { renderWithSalt } from "~browser-test-utils/render";
 import * as layerStories from "~stories/layer-layout/layer-layout.stories";
@@ -85,5 +85,28 @@ describe("GIVEN a LayerLayout", () => {
     expect(await openLayer()).toHaveClass("saltLayerLayout-fullScreen");
     await page.getByRole("button", { name: /Close Layer/i }).click();
     await expect.poll(layerElement).toBeNull();
+  });
+});
+
+describe("GIVEN a LayerLayout with animation callbacks", () => {
+  it("calls them and still unmounts after closing", async () => {
+    const onAnimationStart = vi.fn();
+    const onAnimationEnd = vi.fn();
+    await openLayer(Default, { onAnimationEnd, onAnimationStart });
+    await page.getByRole("button", { name: /Close Layer/i }).click();
+    await expect.poll(layerElement).toBeNull();
+    expect(onAnimationStart).toHaveBeenCalled();
+    expect(onAnimationEnd).toHaveBeenCalled();
+  });
+});
+
+describe("GIVEN a LayerLayout with a scrim className", () => {
+  it("keeps the animation class on the scrim", async () => {
+    await openLayer(Default, { scrimProps: { className: "custom-scrim" } });
+    const scrim = document.querySelector(".saltScrim");
+    expect(scrim).toHaveClass(
+      "custom-scrim",
+      "saltLayerLayout-enter-animation",
+    );
   });
 });

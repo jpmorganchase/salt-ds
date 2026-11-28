@@ -65,6 +65,8 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
       disableAnimations = false,
       scrimProps,
       isOpen = true,
+      onAnimationEnd,
+      onAnimationStart,
       ...rest
     } = props;
 
@@ -116,11 +118,15 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
           [withBaseName("enter-animation")]: enterAnimation,
           [withBaseName("exit-animation")]: exitAnimation,
         })}
-        onAnimationStart={() => setIsAnimating(true)}
-        onAnimationEnd={() => {
+        onAnimationStart={(event) => {
+          setIsAnimating(true);
+          onAnimationStart?.(event);
+        }}
+        onAnimationEnd={(event) => {
           if (!isOpen && showComponent) {
             setShowComponent(false);
           }
+          onAnimationEnd?.(event);
         }}
         {...(disableScrim && ariaAttributes)}
         {...rest}
@@ -134,11 +140,14 @@ export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
     ) : (
       <Scrim
         open={showComponent}
-        className={clsx({
-          [withBaseName("enter-animation")]: enterAnimation,
-          [withBaseName("exit-animation")]: exitAnimation,
-        })}
         {...scrimProps}
+        className={clsx(
+          {
+            [withBaseName("enter-animation")]: enterAnimation,
+            [withBaseName("exit-animation")]: exitAnimation,
+          },
+          scrimProps?.className,
+        )}
       >
         {layerLayout}
       </Scrim>

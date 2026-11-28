@@ -25,7 +25,6 @@ export interface DropdownBaseProps
   openOnFocus?: boolean;
   placement?: DropdownPlacement;
   popupWidth?: number;
-  triggerComponent?: ReactElement;
   width?: number | string;
 }
 
