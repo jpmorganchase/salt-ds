@@ -29,6 +29,9 @@ const withBaseName = makePrefixer("saltListItemDeprecated");
 
 // just to keep line number parity
 //
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
+ */
 export const ListItemBase = memo(
   forwardRef(function ListItemBase(
     props: ListItemBaseProps,

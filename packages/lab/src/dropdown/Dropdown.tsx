@@ -25,6 +25,9 @@ import { DropdownButton } from "./DropdownButton";
 import type { DropdownBaseProps } from "./dropdownTypes";
 import { useDropdown } from "./useDropdown";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Dropdown` from `@salt-ds/core` instead.
+ */
 export interface DropdownProps<
   Item = string,
   Selection extends SelectionStrategy = "default",
@@ -40,6 +43,9 @@ export interface DropdownProps<
   >;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Dropdown` from `@salt-ds/core` instead.
+ */
 export const Dropdown = forwardRef(function Dropdown<
   Item = string,
   Selection extends SelectionStrategy = "default",

@@ -13,6 +13,9 @@ import { useIsViewportLargerThanBreakpoint } from "../utils";
 
 import layerLayoutCss from "./LayerLayout.css";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Dialog`, `Drawer` or `Overlay` from `@salt-ds/core` instead.
+ */
 export const LAYER_POSITIONS = [
   "center",
   "left",
@@ -21,8 +24,14 @@ export const LAYER_POSITIONS = [
   "bottom",
 ] as const;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Dialog`, `Drawer` or `Overlay` from `@salt-ds/core` instead.
+ */
 export type LayerPositions = (typeof LAYER_POSITIONS)[number];
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Dialog`, `Drawer` or `Overlay` from `@salt-ds/core` instead.
+ */
 export interface LayerLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Disable the scrim.
@@ -54,6 +63,9 @@ const withBaseName = makePrefixer("saltLayerLayout");
 
 const ariaAttributes = { role: "dialog", "aria-modal": true };
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Dialog`, `Drawer` or `Overlay` from `@salt-ds/core` instead.
+ */
 export const LayerLayout = forwardRef<HTMLDivElement, LayerLayoutProps>(
   function LayerLayout(props, ref) {
     const {

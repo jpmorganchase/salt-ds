@@ -5,11 +5,17 @@ import { useContactDetailsContext } from "./internal";
 
 const withBaseName = makePrefixer("saltContactPrimaryInfo");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export interface ContactPrimaryInfoProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "color"> {
   text: string;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export const ContactPrimaryInfo = forwardRef<
   HTMLDivElement,
   ContactPrimaryInfoProps

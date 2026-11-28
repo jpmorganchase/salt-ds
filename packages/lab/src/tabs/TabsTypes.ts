@@ -10,25 +10,46 @@ import type { EditableLabelProps } from "../editable-label";
 import type { OverflowSource, orientationType } from "../responsive";
 import type { ExitEditModeHandler } from "./useEditableItem";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Tabs` from `@salt-ds/core` instead.
+ */
 export interface FocusAPI {
   focus: () => void;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Tabs` from `@salt-ds/core` instead.
+ */
 export interface TabDescriptor extends OverflowSource {
   element?: ReactElement;
 }
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Tabs` from `@salt-ds/core` instead.
+ */
 export type TabsSource = string[] | TabDescriptor[];
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Tabs` from `@salt-ds/core` instead.
+ */
 export type navigationProps = Pick<TabProps, "onFocus" | "onKeyDown">;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Tabs` from `@salt-ds/core` instead.
+ */
 export type composableTabProps = navigationProps &
   Pick<
     TabProps,
     "onClick" | "onEnterEditMode" | "onExitEditMode" | "onMouseDown"
   >;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Tabs` from `@salt-ds/core` instead.
+ */
 export type TabstripVariant = "primary" | "tertiary";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Tabs` from `@salt-ds/core` instead.
+ */
 export interface TabstripProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * when true Tabs may be re-arranged by dragging individual Tabs to new position within Tabstrip.
@@ -84,6 +105,9 @@ export interface TabstripProps extends HTMLAttributes<HTMLDivElement> {
   variant?: TabstripVariant;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Tabs` from `@salt-ds/core` instead.
+ */
 export type exitEditHandler = (
   originalValue: string,
   editedValue: string,
@@ -91,12 +115,18 @@ export type exitEditHandler = (
   tabIndex: number,
 ) => void;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Tabs` from `@salt-ds/core` instead.
+ */
 export interface responsiveDataAttributes {
   "data-index": number;
   "data-overflowed"?: boolean;
   "data-priority": number;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Tabs` from `@salt-ds/core` instead.
+ */
 export type TabProps = Omit<
   HTMLAttributes<HTMLElement>,
   "onClick" | "onKeyUp"
@@ -123,4 +153,7 @@ export type TabProps = Omit<
   tabChildIndex?: number;
 };
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Tabs` from `@salt-ds/core` instead.
+ */
 export type TabElement = ReactElement<TabProps>;

@@ -1,3 +1,4 @@
+import type { FunctionComponent } from "react";
 import {
   afterEach,
   beforeEach,
@@ -85,7 +86,7 @@ describe("deprecatedExport", () => {
 
   describe("deprecatedComponent", () => {
     it("should set the displayName", () => {
-      const FakeComponent = () => null;
+      const FakeComponent: FunctionComponent = () => null;
       const wrapped = deprecatedComponent(
         FakeComponent,
         "FakeComponent",

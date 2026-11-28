@@ -10,8 +10,14 @@ import appHeaderCss from "./AppHeader.css";
 
 const withBaseName = makePrefixer("saltAppHeader");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [app header pattern](https://www.saltdesignsystem.com/salt/patterns/app-header) instead.
+ */
 export type AppHeaderProps = HTMLAttributes<HTMLDivElement>;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [app header pattern](https://www.saltdesignsystem.com/salt/patterns/app-header) instead.
+ */
 export const AppHeader = forwardRef<HTMLDivElement, AppHeaderProps>(
   function AppHeader(
     {

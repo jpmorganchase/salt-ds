@@ -9,6 +9,9 @@ import metricCSS from "./Metric.css";
 
 const withBaseName = makePrefixer("saltMetric");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [metric pattern](https://www.saltdesignsystem.com/salt/patterns/metric) instead.
+ */
 export interface MetricProps
   extends MetricContextValue,
     HTMLAttributes<HTMLDivElement> {
@@ -26,6 +29,9 @@ export interface MetricProps
   id?: string;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [metric pattern](https://www.saltdesignsystem.com/salt/patterns/metric) instead.
+ */
 export const Metric = forwardRef<HTMLDivElement, MetricProps>(function Metric(
   {
     className,

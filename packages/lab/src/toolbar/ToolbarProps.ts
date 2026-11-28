@@ -6,14 +6,23 @@ import type {
   ReactNode,
 } from "react";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Toolbar` from `@salt-ds/core` instead.
+ */
 export type OrientationShape = "vertical" | "horizontal";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Toolbar` from `@salt-ds/core` instead.
+ */
 export interface ToolbarAlignmentProps {
   alignCenter?: true | undefined;
   alignEnd?: true | undefined;
   alignStart?: true | undefined;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Toolbar` from `@salt-ds/core` instead.
+ */
 export interface ToolbarProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * Used by custom elements to render a custom tooltip

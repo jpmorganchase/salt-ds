@@ -34,6 +34,9 @@ import { stateChangeTypes } from "./stateChangeTypes";
 
 const defaultItemToString = (item: any) => item?.title || String(item);
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Menu` from `@salt-ds/core` instead.
+ */
 export const CascadingMenu = forwardRef<HTMLDivElement, CascadingMenuProps>(
   function CascadingMenu(props, ref) {
     const {

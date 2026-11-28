@@ -1,9 +1,21 @@
 import { useIsomorphicLayoutEffect } from "@salt-ds/core";
 import { type RefObject, useCallback, useRef } from "react";
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const WidthHeight = ["height", "width"];
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const HeightOnly = ["height"];
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const WidthOnly = ["width"];
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export type measurements<T = string | number> = {
   height?: T;
   scrollHeight?: T;
@@ -12,6 +24,9 @@ export type measurements<T = string | number> = {
 };
 type measuredDimension = keyof measurements<number>;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export type ResizeHandler = (measurements: measurements<number>) => void;
 
 type observedDetails = {
@@ -71,6 +86,9 @@ const resizeObserver =
 // with initial size
 // Note asking for scrollHeight alone will not trigger onResize, this is only triggered by height,
 // with scrollHeight returned as an auxilliary value
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `useResizeObserver` from `@salt-ds/core` instead.
+ */
 export function useResizeObserver(
   ref: RefObject<Element | HTMLElement | null>,
   dimensions: string[],

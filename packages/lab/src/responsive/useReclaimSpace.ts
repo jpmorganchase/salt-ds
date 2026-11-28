@@ -30,6 +30,9 @@ const findNextOverflowedItem = (items: OverflowItem[]) => {
   return null;
 };
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const addAllVisible = (sum: number, m: OverflowItem) =>
   sum + (m.overflowed ? 0 : m.size);
 
@@ -57,6 +60,9 @@ const mightBeAbleToReclaimSpace = (items: OverflowItem[]) =>
 // We need to release the reclaimed space (i.e take it back from the collapsed item and re-assign it
 // as available space) when container grows and space now allows overflowed item to be 'un-wrapped'
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const useReclaimSpace = ({
   collectionHook,
   label: _label = "Toolbar",

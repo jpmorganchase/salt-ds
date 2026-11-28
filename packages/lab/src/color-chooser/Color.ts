@@ -1,6 +1,9 @@
 import tinycolor from "tinycolor2";
 import { getColorNameByHexValue } from "./ColorHelpers";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export type RGBAValue = {
   r: number;
   b: number;
@@ -8,6 +11,9 @@ export type RGBAValue = {
   a: number;
 };
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export class Color {
   private color: tinycolor.Instance = tinycolor();
 

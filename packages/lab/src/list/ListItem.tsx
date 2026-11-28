@@ -13,6 +13,9 @@ const withBaseName = makePrefixer("saltListItem");
 // determine height of ListItem and monitor it for size changes (in
 // case of runtime density switch). This allows ListItem height to
 // be controlled purely through CSS.
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
+ */
 export const ListItemProxy = forwardRef(function ListItemProxy(
   _props: HTMLAttributes<HTMLDivElement>,
   forwardedRef: ForwardedRef<HTMLDivElement>,
@@ -29,6 +32,9 @@ export const ListItemProxy = forwardRef(function ListItemProxy(
 // Note: the memo is effective if List label is passed as simple string
 // If children are used, it is the responsibility of caller to memoise
 // these if performance on highlight is perceived to be an issue.
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
+ */
 export const ListItem = forwardRef<HTMLDivElement, ListItemProps>(
   function ListItem(
     {

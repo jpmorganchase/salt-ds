@@ -7,12 +7,18 @@ import type {
 } from "react";
 import type { PortalProps } from "../portal";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Dropdown` from `@salt-ds/core` instead.
+ */
 export type DropdownPlacement =
   | "bottom-start"
   | "bottom-end"
   | "top-start"
   | "top-end"; // do any others make sense ?
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Dropdown` from `@salt-ds/core` instead.
+ */
 export interface DropdownBaseProps
   extends Omit<HTMLAttributes<HTMLDivElement>, "onSelect">,
     Pick<PortalProps, "disablePortal" | "container"> {
@@ -29,6 +35,9 @@ export interface DropdownBaseProps
   width?: number | string;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Dropdown` from `@salt-ds/core` instead.
+ */
 export interface DropdownHookProps
   extends Pick<
     DropdownBaseProps,
@@ -48,6 +57,9 @@ export interface DropdownHookProps
   rootRef: RefObject<HTMLDivElement | null>;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Dropdown` from `@salt-ds/core` instead.
+ */
 export interface DropdownHookTriggerProps {
   "aria-expanded"?: boolean;
   "aria-labelledby"?: string;
@@ -66,6 +78,9 @@ interface ComponentProps extends HTMLAttributes<HTMLElement> {
   width?: number | string;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Dropdown` from `@salt-ds/core` instead.
+ */
 export interface DropdownHookResult {
   componentProps: ComponentProps;
   isOpen: boolean;

@@ -15,8 +15,14 @@ import { useTabs } from "./useTabs";
 
 const withBaseName = makePrefixer("saltTabs");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Tabs` from `@salt-ds/core` instead.
+ */
 export type TabsProps = Omit<TabstripProps, "defaultSource">;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Tabs` from `@salt-ds/core` instead.
+ */
 export const Tabs = forwardRef(function Tabs(
   {
     activeTabIndex: activeTabIndexProp,

@@ -60,6 +60,9 @@ const tabDescriptors = (
     typeof tab === "string" ? { label: tab } : tab,
   );
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Tabs` from `@salt-ds/core` instead.
+ */
 export const Tabstrip = forwardRef(function Tabstrip(
   {
     activeTabIndex: activeTabIndexProp,

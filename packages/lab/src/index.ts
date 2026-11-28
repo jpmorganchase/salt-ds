@@ -16,30 +16,106 @@ export * from "./contact-details";
 export * from "./content-status";
 export * from "./deck-item";
 export * from "./deck-layout";
+// Named exports take precedence over `export *`, so consumers get these
+// versions, which warn that they're deprecated, instead of the originals.
+export {
+  AppHeader,
+  ButtonBar,
+  CascadingMenu,
+  ColorChooser,
+  ColorPicker,
+  ComboBox,
+  ComboBoxDeprecated,
+  ContactAction,
+  ContactActions,
+  ContactAvatar,
+  ContactDetails,
+  ContactFavoriteToggle,
+  ContactMetadata,
+  ContactMetadataItem,
+  ContactPrimaryInfo,
+  ContactSecondaryInfo,
+  ContactTertiaryInfo,
+  ContentStatus,
+  DeckItem,
+  DeckLayout,
+  Dropdown,
+  DropdownBase,
+  DropdownButton,
+  DropdownPlaceholder,
+  EditableLabel,
+  ElectronWindow,
+  FormattedInput,
+  FormField,
+  FormGroup,
+  FormLabel,
+  Highlighter,
+  Input,
+  LayerLayout,
+  List,
+  ListItem,
+  ListItemBaseDeprecated,
+  ListItemNext,
+  ListItemProxy,
+  ListNext,
+  Logo,
+  LogoImage,
+  LogoSeparator,
+  MailLinkComponent,
+  MenuButton,
+  Metric,
+  MetricContent,
+  MetricHeader,
+  OrderedButton,
+  Portal,
+  QueryInput,
+  SearchInput,
+  StaticInputAdornment,
+  Swatch,
+  SwatchesPicker,
+  TabActivationIndicator,
+  Tabs,
+  Tabstrip,
+  TokenizedInput,
+  TokenizedInputBase,
+  Toolbar,
+  useClickOutside,
+  useDropdownBase,
+  useDynamicCollapse,
+  useEventCallback,
+  useFormFieldLegacyProps,
+  useInstantCollapse,
+  useIsViewportLargerThanBreakpoint,
+  useLayoutEffectOnce,
+  useLayoutEffectSkipFirst,
+  useList,
+  useListItemDeprecated,
+  useOverflow,
+  useOverflowCollectionItems,
+  useOverflowDetection,
+  useOverflowLayout,
+  useQueryInput,
+  useReclaimSpace,
+  useResizeObserver,
+  useSlideSelection,
+  useTokenizedInput,
+  useWidth,
+  useWindow,
+  VirtualizedList,
+  Window,
+} from "./deprecations";
 export * from "./dropdown";
 export * from "./editable-label";
 export * from "./form-field-context-legacy";
-export {
-  FormFieldLegacy as FormField,
-  type FormFieldLegacyProps as FormFieldProps,
-  FormLabel,
-} from "./form-field-legacy";
+export type { FormFieldLegacyProps as FormFieldProps } from "./form-field-legacy";
 export * from "./form-group";
 export * from "./formatted-input";
-export {
-  InputLegacy as Input,
-  type InputLegacyProps as InputProps,
-  StaticInputAdornment,
-} from "./input-legacy";
+export type { InputLegacyProps as InputProps } from "./input-legacy";
 export * from "./layer-layout";
 export * from "./list";
 export type {
   ListChangeHandler as ListChangeHandlerDeprecated,
   ListSelectHandler as ListSelectHandlerDeprecated,
-} from "./list-deprecated";
-export {
-  ListItemBase as ListItemBaseDeprecated,
-  useListItem as useListItemDeprecated,
 } from "./list-deprecated";
 export * from "./list-next";
 export * from "./logo";

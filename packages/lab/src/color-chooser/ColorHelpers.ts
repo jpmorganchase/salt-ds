@@ -2,6 +2,9 @@ import { Color } from "./Color";
 import { isTransparent } from "./color-utils";
 import { saltColorMap } from "./colorMap";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export function getColorNameByHexValue(
   hexValue: string | undefined,
   disableAlpha = false,
@@ -41,6 +44,9 @@ export function getColorNameByHexValue(
   return disableFallBackToHex ? undefined : getHexValue(hexValue, disableAlpha);
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export function hexValueWithoutAlpha(
   hexValue: string | undefined,
 ): string | undefined {
@@ -50,6 +56,9 @@ export function hexValueWithoutAlpha(
     : undefined;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export function getHexValue(
   hexValue: string | undefined,
   disableAlpha: boolean,
@@ -58,12 +67,18 @@ export function getHexValue(
   return disableAlpha ? hexValueWithoutAlpha(hexValue) : hexValue;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const isValidHex = (hex: string | undefined): boolean => {
   return hex
     ? /^#[0-9a-fA-F]{8}$/.test(hex) || /#[0-9a-fA-F]{6}$/.test(hex)
     : false;
 };
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const convertColorMapValueToHex = (color: string): string => {
   if (!color.startsWith("rgb")) return color;
   const rgbVals = color.startsWith("rgba")

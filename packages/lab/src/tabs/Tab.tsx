@@ -48,6 +48,9 @@ const CloseTabButton = (props: ButtonProps) => {
   );
 };
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Tabs` from `@salt-ds/core` instead.
+ */
 export const Tab = forwardRef(function Tab(
   {
     ariaControls,

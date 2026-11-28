@@ -9,6 +9,9 @@ export type StaticInputAdornmentProps = HTMLAttributes<HTMLDivElement>;
 
 const withBaseName = makePrefixer("saltStaticInputAdornment");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use the `startAdornment` and `endAdornment` props of `Input` from `@salt-ds/core` instead.
+ */
 export const StaticInputAdornment = forwardRef<
   HTMLDivElement,
   StaticInputAdornmentProps

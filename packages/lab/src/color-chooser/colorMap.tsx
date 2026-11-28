@@ -3,6 +3,9 @@ const common = {
   saltblack: "rgb(0, 0, 0)",
 };
 /* TODO: a few of these are probably out of date and need checking */
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const saltlight = {
   ...common,
   /* Color palette will stay the same no matter of theming */
@@ -111,4 +114,7 @@ export const saltlight = {
   saltgray900: "rgb(22, 22, 22)" /* #161616 */,
 };
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const saltColorMap: Record<string, string> = saltlight;

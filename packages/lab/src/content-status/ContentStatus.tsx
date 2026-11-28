@@ -23,6 +23,9 @@ import {
 
 const withBaseName = makePrefixer("saltContentStatus");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [content status pattern](https://www.saltdesignsystem.com/salt/patterns/content-status) instead.
+ */
 export interface ContentStatusProps
   extends HTMLAttributes<HTMLDivElement>,
     StatusIndicatorProps {
@@ -31,6 +34,9 @@ export interface ContentStatusProps
   onActionClick?: (evt: MouseEvent<HTMLButtonElement>) => void;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [content status pattern](https://www.saltdesignsystem.com/salt/patterns/content-status) instead.
+ */
 export const ContentStatus = forwardRef<HTMLDivElement, ContentStatusProps>(
   function ContentStatus(
     {

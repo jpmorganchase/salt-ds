@@ -52,6 +52,9 @@ function getActiveTab(
   return 0;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export interface ColorChooserProps {
   color: Color | undefined;
   defaultAlpha?: number;
@@ -72,6 +75,9 @@ export interface ColorChooserProps {
   readOnly?: boolean;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const ColorChooser = ({
   onClear,
   onSelect,

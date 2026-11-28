@@ -14,12 +14,21 @@ import { ButtonBarContext } from "./internal/ButtonBarContext";
 import { DescendantProvider } from "./internal/DescendantContext";
 import { useDescendants } from "./internal/useDescendants";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [button bar pattern](https://www.saltdesignsystem.com/salt/patterns/button-bar) instead.
+ */
 // biome-ignore lint/suspicious/noExplicitAny: any is used here to allow flexibility in the type of keys
 export type PartialRecord<K extends keyof any, T> = Partial<Record<K, T>>;
 
 type ButtonBarOrderKey = "order" | "alignLeftOrder" | "stackOrder";
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [button bar pattern](https://www.saltdesignsystem.com/salt/patterns/button-bar) instead.
+ */
 export type ButtonBarSortOrder = "asc" | "desc";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [button bar pattern](https://www.saltdesignsystem.com/salt/patterns/button-bar) instead.
+ */
 export const DefaultButtonsOrderByVariant: Record<
   ButtonVariant,
   Record<ButtonBarOrderKey, number>
@@ -118,6 +127,9 @@ function alignSecondaryChild(
   return noSecondaryChildren;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [button bar pattern](https://www.saltdesignsystem.com/salt/patterns/button-bar) instead.
+ */
 export interface ButtonBarProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * By default ButtonBar lays buttons from right to left horizontally ordering action buttons by order prop.
@@ -165,6 +177,9 @@ export interface ButtonBarProps extends HTMLAttributes<HTMLDivElement> {
 
 const withBaseName = makePrefixer("saltButtonBar");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [button bar pattern](https://www.saltdesignsystem.com/salt/patterns/button-bar) instead.
+ */
 export const ButtonBar = forwardRef<HTMLDivElement, ButtonBarProps>(
   function ButtonBar(
     {

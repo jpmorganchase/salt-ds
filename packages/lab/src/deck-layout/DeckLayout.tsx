@@ -15,10 +15,22 @@ import { useWidth } from "../responsive";
 
 import deckLayoutCss from "./DeckLayout.css";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Consider `Carousel` from `@salt-ds/embla-carousel` instead.
+ */
 export type LayoutAnimation = "slide" | "fade";
+/**
+ * @deprecated since 1.0.0-alpha.110. Consider `Carousel` from `@salt-ds/embla-carousel` instead.
+ */
 export type LayoutAnimationDirection = "horizontal" | "vertical";
+/**
+ * @deprecated since 1.0.0-alpha.110. Consider `Carousel` from `@salt-ds/embla-carousel` instead.
+ */
 export type LayoutAnimationTransition = "increase" | "decrease";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Consider `Carousel` from `@salt-ds/embla-carousel` instead.
+ */
 export interface DeckLayoutProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * The initial item to render.
@@ -40,6 +52,9 @@ export interface DeckLayoutProps extends HTMLAttributes<HTMLDivElement> {
 
 const withBaseName = makePrefixer("saltDeckLayout");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Consider `Carousel` from `@salt-ds/embla-carousel` instead.
+ */
 export const DeckLayout = forwardRef<HTMLDivElement, DeckLayoutProps>(
   function DeckLayout(
     {

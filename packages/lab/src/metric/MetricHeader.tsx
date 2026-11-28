@@ -7,6 +7,9 @@ import { useMetricContext } from "./internal";
 
 import metricHeaderCss from "./MetricHeader.css";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [metric pattern](https://www.saltdesignsystem.com/salt/patterns/metric) instead.
+ */
 export interface MetricHeaderProps extends HTMLAttributes<HTMLDivElement> {
   /**
    * If provided, subtitle will be rendered as a `Link` element with these props.
@@ -26,6 +29,9 @@ export interface MetricHeaderProps extends HTMLAttributes<HTMLDivElement> {
 
 const withBaseName = makePrefixer("saltMetricHeader");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [metric pattern](https://www.saltdesignsystem.com/salt/patterns/metric) instead.
+ */
 export const MetricHeader = forwardRef<HTMLDivElement, MetricHeaderProps>(
   function MetricHeader(
     { SubtitleLinkProps, className, title, subtitle, ...restProps },

@@ -17,6 +17,9 @@ import editableLabelCss from "./EditableLabel.css";
 
 const classBase = "saltEditableLabel";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export interface EditableLabelProps {
   className?: string;
   defaultEditing?: boolean;
@@ -33,6 +36,9 @@ export interface EditableLabelProps {
   value?: string;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const EditableLabel = forwardRef(function EditableLabel(
   {
     className: classNameProp,

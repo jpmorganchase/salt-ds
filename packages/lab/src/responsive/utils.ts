@@ -1,5 +1,8 @@
 const COLLAPSIBLE = "data-collapsible";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export type dataPadDirection = "data-pad-start" | "data-pad-end";
 
 const RESPONSIVE_ATTRIBUTE: { [key: string]: boolean } = {
@@ -8,6 +11,9 @@ const RESPONSIVE_ATTRIBUTE: { [key: string]: boolean } = {
   "data-pad-end": true,
 };
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const isResponsiveAttribute = (propName: string): boolean =>
   RESPONSIVE_ATTRIBUTE[propName] ?? false;
 
@@ -30,6 +36,7 @@ type ResponsivePropsTuple = [AnyProps, AnyProps];
  * field and remove them from the props of the nested component.
  * @param props
  * @returns
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
  */
 export const liftResponsivePropsToFormField = (
   props: AnyProps,

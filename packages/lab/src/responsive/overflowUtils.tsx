@@ -4,34 +4,73 @@ import type {
   orientationType,
 } from "./overflowTypes";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const DropdownPlaceholder = () => null;
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const getDropdownPlaceholder = () => <DropdownPlaceholder />;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export type heightOrWidth = "width" | "height";
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const NO_DATA = {};
 const LEFT_RIGHT = ["left", "right"];
 const TOP_BOTTOM = ["top", "bottom"];
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const allExceptOverflowIndicator = (sum: number, m: OverflowItem) =>
   sum + (m.isOverflowIndicator ? 0 : m.size);
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const isCollapsed = (item: OverflowItem): boolean =>
   item.collapsed === true;
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const isCollapsing = (item: OverflowItem): boolean =>
   item.collapsing === true;
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const isCollapsedOrCollapsing = (item: OverflowItem): boolean =>
   isCollapsed(item) || isCollapsing(item);
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const isOverflowed = (item: OverflowItem): boolean =>
   item.overflowed === true;
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const notOverflowed = (item: OverflowItem): boolean =>
   !isOverflowed(item);
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const isCollapsible = (item: OverflowItem) =>
   item.collapsible === "instant" || item.collapsible === "dynamic";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const getIsOverflowed = (managedItems: OverflowItem[]) =>
   managedItems.some(isOverflowed);
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const measureContainer = (
   ref: ElementRef,
   orientation: orientationType = "horizontal",
@@ -86,6 +125,9 @@ const isContainerOverflowing = (
   return isHorizontal ? maxPos > bottom : maxPos > right;
 };
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const measureContainerOverflow = (
   ref: ElementRef,
   orientation: orientationType = "horizontal",
@@ -111,6 +153,7 @@ export const measureContainerOverflow = (
  * Compute element size including margin.
  * Exclude margin where this has been applied for alignment, via margin: auto
  * which can be identified by the data-pad-end, data-pad-start attributes.
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
  **/
 export function measureElementSize(
   element: HTMLElement,
@@ -144,6 +187,9 @@ export function measureElementSize(
   return marginStart + minWidth + marginEnd;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const byDescendingPriority = (m1: OverflowItem, m2: OverflowItem) => {
   let result = m1.priority - m2.priority;
   if (result === 0) {
@@ -173,6 +219,9 @@ export const byDescendingPriority = (m1: OverflowItem, m2: OverflowItem) => {
 //     ? (value as collapsibleType)
 //     : undefined;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const getOverflowIndicator = (managedItems: OverflowItem[]) =>
   managedItems.find((item) => item.isOverflowIndicator);
 
@@ -183,6 +232,9 @@ export const getOverflowIndicator = (managedItems: OverflowItem[]) =>
 
 const getPriority = (item: OverflowItem) => item.priority;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const popNextItemByPriority = (
   items: OverflowItem[],
 ): OverflowItem | null => {
@@ -195,6 +247,9 @@ export const popNextItemByPriority = (
   return null;
 };
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const measureOverflowItems = (
   items: OverflowItem[],
   dimension: heightOrWidth,
@@ -218,8 +273,14 @@ export const measureOverflowItems = (
   return items;
 };
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const addAll = (sum: number, m: OverflowItem): number => sum + m.size;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const getElementForItem = (ref: ElementRef, item: OverflowItem) =>
   ref.current?.querySelector<HTMLElement>(
     `:scope > [data-index='${item.index}']`,
@@ -227,6 +288,9 @@ export const getElementForItem = (ref: ElementRef, item: OverflowItem) =>
 
 type dimension = "left" | "right" | "top" | "bottom";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export const getRuntimePadding = (
   el: HTMLElement,
   ...dimensions: dimension[]

@@ -9,6 +9,9 @@ interface useFormFieldLegacyPropsProps {
   focusVisible?: boolean;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `useFormFieldProps` from `@salt-ds/core` instead.
+ */
 export function useFormFieldLegacyProps({
   focusVisible,
 }: useFormFieldLegacyPropsProps = {}): Partial<FormFieldLegacyContextValue> {

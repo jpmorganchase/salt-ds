@@ -8,6 +8,9 @@ import { useListItem } from "./ListNextContext";
 
 const withBaseName = makePrefixer("saltListItemNext");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
+ */
 export interface ListItemNextProps extends HTMLAttributes<HTMLLIElement> {
   /**
    * If true, the particular list item in list will be disabled.
@@ -23,6 +26,9 @@ export interface ListItemNextProps extends HTMLAttributes<HTMLLIElement> {
   value: string;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
+ */
 export const ListItemNext = forwardRef<HTMLLIElement, ListItemNextProps>(
   function ListItemNext(
     {

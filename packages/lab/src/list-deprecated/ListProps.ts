@@ -13,6 +13,9 @@ export type ListSelectionVariant =
   | ListSingleSelectionVariant
   | ListMultiSelectionVariant;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
+ */
 export type ListChangeHandler<
   Item = string,
   Variant extends ListSelectionVariant = "default",
@@ -21,6 +24,9 @@ export type ListChangeHandler<
   item: null | (Variant extends ListMultiSelectionVariant ? Array<Item> : Item),
 ) => void;
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `ListBox` from `@salt-ds/core` instead.
+ */
 export type ListSelectHandler<Item = string> = (
   event: SyntheticEvent,
   item: Item | null,

@@ -1,5 +1,8 @@
 import { saltColorMap } from "./colorMap";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export function makePalette(
   colorScheme: string,
   saltColorOverrides?: Record<string, string>,
@@ -37,6 +40,9 @@ const purplePalette = (saltColorOverrides?: Record<string, string>) =>
 const grayPalette = (saltColorOverrides?: Record<string, string>) =>
   makePalette("gray", saltColorOverrides);
 
+/**
+ * @deprecated since 1.0.0-alpha.110. It will be removed in a future release, with no replacement.
+ */
 export function getColorPalettes(
   saltColorOverrides?: Record<string, string>,
 ): string[][] {

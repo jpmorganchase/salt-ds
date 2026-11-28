@@ -4,8 +4,14 @@ import { useContactDetailsContext } from "./internal";
 
 const withBaseName = makePrefixer("saltContactActions");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export interface ContactActionsProps extends HTMLAttributes<HTMLDivElement> {}
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export const ContactActions = forwardRef<HTMLDivElement, ContactActionsProps>(
   function ContactActions(props, ref) {
     const { children, ...restProps } = props;

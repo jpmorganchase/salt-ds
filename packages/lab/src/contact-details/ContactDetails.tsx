@@ -8,8 +8,14 @@ import { ContactDetailsContext, useComponentSize } from "./internal";
 
 const withBaseName = makePrefixer("saltContactDetails");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export type ContactDetailsVariant = "default" | "compact" | "mini";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export interface ContactDetailsProps extends HTMLAttributes<HTMLDivElement> {
   variant?: ContactDetailsVariant;
   stackAtBreakpoint?: number;
@@ -20,6 +26,9 @@ function getClassName(variant: ContactDetailsVariant, isStacked?: boolean) {
   return withBaseName(`${variant}${isStacked ? "-stacked" : ""}`);
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Follow the [contact details pattern](https://www.saltdesignsystem.com/salt/patterns/contact-details) instead.
+ */
 export const ContactDetails = forwardRef<HTMLDivElement, ContactDetailsProps>(
   function ContactDetails(props, externalRef) {
     const {

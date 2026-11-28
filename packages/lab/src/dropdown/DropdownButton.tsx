@@ -13,6 +13,9 @@ import { useFormFieldLegacyProps } from "../form-field-context-legacy";
 
 import dropdownButtonCss from "./DropdownButton.css";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Dropdown` from `@salt-ds/core` instead.
+ */
 export interface DropdownButtonProps extends ButtonProps {
   /**
    * Replace the default Icon component
@@ -61,6 +64,9 @@ export interface DropdownButtonProps extends ButtonProps {
 
 const withBaseName = makePrefixer("saltDropdownButton");
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Use `Dropdown` from `@salt-ds/core` instead.
+ */
 export const DropdownButton = forwardRef(function DropdownButton(
   {
     IconComponent,

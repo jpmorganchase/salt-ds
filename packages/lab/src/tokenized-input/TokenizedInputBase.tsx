@@ -45,13 +45,25 @@ import type {
   TokenizedInputState,
 } from "./useTokenizedInput";
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Consider `ComboBox` from `@salt-ds/core` with `multiselect` first. If users need to enter their own values, use `TokenizedInputNext`.
+ */
 export type RemoveItemHandler = (itemIndex: number) => void;
+/**
+ * @deprecated since 1.0.0-alpha.110. Consider `ComboBox` from `@salt-ds/core` with `multiselect` first. If users need to enter their own values, use `TokenizedInputNext`.
+ */
 export type ItemToString<Item> = (item: Item) => string;
+/**
+ * @deprecated since 1.0.0-alpha.110. Consider `ComboBox` from `@salt-ds/core` with `multiselect` first. If users need to enter their own values, use `TokenizedInputNext`.
+ */
 export type ExpandButtonProps = Pick<
   ButtonProps,
   "role" | "aria-roledescription" | "aria-describedby"
 > & { accessibleText?: string };
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Consider `ComboBox` from `@salt-ds/core` with `multiselect` first. If users need to enter their own values, use `TokenizedInputNext`.
+ */
 export interface TokenizedInputBaseProps<Item>
   extends Partial<TokenizedInputState<Item>>,
     Omit<
@@ -98,6 +110,9 @@ function hasHelpers<Item>(helpers: TokenizedInputHelpers<Item>) {
   return helpers != null;
 }
 
+/**
+ * @deprecated since 1.0.0-alpha.110. Consider `ComboBox` from `@salt-ds/core` with `multiselect` first. If users need to enter their own values, use `TokenizedInputNext`.
+ */
 export const TokenizedInputBase = forwardRef(function TokenizedInputBase<Item>(
   props: TokenizedInputBaseProps<Item>,
   ref: ForwardedRef<HTMLDivElement>,
