@@ -1,6 +1,7 @@
 import {
   useClassNameInjection,
   useComponentCssInjection,
+  useComponentDefaults,
 } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -281,9 +282,11 @@ const defaultParse = (value: string, decimalScale: number): number | null => {
 
 export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
   function NumberInput(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltNumberInput", props);
     const { className, props: finalProps } = useClassNameInjection(
       "saltNumberInput",
-      props,
+      propsWithDefaults,
     );
     const {
       "aria-valuetext": ariaValueTextProp,
@@ -317,8 +320,10 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
       placeholder,
       readOnly,
       startAdornment,
-      decrement = (v, s, m) => defaultDecrement(v, s, m, parse),
-      increment = (v, s, m) => defaultIncrement(v, s, m, parse),
+      decrement = (v: string, s: number, m: number) =>
+        defaultDecrement(v, s, m, parse),
+      increment = (v: string, s: number, m: number) =>
+        defaultIncrement(v, s, m, parse),
       textAlign = "left",
       validationStatus: validationStatusProp,
       variant = "primary",
@@ -600,6 +605,7 @@ export const NumberInput = forwardRef<HTMLDivElement, NumberInputProps>(
         onBlur={handleBlur}
         onMouseUp={handleContainerMouseUp}
         {...restProps}
+        {...rootDataAttributes}
         ref={ref}
       >
         {startAdornment && (

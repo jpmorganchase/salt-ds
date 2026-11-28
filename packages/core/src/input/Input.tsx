@@ -1,6 +1,7 @@
 import {
   useClassNameInjection,
   useComponentCssInjection,
+  useComponentDefaults,
 } from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
@@ -94,9 +95,11 @@ function isEmptyReadOnlyValue(
 
 export const Input = forwardRef<HTMLDivElement, InputProps>(
   function Input(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltInput", props);
     const { className, props: finalProps } = useClassNameInjection(
       "saltInput",
-      props,
+      propsWithDefaults,
     );
     const {
       "aria-activedescendant": ariaActiveDescendant,
@@ -225,6 +228,7 @@ export const Input = forwardRef<HTMLDivElement, InputProps>(
         ref={ref}
         style={inputStyle}
         {...other}
+        {...rootDataAttributes}
       >
         {startAdornment && (
           <div className={withBaseName("startAdornmentContainer")}>

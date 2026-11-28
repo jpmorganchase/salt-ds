@@ -1,4 +1,4 @@
-import { useClassNameInjection } from "@salt-ds/styles";
+import { useClassNameInjection, useComponentDefaults } from "@salt-ds/styles";
 import { clsx } from "clsx";
 import {
   cloneElement,
@@ -89,9 +89,11 @@ export interface TooltipProps
 
 export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
   function Tooltip(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltTooltip", props);
     const { className, props: finalProps } = useClassNameInjection(
       "saltTooltip",
-      props,
+      propsWithDefaults,
     );
 
     const {
@@ -108,6 +110,14 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       ...rest
     } = finalProps;
 
+    const rootDataAttributesFromProps = Object.fromEntries(
+      Object.entries(rest).filter(([key]) => key.startsWith("data-")),
+    );
+
+    const tooltipHookProps = Object.fromEntries(
+      Object.entries(rest).filter(([key]) => !key.startsWith("data-")),
+    );
+
     const {
       disabled: formFieldDisabled,
       validationStatus: formFieldValidationStatus,
@@ -123,7 +133,7 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
       placement,
       enterDelay,
       leaveDelay,
-      ...rest,
+      ...tooltipHookProps,
     };
 
     const {
@@ -159,6 +169,8 @@ export const Tooltip = forwardRef<HTMLDivElement, TooltipProps>(
           {...getTooltipProps()}
           ref={floatingRef}
           {...getTooltipPosition()}
+          {...rootDataAttributesFromProps}
+          {...rootDataAttributes}
         >
           <TooltipBase
             hideIcon={hideIcon}

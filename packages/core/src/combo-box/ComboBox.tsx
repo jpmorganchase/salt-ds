@@ -7,7 +7,7 @@ import {
   useFocus,
   useInteractions,
 } from "@floating-ui/react";
-import { useClassNameInjection } from "@salt-ds/styles";
+import { useClassNameInjection, useComponentDefaults } from "@salt-ds/styles";
 import { clsx } from "clsx";
 import {
   type ChangeEvent,
@@ -80,9 +80,13 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
   props: ComboBoxProps<Item>,
   ref: ForwardedRef<HTMLDivElement>,
 ) {
-  const { className, props: finalProps } = useClassNameInjection(
+  const { props: propsWithDefaults, rootDataAttributes } = useComponentDefaults(
     "saltComboBox",
     props,
+  );
+  const { className, props: finalProps } = useClassNameInjection(
+    "saltComboBox",
+    propsWithDefaults,
   );
   const {
     children,
@@ -498,6 +502,7 @@ export const ComboBox = forwardRef(function ComboBox<Item>(
           onBlur: handleBlur,
           onFocus: handleFocus,
           ...rest,
+          ...rootDataAttributes,
         })}
         pills={
           multiselect ? selectedState.map((item) => valueToString(item)) : []

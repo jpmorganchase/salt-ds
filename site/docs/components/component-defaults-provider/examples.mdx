@@ -1,0 +1,29 @@
+---
+title:
+  $ref: ./#/title
+layout: DetailComponent
+sidebar:
+  exclude: true
+data:
+  $ref: ./#/data
+---
+
+## Bordered defaults toggle
+
+Use a `ComponentDefaultsProvider` to define default `bordered` values for supported components. In this example, toggling the provider defaults switches the same component set between baseline rendering and border-enabled defaults.
+
+<LivePreview
+  componentName="component-defaults-provider"
+  exampleName="BorderedDefaults"
+/>
+
+## Root data attributes
+
+You can provide root-level `data-*` attributes through the provider to stamp telemetry or ownership metadata onto supported component roots.
+
+Defaults are merged across providers, and inner keys override matching outer keys.
+
+<LivePreview
+  componentName="component-defaults-provider"
+  exampleName="RootDataAttributes"
+/>

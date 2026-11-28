@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
@@ -99,6 +102,11 @@ export const ToggleButtonGroup = forwardRef<
   HTMLDivElement,
   ToggleButtonGroupProps
 >(function ToggleButtonGroup(props, ref) {
+  const { props: propsWithDefaults, rootDataAttributes } = useComponentDefaults(
+    "saltToggleButtonGroup",
+    props,
+  );
+
   const {
     appearance,
     children,
@@ -112,7 +120,7 @@ export const ToggleButtonGroup = forwardRef<
     readOnly,
     sentiment,
     ...rest
-  } = props;
+  } = propsWithDefaults;
 
   const targetWindow = useWindow();
   useComponentCssInjection({
@@ -292,6 +300,7 @@ export const ToggleButtonGroup = forwardRef<
         ref={handleRef}
         onKeyDown={handleKeyDown}
         {...rest}
+        {...rootDataAttributes}
       >
         {children}
       </div>

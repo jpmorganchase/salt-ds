@@ -4,7 +4,10 @@ import {
   useDismiss,
   useInteractions,
 } from "@floating-ui/react";
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
@@ -90,6 +93,9 @@ const withBaseName = makePrefixer("saltDrawer");
 
 export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
   function Drawer(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltDrawer", props);
+
     const {
       children,
       className,
@@ -106,7 +112,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
       "aria-labelledby": ariaLabelledBy,
       "aria-describedby": ariaDescribedBy,
       ...rest
-    } = props;
+    } = propsWithDefaults;
 
     const targetWindow = useWindow();
     useComponentCssInjection({
@@ -216,6 +222,7 @@ export const Drawer = forwardRef<HTMLDivElement, DrawerProps>(
             )}
             {...getFloatingProps()}
             {...rest}
+            {...rootDataAttributes}
             style={{
               ...style,
               ...sizeStyle,

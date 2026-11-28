@@ -1,4 +1,7 @@
-import { useComponentCssInjection } from "@salt-ds/styles";
+import {
+  useComponentCssInjection,
+  useComponentDefaults,
+} from "@salt-ds/styles";
 import { useWindow } from "@salt-ds/window";
 import { clsx } from "clsx";
 import {
@@ -50,6 +53,9 @@ export interface TabListProps
 
 export const TabList = forwardRef<HTMLDivElement, TabListProps>(
   function TabList(props, ref) {
+    const { props: propsWithDefaults, rootDataAttributes } =
+      useComponentDefaults("saltTabList", props);
+
     const {
       appearance = "bordered",
       activeColor = "primary",
@@ -60,7 +66,7 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
       onKeyDown,
       onPointerDownCapture,
       ...rest
-    } = props;
+    } = propsWithDefaults;
     const targetWindow = useWindow();
     useComponentCssInjection({
       testId: "salt-tab-list",
@@ -363,6 +369,7 @@ export const TabList = forwardRef<HTMLDivElement, TabListProps>(
           onPointerDownCapture?.(event);
         }}
         {...rest}
+        {...rootDataAttributes}
       >
         {renderMode === "inline" ? (
           children
